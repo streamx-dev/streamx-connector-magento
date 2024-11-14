@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <type name="Magento\Catalog\Controller\Adminhtml\Product\Edit">
+        <plugin name="streamx_connector_product_publisher_plugin" type="StreamX\Connector\Plugins\ProductPublisherPlugin" />
+    </type>
+</config>

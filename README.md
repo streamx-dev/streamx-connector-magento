@@ -31,3 +31,31 @@ open http://localhost:1080
 
 # If the Magento admin page displays warning about invalidated cache - perform the actions according to the displayed message
 ```
+
+### Install the StreamX Connector:
+Execute the following commands from root directory of the project.
+
+```bash
+# Magento requires plugins to be placed in its src/app/code directory.
+# Copy the plugin code to magento on each change:
+rm -rf magento/src/app/code/StreamX/Connector
+mkdir -p magento/src/app/code/StreamX/Connector
+cp -R src/* magento/src/app/code/StreamX/Connector
+
+# Enable the Module
+cd magento
+bin/magento module:enable StreamX_Connector
+
+# Register the module in Magento’s system and apply any database changes or setup scripts:
+bin/magento setup:upgrade
+
+# After installation, it’s a good practice to clear Magento’s cache to ensure the changes are reflected:
+bin/magento cache:clean
+bin/magento cache:flush
+
+# Verify the Installation. The custom module should now be listed as enabled and ready to use in Magento:
+bin/magento module:status
+```
+
+### Apply code updates of the StreamX Connector in Magento:
+In most cases it's enough to copy (overwrite) the plugin files. No need to restart Magento
