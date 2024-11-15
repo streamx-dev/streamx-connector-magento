@@ -69,8 +69,8 @@ services:
   opensearch:
     image: markoshust/magento-opensearch:2.12-0
     ports:
-      - "9200:9200"
-      - "9300:9300"
+      - "9201:9200"
+      - "9301:9300"
     env_file: env/opensearch.env
     environment:
       - "discovery.type=single-node"

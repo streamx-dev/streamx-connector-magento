@@ -1,2 +1,8 @@
-.DS_Store
+**/.DS_Store
+**/vendor/**
+**/target/**
 **/.vscode/launch.json
+**/.phpunit.result.cache
+
+# TODO remove when streamx/ingestion-client is used as a standard `composer` dependency
+streamx-ingestion-php/**
