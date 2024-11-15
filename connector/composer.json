@@ -1,0 +1,40 @@
+{
+  "name": "streamx/magento-connector",
+  "description": "Magento connector for StreamX - a Digital Experience Data Mesh.",
+  "version": "0.0.1",
+  "type": "magento2-module",
+  "autoload": {
+    "psr-4": {
+      "Streamx\\Connector\\Plugins\\": "src/Plugins/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Streamx\\Connector\\Plugins\\Tests\\": "tests/"
+    }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://repo.magento.com/"
+    },
+    {
+      "type": "path",
+      "url": "../streamx-ingestion-php"
+    }
+  ],
+  "require": {
+    "streamx/ingestion-client": "*"
+  },
+  "__comment" : "Magento libraries are explicitly required only for running tests. When the connector is deployed to Magento, it uses libraries available on the server",
+  "require-dev": {
+    "magento/module-catalog": "^104",
+    "phpunit/phpunit": "^9.5",
+    "ext-xdebug": "*"
+  },
+  "config": {
+    "allow-plugins": {
+      "magento/composer-dependency-version-audit-plugin": true
+    }
+  }
+}
