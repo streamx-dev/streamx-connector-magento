@@ -3,7 +3,10 @@
 namespace Streamx\Connector\Plugins\Tests;
 
 use Streamx\Connector\Plugins\ProductPublisherPlugin;
+use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Controller\Adminhtml\Product\Edit;
+use Magento\Catalog\Model\ProductRepository;
+use Magento\Framework\App\RequestInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 
@@ -15,19 +18,25 @@ class ProductPublisherPluginTest extends TestCase {
     /** @test */
     public function testPlugin() {
         // given
-        $edit = $this->createMock(Edit::class);
-        $myClosure = function() {
-            return 'abc';
-        };
         $logger = $this->createMock(LoggerInterface::class);
 
+        $product = $this->createMock(ProductInterface::class);
+        $proceed = function() use($product) { return $product; };
+
+        $productRepository = $this->createMock(ProductRepository::class);
+        $productRepository->method('getById')->willReturn($product);
+
+        $request = $this->createMock(RequestInterface::class);
+        $edit = $this->createMock(Edit::class);
+        $edit->method('getRequest')->willReturn($request);
+
         // when
-        $plugin = new ProductPublisherPlugin($logger);
+        $plugin = new ProductPublisherPlugin($logger, $productRepository);
         $plugin->ingestionBaseUrl = self::INGESTION_BASE_URL;
-        $result = $plugin->aroundExecute($edit, $myClosure);
+        $result = $plugin->aroundExecute($edit, $proceed);
 
         // then
-        $this->assertEquals('abc', $result);
+        $this->assertEquals($product, $result);
         $this->assertPageIsPublished('key-from-magento-connector');
     }
 
