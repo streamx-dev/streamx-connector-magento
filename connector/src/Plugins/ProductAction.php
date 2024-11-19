@@ -2,14 +2,13 @@
 
 namespace Streamx\Connector\Plugins;
 
-use Closure;
 use Magento\Catalog\Api\Data\ProductInterface;
-use Magento\Catalog\Controller\Adminhtml\Product\Edit;
 use Magento\Catalog\Model\ProductRepository;
+use Magento\Framework\Indexer\ActionInterface;
 use Psr\Log\LoggerInterface;
 use Streamx\Clients\Ingestion\Builders\StreamxClientBuilders;
 
-class ProductPublisherPlugin {
+class ProductAction implements ActionInterface {
 
     // TODO: load those two from properties, instead of hard-coding as constants
     public string $ingestionBaseUrl = 'http://rest-ingestion:8080';
@@ -18,23 +17,29 @@ class ProductPublisherPlugin {
     private LoggerInterface $logger;
     private ProductRepository $productRepository;
 
-    // constructor for magento dependency injection
     public function __construct(LoggerInterface $logger, ProductRepository $productRepository) {
         $this->logger = $logger;
         $this->productRepository = $productRepository;
     }
 
-    public function aroundExecute(Edit $subject, Closure $proceed) {
-        $this->logger->info('Before admin has edited a product: ' . self::toJson($subject));
-        $result = $proceed();
-        $this->logger->info('After admin has edited a product.');
-        // the above logs should be written to: /var/www/html/var/log/system.log
+    // @Override
+    public function executeRow($id) {
+        $this->logger->info("ProductAction executeRow($id)");
+        $this->executeList([$id]);
+    }
 
-        $productId = $subject->getRequest()->getParam('id');
-        $product = $this->productRepository->getById($productId);
-        $this->publishToStreamX($product);
+    // @Override
+    public function executeList(array $ids) {
+        $this->logger->info("ProductAction executeList(" . json_encode($ids) . ")");
+        foreach ($ids as $id) {
+            $product = $this->productRepository->getById($id);
+            $this->publishToStreamX($product);
+        }
+    }
 
-        return $result;
+    // @Override
+    public function executeFull() {
+        $this->logger->info("ProductAction executeFull(): full reindexing is not implemented");
     }
 
     private function publishToStreamX(ProductInterface $product) {
@@ -48,7 +53,8 @@ class ProductPublisherPlugin {
                 )
             ]
         ];
-        $publisher->publish('key-from-magento-connector', $page);
+        $key = sprintf('product_%s', $product->getId());
+        $publisher->publish($key, $page);
     }
 
     private static function toJson($obj): string {
