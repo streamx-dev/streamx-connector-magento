@@ -1,6 +1,11 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
+
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
-    <type name="Magento\Catalog\Controller\Adminhtml\Product\Edit">
-        <plugin name="streamx_connector_product_publisher_plugin" type="StreamX\Connector\Plugins\ProductPublisherPlugin" />
+
+    <type name="Magento\Catalog\Model\ResourceModel\Product">
+        <plugin name="productsPlugin" type="StreamX\Connector\Plugins\ProductObserver"/>
+    </type>
+    <type name="Magento\Catalog\Model\Product\Action">
+        <plugin name="productsMassActionPlugin" type="StreamX\Connector\Plugins\ProductObserver"/>
     </type>
 </config>
