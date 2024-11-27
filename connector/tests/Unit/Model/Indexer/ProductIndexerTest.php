@@ -1,14 +1,15 @@
 <?php declare(strict_types=1);
 
-namespace Streamx\Connector\Plugins\Tests;
+namespace Streamx\Connector\Model\Indexer\Tests;
 
-use Streamx\Connector\Plugins\ProductAction;
+use Streamx\Connector\Model\Indexer\ProductIndexer;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Model\ProductRepository;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 
-class ProductActionTest extends TestCase {
+// TODO: adjust test to recent changes
+class ProductIndexerTest extends TestCase {
 
     private const INGESTION_BASE_URL = "http://localhost:8080";
     private const DELIVERY_BASE_URL = "http://localhost:8081";
@@ -37,9 +38,9 @@ class ProductActionTest extends TestCase {
         });
 
         // when
-        $action = new ProductAction($logger, $productRepository);
-        $action->ingestionBaseUrl = self::INGESTION_BASE_URL;
-        $action->executeList([1, 2]);
+        $indexer = new ProductIndexer($logger, $productRepository);
+        $indexer->ingestionBaseUrl = self::INGESTION_BASE_URL;
+        $indexer->executeList([1, 2]);
 
         // then
         $this->assertPageIsPublished('product_1');

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Indexer/etc/indexer.xsd">
+    <indexer id="streamx_products" view_id="streamx_products" class="StreamX\Connector\Model\Indexer\ProductIndexer">
+        <title translate="true">StreamX Products</title>
+        <description translate="true">Rebuild products index for StreamX Connector</description>
+    </indexer>
+</config>
