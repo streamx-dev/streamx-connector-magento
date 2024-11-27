@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!-- You can view sample of Magento mview.xml file here: https://github.com/magento/magento2/blob/2.4/app/code/Magento/Catalog/etc/mview.xml -->
-
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Mview/etc/mview.xsd">
-    <view id="streamx_products" class="Streamx\Connector\Plugins\ProductAction" group="indexer">
+    <view id="streamx_products" class="Streamx\Connector\Model\Indexer\ProductMviewHandler" group="indexer">
         <subscriptions>
             <table name="catalog_product_entity" entity_column="entity_id" />
             <table name="catalog_product_entity_datetime" entity_column="entity_id" />
@@ -17,6 +14,7 @@
             <table name="catalog_product_website" entity_column="product_id" />
             <table name="catalog_category_product" entity_column="product_id" />
             <table name="cataloginventory_stock_item" entity_column="product_id" />
+            <table name="cataloginventory_stock_status" entity_column="product_id" />
         </subscriptions>
     </view>
 </config>

@@ -5,12 +5,12 @@
   "type": "magento2-module",
   "autoload": {
     "psr-4": {
-      "Streamx\\Connector\\Plugins\\": "src/Plugins/"
+      "Streamx\\Connector\\Model\\Indexer\\": "src/Model/Indexer/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Streamx\\Connector\\Plugins\\Tests\\": "tests/"
+      "Streamx\\Connector\\Model\\Indexer\\Tests\\": "tests/"
     }
   },
   "repositories": [

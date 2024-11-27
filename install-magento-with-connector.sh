@@ -1,5 +1,6 @@
 ### PREREQUISITES:
-# streamx-ingestion-php repository cloned as sibling of streamx-connector-magento in your filesystem
+# - streamx-ingestion-php repository cloned as sibling of streamx-connector-magento in your filesystem
+# - Composer authentication to download Magento images is configured - see README.md
 
 ### FRESH RUN:
 # If you already have a Magento instance configured - to remove everything, execute:
@@ -14,6 +15,9 @@ cd magento
 
 ### Install magento docker images - see https://github.com/markshust/docker-magento
 curl -s https://raw.githubusercontent.com/markshust/docker-magento/master/lib/onelinesetup | bash -s -- magento.test 2.4.7 community
+
+# Increase innodb-buffer-pool-size to avoid warnings in logs
+sed -i '' 's|--max_allowed_packet|--innodb-buffer-pool-size=512M --max_allowed_packet|g' compose.yaml
 
 ### Remove unnecessary docker-magento's .git repo folder
 rm -rf .git
@@ -45,7 +49,7 @@ bin/composer config repositories.streamx-client path app/code/StreamX/Client
 # Add streamx ingestion client to magento's composer.json file
 bin/composer require "streamx/ingestion-client"
 
-# Magento requires plugins to be placed in its src/app/code directory. Copy the plugin code to magento
+# Magento requires custom code to be placed in its src/app/code directory. Copy the Connector code to magento
 cd ..
 rm -rf magento/src/app/code/StreamX/Connector
 mkdir -p magento/src/app/code/StreamX/Connector
