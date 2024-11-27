@@ -3,18 +3,18 @@
 Steps to Obtain and Configure Magento Authentication Keys
 1. Generate Authentication Keys
  - log in to the Magento Marketplace: https://marketplace.magento.com/customer/account/login
- - access Your Profile: Click on your account name in the top right corner and select My Profile
+ - access Your Profile: Click on your account name in the top right corner and select My Profile
  - create Access Keys:
-   - navigate to the Access Keys section under the Marketplace tab
-   - click on Create a New Access Key
-   - enter a name for the keys (e.g. "Magento Project") and click OK
-   - note down the generated Public Key (used as the username) and Private Key (used as the password)
-2. Configure auth.json
+   - navigate to the Access Keys section under the Marketplace tab
+   - click on Create a New Access Key
+   - enter a name for the keys (e.g. "Magento Project") and click OK
+   - note down the generated Public Key (used as the username) and Private Key (used as the password)
+2. Configure auth.json
  - locate Composer home directory. You can find this by running:
    ```bash
    composer config --list --global | grep 'home'
    ```
- - create (or edit) the file `auth.json` in the directory
+ - create (or edit) the file `auth.json` in the directory
    - add your authentication keys in the following format:
      ```json
      {
@@ -26,7 +26,7 @@ Steps to Obtain and Configure Magento Authentication Keys
         }
      }
      ```
- - replace <your_public_key> and <your_private_key> with the keys you generated earlier in step 1.
+ - replace <your_public_key> and <your_private_key> with the keys you generated earlier in step 1.
 
 # Setup Magento docker images along with StreamX Connector
 Execute the `install-magento-with-connector.sh` script.
@@ -143,3 +143,4 @@ bin/magento indexer:reindex
 
 # change mode of an indexer
 bin/magento indexer:set-mode schedule|realtime streamx_products
+```

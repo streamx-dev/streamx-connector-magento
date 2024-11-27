@@ -8,13 +8,13 @@
 
   <testsuites>
     <testsuite name="Unit Tests">
-      <directory>tests/Unit</directory>
+      <directory>src/test</directory>
     </testsuite>
   </testsuites>
 
   <coverage pathCoverage="true">
     <include>
-      <directory>src</directory>
+      <directory>src/main</directory>
     </include>
     <report>
       <html outputDirectory="target/coverage-reports/html"/>
