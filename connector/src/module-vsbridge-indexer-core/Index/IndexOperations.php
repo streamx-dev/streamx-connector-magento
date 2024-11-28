@@ -18,7 +18,7 @@ use Divante\VsbridgeIndexerCore\Api\IndexOperationInterface;
 use Divante\VsbridgeIndexerCore\Api\Index\TypeInterface;
 use Divante\VsbridgeIndexerCore\Api\MappingInterface;
 use Divante\VsbridgeIndexerCore\Config\OptimizationSettings;
-use Divante\VsbridgeIndexerCore\Elasticsearch\ClientResolver;
+use Divante\VsbridgeIndexerCore\Streamx\ClientResolver;
 use Divante\VsbridgeIndexerCore\Exception\ConnectionUnhealthyException;
 use Magento\Store\Api\Data\StoreInterface;
 
@@ -347,7 +347,7 @@ class IndexOperations implements IndexOperationInterface
     }
 
     /**
-     * Check if pending tasks + batch indexer size (VueStorefrontIndexer indices setting)
+     * Check if pending tasks + batch indexer size (StreamxIndexer indices setting)
      * are lower than max bulk queue size master node
      *
      * @param array $clusterHealth

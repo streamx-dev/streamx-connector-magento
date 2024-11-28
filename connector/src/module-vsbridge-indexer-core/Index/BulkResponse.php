@@ -17,7 +17,7 @@ class BulkResponse implements BulkResponseInterface
     /**
      * Constructor.
      *
-     * @param array $rawResponse ElasticSearch raw response.
+     * @param array $rawResponse StreamX raw response.
      */
     public function __construct(array $rawResponse)
     {

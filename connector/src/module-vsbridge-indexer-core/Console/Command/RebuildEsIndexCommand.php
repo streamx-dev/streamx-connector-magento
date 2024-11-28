@@ -100,7 +100,7 @@ class RebuildEsIndexCommand extends AbstractIndexerCommand
             self::INPUT_ALL_STORES,
             null,
             InputOption::VALUE_NONE,
-            'Reindex all allowed stores (base on vuestorefront configuration)'
+            'Reindex all allowed stores (base on streamx configuration)'
         );
 
         parent::configure();

@@ -8,7 +8,7 @@ use Divante\VsbridgeIndexerCore\Api\BulkResponseInterfaceFactory as BulkResponse
 use Divante\VsbridgeIndexerCore\Api\BulkRequestInterfaceFactory as BulkRequestFactory;
 use Divante\VsbridgeIndexerCore\Api\IndexInterfaceFactory as IndexFactory;
 use Divante\VsbridgeIndexerCore\Index\Index;
-use Divante\VsbridgeIndexerCore\Elasticsearch\ClientResolver;
+use Divante\VsbridgeIndexerCore\Streamx\ClientResolver;
 use PHPUnit\Framework\TestCase;
 use Magento\Store\Model\Store;
 
@@ -112,8 +112,8 @@ class IndexOperationsTest extends TestCase
 
     public function testGetExistingIndex()
     {
-        $alias =  'vuestorefront_1';
-        $name = 'vuestorefront_1';
+        $alias =  'streamx_1';
+        $name = 'streamx_1';
 
         $indexMock = new Index(
             $name,
@@ -148,8 +148,8 @@ class IndexOperationsTest extends TestCase
     {
         $this->storeMock->method('getId')->willReturn(1);
 
-        $alias =  'vuestorefront_de';
-        $name = 'vuestorefront_1';
+        $alias =  'streamx_de';
+        $name = 'streamx_1';
 
         $indexMock = new Index(
             $name,

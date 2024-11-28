@@ -73,7 +73,7 @@ class IndexSettingsTest extends TestCase
      */
     public function testGetIndexAlias(string $storeCode)
     {
-        $indexPrefix = 'vuestorefront';
+        $indexPrefix = 'streamx';
         $this->indicesSettingsMock->method('addIdentifierToDefaultStoreView')->willReturn(true);
         $this->indicesSettingsMock->method('getIndexNamePrefix')->willReturn($indexPrefix);
         $this->indicesSettingsMock->method('getIndexIdentifier')->willReturn('code');
