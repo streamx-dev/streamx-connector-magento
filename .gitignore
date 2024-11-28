@@ -1,5 +1,5 @@
 .DS_Store
-connector/vendor
+vendor
 connector/target
 .vscode/launch.json
 .idea
