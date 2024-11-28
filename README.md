@@ -59,6 +59,22 @@ Login using credentials from magento/env/magento.env file.
 
 If the Magento admin page displays warning about invalidated cache - perform the actions according to the displayed message
 
+## Enable StreamX Connector
+ - Go to Magento Admin page
+ - Click on `STORES` on the left panel
+ - Click `Configuration` in the `Settings` area
+ - Expand `STREAMX` section, click on `Indexer` item, then expand `General Settings` section on the right
+ - Select `Yes` for the `Enable StreamX Connector` setting
+ - Click the `Save Config` button
+
+## Configure StreamX Connector
+ - Go to Magento Admin page
+ - Click on `STORES` on the left panel
+ - Click `Configuration` in the `Settings` area
+ - Expand `STREAMX` section, click on `Indexer` item, then expand `StreamX Connector Settings` section on the right
+ - Edit the settings you need, or leave the default values
+ - Click the `Save Config` button
+
 ## Start the already configured magento
 If for example you stopped all its containers manually, you can start them using:
 ```bash
@@ -124,7 +140,7 @@ open target/coverage-report/index.html
 cd magento
 
 # list all indexers
-magento % bin/magento indexer:status
+bin/magento indexer:status
 # the indexers are also listed on Magento Admin's System > Tools > Index Management page.
 
 # reindex a specified index
