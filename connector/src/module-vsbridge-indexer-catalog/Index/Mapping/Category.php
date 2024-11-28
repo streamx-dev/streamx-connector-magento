@@ -96,11 +96,6 @@ class Category extends AbstractMapping implements MappingInterface
             $mappingObject = new \Magento\Framework\DataObject();
             $mappingObject->setData($mapping);
 
-            $this->eventManager->dispatch(
-                'elasticsearch_category_mapping_properties',
-                ['mapping' => $mappingObject]
-            );
-
             $this->properties = $mappingObject->getData();
         }
 

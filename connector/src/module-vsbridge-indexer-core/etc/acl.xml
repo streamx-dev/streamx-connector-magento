@@ -11,7 +11,7 @@
     <acl>
         <resources>
             <resource id="Magento_Backend::admin">
-                <resource id="Divante_VsbridgeIndexerCore::configuration" title="VueStorefront Indexer Configuration" />
+                <resource id="Divante_VsbridgeIndexerCore::configuration" title="StreamX Indexer Configuration" />
             </resource>
         </resources>
     </acl>
