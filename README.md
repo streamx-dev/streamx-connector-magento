@@ -56,8 +56,6 @@ bin/magento indexer:reindex catalogsearch_fulltext
 https://magento.test/admin
 
 Login using credentials from magento/env/magento.env file.
-When asked to check your mail for 2FA - open mailcatcher to read and follow the instructions:
-open http://localhost:1080
 
 If the Magento admin page displays warning about invalidated cache - perform the actions according to the displayed message
 
@@ -72,12 +70,7 @@ bin/start
 When developing changes in the StreamX Connector - there's no need to restart Magento. Upload and apply changes to Magento using:
 ```bash
 # cd to root directory of the project, and:
-rm -rf magento/src/app/code/StreamX/Connector
-mkdir -p magento/src/app/code/StreamX/Connector
-cp -R connector/src/* magento/src/app/code/StreamX/Connector
-
-cd magento
-bin/magento cache:clean && bin/magento cache:flush && bin/magento setup:upgrade && bin/magento setup:di:compile
+bash copy_connector_to_magento_and_reload.sh
 ```
 
 ## Restart Magento:
@@ -127,7 +120,6 @@ open target/coverage-report/index.html
 ```
 
 ## Some useful magento commands (when using markshust/docker-magento)
-
 ```bash
 cd magento
 
@@ -136,11 +128,11 @@ magento % bin/magento indexer:status
 # the indexers are also listed on Magento Admin's System > Tools > Index Management page.
 
 # reindex a specified index
-bin/magento indexer:reindex streamx_products
+bin/magento indexer:reindex index_identifier
 
 # reindex all indexers
 bin/magento indexer:reindex
 
 # change mode of an indexer
-bin/magento indexer:set-mode schedule|realtime streamx_products
+bin/magento indexer:set-mode schedule|realtime index_identifier
 ```
