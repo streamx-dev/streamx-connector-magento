@@ -8,10 +8,10 @@
 
   <testsuites>
     <testsuite name="Core module tests">
-      <directory>src/module-vsbridge-indexer-core/Test</directory>
+      <directory>src/module-vsbridge-indexer-core/test</directory>
     </testsuite>
     <testsuite name="Catalog module tests">
-      <directory>src/module-vsbridge-indexer-catalog/Test</directory>
+      <directory>src/module-vsbridge-indexer-catalog/test</directory>
     </testsuite>
   </testsuites>
 
@@ -20,6 +20,10 @@
       <directory>src/module-vsbridge-indexer-core</directory>
       <directory>src/module-vsbridge-indexer-catalog</directory>
     </include>
+    <exclude>
+      <directory>src/module-vsbridge-indexer-core/test</directory>
+      <directory>src/module-vsbridge-indexer-catalog/test</directory>
+    </exclude>
     <report>
       <html outputDirectory="target/coverage-reports/html"/>
     </report>
