@@ -7,14 +7,18 @@
   testdox="true">
 
   <testsuites>
-    <testsuite name="Unit Tests">
-      <directory>src/test</directory>
+    <testsuite name="Core module tests">
+      <directory>src/module-vsbridge-indexer-core/Test</directory>
+    </testsuite>
+    <testsuite name="Catalog module tests">
+      <directory>src/module-vsbridge-indexer-catalog/Test</directory>
     </testsuite>
   </testsuites>
 
   <coverage pathCoverage="true">
     <include>
-      <directory>src/main</directory>
+      <directory>src/module-vsbridge-indexer-core</directory>
+      <directory>src/module-vsbridge-indexer-catalog</directory>
     </include>
     <report>
       <html outputDirectory="target/coverage-reports/html"/>

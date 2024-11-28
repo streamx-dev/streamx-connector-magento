@@ -1,6 +1,5 @@
 <?php
 /**
- * Path to Composer vendor directory.
- * The file is required by magento/magento-composer-installer
+ * Path to Composer vendor directory
  */
 return './vendor';

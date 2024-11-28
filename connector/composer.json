@@ -2,7 +2,17 @@
   "name": "streamx/magento-connector",
   "description": "Magento connector for StreamX - a Digital Experience Data Mesh.",
   "version": "1.0.0",
-  "type": "magento2-module",
+  "type": "magento2-component",
+  "license": "MIT",
+  "authors": [{
+    "name": "Agata",
+    "email": "afirlejczyk@divante.pl"
+  }],
+  "keywords": [
+    "magento",
+    "magento2",
+    "vuestorefront"
+  ],
   "repositories": [
     {
       "type": "composer",
@@ -21,19 +31,36 @@
     "magento/module-backend": ">=100.2.0",
     "magento/module-catalog": ">=102.0.0",
     "magento/magento-composer-installer": "*",
-    "elasticsearch/elasticsearch": "~5.1|~6.1"
+    "elasticsearch/elasticsearch": "~5.1|~6.1|~7"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.5",
     "ext-xdebug": "*"
   },
+  "replace": {
+    "divante/module-vsf-indexer-core": "self.version",
+    "divante/module-vsf-indexer-catalog": "self.version",
+    "divante/module-vsf-indexer-tax": "self.version",
+    "divante/module-vsf-indexer-cms": "self.version"
+  },
   "autoload": {
     "files": [
-      "src/main/registration.php"
+      "src/module-vsbridge-indexer-agreement/registration.php",
+      "src/module-vsbridge-indexer-core/registration.php",
+      "src/module-vsbridge-indexer-catalog/registration.php",
+      "src/module-vsbridge-indexer-cms/registration.php",
+      "src/module-vsbridge-indexer-review/registration.php",
+      "src/module-vsbridge-indexer-tax/registration.php",
+      "src/module-vsbridge-downloadable/registration.php"
     ],
     "psr-4": {
-      "Divante\\VsbridgeIndexerCore\\": "src/main/core",
-      "Divante\\VsbridgeIndexerCatalog\\": "src/main/catalog"
+      "Divante\\VsbridgeIndexerAgreement\\": "src/module-vsbridge-indexer-agreement",
+      "Divante\\VsbridgeIndexerCore\\": "src/module-vsbridge-indexer-core",
+      "Divante\\VsbridgeIndexerCatalog\\": "src/module-vsbridge-indexer-catalog",
+      "Divante\\VsbridgeIndexerCms\\": "src/module-vsbridge-indexer-cms",
+      "Divante\\VsbridgeIndexerReview\\": "src/module-vsbridge-indexer-review",
+      "Divante\\VsbridgeIndexerTax\\": "src/module-vsbridge-indexer-tax",
+      "Divante\\VsbridgeDownloadable\\": "src/module-vsbridge-downloadable"
     }
   },
   "config": {
