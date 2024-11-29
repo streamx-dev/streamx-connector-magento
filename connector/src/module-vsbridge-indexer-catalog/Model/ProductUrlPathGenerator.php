@@ -21,7 +21,6 @@ class ProductUrlPathGenerator
     /**
      * Add URL path
      *
-     * @param array $products
      * @param int $storeId
      *
      * @return array

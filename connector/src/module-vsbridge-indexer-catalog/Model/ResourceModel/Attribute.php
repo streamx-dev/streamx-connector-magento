@@ -26,7 +26,6 @@ class Attribute
     }
 
     /**
-     * @param array $attributeIds
      * @param int   $fromId
      * @param int   $limit
      *

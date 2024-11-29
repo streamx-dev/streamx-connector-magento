@@ -20,7 +20,6 @@ class ViewPlugin
 
     /**
      * @param ViewInterface $subject
-     * @param array $result
      *
      * @return array
      */

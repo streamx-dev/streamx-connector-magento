@@ -50,7 +50,6 @@ class Category
 
     /**
      * @param int $storeId
-     * @param array $categoryIds
      * @param int $fromId
      * @param int $limit
      *
@@ -75,7 +74,6 @@ class Category
 
     /**
      * @param int $storeId
-     * @param array $productIds
      *
      * @return array
      * @throws \Exception
@@ -100,8 +98,6 @@ class Category
     }
 
     /**
-     * @param array $categoryIds
-     *
      * @return array
      * @throws \Exception
      */

@@ -38,7 +38,6 @@ class ConfigurableAttributesTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @param int $storeId
-     * @param array $selectedAttributes
      *
      * @dataProvider provideAllowedAttributes
      */

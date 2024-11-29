@@ -32,7 +32,6 @@ class CustomOptions
     }
 
     /**
-     * @param array $linkFieldIds
      * @param int $storeId
      *
      * @return array
@@ -45,7 +44,6 @@ class CustomOptions
     }
 
     /**
-     * @param array $linkFieldIds
      * @param int $storeId
      *
      * @return Select

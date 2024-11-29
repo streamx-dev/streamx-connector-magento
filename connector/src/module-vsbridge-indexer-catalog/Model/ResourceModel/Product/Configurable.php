@@ -114,8 +114,6 @@ class Configurable
     }
 
     /**
-     * @param array $products
-     *
      * @return void
      */
     public function setProducts(array $products)
@@ -158,8 +156,6 @@ class Configurable
     /**
      * Return array of configurable attribute ids of the given configurable product.
      *
-     * @param array $product
-     *
      * @return array
      */
     private function getProductConfigurableAttributeIds(array $product)
@@ -199,8 +195,6 @@ class Configurable
     /**
      * This method actually would belong into a resource model, but for easier
      * reference I dropped it into the helper here.
-     *
-     * @param array $productIds
      *
      * @return array
      */
@@ -334,8 +328,6 @@ class Configurable
     }
 
     /**
-     * @param array $linkIds
-     *
      * @return array
      */
     private function mapLinkFieldToEntityId(array $linkIds)

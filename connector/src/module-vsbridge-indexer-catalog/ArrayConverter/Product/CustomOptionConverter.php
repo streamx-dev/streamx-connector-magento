@@ -50,8 +50,6 @@ class CustomOptionConverter implements CustomOptionConverterInterface
     }
 
     /**
-     * @param array $option
-     *
      * @return array
      */
     private function prepareValue(array $option): array
@@ -63,8 +61,6 @@ class CustomOptionConverter implements CustomOptionConverterInterface
     }
 
     /**
-     * @param array $option
-     *
      * @return array
      */
     private function unsetFields(array $option): array
@@ -83,8 +79,6 @@ class CustomOptionConverter implements CustomOptionConverterInterface
     }
 
     /**
-     * @param array $option
-     *
      * @return array
      */
     private function prepareOption(array $option): array

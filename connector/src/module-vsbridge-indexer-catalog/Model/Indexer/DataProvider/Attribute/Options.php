@@ -51,7 +51,6 @@ class Options implements DataProviderInterface
     }
 
     /**
-     * @param array $attributeData
      * @param int   $storeId
      *
      * @return array
@@ -62,8 +61,6 @@ class Options implements DataProviderInterface
     }
 
     /**
-     * @param array $attributeData
-     *
      * @return bool
      */
     private function useSource(array $attributeData)

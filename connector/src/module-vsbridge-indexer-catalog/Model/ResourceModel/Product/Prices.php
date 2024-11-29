@@ -61,7 +61,6 @@ class Prices
     /**
      * Only default customer Group ID (0) is supported now
      * @param int $storeId
-     * @param array $productIds
      *
      * @return array
      * @throws \Magento\Framework\Exception\NoSuchEntityException
@@ -105,7 +104,6 @@ class Prices
 
     /**
      * @param int $websiteId
-     * @param array $productsIds
      */
     private function getCatalogRulePrices(int $websiteId, array $productsIds)
     {

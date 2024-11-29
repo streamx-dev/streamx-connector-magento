@@ -49,7 +49,6 @@ class AttributesMetadata  implements DataProviderInterface
     }
 
     /**
-     * @param array $productDTO
      * @param int $storeId
      *
      * @return array
@@ -77,8 +76,6 @@ class AttributesMetadata  implements DataProviderInterface
     }
 
     /**
-     * @param array $productDTO
-     * @param array $attribute
      * @param int $storeId
      *
      * @return array
@@ -89,8 +86,6 @@ class AttributesMetadata  implements DataProviderInterface
     }
 
     /**
-     * @param array $productDTO
-     * @param array $attribute
      * @param int $storeId
      *
      * @return array

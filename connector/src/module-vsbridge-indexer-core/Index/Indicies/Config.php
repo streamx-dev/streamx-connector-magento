@@ -65,8 +65,6 @@ class Config
     }
 
     /**
-     * @param array $indexConfigData
-     *
      * @return array
      */
     private function initIndexConfig(array $indexConfigData)

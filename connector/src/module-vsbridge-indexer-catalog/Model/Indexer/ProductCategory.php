@@ -67,7 +67,6 @@ class ProductCategory implements \Magento\Framework\Indexer\ActionInterface, \Ma
 
     /**
      * @param \Magento\Store\Api\Data\StoreInterface $store
-     * @param array $productIds
      *
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */

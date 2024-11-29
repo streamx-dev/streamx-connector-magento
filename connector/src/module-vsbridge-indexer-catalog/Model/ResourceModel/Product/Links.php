@@ -59,8 +59,6 @@ class Links
     }
 
     /**
-     * @param array $products
-     *
      * @return void
      */
     public function setProducts(array $products)
@@ -73,8 +71,6 @@ class Links
     }
 
     /**
-     * @param array $product
-     *
      * @return array
      */
     public function getLinkedProduct(array $product)

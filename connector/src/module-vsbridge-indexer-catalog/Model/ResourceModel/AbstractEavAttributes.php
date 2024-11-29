@@ -112,7 +112,6 @@ abstract class AbstractEavAttributes implements EavAttributesInterface
 
     /**
      * @param \Magento\Eav\Model\Entity\Attribute $attribute
-     * @param array $allowedAttributes
      *
      * @return bool
      * @throws \Exception
@@ -135,8 +134,6 @@ abstract class AbstractEavAttributes implements EavAttributesInterface
     }
 
     /**
-     * @param array $values
-     *
      * @return array
      * @throws \Exception
      */
@@ -200,8 +197,6 @@ abstract class AbstractEavAttributes implements EavAttributesInterface
      *
      * @param int $storeId
      * @param string $table
-     * @param array $attributeIds
-     * @param array $entityIds
      *
      * @return \Magento\Framework\DB\Select
      * @throws \Exception

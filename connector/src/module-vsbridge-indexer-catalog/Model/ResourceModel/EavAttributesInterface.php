@@ -12,7 +12,6 @@ interface EavAttributesInterface
 
     /**
      * @param \Magento\Eav\Model\Entity\Attribute $attribute
-     * @param array|null $allowedAttributes
      *
      * @return bool
      */

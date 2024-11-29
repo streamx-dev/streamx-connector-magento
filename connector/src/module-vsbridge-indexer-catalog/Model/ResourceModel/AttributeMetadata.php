@@ -119,7 +119,6 @@ class AttributeMetadata
     }
 
     /**
-     * @param array $attributes
      * @param int $storeId
      *
      * @return void
@@ -152,7 +151,6 @@ class AttributeMetadata
     }
 
     /**
-     * @param array $attributes
      * @param int $storeId
      *
      * @throws \Magento\Framework\Exception\LocalizedException
@@ -179,8 +177,6 @@ class AttributeMetadata
     }
 
     /**
-     * @param array $attribute
-     *
      * @return bool
      */
     private function useSourceModel(array $attribute)
@@ -195,7 +191,6 @@ class AttributeMetadata
     }
 
     /**
-     * @param array $attributes
      * @param int $storeId
      *
      * @return void

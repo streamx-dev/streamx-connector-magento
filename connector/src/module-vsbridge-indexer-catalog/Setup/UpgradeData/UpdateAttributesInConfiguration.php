@@ -37,7 +37,6 @@ class UpdateAttributesInConfiguration
     }
 
     /**
-     * @param array $attributeCodes
      * @param string $path
      *
      * @return void
@@ -59,8 +58,6 @@ class UpdateAttributesInConfiguration
     }
 
     /**
-     * @param array $attributes
-     *
      * @return string
      * @throws LocalizedException
      */

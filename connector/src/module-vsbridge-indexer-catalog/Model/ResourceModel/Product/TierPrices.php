@@ -29,7 +29,6 @@ class TierPrices
 
     /**
      * @param int $websiteId
-     * @param array $linkFieldIds
      *
      * @return array
      * @throws \Exception

@@ -34,8 +34,6 @@ class Attribute
     }
 
     /**
-     * @param array $attributeIds
-     *
      * @return \Traversable
      */
     public function rebuild(array $attributeIds = [])
@@ -56,8 +54,6 @@ class Attribute
     }
 
     /**
-     * @param array $attributeData
-     *
      * @return array
      */
     private function filterData(array $attributeData)

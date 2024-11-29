@@ -23,8 +23,6 @@ class ProductCount
     }
 
     /**
-     * @param array $categoryIds
-     *
      * @return array
      */
     public function loadProductCount(array $categoryIds)
@@ -58,8 +56,6 @@ class ProductCount
     }
 
     /**
-     * @param array $categoryIds
-     *
      * @return array
      */
     public function getProductCount(array $categoryIds)
