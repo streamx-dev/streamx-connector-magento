@@ -50,18 +50,12 @@ class IndexSettings
         return $this->configuration->getBatchIndexingSize();
     }
 
-    /**
-     * @return array
-     */
-    public function getIndicesConfig()
+    public function getIndicesConfig(): array
     {
         return $this->indicesConfig->get();
     }
 
-    /**
-     * @return array
-     */
-    public function getEsConfig()
+    public function getEsConfig(): array
     {
         return [
             'index.mapping.total_fields.limit' => $this->configuration->getFieldsLimit(),

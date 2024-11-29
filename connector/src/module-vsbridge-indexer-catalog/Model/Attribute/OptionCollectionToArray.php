@@ -8,9 +8,6 @@ use Magento\Eav\Model\ResourceModel\Entity\Attribute\Option\Collection as Option
 
 class OptionCollectionToArray
 {
-    /**
-     * @return array
-     */
     public function execute(OptionCollection $collection, array $additional = []): array
     {
         $res = [];

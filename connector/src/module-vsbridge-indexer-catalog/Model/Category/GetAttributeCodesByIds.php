@@ -30,8 +30,6 @@ class GetAttributeCodesByIds
 
     /**
      * Load attribute codes by ids
-     *
-     * @return array
      */
     public function execute(string $attributeIds): array
     {

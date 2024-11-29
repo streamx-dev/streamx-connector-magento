@@ -61,7 +61,6 @@ class Prices
     /**
      * Only default customer Group ID (0) is supported now
      *
-     * @return array
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function loadPriceData(int $storeId, array $productIds): array

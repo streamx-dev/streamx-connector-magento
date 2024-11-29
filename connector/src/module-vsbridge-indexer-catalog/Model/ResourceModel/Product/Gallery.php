@@ -47,10 +47,9 @@ class Gallery
     }
 
     /**
-     * @return array
      * @throws \Exception
      */
-    public function loadGallerySet(array $linkFieldIds, int $storeId)
+    public function loadGallerySet(array $linkFieldIds, int $storeId): array
     {
         $select = $this->getLoadGallerySelect($linkFieldIds, $storeId);
 
@@ -68,10 +67,7 @@ class Gallery
         return $attribute->getId();
     }
 
-    /**
-     * @return array
-     */
-    public function loadVideos(array $valueIds, int $storeId)
+    public function loadVideos(array $valueIds, int $storeId): array
     {
         if (empty($valueIds)) {
             return [];
@@ -90,10 +86,7 @@ class Gallery
         return $groupByValueId;
     }
 
-    /**
-     * @return array
-     */
-    private function getVideoRawData(array $valueIds, int $storeId)
+    private function getVideoRawData(array $valueIds, int $storeId): array
     {
         $connection = $this->getConnection();
         $mainTableAlias = 'main';
@@ -130,10 +123,7 @@ class Gallery
         return $connection->fetchAll($select);
     }
 
-    /**
-     * @return array
-     */
-    private function substituteNullsWithDefaultValues(array $rowData)
+    private function substituteNullsWithDefaultValues(array $rowData): array
     {
         $columns = array_keys($this->videoProperties);
 

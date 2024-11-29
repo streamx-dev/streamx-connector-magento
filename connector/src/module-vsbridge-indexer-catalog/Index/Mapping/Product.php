@@ -67,10 +67,7 @@ class Product extends AbstractMapping implements MappingInterface
         return $this->properties;
     }
 
-    /**
-     * @return array
-     */
-    private function getAllAttributesMappingProperties()
+    private function getAllAttributesMappingProperties(): array
     {
         $attributes = $this->getAttributes();
         $allAttributesMapping = [];
@@ -86,9 +83,6 @@ class Product extends AbstractMapping implements MappingInterface
         return $allAttributesMapping;
     }
 
-    /**
-     * @return array
-     */
     private function getCommonMappingProperties(): array
     {
         $attributesMapping = [];
@@ -118,9 +112,6 @@ class Product extends AbstractMapping implements MappingInterface
         return $attributesMapping;
     }
 
-    /**
-     * @return array
-     */
     private function getCustomProperties(): array
     {
         $customProperties = ['attribute_set_id' => ['type' => FieldInterface::TYPE_LONG]];
@@ -134,10 +125,7 @@ class Product extends AbstractMapping implements MappingInterface
         return $customProperties;
     }
 
-    /**
-     * @return array
-     */
-    public function getAttributes()
+    public function getAttributes(): array
     {
         return $this->resourceModel->execute();
     }

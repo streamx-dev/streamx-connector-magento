@@ -17,9 +17,6 @@ class LoadOptionById
         $this->loadOptions = $loadOptions;
     }
 
-    /**
-     * @return array
-     */
     public function execute(string $attributeCode, int $optionId, int $storeId): array
     {
         $options = $this->loadOptions->execute($attributeCode, $storeId);

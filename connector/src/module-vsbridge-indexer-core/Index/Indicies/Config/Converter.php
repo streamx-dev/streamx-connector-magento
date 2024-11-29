@@ -51,10 +51,8 @@ class Converter implements ConverterInterface
      *
      * @param \DOMXPath $xpath XPath access to the document parsed.
      * @param \DOMNode $indexRootNode Index node to be parsed.
-     *
-     * @return array
      */
-    private function parseIndexConfig(\DOMXPath $xpath, \DOMNode $indexRootNode)
+    private function parseIndexConfig(\DOMXPath $xpath, \DOMNode $indexRootNode): array
     {
         $indexConfig = ['types' => []];
         $typesSearchPath = sprintf('%s', self::TYPE_NODE_TYPE);
@@ -73,10 +71,8 @@ class Converter implements ConverterInterface
      *
      * @param \DOMXPath $xpath XPath access to the document parsed.
      * @param \DOMNode $typeRootNode Type node to be parsed.
-     *
-     * @return array
      */
-    private function parseTypeConfig(\DOMXPath $xpath, \DOMNode $typeRootNode)
+    private function parseTypeConfig(\DOMXPath $xpath, \DOMNode $typeRootNode): array
     {
         $datasources = $this->parseDataProviders($xpath, $typeRootNode);
         $mapping = $typeRootNode->getAttribute('mapping');
@@ -97,10 +93,8 @@ class Converter implements ConverterInterface
      *
      * @param \DOMXPath $xpath XPath access to the document parsed.
      * @param \DOMNode $typeRootNode Type node to be parsed.
-     *
-     * @return array
      */
-    private function parseDataProviders(\DOMXPath $xpath, \DOMNode $typeRootNode)
+    private function parseDataProviders(\DOMXPath $xpath, \DOMNode $typeRootNode): array
     {
         $datasources = [];
 

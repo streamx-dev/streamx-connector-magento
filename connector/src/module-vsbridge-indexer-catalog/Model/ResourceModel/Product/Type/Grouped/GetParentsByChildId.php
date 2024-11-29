@@ -72,8 +72,6 @@ class GetParentsByChildId implements GetParentsByChildIdInterface
 
     /**
      * Retrieve sku for parents
-     *
-     * @return array
      */
     private function getProductSkusByIds(array $productIds): array
     {

@@ -30,10 +30,8 @@ class CategoryAttributes
 
     /**
      * Retrieve required attributes for category
-     *
-     * @return array
      */
-    public function getRequiredAttributes(int $storeId)
+    public function getRequiredAttributes(int $storeId): array
     {
         $attributes = $this->config->getAllowedAttributesToIndex($storeId);
 

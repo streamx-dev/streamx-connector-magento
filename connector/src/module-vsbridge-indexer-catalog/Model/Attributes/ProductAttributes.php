@@ -30,9 +30,6 @@ class ProductAttributes
         $this->catalogConfig = $catalogConfiguration;
     }
 
-    /**
-     * @return array
-     */
     public function getAttributes(int $storeId): array
     {
         $attributes = $this->catalogConfig->getAllowedAttributesToIndex($storeId);

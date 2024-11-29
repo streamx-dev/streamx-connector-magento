@@ -242,10 +242,7 @@ class IndexOperations implements IndexOperationInterface
         return $this->indexSettings->getBatchIndexingSize();
     }
 
-    /**
-     * @return array
-     */
-    private function getIndicesConfiguration()
+    private function getIndicesConfiguration(): array
     {
         if (null === $this->indicesConfiguration) {
             $this->indicesConfiguration = $this->indexSettings->getIndicesConfig();

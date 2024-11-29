@@ -105,10 +105,7 @@ class LoadMediaGallery implements LoadMediaGalleryInterface
         }
     }
 
-    /**
-     * @return array
-     */
-    private function getValueIds(array $mediaGallery)
+    private function getValueIds(array $mediaGallery): array
     {
         $valueIds = [];
 
@@ -121,10 +118,7 @@ class LoadMediaGallery implements LoadMediaGalleryInterface
         return $valueIds;
     }
 
-    /**
-     * @return array
-     */
-    private function prepareVideoData(array $video)
+    private function prepareVideoData(array $video): array
     {
         $vimeoRegex = implode('', $this->vimeoRegex);
         $id = null;

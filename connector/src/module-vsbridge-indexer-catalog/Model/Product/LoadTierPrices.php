@@ -104,10 +104,7 @@ class LoadTierPrices implements LoadTierPricesInterface
         return $this->configSettings->syncTierPrices();
     }
 
-    /**
-     * @return array
-     */
-    private function prepareTierPrices(array $productTierPrice)
+    private function prepareTierPrices(array $productTierPrice): array
     {
         return [
             'customer_group_id' => (int) $productTierPrice['cust_group'],

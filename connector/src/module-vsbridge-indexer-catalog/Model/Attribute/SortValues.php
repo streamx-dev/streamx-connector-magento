@@ -6,10 +6,7 @@ namespace Divante\VsbridgeIndexerCatalog\Model\Attribute;
 
 class SortValues
 {
-    /**
-     * @return array
-     */
-    public function execute(array $options)
+    public function execute(array $options): array
     {
         usort($options, [$this, 'sortOptions']);
 

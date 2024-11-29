@@ -25,10 +25,7 @@ class Attribute
         $this->collectionFactory = $collectionFactory;
     }
 
-    /**
-     * @return array
-     */
-    public function getAttributes(array $attributeIds = [], int $fromId = 0, int $limit = 100)
+    public function getAttributes(array $attributeIds = [], int $fromId = 0, int $limit = 100): array
     {
         $select = $this->getAttributeCollectionSelect();
         $connection = $this->resource->getConnection();

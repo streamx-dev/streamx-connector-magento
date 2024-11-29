@@ -85,12 +85,7 @@ class Category extends AbstractMapping implements MappingInterface
         return $this->properties;
     }
 
-    /**
-     * Get All attributes mapping
-     *
-     * @return array
-     */
-    private function getAllAttributesMapping()
+    private function getAllAttributesMapping(): array
     {
         $attributes = $this->getAttributes();
         $allAttributesMapping = [];
@@ -111,12 +106,7 @@ class Category extends AbstractMapping implements MappingInterface
         return $allAttributesMapping;
     }
 
-    /**
-     * Get Children Data Mapping
-     *
-     * @return array
-     */
-    private function getChildrenDataMapping(array $allAttributesMapping, array $commonProperties)
+    private function getChildrenDataMapping(array $allAttributesMapping, array $commonProperties): array
     {
         $childMapping = array_merge($commonProperties, $allAttributesMapping);
         unset($childMapping['created_at'], $childMapping['updated_at']);
@@ -126,8 +116,6 @@ class Category extends AbstractMapping implements MappingInterface
 
     /**
      * Load Category attributes
-     *
-     * @return array
      */
     public function getAttributes(): array
     {

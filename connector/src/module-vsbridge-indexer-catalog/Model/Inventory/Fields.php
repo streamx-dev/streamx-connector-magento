@@ -48,17 +48,11 @@ class Fields
         'low_stock_date',
     ];
 
-    /**
-     * @return array
-     */
     public function getRequiredColumns(): array
     {
         return $this->fields;
     }
 
-    /**
-     * @return array
-     */
     public function getChildRequiredColumns(): array
     {
         return $this->childRequiredFields;

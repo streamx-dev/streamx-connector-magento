@@ -70,10 +70,7 @@ class ConfigurableAttributesTest extends \PHPUnit\Framework\TestCase
         $this->assertEmpty($productAttributes);
     }
 
-    /**
-     * @return array
-     */
-    public function provideAllowedAttributes()
+    public function provideAllowedAttributes(): array
     {
         return [
             [
