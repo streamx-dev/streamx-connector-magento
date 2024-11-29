@@ -82,18 +82,6 @@ class AttributeData implements AttributeDataProviderInterface
      */
     private $applyCategorySlug;
 
-    /**
-     * AttributeData constructor.
-     *
-     * @param AttributeDataProvider $attributeResource
-     * @param CategoryChildrenResource $childrenResource
-     * @param ProductCountResourceModel $productCountResource
-     * @param ApplyCategorySlugInterface $applyCategorySlug
-     * @param CategoryConfigInterface $configSettings
-     * @param CategoryAttributes $categoryAttributes
-     * @param CategoryChildAttributes $categoryChildAttributes
-     * @param DataFilter $dataFilter
-     */
     public function __construct(
         AttributeDataProvider $attributeResource,
         CategoryChildrenResource $childrenResource,

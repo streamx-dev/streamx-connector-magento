@@ -12,8 +12,6 @@ class BulkResponse implements BulkResponseInterface
     private $rawResponse;
 
     /**
-     * Constructor.
-     *
      * @param array $rawResponse StreamX raw response.
      */
     public function __construct(array $rawResponse)

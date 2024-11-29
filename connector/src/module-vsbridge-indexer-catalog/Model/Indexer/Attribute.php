@@ -23,13 +23,6 @@ class Attribute implements \Magento\Framework\Indexer\ActionInterface, \Magento\
      */
     private $storeManager;
 
-    /**
-     * Attribute constructor.
-     *
-     * @param GenericIndexerHandler $indexerHandler
-     * @param StoreManager $storeManager
-     * @param AttributeAction $action
-     */
     public function __construct(
         GenericIndexerHandler $indexerHandler,
         StoreManager $storeManager,

@@ -41,12 +41,6 @@ class LoadMediaGallery implements LoadMediaGalleryInterface
      */
     private $rowIdToEntityId = [];
 
-    /**
-     * MediaGalleryData constructor.
-     *
-     * @param Resource $resource
-     * @param ProductMetaData $productMetaData
-     */
     public function __construct(
         Resource $resource,
         ProductMetaData $productMetaData

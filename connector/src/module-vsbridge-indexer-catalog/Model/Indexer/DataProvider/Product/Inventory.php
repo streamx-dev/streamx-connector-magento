@@ -19,12 +19,6 @@ class Inventory implements DataProviderInterface
      */
     private $inventoryProcessor;
 
-    /**
-     * Inventory constructor.
-     *
-     * @param LoadInventoryInterface $getInventory
-     * @param InventoryConverterInterface $inventoryProcessor
-     */
     public function __construct(
         LoadInventoryInterface $getInventory,
         InventoryConverterInterface $inventoryProcessor

@@ -65,16 +65,6 @@ class IndexOperations implements IndexOperationInterface
      */
     private $optimizationSettings;
 
-    /**
-     * IndexOperations constructor.
-     *
-     * @param ClientResolver $clientResolver
-     * @param BulkResponseFactory $bulkResponseFactory
-     * @param BulkRequestFactory $bulkRequestFactory
-     * @param IndexSettings $indexSettings
-     * @param IndexFactory $indexFactory
-     * @param OptimizationSettings $optimizationSettings
-     */
     public function __construct(
         ClientResolver $clientResolver,
         BulkResponseFactory $bulkResponseFactory,

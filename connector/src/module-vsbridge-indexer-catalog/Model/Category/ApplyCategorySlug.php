@@ -19,12 +19,6 @@ class ApplyCategorySlug implements ApplyCategorySlugInterface
      */
     private $slugGenerator;
 
-    /**
-     * ApplySlug constructor.
-     *
-     * @param SlugGeneratorInterface $slugGenerator
-     * @param CatalogConfigurationInterface $configSettings
-     */
     public function __construct(
         SlugGeneratorInterface $slugGenerator,
         CatalogConfigurationInterface $configSettings

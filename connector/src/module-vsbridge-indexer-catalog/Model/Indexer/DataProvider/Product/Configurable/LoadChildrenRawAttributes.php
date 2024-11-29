@@ -41,17 +41,6 @@ class LoadChildrenRawAttributes
      */
     private $settings;
 
-    /**
-     * LoadChildrenRawAttributes constructor.
-     *
-     * @param CatalogConfigurationInterface $catalogConfiguration
-     * @param AttributeDataProvider $attributeDataProvider
-     * @param ConfigurableAttributes $configurableAttributes
-     * @param LoadTierPricesInterface $loadTierPrices
-     * @param LoadMediaGalleryInterface $loadMediaGallery
-     * @param PriceResourceModel $priceResourceModel
-     * @param int $batchSize
-     */
     public function __construct(
         CatalogConfigurationInterface $catalogConfiguration,
         AttributeDataProvider $attributeDataProvider,

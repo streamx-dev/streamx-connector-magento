@@ -55,13 +55,6 @@ class RebuildEsIndexCommand extends AbstractIndexerCommand
      */
     private $eventManager;
 
-    /**
-     * RebuildEsIndexCommand constructor.
-     *
-     * @param  ObjectManagerFactory  $objectManagerFactory
-     * @param  ManagerInterface  $eventManager
-     * @param  array  $excludeIndices
-     */
     public function __construct(
         ObjectManagerFactory $objectManagerFactory,
         ManagerInterface $eventManager, // Proxy

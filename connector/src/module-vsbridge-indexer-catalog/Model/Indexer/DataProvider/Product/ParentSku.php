@@ -26,13 +26,6 @@ class ParentSku implements DataProviderInterface
      */
     private $configSettings;
 
-    /**
-     * ParentData constructor.
-     *
-     * @param ParentResolver $parentResolver
-     * @param CatalogConfigurationInterface $configSettings
-     *
-     */
     public function __construct(
         ParentResolver $parentResolver,
         CatalogConfigurationInterface $configSettings

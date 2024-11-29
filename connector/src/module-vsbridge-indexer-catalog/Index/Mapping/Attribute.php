@@ -13,11 +13,6 @@ class Attribute implements MappingInterface
      */
     private $optionMapping;
 
-    /**
-     * Attribute constructor.
-     *
-     * @param OptionMapping $optionMapping
-     */
     public function __construct(OptionMapping $optionMapping)
     {
         $this->optionMapping = $optionMapping;

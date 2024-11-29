@@ -28,13 +28,6 @@ class Type implements TypeInterface
      */
     private $dataProviders;
 
-    /**
-     * Type constructor.
-     *
-     * @param $name
-     * @param MappingInterface|null $mapping
-     * @param array $dataProviders
-     */
     public function __construct($name, MappingInterface $mapping = null, array $dataProviders)
     {
         $this->name = $name;

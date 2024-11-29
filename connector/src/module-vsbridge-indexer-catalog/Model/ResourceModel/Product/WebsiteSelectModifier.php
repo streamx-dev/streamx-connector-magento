@@ -22,12 +22,6 @@ class WebsiteSelectModifier implements BaseSelectModifierInterface
      */
     private $storeManager;
 
-    /**
-     * WebsiteSelectModifier constructor.
-     *
-     * @param ResourceConnection $resourceConnection
-     * @param StoreManagerInterface $storeManager
-     */
     public function __construct(
         ResourceConnection $resourceConnection,
         StoreManagerInterface $storeManager

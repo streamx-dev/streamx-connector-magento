@@ -20,12 +20,6 @@ class UpgradeData implements UpgradeDataInterface
      */
     private $setCategoryDefaultAttributes;
 
-    /**
-     * UpgradeData constructor.
-     *
-     * @param SetProductDefaultAttributes $setDefaultAttributes
-     * @param SetCategoryDefaultAttributes $setCategoryDefaultAttributes
-     */
     public function __construct(
         SetProductDefaultAttributes $setDefaultAttributes,
         SetCategoryDefaultAttributes $setCategoryDefaultAttributes

@@ -22,18 +22,6 @@ class Reader extends Filesystem
         '/indices/index/type/data_providers/data_provider' => 'name',
     ];
 
-    /**
-     * Reader constructor.
-     *
-     * @param \Magento\Framework\Config\FileResolverInterface $fileResolver
-     * @param Converter $converter
-     * @param SchemaLocator $schemaLocator
-     * @param \Magento\Framework\Config\ValidationStateInterface $validationState
-     * @param string $fileName
-     * @param array $idAttributes
-     * @param string $domDocumentClass
-     * @param string $defaultScope
-     */
     public function __construct(
         FileResolverInterface $fileResolver,
         Converter $converter,

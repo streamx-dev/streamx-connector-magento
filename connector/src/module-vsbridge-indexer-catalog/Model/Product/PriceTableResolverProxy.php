@@ -38,11 +38,6 @@ class PriceTableResolverProxy
      */
     private $priceIndexTableName = [];
 
-    /**
-     * PriceTableResolver constructor.
-     *
-     * @param ObjectManagerInterface $objectManager
-     */
     public function __construct(ObjectManagerInterface $objectManager)
     {
         $this->objectManager = $objectManager;

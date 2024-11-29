@@ -42,14 +42,6 @@ class Processor
      */
     private $eventManager;
 
-    /**
-     * Processor constructor.
-     *
-     * @param CurlFactory $curlFactory
-     * @param ConfigInterface $config
-     * @param EventManager $manager
-     * @param LoggerInterface $logger
-     */
     public function __construct(
         CurlFactory $curlFactory,
         ConfigInterface $config,

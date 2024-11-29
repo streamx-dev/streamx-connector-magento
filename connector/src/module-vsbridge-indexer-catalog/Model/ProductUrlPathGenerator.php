@@ -13,11 +13,6 @@ class ProductUrlPathGenerator
      */
     private $rewriteResource;
 
-    /**
-     * ProductUrlPathGenerator constructor.
-     *
-     * @param RewriteResource $rewrite
-     */
     public function __construct(RewriteResource $rewrite)
     {
         $this->rewriteResource = $rewrite;

@@ -46,15 +46,6 @@ class Product
      */
     private $baseSelectModifier;
 
-    /**
-     * Product constructor.
-     *
-     * @param CatalogConfigurationInterface $configSettings
-     * @param BaseSelectModifierInterface $baseSelectModifier
-     * @param ResourceConnection $resourceConnection
-     * @param ProductMetaData $productMetaData
-     * @param DbHelper $dbHelper
-     */
     public function __construct(
         CatalogConfigurationInterface $configSettings,
         BaseSelectModifierInterface $baseSelectModifier,

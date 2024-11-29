@@ -38,14 +38,6 @@ class Children
      */
     private $categoryMetaData;
 
-    /**
-     * Children constructor.
-     *
-     * @param LoadAttributes $attributeDataProvider
-     * @param CollectionFactory $collectionFactory
-     * @param ResourceConnection $resourceModel
-     * @param CategoryMetaData $categoryMetaData
-     */
     public function __construct(
         LoadAttributes $attributeDataProvider,
         BaseSelectModifierInterface $baseSelectModifier,

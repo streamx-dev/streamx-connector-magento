@@ -18,12 +18,6 @@ class UpdateAttributeDataPlugin
      */
     private $productProcessor;
 
-    /**
-     * UpdateAttributeData constructor.
-     *
-     * @param ProductProcessor $processor
-     * @param AttributeProcessor $attributeProcessor
-     */
     public function __construct(
         ProductProcessor $processor,
         AttributeProcessor $attributeProcessor

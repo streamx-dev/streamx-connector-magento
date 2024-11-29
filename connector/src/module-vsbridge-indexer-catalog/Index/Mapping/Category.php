@@ -46,15 +46,6 @@ class Category extends AbstractMapping implements MappingInterface
      */
     private $childAttributes;
 
-    /**
-     * Category constructor.
-     *
-     * @param EventManager $eventManager
-     * @param GeneralMapping $generalMapping
-     * @param CategoryChildAttributes $categoryChildAttributes
-     * @param LoadAttributes $resourceModel
-     * @param array $staticFieldMapping
-     */
     public function __construct(
         EventManager $eventManager,
         GeneralMapping $generalMapping,

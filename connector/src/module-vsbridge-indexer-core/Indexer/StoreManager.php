@@ -25,12 +25,6 @@ class StoreManager
      */
     private $loadedStores = null;
 
-    /**
-     * StoreManager constructor.
-     *
-     * @param GeneralConfigInterface $generalSettings
-     * @param StoreManagerInterface $storeManager
-     */
     public function __construct(
         GeneralConfigInterface $generalSettings,
         StoreManagerInterface $storeManager

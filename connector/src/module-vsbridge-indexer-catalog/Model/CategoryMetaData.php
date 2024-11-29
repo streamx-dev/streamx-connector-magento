@@ -17,11 +17,6 @@ class CategoryMetaData
      */
     private $metadataPool;
 
-    /**
-     * CategoryMetaData constructor.
-     *
-     * @param MetadataPool $metadataPool
-     */
     public function __construct(MetadataPool $metadataPool)
     {
         $this->metadataPool = $metadataPool;

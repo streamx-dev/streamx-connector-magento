@@ -23,13 +23,6 @@ class Attribute
      */
     private $convertValue;
 
-    /**
-     * Attribute constructor.
-     *
-     * @param ConvertValueInterface $convertValue
-     * @param AttributeMapping $attributeMapping
-     * @param ResourceModel $resourceModel
-     */
     public function __construct(
         ConvertValueInterface $convertValue,
         AttributeMapping $attributeMapping,

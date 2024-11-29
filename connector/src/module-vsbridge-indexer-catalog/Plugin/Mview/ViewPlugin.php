@@ -13,11 +13,6 @@ class ViewPlugin
      */
     private $catalogSettings;
 
-    /**
-     * ViewPlugin constructor.
-     *
-     * @param CatalogConfigurationInterface $catalogSettings
-     */
     public function __construct(CatalogConfigurationInterface $catalogSettings)
     {
         $this->catalogSettings = $catalogSettings;

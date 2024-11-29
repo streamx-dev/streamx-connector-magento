@@ -12,11 +12,6 @@ abstract class AbstractMapping
      */
     private $staticFieldMapping;
 
-    /**
-     * AbstractMapping constructor.
-     *
-     * @param array $staticFieldMapping
-     */
     public function __construct(array $staticFieldMapping)
     {
         $this->staticFieldMapping = $staticFieldMapping;

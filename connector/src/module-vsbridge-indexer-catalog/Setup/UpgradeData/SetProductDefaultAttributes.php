@@ -22,13 +22,6 @@ class SetProductDefaultAttributes
      */
     private $childAttributes;
 
-    /**
-     * SetDefaultProductAttributes constructor.
-     *
-     * @param UpdateAttributesInConfigurationFactory $updateAttributesInConfiguration
-     * @param array $productAttributes
-     * @param array $childAttributes
-     */
     public function __construct(
         UpdateAttributesInConfigurationFactory $updateAttributesInConfiguration,
         array $productAttributes,

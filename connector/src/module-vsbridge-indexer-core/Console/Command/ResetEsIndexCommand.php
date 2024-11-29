@@ -13,11 +13,6 @@ class ResetEsIndexCommand extends AbstractIndexerCommand
 {
     const VS_INDEXER_PREFIX = 'vsbridge_';
 
-    /**
-     * ResetEsIndexCommand constructor.
-     *
-     * @param  ObjectManagerFactory  $objectManagerFactory
-     */
     public function __construct(ObjectManagerFactory $objectManagerFactory)
     {
         parent::__construct($objectManagerFactory);

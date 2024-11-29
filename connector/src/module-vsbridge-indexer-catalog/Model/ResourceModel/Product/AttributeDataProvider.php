@@ -20,16 +20,6 @@ class AttributeDataProvider extends AbstractEavAttributes
      */
     private $loadAttributes;
 
-    /**
-     * AttributeDataProvider constructor.
-     *
-     * @param LoadAttributes $loadAttributes
-     * @param ProductMapping $productMapping
-     * @param ResourceConnection $resourceConnection
-     * @param ConvertValueInterface $convertValue
-     * @param MetadataPool $metadataPool
-     * @param string $entityType
-     */
     public function __construct(
         LoadAttributes $loadAttributes,
         ProductMapping $productMapping,

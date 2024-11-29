@@ -25,11 +25,6 @@ class ProductAttributes
      */
     private $catalogConfig;
 
-    /**
-     * Attributes constructor.
-     *
-     * @param CatalogConfigurationInterface $catalogConfiguration
-     */
     public function __construct(CatalogConfigurationInterface $catalogConfiguration)
     {
         $this->catalogConfig = $catalogConfiguration;

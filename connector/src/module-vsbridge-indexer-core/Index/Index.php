@@ -27,13 +27,6 @@ class Index implements IndexInterface
      */
     private $alias;
 
-    /**
-     * Index constructor.
-     *
-     * @param string $name
-     * @param string $alias
-     * @param array $types
-     */
     public function __construct(
         string $name,
         string $alias,

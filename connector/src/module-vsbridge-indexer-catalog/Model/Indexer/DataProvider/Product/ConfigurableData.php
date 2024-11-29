@@ -62,17 +62,6 @@ class ConfigurableData implements DataProviderInterface
      */
     private $prepareConfigurableProduct;
 
-    /**
-     * ConfigurableData constructor.
-     *
-     * @param DataFilter $dataFilter
-     * @param ConfigurableResource $configurableResource
-     * @param LoadInventoryInterface $loadInventory
-     * @param LoadConfigurableOptions $configurableProcessor
-     * @param PrepareConfigurableProduct $prepareConfigurableProduct
-     * @param LoadChildrenRawAttributes $childrenAttributeProcessor
-     * @param InventoryConverterInterface $inventoryProcessor
-     */
     public function __construct(
         DataFilter $dataFilter,
         ConfigurableResource $configurableResource,

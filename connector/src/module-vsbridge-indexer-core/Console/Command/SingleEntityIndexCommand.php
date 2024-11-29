@@ -29,11 +29,6 @@ class SingleEntityIndexCommand extends AbstractIndexerCommand
      */
     private $storeManager;
 
-    /**
-     * RebuildEsIndexCommand constructor.
-     *
-     * @param ObjectManagerFactory $objectManagerFactory
-     */
     public function __construct(ObjectManagerFactory $objectManagerFactory)
     {
         parent::__construct($objectManagerFactory);

@@ -13,11 +13,6 @@ class CategoryChildAttributes
      */
     private $config;
 
-    /**
-     * CategoryChildAttributes constructor.
-     *
-     * @param CategoryConfigInterface $categoryConfig
-     */
     public function __construct(CategoryConfigInterface $categoryConfig)
     {
         $this->config = $categoryConfig;

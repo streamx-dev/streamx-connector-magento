@@ -61,18 +61,6 @@ class GenericIndexerHandler
      */
     private $bulkLogger;
 
-    /**
-     * GenericIndexerHandler constructor.
-     *
-     * @param BulkLoggerInterface $bulkLogger
-     * @param IndexOperationInterface $indexOperationProvider
-     * @param IndexerLogger $indexerLogger
-     * @param IndexerRegistry $indexerRegistry
-     * @param Batch $batch
-     * @param TransactionKeyInterface $transactionKey
-     * @param string $indexIdentifier
-     * @param string $typeName
-     */
     public function __construct(
         BulkLoggerInterface $bulkLogger,
         IndexOperationInterface $indexOperationProvider,

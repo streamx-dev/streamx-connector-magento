@@ -35,15 +35,6 @@ class Config
      */
     private $configData;
 
-    /**
-     * Config constructor.
-     *
-     * @param Config\Data $configData
-     * @param \Divante\VsbridgeIndexerCore\Indexer\DataProvider\TransactionKey $transactionKey
-     * @param TypeFactoryInterface $typeInterfaceFactory
-     * @param MappingProcessorFactory $mappingProcessorFactory
-     * @param DataProviderProcessorFactory $dataProviderFactoryProcessor
-     */
     public function __construct(
         Config\Data $configData,
         \Divante\VsbridgeIndexerCore\Indexer\DataProvider\TransactionKey $transactionKey,

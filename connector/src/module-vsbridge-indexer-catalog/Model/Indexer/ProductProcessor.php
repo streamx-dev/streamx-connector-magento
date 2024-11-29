@@ -17,12 +17,6 @@ class ProductProcessor extends \Magento\Framework\Indexer\AbstractProcessor
      */
     private $dependencyInfoProvider;
 
-    /**
-     * ProductProcessor constructor.
-     *
-     * @param DependencyInfoProviderInterface $dependencyInfoProvider
-     * @param IndexerRegistry $indexerRegistry
-     */
     public function __construct(
         DependencyInfoProviderInterface $dependencyInfoProvider,
         IndexerRegistry $indexerRegistry
