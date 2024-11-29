@@ -1,10 +1,4 @@
-<?php
-/**
- * Copyright Divante Sp. z o.o.
- * See LICENSE_DIVANTE.txt for license details.
- */
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Divante\VsbridgeIndexerCatalog\Model\Indexer\DataProvider\Product;
 

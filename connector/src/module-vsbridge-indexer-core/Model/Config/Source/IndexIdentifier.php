@@ -1,10 +1,4 @@
 <?php
-/**
- * @package  Divante\VsbridgeIndexerCore
- * @author Joel Rainwater <joel.rain2o@gmail.com>
- * @copyright 2019 Divante Sp. z o.o.
- * @license See LICENSE_DIVANTE.txt for license details.
- */
 
 namespace Divante\VsbridgeIndexerCore\Model\Config\Source;
 
