@@ -23,7 +23,7 @@ class RebuildEsIndexCommand extends AbstractIndexerCommand
 
     const INPUT_ALL_STORES = 'all';
 
-    const INDEX_IDENTIFIER = 'vue_storefront_catalog';
+    const INDEX_IDENTIFIER = 'streamx_storefront_catalog';
 
     /**
      * @var IndexOperationInterface
@@ -70,7 +70,7 @@ class RebuildEsIndexCommand extends AbstractIndexerCommand
      */
     protected function configure()
     {
-        $this->setName('vsbridge:reindex')
+        $this->setName('streamx:reindex')
             ->setDescription('Rebuild indexer in ES.');
 
         $this->addOption(
@@ -104,7 +104,7 @@ class RebuildEsIndexCommand extends AbstractIndexerCommand
 
         if (!empty($invalidIndices)) {
             $message = 'Some indices has invalid status: '. implode(', ', $invalidIndices) . '. ';
-            $message .= 'Please change indices status to VALID manually or use bin/magento vsbridge:reset command.';
+            $message .= 'Please change indices status to VALID manually or use bin/magento streamx:reset command.';
             $output->writeln("<info>WARNING: Indexation can't be executed. $message</info>");
             return;
         }
@@ -139,7 +139,7 @@ class RebuildEsIndexCommand extends AbstractIndexerCommand
      */
     private function reindex(OutputInterface $output, $storeId, $allStores): int
     {
-        $this->eventManager->dispatch('vsbridge_indexer_reindex_before', [
+        $this->eventManager->dispatch('streamx_indexer_reindex_before', [
             'storeId' => $storeId,
             'allStores' => $allStores,
         ]);
@@ -149,7 +149,7 @@ class RebuildEsIndexCommand extends AbstractIndexerCommand
             $returnValue = false;
 
             if ($this->isAllowedToReindex($store)) {
-                $output->writeln("<info>Reindexing all VS indexes for store " . $store->getName() . "...</info>");
+                $output->writeln("<info>Reindexing all StreamX indexes for store " . $store->getName() . "...</info>");
                 $returnValue = $this->reindexStore($store, $output);
                 $output->writeln("<info>Reindexing has completed!</info>");
             } else {
@@ -174,7 +174,7 @@ class RebuildEsIndexCommand extends AbstractIndexerCommand
             return in_array(Cli::RETURN_FAILURE, $returnValues) ? Cli::RETURN_FAILURE : Cli::RETURN_SUCCESS;
         }
 
-        $this->eventManager->dispatch('vsbridge_indexer_reindex_after', [
+        $this->eventManager->dispatch('streamx_indexer_reindex_after', [
             'storeId' => $storeId,
             'allStores' => $allStores,
         ]);
@@ -200,7 +200,7 @@ class RebuildEsIndexCommand extends AbstractIndexerCommand
     }
 
     /**
-     * Reindex each vsbridge index for the specified store
+     * Reindex each streamx index for the specified store
      */
     private function reindexStore(StoreInterface $store, OutputInterface $output): int
     {
@@ -244,17 +244,17 @@ class RebuildEsIndexCommand extends AbstractIndexerCommand
     {
         /** @var IndexerInterface[] */
         $indexers = $this->getAllIndexers();
-        $vsbridgeIndexers = [];
+        $streamxIndexers = [];
 
         foreach ($indexers as $indexer) {
             $indexId = $indexer->getId();
 
-            if (substr($indexId, 0, 9) === 'vsbridge_' && !in_array($indexId, $this->excludeIndices)) {
-                $vsbridgeIndexers[] = $indexer;
+            if (substr($indexId, 0, 9) === 'streamx_' && !in_array($indexId, $this->excludeIndices)) {
+                $streamxIndexers[] = $indexer;
             }
         }
 
-        return $vsbridgeIndexers;
+        return $streamxIndexers;
     }
 
     /**

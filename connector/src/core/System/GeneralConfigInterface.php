@@ -7,12 +7,12 @@ interface GeneralConfigInterface
     /**
      * Indexer enabled config path
      */
-    const XML_PATH_GENERAL_INDEXER_ENABLED = 'vsbridge_indexer_settings/general_settings/enable';
+    const XML_PATH_GENERAL_INDEXER_ENABLED = 'streamx_indexer_settings/general_settings/enable';
 
     /**
      * Allowed stores to reindex config path
      */
-    const XML_PATH_ALLOWED_STORES_TO_REINDEX = 'vsbridge_indexer_settings/general_settings/allowed_stores';
+    const XML_PATH_ALLOWED_STORES_TO_REINDEX = 'streamx_indexer_settings/general_settings/allowed_stores';
 
     /**
      * Check if store can be reindex

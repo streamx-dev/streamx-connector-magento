@@ -4,7 +4,7 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
-        <vsbridge_indexer_settings>
+        <streamx_indexer_settings>
             <catalog_settings>
                 <use_magento_url_keys>0</use_magento_url_keys>
                 <use_url_key_to_generate_slug>0</use_url_key_to_generate_slug>
@@ -15,6 +15,6 @@
                 <configurable_children_batch_size>500</configurable_children_batch_size>
                 <add_parent_sku>0</add_parent_sku>
             </catalog_settings>
-        </vsbridge_indexer_settings>
+        </streamx_indexer_settings>
     </default>
 </config>

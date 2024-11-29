@@ -9,7 +9,7 @@ use Magento\Framework\Config\ValidationStateInterface;
 
 class Reader extends Filesystem
 {
-    const FILE_NAME = 'vsbridge_indices.xml';
+    const FILE_NAME = 'streamx_indices.xml';
 
     /**
      * List of attributes by XPath used as ids during the file merge process.

@@ -10,7 +10,7 @@ class ProductProcessor extends \Magento\Framework\Indexer\AbstractProcessor
     /**
      * Indexer ID
      */
-    const INDEXER_ID = 'vsbridge_product_indexer';
+    const INDEXER_ID = 'streamx_product_indexer';
 
     /**
      * @var DependencyInfoProviderInterface
@@ -26,7 +26,7 @@ class ProductProcessor extends \Magento\Framework\Indexer\AbstractProcessor
     }
 
     /**
-     * Mark Vsbridge Product indexer as invalid
+     * Mark StreamX Product indexer as invalid
      */
     public function markIndexerAsInvalid(): void
     {

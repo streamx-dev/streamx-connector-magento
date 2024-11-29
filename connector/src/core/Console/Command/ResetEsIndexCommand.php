@@ -11,7 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ResetEsIndexCommand extends AbstractIndexerCommand
 {
-    const VS_INDEXER_PREFIX = 'vsbridge_';
+    const STREAMX_INDEXER_PREFIX = 'StreamX_';
 
     public function __construct(ObjectManagerFactory $objectManagerFactory)
     {
@@ -23,8 +23,8 @@ class ResetEsIndexCommand extends AbstractIndexerCommand
      */
     protected function configure()
     {
-        $this->setName('vsbridge:reset')
-            ->setDescription('Resets vsbridge indices status to invalid');
+        $this->setName('streamx:reset')
+            ->setDescription('Resets streamx indices status to invalid');
 
         parent::configure();
     }
@@ -59,16 +59,16 @@ class ResetEsIndexCommand extends AbstractIndexerCommand
     {
         /** @var IndexerInterface[] */
         $indexers = $this->getAllIndexers();
-        $vsbridgeIndexers = [];
+        $streamxIndexers = [];
 
         foreach ($indexers as $indexer) {
             $indexId = $indexer->getId();
 
-            if (substr($indexId, 0, 9) === self::VS_INDEXER_PREFIX) {
-                $vsbridgeIndexers[] = $indexer;
+            if (substr($indexId, 0, 9) === self::STREAMX_INDEXER_PREFIX) {
+                $streamxIndexers[] = $indexer;
             }
         }
 
-        return $vsbridgeIndexers;
+        return $streamxIndexers;
     }
 }
