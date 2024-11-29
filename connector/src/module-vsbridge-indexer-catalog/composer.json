@@ -1,12 +1,6 @@
 {
     "name": "divante/module-vsbridge-indexer-catalog",
     "type": "magento2-module",
-    "authors":[
-        {
-            "name":"Agata",
-            "email":"afirlejczyk@divante.pl"
-        }
-    ],
     "autoload": {
         "files": [
             "registration.php"
