@@ -38,15 +38,6 @@ class LoadTierPrices implements LoadTierPricesInterface
      */
     private $configSettings;
 
-    /**
-     * PriceData constructor.
-     *
-     * @param CatalogConfigurationInterface $configSettings
-     * @param TierPricesResource $tierPricesResource
-     * @param StoreManagerInterface $storeManager
-     * @param ProductMetaData $productMetaData
-     * @param AttributeDataProvider $config
-     */
     public function __construct(
         CatalogConfigurationInterface $configSettings,
         TierPricesResource $tierPricesResource,

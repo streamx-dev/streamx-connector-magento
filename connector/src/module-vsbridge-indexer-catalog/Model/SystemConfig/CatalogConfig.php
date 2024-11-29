@@ -24,12 +24,6 @@ class CatalogConfig implements CatalogConfigurationInterface
      */
     private $getAttributeCodesByIds;
 
-    /**
-     * Settings constructor.
-     *
-     * @param ScopeConfigInterface $scopeConfig
-     * @param GetAttributeCodesByIds $getAttributeCodesByIds
-     */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
         GetAttributeCodesByIds $getAttributeCodesByIds

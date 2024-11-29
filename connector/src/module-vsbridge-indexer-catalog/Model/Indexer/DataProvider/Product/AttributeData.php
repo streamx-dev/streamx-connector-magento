@@ -42,15 +42,6 @@ class AttributeData implements DataProviderInterface
      */
     private $productUrlPathGenerator;
 
-    /**
-     * AttributeData constructor.
-     *
-     * @param CatalogConfigurationInterface $configSettings
-     * @param SlugGeneratorInterface $slugGenerator
-     * @param ProductUrlPathGenerator $productUrlPathGenerator
-     * @param DataFilter $dataFilter
-     * @param AttributeDataProvider $resourceModel
-     */
     public function __construct(
         ProductAttributes $productAttributes,
         CatalogConfigurationInterface $configSettings,

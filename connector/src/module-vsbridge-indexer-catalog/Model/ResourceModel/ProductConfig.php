@@ -23,12 +23,6 @@ class ProductConfig
      */
     private $entityTypeId;
 
-    /**
-     * Config constructor.
-     *
-     * @param ProductMetaData $productMetaData
-     * @param ResourceConnection $resourceConnection
-     */
     public function __construct(
         ProductMetaData $productMetaData,
         ResourceConnection $resourceConnection

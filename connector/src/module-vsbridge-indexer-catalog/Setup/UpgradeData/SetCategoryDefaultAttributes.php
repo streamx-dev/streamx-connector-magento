@@ -24,13 +24,6 @@ class SetCategoryDefaultAttributes
      */
     private $childAttributes;
 
-    /**
-     * SetDefaultCategoryAttributes constructor.
-     *
-     * @param UpdateAttributesInConfigurationFactory $updateAttributesInConfiguration
-     * @param array $mainAttributes
-     * @param array $childAttributes
-     */
     public function __construct(
         UpdateAttributesInConfigurationFactory $updateAttributesInConfiguration,
         array $mainAttributes = [],

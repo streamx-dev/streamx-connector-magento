@@ -16,11 +16,6 @@ class Config implements ConfigInterface
      */
     private $scopeConfig;
 
-    /**
-     * ClientConfiguration constructor.
-     *
-     * @param ScopeConfigInterface $scopeConfig
-     */
     public function __construct(ScopeConfigInterface $scopeConfig)
     {
         $this->scopeConfig = $scopeConfig;

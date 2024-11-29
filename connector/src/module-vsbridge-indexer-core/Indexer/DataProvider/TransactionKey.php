@@ -9,11 +9,6 @@ class TransactionKey implements DataProviderInterface
 {
     private $transactionKey;
 
-    /**
-     * TransactionKey constructor.
-     *
-     * @param TransactionKeyInterface $transactionKey
-     */
     public function __construct(TransactionKeyInterface $transactionKey)
     {
         $this->transactionKey = $transactionKey->load();

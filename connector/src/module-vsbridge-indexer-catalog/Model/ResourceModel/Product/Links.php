@@ -39,13 +39,6 @@ class Links
      */
     private $productMetaData;
 
-    /**
-     * Links constructor.
-     *
-     * @param ProductMetaData $productMetaData
-     * @param LinkTypeMapper $linkTypeMapper
-     * @param ResourceConnection $resourceConnection
-     */
     public function __construct(
         ProductMetaData $productMetaData,
         LinkTypeMapper $linkTypeMapper,

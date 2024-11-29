@@ -14,12 +14,6 @@ class DataFilter
      */
     private $floatProperties = [];
 
-    /**
-     * DataFilter constructor.
-     *
-     * @param array $integerProperties
-     * @param array $floatProperties
-     */
     public function __construct(
         array $integerProperties = [],
         array $floatProperties = []

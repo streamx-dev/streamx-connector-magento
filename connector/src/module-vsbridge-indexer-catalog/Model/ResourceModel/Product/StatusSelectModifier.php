@@ -30,13 +30,6 @@ class StatusSelectModifier implements BaseSelectModifierInterface
      */
     private $productMetaData;
 
-    /**
-     * Product constructor.
-     *
-     * @param AttributeDataProvider $attributeDataProvider
-     * @param ResourceConnection $resourceConnection
-     * @param ProductMetaData $productMetaData
-     */
     public function __construct(
         AttributeDataProvider $attributeDataProvider,
         ResourceConnection $resourceConnection,

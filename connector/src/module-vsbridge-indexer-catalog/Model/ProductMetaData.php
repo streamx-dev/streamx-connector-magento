@@ -16,11 +16,6 @@ class ProductMetaData
      */
     private $metadataPool;
 
-    /**
-     * ProductMetaData constructor.
-     *
-     * @param MetadataPool $metadataPool
-     */
     public function __construct(MetadataPool $metadataPool)
     {
         $this->metadataPool = $metadataPool;

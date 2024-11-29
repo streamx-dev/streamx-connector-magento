@@ -17,11 +17,6 @@ class ProductCount
      */
     private $categoryProductCountCache = [];
 
-    /**
-     * Category constructor.
-     *
-     * @param ResourceConnection $resourceConnection
-     */
     public function __construct(ResourceConnection $resourceConnection)
     {
         $this->resource = $resourceConnection;

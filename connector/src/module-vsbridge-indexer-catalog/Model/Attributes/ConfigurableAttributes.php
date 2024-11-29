@@ -34,11 +34,6 @@ class ConfigurableAttributes
      */
     private $canIndexMediaGallery;
 
-    /**
-     * ConfigurableAttributes constructor.
-     *
-     * @param CatalogConfigurationInterface $catalogConfiguration
-     */
     public function __construct(CatalogConfigurationInterface $catalogConfiguration)
     {
         $this->catalogConfig = $catalogConfiguration;

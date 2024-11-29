@@ -39,14 +39,6 @@ class ActiveSelectModifier implements BaseSelectModifierInterface
      */
     private $resourceConnection;
 
-    /**
-     * ActiveSelectModifier constructor.
-     *
-     * @param CategoryMetaData $metadataPool
-     * @param StoreManagerInterface $storeManager
-     * @param LoadAttributes $loadAttributes
-     * @param ResourceConnection $resourceConnection
-     */
     public function __construct(
         CategoryMetaData $metadataPool,
         StoreManagerInterface $storeManager,

@@ -53,15 +53,6 @@ abstract class AbstractEavAttributes implements EavAttributesInterface
      */
     private $convertValue;
 
-    /**
-     * AbstractEavAttributes constructor.
-     *
-     * @param ResourceConnection $resourceConnection
-     * @param MetadataPool $metadataPool
-     * @param ConvertValueInterface $convertValue
-     * @param MappingInterface $mapping
-     * @param string $entityType
-     */
     public function __construct(
         ResourceConnection $resourceConnection,
         MetadataPool $metadataPool,

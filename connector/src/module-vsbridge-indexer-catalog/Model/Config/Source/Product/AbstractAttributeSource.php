@@ -21,11 +21,6 @@ abstract class AbstractAttributeSource implements ArrayInterface
      */
     private $collectionFactory;
 
-    /**
-     * Attributes constructor.
-     *
-     * @param CollectionFactory $collectionFactory
-     */
     public function __construct(CollectionFactory $collectionFactory)
     {
         $this->collectionFactory = $collectionFactory;

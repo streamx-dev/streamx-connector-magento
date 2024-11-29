@@ -32,12 +32,6 @@ class LoadAttributes
      */
     private $attributeCodeToId = [];
 
-    /**
-     * LoadAttributes constructor.
-     *
-     * @param Json $serializer
-     * @param AttributeCollectionFactory $attributeCollectionFactory
-     */
     public function __construct(
         Json $serializer,
         AttributeCollectionFactory $attributeCollectionFactory

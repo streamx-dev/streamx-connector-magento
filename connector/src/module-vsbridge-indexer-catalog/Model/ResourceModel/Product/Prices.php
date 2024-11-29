@@ -42,16 +42,6 @@ class Prices
      */
     private $catalogPriceResourceModel;
 
-    /**
-     * Prices constructor.
-     *
-     * @param ResourceConnection $resourceModel
-     * @param StoreManagerInterface $storeManager
-     * @param ProductMetaData $productMetaData
-     * @param CatalogConfigurationInterface $catalogSettings
-     * @param CatalogRulePrice $catalogPriceResourceModel
-     * @param PriceTableResolverProxy $priceTableResolver
-     */
     public function __construct(
         ResourceConnection $resourceModel,
         StoreManagerInterface $storeManager,

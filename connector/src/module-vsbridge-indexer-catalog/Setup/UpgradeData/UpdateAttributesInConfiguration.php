@@ -26,13 +26,6 @@ class UpdateAttributesInConfiguration
      */
     private $entityType;
 
-    /**
-     * UpdateAttributesInConfiguration constructor.
-     *
-     * @param Config $resourceConfig
-     * @param EavConfig $eavConfig
-     * @param string $entityType
-     */
     public function __construct(
         Config $resourceConfig,
         EavConfig $eavConfig,

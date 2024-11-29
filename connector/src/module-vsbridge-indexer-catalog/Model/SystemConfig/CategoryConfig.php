@@ -36,13 +36,6 @@ class CategoryConfig implements CategoryConfigInterface
      */
     private $catalogConfigResource;
 
-    /**
-     * Settings constructor.
-     *
-     * @param ScopeConfigInterface $scopeConfig
-     * @param GetAttributeCodesByIds $getAttributeCodesByIds
-     * @param ConfigResource $configResource
-     */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
         GetAttributeCodesByIds $getAttributeCodesByIds,

@@ -19,12 +19,6 @@ class ConfigurableChildAttributes extends AbstractAttributeSource
      */
     private $productResource;
 
-    /**
-     * Attributes constructor.
-     *
-     * @param CollectionFactory $collectionFactory
-     * @param Resource $productResource
-     */
     public function __construct(CollectionFactory $collectionFactory, Resource $productResource)
     {
         $this->productResource = $productResource;

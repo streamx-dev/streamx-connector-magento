@@ -24,12 +24,6 @@ class MediaGalleryData implements DataProviderInterface
      */
     private $canIndexMediaGallery;
 
-    /**
-     * MediaGalleryData constructor.
-     *
-     * @param CatalogConfigurationInterface $catalogConfig
-     * @param LoadMediaGalleryInterface $galleryProcessor
-     */
     public function __construct(
         CatalogConfigurationInterface $catalogConfig,
         LoadMediaGalleryInterface $galleryProcessor

@@ -36,12 +36,6 @@ class GetAttributeFields
      */
     private $attributeMapping;
 
-    /**
-     * GetAttributeFields constructor.
-     *
-     * @param AttributeMapping $attributeMapping
-     * @param ConvertValueInterface $convertValue
-     */
     public function __construct(
         AttributeMapping $attributeMapping,
         ConvertValueInterface $convertValue

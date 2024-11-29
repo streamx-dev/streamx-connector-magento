@@ -18,12 +18,6 @@ class GetAttributeCodesByIds
      */
     private $logger;
 
-    /**
-     * GetAttributeCodesByIds constructor.
-     *
-     * @param LoadAttributes $loadAttributes
-     * @param LoggerInterface $logger
-     */
     public function __construct(
         LoadAttributes $loadAttributes,
         LoggerInterface $logger

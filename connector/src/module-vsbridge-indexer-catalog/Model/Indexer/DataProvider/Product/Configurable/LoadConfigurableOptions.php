@@ -23,12 +23,6 @@ class LoadConfigurableOptions
      */
     private $sortValues;
 
-    /**
-     * LoadConfigurableOptions constructor.
-     * @param LoadOptionById $loadOptionById
-     * @param SortValues $sortValues
-     * @param CatalogConfigurationInterface $catalogSettings
-     */
     public function __construct(
         LoadOptionById $loadOptionById,
         SortValues $sortValues,
