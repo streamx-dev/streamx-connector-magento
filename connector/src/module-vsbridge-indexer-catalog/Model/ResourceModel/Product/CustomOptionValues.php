@@ -33,8 +33,6 @@ class CustomOptionValues
     }
 
     /**
-     * @param int $storeId
-     *
      * @return array
      */
     public function loadOptionValues(array $optionIds, int $storeId): array
@@ -45,8 +43,6 @@ class CustomOptionValues
     }
 
     /**
-     * @param int $storeId
-     *
      * @return Select
      */
     private function getProductOptionSelect(array $optionIds, int $storeId): Select
@@ -71,7 +67,6 @@ class CustomOptionValues
 
     /**
      * @param Select $select
-     * @param int $storeId
      *
      * @return Select
      */
@@ -104,7 +99,6 @@ class CustomOptionValues
 
     /**
      * @param Select $select
-     * @param int $storeId
      *
      * @return Select
      */

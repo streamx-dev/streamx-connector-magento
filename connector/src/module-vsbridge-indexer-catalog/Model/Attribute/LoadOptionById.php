@@ -19,8 +19,6 @@ class LoadOptionById
 
     /**
      * @param string $attributeCode
-     * @param int $optionId
-     * @param int $storeId
      *
      * @return array
      */

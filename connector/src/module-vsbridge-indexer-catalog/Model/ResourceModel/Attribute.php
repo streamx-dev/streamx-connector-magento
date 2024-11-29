@@ -26,12 +26,9 @@ class Attribute
     }
 
     /**
-     * @param int   $fromId
-     * @param int   $limit
-     *
      * @return array
      */
-    public function getAttributes(array $attributeIds = [], $fromId = 0, $limit = 100)
+    public function getAttributes(array $attributeIds = [], int $fromId = 0, int $limit = 100)
     {
         $select = $this->getAttributeCollectionSelect();
         $connection = $this->resource->getConnection();

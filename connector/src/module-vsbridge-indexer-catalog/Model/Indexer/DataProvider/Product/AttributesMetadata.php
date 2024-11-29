@@ -49,8 +49,6 @@ class AttributesMetadata  implements DataProviderInterface
     }
 
     /**
-     * @param int $storeId
-     *
      * @return array
      */
     private function getAttributeMetadata(array $productDTO, int $storeId): array
@@ -76,8 +74,6 @@ class AttributesMetadata  implements DataProviderInterface
     }
 
     /**
-     * @param int $storeId
-     *
      * @return array
      */
     private function getProductOptions(array $productDTO, array $attribute, int $storeId): array
@@ -86,8 +82,6 @@ class AttributesMetadata  implements DataProviderInterface
     }
 
     /**
-     * @param int $storeId
-     *
      * @return array
      */
     private function getOptionsForOptionAttributes(array $productDTO, array $attribute, int $storeId)

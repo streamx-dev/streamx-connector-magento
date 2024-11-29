@@ -21,8 +21,6 @@ class CategoryChildAttributes
     /**
      * Retrieve required attributes for child category
      *
-     * @param int $storeId
-     *
      * @return array
      */
     public function getRequiredAttributes(int $storeId): array

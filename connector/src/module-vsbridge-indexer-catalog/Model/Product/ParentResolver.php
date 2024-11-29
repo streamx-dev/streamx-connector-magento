@@ -48,8 +48,6 @@ class ParentResolver
     }
 
     /**
-     * @param int $childId
-     *
      * @return array
      */
     public function resolveParentSku(int $childId): array

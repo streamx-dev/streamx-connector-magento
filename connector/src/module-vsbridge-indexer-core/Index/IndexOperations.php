@@ -257,11 +257,9 @@ class IndexOperations implements IndexOperationInterface
     }
 
     /**
-     * @param int $storeId
-     *
      * @return ClientInterface
      */
-    private function resolveClient($storeId): ClientInterface
+    private function resolveClient(int $storeId): ClientInterface
     {
         return $this->clientResolver->getClient($storeId);
     }

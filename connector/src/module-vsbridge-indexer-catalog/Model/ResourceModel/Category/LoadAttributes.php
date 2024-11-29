@@ -58,12 +58,10 @@ class LoadAttributes
     }
 
     /**
-     * @param int $attributeId
-     *
      * @return Attribute
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getAttributeById($attributeId)
+    public function getAttributeById(int $attributeId)
     {
         $this->initAttributes();
 

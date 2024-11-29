@@ -60,7 +60,6 @@ class Prices
 
     /**
      * Only default customer Group ID (0) is supported now
-     * @param int $storeId
      *
      * @return array
      * @throws \Magento\Framework\Exception\NoSuchEntityException
@@ -102,9 +101,6 @@ class Prices
         return $prices;
     }
 
-    /**
-     * @param int $websiteId
-     */
     private function getCatalogRulePrices(int $websiteId, array $productsIds)
     {
         $connection = $this->getConnection();
@@ -135,9 +131,6 @@ class Prices
     }
 
     /**
-     * @param int $websiteId
-     * @param int $customerGroupId
-     *
      * @return string
      */
     private function getPriceIndexTableName(int $websiteId, int $customerGroupId): string
@@ -146,12 +139,10 @@ class Prices
     }
 
     /**
-     * @param int $storeId
-     *
      * @return \Magento\Store\Api\Data\StoreInterface
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    private function getStore($storeId)
+    private function getStore(int $storeId)
     {
         return $this->storeManager->getStore($storeId);
     }

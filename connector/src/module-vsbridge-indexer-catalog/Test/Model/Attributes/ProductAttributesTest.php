@@ -37,8 +37,6 @@ class ProductAttributesTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @param int $storeId
-     *
      * @dataProvider provideAllowedAttributes
      */
     public function testGetAttributes(int $storeId, array $selectedAttributes)

@@ -20,7 +20,6 @@ class QtyCorrectPlugin
     /**
      * @param QtyCounterInterface $subject
      * @param callable $proceed
-     * @param int $websiteId
      * @param string $operator
      *
      * @return void
@@ -30,7 +29,7 @@ class QtyCorrectPlugin
         QtyCounterInterface $subject,
         callable $proceed,
         array $items,
-        $websiteId,
+        int $websiteId,
         $operator
     ) {
         if (!empty($items)) {

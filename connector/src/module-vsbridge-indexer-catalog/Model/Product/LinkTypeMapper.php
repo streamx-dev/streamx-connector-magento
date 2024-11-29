@@ -21,8 +21,6 @@ class LinkTypeMapper
     ];
 
     /**
-     * @param int $typeId
-     *
      * @return string|null
      */
     public function map(int $typeId)

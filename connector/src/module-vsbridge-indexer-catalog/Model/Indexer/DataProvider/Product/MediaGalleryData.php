@@ -45,8 +45,6 @@ class MediaGalleryData implements DataProviderInterface
     }
 
     /**
-     * @param int $storeId
-     *
      * @return bool
      */
     private function canIndexMediaGallery(int $storeId)

@@ -17,13 +17,11 @@ class Product
     }
 
     /**
-     * @param int $storeId
-     *
      * @return \Generator
      * @throws \Magento\Framework\Exception\LocalizedException
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function rebuild($storeId = 1, array $productIds = [])
+    public function rebuild(int $storeId = 1, array $productIds = [])
     {
         $lastProductId = 0;
 

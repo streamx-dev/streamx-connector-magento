@@ -21,11 +21,9 @@ class ProductUrlPathGenerator
     /**
      * Add URL path
      *
-     * @param int $storeId
-     *
      * @return array
      */
-    public function addUrlPath(array $products, $storeId): array
+    public function addUrlPath(array $products, int $storeId): array
     {
         $productIds = array_keys($products);
         $rewrites = $this->rewriteResource->getRawRewritesData($productIds, $storeId);
