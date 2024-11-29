@@ -1,5 +1,5 @@
 {
-    "name": "divante/module-vsbridge-indexer-catalog",
+    "name": "streamx-connector/catalog",
     "type": "magento2-module",
     "autoload": {
         "files": [
