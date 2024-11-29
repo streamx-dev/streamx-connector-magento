@@ -26,13 +26,11 @@ class BulkRequest implements BulkRequestInterface
     }
 
     /**
-     * @param string $index
-     * @param string $type
      * @param $docId
      *
      * @return $this
      */
-    private function deleteDocument($index, $type, $docId)
+    private function deleteDocument(string $index, string $type, $docId)
     {
         $this->bulkData[] = [
             'delete' => [

@@ -63,8 +63,6 @@ class CategoryAttributes
     }
 
     /**
-     * @param string $attributeCode
-     *
      * @return bool
      */
     private function isAttributeAllowed(string $attributeCode, int $storeId): bool

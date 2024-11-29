@@ -27,8 +27,6 @@ class GetAttributeCodesByIds
     }
 
     /**
-     * @param string $attributeIds
-     *
      * @return array
      */
     public function execute(string $attributeIds): array

@@ -104,11 +104,9 @@ class PriceTableResolverProxy
     }
 
     /**
-     * @param string $class
-     *
      * @return mixed
      */
-    private function create($class)
+    private function create(string $class)
     {
         return $this->objectManager->create($class);
     }

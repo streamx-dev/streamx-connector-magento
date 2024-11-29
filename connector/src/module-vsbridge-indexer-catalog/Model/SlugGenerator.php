@@ -17,8 +17,6 @@ class SlugGenerator implements SlugGeneratorInterface
     }
 
     /**
-     * @param string $text
-     *
      * @return string
      */
     private function slugify(string $text)

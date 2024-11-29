@@ -63,7 +63,6 @@ abstract class AbstractMapping
 
     /**
      * @param Attribute $attribute
-     * @param string $esType
      *
      * @return bool
      */

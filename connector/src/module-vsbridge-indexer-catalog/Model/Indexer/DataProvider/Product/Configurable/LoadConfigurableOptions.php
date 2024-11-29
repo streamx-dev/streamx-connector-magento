@@ -34,8 +34,6 @@ class LoadConfigurableOptions
     }
 
     /**
-     * @param string $attributeCode
-     *
      * @return array
      */
     public function execute(string $attributeCode, int $storeId, array $configurableChildren): array

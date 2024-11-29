@@ -48,11 +48,9 @@ class PriceData implements DataProviderInterface
     }
 
     /**
-     * @param string $value
-     *
      * @return float
      */
-    private function preparePrice($value): float
+    private function preparePrice(?string $value): float
     {
         return (float)$value;
     }

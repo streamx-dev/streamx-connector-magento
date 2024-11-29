@@ -67,8 +67,6 @@ class OptimizationSettings
     }
 
     /**
-     * @param string $configField
-     *
      * @return string|null
      */
     private function getConfigParam(string $configField)
