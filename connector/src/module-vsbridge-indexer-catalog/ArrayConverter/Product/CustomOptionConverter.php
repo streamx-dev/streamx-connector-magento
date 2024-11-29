@@ -5,9 +5,6 @@ namespace Divante\VsbridgeIndexerCatalog\ArrayConverter\Product;
 use Divante\VsbridgeIndexerCore\Indexer\DataFilter;
 use Divante\VsbridgeIndexerCatalog\Api\ArrayConverter\Product\CustomOptionConverterInterface;
 
-/**
- * Class CustomOptionConverter
- */
 class CustomOptionConverter implements CustomOptionConverterInterface
 {
     /**

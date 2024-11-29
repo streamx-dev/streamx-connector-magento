@@ -4,9 +4,6 @@ namespace Divante\VsbridgeIndexerCatalog\Model\Attributes;
 
 use Divante\VsbridgeIndexerCatalog\Api\CatalogConfigurationInterface;
 
-/**
- * Class Attributes
- */
 class ProductAttributes
 {
     /**

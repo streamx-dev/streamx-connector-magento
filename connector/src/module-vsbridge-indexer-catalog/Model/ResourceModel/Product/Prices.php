@@ -10,9 +10,6 @@ use Divante\VsbridgeIndexerCatalog\Api\CatalogConfigurationInterface;
 use Divante\VsbridgeIndexerCatalog\Model\ProductMetaData;
 use Divante\VsbridgeIndexerCatalog\Model\Product\PriceTableResolverProxy;
 
-/**
- * Class Prices
- */
 class Prices
 {
     /**

@@ -8,9 +8,6 @@
 
 namespace Divante\VsbridgeIndexerCore\Model\Config\Source;
 
-/**
- * Class IndexIdentifier
- */
 class IndexIdentifier implements \Magento\Framework\Option\ArrayInterface
 {
     /**

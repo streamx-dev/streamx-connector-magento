@@ -11,9 +11,6 @@ use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Select;
 use Magento\GroupedProduct\Model\ResourceModel\Product\Link;
 
-/**
- * Class GetParentsByChildId
- */
 class GetParentsByChildId implements GetParentsByChildIdInterface
 {
     /**

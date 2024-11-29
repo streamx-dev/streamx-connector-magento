@@ -13,9 +13,6 @@ use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\DB\Select;
 use Magento\Framework\Exception\LocalizedException;
 
-/**
- * Class StatusSelectModifier
- */
 class StatusSelectModifier implements BaseSelectModifierInterface
 {
     /**

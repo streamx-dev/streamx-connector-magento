@@ -6,9 +6,6 @@ use Divante\VsbridgeIndexerCore\Api\Index\TypeInterfaceFactory as TypeFactoryInt
 use Divante\VsbridgeIndexerCore\Indexer\DataProviderProcessorFactory;
 use Divante\VsbridgeIndexerCore\Indexer\MappingProcessorFactory;
 
-/**
- * Class Config
- */
 class Config
 {
     /**

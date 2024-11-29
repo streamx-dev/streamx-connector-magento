@@ -4,9 +4,6 @@ namespace Divante\VsbridgeIndexerCore\Indexer;
 
 use Divante\VsbridgeIndexerCore\Api\Indexer\TransactionKeyInterface;
 
-/**
- * Class TransactionKey
- */
 class TransactionKey implements TransactionKeyInterface
 {
     /**

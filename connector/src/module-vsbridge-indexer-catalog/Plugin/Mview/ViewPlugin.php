@@ -6,9 +6,6 @@ use Divante\VsbridgeIndexerCatalog\Model\Indexer\ProductProcessor;
 use Divante\VsbridgeIndexerCatalog\Api\CatalogConfigurationInterface;
 use Magento\Framework\Mview\ViewInterface;
 
-/**
- * Class ViewPlugin
- */
 class ViewPlugin
 {
     /**

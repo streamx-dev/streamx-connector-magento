@@ -10,9 +10,6 @@ use Divante\VsbridgeIndexerCatalog\Api\SlugGeneratorInterface;
 use Divante\VsbridgeIndexerCatalog\Model\ProductUrlPathGenerator;
 use Divante\VsbridgeIndexerCatalog\Model\Attributes\ProductAttributes;
 
-/**
- * Class AttributeData
- */
 class AttributeData implements DataProviderInterface
 {
     /**

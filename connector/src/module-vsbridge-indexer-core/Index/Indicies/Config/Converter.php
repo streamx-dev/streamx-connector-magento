@@ -4,9 +4,6 @@ namespace Divante\VsbridgeIndexerCore\Index\Indicies\Config;
 
 use Magento\Framework\Config\ConverterInterface;
 
-/**
- * Class Converter
- */
 class Converter implements ConverterInterface
 {
     /**

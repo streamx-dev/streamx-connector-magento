@@ -5,9 +5,6 @@ namespace Divante\VsbridgeIndexerCatalog\Setup\UpgradeData;
 use Divante\VsbridgeIndexerCatalog\Api\CatalogConfigurationInterface;
 use Magento\Framework\Exception\LocalizedException;
 
-/**
- * Class SetProductDefaultAttributes
- */
 class SetProductDefaultAttributes
 {
     /**

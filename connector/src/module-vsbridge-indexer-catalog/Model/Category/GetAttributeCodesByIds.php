@@ -8,9 +8,6 @@ use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Category\LoadAttributes;
 use Magento\Framework\Exception\LocalizedException;
 use Psr\Log\LoggerInterface;
 
-/**
- * Class GetAttributeCodesByIds
- */
 class GetAttributeCodesByIds
 {
     /**

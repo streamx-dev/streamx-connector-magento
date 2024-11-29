@@ -5,9 +5,6 @@ namespace Divante\VsbridgeIndexerCatalog\Logger\Handler;
 use Magento\Framework\Logger\Handler\Base;
 use Monolog\Logger;
 
-/**
- * Class Error
- */
 class Error extends Base
 {
     /**

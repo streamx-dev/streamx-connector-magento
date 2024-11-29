@@ -10,9 +10,6 @@ use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Select;
 use Magento\Store\Model\StoreManagerInterface;
 
-/**
- * Class StoreSelectModificator
- */
 class StoreSelectModifier implements BaseSelectModifierInterface
 {
     /**

@@ -6,9 +6,6 @@ namespace Divante\VsbridgeIndexerCatalog\Model\Attributes;
 
 use Divante\VsbridgeIndexerCatalog\Model\SystemConfig\CategoryConfigInterface;
 
-/**
- * Class CategoryAttributes
- */
 class CategoryAttributes
 {
     /**

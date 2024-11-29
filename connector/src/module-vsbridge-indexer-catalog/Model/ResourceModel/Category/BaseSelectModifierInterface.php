@@ -6,9 +6,6 @@ namespace Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Category;
 
 use Magento\Framework\DB\Select;
 
-/**
- * Interface BaseSelectModifierInterface
- */
 interface BaseSelectModifierInterface
 {
     /**

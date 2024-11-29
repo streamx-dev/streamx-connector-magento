@@ -7,9 +7,6 @@ declare(strict_types=1);
 
 namespace Divante\VsbridgeIndexerCatalog\Model\Product;
 
-/**
- * Interface GetParentsByChildIdInterface
- */
 interface GetParentsByChildIdInterface
 {
     /**

@@ -6,9 +6,6 @@ use Divante\VsbridgeIndexerCatalog\Model\CategoryMetaData;
 use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Category\BaseSelectModifierInterface;
 use Magento\Framework\App\ResourceConnection;
 
-/**
- * Class Children
- */
 class Children
 {
     /**

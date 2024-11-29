@@ -11,9 +11,6 @@ use Divante\VsbridgeIndexerCatalog\Model\Product\GetParentsByChildIdInterface;
 use Divante\VsbridgeIndexerCatalog\Model\ProductMetaData;
 use Magento\Framework\App\ResourceConnection;
 
-/**
- * Class GetParentsByChildId
- */
 class GetParentsByChildId implements GetParentsByChildIdInterface
 {
     /**

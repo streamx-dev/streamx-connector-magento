@@ -2,9 +2,6 @@
 
 namespace Divante\VsbridgeIndexerCatalog\Model\Indexer\DataProvider\Product\Configurable;
 
-/**
- * Class PrepareConfigurableProduct
- */
 class PrepareConfigurableProduct
 {
     /**

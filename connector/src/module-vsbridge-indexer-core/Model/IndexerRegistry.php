@@ -2,9 +2,6 @@
 
 namespace Divante\VsbridgeIndexerCore\Model;
 
-/**
- * Class IndexerRegistry
- */
 class IndexerRegistry
 {
     /**

@@ -5,9 +5,6 @@ namespace Divante\VsbridgeIndexerCore\Index\Indicies\Config;
 use Magento\Framework\Config\SchemaLocatorInterface;
 use Magento\Framework\Module\Dir;
 
-/**
- * Class SchemaLocator
- */
 class SchemaLocator implements SchemaLocatorInterface
 {
     /**

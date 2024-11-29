@@ -6,9 +6,6 @@ use Magento\Framework\Config\CacheInterface;
 use Magento\Framework\Config\Data as DataConfig;
 use Magento\Framework\Serialize\SerializerInterface;
 
-/**
- * Class Config
- */
 class Data extends DataConfig
 {
     const CACHE_ID = 'vsf_indices_config';

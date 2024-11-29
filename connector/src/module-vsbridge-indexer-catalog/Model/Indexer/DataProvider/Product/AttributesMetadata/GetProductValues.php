@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Divante\VsbridgeIndexerCatalog\Model\Indexer\DataProvider\Product\AttributesMetadata;
 
-/**
- * Class GetProductValues
- */
 class GetProductValues
 {
     /**

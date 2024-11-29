@@ -6,9 +6,6 @@ use Divante\VsbridgeIndexerCatalog\Index\Mapping\Attribute\SwatchMapping;
 use Divante\VsbridgeIndexerCatalog\Index\Mapping\FieldMappingInterface;
 use Divante\VsbridgeIndexerCore\Api\Mapping\FieldInterface;
 
-/**
- * Class ConfigurableOptionsMapping
- */
 class ConfigurableOptionsMapping implements FieldMappingInterface
 {
     /**

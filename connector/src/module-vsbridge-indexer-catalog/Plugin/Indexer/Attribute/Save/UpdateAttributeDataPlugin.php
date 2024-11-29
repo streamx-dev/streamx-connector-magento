@@ -6,9 +6,6 @@ use Divante\VsbridgeIndexerCatalog\Model\Indexer\AttributeProcessor;
 use Divante\VsbridgeIndexerCatalog\Model\Indexer\ProductProcessor;
 use Magento\Catalog\Model\ResourceModel\Eav\Attribute;
 
-/**
- * Class UpdateAttributeDataPlugin
- */
 class UpdateAttributeDataPlugin
 {
     /**

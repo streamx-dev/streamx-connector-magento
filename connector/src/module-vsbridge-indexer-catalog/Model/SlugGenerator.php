@@ -4,9 +4,6 @@ namespace Divante\VsbridgeIndexerCatalog\Model;
 
 use Divante\VsbridgeIndexerCatalog\Api\SlugGeneratorInterface;
 
-/**
- * Class SlugGenerator
- */
 class SlugGenerator implements SlugGeneratorInterface
 {
     /**

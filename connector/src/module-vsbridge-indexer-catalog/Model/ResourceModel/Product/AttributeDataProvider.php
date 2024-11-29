@@ -11,7 +11,6 @@ use Magento\Eav\Model\Entity\Attribute;
 
 /**
  * Products Attribute provider
- * Class AttributeDataProvider
  */
 class AttributeDataProvider extends AbstractEavAttributes
 {

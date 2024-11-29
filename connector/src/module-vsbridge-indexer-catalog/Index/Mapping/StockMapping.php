@@ -4,9 +4,6 @@ namespace Divante\VsbridgeIndexerCatalog\Index\Mapping;
 
 use Divante\VsbridgeIndexerCore\Api\Mapping\FieldInterface;
 
-/**
- * Class StockMapping
- */
 class StockMapping
 {
     /**

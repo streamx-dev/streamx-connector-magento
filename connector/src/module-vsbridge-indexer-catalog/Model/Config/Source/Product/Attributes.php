@@ -4,9 +4,6 @@ namespace Divante\VsbridgeIndexerCatalog\Model\Config\Source\Product;
 
 use Magento\Catalog\Api\Data\ProductAttributeInterface;
 
-/**
- * Class Attributes
- */
 class Attributes extends AbstractAttributeSource
 {
     /**

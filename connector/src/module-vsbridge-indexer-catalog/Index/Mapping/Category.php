@@ -11,9 +11,6 @@ use Divante\VsbridgeIndexerCore\Api\Mapping\FieldInterface;
 use Divante\VsbridgeIndexerCore\Index\Mapping\GeneralMapping;
 use Magento\Framework\Event\ManagerInterface as EventManager;
 
-/**
- * Class Category
- */
 class Category extends AbstractMapping implements MappingInterface
 {
     /**

@@ -17,8 +17,6 @@ use Magento\Store\Api\Data\StoreInterface;
 use Traversable;
 
 /**
- * Class IndexerHandler
- *
  * TODO refactor - coupling between objects
  */
 class GenericIndexerHandler

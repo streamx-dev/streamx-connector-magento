@@ -2,9 +2,6 @@
 
 namespace Divante\VsbridgeIndexerCatalog\Plugin\Indexer\CatalogInventory;
 
-/**
- * Class ProductsForReindex
- */
 class ProductsForReindex
 {
     /**

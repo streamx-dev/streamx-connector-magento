@@ -10,9 +10,6 @@ use Magento\Framework\Indexer\DimensionFactory;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Store\Model\Indexer\WebsiteDimensionProvider;
 
-/**
- * Class PriceTableResolverProxy
- */
 class PriceTableResolverProxy
 {
     const DEFAULT_PRICE_INDEXER_TABLE = 'catalog_product_index_price';

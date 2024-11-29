@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 use Magento\Framework\Intl\DateTimeFactory;
 
 /**
- * Class IndexSettingsTest responsible for testing \Divante\VsbridgeIndexerCore\Index\IndexSettings
+ * Responsible for testing \Divante\VsbridgeIndexerCore\Index\IndexSettings
  */
 class IndexSettingsTest extends TestCase
 {

@@ -7,9 +7,6 @@ use Magento\Framework\Config\Reader\Filesystem;
 use Magento\Framework\Config\FileResolverInterface;
 use Magento\Framework\Config\ValidationStateInterface;
 
-/**
- * Class Reader
- */
 class Reader extends Filesystem
 {
     const FILE_NAME = 'vsbridge_indices.xml';

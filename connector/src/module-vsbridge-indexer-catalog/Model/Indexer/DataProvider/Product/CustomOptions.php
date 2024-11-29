@@ -11,9 +11,6 @@ use Divante\VsbridgeIndexerCatalog\Model\ProductMetaData;
 use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\CustomOptions as Resource;
 use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\CustomOptionValues as OptionValuesResource;
 
-/**
- * Class CustomOptions
- */
 class CustomOptions implements DataProviderInterface
 {
     /**

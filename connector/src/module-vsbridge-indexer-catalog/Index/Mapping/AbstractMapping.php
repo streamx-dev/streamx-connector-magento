@@ -5,9 +5,6 @@ namespace Divante\VsbridgeIndexerCatalog\Index\Mapping;
 use Divante\VsbridgeIndexerCore\Api\Mapping\FieldInterface;
 use Magento\Eav\Model\Entity\Attribute;
 
-/**
- * Class AbstractMapping
- */
 abstract class AbstractMapping
 {
     /**

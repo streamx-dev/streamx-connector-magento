@@ -6,9 +6,6 @@ use Divante\VsbridgeIndexerCatalog\Api\LoadInventoryInterface;
 use Divante\VsbridgeIndexerCatalog\Api\ArrayConverter\Product\InventoryConverterInterface;
 use Divante\VsbridgeIndexerCore\Api\DataProviderInterface;
 
-/**
- * Class Inventory
- */
 class Inventory implements DataProviderInterface
 {
 

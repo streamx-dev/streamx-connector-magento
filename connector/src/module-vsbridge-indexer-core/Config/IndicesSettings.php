@@ -4,9 +4,6 @@ namespace Divante\VsbridgeIndexerCore\Config;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 
-/**
- * Class SettingsConfig
- */
 class IndicesSettings
 {
     const INDICES_SETTINGS_CONFIG_XML_PREFIX = 'vsbridge_indexer_settings/indices_settings';

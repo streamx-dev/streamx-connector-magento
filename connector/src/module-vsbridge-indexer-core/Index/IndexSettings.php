@@ -8,9 +8,6 @@ use Magento\Framework\Intl\DateTimeFactory;
 use Magento\Store\Api\Data\StoreInterface;
 use Magento\Store\Model\StoreManagerInterface;
 
-/**
- * Class IndexSettings
- */
 class IndexSettings
 {
     /**

@@ -13,9 +13,6 @@ use Magento\Eav\Model\Entity\Attribute\Source\AbstractSource;
 use Magento\Eav\Model\Entity\Attribute\Source\Table as SourceTable;
 use Magento\Swatches\Model\Swatch;
 
-/**
- * Class LoadOptions
- */
 class LoadOptions
 {
     /**

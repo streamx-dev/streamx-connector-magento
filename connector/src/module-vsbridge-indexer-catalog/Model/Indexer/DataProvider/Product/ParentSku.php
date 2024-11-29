@@ -13,7 +13,7 @@ use Divante\VsbridgeIndexerCatalog\Api\CatalogConfigurationInterface;
 use Divante\VsbridgeIndexerCatalog\Model\Product\ParentResolver;
 
 /**
- * Class responsible for adding "parent_sku" for products
+ * Responsible for adding "parent_sku" for products
  */
 class ParentSku implements DataProviderInterface
 {

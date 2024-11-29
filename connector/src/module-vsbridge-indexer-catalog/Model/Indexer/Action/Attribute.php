@@ -6,9 +6,6 @@ use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Attribute as ResourceMode
 use Divante\VsbridgeIndexerCatalog\Index\Mapping\Attribute as AttributeMapping;
 use Divante\VsbridgeIndexerCore\Api\ConvertValueInterface;
 
-/**
- * Class Attribute
- */
 class Attribute
 {
     /**

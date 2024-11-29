@@ -5,9 +5,6 @@ namespace Divante\VsbridgeIndexerCatalog\Console\Command;
 use Divante\VsbridgeIndexerCatalog\Model\Indexer\ProductCategoryProcessor;
 use Symfony\Component\Console\Input\InputInterface;
 
-/**
- * Class IndexerReindexCommand
- */
 class IndexerReindexCommand extends \Magento\Indexer\Console\Command\IndexerReindexCommand
 {
     /**

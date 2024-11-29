@@ -10,9 +10,6 @@ use Magento\Framework\DB\Select;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Store\Model\StoreManagerInterface;
 
-/**
- * Class WebsiteSelectModifier
- */
 class WebsiteSelectModifier implements BaseSelectModifierInterface
 {
     /**

@@ -11,8 +11,6 @@ use Magento\Framework\EntityManager\MetadataPool;
 
 /**
  * Category Attributes Provider
- *
- * Class AttributeDataProvider
  */
 class AttributeDataProvider extends AbstractEavAttributes
 {

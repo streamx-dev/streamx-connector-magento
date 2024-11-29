@@ -12,9 +12,6 @@ use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Category\AttributeDataPro
 use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Category\ProductCount as ProductCountResourceModel;
 use Divante\VsbridgeIndexerCatalog\Api\DataProvider\Category\AttributeDataProviderInterface;
 
-/**
- * Class AttributeData
- */
 class AttributeData implements AttributeDataProviderInterface
 {
     /**

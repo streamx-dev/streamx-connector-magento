@@ -6,9 +6,6 @@ use Magento\Catalog\Model\ResourceModel\Category\Attribute\Collection;
 use Magento\Catalog\Model\ResourceModel\Category\Attribute\CollectionFactory;
 use Magento\Eav\Model\Entity\Attribute;
 
-/**
- * Class LoadAttributes
- */
 class LoadAttributes
 {
     /**

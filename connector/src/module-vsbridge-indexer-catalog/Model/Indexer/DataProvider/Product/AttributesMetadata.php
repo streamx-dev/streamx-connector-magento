@@ -9,9 +9,6 @@ use Divante\VsbridgeIndexerCatalog\Model\Indexer\DataProvider\Product\Attributes
 use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\AttributeMetadata as Resource;
 use Divante\VsbridgeIndexerCore\Api\DataProviderInterface;
 
-/**
- * Class AttributesMetadata
- */
 class AttributesMetadata  implements DataProviderInterface
 {
     /**
