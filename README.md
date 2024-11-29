@@ -108,9 +108,7 @@ If you host both StreamX and Magento on Docker containers - perform the followin
 
 To enable the connector to call the service by its hostname, add the `rest-ingestion` docker container to magento's network:
 ```bash
-docker network ls | grep magento_default
-# Take the network's id and execute the command:
-docker network connect [magento-network-id] rest-ingestion
+bash add-rest-ingestion-to-magento-network.sh
 ```
 
 ## Where to find logs
