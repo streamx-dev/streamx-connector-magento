@@ -7,10 +7,10 @@ class ProductCategoryProcessor extends \Magento\Framework\Indexer\AbstractProces
     /**
      * Indexer ID
      */
-    const INDEXER_ID = 'vsbridge_product_category';
+    const INDEXER_ID = 'streamx_product_category';
 
     /**
-     * Mark Vsbridge Product indexer as invalid
+     * Mark StreamX Product indexer as invalid
      */
     public function markIndexerAsInvalid(): void
     {

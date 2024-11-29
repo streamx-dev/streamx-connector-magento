@@ -1,7 +1,7 @@
 <indices xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="urn:magento:module:StreamX_ConnectorCore:etc/vsbridge_indices.xsd">
+         xsi:noNamespaceSchemaLocation="urn:magento:module:StreamX_ConnectorCore:etc/streamx_indices.xsd">
 
-    <index identifier="vue_storefront_catalog">
+    <index identifier="streamx_storefront_catalog">
         <type name="product" mapping="StreamX\ConnectorCatalog\Index\Mapping\Product">
             <data_providers>
                 <data_provider name="attributes">StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\AttributeData</data_provider>

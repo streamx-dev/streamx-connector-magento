@@ -7,7 +7,7 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
 
 class ClientConfiguration implements ClientConfigurationInterface {
-    const STREAMX_CLIENT_CONFIG_XML_PREFIX = 'vsbridge_indexer_settings/streamx_client';
+    const STREAMX_CLIENT_CONFIG_XML_PREFIX = 'streamx_indexer_settings/streamx_client';
     const INGESTION_BASE_URL_FIELD = 'ingestion_base_url';
     const PAGES_SCHEMA_NAME_FIELD = 'pages_schema_name';
 

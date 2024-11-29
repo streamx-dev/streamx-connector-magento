@@ -9,7 +9,7 @@ interface ConfigInterface
     /**
      * XML PATH Prefix for redis cache settings
      */
-    const CACHE_SETTINGS_XML_PREFIX = 'vsbridge_indexer_settings/redis_cache_settings';
+    const CACHE_SETTINGS_XML_PREFIX = 'streamx_indexer_settings/redis_cache_settings';
 
     const CLEAR_CACHE_FIELD = 'clear_cache';
     const VSF_BASE_URL_FIELD = 'vsf_base_url';

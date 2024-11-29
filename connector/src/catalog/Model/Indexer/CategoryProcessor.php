@@ -9,5 +9,5 @@ class CategoryProcessor extends AbstractProcessor
     /**
      * Indexer ID
      */
-    const INDEXER_ID = 'vsbridge_category_indexer';
+    const INDEXER_ID = 'streamx_category_indexer';
 }
