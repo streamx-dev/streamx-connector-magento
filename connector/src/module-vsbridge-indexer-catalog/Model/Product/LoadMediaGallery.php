@@ -147,11 +147,9 @@ class LoadMediaGallery implements LoadMediaGalleryInterface
     }
 
     /**
-     * @param string $fieldKey
-     *
      * @return string
      */
-    private function getValue($fieldKey, array $image)
+    private function getValue(string $fieldKey, array $image)
     {
         if (isset($image[$fieldKey]) && (null !== $image[$fieldKey])) {
             return $image[$fieldKey];

@@ -37,8 +37,6 @@ class UpdateAttributesInConfiguration
     }
 
     /**
-     * @param string $path
-     *
      * @return void
      *
      * @throws LocalizedException

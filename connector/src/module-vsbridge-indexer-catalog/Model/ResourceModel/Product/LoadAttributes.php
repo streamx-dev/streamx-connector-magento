@@ -80,8 +80,6 @@ class LoadAttributes
     }
 
     /**
-     * @param string $attributeCode
-     *
      * @return Attribute
      * @throws \Magento\Framework\Exception\LocalizedException
      */
@@ -99,9 +97,6 @@ class LoadAttributes
         throw new \Magento\Framework\Exception\LocalizedException(__('Attribute not found.'));
     }
 
-    /**
-     * @param string $attributeCode
-     */
     private function loadAttributeByCode(string $attributeCode)
     {
         if (!isset($this->attributeCodeToId[$attributeCode])) {

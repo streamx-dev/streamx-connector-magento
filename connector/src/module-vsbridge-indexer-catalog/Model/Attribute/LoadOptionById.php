@@ -18,8 +18,6 @@ class LoadOptionById
     }
 
     /**
-     * @param string $attributeCode
-     *
      * @return array
      */
     public function execute(string $attributeCode, int $optionId, int $storeId): array
