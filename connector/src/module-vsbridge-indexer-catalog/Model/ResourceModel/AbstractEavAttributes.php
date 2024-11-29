@@ -111,8 +111,6 @@ abstract class AbstractEavAttributes implements EavAttributesInterface
     }
 
     /**
-     * @param \Magento\Eav\Model\Entity\Attribute $attribute
-     *
      * @return bool
      * @throws \Exception
      */

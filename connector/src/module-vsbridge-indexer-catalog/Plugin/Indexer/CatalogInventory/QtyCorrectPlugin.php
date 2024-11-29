@@ -18,8 +18,6 @@ class QtyCorrectPlugin
     }
 
     /**
-     * @param QtyCounterInterface $subject
-     * @param callable $proceed
      * @return void
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

@@ -58,11 +58,9 @@ class SetCategoryDefaultAttributes
     }
 
     /**
-     * @param $configField
-     *
      * @return string
      */
-    private function getConfigPath($configField): string
+    private function getConfigPath(string $configField): string
     {
         return CategoryConfigInterface::CATEGORY_SETTINGS_XML_PREFIX . '/' . $configField;
     }

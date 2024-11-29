@@ -62,8 +62,6 @@ abstract class AbstractMapping
     }
 
     /**
-     * @param Attribute $attribute
-     *
      * @return bool
      */
     private function addKeywordFieldToTextAttribute(Attribute $attribute, string $esType)
@@ -83,8 +81,6 @@ abstract class AbstractMapping
 
     /**
      * Returns attribute type for indexation.
-     *
-     * @param Attribute $attribute
      *
      * @return string
      */
@@ -126,8 +122,6 @@ abstract class AbstractMapping
     }
 
     /**
-     * @param Attribute $attribute
-     *
      * @return bool
      */
     private function isDateType(Attribute $attribute)
@@ -140,8 +134,6 @@ abstract class AbstractMapping
     }
 
     /**
-     * @param Attribute $attribute
-     *
      * @return bool
      */
     private function isDoubleType(Attribute $attribute)
@@ -154,8 +146,6 @@ abstract class AbstractMapping
     }
 
     /**
-     * @param Attribute $attribute
-     *
      * @return bool
      */
     private function isLongType(Attribute $attribute)
@@ -168,8 +158,6 @@ abstract class AbstractMapping
     }
 
     /**
-     * @param Attribute $attribute
-     *
      * @return bool
      */
     private function isBooleanType(Attribute $attribute)

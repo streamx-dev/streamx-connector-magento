@@ -37,9 +37,6 @@ class ResetEsIndexCommand extends AbstractIndexerCommand
         $this->invalidateIndices($output);
     }
 
-    /**
-     * @param OutputInterface $output
-     */
     private function invalidateIndices(OutputInterface $output)
     {
         foreach ($this->getIndexers() as $indexer) {

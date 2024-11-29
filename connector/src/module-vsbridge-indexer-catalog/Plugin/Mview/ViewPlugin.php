@@ -19,8 +19,6 @@ class ViewPlugin
     }
 
     /**
-     * @param ViewInterface $subject
-     *
      * @return array
      */
     public function afterGetSubscriptions(ViewInterface $subject, array $result): array
@@ -37,8 +35,6 @@ class ViewPlugin
     }
 
     /**
-     * @param ViewInterface $subject
-     *
      * @return bool
      */
     private function isVsbridgeProductIndexer(ViewInterface $subject): bool

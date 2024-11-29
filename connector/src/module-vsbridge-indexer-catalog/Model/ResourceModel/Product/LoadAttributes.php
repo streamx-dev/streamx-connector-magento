@@ -112,9 +112,6 @@ class LoadAttributes
         }
     }
 
-    /**
-     * @param Attribute $attribute
-     */
     private function addAttribute(Attribute $attribute)
     {
         $this->prepareAttribute($attribute);
@@ -123,8 +120,6 @@ class LoadAttributes
     }
 
     /**
-     * @param Attribute $attribute
-     *
      * @return Attribute
      */
     private function prepareAttribute(Attribute $attribute)

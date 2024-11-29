@@ -28,10 +28,6 @@ class UpgradeData implements UpgradeDataInterface
         $this->setCategoryDefaultAttributes = $setCategoryDefaultAttributes;
     }
 
-    /**
-     * @param ModuleDataSetupInterface $setup
-     * @param ModuleContextInterface $context
-     */
     public function upgrade(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
         if (version_compare($context->getVersion(), '1.2.0', '<')) {

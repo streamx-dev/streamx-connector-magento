@@ -161,7 +161,6 @@ class Product
     }
 
     /**
-     * @param \Magento\Framework\DB\Select $select
      * @return \Magento\Framework\DB\Select
      */
     private function addProductTypeFilter(Select $select, int $storeId)

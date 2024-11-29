@@ -66,8 +66,6 @@ class CustomOptionValues
     }
 
     /**
-     * @param Select $select
-     *
      * @return Select
      */
     private function addTitleToResult(Select $select, int $storeId): Select
@@ -98,8 +96,6 @@ class CustomOptionValues
     }
 
     /**
-     * @param Select $select
-     *
      * @return Select
      */
     private function addPriceToResult(Select $select, int $storeId): Select
