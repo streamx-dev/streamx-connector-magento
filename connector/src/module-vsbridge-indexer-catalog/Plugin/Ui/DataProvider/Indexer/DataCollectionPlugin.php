@@ -29,8 +29,6 @@ class DataCollectionPlugin
 
     /**
      * @param \Magento\Framework\DataObject[] $items
-     *
-     * @return int
      */
     private function findIndexerKey($items): int
     {

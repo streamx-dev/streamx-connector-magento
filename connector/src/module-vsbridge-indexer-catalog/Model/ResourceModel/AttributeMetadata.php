@@ -96,18 +96,12 @@ class AttributeMetadata
         return $this->optionsByStore[$storeId][$attributeId] ?? [];
     }
 
-    /**
-     * @return string
-     */
     public function getStoreLabels(int $attributeId, int $storeId): string
     {
         return $this->labelByAttribute[$storeId][$attributeId] ?? '';
     }
 
-    /**
-     * @return void
-     */
-    private function loadOptions(array $attributes, int $storeId)
+    private function loadOptions(array $attributes, int $storeId): void
     {
         if (!isset($this->optionsByStore[$storeId])) {
             $attributeIds = array_column($attributes, 'attribute_id');
@@ -158,10 +152,7 @@ class AttributeMetadata
         }
     }
 
-    /**
-     * @return bool
-     */
-    private function useSourceModel(array $attribute)
+    private function useSourceModel(array $attribute): bool
     {
         $source = $attribute['source_model'];
 
@@ -172,10 +163,7 @@ class AttributeMetadata
         return false;
     }
 
-    /**
-     * @return void
-     */
-    private function loadStoreLabels(array $attributes, int $storeId)
+    private function loadStoreLabels(array $attributes, int $storeId): void
     {
         if (!isset($this->labelByAttribute[$storeId])) {
             $attributeIds = array_column($attributes, 'attribute_id');
@@ -201,9 +189,6 @@ class AttributeMetadata
         }
     }
 
-    /**
-     * @return Select
-     */
     private function createBaseLoadSelect(): Select
     {
         /** @var Collection $collection */

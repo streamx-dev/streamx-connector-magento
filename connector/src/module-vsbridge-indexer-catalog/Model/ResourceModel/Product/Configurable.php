@@ -100,10 +100,7 @@ class Configurable
         $this->dbHelper = $dbHelper;
     }
 
-    /**
-     * @return void
-     */
-    public function clear()
+    public function clear(): void
     {
         $this->productsData = null;
         $this->associatedSimpleProducts = null;
@@ -113,10 +110,7 @@ class Configurable
         $this->configurableProductIds = null;
     }
 
-    /**
-     * @return void
-     */
-    public function setProducts(array $products)
+    public function setProducts(array $products): void
     {
         $this->productsData = $products;
     }

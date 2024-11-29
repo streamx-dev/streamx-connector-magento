@@ -50,7 +50,6 @@ class WebsiteSelectModifier implements BaseSelectModifierInterface
     /**
      * Retrieve WebsiteId for given store
      *
-     * @return int
      * @throws NoSuchEntityException
      */
     private function getWebsiteId(int $storeId): int

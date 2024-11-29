@@ -68,7 +68,6 @@ class StatusSelectModifier implements BaseSelectModifierInterface
     /**
      * Retrieve Store join conditions
      *
-     * @return string
      * @throws LocalizedException
      */
     private function getStoreJoinConditions(int $storeId): string
@@ -88,8 +87,6 @@ class StatusSelectModifier implements BaseSelectModifierInterface
 
     /**
      * Get Default Join Conditions
-     *
-     * @return string
      *
      * @throws LocalizedException
      */
@@ -113,18 +110,14 @@ class StatusSelectModifier implements BaseSelectModifierInterface
 
     /**
      * Get Connection
-     *
-     * @return AdapterInterface
      */
-    private function getConnection()
+    private function getConnection(): AdapterInterface
     {
         return $this->resourceConnection->getConnection();
     }
 
     /**
      * Get status attribute id
-     *
-     * @return Attribute
      *
      * @throws LocalizedException
      */

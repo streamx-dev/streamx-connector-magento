@@ -49,19 +49,13 @@ class Links
         $this->productMetaData = $productMetaData;
     }
 
-    /**
-     * @return void
-     */
-    public function clear()
+    public function clear(): void
     {
         $this->links = null;
         $this->products = null;
     }
 
-    /**
-     * @return void
-     */
-    public function setProducts(array $products)
+    public function setProducts(array $products): void
     {
         $linkField = $this->productMetaData->get()->getLinkField();
 
@@ -100,10 +94,7 @@ class Links
         return [];
     }
 
-    /**
-     * @return string|null
-     */
-    private function getLinkType(int $typeId)
+    private function getLinkType(int $typeId): ?string
     {
         return $this->linkTypeMapper->map($typeId);
     }
@@ -128,10 +119,7 @@ class Links
         return $this->links;
     }
 
-    /**
-     * @return Select
-     */
-    private function buildLinksSelect()
+    private function buildLinksSelect(): Select
     {
         $productIds = $this->getProductsIds();
 
@@ -158,10 +146,7 @@ class Links
         return $this->joinPositionAttribute($select);
     }
 
-    /**
-     * @return Select
-     */
-    private function joinPositionAttribute(Select $select)
+    private function joinPositionAttribute(Select $select): Select
     {
         $alias = 'link_position';
 
@@ -188,10 +173,7 @@ class Links
         return $this->resource->getConnection();
     }
 
-    /**
-     * @return string
-     */
-    private function getAttributeTypeTable()
+    private function getAttributeTypeTable(): string
     {
         return $this->resource->getTableName('catalog_product_link_attribute_int');
     }

@@ -35,10 +35,7 @@ class ParentResolver
         $this->parentProviders = $handlers;
     }
 
-    /**
-     * @return void
-     */
-    public function load(array $childIds)
+    public function load(array $childIds): void
     {
         $this->parentSkus = [];
 

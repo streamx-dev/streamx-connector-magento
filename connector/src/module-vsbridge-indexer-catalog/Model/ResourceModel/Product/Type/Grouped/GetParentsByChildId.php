@@ -49,11 +49,6 @@ class GetParentsByChildId implements GetParentsByChildIdInterface
         return $parentSku;
     }
 
-    /**
-     * Build Select
-     *
-     * @return Select
-     */
     private function buildSelect(array $childId): Select
     {
         $connection = $this->resourceConnection->getConnection();

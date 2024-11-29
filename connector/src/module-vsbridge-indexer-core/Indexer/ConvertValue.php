@@ -45,10 +45,7 @@ class ConvertValue implements ConvertValueInterface
         return $value;
     }
 
-    /**
-     * @return string|null
-     */
-    private function getFieldTypeByCode(array $mapping, string $field)
+    private function getFieldTypeByCode(array $mapping, string $field): ?string
     {
         if (isset($mapping[$field]['type'])) {
             $type = $mapping[$field]['type'];

@@ -16,10 +16,8 @@ class SortValues
     /**
      * @param array $a
      * @param array $b
-     *
-     * @return int
      */
-    public function sortOptions($a, $b)
+    public function sortOptions($a, $b): int
     {
         $aSizePos = $a['sort_order'] ?? 0;
         $bSizePos = $b['sort_order'] ?? 0;

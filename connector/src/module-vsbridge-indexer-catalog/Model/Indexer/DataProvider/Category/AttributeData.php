@@ -266,10 +266,7 @@ class AttributeData implements AttributeDataProviderInterface
         return $this->getDataFilter()->execute($categoryData);
     }
 
-    /**
-     * @return DataFilter
-     */
-    private function getDataFilter()
+    private function getDataFilter(): DataFilter
     {
         return $this->dataFilter;
     }

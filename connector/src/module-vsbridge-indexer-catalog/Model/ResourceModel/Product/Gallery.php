@@ -57,10 +57,9 @@ class Gallery
     }
 
     /**
-     * @return int
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    private function getMediaGalleryAttributeId()
+    private function getMediaGalleryAttributeId(): int
     {
         $attribute = $this->entityAttribute->loadByCode(\Magento\Catalog\Model\Product::ENTITY, 'media_gallery');
 
@@ -139,10 +138,9 @@ class Gallery
     }
 
     /**
-     * @return Select
      * @throws \Exception
      */
-    private function getLoadGallerySelect(array $linkFieldIds, int $storeId)
+    private function getLoadGallerySelect(array $linkFieldIds, int $storeId): Select
     {
         $linkField = $this->metadataPool->get()->getLinkField();
         $attributeId = $this->getMediaGalleryAttributeId();

@@ -45,9 +45,6 @@ class LoadOptions
         $this->optionCollectionToArray = $optionCollectionToArray;
     }
 
-    /**
-     * @return string
-     */
     public function execute(string $attributeCode, int $storeId): array
     {
         $attributeModel = $this->attributeDataProvider->getAttributeByCode($attributeCode);
@@ -82,10 +79,7 @@ class LoadOptions
         return $this->optionsByAttribute[$key];
     }
 
-    /**
-     * @return bool
-     */
-    private function useSourceModel(Attribute $attribute)
+    private function useSourceModel(Attribute $attribute): bool
     {
         $source = $attribute->getSource();
 
@@ -125,10 +119,7 @@ class LoadOptions
         return $options;
     }
 
-    /**
-     * @return bool
-     */
-    private function isVisualSwatch(Attribute $attribute)
+    private function isVisualSwatch(Attribute $attribute): bool
     {
         return $attribute->getData('swatch_input_type') === Swatch::SWATCH_INPUT_TYPE_VISUAL
             || $attribute->getData('swatch_input_type') === Swatch::SWATCH_INPUT_TYPE_TEXT;

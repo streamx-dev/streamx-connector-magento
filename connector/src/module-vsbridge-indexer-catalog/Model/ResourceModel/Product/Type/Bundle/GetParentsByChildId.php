@@ -58,8 +58,6 @@ class GetParentsByChildId implements GetParentsByChildIdInterface
 
     /**
      * Retrieve Bundle Selection Table
-     *
-     * @return string
      */
     private function getMainTable(): string
     {

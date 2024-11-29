@@ -65,10 +65,9 @@ class LoadAttributes
     }
 
     /**
-     * @return Attribute
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getAttributeById(int $attributeId)
+    public function getAttributeById(int $attributeId): Attribute
     {
         $this->initAttributes();
 
@@ -80,10 +79,9 @@ class LoadAttributes
     }
 
     /**
-     * @return Attribute
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getAttributeByCode(string $attributeCode)
+    public function getAttributeByCode(string $attributeCode): Attribute
     {
         $this->initAttributes();
         $this->loadAttributeByCode($attributeCode);
@@ -119,10 +117,7 @@ class LoadAttributes
         $this->attributeCodeToId[$attribute->getAttributeCode()] = $attribute->getId();
     }
 
-    /**
-     * @return Attribute
-     */
-    private function prepareAttribute(Attribute $attribute)
+    private function prepareAttribute(Attribute $attribute): Attribute
     {
         $additionalData = (string)$attribute->getData('additional_data');
 
@@ -137,10 +132,7 @@ class LoadAttributes
         return $attribute;
     }
 
-    /**
-     * @return Collection
-     */
-    private function getAttributeCollection()
+    private function getAttributeCollection(): Collection
     {
         return $this->attributeCollectionFactory->create();
     }

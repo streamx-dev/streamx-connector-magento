@@ -43,9 +43,6 @@ class PriceTableResolverProxy
         $this->objectManager = $objectManager;
     }
 
-    /**
-     * @return string
-     */
     public function resolve(int $websiteId, int $customerGroupId): string
     {
         if (class_exists('\Magento\Catalog\Model\Indexer\Product\Price\PriceTableResolver')) {

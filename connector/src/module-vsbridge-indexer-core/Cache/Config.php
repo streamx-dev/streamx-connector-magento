@@ -51,10 +51,7 @@ class Config implements ConfigInterface
         return ['timeout' => $this->getTimeout($storeId)];
     }
 
-    /**
-     * @return string|null
-     */
-    private function getConfigParam(string $configField, int $storeId)
+    private function getConfigParam(string $configField, int $storeId): ?string
     {
         $path = self::CACHE_SETTINGS_XML_PREFIX . '/' . $configField;
 

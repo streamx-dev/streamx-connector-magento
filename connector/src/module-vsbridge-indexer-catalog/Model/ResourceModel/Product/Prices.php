@@ -129,9 +129,6 @@ class Prices
         return $connection->fetchPairs($select);
     }
 
-    /**
-     * @return string
-     */
     private function getPriceIndexTableName(int $websiteId, int $customerGroupId): string
     {
         return $this->priceTableResolver->resolve($websiteId, $customerGroupId);

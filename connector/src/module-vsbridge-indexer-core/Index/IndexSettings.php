@@ -42,10 +42,7 @@ class IndexSettings
         $this->dateTimeFactory = $dateTimeFactory;
     }
 
-    /**
-     * @return int
-     */
-    public function getBatchIndexingSize()
+    public function getBatchIndexingSize(): int
     {
         return $this->configuration->getBatchIndexingSize();
     }
@@ -81,10 +78,7 @@ class IndexSettings
         ];
     }
 
-    /**
-     * @return string
-     */
-    public function createIndexName(StoreInterface $store)
+    public function createIndexName(StoreInterface $store): string
     {
         $name = $this->getIndexAlias($store);
         $currentDate = $this->dateTimeFactory->create();
@@ -92,10 +86,7 @@ class IndexSettings
         return $name . '_' . $currentDate->getTimestamp();
     }
 
-    /**
-     * @return string
-     */
-    public function getIndexAlias(StoreInterface $store)
+    public function getIndexAlias(StoreInterface $store): string
     {
         $indexNamePrefix = $this->configuration->getIndexNamePrefix();
         $storeIdentifier = $this->getStoreIdentifier($store);
@@ -107,10 +98,7 @@ class IndexSettings
         return strtolower($indexNamePrefix);
     }
 
-    /**
-     * @return string
-     */
-    private function getStoreIdentifier(StoreInterface $store)
+    private function getStoreIdentifier(StoreInterface $store): string
     {
         if (!$this->configuration->addIdentifierToDefaultStoreView()) {
             $defaultStoreView = $this->storeManager->getDefaultStoreView();
