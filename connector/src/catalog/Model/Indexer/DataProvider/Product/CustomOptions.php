@@ -3,13 +3,13 @@
 
 declare(strict_types = 1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Indexer\DataProvider\Product;
+namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
-use Divante\VsbridgeIndexerCore\Api\DataProviderInterface;
-use Divante\VsbridgeIndexerCatalog\Api\ArrayConverter\Product\CustomOptionConverterInterface;
-use Divante\VsbridgeIndexerCatalog\Model\ProductMetaData;
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\CustomOptions as Resource;
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\CustomOptionValues as OptionValuesResource;
+use StreamX\ConnectorCore\Api\DataProviderInterface;
+use StreamX\ConnectorCatalog\Api\ArrayConverter\Product\CustomOptionConverterInterface;
+use StreamX\ConnectorCatalog\Model\ProductMetaData;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\CustomOptions as Resource;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\CustomOptionValues as OptionValuesResource;
 
 class CustomOptions implements DataProviderInterface
 {

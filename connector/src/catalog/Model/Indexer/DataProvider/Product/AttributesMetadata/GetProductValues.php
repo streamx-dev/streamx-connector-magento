@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Indexer\DataProvider\Product\AttributesMetadata;
+namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\AttributesMetadata;
 
 class GetProductValues
 {

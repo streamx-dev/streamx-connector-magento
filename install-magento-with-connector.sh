@@ -29,7 +29,6 @@ bin/magento module:enable MarkShust_DisableTwoFactorAuth
 
 ### Install sample data
 bin/magento sampledata:deploy
-bin/magento setup:upgrade
 
 ### Import php ingestion client for development
 # Note: in future, when the client is made publicly available - we will be just using `composer require streamx/ingestion-client`.

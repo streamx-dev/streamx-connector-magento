@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Config\Source\Category;
+namespace StreamX\ConnectorCatalog\Model\Config\Source\Category;
 
 use Magento\Catalog\Model\ResourceModel\Category\Attribute\Collection;
 use Magento\Catalog\Model\ResourceModel\Category\Attribute\CollectionFactory;

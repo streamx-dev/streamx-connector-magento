@@ -6,7 +6,7 @@
             "registration.php"
         ],
         "psr-4": {
-            "Divante\\VsbridgeIndexerCatalog\\": ""
+            "StreamX\\ConnectorCatalog\\": ""
         }
     }
 }

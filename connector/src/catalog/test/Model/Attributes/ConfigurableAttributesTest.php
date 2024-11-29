@@ -1,9 +1,9 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Test\Model\Attributes;
+namespace StreamX\ConnectorCatalog\Test\Model\Attributes;
 
-use Divante\VsbridgeIndexerCatalog\Model\Attributes\ConfigurableAttributes;
-use Divante\VsbridgeIndexerCatalog\Api\CatalogConfigurationInterface;
+use StreamX\ConnectorCatalog\Model\Attributes\ConfigurableAttributes;
+use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 
 class ConfigurableAttributesTest extends \PHPUnit\Framework\TestCase

@@ -1,6 +1,6 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCore\Api\Mapping;
+namespace StreamX\ConnectorCore\Api\Mapping;
 
 interface FieldInterface
 {

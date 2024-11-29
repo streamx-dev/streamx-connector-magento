@@ -1,6 +1,6 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCore\Exception;
+namespace StreamX\ConnectorCore\Exception;
 
 class ConnectionDisabledException extends \RuntimeException
 {

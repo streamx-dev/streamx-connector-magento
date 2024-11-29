@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-use Divante\VsbridgeIndexerCore\Config\IndicesSettings;
-use Divante\VsbridgeIndexerCore\Index\IndexSettings;
-use Divante\VsbridgeIndexerCore\Index\Indicies\Config;
+use StreamX\ConnectorCore\Config\IndicesSettings;
+use StreamX\ConnectorCore\Index\IndexSettings;
+use StreamX\ConnectorCore\Index\Indicies\Config;
 use Magento\Store\Model\Store;
 use Magento\Store\Model\StoreManagerInterface;
 use PHPUnit\Framework\TestCase;
 use Magento\Framework\Intl\DateTimeFactory;
 
 /**
- * Responsible for testing \Divante\VsbridgeIndexerCore\Index\IndexSettings
+ * Responsible for testing \StreamX\ConnectorCore\Index\IndexSettings
  */
 class IndexSettingsTest extends TestCase
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCore\Index;
+namespace StreamX\ConnectorCore\Index;
 
-use Divante\VsbridgeIndexerCore\Index\Indicies\Config as IndicesConfig;
-use Divante\VsbridgeIndexerCore\Config\IndicesSettings;
+use StreamX\ConnectorCore\Index\Indicies\Config as IndicesConfig;
+use StreamX\ConnectorCore\Config\IndicesSettings;
 use Magento\Framework\Intl\DateTimeFactory;
 use Magento\Store\Api\Data\StoreInterface;
 use Magento\Store\Model\StoreManagerInterface;

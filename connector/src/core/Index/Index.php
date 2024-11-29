@@ -1,9 +1,9 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCore\Index;
+namespace StreamX\ConnectorCore\Index;
 
-use Divante\VsbridgeIndexerCore\Api\IndexInterface;
-use Divante\VsbridgeIndexerCore\Api\Index\TypeInterface;
+use StreamX\ConnectorCore\Api\IndexInterface;
+use StreamX\ConnectorCore\Api\Index\TypeInterface;
 
 class Index implements IndexInterface
 {

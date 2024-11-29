@@ -1,6 +1,6 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Category;
+namespace StreamX\ConnectorCatalog\Model\ResourceModel\Category;
 
 use Magento\Framework\App\ResourceConnection;
 

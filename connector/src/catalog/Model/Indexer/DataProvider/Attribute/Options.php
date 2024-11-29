@@ -1,9 +1,9 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Indexer\DataProvider\Attribute;
+namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Attribute;
 
-use Divante\VsbridgeIndexerCore\Api\DataProviderInterface;
-use Divante\VsbridgeIndexerCatalog\Model\Attribute\LoadOptions;
+use StreamX\ConnectorCore\Api\DataProviderInterface;
+use StreamX\ConnectorCatalog\Model\Attribute\LoadOptions;
 use Magento\Eav\Model\ResourceModel\Entity\Attribute as EntityResource;
 
 class Options implements DataProviderInterface

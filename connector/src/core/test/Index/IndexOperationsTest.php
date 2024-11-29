@@ -1,14 +1,14 @@
 <?php
 
-use Divante\VsbridgeIndexerCore\Api\Client\ClientInterface;
-use Divante\VsbridgeIndexerCore\Config\OptimizationSettings;
-use Divante\VsbridgeIndexerCore\Index\IndexOperations;
-use Divante\VsbridgeIndexerCore\Index\IndexSettings;
-use Divante\VsbridgeIndexerCore\Api\BulkResponseInterfaceFactory as BulkResponseFactory;
-use Divante\VsbridgeIndexerCore\Api\BulkRequestInterfaceFactory as BulkRequestFactory;
-use Divante\VsbridgeIndexerCore\Api\IndexInterfaceFactory as IndexFactory;
-use Divante\VsbridgeIndexerCore\Index\Index;
-use Divante\VsbridgeIndexerCore\Streamx\ClientResolver;
+use StreamX\ConnectorCore\Api\Client\ClientInterface;
+use StreamX\ConnectorCore\Config\OptimizationSettings;
+use StreamX\ConnectorCore\Index\IndexOperations;
+use StreamX\ConnectorCore\Index\IndexSettings;
+use StreamX\ConnectorCore\Api\BulkResponseInterfaceFactory as BulkResponseFactory;
+use StreamX\ConnectorCore\Api\BulkRequestInterfaceFactory as BulkRequestFactory;
+use StreamX\ConnectorCore\Api\IndexInterfaceFactory as IndexFactory;
+use StreamX\ConnectorCore\Index\Index;
+use StreamX\ConnectorCore\Streamx\ClientResolver;
 use PHPUnit\Framework\TestCase;
 use Magento\Store\Model\Store;
 

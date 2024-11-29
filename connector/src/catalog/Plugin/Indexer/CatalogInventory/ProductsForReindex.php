@@ -1,6 +1,6 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Plugin\Indexer\CatalogInventory;
+namespace StreamX\ConnectorCatalog\Plugin\Indexer\CatalogInventory;
 
 class ProductsForReindex
 {

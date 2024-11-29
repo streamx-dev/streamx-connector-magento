@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Plugin\Controller\Catalog\Adminhtml\Product\Action;
+namespace StreamX\ConnectorCatalog\Plugin\Controller\Catalog\Adminhtml\Product\Action;
 
-use Divante\VsbridgeIndexerCatalog\Model\Indexer\ProductProcessor;
+use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use Magento\Backend\Model\View\Result\Redirect;
 use Magento\Catalog\Controller\Adminhtml\Product\Action\Attribute\Save;
 use Magento\Catalog\Helper\Product\Edit\Action\Attribute;

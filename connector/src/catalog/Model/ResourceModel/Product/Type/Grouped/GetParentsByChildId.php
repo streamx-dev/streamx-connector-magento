@@ -1,9 +1,9 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\Type\Grouped;
+namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product\Type\Grouped;
 
-use Divante\VsbridgeIndexerCatalog\Model\ProductMetaData;
-use Divante\VsbridgeIndexerCatalog\Model\Product\GetParentsByChildIdInterface;
+use StreamX\ConnectorCatalog\Model\ProductMetaData;
+use StreamX\ConnectorCatalog\Model\Product\GetParentsByChildIdInterface;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Select;
 use Magento\GroupedProduct\Model\ResourceModel\Product\Link;

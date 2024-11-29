@@ -1,10 +1,10 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Indexer\DataProvider\Product\Configurable;
+namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\Configurable;
 
-use Divante\VsbridgeIndexerCatalog\Model\Attribute\LoadOptionById;
-use Divante\VsbridgeIndexerCatalog\Model\Attribute\SortValues;
-use Divante\VsbridgeIndexerCatalog\Api\CatalogConfigurationInterface;
+use StreamX\ConnectorCatalog\Model\Attribute\LoadOptionById;
+use StreamX\ConnectorCatalog\Model\Attribute\SortValues;
+use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
 
 class LoadConfigurableOptions
 {

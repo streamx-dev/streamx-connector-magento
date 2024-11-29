@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Indexer\DataProvider\Product;
+namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
-use Divante\VsbridgeIndexerCore\Api\DataProviderInterface;
-use Divante\VsbridgeIndexerCatalog\Api\CatalogConfigurationInterface;
-use Divante\VsbridgeIndexerCatalog\Model\Product\ParentResolver;
+use StreamX\ConnectorCore\Api\DataProviderInterface;
+use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
+use StreamX\ConnectorCatalog\Model\Product\ParentResolver;
 
 /**
  * Responsible for adding "parent_sku" for products

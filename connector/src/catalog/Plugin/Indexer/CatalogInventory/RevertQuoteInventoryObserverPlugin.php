@@ -1,8 +1,8 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Plugin\Indexer\CatalogInventory;
+namespace StreamX\ConnectorCatalog\Plugin\Indexer\CatalogInventory;
 
-use Divante\VsbridgeIndexerCatalog\Model\Indexer\ProductProcessor;
+use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use Magento\CatalogInventory\Observer\RevertQuoteInventoryObserver;
 
 class RevertQuoteInventoryObserverPlugin

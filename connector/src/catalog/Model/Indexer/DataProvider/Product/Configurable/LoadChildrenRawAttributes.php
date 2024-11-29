@@ -1,13 +1,13 @@
 <?php declare(strict_types = 1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Indexer\DataProvider\Product\Configurable;
+namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\Configurable;
 
-use Divante\VsbridgeIndexerCatalog\Model\Attributes\ConfigurableAttributes;
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\AttributeDataProvider;
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\Prices as PriceResourceModel;
-use Divante\VsbridgeIndexerCatalog\Api\LoadTierPricesInterface;
-use Divante\VsbridgeIndexerCatalog\Api\CatalogConfigurationInterface;
-use Divante\VsbridgeIndexerCatalog\Api\LoadMediaGalleryInterface;
+use StreamX\ConnectorCatalog\Model\Attributes\ConfigurableAttributes;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\AttributeDataProvider;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Prices as PriceResourceModel;
+use StreamX\ConnectorCatalog\Api\LoadTierPricesInterface;
+use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
+use StreamX\ConnectorCatalog\Api\LoadMediaGalleryInterface;
 
 class LoadChildrenRawAttributes
 {

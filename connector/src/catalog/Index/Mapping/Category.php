@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Index\Mapping;
+namespace StreamX\ConnectorCatalog\Index\Mapping;
 
-use Divante\VsbridgeIndexerCatalog\Model\Attributes\CategoryChildAttributes;
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Category\LoadAttributes;
-use Divante\VsbridgeIndexerCore\Api\MappingInterface;
-use Divante\VsbridgeIndexerCore\Api\Mapping\FieldInterface;
-use Divante\VsbridgeIndexerCore\Index\Mapping\GeneralMapping;
+use StreamX\ConnectorCatalog\Model\Attributes\CategoryChildAttributes;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Category\LoadAttributes;
+use StreamX\ConnectorCore\Api\MappingInterface;
+use StreamX\ConnectorCore\Api\Mapping\FieldInterface;
+use StreamX\ConnectorCore\Index\Mapping\GeneralMapping;
 use Magento\Framework\Event\ManagerInterface as EventManager;
 
 class Category extends AbstractMapping implements MappingInterface

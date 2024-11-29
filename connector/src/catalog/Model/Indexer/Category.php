@@ -1,11 +1,11 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Indexer;
+namespace StreamX\ConnectorCatalog\Model\Indexer;
 
-use Divante\VsbridgeIndexerCatalog\Model\Indexer\Action\Category as Action;
-use Divante\VsbridgeIndexerCore\Indexer\GenericIndexerHandler;
-use Divante\VsbridgeIndexerCore\Indexer\StoreManager;
-use Divante\VsbridgeIndexerCore\Cache\Processor as CacheProcessor;
+use StreamX\ConnectorCatalog\Model\Indexer\Action\Category as Action;
+use StreamX\ConnectorCore\Indexer\GenericIndexerHandler;
+use StreamX\ConnectorCore\Indexer\StoreManager;
+use StreamX\ConnectorCore\Cache\Processor as CacheProcessor;
 
 class Category implements \Magento\Framework\Indexer\ActionInterface, \Magento\Framework\Mview\ActionInterface
 {

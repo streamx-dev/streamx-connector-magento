@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product;
+namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Select;
 use Magento\Framework\Exception\NoSuchEntityException;

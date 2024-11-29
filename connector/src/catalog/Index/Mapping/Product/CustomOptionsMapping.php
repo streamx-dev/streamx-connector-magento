@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Index\Mapping\Product;
+namespace StreamX\ConnectorCatalog\Index\Mapping\Product;
 
-use Divante\VsbridgeIndexerCatalog\Index\Mapping\FieldMappingInterface;
-use Divante\VsbridgeIndexerCore\Api\Mapping\FieldInterface;
+use StreamX\ConnectorCatalog\Index\Mapping\FieldMappingInterface;
+use StreamX\ConnectorCore\Api\Mapping\FieldInterface;
 
 class CustomOptionsMapping implements FieldMappingInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model\ResourceModel;
+namespace StreamX\ConnectorCatalog\Model\ResourceModel;
 
 interface EavAttributesInterface
 {

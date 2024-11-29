@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCore\Streamx;
+namespace StreamX\ConnectorCore\Streamx;
 
-use Divante\VsbridgeIndexerCore\Api\Client\BuilderInterface;
+use StreamX\ConnectorCore\Api\Client\BuilderInterface;
 use Psr\Log\LoggerInterface;
 use Streamx\Clients\Ingestion\Builders\StreamxClientBuilders;
 use Streamx\Clients\Ingestion\Publisher\Publisher;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCore\Indexer;
+namespace StreamX\ConnectorCore\Indexer;
 
 class DataProviderProcessorFactory
 {

@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Product;
+namespace StreamX\ConnectorCatalog\Model\Product;
 
-use Divante\VsbridgeIndexerCatalog\Api\CatalogConfigurationInterface;
-use Divante\VsbridgeIndexerCatalog\Api\LoadTierPricesInterface;
-use Divante\VsbridgeIndexerCatalog\Model\ProductMetaData;
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\TierPrices as TierPricesResource;
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\AttributeDataProvider;
+use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
+use StreamX\ConnectorCatalog\Api\LoadTierPricesInterface;
+use StreamX\ConnectorCatalog\Model\ProductMetaData;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\TierPrices as TierPricesResource;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\AttributeDataProvider;
 
 use Magento\Customer\Model\Group;
 use Magento\Store\Model\StoreManagerInterface;
@@ -14,7 +14,7 @@ use Magento\Store\Model\StoreManagerInterface;
 class LoadTierPrices implements LoadTierPricesInterface
 {
     /**
-     * @var \Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\TierPrices
+     * @var \StreamX\ConnectorCatalog\Model\ResourceModel\Product\TierPrices
      */
     private $tierPriceResource;
 

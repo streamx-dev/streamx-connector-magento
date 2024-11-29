@@ -1,10 +1,10 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Indexer\DataProvider\Product;
+namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
-use Divante\VsbridgeIndexerCatalog\Api\LoadInventoryInterface;
-use Divante\VsbridgeIndexerCatalog\Api\ArrayConverter\Product\InventoryConverterInterface;
-use Divante\VsbridgeIndexerCore\Api\DataProviderInterface;
+use StreamX\ConnectorCatalog\Api\LoadInventoryInterface;
+use StreamX\ConnectorCatalog\Api\ArrayConverter\Product\InventoryConverterInterface;
+use StreamX\ConnectorCore\Api\DataProviderInterface;
 
 class Inventory implements DataProviderInterface
 {

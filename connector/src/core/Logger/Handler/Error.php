@@ -1,6 +1,6 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCore\Logger\Handler;
+namespace StreamX\ConnectorCore\Logger\Handler;
 
 use Magento\Framework\Logger\Handler\Base;
 use Monolog\Logger;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model\ResourceModel;
+namespace StreamX\ConnectorCatalog\Model\ResourceModel;
 
 use Magento\Catalog\Model\ResourceModel\Product\Attribute\Collection;
 use Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory;

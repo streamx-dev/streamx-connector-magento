@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Indexer\DataProvider\Product;
+namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
-use Divante\VsbridgeIndexerCatalog\Api\CatalogConfigurationInterface;
-use Divante\VsbridgeIndexerCatalog\Model\Indexer\DataProvider\Product\AttributesMetadata\GetProductValues;
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\AttributeMetadata as Resource;
-use Divante\VsbridgeIndexerCore\Api\DataProviderInterface;
+use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
+use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\AttributesMetadata\GetProductValues;
+use StreamX\ConnectorCatalog\Model\ResourceModel\AttributeMetadata as Resource;
+use StreamX\ConnectorCore\Api\DataProviderInterface;
 
 class AttributesMetadata  implements DataProviderInterface
 {

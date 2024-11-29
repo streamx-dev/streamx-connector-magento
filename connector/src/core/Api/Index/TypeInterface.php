@@ -1,23 +1,23 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCore\Api\Index;
+namespace StreamX\ConnectorCore\Api\Index;
 
 interface TypeInterface
 {
     public function getName(): string;
 
     /**
-     * @return \Divante\VsbridgeIndexerCore\Api\MappingInterface
+     * @return \StreamX\ConnectorCore\Api\MappingInterface
      */
     public function getMapping();
 
     /**
-     * @return \Divante\VsbridgeIndexerCore\Api\DataProviderInterface[]
+     * @return \StreamX\ConnectorCore\Api\DataProviderInterface[]
      */
     public function getDataProviders();
 
     /**
-     * @return \Divante\VsbridgeIndexerCore\Api\DataProviderInterface
+     * @return \StreamX\ConnectorCore\Api\DataProviderInterface
      */
     public function getDataProvider(string $name);
 }

@@ -2,10 +2,10 @@
 
 declare(strict_types = 1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model\ResourceModel;
+namespace StreamX\ConnectorCatalog\Model\ResourceModel;
 
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\AttributesMetadata\GetAttributeFields;
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\LoadAttributes;
+use StreamX\ConnectorCatalog\Model\ResourceModel\AttributesMetadata\GetAttributeFields;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\LoadAttributes;
 
 use Magento\Catalog\Model\ResourceModel\Product\Attribute\Collection;
 use Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory;

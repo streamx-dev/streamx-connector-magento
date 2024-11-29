@@ -1,15 +1,15 @@
 <?php declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Indexer\DataProvider\Product;
+namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
-use Divante\VsbridgeIndexerCore\Api\DataProviderInterface;
-use Divante\VsbridgeIndexerCatalog\Api\LoadTierPricesInterface;
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\Prices as Resource;
+use StreamX\ConnectorCore\Api\DataProviderInterface;
+use StreamX\ConnectorCatalog\Api\LoadTierPricesInterface;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Prices as Resource;
 
 class PriceData implements DataProviderInterface
 {
     /**
-     * @var \Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\Prices
+     * @var \StreamX\ConnectorCatalog\Model\ResourceModel\Product\Prices
      */
     private $resourcePriceModel;
 

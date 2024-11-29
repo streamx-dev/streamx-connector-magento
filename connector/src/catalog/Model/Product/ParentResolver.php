@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Product;
+namespace StreamX\ConnectorCatalog\Model\Product;
 
 use Magento\Framework\Exception\InputException;
 

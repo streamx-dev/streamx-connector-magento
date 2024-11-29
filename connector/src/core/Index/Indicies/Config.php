@@ -1,10 +1,10 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCore\Index\Indicies;
+namespace StreamX\ConnectorCore\Index\Indicies;
 
-use Divante\VsbridgeIndexerCore\Api\Index\TypeInterfaceFactory as TypeFactoryInterface;
-use Divante\VsbridgeIndexerCore\Indexer\DataProviderProcessorFactory;
-use Divante\VsbridgeIndexerCore\Indexer\MappingProcessorFactory;
+use StreamX\ConnectorCore\Api\Index\TypeInterfaceFactory as TypeFactoryInterface;
+use StreamX\ConnectorCore\Indexer\DataProviderProcessorFactory;
+use StreamX\ConnectorCore\Indexer\MappingProcessorFactory;
 
 class Config
 {
@@ -26,7 +26,7 @@ class Config
     private $mappingProviderProcessorFactory;
 
     /**
-     * @var \Divante\VsbridgeIndexerCore\Indexer\DataProvider\TransactionKey
+     * @var \StreamX\ConnectorCore\Indexer\DataProvider\TransactionKey
      */
     private $transactionKey;
 
@@ -37,7 +37,7 @@ class Config
 
     public function __construct(
         Config\Data $configData,
-        \Divante\VsbridgeIndexerCore\Indexer\DataProvider\TransactionKey $transactionKey,
+        \StreamX\ConnectorCore\Indexer\DataProvider\TransactionKey $transactionKey,
         TypeFactoryInterface $typeInterfaceFactory,
         MappingProcessorFactory $mappingProcessorFactory,
         DataProviderProcessorFactory $dataProviderFactoryProcessor

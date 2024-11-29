@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCore\Streamx;
+namespace StreamX\ConnectorCore\Streamx;
 
 class ContentTemplate {
     public string $type;

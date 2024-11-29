@@ -37,8 +37,8 @@
       "src/catalog/registration.php"
     ],
     "psr-4": {
-      "Divante\\VsbridgeIndexerCore\\": "src/core",
-      "Divante\\VsbridgeIndexerCatalog\\": "src/catalog"
+      "StreamX\\ConnectorCore\\": "src/core",
+      "StreamX\\ConnectorCatalog\\": "src/catalog"
     }
   },
   "config": {

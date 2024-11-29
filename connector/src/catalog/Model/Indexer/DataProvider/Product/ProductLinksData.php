@@ -1,9 +1,9 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Indexer\DataProvider\Product;
+namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
-use Divante\VsbridgeIndexerCore\Api\DataProviderInterface;
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\Links as LinkResourceModel;
+use StreamX\ConnectorCore\Api\DataProviderInterface;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Links as LinkResourceModel;
 
 class ProductLinksData implements DataProviderInterface
 {

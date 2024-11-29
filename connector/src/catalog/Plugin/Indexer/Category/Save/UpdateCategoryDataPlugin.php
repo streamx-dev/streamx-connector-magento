@@ -1,9 +1,9 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Plugin\Indexer\Category\Save;
+namespace StreamX\ConnectorCatalog\Plugin\Indexer\Category\Save;
 
-use Divante\VsbridgeIndexerCatalog\Model\Indexer\CategoryProcessor;
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Category as CategoryResourceModel;
+use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Category as CategoryResourceModel;
 
 use Magento\Catalog\Model\Category;
 

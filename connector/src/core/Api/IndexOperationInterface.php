@@ -1,6 +1,6 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCore\Api;
+namespace StreamX\ConnectorCore\Api;
 
 use Magento\Store\Api\Data\StoreInterface;
 

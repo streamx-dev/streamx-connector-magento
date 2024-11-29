@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Api\DataProvider\Category;
+namespace StreamX\ConnectorCatalog\Api\DataProvider\Category;
 
-use Divante\VsbridgeIndexerCore\Api\DataProviderInterface;
+use StreamX\ConnectorCore\Api\DataProviderInterface;
 
 interface AttributeDataProviderInterface extends DataProviderInterface
 {

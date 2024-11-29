@@ -2,10 +2,10 @@
 
 declare(strict_types = 1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model\ResourceModel\AttributesMetadata;
+namespace StreamX\ConnectorCatalog\Model\ResourceModel\AttributesMetadata;
 
-use Divante\VsbridgeIndexerCore\Api\ConvertValueInterface;
-use Divante\VsbridgeIndexerCatalog\Index\Mapping\Attribute as AttributeMapping;
+use StreamX\ConnectorCore\Api\ConvertValueInterface;
+use StreamX\ConnectorCatalog\Index\Mapping\Attribute as AttributeMapping;
 
 class GetAttributeFields
 {

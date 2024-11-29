@@ -1,10 +1,10 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product;
+namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
-use Divante\VsbridgeIndexerCore\Api\ConvertValueInterface;
-use Divante\VsbridgeIndexerCatalog\Index\Mapping\Product as ProductMapping;
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\AbstractEavAttributes;
+use StreamX\ConnectorCore\Api\ConvertValueInterface;
+use StreamX\ConnectorCatalog\Index\Mapping\Product as ProductMapping;
+use StreamX\ConnectorCatalog\Model\ResourceModel\AbstractEavAttributes;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\EntityManager\MetadataPool;
 use Magento\Eav\Model\Entity\Attribute;

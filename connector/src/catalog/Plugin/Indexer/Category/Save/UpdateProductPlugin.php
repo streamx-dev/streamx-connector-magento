@@ -1,9 +1,9 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Plugin\Indexer\Category\Save;
+namespace StreamX\ConnectorCatalog\Plugin\Indexer\Category\Save;
 
-use Divante\VsbridgeIndexerCatalog\Model\Indexer\ProductCategoryProcessor;
-use Divante\VsbridgeIndexerCatalog\Model\Indexer\ProductProcessor;
+use StreamX\ConnectorCatalog\Model\Indexer\ProductCategoryProcessor;
+use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 
 class UpdateProductPlugin
 {

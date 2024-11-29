@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Setup\UpgradeData;
+namespace StreamX\ConnectorCatalog\Setup\UpgradeData;
 
-use Divante\VsbridgeIndexerCatalog\Model\SystemConfig\CategoryConfigInterface;
+use StreamX\ConnectorCatalog\Model\SystemConfig\CategoryConfigInterface;
 use Magento\Framework\Exception\LocalizedException;
 
 class SetCategoryDefaultAttributes

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Config\Source\Product;
+namespace StreamX\ConnectorCatalog\Model\Config\Source\Product;
 
 use Magento\Catalog\Api\Data\ProductAttributeInterface;
 use Magento\Catalog\Model\ResourceModel\Product\Attribute\Collection;

@@ -3,9 +3,9 @@
 
 declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product;
+namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
-use Divante\VsbridgeIndexerCatalog\Model\Inventory\Fields as InventoryFields;
+use StreamX\ConnectorCatalog\Model\Inventory\Fields as InventoryFields;
 use Magento\Framework\App\ResourceConnection;
 use Magento\CatalogInventory\Api\StockConfigurationInterface;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCore\Index;
+namespace StreamX\ConnectorCore\Index;
 
-use Divante\VsbridgeIndexerCore\Api\BulkLoggerInterface;
-use Divante\VsbridgeIndexerCore\Api\BulkResponseInterface;
+use StreamX\ConnectorCore\Api\BulkLoggerInterface;
+use StreamX\ConnectorCore\Api\BulkResponseInterface;
 use Psr\Log\LoggerInterface;
 
 class BulkLogger implements BulkLoggerInterface

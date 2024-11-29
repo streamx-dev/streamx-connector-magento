@@ -1,8 +1,8 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product;
+namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
-use Divante\VsbridgeIndexerCatalog\Model\ProductMetaData;
+use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use Magento\Catalog\Model\ResourceModel\Product\Gallery as GalleryResource;
 use Magento\Eav\Model\Entity\Attribute as EntityAttribute;
 use Magento\Framework\DB\Select;

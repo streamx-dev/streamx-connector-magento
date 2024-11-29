@@ -1,16 +1,16 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCore\Indexer;
+namespace StreamX\ConnectorCore\Indexer;
 
-use Divante\VsbridgeIndexerCore\Api\BulkLoggerInterface;
-use Divante\VsbridgeIndexerCore\Api\DataProviderInterface;
-use Divante\VsbridgeIndexerCore\Api\IndexInterface;
-use Divante\VsbridgeIndexerCore\Api\Indexer\TransactionKeyInterface;
-use Divante\VsbridgeIndexerCore\Api\IndexOperationInterface;
-use Divante\VsbridgeIndexerCore\Exception\ConnectionDisabledException;
-use Divante\VsbridgeIndexerCore\Exception\ConnectionUnhealthyException;
-use Divante\VsbridgeIndexerCore\Logger\IndexerLogger;
-use Divante\VsbridgeIndexerCore\Model\IndexerRegistry;
+use StreamX\ConnectorCore\Api\BulkLoggerInterface;
+use StreamX\ConnectorCore\Api\DataProviderInterface;
+use StreamX\ConnectorCore\Api\IndexInterface;
+use StreamX\ConnectorCore\Api\Indexer\TransactionKeyInterface;
+use StreamX\ConnectorCore\Api\IndexOperationInterface;
+use StreamX\ConnectorCore\Exception\ConnectionDisabledException;
+use StreamX\ConnectorCore\Exception\ConnectionUnhealthyException;
+use StreamX\ConnectorCore\Logger\IndexerLogger;
+use StreamX\ConnectorCore\Model\IndexerRegistry;
 use Exception;
 use Magento\Framework\Indexer\SaveHandler\Batch;
 use Magento\Store\Api\Data\StoreInterface;

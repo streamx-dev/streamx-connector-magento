@@ -1,10 +1,10 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Test\Model\Attributes;
+namespace StreamX\ConnectorCatalog\Test\Model\Attributes;
 
-use Divante\VsbridgeIndexerCatalog\Model\Attributes\CategoryAttributes;
-use Divante\VsbridgeIndexerCatalog\Model\Attributes\CategoryChildAttributes;
-use Divante\VsbridgeIndexerCatalog\Model\SystemConfig\CategoryConfigInterface;
+use StreamX\ConnectorCatalog\Model\Attributes\CategoryAttributes;
+use StreamX\ConnectorCatalog\Model\Attributes\CategoryChildAttributes;
+use StreamX\ConnectorCatalog\Model\SystemConfig\CategoryConfigInterface;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 
 class CategoryChildAttributesTest extends \PHPUnit\Framework\TestCase

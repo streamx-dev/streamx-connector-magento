@@ -2,46 +2,46 @@
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
 
-    <preference for="Divante\VsbridgeIndexerCore\Api\BulkLoggerInterface" type="Divante\VsbridgeIndexerCore\Index\BulkLogger"/>
-    <preference for="Divante\VsbridgeIndexerCore\Api\Client\ClientInterface" type="Divante\VsbridgeIndexerCore\Streamx\Client"/>
-    <preference for="Divante\VsbridgeIndexerCore\Api\Client\ConfigurationInterface" type="Divante\VsbridgeIndexerCore\Streamx\ClientConfiguration"/>
-    <preference for="Divante\VsbridgeIndexerCore\Api\Index\TypeInterface" type="Divante\VsbridgeIndexerCore\Index\Type"/>
-    <preference for="Divante\VsbridgeIndexerCore\Api\Indexer\TransactionKeyInterface" type="Divante\VsbridgeIndexerCore\Indexer\TransactionKey"/>
-    <preference for="Divante\VsbridgeIndexerCore\Api\BulkRequestInterface" type="Divante\VsbridgeIndexerCore\Index\BulkRequest"/>
-    <preference for="Divante\VsbridgeIndexerCore\Api\BulkResponseInterface" type="Divante\VsbridgeIndexerCore\Index\BulkResponse"/>
-    <preference for="Divante\VsbridgeIndexerCore\Api\ConvertValueInterface" type="Divante\VsbridgeIndexerCore\Indexer\ConvertValue"/>
-    <preference for="Divante\VsbridgeIndexerCore\Api\IndexInterface" type="Divante\VsbridgeIndexerCore\Index\Index"/>
-    <preference for="Divante\VsbridgeIndexerCore\Api\IndexOperationInterface" type="Divante\VsbridgeIndexerCore\Index\IndexOperations"/>
-    <preference for="Divante\VsbridgeIndexerCore\System\GeneralConfigInterface" type="Divante\VsbridgeIndexerCore\System\GeneralConfig"/>
-    <preference for="Divante\VsbridgeIndexerCore\Cache\ConfigInterface" type="Divante\VsbridgeIndexerCore\Cache\Config"/>
+    <preference for="StreamX\ConnectorCore\Api\BulkLoggerInterface" type="StreamX\ConnectorCore\Index\BulkLogger"/>
+    <preference for="StreamX\ConnectorCore\Api\Client\ClientInterface" type="StreamX\ConnectorCore\Streamx\Client"/>
+    <preference for="StreamX\ConnectorCore\Api\Client\ConfigurationInterface" type="StreamX\ConnectorCore\Streamx\ClientConfiguration"/>
+    <preference for="StreamX\ConnectorCore\Api\Index\TypeInterface" type="StreamX\ConnectorCore\Index\Type"/>
+    <preference for="StreamX\ConnectorCore\Api\Indexer\TransactionKeyInterface" type="StreamX\ConnectorCore\Indexer\TransactionKey"/>
+    <preference for="StreamX\ConnectorCore\Api\BulkRequestInterface" type="StreamX\ConnectorCore\Index\BulkRequest"/>
+    <preference for="StreamX\ConnectorCore\Api\BulkResponseInterface" type="StreamX\ConnectorCore\Index\BulkResponse"/>
+    <preference for="StreamX\ConnectorCore\Api\ConvertValueInterface" type="StreamX\ConnectorCore\Indexer\ConvertValue"/>
+    <preference for="StreamX\ConnectorCore\Api\IndexInterface" type="StreamX\ConnectorCore\Index\Index"/>
+    <preference for="StreamX\ConnectorCore\Api\IndexOperationInterface" type="StreamX\ConnectorCore\Index\IndexOperations"/>
+    <preference for="StreamX\ConnectorCore\System\GeneralConfigInterface" type="StreamX\ConnectorCore\System\GeneralConfig"/>
+    <preference for="StreamX\ConnectorCore\Cache\ConfigInterface" type="StreamX\ConnectorCore\Cache\Config"/>
 
-    <type name="Divante\VsbridgeIndexerCore\Logger\IndexerLogger">
+    <type name="StreamX\ConnectorCore\Logger\IndexerLogger">
         <arguments>
             <argument name="name" xsi:type="string">vsbridgeIndexerLogger</argument>
             <argument name="handlers"  xsi:type="array">
-                <item name="info" xsi:type="object">Divante\VsbridgeIndexerCore\Logger\Handler\Info</item>
-                <item name="error" xsi:type="object">Divante\VsbridgeIndexerCore\Logger\Handler\Error</item>
+                <item name="info" xsi:type="object">StreamX\ConnectorCore\Logger\Handler\Info</item>
+                <item name="error" xsi:type="object">StreamX\ConnectorCore\Logger\Handler\Error</item>
             </argument>
         </arguments>
     </type>
-    <type name="Divante\VsbridgeIndexerCore\Index\BulkLogger">
+    <type name="StreamX\ConnectorCore\Index\BulkLogger">
         <arguments>
-            <argument name="logger" xsi:type="object">Divante\VsbridgeIndexerCore\Logger\IndexerLogger</argument>
+            <argument name="logger" xsi:type="object">StreamX\ConnectorCore\Logger\IndexerLogger</argument>
         </arguments>
     </type>
 
-    <type name="Divante\VsbridgeIndexerCore\Cache\Logger\CacheLogger">
+    <type name="StreamX\ConnectorCore\Cache\Logger\CacheLogger">
         <arguments>
             <argument name="name" xsi:type="string">vsbridgeIndexerCacheLogger</argument>
             <argument name="handlers"  xsi:type="array">
-                <item name="info" xsi:type="object">Divante\VsbridgeIndexerCore\Cache\Logger\Handler\Info</item>
+                <item name="info" xsi:type="object">StreamX\ConnectorCore\Cache\Logger\Handler\Info</item>
             </argument>
         </arguments>
     </type>
 
-    <type name="Divante\VsbridgeIndexerCore\Cache\Processor">
+    <type name="StreamX\ConnectorCore\Cache\Processor">
         <arguments>
-            <argument name="logger" xsi:type="object">Divante\VsbridgeIndexerCore\Cache\Logger\CacheLogger</argument>
+            <argument name="logger" xsi:type="object">StreamX\ConnectorCore\Cache\Logger\CacheLogger</argument>
         </arguments>
     </type>
 
@@ -58,14 +58,14 @@
     <type name="Magento\Framework\Console\CommandListInterface">
         <arguments>
             <argument name="commands" xsi:type="array">
-                <item name="index_single_entity" xsi:type="object">Divante\VsbridgeIndexerCore\Console\Command\SingleEntityIndexCommand</item>
-                <item name="rebuild" xsi:type="object">Divante\VsbridgeIndexerCore\Console\Command\RebuildEsIndexCommand</item>
-                <item name="vsbridge_reset" xsi:type="object">Divante\VsbridgeIndexerCore\Console\Command\ResetEsIndexCommand</item>
+                <item name="index_single_entity" xsi:type="object">StreamX\ConnectorCore\Console\Command\SingleEntityIndexCommand</item>
+                <item name="rebuild" xsi:type="object">StreamX\ConnectorCore\Console\Command\RebuildEsIndexCommand</item>
+                <item name="vsbridge_reset" xsi:type="object">StreamX\ConnectorCore\Console\Command\ResetEsIndexCommand</item>
             </argument>
         </arguments>
     </type>
 
-    <type name="Divante\VsbridgeIndexerCore\Console\Command\RebuildEsIndexCommand">
+    <type name="StreamX\ConnectorCore\Console\Command\RebuildEsIndexCommand">
         <arguments>
             <argument name="eventManager" xsi:type="object">Magento\Framework\Event\ManagerInterface\Proxy</argument>
         </arguments>

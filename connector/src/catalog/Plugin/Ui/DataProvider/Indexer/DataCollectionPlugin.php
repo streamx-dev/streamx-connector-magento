@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Plugin\Ui\DataProvider\Indexer;
+namespace StreamX\ConnectorCatalog\Plugin\Ui\DataProvider\Indexer;
 
-use Divante\VsbridgeIndexerCatalog\Model\Indexer\ProductCategoryProcessor;
+use StreamX\ConnectorCatalog\Model\Indexer\ProductCategoryProcessor;
 use Magento\Indexer\Ui\DataProvider\Indexer\DataCollection;
 
 class DataCollectionPlugin
