@@ -4,20 +4,11 @@ namespace Divante\VsbridgeIndexerCore\Api;
 
 interface IndexInterface
 {
-    /**
-     * @return string
-     */
-    public function getName();
+    public function getName(): string;
 
-    /**
-     * @return string
-     */
-    public function getAlias();
+    public function getAlias(): string;
 
-    /**
-     * @return boolean
-     */
-    public function isNew();
+    public function isNew(): bool;
 
     /**
      * @return \Divante\VsbridgeIndexerCore\Api\Index\TypeInterface[]
@@ -25,10 +16,8 @@ interface IndexInterface
     public function getTypes();
 
     /**
-     * @param $typeName
-     *
      * @return \Divante\VsbridgeIndexerCore\Api\Index\TypeInterface
      * @throws \InvalidArgumentException When the type does not exists.
      */
-    public function getType($typeName);
+    public function getType(string $typeName);
 }

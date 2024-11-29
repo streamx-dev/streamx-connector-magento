@@ -43,13 +43,7 @@ class AttributesMetadata  implements DataProviderInterface
         $this->configuration = $configuration;
     }
 
-    /**
-     * @param array $indexData
-     * @param int $storeId
-     *
-     * @return array
-     */
-    public function addData(array $indexData, $storeId)
+    public function addData(array $indexData, int $storeId): array
     {
         if ($this->configuration->canExportAttributesMetadata()) {
             foreach ($indexData as $productId => $productDTO) {

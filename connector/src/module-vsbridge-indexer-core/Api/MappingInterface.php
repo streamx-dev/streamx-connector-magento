@@ -4,8 +4,5 @@ namespace Divante\VsbridgeIndexerCore\Api;
 
 interface MappingInterface
 {
-    /**
-     * @return array
-     */
-    public function getMappingProperties();
+    public function getMappingProperties(): array;
 }

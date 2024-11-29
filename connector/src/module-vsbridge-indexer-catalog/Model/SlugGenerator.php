@@ -9,7 +9,7 @@ class SlugGenerator implements SlugGeneratorInterface
     /**
      * @inheritdoc
      */
-    public function generate($text, $id)
+    public function generate(string $text, int $id): string
     {
         $text = $text . '-' . $id;
 

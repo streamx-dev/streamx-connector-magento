@@ -4,11 +4,5 @@ namespace Divante\VsbridgeIndexerCatalog\Api;
 
 interface LoadTierPricesInterface
 {
-    /**
-     * @param array $indexData
-     * @param int $storeId
-     *
-     * @return array
-     */
     public function execute(array $indexData, int $storeId): array;
 }

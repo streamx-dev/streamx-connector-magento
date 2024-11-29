@@ -6,11 +6,6 @@ interface DataProviderInterface
 {
     /**
      * Append data to a list of documents.
-     *
-     * @param array $indexData
-     * @param int $storeId
-     *
-     * @return array
      */
-    public function addData(array $indexData, $storeId);
+    public function addData(array $indexData, int $storeId): array;
 }

@@ -9,8 +9,6 @@ class SwatchMapping implements FieldMappingInterface
 {
     /**
      * Retrieve Swatch Mapping
-     *
-     * @return array
      */
     public function get(): array
     {

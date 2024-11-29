@@ -62,10 +62,6 @@ class ActiveSelectModifier implements BaseSelectModifierInterface
     /**
      * Process the select statement - filter categories by vendor
      *
-     * @param Select $select
-     * @param int $storeId
-     *
-     * @return Select
      * @throws LocalizedException
      * @throws NoSuchEntityException
      */

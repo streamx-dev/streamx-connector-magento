@@ -55,10 +55,6 @@ class CategoryConfig implements CategoryConfigInterface
 
     /**
      * @inheritdoc
-     *
-     * @param int $storeId
-     *
-     * @return array
      */
     public function getAllowedAttributesToIndex(int $storeId): array
     {
@@ -80,10 +76,6 @@ class CategoryConfig implements CategoryConfigInterface
 
     /**
      * @inheritdoc
-     *
-     * @param int $storeId
-     *
-     * @return array
      */
     public function getAllowedChildAttributesToIndex(int $storeId): array
     {
@@ -105,8 +97,6 @@ class CategoryConfig implements CategoryConfigInterface
 
     /**
      * @inheritdoc
-     *
-     * @return array
      */
     public function getAttributesUsedForSortBy(): array
     {
@@ -122,10 +112,6 @@ class CategoryConfig implements CategoryConfigInterface
 
     /**
      * @inheritdoc
-     *
-     * @param int $storeId
-     *
-     * @return string
      */
     public function getProductListDefaultSortBy(int $storeId): string
     {
@@ -147,10 +133,6 @@ class CategoryConfig implements CategoryConfigInterface
 
     /**
      * @inheritdoc
-     *
-     * @param int $storeId
-     *
-     * @return string
      */
     public function getCategoryUrlSuffix(int $storeId): string
     {

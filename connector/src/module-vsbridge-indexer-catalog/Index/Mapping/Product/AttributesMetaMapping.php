@@ -25,9 +25,6 @@ class AttributesMetaMapping implements FieldMappingInterface
         $this->optionMapping = $optionMapping;
     }
 
-    /**
-     * @return array
-     */
     public function get(): array
     {
         return [

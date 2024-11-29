@@ -26,7 +26,7 @@ class ProductLinksData implements DataProviderInterface
     /**
      * @inheritdoc
      */
-    public function addData(array $indexData, $storeId)
+    public function addData(array $indexData, int $storeId): array
     {
         $this->resourceModel->clear();
         $this->resourceModel->setProducts($indexData);

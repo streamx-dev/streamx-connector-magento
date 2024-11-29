@@ -26,62 +26,32 @@ class Config implements ConfigInterface
         $this->scopeConfig = $scopeConfig;
     }
 
-    /**
-     * @param int $storeId
-     *
-     * @return bool
-     */
-    public function clearCache($storeId): bool
+    public function clearCache(int $storeId): bool
     {
         return (bool) $this->getConfigParam(self::CLEAR_CACHE_FIELD, $storeId);
     }
 
-    /**
-     * @param int $storeId
-     *
-     * @return int
-     */
     public function getInvalidateEntitiesBatchSize(int $storeId): int
     {
         return (int) $this->getConfigParam(self::INVALIDATE_CACHE_ENTITIES_BATCH_SIZE_FIELD, $storeId);
     }
 
-    /**
-     * @param int $storeId
-     *
-     * @return string
-     */
-    public function getVsfBaseUrl($storeId): string
+    public function getVsfBaseUrl(int $storeId): string
     {
         return (string) $this->getConfigParam(self::VSF_BASE_URL_FIELD, $storeId);
     }
 
-    /**
-     * @param int $storeId
-     *
-     * @return string
-     */
-    public function getInvalidateCacheKey($storeId): string
+    public function getInvalidateCacheKey(int $storeId): string
     {
         return (string) $this->getConfigParam(self::INVALIDATE_CACHE_FIELD, $storeId);
     }
 
-    /**
-     * @param int $storeId
-     *
-     * @return int
-     */
-    public function getTimeout($storeId): int
+    public function getTimeout(int $storeId): int
     {
         return (int) $this->getConfigParam(self::CONNECTION_TIMEOUT_FIELD, $storeId);
     }
 
-    /**
-     * @param int $storeId
-     *
-     * @return array
-     */
-    public function getConnectionOptions($storeId): array
+    public function getConnectionOptions(int $storeId): array
     {
         return ['timeout' => $this->getTimeout($storeId)];
     }

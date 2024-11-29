@@ -35,12 +35,6 @@ class InventoryConverter implements InventoryConverterInterface
         $this->stockConfiguration = $stockConfiguration;
     }
 
-    /**
-     * @param int $storeId
-     * @param array $inventory
-     *
-     * @return array
-     */
     public function prepareInventoryData(int $storeId, array $inventory): array
     {
         if (!empty($inventory[StockItemInterface::USE_CONFIG_MIN_QTY])) {

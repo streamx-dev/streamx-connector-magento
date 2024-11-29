@@ -4,23 +4,11 @@ namespace Divante\VsbridgeIndexerCore\Api;
 
 interface BulkResponseInterface
 {
-    /**
-     * @return boolean
-     */
-    public function hasErrors();
+    public function hasErrors(): bool;
 
-    /**
-     * @return array
-     */
-    public function getErrorItems();
+    public function getErrorItems(): array;
 
-    /**
-     * @return array
-     */
-    public function getSuccessItems();
+    public function getSuccessItems(): array;
 
-    /**
-     * @return array
-     */
-    public function aggregateErrorsByReason();
+    public function aggregateErrorsByReason(): array;
 }

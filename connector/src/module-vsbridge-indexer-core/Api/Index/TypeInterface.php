@@ -4,10 +4,7 @@ namespace Divante\VsbridgeIndexerCore\Api\Index;
 
 interface TypeInterface
 {
-    /**
-     * @return string
-     */
-    public function getName();
+    public function getName(): string;
 
     /**
      * @return \Divante\VsbridgeIndexerCore\Api\MappingInterface
@@ -20,7 +17,6 @@ interface TypeInterface
     public function getDataProviders();
 
     /**
-     * @param string $name
      * @return \Divante\VsbridgeIndexerCore\Api\DataProviderInterface
      */
     public function getDataProvider(string $name);

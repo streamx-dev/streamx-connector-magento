@@ -48,11 +48,6 @@ class StatusSelectModifier implements BaseSelectModifierInterface
     }
 
     /**
-     * @param Select $select
-     * @param int $storeId
-     *
-     * @return Select
-     *
      * @throws LocalizedException
      */
     public function execute(Select $select, int $storeId): Select

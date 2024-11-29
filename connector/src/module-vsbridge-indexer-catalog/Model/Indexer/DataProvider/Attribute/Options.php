@@ -36,7 +36,7 @@ class Options implements DataProviderInterface
     /**
      * @inheritdoc
      */
-    public function addData(array $indexData, $storeId)
+    public function addData(array $indexData, int $storeId): array
     {
         foreach ($indexData as $attributeId => $attributeData) {
             $attributeData['default_frontend_label'] = $attributeData['frontend_label'];

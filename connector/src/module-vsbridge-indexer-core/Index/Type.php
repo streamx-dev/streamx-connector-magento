@@ -42,10 +42,7 @@ class Type implements TypeInterface
         $this->dataProviders = $dataProviders;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }

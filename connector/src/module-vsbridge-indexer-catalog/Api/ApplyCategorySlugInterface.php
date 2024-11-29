@@ -4,10 +4,5 @@ namespace Divante\VsbridgeIndexerCatalog\Api;
 
 interface ApplyCategorySlugInterface
 {
-    /**
-     * @param array $category
-     *
-     * @return array
-     */
-    public function execute(array $category);
+    public function execute(array $category): array;
 }

@@ -58,10 +58,7 @@ class Product extends AbstractMapping implements MappingInterface
         parent::__construct($staticFieldMapping);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getMappingProperties()
+    public function getMappingProperties(): array
     {
         if (null === $this->properties) {
             $allAttributesMapping = $this->getAllAttributesMappingProperties();

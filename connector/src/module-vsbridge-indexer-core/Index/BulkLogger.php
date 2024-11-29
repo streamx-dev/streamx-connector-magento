@@ -23,12 +23,7 @@ class BulkLogger implements BulkLoggerInterface
         $this->logger = $logger;
     }
 
-    /**
-     * @param BulkResponseInterface $bulkResponse
-     *
-     * @return void
-     */
-    public function log(BulkResponseInterface $bulkResponse)
+    public function log(BulkResponseInterface $bulkResponse): void
     {
         if ($bulkResponse->hasErrors()) {
             $aggregateErrorsByReason = $bulkResponse->aggregateErrorsByReason();

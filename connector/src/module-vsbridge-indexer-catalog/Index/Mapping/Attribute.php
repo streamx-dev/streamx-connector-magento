@@ -83,10 +83,7 @@ class Attribute implements MappingInterface
         'frontend_input_renderer',
     ];
 
-    /**
-     * @inheritdoc
-     */
-    public function getMappingProperties()
+    public function getMappingProperties(): array
     {
         $properties = [];
 

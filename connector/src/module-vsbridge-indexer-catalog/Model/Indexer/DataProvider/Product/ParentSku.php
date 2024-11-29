@@ -43,13 +43,8 @@ class ParentSku implements DataProviderInterface
 
     /**
      * @inheritDoc
-     *
-     * @param array $indexData
-     * @param int $storeId
-     *
-     * @return array
      */
-    public function addData(array $indexData, $storeId)
+    public function addData(array $indexData, int $storeId): array
     {
         if (!$this->configSettings->addParentSku()) {
             return $indexData;

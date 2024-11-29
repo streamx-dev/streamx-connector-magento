@@ -62,10 +62,6 @@ class LoadTierPrices implements LoadTierPricesInterface
     }
 
     /**
-     * @param array $indexData
-     * @param int $storeId
-     *
-     * @return array
      * @throws \Exception
      * @throws \Magento\Framework\Exception\LocalizedException
      */
