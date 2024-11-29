@@ -45,8 +45,6 @@ class GetAttributeFields
     }
 
     /**
-     * @param array $row
-     *
      * @return array
      */
     public function execute(array $row)

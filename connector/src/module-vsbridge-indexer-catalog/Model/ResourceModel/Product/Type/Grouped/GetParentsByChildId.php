@@ -52,8 +52,6 @@ class GetParentsByChildId implements GetParentsByChildIdInterface
     /**
      * Build Select
      *
-     * @param array $childId
-     *
      * @return Select
      */
     private function buildSelect(array $childId): Select
@@ -74,8 +72,6 @@ class GetParentsByChildId implements GetParentsByChildIdInterface
 
     /**
      * Retrieve sku for parents
-     *
-     * @param array $productIds
      *
      * @return array
      */

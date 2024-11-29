@@ -63,8 +63,6 @@ class InventoryConverter implements InventoryConverterInterface
     }
 
     /**
-     * @param array $stockData
-     *
      * @return array
      */
     public function prepareStockData(array $stockData)

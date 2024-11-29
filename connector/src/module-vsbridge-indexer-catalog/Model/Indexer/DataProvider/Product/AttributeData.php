@@ -79,8 +79,6 @@ class AttributeData implements DataProviderInterface
     }
 
     /**
-     * @param array $productData
-     *
      * @return array
      */
     private function applySlug(array $productData): array

@@ -51,7 +51,6 @@ class Children
     }
 
     /**
-     * @param array $category
      * @param int $storeId
      *
      * @return array
@@ -75,7 +74,6 @@ class Children
     }
 
     /**
-     * @param array $category
      * @param int $storeId
      *
      * @return array

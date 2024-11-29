@@ -33,7 +33,6 @@ class CustomOptionValues
     }
 
     /**
-     * @param array $optionIds
      * @param int $storeId
      *
      * @return array
@@ -46,7 +45,6 @@ class CustomOptionValues
     }
 
     /**
-     * @param array $optionIds
      * @param int $storeId
      *
      * @return Select

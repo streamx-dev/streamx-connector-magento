@@ -10,7 +10,6 @@ class OptionCollectionToArray
 {
     /**
      * @param OptionCollection $collection
-     * @param array $additional
      *
      * @return array
      */

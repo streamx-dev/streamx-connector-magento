@@ -70,8 +70,6 @@ class BulkResponse implements BulkResponseInterface
     }
 
     /**
-     * @param array $item
-     *
      * @return array
      */
     private function prepareErrorByReason(array $item)

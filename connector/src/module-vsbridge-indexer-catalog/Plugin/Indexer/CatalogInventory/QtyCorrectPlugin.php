@@ -20,7 +20,6 @@ class QtyCorrectPlugin
     /**
      * @param QtyCounterInterface $subject
      * @param callable $proceed
-     * @param array $items
      * @param int $websiteId
      * @param string $operator
      *

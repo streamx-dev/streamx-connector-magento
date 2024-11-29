@@ -105,8 +105,6 @@ class LoadTierPrices implements LoadTierPricesInterface
     }
 
     /**
-     * @param array $productTierPrice
-     *
      * @return array
      */
     private function prepareTierPrices(array $productTierPrice)

@@ -149,8 +149,6 @@ class AttributeData implements AttributeDataProviderInterface
     }
 
     /**
-     * @param array $category
-     * @param array $groupedChildren
      * @param int $storeId
      *
      * @return array
@@ -167,8 +165,6 @@ class AttributeData implements AttributeDataProviderInterface
     }
 
     /**
-     * @param array $children
-     *
      * @return array
      */
     private function groupChildrenById(array $children)
@@ -184,7 +180,6 @@ class AttributeData implements AttributeDataProviderInterface
     }
 
     /**
-     * @param array $categories
      * @param int $rootId
      * @param int $storeId
      *
@@ -228,7 +223,6 @@ class AttributeData implements AttributeDataProviderInterface
     }
 
     /**
-     * @param array $categoryDTO
      * @param int $storeId
      *
      * @return array
@@ -252,7 +246,6 @@ class AttributeData implements AttributeDataProviderInterface
     }
 
     /**
-     * @param array $category
      * @param $storeId
      *
      * @return array
@@ -273,7 +266,6 @@ class AttributeData implements AttributeDataProviderInterface
     }
 
     /**
-     * @param array $category
      * @param int $storeId
      *
      * @return array
@@ -294,8 +286,6 @@ class AttributeData implements AttributeDataProviderInterface
     }
 
     /**
-     * @param array $categoryDTO
-     *
      * @return array
      */
     private function addSlug(array $categoryDTO)
@@ -304,8 +294,6 @@ class AttributeData implements AttributeDataProviderInterface
     }
 
     /**
-     * @param array $categoryData
-     *
      * @return array
      */
     private function filterData(array $categoryData)

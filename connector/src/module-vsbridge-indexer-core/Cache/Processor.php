@@ -57,7 +57,6 @@ class Processor
     /**
      * @param int $storeId
      * @param string $dataType
-     * @param array $entityIds
      *
      * @return $this
      */
@@ -81,7 +80,6 @@ class Processor
     /**
      * @param int $storeId
      * @param string $dataType
-     * @param array $entityIds
      */
     public function cleanCacheInBatches(int $storeId, string $dataType, array $entityIds)
     {
@@ -109,7 +107,6 @@ class Processor
 
     /**
      * @param int $storeId
-     * @param array $tags
      */
     public function cleanCacheByTags($storeId, array $tags)
     {
@@ -165,7 +162,6 @@ class Processor
     /**
      * @param int $storeId
      * @param string $type
-     * @param array  $ids
      *
      * @return string
      */
@@ -191,7 +187,6 @@ class Processor
 
     /**
      * @param string $type
-     * @param array $ids
      *
      * @return string
      */

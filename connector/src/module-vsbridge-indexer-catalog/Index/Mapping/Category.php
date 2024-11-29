@@ -114,9 +114,6 @@ class Category extends AbstractMapping implements MappingInterface
     /**
      * Get Children Data Mapping
      *
-     * @param array $allAttributesMapping
-     * @param array $commonProperties
-     *
      * @return array
      */
     private function getChildrenDataMapping(array $allAttributesMapping, array $commonProperties)

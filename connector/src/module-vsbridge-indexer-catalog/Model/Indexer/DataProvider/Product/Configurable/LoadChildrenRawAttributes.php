@@ -59,8 +59,6 @@ class LoadChildrenRawAttributes
 
     /**
      * @param int $storeId
-     * @param array $allChildren
-     * @param array $configurableAttributeCodes
      *
      * @return array
      * @throws \Exception
@@ -146,8 +144,6 @@ class LoadChildrenRawAttributes
 
     /**
      * @param int $storeId
-     *
-     * @param array $documents
      *
      * @return \Generator
      */

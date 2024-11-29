@@ -62,7 +62,6 @@ class Product
 
     /**
      * @param int $storeId
-     * @param array $productIds
      * @param int $fromId
      * @param int $limit
      *
@@ -89,7 +88,6 @@ class Product
     }
 
     /**
-     * @param array $requiredColumns
      * @param int $storeId
      *
      * @return Select
@@ -134,7 +132,6 @@ class Product
     }
 
     /**
-     * @param array $parentIds
      * @param int $storeId
      *
      * @return array
@@ -189,8 +186,6 @@ class Product
     }
 
     /**
-     * @param array $childrenIds
-     *
      * @return array
      * @throws \Exception
      */

@@ -36,8 +36,6 @@ class ParentResolver
     }
 
     /**
-     * @param array $childIds
-     *
      * @return void
      */
     public function load(array $childIds)

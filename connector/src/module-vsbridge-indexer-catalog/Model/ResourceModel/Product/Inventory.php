@@ -37,8 +37,6 @@ class Inventory
     }
 
     /**
-     * @param array $productIds
-     *
      * @return array
      */
     public function loadInventory(array $productIds): array
@@ -47,8 +45,6 @@ class Inventory
     }
 
     /**
-     * @param array $productIds
-     *
      * @return array
      */
     public function loadChildrenInventory(array $productIds): array
@@ -57,9 +53,6 @@ class Inventory
     }
 
     /**
-     * @param array $productIds
-     * @param array $fields
-     *
      * @return array
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

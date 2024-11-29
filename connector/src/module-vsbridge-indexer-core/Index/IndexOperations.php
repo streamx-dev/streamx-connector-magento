@@ -302,7 +302,6 @@ class IndexOperations implements IndexOperationInterface
      * Check if pending tasks + batch indexer size (StreamxIndexer indices setting)
      * are lower than max bulk queue size master node
      *
-     * @param array $clusterHealth
      * @param $storeId
      *
      * @return void
