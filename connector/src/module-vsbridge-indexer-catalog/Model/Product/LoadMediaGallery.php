@@ -91,8 +91,6 @@ class LoadMediaGallery implements LoadMediaGalleryInterface
     /**
      * Map Row Id to Entity Id
      *
-     * @param array $products
-     *
      * @return void
      */
     private function mapRowIdToEntityId(array $products)
@@ -108,8 +106,6 @@ class LoadMediaGallery implements LoadMediaGalleryInterface
     }
 
     /**
-     * @param array $mediaGallery
-     *
      * @return array
      */
     private function getValueIds(array $mediaGallery)
@@ -126,8 +122,6 @@ class LoadMediaGallery implements LoadMediaGalleryInterface
     }
 
     /**
-     * @param array $video
-     *
      * @return array
      */
     private function prepareVideoData(array $video)
@@ -154,7 +148,6 @@ class LoadMediaGallery implements LoadMediaGalleryInterface
 
     /**
      * @param string $fieldKey
-     * @param array  $image
      *
      * @return string
      */

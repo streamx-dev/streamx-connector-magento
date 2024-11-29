@@ -18,7 +18,6 @@ class Product
 
     /**
      * @param int $storeId
-     * @param array $productIds
      *
      * @return \Generator
      * @throws \Magento\Framework\Exception\LocalizedException
@@ -52,8 +51,6 @@ class Product
     }
 
     /**
-     * @param array $childrenIds
-     *
      * @return array
      */
     private function getProductIds(array $childrenIds)

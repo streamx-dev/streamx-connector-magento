@@ -49,7 +49,6 @@ class Category
 
     /**
      * @param int $storeId
-     * @param array $productIds
      *
      * @return array
      * @throws \Magento\Framework\Exception\LocalizedException
@@ -76,7 +75,6 @@ class Category
     }
 
     /**
-     * @param array $categoryIds
      * @param int $storeId
      *
      * @return array|mixed
@@ -105,7 +103,6 @@ class Category
     }
 
     /**
-     * @param array $loadCategoryIds
      * @param int $storeId
      *
      * @return array

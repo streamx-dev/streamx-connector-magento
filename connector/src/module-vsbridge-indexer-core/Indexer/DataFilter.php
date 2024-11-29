@@ -23,9 +23,6 @@ class DataFilter
     }
 
     /**
-     * @param array      $dtoToFilter
-     * @param array|null $blackList
-     *
      * @return array
      */
     public function execute(array $dtoToFilter, array $blackList = null)

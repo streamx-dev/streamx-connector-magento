@@ -7,7 +7,6 @@ namespace Divante\VsbridgeIndexerCatalog\Model\Indexer\DataProvider\Product\Attr
 class GetProductValues
 {
     /**
-     * @param array $productDTO
      * @param string $attributeCode
      *
      * @return array
@@ -31,7 +30,6 @@ class GetProductValues
     }
 
     /**
-     * @param array $productDTO
      * @param string $attributeCode
      *
      * @return array

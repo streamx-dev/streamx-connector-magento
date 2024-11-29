@@ -63,9 +63,6 @@ class StoreManager
         return $this->loadedStores = $allowedStores;
     }
 
-    /**
-     * @param array $stores
-     */
     public function override(array $stores)
     {
         $this->loadedStores = $stores;

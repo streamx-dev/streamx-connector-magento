@@ -58,8 +58,6 @@ class Bundle
     }
 
     /**
-     * @param array $products
-     *
      * @return void
      * @throws \Exception
      */
@@ -212,8 +210,6 @@ class Bundle
     }
 
     /**
-     * @param array $productIds
-     *
      * @return array
      */
     private function getProductSku(array $productIds)

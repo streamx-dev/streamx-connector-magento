@@ -28,7 +28,6 @@ class Rewrite
     }
 
     /**
-     * @param array $productIds
      * @param int $storeId
      *
      * @return array

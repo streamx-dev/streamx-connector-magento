@@ -150,7 +150,6 @@ class LoadOptions
 
     /**
      * @param OptionCollection $collection
-     * @param array $additional
      *
      * @return array
      */

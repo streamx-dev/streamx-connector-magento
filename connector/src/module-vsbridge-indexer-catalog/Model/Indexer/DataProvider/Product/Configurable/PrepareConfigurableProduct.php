@@ -5,8 +5,6 @@ namespace Divante\VsbridgeIndexerCatalog\Model\Indexer\DataProvider\Product\Conf
 class PrepareConfigurableProduct
 {
     /**
-     * @param array $productDTO
-     *
      * @return array
      */
     public function execute(array $productDTO): array

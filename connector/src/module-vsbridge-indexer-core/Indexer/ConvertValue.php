@@ -46,7 +46,6 @@ class ConvertValue implements ConvertValueInterface
     }
 
     /**
-     * @param array $mapping
      * @param string $field
      *
      * @return string|null

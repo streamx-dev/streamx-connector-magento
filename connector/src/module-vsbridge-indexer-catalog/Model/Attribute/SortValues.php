@@ -7,8 +7,6 @@ namespace Divante\VsbridgeIndexerCatalog\Model\Attribute;
 class SortValues
 {
     /**
-     * @param array $options
-     *
      * @return array
      */
     public function execute(array $options)

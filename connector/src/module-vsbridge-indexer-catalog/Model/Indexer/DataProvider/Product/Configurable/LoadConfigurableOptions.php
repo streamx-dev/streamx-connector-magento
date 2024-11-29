@@ -36,7 +36,6 @@ class LoadConfigurableOptions
     /**
      * @param string $attributeCode
      * @param int $storeId
-     * @param array $configurableChildren
      *
      * @return array
      */

@@ -117,7 +117,6 @@ class ConfigurableData implements DataProviderInterface
     }
 
     /**
-     * @param array $indexData
      * @param int $storeId
      *
      * @return array
@@ -173,7 +172,6 @@ class ConfigurableData implements DataProviderInterface
     /**
      * Apply attributes to product variants + extra options for products necessary for vsf
      *
-     * @param array $productDTO
      * @param int $storeId
      *
      * @return array
@@ -224,8 +222,6 @@ class ConfigurableData implements DataProviderInterface
     }
 
     /**
-     * @param array $productDTO
-     *
      * @return array
      */
     private function prepareConfigurableProduct(array $productDTO): array
@@ -234,8 +230,6 @@ class ConfigurableData implements DataProviderInterface
     }
 
     /**
-     * @param array $productData
-     *
      * @return array
      */
     private function filterData(array $productData): array

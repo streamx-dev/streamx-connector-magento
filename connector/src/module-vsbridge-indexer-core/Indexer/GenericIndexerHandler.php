@@ -86,7 +86,6 @@ class GenericIndexerHandler
      *
      * @param Traversable $documents
      * @param StoreInterface $store
-     * @param array $requireDataProvides
      *
      * @return $this
      * @throws ConnectionUnhealthyException
@@ -200,7 +199,6 @@ class GenericIndexerHandler
      * Removed unnecessary documents in ES by transaction key
      *
      * @param StoreInterface $store
-     * @param array $docIds
      *
      * @return void
      */

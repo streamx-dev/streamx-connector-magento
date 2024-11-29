@@ -10,7 +10,6 @@ class ProductsForReindex
     private $productsForReindex = [];
 
     /**
-     * @param array $items
      * @return void
      */
     public function setProducts(array $items)

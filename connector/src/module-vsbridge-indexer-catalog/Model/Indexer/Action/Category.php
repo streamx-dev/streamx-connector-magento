@@ -18,7 +18,6 @@ class Category
 
     /**
      * @param int $storeId
-     * @param array $categoryIds
      *
      * @return \Generator
      * @throws \Magento\Framework\Exception\NoSuchEntityException

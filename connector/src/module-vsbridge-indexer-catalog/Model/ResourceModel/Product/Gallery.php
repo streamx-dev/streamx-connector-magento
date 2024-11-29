@@ -47,7 +47,6 @@ class Gallery
     }
 
     /**
-     * @param array $linkFieldIds
      * @param int $storeId
      *
      * @return array
@@ -72,7 +71,6 @@ class Gallery
     }
 
     /**
-     * @param array $valueIds
      * @param int $storeId
      *
      * @return array
@@ -97,7 +95,6 @@ class Gallery
     }
 
     /**
-     * @param array $valueIds
      * @param int $storeId
      *
      * @return array
@@ -140,8 +137,6 @@ class Gallery
     }
 
     /**
-     * @param array $rowData
-     *
      * @return array
      */
     private function substituteNullsWithDefaultValues(array $rowData)
@@ -160,7 +155,6 @@ class Gallery
     }
 
     /**
-     * @param array $linkFieldIds
      * @param int   $storeId
      *
      * @return Select
