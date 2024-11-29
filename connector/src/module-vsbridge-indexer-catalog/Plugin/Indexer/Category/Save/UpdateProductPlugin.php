@@ -28,7 +28,6 @@ class UpdateProductPlugin
     /**
      * Update product category data in ES after changing category products
      *
-     * @param \Magento\Catalog\Model\Category $category
      * @return \Magento\Catalog\Model\Category
      */
     public function afterSave(\Magento\Catalog\Model\Category $category)

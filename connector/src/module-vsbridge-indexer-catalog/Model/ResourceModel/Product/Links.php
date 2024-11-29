@@ -165,8 +165,6 @@ class Links
     }
 
     /**
-     * @param Select $select
-     *
      * @return Select
      */
     private function joinPositionAttribute(Select $select)

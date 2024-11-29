@@ -29,8 +29,6 @@ class ConfigurableChildAttributes extends AbstractAttributeSource
     /**
      * @inheritDoc
      *
-     * @param \Magento\Catalog\Api\Data\ProductAttributeInterface $attribute
-     *
      * @return bool
      */
     public function canAddAttribute(\Magento\Catalog\Api\Data\ProductAttributeInterface $attribute): bool

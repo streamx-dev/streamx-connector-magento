@@ -26,14 +26,11 @@ class AttributeSavePlugin
     }
 
     /**
-     * @param Save $subject
-     * @param Redirect $result
-     *
      * @return Redirect
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function afterExecute(Save $subject, $result)
+    public function afterExecute(Save $subject, Redirect $result)
     {
         $productIds = $this->attributeHelper->getProductIds();
 

@@ -239,11 +239,9 @@ class AttributeData implements AttributeDataProviderInterface
     }
 
     /**
-     * @param $storeId
-     *
      * @return array
      */
-    private function addAvailableSortByOption(array $category, $storeId): array
+    private function addAvailableSortByOption(array $category, int $storeId): array
     {
         if (!$this->categoryAttributes->canAddAvailableSortBy($storeId)) {
             return $category;

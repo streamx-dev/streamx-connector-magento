@@ -11,8 +11,6 @@ interface EavAttributesInterface
     public function loadAttributesData(int $storeId, array $entityIds, array $requiredAttributes = null): array;
 
     /**
-     * @param \Magento\Eav\Model\Entity\Attribute $attribute
-     *
      * @return bool
      */
     public function canIndexAttribute(\Magento\Eav\Model\Entity\Attribute $attribute, array $allowedAttributes = null);

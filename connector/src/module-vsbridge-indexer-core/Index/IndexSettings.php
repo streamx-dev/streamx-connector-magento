@@ -88,8 +88,6 @@ class IndexSettings
     }
 
     /**
-     * @param StoreInterface $store
-     *
      * @return string
      */
     public function createIndexName(StoreInterface $store)
@@ -101,8 +99,6 @@ class IndexSettings
     }
 
     /**
-     * @param StoreInterface $store
-     *
      * @return string
      */
     public function getIndexAlias(StoreInterface $store)
@@ -118,8 +114,6 @@ class IndexSettings
     }
 
     /**
-     * @param StoreInterface $store
-     *
      * @return string
      */
     private function getStoreIdentifier(StoreInterface $store)
