@@ -282,7 +282,7 @@ class Configurable
      * @throws \Magento\Framework\Exception\LocalizedException
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getSimpleProducts(int $storeId): array
+    public function getSimpleProducts(int $storeId): ?array
     {
         if (null === $this->simpleProducts) {
             $parentIds = $this->getParentIds();
