@@ -68,8 +68,6 @@ class StatusSelectModifier implements BaseSelectModifierInterface
     /**
      * Retrieve Store join conditions
      *
-     * @param int $storeId
-     *
      * @return string
      * @throws LocalizedException
      */

@@ -34,12 +34,10 @@ class StoreManager
     }
 
     /**
-     * @param int|null $storeId
-     *
      * @return array|\Magento\Store\Api\Data\StoreInterface[]
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getStores($storeId = null)
+    public function getStores(int $storeId = null)
     {
         if ($this->loadedStores) {
             return $this->loadedStores;

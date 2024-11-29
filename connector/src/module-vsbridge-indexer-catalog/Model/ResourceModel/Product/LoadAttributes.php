@@ -65,8 +65,6 @@ class LoadAttributes
     }
 
     /**
-     * @param int $attributeId
-     *
      * @return Attribute
      * @throws \Magento\Framework\Exception\LocalizedException
      */

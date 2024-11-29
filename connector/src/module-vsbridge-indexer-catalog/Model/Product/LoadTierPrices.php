@@ -118,12 +118,10 @@ class LoadTierPrices implements LoadTierPricesInterface
     }
 
     /**
-     * @param int $storeId
-     *
      * @return int
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    private function getWebsiteId($storeId)
+    private function getWebsiteId(int $storeId)
     {
         $attribute = $this->getTierPriceAttribute();
         $websiteId = 0;

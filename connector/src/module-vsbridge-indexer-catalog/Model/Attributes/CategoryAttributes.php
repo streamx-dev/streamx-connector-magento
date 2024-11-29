@@ -31,8 +31,6 @@ class CategoryAttributes
     /**
      * Retrieve required attributes for category
      *
-     * @param int $storeId
-     *
      * @return array
      */
     public function getRequiredAttributes(int $storeId)
@@ -49,8 +47,6 @@ class CategoryAttributes
     }
 
     /**
-     * @param int $storeId
-     *
      * @return bool
      */
     public function canAddAvailableSortBy(int $storeId): bool
@@ -59,8 +55,6 @@ class CategoryAttributes
     }
 
     /**
-     * @param int $storeId
-     *
      * @return bool
      */
     public function canAddDefaultSortBy(int $storeId): bool
@@ -70,7 +64,6 @@ class CategoryAttributes
 
     /**
      * @param string $attributeCode
-     * @param int $storeId
      *
      * @return bool
      */

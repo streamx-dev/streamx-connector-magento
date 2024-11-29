@@ -40,8 +40,6 @@ class ConfigurableAttributes
     }
 
     /**
-     * @param int $storeId
-     *
      * @return array
      */
     public function getChildrenRequiredAttributes(int $storeId): array
@@ -60,11 +58,9 @@ class ConfigurableAttributes
     }
 
     /**
-     * @param int $storeId
-     *
      * @return bool
      */
-    public function canIndexMediaGallery($storeId): bool
+    public function canIndexMediaGallery(int $storeId): bool
     {
         if (null === $this->canIndexMediaGallery) {
             $attributes = $this->getChildrenRequiredAttributes($storeId);

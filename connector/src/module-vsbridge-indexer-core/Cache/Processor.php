@@ -55,12 +55,11 @@ class Processor
     }
 
     /**
-     * @param int $storeId
      * @param string $dataType
      *
      * @return $this
      */
-    public function cleanCacheByDocIds($storeId, $dataType, array $entityIds)
+    public function cleanCacheByDocIds(int $storeId, $dataType, array $entityIds)
     {
         if ($this->config->clearCache($storeId)) {
             if (!empty($entityIds)) {
@@ -78,7 +77,6 @@ class Processor
     }
 
     /**
-     * @param int $storeId
      * @param string $dataType
      */
     public function cleanCacheInBatches(int $storeId, string $dataType, array $entityIds)
@@ -105,10 +103,7 @@ class Processor
         }
     }
 
-    /**
-     * @param int $storeId
-     */
-    public function cleanCacheByTags($storeId, array $tags)
+    public function cleanCacheByTags(int $storeId, array $tags)
     {
         $storeId = (int) $storeId;
 
@@ -125,8 +120,6 @@ class Processor
     }
 
     /**
-     * @param int $storeId
-     *
      * @return int
      */
     private function getInvalidateEntitiesBatchSize(int $storeId)
@@ -160,12 +153,11 @@ class Processor
     }
 
     /**
-     * @param int $storeId
      * @param string $type
      *
      * @return string
      */
-    private function getCacheInvalidateUrl($storeId, $type, array $ids)
+    private function getCacheInvalidateUrl(int $storeId, $type, array $ids)
     {
         $fullUrl = $this->getInvalidateCacheUrl($storeId);
         $params = $this->prepareTagsByDocIds($type, $ids);

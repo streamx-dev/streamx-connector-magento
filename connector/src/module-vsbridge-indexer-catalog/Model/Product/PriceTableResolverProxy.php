@@ -44,9 +44,6 @@ class PriceTableResolverProxy
     }
 
     /**
-     * @param int $websiteId
-     * @param int $customerGroupId
-     *
      * @return string
      */
     public function resolve(int $websiteId, int $customerGroupId): string

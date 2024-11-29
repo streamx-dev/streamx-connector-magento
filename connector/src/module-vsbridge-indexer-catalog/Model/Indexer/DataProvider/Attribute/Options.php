@@ -51,11 +51,9 @@ class Options implements DataProviderInterface
     }
 
     /**
-     * @param int   $storeId
-     *
      * @return array
      */
-    public function getAttributeOptions(array $attributeData, $storeId)
+    public function getAttributeOptions(array $attributeData, int $storeId)
     {
         return $this->loadOptions->execute($attributeData['attribute_code'], $storeId);
     }
@@ -70,11 +68,9 @@ class Options implements DataProviderInterface
     }
 
     /**
-     * @param int $attributeId
-     *
      * @return array
      */
-    private function getStoreLabelsByAttributeId($attributeId)
+    private function getStoreLabelsByAttributeId(int $attributeId)
     {
         return $this->entityAttributeResource->getStoreLabelsByAttributeId($attributeId);
     }

@@ -47,12 +47,10 @@ class Gallery
     }
 
     /**
-     * @param int $storeId
-     *
      * @return array
      * @throws \Exception
      */
-    public function loadGallerySet(array $linkFieldIds, $storeId)
+    public function loadGallerySet(array $linkFieldIds, int $storeId)
     {
         $select = $this->getLoadGallerySelect($linkFieldIds, $storeId);
 
@@ -71,11 +69,9 @@ class Gallery
     }
 
     /**
-     * @param int $storeId
-     *
      * @return array
      */
-    public function loadVideos(array $valueIds, $storeId)
+    public function loadVideos(array $valueIds, int $storeId)
     {
         if (empty($valueIds)) {
             return [];
@@ -95,11 +91,9 @@ class Gallery
     }
 
     /**
-     * @param int $storeId
-     *
      * @return array
      */
-    private function getVideoRawData(array $valueIds, $storeId)
+    private function getVideoRawData(array $valueIds, int $storeId)
     {
         $connection = $this->getConnection();
         $mainTableAlias = 'main';
@@ -155,12 +149,10 @@ class Gallery
     }
 
     /**
-     * @param int   $storeId
-     *
      * @return Select
      * @throws \Exception
      */
-    private function getLoadGallerySelect(array $linkFieldIds, $storeId)
+    private function getLoadGallerySelect(array $linkFieldIds, int $storeId)
     {
         $linkField = $this->metadataPool->get()->getLinkField();
         $attributeId = $this->getMediaGalleryAttributeId();

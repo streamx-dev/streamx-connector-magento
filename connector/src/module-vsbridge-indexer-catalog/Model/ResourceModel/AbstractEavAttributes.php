@@ -195,13 +195,12 @@ abstract class AbstractEavAttributes implements EavAttributesInterface
     /**
      * Retrieve attributes load select
      *
-     * @param int $storeId
      * @param string $table
      *
      * @return \Magento\Framework\DB\Select
      * @throws \Exception
      */
-    private function getLoadAttributesSelect($storeId, $table, array $attributeIds, array $entityIds)
+    private function getLoadAttributesSelect(int $storeId, $table, array $attributeIds, array $entityIds)
     {
         //  Either row_id (enterpise/commerce version) or entity_id.
         $linkField = $this->getEntityMetaData()->getLinkField();

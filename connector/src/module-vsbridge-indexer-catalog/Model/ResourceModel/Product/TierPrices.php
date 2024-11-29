@@ -28,12 +28,10 @@ class TierPrices
     }
 
     /**
-     * @param int $websiteId
-     *
      * @return array
      * @throws \Exception
      */
-    public function loadTierPrices($websiteId, array $linkFieldIds)
+    public function loadTierPrices(int $websiteId, array $linkFieldIds)
     {
         $linkField = $this->productMetaData->get()->getLinkField();
 

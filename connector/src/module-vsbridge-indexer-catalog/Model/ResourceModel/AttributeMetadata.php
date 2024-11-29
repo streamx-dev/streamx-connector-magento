@@ -73,8 +73,6 @@ class AttributeMetadata
     }
 
     /**
-     * @param int $storeId
-     *
      * @return array
      */
     public function getAttributes(int $storeId)
@@ -97,9 +95,6 @@ class AttributeMetadata
     }
 
     /**
-     * @param int $attributeId
-     * @param int $storeId
-     *
      * @return array
      */
     public function getOptions(int $attributeId, int $storeId): array
@@ -108,9 +103,6 @@ class AttributeMetadata
     }
 
     /**
-     * @param int $attributeId
-     * @param int $storeId
-     *
      * @return string
      */
     public function getStoreLabels(int $attributeId, int $storeId): string
@@ -119,8 +111,6 @@ class AttributeMetadata
     }
 
     /**
-     * @param int $storeId
-     *
      * @return void
      */
     private function loadOptions(array $attributes, int $storeId)
@@ -151,8 +141,6 @@ class AttributeMetadata
     }
 
     /**
-     * @param int $storeId
-     *
      * @throws \Magento\Framework\Exception\LocalizedException
      */
     private function loadSourceModelOptions(array $attributes, int $storeId)
@@ -191,8 +179,6 @@ class AttributeMetadata
     }
 
     /**
-     * @param int $storeId
-     *
      * @return void
      */
     private function loadStoreLabels(array $attributes, int $storeId)

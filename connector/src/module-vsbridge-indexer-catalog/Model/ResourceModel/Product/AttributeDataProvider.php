@@ -41,14 +41,12 @@ class AttributeDataProvider extends AbstractEavAttributes
     }
 
     /**
-     * @param int $attributeId
-     *
      * @return Attribute
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getAttributeById($attributeId)
+    public function getAttributeById(int $attributeId)
     {
-        return $this->loadAttributes->getAttributeById((int) $attributeId);
+        return $this->loadAttributes->getAttributeById($attributeId);
     }
 
     /**
