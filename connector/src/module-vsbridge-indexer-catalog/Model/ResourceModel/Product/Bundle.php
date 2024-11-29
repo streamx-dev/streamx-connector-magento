@@ -82,11 +82,9 @@ class Bundle
     }
 
     /**
-     * @param int $storeId
-     *
      * @return array
      */
-    public function loadBundleOptions($storeId)
+    public function loadBundleOptions(int $storeId)
     {
         $productIds = $this->getBundleIds();
 
@@ -103,11 +101,9 @@ class Bundle
     /**
      * Init Options
      *
-     * @param int $storeId
-     *
      * @return void
      */
-    private function initOptions($storeId)
+    private function initOptions(int $storeId)
     {
         $bundleOptions = $this->getBundleOptionsFromResource($storeId);
 
@@ -130,8 +126,6 @@ class Bundle
 
     /**
      * Append Selection
-     *
-     * @param int $storeId
      *
      * @return void
      */
@@ -222,11 +216,9 @@ class Bundle
     }
 
     /**
-     * @param int $storeId
-     *
      * @return array
      */
-    private function getBundleOptionsFromResource($storeId)
+    private function getBundleOptionsFromResource(int $storeId)
     {
         $productIds = $this->getBundleIds();
 
@@ -245,11 +237,10 @@ class Bundle
 
     /**
      * @param Select $select
-     * @param int $storeId
      *
      * @return Select
      */
-    private function joinOptionValues(Select $select, $storeId)
+    private function joinOptionValues(Select $select, int $storeId)
     {
         $select
             ->joinLeft(

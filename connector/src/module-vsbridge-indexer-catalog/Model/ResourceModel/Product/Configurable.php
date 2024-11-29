@@ -125,7 +125,6 @@ class Configurable
      * Return the attribute values of the associated simple products
      *
      * @param array $product Configurable product.
-     * @param int $storeId
      *
      * @return array
      * @throws \Exception
@@ -216,7 +215,6 @@ class Configurable
     }
 
     /**
-     * @param int $storeId
      * @return array
      * @throws \Exception
      */
@@ -230,7 +228,6 @@ class Configurable
     /**
      * Return array of all configurable attributes in the current collection.
      * Array indexes are the attribute ids, array values the attribute code
-     * @param int $storeId
      * @return array
      * @throws \Exception
      */
@@ -302,13 +299,11 @@ class Configurable
      * Return all associated simple products for the configurable products in
      * the current product collection.
      *
-     * @param int $storeId
-     *
      * @return array
      * @throws \Magento\Framework\Exception\LocalizedException
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getSimpleProducts($storeId)
+    public function getSimpleProducts(int $storeId)
     {
         if (null === $this->simpleProducts) {
             $parentIds = $this->getParentIds();

@@ -49,14 +49,10 @@ class Category
     }
 
     /**
-     * @param int $storeId
-     * @param int $fromId
-     * @param int $limit
-     *
      * @return array
      * @throws \Exception
      */
-    public function getCategories($storeId = 1, array $categoryIds = [], $fromId = 0, $limit = 1000)
+    public function getCategories(int $storeId = 1, array $categoryIds = [], int $fromId = 0, int $limit = 1000)
     {
         $select = $this->filterByStore($storeId);
         $tableName = self::MAIN_TABLE_ALIAS;
@@ -73,12 +69,10 @@ class Category
     }
 
     /**
-     * @param int $storeId
-     *
      * @return array
      * @throws \Exception
      */
-    public function getCategoryProductSelect($storeId, array $productIds)
+    public function getCategoryProductSelect(int $storeId, array $productIds)
     {
         $select = $this->filterByStore($storeId);
         $table = $this->resource->getTableName('catalog_category_product');
@@ -135,8 +129,6 @@ class Category
     }
 
     /**
-     * @param int $categoryId
-     *
      * @return int[]
      * @throws \Exception
      */
@@ -157,13 +149,11 @@ class Category
     }
 
     /**
-     * @param int $storeId
-     *
      * @return \Magento\Framework\DB\Select
      * @throws \Exception
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    private function filterByStore($storeId)
+    private function filterByStore(int $storeId)
     {
         $metaData = $this->categoryMetaData->get();
         $select = $this->getConnection()->select()->from(

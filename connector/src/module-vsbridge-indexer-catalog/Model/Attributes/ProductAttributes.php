@@ -31,8 +31,6 @@ class ProductAttributes
     }
 
     /**
-     * @param int $storeId
-     *
      * @return array
      */
     public function getAttributes(int $storeId): array

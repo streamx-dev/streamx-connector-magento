@@ -104,11 +104,9 @@ class Links
     }
 
     /**
-     * @param int $typeId
-     *
      * @return string|null
      */
-    private function getLinkType($typeId)
+    private function getLinkType(int $typeId)
     {
         return $this->linkTypeMapper->map($typeId);
     }

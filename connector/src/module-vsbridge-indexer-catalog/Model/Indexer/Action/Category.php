@@ -17,12 +17,10 @@ class Category
     }
 
     /**
-     * @param int $storeId
-     *
      * @return \Generator
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function rebuild($storeId = 1, array $categoryIds = [])
+    public function rebuild(int $storeId = 1, array $categoryIds = [])
     {
         $lastCategoryId = 0;
 

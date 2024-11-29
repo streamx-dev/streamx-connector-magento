@@ -151,7 +151,6 @@ class CategoryConfig implements CategoryConfigInterface
      * Retrieve config value by path and scope.
      *
      * @param string $configField
-     * @param int|null $storeId
      *
      * @return string|null
      */

@@ -37,8 +37,6 @@ class ConfigurableAttributesTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @param int $storeId
-     *
      * @dataProvider provideAllowedAttributes
      */
     public function testGetChildrenRequiredAttributes(int $storeId, array $selectedAttributes)

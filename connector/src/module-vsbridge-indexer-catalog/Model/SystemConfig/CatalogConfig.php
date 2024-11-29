@@ -112,11 +112,10 @@ class CatalogConfig implements CatalogConfigurationInterface
      * Retrieve config value by path and scope.
      *
      * @param string $configField
-     * @param int|null $storeId
      *
      * @return string|null
      */
-    private function getConfigParam(string $configField, $storeId = null)
+    private function getConfigParam(string $configField, int $storeId = null)
     {
         $key = $configField . (string) $storeId;
 

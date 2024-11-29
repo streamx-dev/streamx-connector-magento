@@ -53,11 +53,10 @@ class Config implements ConfigInterface
 
     /**
      * @param string $configField
-     * @param int $storeId
      *
      * @return string|null
      */
-    private function getConfigParam(string $configField, $storeId)
+    private function getConfigParam(string $configField, int $storeId)
     {
         $path = self::CACHE_SETTINGS_XML_PREFIX . '/' . $configField;
 

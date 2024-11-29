@@ -32,8 +32,6 @@ class CustomOptions
     }
 
     /**
-     * @param int $storeId
-     *
      * @return array
      */
     public function loadProductOptions(array $linkFieldIds, int $storeId): array
@@ -44,8 +42,6 @@ class CustomOptions
     }
 
     /**
-     * @param int $storeId
-     *
      * @return Select
      */
     private function getProductOptionSelect(array $linkFieldIds, int $storeId): Select
@@ -67,7 +63,6 @@ class CustomOptions
 
     /**
      * @param Select $select
-     * @param int $storeId
      *
      * @return Select
      */
@@ -105,7 +100,6 @@ class CustomOptions
 
     /**
      * @param Select $select
-     * @param int $storeId
      *
      * @return Select
      */

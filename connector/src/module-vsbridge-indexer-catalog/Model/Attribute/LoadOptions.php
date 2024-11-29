@@ -47,7 +47,6 @@ class LoadOptions
 
     /**
      * @param string $attributeCode
-     * @param int $storeId
      *
      * @return string
      */

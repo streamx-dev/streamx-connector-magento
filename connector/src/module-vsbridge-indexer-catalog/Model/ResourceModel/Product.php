@@ -61,16 +61,12 @@ class Product
     }
 
     /**
-     * @param int $storeId
-     * @param int $fromId
-     * @param int $limit
-     *
      * @return array
      * @throws \Exception
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getProducts($storeId = 1, array $productIds = [], $fromId = 0, $limit = 1000)
+    public function getProducts(int $storeId = 1, array $productIds = [], int $fromId = 0, int $limit = 1000)
     {
         $select = $this->prepareBaseProductSelect($this->getRequiredColumns(), $storeId);
         $select = $this->addProductTypeFilter($select, $storeId);
@@ -88,8 +84,6 @@ class Product
     }
 
     /**
-     * @param int $storeId
-     *
      * @return Select
      * @throws \Magento\Framework\Exception\LocalizedException
      * @throws \Magento\Framework\Exception\NoSuchEntityException
@@ -132,13 +126,11 @@ class Product
     }
 
     /**
-     * @param int $storeId
-     *
      * @return array
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function loadChildrenProducts(array $parentIds, $storeId)
+    public function loadChildrenProducts(array $parentIds, int $storeId)
     {
         $linkField = $this->productMetaData->get()->getLinkField();
         $entityId = $this->productMetaData->get()->getIdentifierField();
@@ -170,11 +162,9 @@ class Product
 
     /**
      * @param \Magento\Framework\DB\Select $select
-     * @param int $storeId
-     *
      * @return \Magento\Framework\DB\Select
      */
-    private function addProductTypeFilter(Select $select, $storeId)
+    private function addProductTypeFilter(Select $select, int $storeId)
     {
         $types = $this->productSettings->getAllowedProductTypes($storeId);
 

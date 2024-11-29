@@ -149,8 +149,6 @@ class AttributeData implements AttributeDataProviderInterface
     }
 
     /**
-     * @param int $storeId
-     *
      * @return array
      */
     private function addChildrenData(array $category, array $groupedChildren, int $storeId)
@@ -180,9 +178,6 @@ class AttributeData implements AttributeDataProviderInterface
     }
 
     /**
-     * @param int $rootId
-     * @param int $storeId
-     *
      * @return array
      */
     private function plotTree(array $categories, int $rootId, int $storeId)
@@ -223,8 +218,6 @@ class AttributeData implements AttributeDataProviderInterface
     }
 
     /**
-     * @param int $storeId
-     *
      * @return array
      */
     private function prepareCategory(array $categoryDTO, int $storeId)
@@ -266,11 +259,9 @@ class AttributeData implements AttributeDataProviderInterface
     }
 
     /**
-     * @param int $storeId
-     *
      * @return array
      */
-    private function addDefaultSortByOption(array $category, $storeId): array
+    private function addDefaultSortByOption(array $category, int $storeId): array
     {
         if (!$this->categoryAttributes->canAddDefaultSortBy($storeId)) {
             return $category;

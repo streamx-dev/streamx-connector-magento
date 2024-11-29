@@ -117,8 +117,6 @@ class ConfigurableData implements DataProviderInterface
     }
 
     /**
-     * @param int $storeId
-     *
      * @return array
      * @throws \Exception
      */
@@ -171,8 +169,6 @@ class ConfigurableData implements DataProviderInterface
 
     /**
      * Apply attributes to product variants + extra options for products necessary for vsf
-     *
-     * @param int $storeId
      *
      * @return array
      * @throws \Exception

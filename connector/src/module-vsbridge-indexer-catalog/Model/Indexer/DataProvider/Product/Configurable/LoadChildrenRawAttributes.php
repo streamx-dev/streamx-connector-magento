@@ -58,13 +58,11 @@ class LoadChildrenRawAttributes
     }
 
     /**
-     * @param int $storeId
-     *
      * @return array
      * @throws \Exception
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function execute($storeId, array $allChildren, array $configurableAttributeCodes)
+    public function execute(int $storeId, array $allChildren, array $configurableAttributeCodes)
     {
         $requiredAttributes = $this->getRequiredChildrenAttributes($storeId);
 
@@ -133,18 +131,14 @@ class LoadChildrenRawAttributes
     }
 
     /**
-     * @param int $storeId
-     *
      * @return array
      */
-    private function getRequiredChildrenAttributes($storeId): array
+    private function getRequiredChildrenAttributes(int $storeId): array
     {
         return $this->configurableAttributes->getChildrenRequiredAttributes($storeId);
     }
 
     /**
-     * @param int $storeId
-     *
      * @return \Generator
      */
     private function getChildrenInBatches(array $documents, int $storeId)
@@ -170,8 +164,6 @@ class LoadChildrenRawAttributes
 
     /**
      * Retrieve batch size
-     *
-     * @param int $storeId
      *
      * @return int
      */

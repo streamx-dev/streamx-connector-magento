@@ -28,11 +28,9 @@ class Rewrite
     }
 
     /**
-     * @param int $storeId
-     *
      * @return array
      */
-    public function getRawRewritesData(array $productIds, $storeId)
+    public function getRawRewritesData(array $productIds, int $storeId)
     {
         $connection = $this->resource->getConnection();
         $select = $this->resource->getConnection()->select();
