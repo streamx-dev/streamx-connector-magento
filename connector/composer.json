@@ -3,11 +3,6 @@
   "description": "Magento connector for StreamX - a Digital Experience Data Mesh.",
   "version": "1.0.0",
   "type": "magento2-component",
-  "license": "MIT",
-  "authors": [{
-    "name": "Agata",
-    "email": "afirlejczyk@divante.pl"
-  }],
   "keywords": [
     "magento",
     "magento2",
@@ -36,20 +31,14 @@
     "phpunit/phpunit": "^9.5",
     "ext-xdebug": "*"
   },
-  "replace": {
-    "divante/module-vsf-indexer-core": "self.version",
-    "divante/module-vsf-indexer-catalog": "self.version",
-    "divante/module-vsf-indexer-tax": "self.version",
-    "divante/module-vsf-indexer-cms": "self.version"
-  },
   "autoload": {
     "files": [
-      "src/module-vsbridge-indexer-core/registration.php",
-      "src/module-vsbridge-indexer-catalog/registration.php"
+      "src/core/registration.php",
+      "src/catalog/registration.php"
     ],
     "psr-4": {
-      "Divante\\VsbridgeIndexerCore\\": "src/module-vsbridge-indexer-core",
-      "Divante\\VsbridgeIndexerCatalog\\": "src/module-vsbridge-indexer-catalog"
+      "Divante\\VsbridgeIndexerCore\\": "src/core",
+      "Divante\\VsbridgeIndexerCatalog\\": "src/catalog"
     }
   },
   "config": {

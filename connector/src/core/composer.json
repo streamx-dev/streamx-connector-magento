@@ -1,5 +1,5 @@
 {
-    "name": "divante/module-vsbridge-indexer-core",
+    "name": "streamx-connector/core",
     "type": "magento2-module",
     "autoload": {
         "files": [
