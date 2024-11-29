@@ -2,7 +2,6 @@
 
 namespace Divante\VsbridgeIndexerCore\Streamx;
 
-use Divante\VsbridgeIndexerCore\Api\Client\BuilderInterface as ClientBuilder;
 use Divante\VsbridgeIndexerCore\Api\Client\ClientInterface;
 use Divante\VsbridgeIndexerCore\Api\Client\ClientInterfaceFactory;
 use Divante\VsbridgeIndexerCore\Api\Client\ConfigurationInterface;
@@ -14,30 +13,19 @@ class ClientResolver {
     private array $clients = [];
 
     private GeneralConfigInterface $config;
-
-    private ClientBuilder $clientBuilder;
-
-    private ConfigurationInterfaceFactory $clientConfigurationFactory;
-
     private ClientInterfaceFactory $clientFactory;
+    private ConfigurationInterfaceFactory $clientConfigurationFactory;
+    private StreamxPublisherProvider $streamxPublisherProvider;
 
-    /**
-     * ClientResolver constructor.
-     *
-     * @param GeneralConfigInterface $config
-     * @param ClientBuilder $clientBuilder
-     * @param ClientInterfaceFactory $clientFactory
-     * @param ConfigurationInterfaceFactory $clientConfiguration
-     */
     public function __construct(
         GeneralConfigInterface        $config,
-        ClientBuilder                 $clientBuilder,
         ClientInterfaceFactory        $clientFactory,
-        ConfigurationInterfaceFactory $clientConfiguration) {
+        ConfigurationInterfaceFactory $clientConfiguration,
+        StreamxPublisherProvider      $streamxPublisherProvider) {
         $this->config = $config;
         $this->clientFactory = $clientFactory;
-        $this->clientBuilder = $clientBuilder;
         $this->clientConfigurationFactory = $clientConfiguration;
+        $this->streamxPublisherProvider = $streamxPublisherProvider;
     }
 
     public function getClient(int $storeId): ClientInterface {
@@ -48,8 +36,8 @@ class ClientResolver {
         if (!isset($this->clients[$storeId])) {
             /** @var ConfigurationInterface $configuration */
             $configuration = $this->clientConfigurationFactory->create(['storeId' => $storeId]);
-            $httpClient = $this->clientBuilder->build($configuration->getOptions($storeId));
-            $this->clients[$storeId] = $this->clientFactory->create(['client' => $httpClient]);
+            $publisher = $this->streamxPublisherProvider->buildPublisher($configuration->getOptions($storeId));
+            $this->clients[$storeId] = $this->clientFactory->create(['publisher' => $publisher]);
         }
 
         return $this->clients[$storeId];

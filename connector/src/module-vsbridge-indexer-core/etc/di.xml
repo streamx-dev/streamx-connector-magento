@@ -12,7 +12,6 @@
     <preference for="Divante\VsbridgeIndexerCore\Api\BulkLoggerInterface" type="Divante\VsbridgeIndexerCore\Index\BulkLogger"/>
     <preference for="Divante\VsbridgeIndexerCore\Api\Client\ClientInterface" type="Divante\VsbridgeIndexerCore\Streamx\Client"/>
     <preference for="Divante\VsbridgeIndexerCore\Api\Client\ConfigurationInterface" type="Divante\VsbridgeIndexerCore\Streamx\ClientConfiguration"/>
-    <preference for="Divante\VsbridgeIndexerCore\Api\Client\BuilderInterface" type="Divante\VsbridgeIndexerCore\Streamx\ClientBuilder"/>
     <preference for="Divante\VsbridgeIndexerCore\Api\Index\TypeInterface" type="Divante\VsbridgeIndexerCore\Index\Type"/>
     <preference for="Divante\VsbridgeIndexerCore\Api\Indexer\TransactionKeyInterface" type="Divante\VsbridgeIndexerCore\Indexer\TransactionKey"/>
     <preference for="Divante\VsbridgeIndexerCore\Api\BulkRequestInterface" type="Divante\VsbridgeIndexerCore\Index\BulkRequest"/>
@@ -54,13 +53,14 @@
     </type>
 
     <!-- Prevent sensitive fields from getting dumped with store config -->
-    <type name="Magento\Config\Model\Config\TypePool">
-        <arguments>
-            <argument name="sensitive" xsi:type="array">
-                <item name="vsbridge_indexer_settings/es_client/auth_pwd" xsi:type="string">1</item>
-            </argument>
-        </arguments>
-    </type>
+    <!-- TODO add any sensitive data such as auth tokens to the Rest Ingestion endpoint here -->
+    <!--    <type name="Magento\Config\Model\Config\TypePool">-->
+    <!--        <arguments>-->
+    <!--            <argument name="sensitive" xsi:type="array">-->
+    <!--                <item name="vsbridge_indexer_settings/streamx_client/auth_pwd" xsi:type="string">1</item>-->
+    <!--            </argument>-->
+    <!--        </arguments>-->
+    <!--    </type>-->
 
     <type name="Magento\Framework\Console\CommandListInterface">
         <arguments>

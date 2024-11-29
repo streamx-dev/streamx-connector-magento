@@ -3,26 +3,22 @@
 namespace Divante\VsbridgeIndexerCore\Streamx;
 
 use Divante\VsbridgeIndexerCore\Api\Client\ClientInterface;
-use Exception;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Psr7\Request;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Store\Model\StoreManagerInterface;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
+use Streamx\Clients\Ingestion\Exceptions\StreamxClientException;
+use Streamx\Clients\Ingestion\Publisher\Publisher;
+use function date;
 
 class Client implements ClientInterface {
-    private $headers = [
-        'Content-Type' => 'application/json',
-        'accept' => '*/*'
-    ];
-    private \GuzzleHttp\Client $client;
+
+    private Publisher $publisher;
     private LoggerInterface $logger;
     private string $baseUrl;
 
-    public function __construct(StoreManagerInterface $storeManager, \GuzzleHttp\Client $client, LoggerInterface $logger) {
-        $this->client = $client;
+    public function __construct(StoreManagerInterface $storeManager, Publisher $publisher, LoggerInterface $logger) {
         $this->logger = $logger;
+        $this->publisher = $publisher;
         try {
             $this->baseUrl = $storeManager->getStore()->getBaseUrl();
         } catch (NoSuchEntityException $e) {
@@ -34,6 +30,7 @@ class Client implements ClientInterface {
     public function bulk(array $bulkParams): array {
         $this->logger->info("EXECUTING:: bulk update");
 
+        // TODO: adjust code that produced the $bulkParams array, to make it in StreamX format (originally it is in ElasticSearch format)
         $type = $bulkParams['body'][0]['index']['_type']; // product, category ...
         foreach ($bulkParams['body'] as $data) {
             if (isset($data['index']['_index'])) {
@@ -42,36 +39,15 @@ class Client implements ClientInterface {
             }
             if ($type == 'product') {
                 $payloadData = $this->mapProductData($data);
-
-                $content = new ContentTemplate();
-                $content->setType("application/json");
-                $content->setPayload(json_encode($payloadData));
-
-                $body = new BodyTemplate();
-                $body->setKey("pim:" . $payloadData['id']);
-                $body->setType("data");
-                $body->setDependencies([]);
-                $body->setContent($content);
-
-                // Do the call
-                $bodyEncoded = json_encode($body);
                 $this->logger->info("Data update requested");
-                $request = new Request('POST', "", $this->headers, $bodyEncoded);
                 try {
-                    $promise = $this->client->sendAsync($request);
-                    $promise->then(
-                        function (ResponseInterface $response) {
-                            $this->logger->info("Data update processed: " . $response->getBody());
-                        },
-                        function (RequestException $exception) {
-                        }
-                    );
-                    // TODO this is required, since Guzzle does not support fire and forget mechanism
-                    // We should reimplement a client to use something more performant than HTTP (GRPC? or bash client)
-                    $promise->wait();
-                } catch (Exception $e) {
-                    $this->logger->warning("Data update failed: " . $e->getMessage());
+                    $this->publishToStreamX($payloadData); // TODO make sure this is async
+                    $this->logger->info("Data update processed");
+                } catch (StreamxClientException $e) {
+                    $this->logger->error('Data update failed: ' . $e->getMessage(), ['exception' => $e]);
                 }
+            } else {
+                $this->logger->info("Not a product: $type");
             }
         }
 
@@ -113,15 +89,36 @@ class Client implements ClientInterface {
         return $payloadData;
     }
 
-    public function changeRefreshInterval(string $indexName, $value) {
+    /**
+     * @throws StreamxClientException
+     */
+    private function publishToStreamX(array $productData) {
+        $productId = $productData['id'];
+        $this->logger->info("Publishing product $productId");
+
+        $page = [
+            'content' => [
+                'bytes' => sprintf("Admin has edited a Product at %s. Edited state:\n%s",
+                    date("Y-m-d H:i:s"),
+                    json_encode($productData)
+                )
+            ]
+        ];
+        $key = "product_$productId";
+        $this->publisher->publish($key, $page);
+    }
+
+    // TODO: the below methods are from Elastic Search based indexer. Probably never needed by StreamX Indexer
+
+    public function changeRefreshInterval(string $indexName, $value): void {
         $this->logger->info("SUPPRESSING:: changing refresh interval of $indexName to $value");
     }
 
-    public function changeNumberOfReplicas(string $indexName, int $value) {
+    public function changeNumberOfReplicas(string $indexName, int $value): void {
         $this->logger->info("SUPPRESSING:: changing number of replicas of $indexName to $value");
     }
 
-    public function createIndex(string $indexName, array $indexSettings) {
+    public function createIndex(string $indexName, array $indexSettings): void {
         $this->logger->info("SUPPRESSING:: creation of an index with name $indexName and data: " . json_encode($indexSettings));
     }
 
@@ -145,11 +142,11 @@ class Client implements ClientInterface {
         return 10000;
     }
 
-    public function updateAliases(array $aliasActions) {
+    public function updateAliases(array $aliasActions): void {
         $this->logger->info("SUPPRESSING:: alias update: " . json_encode($aliasActions));
     }
 
-    public function refreshIndex(string $indexName) {
+    public function refreshIndex(string $indexName): void {
         $this->logger->info("SUPPRESSING:: index refresh: $indexName");
     }
 

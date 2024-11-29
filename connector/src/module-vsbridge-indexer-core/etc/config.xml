@@ -10,11 +10,10 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
         <vsbridge_indexer_settings>
-            <es_client>
-                <host>127.0.0.1</host>
-                <port>9200</port>
-                <auth_pwd backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
-            </es_client>
+            <streamx_client>
+                <ingestion_base_url>http://rest-ingestion:8080</ingestion_base_url>
+                <pages_schema_name>dev.streamx.blueprints.data.PageIngestionMessage</pages_schema_name>
+            </streamx_client>
             <indices_settings>
                 <batch_indexing_size>1000</batch_indexing_size>
                 <index_name>vue_storefront_catalog</index_name>
