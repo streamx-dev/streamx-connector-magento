@@ -11,10 +11,8 @@ class ProductCategoryProcessor extends \Magento\Framework\Indexer\AbstractProces
 
     /**
      * Mark Vsbridge Product indexer as invalid
-     *
-     * @return void
      */
-    public function markIndexerAsInvalid()
+    public function markIndexerAsInvalid(): void
     {
         $this->getIndexer()->invalidate();
     }

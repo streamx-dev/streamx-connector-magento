@@ -111,10 +111,9 @@ abstract class AbstractEavAttributes implements EavAttributesInterface
     }
 
     /**
-     * @return bool
      * @throws \Exception
      */
-    public function canIndexAttribute(\Magento\Eav\Model\Entity\Attribute $attribute, array $allowedAttributes = null)
+    public function canIndexAttribute(\Magento\Eav\Model\Entity\Attribute $attribute, array $allowedAttributes = null): bool
     {
         if ($attribute->isStatic()) {
             return false;

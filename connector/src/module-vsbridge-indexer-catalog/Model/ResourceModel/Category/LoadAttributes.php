@@ -58,10 +58,9 @@ class LoadAttributes
     }
 
     /**
-     * @return Attribute
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getAttributeById(int $attributeId)
+    public function getAttributeById(int $attributeId): Attribute
     {
         $this->initAttributes();
 
@@ -73,10 +72,9 @@ class LoadAttributes
     }
 
     /**
-     * @return Attribute
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getAttributeByCode(string $attributeCode)
+    public function getAttributeByCode(string $attributeCode): Attribute
     {
         $this->initAttributes();
 
@@ -89,10 +87,7 @@ class LoadAttributes
         throw new \Magento\Framework\Exception\LocalizedException(__('Attribute not found.'));
     }
 
-    /**
-     * @return Collection
-     */
-    private function getAttributeCollection()
+    private function getAttributeCollection(): Collection
     {
         return $this->attributeCollectionFactory->create();
     }

@@ -90,10 +90,8 @@ class LoadMediaGallery implements LoadMediaGalleryInterface
 
     /**
      * Map Row Id to Entity Id
-     *
-     * @return void
      */
-    private function mapRowIdToEntityId(array $products)
+    private function mapRowIdToEntityId(array $products): void
     {
         $linkField = $this->productMetaData->get()->getLinkField();
         $identifierField = $this->productMetaData->get()->getIdentifierField();
@@ -140,10 +138,7 @@ class LoadMediaGallery implements LoadMediaGalleryInterface
         return $video;
     }
 
-    /**
-     * @return string
-     */
-    private function getValue(string $fieldKey, array $image)
+    private function getValue(string $fieldKey, array $image): string
     {
         if (isset($image[$fieldKey]) && (null !== $image[$fieldKey])) {
             return $image[$fieldKey];

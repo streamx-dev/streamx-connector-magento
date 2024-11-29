@@ -42,10 +42,7 @@ class OptimizationSettings
         return (bool) $this->getConfigParam('number_of_replicas');
     }
 
-    /**
-     * @return string
-     */
-    public function getDefaultNumberOfReplicas()
+    public function getDefaultNumberOfReplicas(): string
     {
         return $this->getConfigParam('number_of_replicas_value');
     }
@@ -58,18 +55,12 @@ class OptimizationSettings
         return (bool) $this->getConfigParam('refresh_interval');
     }
 
-    /**
-     * @return string
-     */
-    public function getDefaultRefreshInterval()
+    public function getDefaultRefreshInterval(): string
     {
         return $this->getConfigParam('refresh_interval_value') . 's';
     }
 
-    /**
-     * @return string|null
-     */
-    private function getConfigParam(string $configField)
+    private function getConfigParam(string $configField): ?string
     {
         $path = self::OPTIMIZATION_SETTINGS_CONFIG_XML_PREFIX . '/' . $configField;
 

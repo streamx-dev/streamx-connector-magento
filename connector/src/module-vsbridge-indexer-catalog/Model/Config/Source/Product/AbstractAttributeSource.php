@@ -66,8 +66,6 @@ abstract class AbstractAttributeSource implements ArrayInterface
 
     /**
      * Validate if attribute can be shown
-     *
-     * @return bool
      */
     abstract public function canAddAttribute(ProductAttributeInterface $attribute): bool;
 }

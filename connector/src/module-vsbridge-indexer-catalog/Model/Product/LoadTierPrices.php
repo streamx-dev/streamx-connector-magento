@@ -96,9 +96,6 @@ class LoadTierPrices implements LoadTierPricesInterface
         return $indexData;
     }
 
-    /**
-     * @return bool
-     */
     private function syncTierPrices(): bool
     {
         return $this->configSettings->syncTierPrices();
@@ -115,10 +112,9 @@ class LoadTierPrices implements LoadTierPricesInterface
     }
 
     /**
-     * @return int
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    private function getWebsiteId(int $storeId)
+    private function getWebsiteId(int $storeId): int
     {
         $attribute = $this->getTierPriceAttribute();
         $websiteId = 0;

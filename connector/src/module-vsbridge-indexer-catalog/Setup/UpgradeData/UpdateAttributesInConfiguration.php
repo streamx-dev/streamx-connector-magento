@@ -56,7 +56,6 @@ class UpdateAttributesInConfiguration
     }
 
     /**
-     * @return string
      * @throws LocalizedException
      */
     private function getAttributeIdsByCodes(array $attributes): string

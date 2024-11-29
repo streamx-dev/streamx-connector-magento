@@ -79,10 +79,8 @@ abstract class AbstractMapping
 
     /**
      * Returns attribute type for indexation.
-     *
-     * @return string
      */
-    public function getAttributeType(Attribute $attribute)
+    public function getAttributeType(Attribute $attribute): string
     {
         $attributeCode = $attribute->getAttributeCode();
 

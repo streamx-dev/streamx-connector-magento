@@ -27,10 +27,8 @@ class ProductProcessor extends \Magento\Framework\Indexer\AbstractProcessor
 
     /**
      * Mark Vsbridge Product indexer as invalid
-     *
-     * @return void
      */
-    public function markIndexerAsInvalid()
+    public function markIndexerAsInvalid(): void
     {
         $this->getIndexer()->invalidate();
     }
@@ -40,9 +38,8 @@ class ProductProcessor extends \Magento\Framework\Indexer\AbstractProcessor
      *
      * @param int $id
      * @param bool $forceReindex
-     * @return void
      */
-    public function reindexRow($id, $forceReindex = false)
+    public function reindexRow($id, $forceReindex = false): void
     {
         if ($this->hasToReindex()) {
             parent::reindexRow($id, $forceReindex);
@@ -61,7 +58,6 @@ class ProductProcessor extends \Magento\Framework\Indexer\AbstractProcessor
     }
 
     /**
-     * @return bool
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     private function hasToReindex(): bool

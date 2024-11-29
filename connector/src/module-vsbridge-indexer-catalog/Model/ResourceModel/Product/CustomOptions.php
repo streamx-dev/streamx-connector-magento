@@ -38,9 +38,6 @@ class CustomOptions
         return $this->getConnection()->fetchAssoc($select);
     }
 
-    /**
-     * @return Select
-     */
     private function getProductOptionSelect(array $linkFieldIds, int $storeId): Select
     {
         $connection = $this->getConnection();
@@ -58,9 +55,6 @@ class CustomOptions
         return $select;
     }
 
-    /**
-     * @return Select
-     */
     private function addTitleToResult(Select $select, int $storeId): Select
     {
         $productOptionTitleTable = $this->resource->getTableName('catalog_product_option_title');
@@ -93,9 +87,6 @@ class CustomOptions
         return $select;
     }
 
-    /**
-     * @return Select
-     */
     private function addPriceToResult(Select $select, int $storeId): Select
     {
         $productOptionPriceTable = $this->resource->getTableName('catalog_product_option_price');

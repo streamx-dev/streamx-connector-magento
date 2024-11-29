@@ -83,11 +83,10 @@ class Product
     }
 
     /**
-     * @return Select
      * @throws \Magento\Framework\Exception\LocalizedException
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function prepareBaseProductSelect(array $requiredColumns, int $storeId)
+    public function prepareBaseProductSelect(array $requiredColumns, int $storeId): Select
     {
         $select = $this->getConnection()->select()
             ->from(

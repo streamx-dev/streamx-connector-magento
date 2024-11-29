@@ -237,12 +237,7 @@ class GenericIndexerHandler
         return $index;
     }
 
-    /**
-     * Get type name
-     *
-     * @return string
-     */
-    public function getTypeName()
+    public function getTypeName(): string
     {
         return $this->typeName;
     }

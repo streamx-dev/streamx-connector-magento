@@ -58,10 +58,7 @@ class ProductConfig
         return $connection->fetchCol($select);
     }
 
-    /**
-     * @return int
-     */
-    private function getEntityTypeId(string $entityTypeCode)
+    private function getEntityTypeId(string $entityTypeCode): int
     {
         if (null === $this->entityTypeId) {
             $connection = $this->resource->getConnection();

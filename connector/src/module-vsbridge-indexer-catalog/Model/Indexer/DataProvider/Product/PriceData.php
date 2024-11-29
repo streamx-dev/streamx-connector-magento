@@ -47,9 +47,6 @@ class PriceData implements DataProviderInterface
         return $this->tierPriceLoader->execute($indexData, $storeId);
     }
 
-    /**
-     * @return float
-     */
     private function preparePrice(?string $value): float
     {
         return (float)$value;

@@ -158,11 +158,6 @@ class LoadChildrenRawAttributes
         }
     }
 
-    /**
-     * Retrieve batch size
-     *
-     * @return int
-     */
     private function getBatchSize(int $storeId): int
     {
         return $this->settings->getConfigurableChildrenBatchSize($storeId);

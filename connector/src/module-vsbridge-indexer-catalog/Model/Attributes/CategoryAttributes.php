@@ -44,25 +44,16 @@ class CategoryAttributes
         return $attributes;
     }
 
-    /**
-     * @return bool
-     */
     public function canAddAvailableSortBy(int $storeId): bool
     {
         return $this->isAttributeAllowed('available_sort_by', $storeId);
     }
 
-    /**
-     * @return bool
-     */
     public function canAddDefaultSortBy(int $storeId): bool
     {
         return $this->isAttributeAllowed('default_sort_by', $storeId);
     }
 
-    /**
-     * @return bool
-     */
     private function isAttributeAllowed(string $attributeCode, int $storeId): bool
     {
         $allowedAttributes = $this->getRequiredAttributes($storeId);
