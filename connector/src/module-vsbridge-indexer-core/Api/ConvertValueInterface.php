@@ -5,8 +5,6 @@ namespace Divante\VsbridgeIndexerCore\Api;
 interface ConvertValueInterface
 {
     /**
-     * @param MappingInterface $mapping
-     * @param string $field
      * @param string|array $value
      *
      * @return string|array|int|float

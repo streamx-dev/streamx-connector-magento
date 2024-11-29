@@ -83,14 +83,9 @@ abstract class AbstractEavAttributes implements EavAttributesInterface
     abstract public function initAttributes();
 
     /**
-     * @param int $storeId
-     * @param array $entityIds
-     * @param array $requiredAttributes
-     *
-     * @return array
      * @throws \Exception
      */
-    public function loadAttributesData($storeId, array $entityIds, array $requiredAttributes = null)
+    public function loadAttributesData(int $storeId, array $entityIds, array $requiredAttributes = null): array
     {
         $this->attributesById = $this->initAttributes();
         $tableAttributes = [];

@@ -16,7 +16,7 @@ class BulkRequest implements BulkRequestInterface
     /**
      * @inheritdoc
      */
-    public function deleteDocuments($index, $type, array $docIds)
+    public function deleteDocuments(string $index, string $type, array $docIds)
     {
         foreach ($docIds as $docId) {
             $this->deleteDocument($index, $type, $docId);
@@ -48,7 +48,7 @@ class BulkRequest implements BulkRequestInterface
     /**
      * @inheritdoc
      */
-    public function addDocuments($index, $type, array $data)
+    public function addDocuments(string $index, string $type, array $data)
     {
         foreach ($data as $docId => $documentData) {
             $documentData = $this->prepareDocument($documentData);
@@ -58,10 +58,7 @@ class BulkRequest implements BulkRequestInterface
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function prepareDocument(array $data)
+    public function prepareDocument(array $data): array
     {
         unset($data['entity_id']);
         unset($data['row_id']);
@@ -90,7 +87,7 @@ class BulkRequest implements BulkRequestInterface
     /**
      * @inheritdoc
      */
-    public function updateDocuments($index, $type, array $data)
+    public function updateDocuments(string $index, string $type, array $data)
     {
         foreach ($data as $docId => $documentData) {
             $documentData = $this->prepareDocument($documentData);
@@ -121,7 +118,7 @@ class BulkRequest implements BulkRequestInterface
     /**
      * @inheritdoc
      */
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         return count($this->bulkData) == 0;
     }
@@ -129,7 +126,7 @@ class BulkRequest implements BulkRequestInterface
     /**
      * @inheritdoc
      */
-    public function getOperations()
+    public function getOperations(): array
     {
         return $this->bulkData;
     }

@@ -6,8 +6,6 @@ interface FieldMappingInterface
 {
     /**
      * Retrieve field mapping options
-     *
-     * @return array
      */
     public function get(): array;
 }

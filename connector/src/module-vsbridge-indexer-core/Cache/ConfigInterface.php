@@ -18,44 +18,15 @@ interface ConfigInterface
 
     const INVALIDATE_CACHE_ENTITIES_BATCH_SIZE_FIELD = 'entity_invalidate_batch_size';
 
-    /**
-     * @param int $storeId
-     *
-     * @return bool
-     */
-    public function clearCache($storeId): bool;
+    public function clearCache(int $storeId): bool;
 
-    /**
-     * @param int $storeId
-     *
-     * @return int
-     */
     public function getInvalidateEntitiesBatchSize(int $storeId): int;
 
-    /**
-     * @param int $storeId
-     *
-     * @return string
-     */
-    public function getVsfBaseUrl($storeId): string;
+    public function getVsfBaseUrl(int $storeId): string;
 
-    /**
-     * @param int $storeId
-     *
-     * @return string
-     */
-    public function getInvalidateCacheKey($storeId): string;
+    public function getInvalidateCacheKey(int $storeId): string;
 
-    /**
-     * @param int $storeId
-     *
-     * @return int
-     */
-    public function getTimeout($storeId): int;
-    /**
-     * @param int $storeId
-     *
-     * @return array
-     */
-    public function getConnectionOptions($storeId): array;
+    public function getTimeout(int $storeId): int;
+
+    public function getConnectionOptions(int $storeId): array;
 }

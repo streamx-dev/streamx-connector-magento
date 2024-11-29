@@ -6,93 +6,27 @@ use Magento\Store\Api\Data\StoreInterface;
 
 interface IndexOperationInterface
 {
-    /**
-     * @param int $storeId
-     * @param BulkRequestInterface $bulk
-     *
-     * @return BulkResponseInterface
-     */
-    public function executeBulk($storeId, BulkRequestInterface $bulk);
+    public function executeBulk(int $storeId, BulkRequestInterface $bulk): BulkResponseInterface;
 
-    /**
-     * @param int $storeId
-     * @param array $params
-     *
-     * @return void
-     */
-    public function deleteByQuery($storeId, array $params);
+    public function deleteByQuery(int $storeId, array $params): void;
 
-    /**
-     * @param int $storeId
-     * @param string $indexName
-     *
-     * @return bool
-     */
-    public function indexExists($storeId, $indexName);
+    public function indexExists(int $storeId, string $indexName): bool;
 
-    /**
-     * @param string $indexIdentifier
-     * @param StoreInterface  $store
-     *
-     * @return IndexInterface
-     */
-    public function getIndexByName($indexIdentifier, StoreInterface $store);
+    public function getIndexByName(string $indexIdentifier, StoreInterface $store): IndexInterface;
 
-    /**
-     * @param StoreInterface  $store
-     *
-     * @return string
-     */
-    public function getIndexAlias(StoreInterface $store);
+    public function getIndexAlias(StoreInterface $store): string;
 
-    /**
-     * @param string $indexIdentifier
-     * @param StoreInterface  $store
-     *
-     * @return IndexInterface
-     */
-    public function createIndex($indexIdentifier, StoreInterface $store);
+    public function createIndex(string $indexIdentifier, StoreInterface $store): IndexInterface;
 
-    /**
-     * @param int $storeId
-     * @param IndexInterface $index
-     *
-     * @return void
-     */
-    public function refreshIndex($storeId, IndexInterface $index);
+    public function refreshIndex(int $storeId, IndexInterface $index): void;
 
-    /**
-     * @param int $storeId
-     * @param string $indexName
-     * @param string $indexAlias
-     *
-     * @return void
-     */
-    public function switchIndexer($storeId, string $indexName, string $indexAlias);
+    public function switchIndexer(int $storeId, string $indexName, string $indexAlias): void;
 
-    /**
-     * @return BulkRequestInterface
-     */
-    public function createBulk();
+    public function createBulk(): BulkRequestInterface;
 
-    /**
-     * @return int
-     */
-    public function getBatchIndexingSize();
+    public function getBatchIndexingSize(): int;
 
-    /**
-     * @param int $storeId
-     * @param string $indexName
-     *
-     * @return void
-     */
-    public function optimizeEsIndexing($storeId, string $indexName);
+    public function optimizeEsIndexing(int $storeId, string $indexName): void;
 
-    /**
-     * @param int $storeId
-     * @param string $indexName
-     *
-     * @return void
-     */
-    public function cleanAfterOptimizeEsIndexing($storeId, string $indexName);
+    public function cleanAfterOptimizeEsIndexing(int $storeId, string $indexName): void;
 }

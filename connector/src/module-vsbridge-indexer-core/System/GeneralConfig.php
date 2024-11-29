@@ -27,7 +27,7 @@ class GeneralConfig implements GeneralConfigInterface
     /**
      * @inheritdoc
      */
-    public function canReindexStore($storeId): bool
+    public function canReindexStore(int $storeId): bool
     {
         $allowedStores = $this->getStoresToIndex();
 

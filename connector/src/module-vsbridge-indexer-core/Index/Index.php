@@ -44,18 +44,12 @@ class Index implements IndexInterface
         $this->types = $this->prepareTypes($types);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function isNew()
+    public function isNew(): bool
     {
         return $this->alias !== $this->name;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getAlias()
+    public function getAlias(): string
     {
         return $this->alias;
     }
@@ -76,10 +70,7 @@ class Index implements IndexInterface
         return $preparedTypes;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -95,7 +86,7 @@ class Index implements IndexInterface
     /**
      * @inheritdoc
      */
-    public function getType($typeName)
+    public function getType(string $typeName)
     {
         if (!isset($this->types[$typeName])) {
             throw new \InvalidArgumentException("Type $typeName is not available in index.");

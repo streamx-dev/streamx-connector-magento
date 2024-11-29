@@ -36,10 +36,6 @@ class GetParentsByChildId implements GetParentsByChildIdInterface
 
     /**
      * @inheritDoc
-     *
-     * @param array $childId
-     *
-     * @return array
      */
     public function execute(array $childId): array
     {

@@ -21,18 +21,12 @@ class BulkResponse implements BulkResponseInterface
         $this->rawResponse = $rawResponse;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function hasErrors()
+    public function hasErrors(): bool
     {
         return (bool)$this->rawResponse['errors'];
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getErrorItems()
+    public function getErrorItems(): array
     {
         return array_filter(
             $this->rawResponse['items'],
@@ -42,10 +36,7 @@ class BulkResponse implements BulkResponseInterface
         );
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getSuccessItems()
+    public function getSuccessItems(): array
     {
         $successes = array_filter(
             $this->rawResponse['items'],
@@ -57,10 +48,7 @@ class BulkResponse implements BulkResponseInterface
         return $successes;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function aggregateErrorsByReason()
+    public function aggregateErrorsByReason(): array
     {
         $errorByReason = [];
 

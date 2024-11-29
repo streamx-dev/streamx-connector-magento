@@ -33,10 +33,7 @@ class ApplyCategorySlug implements ApplyCategorySlugInterface
         $this->slugGenerator = $slugGenerator;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function execute(array $category)
+    public function execute(array $category): array
     {
         if ($this->settings->useMagentoUrlKeys()) {
             if (!isset($category['url_key'])) {

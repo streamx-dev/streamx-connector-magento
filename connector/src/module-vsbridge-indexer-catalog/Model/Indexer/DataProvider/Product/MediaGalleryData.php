@@ -41,7 +41,7 @@ class MediaGalleryData implements DataProviderInterface
     /**
      * @inheritdoc
      */
-    public function addData(array $indexData, $storeId)
+    public function addData(array $indexData, int $storeId): array
     {
         if ($this->canIndexMediaGallery($storeId)) {
             return $this->loadMediaGallery->execute($indexData, $storeId);

@@ -22,7 +22,7 @@ class TransactionKey implements DataProviderInterface
     /**
      * @inheritdoc
      */
-    public function addData(array $indexData, $storeId)
+    public function addData(array $indexData, int $storeId): array
     {
         foreach ($indexData as &$data) {
             $data['tsk'] = $this->transactionKey;

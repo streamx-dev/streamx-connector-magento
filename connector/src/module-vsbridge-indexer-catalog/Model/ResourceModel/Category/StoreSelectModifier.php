@@ -29,9 +29,6 @@ class StoreSelectModifier implements BaseSelectModifierInterface
 
     /**
      * Modify the select statement
-     *
-     * @param Select $select
-     * @return Select
      */
     public function execute(Select $select, int $storeId): Select
     {

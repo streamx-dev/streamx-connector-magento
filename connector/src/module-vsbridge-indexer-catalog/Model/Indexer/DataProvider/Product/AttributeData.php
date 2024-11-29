@@ -68,13 +68,9 @@ class AttributeData implements DataProviderInterface
     }
 
     /**
-     * @param array $indexData
-     * @param int   $storeId
-     *
-     * @return array
      * @throws \Exception
      */
-    public function addData(array $indexData, $storeId)
+    public function addData(array $indexData, int $storeId): array
     {
         $requiredAttributes = $this->productAttributes->getAttributes($storeId);
         $attributes = $this->resourceModel->loadAttributesData($storeId, array_keys($indexData), $requiredAttributes);

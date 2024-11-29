@@ -56,7 +56,7 @@ class CustomOptions implements DataProviderInterface
     /**
      * @inheritdoc
      */
-    public function addData(array $indexData, $storeId)
+    public function addData(array $indexData, int $storeId): array
     {
         $storeId = (int)$storeId;
         $linkField = $this->productMetaData->get()->getLinkField();

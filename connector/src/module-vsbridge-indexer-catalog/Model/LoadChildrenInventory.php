@@ -25,9 +25,6 @@ class LoadChildrenInventory implements LoadInventoryInterface
         $this->resource = $resource;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function execute(array $indexData, int $storeId): array
     {
         $productIds = array_keys($indexData);
