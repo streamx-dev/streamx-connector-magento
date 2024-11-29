@@ -6,9 +6,6 @@ use Divante\VsbridgeIndexerCore\Api\DataProviderInterface;
 use Divante\VsbridgeIndexerCatalog\Model\Attribute\LoadOptions;
 use Magento\Eav\Model\ResourceModel\Entity\Attribute as EntityResource;
 
-/**
- * Class Options
- */
 class Options implements DataProviderInterface
 {
 

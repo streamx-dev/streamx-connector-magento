@@ -2,9 +2,6 @@
 
 namespace Divante\VsbridgeIndexerCatalog\Api\ArrayConverter\Product;
 
-/**
- * Interface InventoryConverterInterface
- */
 interface InventoryConverterInterface
 {
     /**

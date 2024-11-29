@@ -2,9 +2,6 @@
 
 namespace Divante\VsbridgeIndexerCore\System;
 
-/**
- * Interface GeneralConfigInterface
- */
 interface GeneralConfigInterface
 {
     /**

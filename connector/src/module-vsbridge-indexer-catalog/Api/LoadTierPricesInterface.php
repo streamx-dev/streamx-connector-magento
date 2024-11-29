@@ -2,9 +2,6 @@
 
 namespace Divante\VsbridgeIndexerCatalog\Api;
 
-/**
- * Interface LoadTierPricesInterface
- */
 interface LoadTierPricesInterface
 {
     /**

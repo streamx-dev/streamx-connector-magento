@@ -6,9 +6,6 @@ namespace Divante\VsbridgeIndexerCatalog\Api\DataProvider\Category;
 
 use Divante\VsbridgeIndexerCore\Api\DataProviderInterface;
 
-/**
- * Interface AttributeDataProviderInterface
- */
 interface AttributeDataProviderInterface extends DataProviderInterface
 {
     /**

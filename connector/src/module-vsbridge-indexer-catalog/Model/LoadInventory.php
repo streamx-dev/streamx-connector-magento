@@ -8,9 +8,6 @@ namespace Divante\VsbridgeIndexerCatalog\Model;
 use Divante\VsbridgeIndexerCatalog\Api\LoadInventoryInterface;
 use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\Inventory as InventoryResource;
 
-/**
- * Class LoadInventory
- */
 class LoadInventory implements LoadInventoryInterface
 {
     /**

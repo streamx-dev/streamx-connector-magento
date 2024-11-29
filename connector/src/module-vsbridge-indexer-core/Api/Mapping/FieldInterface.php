@@ -2,9 +2,6 @@
 
 namespace Divante\VsbridgeIndexerCore\Api\Mapping;
 
-/**
- * Interface FieldInterface
- */
 interface FieldInterface
 {
     const TYPE_KEYWORD = 'keyword';

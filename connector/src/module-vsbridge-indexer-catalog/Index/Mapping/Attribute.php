@@ -6,9 +6,6 @@ use Divante\VsbridgeIndexerCatalog\Index\Mapping\Attribute\OptionMapping;
 use Divante\VsbridgeIndexerCore\Api\MappingInterface;
 use Divante\VsbridgeIndexerCore\Api\Mapping\FieldInterface;
 
-/**
- * Class Attribute
- */
 class Attribute implements MappingInterface
 {
     /**

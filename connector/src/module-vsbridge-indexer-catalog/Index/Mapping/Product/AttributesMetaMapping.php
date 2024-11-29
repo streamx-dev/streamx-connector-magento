@@ -8,9 +8,6 @@ use Divante\VsbridgeIndexerCatalog\Index\Mapping\Attribute\OptionMapping;
 use Divante\VsbridgeIndexerCatalog\Index\Mapping\FieldMappingInterface;
 use Divante\VsbridgeIndexerCore\Api\Mapping\FieldInterface;
 
-/**
- * Class AttributesMetaMapping
- */
 class AttributesMetaMapping implements FieldMappingInterface
 {
     /**

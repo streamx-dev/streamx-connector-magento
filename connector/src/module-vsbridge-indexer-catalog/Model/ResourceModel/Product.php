@@ -9,9 +9,6 @@ use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Helper as DbHelper;
 use Magento\Framework\DB\Select;
 
-/**
- * Class Product
- */
 class Product
 {
     /**

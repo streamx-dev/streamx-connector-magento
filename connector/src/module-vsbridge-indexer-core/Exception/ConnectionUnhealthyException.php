@@ -8,11 +8,6 @@ namespace Divante\VsbridgeIndexerCore\Exception;
 
 use Magento\Framework\Exception\LocalizedException;
 
-/**
- * Class ConnectionUnhealthyException
- *
- * @package Divante\VsbridgeIndexerCore\Exception
- */
 class ConnectionUnhealthyException extends LocalizedException
 {
 }

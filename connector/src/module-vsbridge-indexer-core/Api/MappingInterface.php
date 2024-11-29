@@ -2,9 +2,6 @@
 
 namespace Divante\VsbridgeIndexerCore\Api;
 
-/**
- * Interface MappingInterface
- */
 interface MappingInterface
 {
     /**

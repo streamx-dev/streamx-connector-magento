@@ -8,11 +8,6 @@
 
 namespace Divante\VsbridgeIndexerCore\Exception;
 
-/**
- * Class ConnectionDisabledException
- *
- * @package \Divante\VsbridgeIndexerCore
- */
 class ConnectionDisabledException extends \RuntimeException
 {
 }

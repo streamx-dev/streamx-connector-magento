@@ -6,9 +6,6 @@ use Divante\VsbridgeIndexerCore\Api\Mapping\FieldInterface;
 use Divante\VsbridgeIndexerCore\Api\MappingInterface;
 use Divante\VsbridgeIndexerCore\Api\ConvertValueInterface;
 
-/**
- * Class ConvertValue
- */
 class ConvertValue implements ConvertValueInterface
 {
     /**

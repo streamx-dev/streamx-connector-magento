@@ -5,9 +5,6 @@ namespace Divante\VsbridgeIndexerCatalog\Plugin\Indexer\Category\Save;
 use Divante\VsbridgeIndexerCatalog\Model\Indexer\ProductCategoryProcessor;
 use Divante\VsbridgeIndexerCatalog\Model\Indexer\ProductProcessor;
 
-/**
- * Class UpdateProductPlugin
- */
 class UpdateProductPlugin
 {
     /**

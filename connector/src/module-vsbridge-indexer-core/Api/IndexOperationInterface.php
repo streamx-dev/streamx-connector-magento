@@ -4,9 +4,6 @@ namespace Divante\VsbridgeIndexerCore\Api;
 
 use Magento\Store\Api\Data\StoreInterface;
 
-/**
- * Interface IndexOperationInterface
- */
 interface IndexOperationInterface
 {
     /**

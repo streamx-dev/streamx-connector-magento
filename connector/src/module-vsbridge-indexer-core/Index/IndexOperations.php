@@ -16,9 +16,6 @@ use Divante\VsbridgeIndexerCore\Streamx\ClientResolver;
 use Divante\VsbridgeIndexerCore\Exception\ConnectionUnhealthyException;
 use Magento\Store\Api\Data\StoreInterface;
 
-/**
- * Class IndexOperations
- */
 class IndexOperations implements IndexOperationInterface
 {
     const GREEN_HEALTH_STATUS = 'green';

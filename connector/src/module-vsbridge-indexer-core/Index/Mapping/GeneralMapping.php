@@ -4,9 +4,6 @@ namespace Divante\VsbridgeIndexerCore\Index\Mapping;
 
 use Divante\VsbridgeIndexerCore\Api\Mapping\FieldInterface;
 
-/**
- * Class GeneralMapping
- */
 class GeneralMapping
 {
     /**

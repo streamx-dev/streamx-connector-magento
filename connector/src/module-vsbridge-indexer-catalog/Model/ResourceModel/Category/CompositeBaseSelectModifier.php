@@ -7,9 +7,6 @@ namespace Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Category;
 use Magento\Framework\DB\Select;
 use Magento\Framework\Exception\InputException;
 
-/**
- * Class CompositeBaseSelectModifier
- */
 class CompositeBaseSelectModifier implements BaseSelectModifierInterface
 {
     /**

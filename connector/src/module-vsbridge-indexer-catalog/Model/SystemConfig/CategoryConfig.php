@@ -9,9 +9,6 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
 use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\ProductConfig as ConfigResource;
 
-/**
- * Class CategoryConfig
- */
 class CategoryConfig implements CategoryConfigInterface
 {
     /**

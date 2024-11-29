@@ -7,9 +7,6 @@ namespace Divante\VsbridgeIndexerCatalog\Model\Config\Backend;
 
 use Magento\Framework\App\Config\Value;
 
-/**
- * Class Attributes
- */
 class Attributes extends Value
 {
     /**

@@ -11,9 +11,6 @@ use Divante\VsbridgeIndexerCore\Api\MappingInterface;
 use Divante\VsbridgeIndexerCore\Index\Mapping\GeneralMapping;
 use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\LoadAttributes;
 
-/**
- * Class Product
- */
 class Product extends AbstractMapping implements MappingInterface
 {
     /**

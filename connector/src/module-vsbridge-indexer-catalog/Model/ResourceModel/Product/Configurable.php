@@ -10,9 +10,6 @@ use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Helper as DbHelper;
 use Psr\Log\LoggerInterface;
 
-/**
- * Class Configurable
- */
 class Configurable
 {
 

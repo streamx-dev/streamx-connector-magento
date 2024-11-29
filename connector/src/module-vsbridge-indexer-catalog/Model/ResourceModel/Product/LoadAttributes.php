@@ -7,9 +7,6 @@ use Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory as A
 use Magento\Catalog\Model\ResourceModel\Eav\Attribute;
 use Magento\Framework\Serialize\Serializer\Json;
 
-/**
- * Class LoadAttributes
- */
 class LoadAttributes
 {
     /**

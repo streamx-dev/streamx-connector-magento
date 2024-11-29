@@ -2,9 +2,6 @@
 
 namespace Divante\VsbridgeIndexerCore\Api\Index;
 
-/**
- * Interface TypeInterface
- */
 interface TypeInterface
 {
     /**

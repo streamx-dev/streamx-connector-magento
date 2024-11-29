@@ -6,9 +6,6 @@ namespace Divante\VsbridgeIndexerCatalog\Model;
 
 use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\Rewrite as RewriteResource;
 
-/**
- * Class ProductUrlPathGenerator
- */
 class ProductUrlPathGenerator
 {
     /**

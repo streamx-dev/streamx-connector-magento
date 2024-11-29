@@ -5,9 +5,6 @@ namespace Divante\VsbridgeIndexerCatalog\Model\ResourceModel;
 use Divante\VsbridgeIndexerCatalog\Model\ProductMetaData;
 use Magento\Framework\App\ResourceConnection;
 
-/**
- * Class ProductConfig
- */
 class ProductConfig
 {
 

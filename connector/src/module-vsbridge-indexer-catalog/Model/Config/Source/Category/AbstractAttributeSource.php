@@ -9,9 +9,6 @@ use Magento\Catalog\Model\ResourceModel\Category\Attribute\CollectionFactory;
 use Magento\Eav\Model\Entity\Attribute;
 use Magento\Framework\Option\ArrayInterface;
 
-/**
- * Class AbstractAttributeSource
- */
 abstract class AbstractAttributeSource implements ArrayInterface
 {
     /**

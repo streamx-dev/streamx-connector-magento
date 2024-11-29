@@ -6,9 +6,6 @@ use Divante\VsbridgeIndexerCore\Api\BulkLoggerInterface;
 use Divante\VsbridgeIndexerCore\Api\BulkResponseInterface;
 use Psr\Log\LoggerInterface;
 
-/**
- * Class BulkLogger
- */
 class BulkLogger implements BulkLoggerInterface
 {
     /**

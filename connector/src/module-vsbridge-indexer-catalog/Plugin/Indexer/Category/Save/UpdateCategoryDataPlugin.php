@@ -7,9 +7,6 @@ use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Category as CategoryResou
 
 use Magento\Catalog\Model\Category;
 
-/**
- * Class UpdateCategoryDataPlugin
- */
 class UpdateCategoryDataPlugin
 {
     /**

@@ -7,9 +7,6 @@ namespace Divante\VsbridgeIndexerCatalog\Setup\UpgradeData;
 use Divante\VsbridgeIndexerCatalog\Model\SystemConfig\CategoryConfigInterface;
 use Magento\Framework\Exception\LocalizedException;
 
-/**
- * Class SetDefaultCategoryAttributes
- */
 class SetCategoryDefaultAttributes
 {
     /**

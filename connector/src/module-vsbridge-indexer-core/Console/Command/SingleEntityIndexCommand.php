@@ -11,9 +11,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Symfony\Component\Console\Input\InputArgument;
 
-/**
- * Class SingleEntityIndexCommand
- */
 class SingleEntityIndexCommand extends AbstractIndexerCommand
 {
     const INPUT_STORE = 'store';

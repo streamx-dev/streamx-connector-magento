@@ -6,7 +6,7 @@ use Divante\VsbridgeIndexerCore\System\GeneralConfigInterface;
 use Magento\Store\Model\StoreManagerInterface;
 
 /**
- * Class StoreManager is responsible for getting stores allowed to reindex
+ * Responsible for getting stores allowed to reindex
  */
 class StoreManager
 {

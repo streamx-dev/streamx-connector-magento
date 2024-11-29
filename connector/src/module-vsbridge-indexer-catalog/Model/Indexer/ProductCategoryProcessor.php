@@ -2,9 +2,6 @@
 
 namespace Divante\VsbridgeIndexerCatalog\Model\Indexer;
 
-/**
- * Class ProductCategoryProcessor
- */
 class ProductCategoryProcessor extends \Magento\Framework\Indexer\AbstractProcessor
 {
     /**

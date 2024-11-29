@@ -7,9 +7,6 @@ use Divante\VsbridgeIndexerCatalog\Model\Attributes\CategoryChildAttributes;
 use Divante\VsbridgeIndexerCatalog\Model\SystemConfig\CategoryConfigInterface;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 
-/**
- * Class CategoryChildAttributesTest
- */
 class CategoryChildAttributesTest extends \PHPUnit\Framework\TestCase
 {
     /**

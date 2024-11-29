@@ -7,9 +7,6 @@ namespace Divante\VsbridgeIndexerCatalog\Index\Mapping\Attribute;
 use Divante\VsbridgeIndexerCatalog\Index\Mapping\FieldMappingInterface;
 use Divante\VsbridgeIndexerCore\Api\Mapping\FieldInterface;
 
-/**
- * Class OptionMapping
- */
 class OptionMapping implements FieldMappingInterface
 {
     /**

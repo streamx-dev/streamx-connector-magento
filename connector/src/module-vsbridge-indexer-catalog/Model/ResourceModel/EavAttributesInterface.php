@@ -2,9 +2,6 @@
 
 namespace Divante\VsbridgeIndexerCatalog\Model\ResourceModel;
 
-/**
- * Interface EavAttributesInterface
- */
 interface EavAttributesInterface
 {
 

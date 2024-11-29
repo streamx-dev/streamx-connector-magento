@@ -6,9 +6,6 @@ use Magento\Catalog\Model\ResourceModel\Product\Attribute\Collection;
 use Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory;
 use Magento\Framework\App\ResourceConnection;
 
-/**
- * Class ProductAttribute
- */
 class Attribute
 {
 

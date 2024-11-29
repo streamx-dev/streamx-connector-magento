@@ -5,9 +5,6 @@ namespace Divante\VsbridgeIndexerCore\Indexer\DataProvider;
 use Divante\VsbridgeIndexerCore\Api\Indexer\TransactionKeyInterface;
 use Divante\VsbridgeIndexerCore\Api\DataProviderInterface;
 
-/**
- * Class TransactionKey
- */
 class TransactionKey implements DataProviderInterface
 {
     private $transactionKey;

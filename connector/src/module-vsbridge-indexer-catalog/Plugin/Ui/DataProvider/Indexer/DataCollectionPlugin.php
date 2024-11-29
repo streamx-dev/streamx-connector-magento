@@ -7,9 +7,6 @@ namespace Divante\VsbridgeIndexerCatalog\Plugin\Ui\DataProvider\Indexer;
 use Divante\VsbridgeIndexerCatalog\Model\Indexer\ProductCategoryProcessor;
 use Magento\Indexer\Ui\DataProvider\Indexer\DataCollection;
 
-/**
- * Class DataCollectionPlugin
- */
 class DataCollectionPlugin
 {
 

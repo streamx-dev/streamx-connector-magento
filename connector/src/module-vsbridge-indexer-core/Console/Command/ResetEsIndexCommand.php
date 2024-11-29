@@ -13,9 +13,6 @@ use Magento\Indexer\Console\Command\AbstractIndexerCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * Class ResetEsIndexCommand
- */
 class ResetEsIndexCommand extends AbstractIndexerCommand
 {
     const VS_INDEXER_PREFIX = 'vsbridge_';

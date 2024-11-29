@@ -5,9 +5,6 @@ namespace Divante\VsbridgeIndexerCatalog\Model\Product;
 use Magento\Catalog\Model\Product\Link as ProductLink;
 use Magento\GroupedProduct\Model\ResourceModel\Product\Link as GroupedLink;
 
-/**
- * Class LinkTypeMapper
- */
 class LinkTypeMapper
 {
 

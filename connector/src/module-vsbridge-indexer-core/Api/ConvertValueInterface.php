@@ -2,9 +2,6 @@
 
 namespace Divante\VsbridgeIndexerCore\Api;
 
-/**
- * Interface ConvertValueInterface
- */
 interface ConvertValueInterface
 {
     /**

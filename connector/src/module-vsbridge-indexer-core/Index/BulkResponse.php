@@ -4,9 +4,6 @@ namespace Divante\VsbridgeIndexerCore\Index;
 
 use Divante\VsbridgeIndexerCore\Api\BulkResponseInterface;
 
-/**
- * Class BulkResponse
- */
 class BulkResponse implements BulkResponseInterface
 {
     /**

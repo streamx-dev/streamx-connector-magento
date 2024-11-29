@@ -7,9 +7,6 @@ use Divante\VsbridgeIndexerCatalog\Model\Product\GetAttributeCodesByIds;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
 
-/**
- * Class CatalogConfig
- */
 class CatalogConfig implements CatalogConfigurationInterface
 {
     /**

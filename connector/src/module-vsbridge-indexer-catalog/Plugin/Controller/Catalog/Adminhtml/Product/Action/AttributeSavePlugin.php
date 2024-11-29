@@ -13,9 +13,6 @@ use Magento\Backend\Model\View\Result\Redirect;
 use Magento\Catalog\Controller\Adminhtml\Product\Action\Attribute\Save;
 use Magento\Catalog\Helper\Product\Edit\Action\Attribute;
 
-/**
- * Class AttributeSavePlugin
- */
 class AttributeSavePlugin
 {
     /**

@@ -7,9 +7,6 @@ use Magento\Framework\App\ResourceConnection;
 use Magento\Catalog\Model\ResourceModel\Category\Collection as CategoryCollection;
 use Magento\Catalog\Model\ResourceModel\Category\CollectionFactory as CategoryCollectionFactory;
 
-/**
- * Class Category
- */
 class Category
 {
 

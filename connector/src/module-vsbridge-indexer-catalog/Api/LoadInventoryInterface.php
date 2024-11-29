@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Divante\VsbridgeIndexerCatalog\Api;
 
-/**
- * Interface LoadInventoryInterface
- */
 interface LoadInventoryInterface
 {
     /**

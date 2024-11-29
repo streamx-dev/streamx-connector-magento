@@ -6,9 +6,6 @@ use Divante\VsbridgeIndexerCatalog\Model\Attributes\ProductAttributes;
 use Divante\VsbridgeIndexerCatalog\Api\CatalogConfigurationInterface;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 
-/**
- * Class ProductAttributesTest
- */
 class ProductAttributesTest extends \PHPUnit\Framework\TestCase
 {
     /**

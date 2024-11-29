@@ -17,9 +17,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Magento\Store\Model\StoreManagerInterface;
 
-/**
- * Class IndexerReindexCommand
- */
 class RebuildEsIndexCommand extends AbstractIndexerCommand
 {
     const INPUT_STORE = 'store';
