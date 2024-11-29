@@ -1,10 +1,10 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Indexer;
+namespace StreamX\ConnectorCatalog\Model\Indexer;
 
-use Divante\VsbridgeIndexerCatalog\Model\Indexer\Action\Attribute as AttributeAction;
-use Divante\VsbridgeIndexerCore\Indexer\GenericIndexerHandler;
-use Divante\VsbridgeIndexerCore\Indexer\StoreManager;
+use StreamX\ConnectorCatalog\Model\Indexer\Action\Attribute as AttributeAction;
+use StreamX\ConnectorCore\Indexer\GenericIndexerHandler;
+use StreamX\ConnectorCore\Indexer\StoreManager;
 
 class Attribute implements \Magento\Framework\Indexer\ActionInterface, \Magento\Framework\Mview\ActionInterface
 {

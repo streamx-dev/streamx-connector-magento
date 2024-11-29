@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Attributes;
+namespace StreamX\ConnectorCatalog\Model\Attributes;
 
-use Divante\VsbridgeIndexerCatalog\Model\SystemConfig\CategoryConfigInterface;
+use StreamX\ConnectorCatalog\Model\SystemConfig\CategoryConfigInterface;
 
 class CategoryChildAttributes
 {

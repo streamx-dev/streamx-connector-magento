@@ -1,6 +1,6 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCore\Config;
+namespace StreamX\ConnectorCore\Config;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 

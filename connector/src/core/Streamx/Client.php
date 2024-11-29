@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCore\Streamx;
+namespace StreamX\ConnectorCore\Streamx;
 
-use Divante\VsbridgeIndexerCore\Api\Client\ClientInterface;
+use StreamX\ConnectorCore\Api\Client\ClientInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Store\Model\StoreManagerInterface;
 use Psr\Log\LoggerInterface;

@@ -1,14 +1,14 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Indexer\DataProvider\Product;
+namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
-use Divante\VsbridgeIndexerCore\Api\DataProviderInterface;
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\Category as Resource;
+use StreamX\ConnectorCore\Api\DataProviderInterface;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Category as Resource;
 
 class CategoryData implements DataProviderInterface
 {
     /**
-     * @var \Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\Category
+     * @var \StreamX\ConnectorCatalog\Model\ResourceModel\Product\Category
      */
     private $resourceModel;
 

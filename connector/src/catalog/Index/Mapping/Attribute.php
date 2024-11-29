@@ -1,10 +1,10 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Index\Mapping;
+namespace StreamX\ConnectorCatalog\Index\Mapping;
 
-use Divante\VsbridgeIndexerCatalog\Index\Mapping\Attribute\OptionMapping;
-use Divante\VsbridgeIndexerCore\Api\MappingInterface;
-use Divante\VsbridgeIndexerCore\Api\Mapping\FieldInterface;
+use StreamX\ConnectorCatalog\Index\Mapping\Attribute\OptionMapping;
+use StreamX\ConnectorCore\Api\MappingInterface;
+use StreamX\ConnectorCore\Api\Mapping\FieldInterface;
 
 class Attribute implements MappingInterface
 {

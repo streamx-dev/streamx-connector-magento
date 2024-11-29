@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCore\Streamx;
+namespace StreamX\ConnectorCore\Streamx;
 
-use Divante\VsbridgeIndexerCore\Api\Client\ClientInterface;
-use Divante\VsbridgeIndexerCore\Api\Client\ClientInterfaceFactory;
-use Divante\VsbridgeIndexerCore\Api\Client\ConfigurationInterface;
-use Divante\VsbridgeIndexerCore\Api\Client\ConfigurationInterfaceFactory;
-use Divante\VsbridgeIndexerCore\Exception\ConnectionDisabledException;
-use Divante\VsbridgeIndexerCore\System\GeneralConfigInterface;
+use StreamX\ConnectorCore\Api\Client\ClientInterface;
+use StreamX\ConnectorCore\Api\Client\ClientInterfaceFactory;
+use StreamX\ConnectorCore\Api\Client\ConfigurationInterface;
+use StreamX\ConnectorCore\Api\Client\ConfigurationInterfaceFactory;
+use StreamX\ConnectorCore\Exception\ConnectionDisabledException;
+use StreamX\ConnectorCore\System\GeneralConfigInterface;
 
 class ClientResolver {
     private array $clients = [];

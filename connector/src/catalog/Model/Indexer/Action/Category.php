@@ -1,8 +1,8 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Indexer\Action;
+namespace StreamX\ConnectorCatalog\Model\Indexer\Action;
 
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Category as ResourceModel;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Category as ResourceModel;
 
 class Category
 {

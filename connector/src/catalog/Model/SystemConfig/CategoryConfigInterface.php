@@ -1,6 +1,6 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model\SystemConfig;
+namespace StreamX\ConnectorCatalog\Model\SystemConfig;
 
 /**
  * @api

@@ -1,6 +1,6 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCore\Model\Config\Source;
+namespace StreamX\ConnectorCore\Model\Config\Source;
 
 class IndexIdentifier implements \Magento\Framework\Option\ArrayInterface
 {

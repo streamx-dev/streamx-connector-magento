@@ -2,9 +2,9 @@
 
 declare(strict_types = 1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Attribute;
+namespace StreamX\ConnectorCatalog\Model\Attribute;
 
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\AttributeDataProvider;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\AttributeDataProvider;
 
 use Magento\Eav\Model\ResourceModel\Entity\Attribute\Option\Collection as OptionCollection;
 use Magento\Eav\Model\ResourceModel\Entity\Attribute\Option\CollectionFactory;

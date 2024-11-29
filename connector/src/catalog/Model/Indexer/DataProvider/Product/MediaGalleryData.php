@@ -1,10 +1,10 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Indexer\DataProvider\Product;
+namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
-use Divante\VsbridgeIndexerCore\Api\DataProviderInterface;
-use Divante\VsbridgeIndexerCatalog\Api\LoadMediaGalleryInterface;
-use Divante\VsbridgeIndexerCatalog\Api\CatalogConfigurationInterface;
+use StreamX\ConnectorCore\Api\DataProviderInterface;
+use StreamX\ConnectorCatalog\Api\LoadMediaGalleryInterface;
+use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
 
 class MediaGalleryData implements DataProviderInterface
 {

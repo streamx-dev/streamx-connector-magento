@@ -1,6 +1,6 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Indexer;
+namespace StreamX\ConnectorCatalog\Model\Indexer;
 
 class ProductCategoryProcessor extends \Magento\Framework\Indexer\AbstractProcessor
 {

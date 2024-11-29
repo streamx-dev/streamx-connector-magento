@@ -1,14 +1,14 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Indexer\DataProvider\Product;
+namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\AttributeDataProvider;
-use Divante\VsbridgeIndexerCore\Api\DataProviderInterface;
-use Divante\VsbridgeIndexerCore\Indexer\DataFilter;
-use Divante\VsbridgeIndexerCatalog\Api\CatalogConfigurationInterface;
-use Divante\VsbridgeIndexerCatalog\Api\SlugGeneratorInterface;
-use Divante\VsbridgeIndexerCatalog\Model\ProductUrlPathGenerator;
-use Divante\VsbridgeIndexerCatalog\Model\Attributes\ProductAttributes;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\AttributeDataProvider;
+use StreamX\ConnectorCore\Api\DataProviderInterface;
+use StreamX\ConnectorCore\Indexer\DataFilter;
+use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
+use StreamX\ConnectorCatalog\Api\SlugGeneratorInterface;
+use StreamX\ConnectorCatalog\Model\ProductUrlPathGenerator;
+use StreamX\ConnectorCatalog\Model\Attributes\ProductAttributes;
 
 class AttributeData implements DataProviderInterface
 {

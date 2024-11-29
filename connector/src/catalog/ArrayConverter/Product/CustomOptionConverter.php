@@ -1,9 +1,9 @@
 <?php declare(strict_types = 1);
 
-namespace Divante\VsbridgeIndexerCatalog\ArrayConverter\Product;
+namespace StreamX\ConnectorCatalog\ArrayConverter\Product;
 
-use Divante\VsbridgeIndexerCore\Indexer\DataFilter;
-use Divante\VsbridgeIndexerCatalog\Api\ArrayConverter\Product\CustomOptionConverterInterface;
+use StreamX\ConnectorCore\Indexer\DataFilter;
+use StreamX\ConnectorCatalog\Api\ArrayConverter\Product\CustomOptionConverterInterface;
 
 class CustomOptionConverter implements CustomOptionConverterInterface
 {

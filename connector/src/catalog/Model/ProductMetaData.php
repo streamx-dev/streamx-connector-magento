@@ -1,6 +1,6 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model;
+namespace StreamX\ConnectorCatalog\Model;
 
 use Magento\Framework\EntityManager\MetadataPool;
 

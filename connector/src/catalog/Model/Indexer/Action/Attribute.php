@@ -1,10 +1,10 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Indexer\Action;
+namespace StreamX\ConnectorCatalog\Model\Indexer\Action;
 
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Attribute as ResourceModel;
-use Divante\VsbridgeIndexerCatalog\Index\Mapping\Attribute as AttributeMapping;
-use Divante\VsbridgeIndexerCore\Api\ConvertValueInterface;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Attribute as ResourceModel;
+use StreamX\ConnectorCatalog\Index\Mapping\Attribute as AttributeMapping;
+use StreamX\ConnectorCore\Api\ConvertValueInterface;
 
 class Attribute
 {

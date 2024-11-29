@@ -3,10 +3,10 @@
 
 declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model;
+namespace StreamX\ConnectorCatalog\Model;
 
-use Divante\VsbridgeIndexerCatalog\Api\LoadInventoryInterface;
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\Inventory as InventoryResource;
+use StreamX\ConnectorCatalog\Api\LoadInventoryInterface;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Inventory as InventoryResource;
 
 class LoadInventory implements LoadInventoryInterface
 {

@@ -1,14 +1,14 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Indexer\DataProvider\Product;
+namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\Bundle as Resource;
-use Divante\VsbridgeIndexerCore\Api\DataProviderInterface;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Bundle as Resource;
+use StreamX\ConnectorCore\Api\DataProviderInterface;
 
 class BundleOptionsData implements DataProviderInterface
 {
     /**
-     * @var \Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\Bundle
+     * @var \StreamX\ConnectorCatalog\Model\ResourceModel\Product\Bundle
      */
     private $resourceModel;
 

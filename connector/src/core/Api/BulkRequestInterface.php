@@ -1,6 +1,6 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCore\Api;
+namespace StreamX\ConnectorCore\Api;
 
 interface BulkRequestInterface
 {
@@ -25,12 +25,12 @@ interface BulkRequestInterface
      * @param string $type  Document type.
      * @param array  $data  Document data.
      *
-     * @return \Divante\VsbridgeIndexerCore\Api\BulkRequestInterface
+     * @return \StreamX\ConnectorCore\Api\BulkRequestInterface
      */
     public function addDocuments(string $index, string $type, array $data);
 
     /**
-     * @return \Divante\VsbridgeIndexerCore\Api\BulkRequestInterface
+     * @return \StreamX\ConnectorCore\Api\BulkRequestInterface
      */
     public function deleteDocuments(string $index, string $type, array $docIds);
 
@@ -43,7 +43,7 @@ interface BulkRequestInterface
      * @param string $type  Document type.
      * @param array  $data  Document data.
      *
-     * @return \Divante\VsbridgeIndexerCore\Api\BulkRequestInterface
+     * @return \StreamX\ConnectorCore\Api\BulkRequestInterface
      */
     public function updateDocuments(string $index, string $type, array $data);
 }

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Index\Mapping;
+namespace StreamX\ConnectorCatalog\Index\Mapping;
 
 interface FieldMappingInterface
 {

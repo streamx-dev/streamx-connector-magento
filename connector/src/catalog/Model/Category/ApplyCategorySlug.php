@@ -1,10 +1,10 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Category;
+namespace StreamX\ConnectorCatalog\Model\Category;
 
-use Divante\VsbridgeIndexerCatalog\Api\ApplyCategorySlugInterface;
-use Divante\VsbridgeIndexerCatalog\Api\CatalogConfigurationInterface;
-use Divante\VsbridgeIndexerCatalog\Api\SlugGeneratorInterface;
+use StreamX\ConnectorCatalog\Api\ApplyCategorySlugInterface;
+use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
+use StreamX\ConnectorCatalog\Api\SlugGeneratorInterface;
 
 class ApplyCategorySlug implements ApplyCategorySlugInterface
 {

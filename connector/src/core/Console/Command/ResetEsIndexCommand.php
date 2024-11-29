@@ -1,6 +1,6 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCore\Console\Command;
+namespace StreamX\ConnectorCore\Console\Command;
 
 use Magento\Framework\App\ObjectManagerFactory;
 use Magento\Framework\Exception\LocalizedException;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Api\ArrayConverter\Product;
+namespace StreamX\ConnectorCatalog\Api\ArrayConverter\Product;
 
 interface CustomOptionConverterInterface
 {

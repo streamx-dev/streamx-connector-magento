@@ -1,6 +1,6 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Plugin\Indexer\CatalogInventory;
+namespace StreamX\ConnectorCatalog\Plugin\Indexer\CatalogInventory;
 
 use Magento\CatalogInventory\Model\ResourceModel\QtyCounterInterface;
 

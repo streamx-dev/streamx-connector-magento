@@ -1,11 +1,11 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Index\Mapping;
+namespace StreamX\ConnectorCatalog\Index\Mapping;
 
-use Divante\VsbridgeIndexerCore\Api\Mapping\FieldInterface;
-use Divante\VsbridgeIndexerCore\Api\MappingInterface;
-use Divante\VsbridgeIndexerCore\Index\Mapping\GeneralMapping;
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\LoadAttributes;
+use StreamX\ConnectorCore\Api\Mapping\FieldInterface;
+use StreamX\ConnectorCore\Api\MappingInterface;
+use StreamX\ConnectorCore\Index\Mapping\GeneralMapping;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\LoadAttributes;
 
 class Product extends AbstractMapping implements MappingInterface
 {

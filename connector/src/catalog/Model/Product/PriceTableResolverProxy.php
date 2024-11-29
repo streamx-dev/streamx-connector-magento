@@ -3,7 +3,7 @@
 
 declare(strict_types = 1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Product;
+namespace StreamX\ConnectorCatalog\Model\Product;
 
 use Magento\Customer\Model\Indexer\CustomerGroupDimensionProvider;
 use Magento\Framework\Indexer\DimensionFactory;

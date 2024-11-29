@@ -1,10 +1,10 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCore\Console\Command;
+namespace StreamX\ConnectorCore\Console\Command;
 
-use Divante\VsbridgeIndexerCore\Indexer\StoreManager;
-use Divante\VsbridgeIndexerCore\Api\IndexOperationInterface;
-use Divante\VsbridgeIndexerCore\Model\IndexerRegistry;
+use StreamX\ConnectorCore\Indexer\StoreManager;
+use StreamX\ConnectorCore\Api\IndexOperationInterface;
+use StreamX\ConnectorCore\Model\IndexerRegistry;
 use Magento\Framework\App\ObjectManagerFactory;
 use Magento\Framework\Console\Cli;
 use Magento\Framework\Event\ManagerInterface;

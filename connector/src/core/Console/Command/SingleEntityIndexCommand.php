@@ -1,8 +1,8 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCore\Console\Command;
+namespace StreamX\ConnectorCore\Console\Command;
 
-use Divante\VsbridgeIndexerCore\Indexer\StoreManager;
+use StreamX\ConnectorCore\Indexer\StoreManager;
 use Magento\Framework\App\ObjectManagerFactory;
 use Magento\Framework\Indexer\IndexerInterface;
 use Magento\Indexer\Console\Command\AbstractIndexerCommand;

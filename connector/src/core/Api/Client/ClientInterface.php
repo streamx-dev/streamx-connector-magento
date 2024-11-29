@@ -1,6 +1,6 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCore\Api\Client;
+namespace StreamX\ConnectorCore\Api\Client;
 
 // TODO remove methods not required by StreamX indexer
 interface ClientInterface {

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Category;
+namespace StreamX\ConnectorCatalog\Model\ResourceModel\Category;
 
-use Divante\VsbridgeIndexerCatalog\Model\CategoryMetaData;
+use StreamX\ConnectorCatalog\Model\CategoryMetaData;
 use Magento\Catalog\Model\Category;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Select;

@@ -1,9 +1,9 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product;
+namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
 use Magento\Framework\App\ResourceConnection;
-use Divante\VsbridgeIndexerCatalog\Model\ProductMetaData;
+use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use Magento\UrlRewrite\Model\Storage\DbStorage;
 use Magento\UrlRewrite\Service\V1\Data\UrlRewrite;
 

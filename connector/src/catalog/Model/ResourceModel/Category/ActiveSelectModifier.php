@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Category;
+namespace StreamX\ConnectorCatalog\Model\ResourceModel\Category;
 
-use Divante\VsbridgeIndexerCatalog\Model\CategoryMetaData;
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Category;
+use StreamX\ConnectorCatalog\Model\CategoryMetaData;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Category;
 use Magento\Catalog\Api\Data\CategoryInterface;
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
 use Magento\Eav\Model\Entity\Attribute as Attribute;

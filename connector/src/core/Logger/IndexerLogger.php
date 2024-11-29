@@ -1,6 +1,6 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCore\Logger;
+namespace StreamX\ConnectorCore\Logger;
 
 use Monolog\Logger;
 

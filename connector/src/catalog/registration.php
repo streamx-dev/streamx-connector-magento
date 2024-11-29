@@ -4,6 +4,6 @@ use \Magento\Framework\Component\ComponentRegistrar;
 
 ComponentRegistrar::register(
     ComponentRegistrar::MODULE,
-    'Divante_VsbridgeIndexerCatalog',
+    'StreamX_ConnectorCatalog',
     __DIR__
 );

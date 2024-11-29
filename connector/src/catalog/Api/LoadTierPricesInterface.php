@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Api;
+namespace StreamX\ConnectorCatalog\Api;
 
 interface LoadTierPricesInterface
 {

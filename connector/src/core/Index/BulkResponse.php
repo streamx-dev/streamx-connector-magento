@@ -1,8 +1,8 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCore\Index;
+namespace StreamX\ConnectorCore\Index;
 
-use Divante\VsbridgeIndexerCore\Api\BulkResponseInterface;
+use StreamX\ConnectorCore\Api\BulkResponseInterface;
 
 class BulkResponse implements BulkResponseInterface
 {

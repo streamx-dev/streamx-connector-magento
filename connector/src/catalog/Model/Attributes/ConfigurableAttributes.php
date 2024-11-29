@@ -1,8 +1,8 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Attributes;
+namespace StreamX\ConnectorCatalog\Model\Attributes;
 
-use Divante\VsbridgeIndexerCatalog\Api\CatalogConfigurationInterface;
+use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
 
 class ConfigurableAttributes
 {

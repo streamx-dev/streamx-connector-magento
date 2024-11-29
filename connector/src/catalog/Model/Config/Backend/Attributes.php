@@ -3,7 +3,7 @@
 
 declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Config\Backend;
+namespace StreamX\ConnectorCatalog\Model\Config\Backend;
 
 use Magento\Framework\App\Config\Value;
 

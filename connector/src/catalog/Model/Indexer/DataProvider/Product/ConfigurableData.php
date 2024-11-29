@@ -1,16 +1,16 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Indexer\DataProvider\Product;
+namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
-use Divante\VsbridgeIndexerCore\Api\DataProviderInterface;
-use Divante\VsbridgeIndexerCore\Indexer\DataFilter;
+use StreamX\ConnectorCore\Api\DataProviderInterface;
+use StreamX\ConnectorCore\Indexer\DataFilter;
 
-use Divante\VsbridgeIndexerCatalog\Api\LoadInventoryInterface;
-use Divante\VsbridgeIndexerCatalog\Model\Indexer\DataProvider\Product\Configurable\LoadChildrenRawAttributes;
-use Divante\VsbridgeIndexerCatalog\Model\Indexer\DataProvider\Product\Configurable\LoadConfigurableOptions;
-use Divante\VsbridgeIndexerCatalog\Model\Indexer\DataProvider\Product\Configurable\PrepareConfigurableProduct;
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\Configurable as ConfigurableResource;
-use Divante\VsbridgeIndexerCatalog\Api\ArrayConverter\Product\InventoryConverterInterface;
+use StreamX\ConnectorCatalog\Api\LoadInventoryInterface;
+use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\Configurable\LoadChildrenRawAttributes;
+use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\Configurable\LoadConfigurableOptions;
+use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\Configurable\PrepareConfigurableProduct;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Configurable as ConfigurableResource;
+use StreamX\ConnectorCatalog\Api\ArrayConverter\Product\InventoryConverterInterface;
 
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable as ConfigurableType;
 

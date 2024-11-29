@@ -1,9 +1,9 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product;
+namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
-use Divante\VsbridgeIndexerCatalog\Model\Product\LinkTypeMapper;
-use Divante\VsbridgeIndexerCatalog\Model\ProductMetaData;
+use StreamX\ConnectorCatalog\Model\Product\LinkTypeMapper;
+use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Select;
 

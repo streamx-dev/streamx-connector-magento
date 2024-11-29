@@ -1,9 +1,9 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Plugin\Indexer\Attribute\Save;
+namespace StreamX\ConnectorCatalog\Plugin\Indexer\Attribute\Save;
 
-use Divante\VsbridgeIndexerCatalog\Model\Indexer\AttributeProcessor;
-use Divante\VsbridgeIndexerCatalog\Model\Indexer\ProductProcessor;
+use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
+use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use Magento\Catalog\Model\ResourceModel\Eav\Attribute;
 
 class UpdateAttributeDataPlugin

@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Product;
+namespace StreamX\ConnectorCatalog\Model\Product;
 
-use Divante\VsbridgeIndexerCatalog\Api\LoadMediaGalleryInterface;
-use Divante\VsbridgeIndexerCatalog\Model\ProductMetaData;
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\Gallery as Resource;
+use StreamX\ConnectorCatalog\Api\LoadMediaGalleryInterface;
+use StreamX\ConnectorCatalog\Model\ProductMetaData;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Gallery as Resource;
 
 class LoadMediaGallery implements LoadMediaGalleryInterface
 {
@@ -27,7 +27,7 @@ class LoadMediaGallery implements LoadMediaGalleryInterface
     ];
 
     /**
-     * @var \Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\Gallery
+     * @var \StreamX\ConnectorCatalog\Model\ResourceModel\Product\Gallery
      */
     private $resourceModel;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCore\Indexer;
+namespace StreamX\ConnectorCore\Indexer;
 
-use Divante\VsbridgeIndexerCore\System\GeneralConfigInterface;
+use StreamX\ConnectorCore\System\GeneralConfigInterface;
 use Magento\Store\Model\StoreManagerInterface;
 
 /**
