@@ -18,11 +18,9 @@ class MappingProcessorFactory
     }
 
     /**
-     * @param string $instanceName
-     *
      * @return mixed
      */
-    public function get($instanceName)
+    public function get(string $instanceName)
     {
         return $this->objectManager->get($instanceName);
     }

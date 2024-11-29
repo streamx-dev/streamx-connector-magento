@@ -55,11 +55,9 @@ class Processor
     }
 
     /**
-     * @param string $dataType
-     *
      * @return $this
      */
-    public function cleanCacheByDocIds(int $storeId, $dataType, array $entityIds)
+    public function cleanCacheByDocIds(int $storeId, string $dataType, array $entityIds)
     {
         if ($this->config->clearCache($storeId)) {
             if (!empty($entityIds)) {
@@ -76,9 +74,6 @@ class Processor
         return $this;
     }
 
-    /**
-     * @param string $dataType
-     */
     public function cleanCacheInBatches(int $storeId, string $dataType, array $entityIds)
     {
         $batchSize = $this->getInvalidateEntitiesBatchSize($storeId);
@@ -127,11 +122,7 @@ class Processor
         return $this->config->getInvalidateEntitiesBatchSize($storeId);
     }
 
-    /**
-     * @param string $storeId
-     * @param string $uri
-     */
-    private function call($storeId, $uri)
+    private function call(string $storeId, string $uri)
     {
         $config = $this->config->getConnectionOptions($storeId);
         /** @var \Magento\Framework\HTTP\Adapter\Curl $curl */
@@ -153,11 +144,9 @@ class Processor
     }
 
     /**
-     * @param string $type
-     *
      * @return string
      */
-    private function getCacheInvalidateUrl(int $storeId, $type, array $ids)
+    private function getCacheInvalidateUrl(int $storeId, string $type, array $ids)
     {
         $fullUrl = $this->getInvalidateCacheUrl($storeId);
         $params = $this->prepareTagsByDocIds($type, $ids);
@@ -178,11 +167,9 @@ class Processor
     }
 
     /**
-     * @param string $type
-     *
      * @return string
      */
-    public function prepareTagsByDocIds($type, array $ids)
+    public function prepareTagsByDocIds(string $type, array $ids)
     {
         $params = '';
         $cacheTags = $this->getCacheTags();

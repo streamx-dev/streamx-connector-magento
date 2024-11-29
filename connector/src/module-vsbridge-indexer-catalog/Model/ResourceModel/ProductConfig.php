@@ -60,8 +60,6 @@ class ProductConfig
     }
 
     /**
-     * @param string $entityTypeCode
-     *
      * @return int
      */
     private function getEntityTypeId(string $entityTypeCode)

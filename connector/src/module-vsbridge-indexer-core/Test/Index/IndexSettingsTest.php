@@ -67,8 +67,6 @@ class IndexSettingsTest extends TestCase
     }
 
     /**
-     * @param string $storeCode
-     *
      * @dataProvider provideStores
      */
     public function testGetIndexAlias(string $storeCode)

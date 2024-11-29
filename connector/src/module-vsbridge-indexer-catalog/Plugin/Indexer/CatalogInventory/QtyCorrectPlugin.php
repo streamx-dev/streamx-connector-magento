@@ -20,8 +20,6 @@ class QtyCorrectPlugin
     /**
      * @param QtyCounterInterface $subject
      * @param callable $proceed
-     * @param string $operator
-     *
      * @return void
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
@@ -30,7 +28,7 @@ class QtyCorrectPlugin
         callable $proceed,
         array $items,
         int $websiteId,
-        $operator
+        string $operator
     ) {
         if (!empty($items)) {
             $productIds = array_keys($items);

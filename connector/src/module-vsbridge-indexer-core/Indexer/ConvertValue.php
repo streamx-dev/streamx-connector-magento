@@ -46,8 +46,6 @@ class ConvertValue implements ConvertValueInterface
     }
 
     /**
-     * @param string $field
-     *
      * @return string|null
      */
     private function getFieldTypeByCode(array $mapping, string $field)
