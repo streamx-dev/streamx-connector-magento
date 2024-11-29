@@ -8,19 +8,7 @@ use Divante\VsbridgeIndexerCore\Api\DataProviderInterface;
 
 interface AttributeDataProviderInterface extends DataProviderInterface
 {
-    /**
-     * @param array $categoryDTO
-     * @param int $storeId
-     *
-     * @return array
-     */
-    public function prepareParentCategory(array $categoryDTO, int $storeId);
+    public function prepareParentCategory(array $categoryDTO, int $storeId): array;
 
-    /**
-     * @param array $categoryDTO
-     * @param int $storeId
-     *
-     * @return array
-     */
-    public function prepareChildCategory(array $categoryDTO, int $storeId);
+    public function prepareChildCategory(array $categoryDTO, int $storeId): array;
 }

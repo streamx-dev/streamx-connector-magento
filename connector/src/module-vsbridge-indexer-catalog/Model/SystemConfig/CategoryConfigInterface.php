@@ -20,17 +20,11 @@ interface CategoryConfigInterface
 
     /**
      * Retrieve Category Url Suffix
-     *
-     * @param int $storeId
-     *
-     * @return string
      */
     public function getCategoryUrlSuffix(int $storeId): string;
 
     /**
      * Retrieve attributes used for sort by
-     *
-     * @return array
      *
      * @throws \Exception
      */
@@ -38,28 +32,16 @@ interface CategoryConfigInterface
 
     /**
      * Retrieve default product attribute used for sort by
-     *
-     * @param int $storeId
-     *
-     * @return string
      */
     public function getProductListDefaultSortBy(int $storeId): string;
 
     /**
      * Retrieve Category Attributes Allowed to export
-     *
-     * @param int $storeId
-     *
-     * @return array
      */
     public function getAllowedAttributesToIndex(int $storeId): array;
 
     /**
      * Retrieve allowed attributes for children categories
-     *
-     * @param int $storeId
-     *
-     * @return array
      */
     public function getAllowedChildAttributesToIndex(int $storeId): array;
 }

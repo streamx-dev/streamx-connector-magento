@@ -114,13 +114,7 @@ class AttributeData implements AttributeDataProviderInterface
         $this->childAttributes = $categoryChildAttributes;
     }
 
-    /**
-     * @param array $indexData
-     * @param int   $storeId
-     *
-     * @return array
-     */
-    public function addData(array $indexData, $storeId)
+    public function addData(array $indexData, int $storeId): array
     {
         $this->settings->getAttributesUsedForSortBy();
         /**
@@ -235,24 +229,12 @@ class AttributeData implements AttributeDataProviderInterface
         return empty($categoryTree) ? [] : $categoryTree;
     }
 
-    /**
-     * @param array $categoryDTO
-     * @param int $storeId
-     *
-     * @return array
-     */
-    public function prepareParentCategory(array $categoryDTO, int $storeId)
+    public function prepareParentCategory(array $categoryDTO, int $storeId): array
     {
         return $this->prepareCategory($categoryDTO, $storeId);
     }
 
-    /**
-     * @param array $categoryDTO
-     * @param int $storeId
-     *
-     * @return array
-     */
-    public function prepareChildCategory(array $categoryDTO, int $storeId)
+    public function prepareChildCategory(array $categoryDTO, int $storeId): array
     {
         return $this->prepareCategory($categoryDTO, $storeId);
     }

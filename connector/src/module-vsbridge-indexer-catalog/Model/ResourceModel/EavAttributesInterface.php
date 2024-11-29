@@ -6,14 +6,9 @@ interface EavAttributesInterface
 {
 
     /**
-     * @param int $storeId
-     * @param array $entityIds
-     * @param array $requiredAttributes
-     *
-     * @return array
      * @throws \Exception
      */
-    public function loadAttributesData($storeId, array $entityIds, array $requiredAttributes = null);
+    public function loadAttributesData(int $storeId, array $entityIds, array $requiredAttributes = null): array;
 
     /**
      * @param \Magento\Eav\Model\Entity\Attribute $attribute

@@ -35,12 +35,6 @@ class CustomOptionConverter implements CustomOptionConverterInterface
         $this->dataFilter = $dataFilter;
     }
 
-    /**
-     * @param array $options
-     * @param array $optionValues
-     *
-     * @return array
-     */
     public function process(array $options, array $optionValues): array
     {
         $groupOption = [];

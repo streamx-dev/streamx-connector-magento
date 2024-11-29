@@ -6,10 +6,6 @@ interface GetParentsByChildIdInterface
 {
     /**
      * Retrieve parent sku array by requested children
-     *
-     * @param array $childId
-     *
-     * @return array
      */
     public function execute(array $childId): array;
 }

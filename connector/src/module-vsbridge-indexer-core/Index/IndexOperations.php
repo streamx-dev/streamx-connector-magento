@@ -2,6 +2,7 @@
 
 namespace Divante\VsbridgeIndexerCore\Index;
 
+use Divante\VsbridgeIndexerCore\Api\BulkResponseInterface;
 use Divante\VsbridgeIndexerCore\Api\Client\ClientInterface;
 use Divante\VsbridgeIndexerCore\Api\BulkResponseInterfaceFactory as BulkResponseFactory;
 use Divante\VsbridgeIndexerCore\Api\BulkRequestInterface;
@@ -90,10 +91,7 @@ class IndexOperations implements IndexOperationInterface
         $this->optimizationSettings = $optimizationSettings;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function executeBulk($storeId, BulkRequestInterface $bulk)
+    public function executeBulk(int $storeId, BulkRequestInterface $bulk): BulkResponseInterface
     {
         $this->checkEsCondition($storeId);
 
@@ -109,18 +107,12 @@ class IndexOperations implements IndexOperationInterface
         );
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function deleteByQuery($storeId, array $params)
+    public function deleteByQuery(int $storeId, array $params): void
     {
         $this->resolveClient($storeId)->deleteByQuery($params);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function indexExists($storeId, $indexName)
+    public function indexExists(int $storeId, string $indexName): bool
     {
         $exists = true;
 
@@ -131,10 +123,7 @@ class IndexOperations implements IndexOperationInterface
         return $exists;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getIndexByName($indexIdentifier, StoreInterface $store)
+    public function getIndexByName(string $indexIdentifier, StoreInterface $store): IndexInterface
     {
         $indexAlias = $this->getIndexAlias($store);
 
@@ -151,18 +140,12 @@ class IndexOperations implements IndexOperationInterface
         return $this->indicesByIdentifier[$indexAlias];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getIndexAlias(StoreInterface $store)
+    public function getIndexAlias(StoreInterface $store): string
     {
         return $this->indexSettings->getIndexAlias($store);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function createIndex($indexIdentifier, StoreInterface $store)
+    public function createIndex(string $indexIdentifier, StoreInterface $store): IndexInterface
     {
         $index = $this->initIndex($indexIdentifier, $store, false);
 
@@ -187,18 +170,12 @@ class IndexOperations implements IndexOperationInterface
         return $index;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function refreshIndex($storeId, IndexInterface $index)
+    public function refreshIndex(int $storeId, IndexInterface $index): void
     {
         $this->resolveClient($storeId)->refreshIndex($index->getName());
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function switchIndexer($storeId, string $indexName, string $indexAlias)
+    public function switchIndexer($storeId, string $indexName, string $indexAlias): void
     {
         $aliasActions = [
             [
@@ -267,18 +244,12 @@ class IndexOperations implements IndexOperationInterface
         return $this->indicesByIdentifier[$indexAlias] = $index;
     }
 
-    /**
-     * @return BulkRequestInterface
-     */
-    public function createBulk()
+    public function createBulk(): BulkRequestInterface
     {
         return $this->bulkRequestFactory->create();
     }
 
-    /**
-     * @return int
-     */
-    public function getBatchIndexingSize()
+    public function getBatchIndexingSize(): int
     {
         return $this->indexSettings->getBatchIndexingSize();
     }
@@ -363,11 +334,8 @@ class IndexOperations implements IndexOperationInterface
 
     /**
      * Set specific values before indexing to optimize ES
-     *
-     * @param int $storeId
-     * @param string $indexName
      */
-    public function optimizeEsIndexing($storeId, string $indexName)
+    public function optimizeEsIndexing(int $storeId, string $indexName): void
     {
         if ($this->optimizationSettings->changeNumberOfReplicas()) {
             $this->resolveClient($storeId)->changeNumberOfReplicas(
@@ -386,11 +354,8 @@ class IndexOperations implements IndexOperationInterface
 
     /**
      * Restore values that were set before optimization.
-     *
-     * @param int $storeId
-     * @param string $indexName
      */
-    public function cleanAfterOptimizeEsIndexing($storeId, string $indexName)
+    public function cleanAfterOptimizeEsIndexing(int $storeId, string $indexName): void
     {
         if ($this->optimizationSettings->changeNumberOfReplicas()) {
             $numberOfReplicas = $this->optimizationSettings->getDefaultNumberOfReplicas();

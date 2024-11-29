@@ -38,84 +38,42 @@ class CatalogConfig implements CatalogConfigurationInterface
         $this->getAttributeCodesByIds = $getAttributeCodesByIds;
     }
 
-    /**
-     * @inheritDoc
-     *
-     * @return bool
-     */
     public function useMagentoUrlKeys(): bool
     {
         return (bool) $this->getConfigParam(CatalogConfigurationInterface::USE_MAGENTO_URL_KEYS);
     }
 
-    /**
-     * @inheritDoc
-     *
-     * @return bool
-     */
     public function useUrlKeyToGenerateSlug(): bool
     {
         return (bool) $this->getConfigParam(CatalogConfigurationInterface::USE_URL_KEY_TO_GENERATE_SLUG);
     }
 
-    /**
-     * @inheritDoc
-     *
-     * @return bool
-     */
     public function useCatalogRules(): bool
     {
         return (bool) $this->getConfigParam(CatalogConfigurationInterface::USE_CATALOG_RULES);
     }
 
-    /**
-     * @inheritDoc
-     *
-     * @return bool
-     */
     public function syncTierPrices(): bool
     {
         return (bool) $this->getConfigParam(CatalogConfigurationInterface::SYNC_TIER_PRICES);
     }
 
-    /**
-     * @inheritdoc
-     *
-     * @return bool
-     */
     public function addParentSku(): bool
     {
         return (bool) $this->getConfigParam(CatalogConfigurationInterface::ADD_PARENT_SKU);
     }
 
-    /**
-     * @inheritDoc
-     *
-     * @return bool
-     */
     public function addSwatchesToConfigurableOptions(): bool
     {
         return (bool) $this->getConfigParam(CatalogConfigurationInterface::ADD_SWATCHES_OPTIONS);
     }
 
-    /**
-     * @inheritDoc
-     *
-     * @return bool
-     */
     public function canExportAttributesMetadata(): bool
     {
         return (bool) $this->getConfigParam(CatalogConfigurationInterface::EXPORT_ATTRIBUTES_METADATA);
     }
 
-    /**
-     * @inheritDoc
-     *
-     * @param int $storeId
-     *
-     * @return array
-     */
-    public function getAllowedProductTypes($storeId): array
+    public function getAllowedProductTypes(int $storeId): array
     {
         $types = $this->getConfigParam(CatalogConfigurationInterface::ALLOWED_PRODUCT_TYPES, $storeId);
 
@@ -128,13 +86,6 @@ class CatalogConfig implements CatalogConfigurationInterface
         return $types;
     }
 
-    /**
-     * @inheritDoc
-     *
-     * @param int $storeId
-     *
-     * @return array
-     */
     public function getAllowedAttributesToIndex(int $storeId): array
     {
         $attributes = (string)$this->getConfigParam(
@@ -145,13 +96,6 @@ class CatalogConfig implements CatalogConfigurationInterface
         return $this->getAttributeCodesByIds->execute($attributes);
     }
 
-    /**
-     * @inheritDoc
-     *
-     * @param int $storeId
-     *
-     * @return array
-     */
     public function getAllowedChildAttributesToIndex(int $storeId): array
     {
         $attributes = (string)$this->getConfigParam(
@@ -162,13 +106,6 @@ class CatalogConfig implements CatalogConfigurationInterface
         return $this->getAttributeCodesByIds->execute($attributes);
     }
 
-    /**
-     * @inheritDoc
-     *
-     * @param int $storeId
-     *
-     * @return int
-     */
     public function getConfigurableChildrenBatchSize(int $storeId): int
     {
         return (int) $this->getConfigParam(

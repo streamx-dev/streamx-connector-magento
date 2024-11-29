@@ -16,24 +16,16 @@ interface GeneralConfigInterface
 
     /**
      * Check if store can be reindex
-     *
-     * @param int $storeId
-     *
-     * @return bool
      */
-    public function canReindexStore($storeId): bool;
+    public function canReindexStore(int $storeId): bool;
 
     /**
      * Get Store ids allowed to reindex
-     *
-     * @return array
      */
     public function getStoresToIndex(): array;
 
     /**
      * Check if ES indexing enabled
-     *
-     * @return bool
      */
     public function isEnabled(): bool;
 }

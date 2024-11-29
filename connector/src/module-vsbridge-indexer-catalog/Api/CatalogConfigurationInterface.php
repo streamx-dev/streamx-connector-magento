@@ -46,70 +46,25 @@ interface CatalogConfigurationInterface
      */
     const ADD_PARENT_SKU = 'add_parent_sku';
 
-    /**
-     * @return bool
-     */
     public function useMagentoUrlKeys(): bool;
 
-    /**
-     * @return bool
-     */
     public function useUrlKeyToGenerateSlug(): bool;
 
-    /**
-     * @return bool
-     */
     public function useCatalogRules(): bool;
 
-    /**
-     * @return bool
-     */
     public function syncTierPrices(): bool;
 
-    /**
-     * Add Parent SKU
-     *
-     * @return bool
-     */
     public function addParentSku(): bool;
 
-    /**
-     * @return bool
-     */
     public function canExportAttributesMetadata(): bool;
 
-    /**
-     * @return bool
-     */
     public function addSwatchesToConfigurableOptions();
 
-    /**
-     * @param int $storeId
-     *
-     * @return array
-     */
-    public function getAllowedProductTypes($storeId): array;
+    public function getAllowedProductTypes(int $storeId): array;
 
-    /**
-     * @param int $storeId
-     *
-     * @return array
-     */
     public function getAllowedAttributesToIndex(int $storeId): array;
 
-    /**
-     * @param int $storeId
-     *
-     * @return array
-     */
     public function getAllowedChildAttributesToIndex(int $storeId): array;
 
-    /**
-     * Retrieve configurable children batch size
-     *
-     * @param int $storeId
-     *
-     * @return int
-     */
     public function getConfigurableChildrenBatchSize(int $storeId): int;
 }

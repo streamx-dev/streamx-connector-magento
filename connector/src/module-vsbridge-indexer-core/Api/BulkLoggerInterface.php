@@ -4,10 +4,5 @@ namespace Divante\VsbridgeIndexerCore\Api;
 
 interface BulkLoggerInterface
 {
-    /**
-     * @param BulkResponseInterface $bulkResponse
-     *
-     * @return void
-     */
-    public function log(BulkResponseInterface $bulkResponse);
+    public function log(BulkResponseInterface $bulkResponse): void;
 }

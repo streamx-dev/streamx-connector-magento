@@ -33,15 +33,11 @@ class PriceData implements DataProviderInterface
     }
 
     /**
-     * @param array $indexData
-     * @param int $storeId
-     *
-     * @return array
      * @throws \Exception
      * @throws \Magento\Framework\Exception\LocalizedException
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function addData(array $indexData, $storeId)
+    public function addData(array $indexData, int $storeId): array
     {
         $productIds = array_keys($indexData);
         $priceData = $this->resourcePriceModel->loadPriceData($storeId, $productIds);

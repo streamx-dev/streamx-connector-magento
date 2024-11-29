@@ -33,13 +33,7 @@ class Inventory implements DataProviderInterface
         $this->inventoryProcessor = $inventoryProcessor;
     }
 
-    /**
-     * @param array $indexData
-     * @param int   $storeId
-     *
-     * @return array
-     */
-    public function addData(array $indexData, $storeId)
+    public function addData(array $indexData, int $storeId): array
     {
         $inventoryData = $this->getInventory->execute($indexData, $storeId);
 

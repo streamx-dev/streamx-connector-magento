@@ -25,7 +25,7 @@ class CategoryData implements DataProviderInterface
     /**
      * @inheritdoc
      */
-    public function addData(array $indexData, $storeId)
+    public function addData(array $indexData, int $storeId): array
     {
         $categoryData = $this->resourceModel->loadCategoryData($storeId, array_keys($indexData));
 

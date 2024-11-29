@@ -69,12 +69,7 @@ class Category extends AbstractMapping implements MappingInterface
         parent::__construct($staticFieldMapping);
     }
 
-    /**
-     * @inheritDoc
-     *
-     * @return array
-     */
-    public function getMappingProperties()
+    public function getMappingProperties(): array
     {
         if (null === $this->properties) {
             $attributesMapping = $this->getAllAttributesMapping();
