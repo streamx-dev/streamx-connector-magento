@@ -57,8 +57,6 @@ class LoadOptions
     }
 
     /**
-     * @param Attribute $attribute
-     *
      * @return array
      */
     private function loadOptions(Attribute $attribute): array
@@ -88,8 +86,6 @@ class LoadOptions
     }
 
     /**
-     * @param Attribute $attribute
-     *
      * @return bool
      */
     private function useSourceModel(Attribute $attribute)
@@ -104,8 +100,6 @@ class LoadOptions
     }
 
     /**
-     * @param Attribute $attribute
-     *
      * @return OptionCollection
      */
     private function getOptionCollection(Attribute $attribute)
@@ -135,8 +129,6 @@ class LoadOptions
     }
 
     /**
-     * @param Attribute $attribute
-     *
      * @return bool
      */
     private function isVisualSwatch(Attribute $attribute)
@@ -146,8 +138,6 @@ class LoadOptions
     }
 
     /**
-     * @param OptionCollection $collection
-     *
      * @return array
      */
     private function toOptionArray(OptionCollection $collection, array $additional): array

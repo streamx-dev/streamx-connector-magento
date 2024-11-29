@@ -200,12 +200,10 @@ class IndexOperations implements IndexOperationInterface
 
     /**
      * @param $indexIdentifier
-     * @param StoreInterface $store
-     * @param bool $existingIndex
      *
      * @return Index
      */
-    private function initIndex($indexIdentifier, StoreInterface $store, $existingIndex)
+    private function initIndex($indexIdentifier, StoreInterface $store, bool $existingIndex)
     {
         $this->getIndicesConfiguration();
 

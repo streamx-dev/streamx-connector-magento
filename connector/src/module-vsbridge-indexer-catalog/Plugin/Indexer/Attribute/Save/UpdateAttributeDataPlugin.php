@@ -29,7 +29,6 @@ class UpdateAttributeDataPlugin
     /**
      * TODO check if we add new attribute, after adding new attribute send request to elastic to add new mapping
      * for field.
-     * @param Attribute $attribute
      *
      * @return Attribute
      */
@@ -42,8 +41,6 @@ class UpdateAttributeDataPlugin
 
     /**
      * After deleting attribute we should update all products
-     * @param Attribute $attribute
-     * @param Attribute $result
      *
      * @return Attribute
      */

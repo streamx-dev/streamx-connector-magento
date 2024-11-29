@@ -26,7 +26,6 @@ class ReindexQuoteInventoryObserverPlugin
     }
 
     /**
-     * @param ReindexQuoteInventoryObserver $subject
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      *
      * @return void

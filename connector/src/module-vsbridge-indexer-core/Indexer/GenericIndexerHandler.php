@@ -84,9 +84,6 @@ class GenericIndexerHandler
     /**
      * Update documents in ES
      *
-     * @param Traversable $documents
-     * @param StoreInterface $store
-     *
      * @return $this
      * @throws ConnectionUnhealthyException
      */
@@ -144,9 +141,6 @@ class GenericIndexerHandler
     /**
      * Save documents in ES
      *
-     * @param Traversable $documents
-     * @param StoreInterface $store
-     *
      * @return void
      * @throws ConnectionUnhealthyException
      */
@@ -198,8 +192,6 @@ class GenericIndexerHandler
     /**
      * Removed unnecessary documents in ES by transaction key
      *
-     * @param StoreInterface $store
-     *
      * @return void
      */
     public function cleanUpByTransactionKey(StoreInterface $store, array $docIds = null)
@@ -231,8 +223,6 @@ class GenericIndexerHandler
 
     /**
      * Get Index
-     *
-     * @param StoreInterface $store
      *
      * @return IndexInterface
      */

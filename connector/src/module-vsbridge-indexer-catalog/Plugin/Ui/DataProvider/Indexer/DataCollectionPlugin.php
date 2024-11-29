@@ -11,7 +11,6 @@ class DataCollectionPlugin
 {
 
     /**
-     * @param DataCollection $subject
      * @param \Magento\Framework\DataObject[] $items
      *
      * @return \Magento\Framework\DataObject[]

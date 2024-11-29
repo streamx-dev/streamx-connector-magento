@@ -236,8 +236,6 @@ class Bundle
     }
 
     /**
-     * @param Select $select
-     *
      * @return Select
      */
     private function joinOptionValues(Select $select, int $storeId)

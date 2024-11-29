@@ -26,7 +26,6 @@ class RevertQuoteInventoryObserverPlugin
     }
 
     /**
-     * @param RevertQuoteInventoryObserver $subject
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      *
      * @return void

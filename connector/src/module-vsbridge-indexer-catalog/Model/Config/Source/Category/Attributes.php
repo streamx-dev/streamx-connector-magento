@@ -28,8 +28,6 @@ class Attributes extends AbstractAttributeSource
     /**
      * @inheritDoc
      *
-     * @param Attribute $attribute
-     *
      * @return bool
      */
     public function canAddAttribute(Attribute $attribute): bool

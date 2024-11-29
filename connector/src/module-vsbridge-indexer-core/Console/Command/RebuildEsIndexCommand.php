@@ -135,7 +135,6 @@ class RebuildEsIndexCommand extends AbstractIndexerCommand
     }
 
     /***
-     * @param OutputInterface $output
      * @param $storeId
      * @param $allStores
      *
@@ -188,8 +187,6 @@ class RebuildEsIndexCommand extends AbstractIndexerCommand
     /**
      * Check if Store is allowed to reindex
      *
-     * @param StoreInterface $store
-     *
      * @return bool
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
@@ -208,9 +205,6 @@ class RebuildEsIndexCommand extends AbstractIndexerCommand
 
     /**
      * Reindex each vsbridge index for the specified store
-     *
-     * @param \Magento\Store\Api\Data\StoreInterface $store
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return int
      */
