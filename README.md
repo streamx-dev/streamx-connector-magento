@@ -129,6 +129,7 @@ export XDEBUG_MODE=coverage
 3. Run tests with coverage and open results in web browser:
 ```bash
 cd connector
+composer update # enough to execute this only once - will create the './vendor/bin/phpunit' directory
 ./vendor/bin/phpunit --coverage-text --coverage-html target/coverage-report
 open target/coverage-report/index.html
 ```

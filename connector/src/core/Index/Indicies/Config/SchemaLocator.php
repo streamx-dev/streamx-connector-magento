@@ -10,7 +10,7 @@ class SchemaLocator implements SchemaLocatorInterface
     /**
      * XML schema for config file.
      */
-    const CONFIG_FILE_SCHEMA = 'vsbridge_indices.xsd';
+    const CONFIG_FILE_SCHEMA = 'streamx_indices.xsd';
 
     /**
      * Path to corresponding XSD file with validation rules for merged config

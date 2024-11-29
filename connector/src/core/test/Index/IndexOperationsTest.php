@@ -57,7 +57,7 @@ class IndexOperationsTest extends TestCase
 
     /** @var array[][]  */
     private $indicesXmlConfiguration  = [
-        'vue' => [
+        'streamx' => [
             'types' => []
         ]
     ];
@@ -136,7 +136,7 @@ class IndexOperationsTest extends TestCase
 
         $this->clientMock->method('indexExists')->with($name)->willReturn(true);
 
-        $index = $this->indexOperations->getIndexByName('vue', $this->storeMock);
+        $index = $this->indexOperations->getIndexByName('streamx', $this->storeMock);
         $this->assertEquals($indexMock, $index);
         $this->assertEquals($index->isNew(), false);
     }
@@ -169,7 +169,7 @@ class IndexOperationsTest extends TestCase
         $this->esIndexSettingsMock->method('getEsConfig')->willReturn([]);
         $this->clientResolverMock->method('getClient')->with(1)->willReturn($this->clientMock);
 
-        $index = $this->indexOperations->createIndex('vue', $this->storeMock);
+        $index = $this->indexOperations->createIndex('streamx', $this->storeMock);
         $this->assertEquals($indexMock, $index);
         $this->assertEquals($index->isNew(), true);
     }

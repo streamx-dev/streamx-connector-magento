@@ -17,7 +17,7 @@
 
     <type name="StreamX\ConnectorCore\Logger\IndexerLogger">
         <arguments>
-            <argument name="name" xsi:type="string">vsbridgeIndexerLogger</argument>
+            <argument name="name" xsi:type="string">streamxIndexerLogger</argument>
             <argument name="handlers"  xsi:type="array">
                 <item name="info" xsi:type="object">StreamX\ConnectorCore\Logger\Handler\Info</item>
                 <item name="error" xsi:type="object">StreamX\ConnectorCore\Logger\Handler\Error</item>
@@ -32,7 +32,7 @@
 
     <type name="StreamX\ConnectorCore\Cache\Logger\CacheLogger">
         <arguments>
-            <argument name="name" xsi:type="string">vsbridgeIndexerCacheLogger</argument>
+            <argument name="name" xsi:type="string">streamxIndexerCacheLogger</argument>
             <argument name="handlers"  xsi:type="array">
                 <item name="info" xsi:type="object">StreamX\ConnectorCore\Cache\Logger\Handler\Info</item>
             </argument>
@@ -50,7 +50,7 @@
     <!--    <type name="Magento\Config\Model\Config\TypePool">-->
     <!--        <arguments>-->
     <!--            <argument name="sensitive" xsi:type="array">-->
-    <!--                <item name="vsbridge_indexer_settings/streamx_client/auth_pwd" xsi:type="string">1</item>-->
+    <!--                <item name="streamx_indexer_settings/streamx_client/auth_pwd" xsi:type="string">1</item>-->
     <!--            </argument>-->
     <!--        </arguments>-->
     <!--    </type>-->
@@ -60,7 +60,7 @@
             <argument name="commands" xsi:type="array">
                 <item name="index_single_entity" xsi:type="object">StreamX\ConnectorCore\Console\Command\SingleEntityIndexCommand</item>
                 <item name="rebuild" xsi:type="object">StreamX\ConnectorCore\Console\Command\RebuildEsIndexCommand</item>
-                <item name="vsbridge_reset" xsi:type="object">StreamX\ConnectorCore\Console\Command\ResetEsIndexCommand</item>
+                <item name="streamx_reset" xsi:type="object">StreamX\ConnectorCore\Console\Command\ResetEsIndexCommand</item>
             </argument>
         </arguments>
     </type>

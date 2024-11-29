@@ -10,7 +10,7 @@ interface CategoryConfigInterface
     /**
      * @const string
      */
-    const CATEGORY_SETTINGS_XML_PREFIX = 'vsbridge_indexer_settings/catalog_category_settings';
+    const CATEGORY_SETTINGS_XML_PREFIX = 'streamx_indexer_settings/catalog_category_settings';
 
     /**
      * Category attributes to reindex

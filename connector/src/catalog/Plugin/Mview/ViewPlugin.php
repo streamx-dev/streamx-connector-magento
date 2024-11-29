@@ -20,7 +20,7 @@ class ViewPlugin
 
     public function afterGetSubscriptions(ViewInterface $subject, array $result): array
     {
-        if ($this->catalogSettings->useCatalogRules() && $this->isVsbridgeProductIndexer($subject)) {
+        if ($this->catalogSettings->useCatalogRules() && $this->isStreamxProductIndexer($subject)) {
             $result['catalogrule_product_price'] = [
                 'name' => 'catalogrule_product_price',
                 'column' => 'product_id',
@@ -34,7 +34,7 @@ class ViewPlugin
     /**
      * @return bool
      */
-    private function isVsbridgeProductIndexer(ViewInterface $subject): bool
+    private function isStreamxProductIndexer(ViewInterface $subject): bool
     {
         return ProductProcessor::INDEXER_ID === $subject->getId();
     }

@@ -39,7 +39,7 @@ class SingleEntityIndexCommand extends AbstractIndexerCommand
      */
     protected function configure()
     {
-        $this->setName('vsbridge:index')
+        $this->setName('streamx:index')
             ->setDescription(
                 'Update single entity in ES (product, category, attribute,  etc..). Useful tool for testing new data.'
             );
@@ -107,7 +107,6 @@ class SingleEntityIndexCommand extends AbstractIndexerCommand
     {
         /** @var IndexerInterface[] */
         $indexers = $this->getAllIndexers();
-        $vsbridgeIndexers = [];
 
         foreach ($indexers as $indexer) {
             $indexId = $indexer->getId();

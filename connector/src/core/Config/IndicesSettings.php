@@ -6,7 +6,7 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 
 class IndicesSettings
 {
-    const INDICES_SETTINGS_CONFIG_XML_PREFIX = 'vsbridge_indexer_settings/indices_settings';
+    const INDICES_SETTINGS_CONFIG_XML_PREFIX = 'streamx_indexer_settings/indices_settings';
 
     /**
      * @var ScopeConfigInterface
