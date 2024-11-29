@@ -1,8 +1,5 @@
 <?php
-/**
- * Copyright Divante Sp. z o.o.
- * See LICENSE_DIVANTE.txt for license details.
- */
+
 namespace Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\Type\Grouped;
 
 use Divante\VsbridgeIndexerCatalog\Model\ProductMetaData;
