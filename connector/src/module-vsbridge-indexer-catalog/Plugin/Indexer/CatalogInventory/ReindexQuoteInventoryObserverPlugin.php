@@ -5,9 +5,6 @@ namespace Divante\VsbridgeIndexerCatalog\Plugin\Indexer\CatalogInventory;
 use Divante\VsbridgeIndexerCatalog\Model\Indexer\ProductProcessor;
 use Magento\CatalogInventory\Observer\ReindexQuoteInventoryObserver;
 
-/**
- * Class ReindexQuoteInventoryObserverPlugin
- */
 class ReindexQuoteInventoryObserverPlugin
 {
     /**

@@ -5,9 +5,6 @@ namespace Divante\VsbridgeIndexerCatalog\Model\Indexer\DataProvider\Product;
 use Divante\VsbridgeIndexerCore\Api\DataProviderInterface;
 use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\Category as Resource;
 
-/**
- * Class CategoryData
- */
 class CategoryData implements DataProviderInterface
 {
     /**

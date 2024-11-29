@@ -5,9 +5,6 @@ declare(strict_types=1);
 
 namespace Divante\VsbridgeIndexerCatalog\Model\Inventory;
 
-/**
- * Class Fields
- */
 class Fields
 {
     /**

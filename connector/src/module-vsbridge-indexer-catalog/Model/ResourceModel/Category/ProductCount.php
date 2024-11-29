@@ -4,9 +4,6 @@ namespace Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Category;
 
 use Magento\Framework\App\ResourceConnection;
 
-/**
- * Class ProductCount
- */
 class ProductCount
 {
 

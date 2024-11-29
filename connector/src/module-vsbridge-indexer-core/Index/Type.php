@@ -5,9 +5,6 @@ namespace Divante\VsbridgeIndexerCore\Index;
 use Divante\VsbridgeIndexerCore\Api\Index\TypeInterface;
 use Divante\VsbridgeIndexerCore\Api\MappingInterface;
 
-/**
- * Class Type
- */
 class Type implements TypeInterface
 {
     /**

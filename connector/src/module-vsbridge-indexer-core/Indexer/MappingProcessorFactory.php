@@ -2,9 +2,6 @@
 
 namespace Divante\VsbridgeIndexerCore\Indexer;
 
-/**
- * Class MappingProcessorFactory
- */
 class MappingProcessorFactory
 {
     /**

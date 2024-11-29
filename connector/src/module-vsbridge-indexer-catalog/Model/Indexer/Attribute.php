@@ -6,9 +6,6 @@ use Divante\VsbridgeIndexerCatalog\Model\Indexer\Action\Attribute as AttributeAc
 use Divante\VsbridgeIndexerCore\Indexer\GenericIndexerHandler;
 use Divante\VsbridgeIndexerCore\Indexer\StoreManager;
 
-/**
- * Class Attribute
- */
 class Attribute implements \Magento\Framework\Indexer\ActionInterface, \Magento\Framework\Mview\ActionInterface
 {
     /**

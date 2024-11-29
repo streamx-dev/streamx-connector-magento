@@ -6,9 +6,6 @@ namespace Divante\VsbridgeIndexerCatalog\Model\Config\Source\Category;
 
 use Magento\Eav\Model\Entity\Attribute;
 
-/**
- * Class Attributes
- */
 class Attributes extends AbstractAttributeSource
 {
     /**

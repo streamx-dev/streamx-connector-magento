@@ -2,9 +2,6 @@
 
 namespace Divante\VsbridgeIndexerCatalog\Index\Mapping;
 
-/**
- * Interface FieldMappingInterface
- */
 interface FieldMappingInterface
 {
     /**

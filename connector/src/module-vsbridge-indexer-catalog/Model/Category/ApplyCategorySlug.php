@@ -6,9 +6,6 @@ use Divante\VsbridgeIndexerCatalog\Api\ApplyCategorySlugInterface;
 use Divante\VsbridgeIndexerCatalog\Api\CatalogConfigurationInterface;
 use Divante\VsbridgeIndexerCatalog\Api\SlugGeneratorInterface;
 
-/**
- * Class ApplyCategorySlug
- */
 class ApplyCategorySlug implements ApplyCategorySlugInterface
 {
 

@@ -6,9 +6,6 @@ use Magento\Framework\HTTP\Adapter\CurlFactory;
 use Magento\Framework\Event\ManagerInterface as EventManager;
 use Psr\Log\LoggerInterface;
 
-/**
- * Class Processor
- */
 class Processor
 {
     /**

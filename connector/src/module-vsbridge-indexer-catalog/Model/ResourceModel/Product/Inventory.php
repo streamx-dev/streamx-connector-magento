@@ -9,9 +9,6 @@ use Divante\VsbridgeIndexerCatalog\Model\Inventory\Fields as InventoryFields;
 use Magento\Framework\App\ResourceConnection;
 use Magento\CatalogInventory\Api\StockConfigurationInterface;
 
-/**
- * Class Inventory
- */
 class Inventory
 {
     /**

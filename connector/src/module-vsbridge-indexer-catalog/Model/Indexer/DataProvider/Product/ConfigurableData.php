@@ -14,9 +14,6 @@ use Divante\VsbridgeIndexerCatalog\Api\ArrayConverter\Product\InventoryConverter
 
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable as ConfigurableType;
 
-/**
- * Class ConfigurableData
- */
 class ConfigurableData implements DataProviderInterface
 {
     /**

@@ -6,9 +6,6 @@ use Divante\VsbridgeIndexerCatalog\Api\LoadMediaGalleryInterface;
 use Divante\VsbridgeIndexerCatalog\Model\ProductMetaData;
 use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\Gallery as Resource;
 
-/**
- * Class LoadMediaGallery
- */
 class LoadMediaGallery implements LoadMediaGalleryInterface
 {
     const VIDEO_TYPE = 'external-video';

@@ -8,9 +8,6 @@ use Divante\VsbridgeIndexerCatalog\Api\ArrayConverter\Product\InventoryConverter
 use Divante\VsbridgeIndexerCatalog\Index\Mapping\StockMapping;
 use Divante\VsbridgeIndexerCore\Api\Mapping\FieldInterface;
 
-/**
- * Class InventoryConverter
- */
 class InventoryConverter implements InventoryConverterInterface
 {
 

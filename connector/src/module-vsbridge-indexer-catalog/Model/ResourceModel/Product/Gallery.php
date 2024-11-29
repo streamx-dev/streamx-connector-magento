@@ -9,9 +9,6 @@ use Magento\Framework\DB\Select;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Store\Model\Store;
 
-/**
- * Class Gallery
- */
 class Gallery
 {
     /**

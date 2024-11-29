@@ -6,9 +6,6 @@ use Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory;
 use Divante\VsbridgeIndexerCatalog\Model\Attributes\ConfigurableAttributes;
 use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product as Resource;
 
-/**
- * Class ConfigurableChildAttributes
- */
 class ConfigurableChildAttributes extends AbstractAttributeSource
 {
 

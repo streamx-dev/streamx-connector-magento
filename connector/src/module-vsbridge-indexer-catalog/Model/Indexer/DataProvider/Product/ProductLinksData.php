@@ -5,9 +5,6 @@ namespace Divante\VsbridgeIndexerCatalog\Model\Indexer\DataProvider\Product;
 use Divante\VsbridgeIndexerCore\Api\DataProviderInterface;
 use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\Links as LinkResourceModel;
 
-/**
- * Class LinkData
- */
 class ProductLinksData implements DataProviderInterface
 {
 

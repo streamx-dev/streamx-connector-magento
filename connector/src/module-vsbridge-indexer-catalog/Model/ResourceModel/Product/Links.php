@@ -7,9 +7,6 @@ use Divante\VsbridgeIndexerCatalog\Model\ProductMetaData;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Select;
 
-/**
- * Class Links
- */
 class Links
 {
     /**

@@ -5,9 +5,6 @@ namespace Divante\VsbridgeIndexerCatalog\Index\Mapping\Product;
 use Divante\VsbridgeIndexerCatalog\Index\Mapping\FieldMappingInterface;
 use Divante\VsbridgeIndexerCore\Api\Mapping\FieldInterface;
 
-/**
- * Class CategoryMapping
- */
 class CategoryMapping implements FieldMappingInterface
 {
     /**

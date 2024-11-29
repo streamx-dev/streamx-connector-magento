@@ -5,9 +5,6 @@ namespace Divante\VsbridgeIndexerCore\Index;
 use Divante\VsbridgeIndexerCore\Api\IndexInterface;
 use Divante\VsbridgeIndexerCore\Api\Index\TypeInterface;
 
-/**
- * Class Index
- */
 class Index implements IndexInterface
 {
 

@@ -11,9 +11,6 @@ use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\AttributeDataProv
 use Magento\Customer\Model\Group;
 use Magento\Store\Model\StoreManagerInterface;
 
-/**
- * Class LoadTierPrices
- */
 class LoadTierPrices implements LoadTierPricesInterface
 {
     /**

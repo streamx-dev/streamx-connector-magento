@@ -7,9 +7,6 @@ namespace Divante\VsbridgeIndexerCatalog\Model\ResourceModel\AttributesMetadata;
 use Divante\VsbridgeIndexerCore\Api\ConvertValueInterface;
 use Divante\VsbridgeIndexerCatalog\Index\Mapping\Attribute as AttributeMapping;
 
-/**
- * Class GetAttributeFields
- */
 class GetAttributeFields
 {
     /**

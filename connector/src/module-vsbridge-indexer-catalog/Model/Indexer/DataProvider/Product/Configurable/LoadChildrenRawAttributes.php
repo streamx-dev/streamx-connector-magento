@@ -9,9 +9,6 @@ use Divante\VsbridgeIndexerCatalog\Api\LoadTierPricesInterface;
 use Divante\VsbridgeIndexerCatalog\Api\CatalogConfigurationInterface;
 use Divante\VsbridgeIndexerCatalog\Api\LoadMediaGalleryInterface;
 
-/**
- * Class LoadChildrenRawAttributes
- */
 class LoadChildrenRawAttributes
 {
     /**

@@ -4,9 +4,6 @@ namespace Divante\VsbridgeIndexerCatalog\Model;
 
 use Magento\Framework\EntityManager\MetadataPool;
 
-/**
- * Class ProductMetaData
- */
 class ProductMetaData
 {
     /**

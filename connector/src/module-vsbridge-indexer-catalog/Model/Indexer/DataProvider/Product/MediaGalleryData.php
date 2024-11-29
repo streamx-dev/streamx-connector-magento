@@ -6,9 +6,6 @@ use Divante\VsbridgeIndexerCore\Api\DataProviderInterface;
 use Divante\VsbridgeIndexerCatalog\Api\LoadMediaGalleryInterface;
 use Divante\VsbridgeIndexerCatalog\Api\CatalogConfigurationInterface;
 
-/**
- * Class MediaGalleryData
- */
 class MediaGalleryData implements DataProviderInterface
 {
 

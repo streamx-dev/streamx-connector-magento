@@ -6,9 +6,6 @@ use Divante\VsbridgeIndexerCore\Api\DataProviderInterface;
 use Divante\VsbridgeIndexerCatalog\Api\LoadTierPricesInterface;
 use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\Prices as Resource;
 
-/**
- * Class PriceData
- */
 class PriceData implements DataProviderInterface
 {
     /**

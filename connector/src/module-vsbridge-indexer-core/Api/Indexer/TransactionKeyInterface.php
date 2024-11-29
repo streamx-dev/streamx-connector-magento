@@ -2,9 +2,6 @@
 
 namespace Divante\VsbridgeIndexerCore\Api\Indexer;
 
-/**
- * Interface TransactionKeyInterface
- */
 interface TransactionKeyInterface
 {
     /**

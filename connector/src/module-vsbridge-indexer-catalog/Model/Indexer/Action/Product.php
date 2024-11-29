@@ -4,9 +4,6 @@ namespace Divante\VsbridgeIndexerCatalog\Model\Indexer\Action;
 
 use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product as ResourceModel;
 
-/**
- * Class Product
- */
 class Product
 {
     /**

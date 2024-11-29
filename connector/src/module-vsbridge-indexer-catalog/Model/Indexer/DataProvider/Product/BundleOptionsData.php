@@ -5,9 +5,6 @@ namespace Divante\VsbridgeIndexerCatalog\Model\Indexer\DataProvider\Product;
 use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\Bundle as Resource;
 use Divante\VsbridgeIndexerCore\Api\DataProviderInterface;
 
-/**
- * Class BundleOptionsData
- */
 class BundleOptionsData implements DataProviderInterface
 {
     /**

@@ -12,9 +12,6 @@ use Divante\VsbridgeIndexerCore\Streamx\ClientResolver;
 use PHPUnit\Framework\TestCase;
 use Magento\Store\Model\Store;
 
-/**
- * Class IndexOperationsTest
- */
 class IndexOperationsTest extends TestCase
 {
     /**

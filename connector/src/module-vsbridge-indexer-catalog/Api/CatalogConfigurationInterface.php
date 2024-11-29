@@ -2,9 +2,6 @@
 
 namespace Divante\VsbridgeIndexerCatalog\Api;
 
-/**
- * Interface CatalogConfigurationInterface
- */
 interface CatalogConfigurationInterface
 {
     const CATALOG_SETTINGS_XML_PREFIX = 'vsbridge_indexer_settings/catalog_settings';

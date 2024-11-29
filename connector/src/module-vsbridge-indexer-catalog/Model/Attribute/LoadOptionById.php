@@ -4,9 +4,6 @@ declare(strict_types = 1);
 
 namespace Divante\VsbridgeIndexerCatalog\Model\Attribute;
 
-/**
- * Class LoadOptionById
- */
 class LoadOptionById
 {
 

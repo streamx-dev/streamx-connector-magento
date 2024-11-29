@@ -9,9 +9,6 @@ namespace Divante\VsbridgeIndexerCatalog\Model\Product;
 
 use Magento\Framework\Exception\InputException;
 
-/**
- * Class ParentResolver
- */
 class ParentResolver
 {
     /**

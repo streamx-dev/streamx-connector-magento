@@ -9,9 +9,6 @@ use Magento\Store\Model\StoreManagerInterface;
 use Magento\Catalog\Model\Category as CoreCategoryModel;
 use Magento\Framework\DB\Select;
 
-/**
- * Class Category
- */
 class Category
 {
     /**

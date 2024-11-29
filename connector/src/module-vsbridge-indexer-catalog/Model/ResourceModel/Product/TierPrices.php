@@ -6,9 +6,6 @@ use Magento\Framework\App\ResourceConnection;
 use Magento\Customer\Model\Group;
 use Divante\VsbridgeIndexerCatalog\Model\ProductMetaData;
 
-/**
- * Class TierPrices
- */
 class TierPrices
 {
 

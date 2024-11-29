@@ -9,9 +9,6 @@ use Magento\Eav\Model\Config as EavConfig;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Exception\LocalizedException;
 
-/**
- * Class UpdateAttributesInConfiguration
- */
 class UpdateAttributesInConfiguration
 {
     /**

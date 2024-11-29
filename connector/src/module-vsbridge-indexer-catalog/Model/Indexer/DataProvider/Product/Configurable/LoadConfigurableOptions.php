@@ -6,9 +6,6 @@ use Divante\VsbridgeIndexerCatalog\Model\Attribute\LoadOptionById;
 use Divante\VsbridgeIndexerCatalog\Model\Attribute\SortValues;
 use Divante\VsbridgeIndexerCatalog\Api\CatalogConfigurationInterface;
 
-/**
- * Class LoadConfigurableOptions
- */
 class LoadConfigurableOptions
 {
     /**

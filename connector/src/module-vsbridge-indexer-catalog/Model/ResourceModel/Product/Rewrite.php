@@ -7,9 +7,6 @@ use Divante\VsbridgeIndexerCatalog\Model\ProductMetaData;
 use Magento\UrlRewrite\Model\Storage\DbStorage;
 use Magento\UrlRewrite\Service\V1\Data\UrlRewrite;
 
-/**
- * Class Rewrite
- */
 class Rewrite
 {
     /**

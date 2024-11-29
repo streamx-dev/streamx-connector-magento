@@ -4,9 +4,6 @@ namespace Divante\VsbridgeIndexerCatalog\Plugin\Indexer\CatalogInventory;
 
 use Magento\CatalogInventory\Model\ResourceModel\QtyCounterInterface;
 
-/**
- * Class QtyCorrectPlugin
- */
 class QtyCorrectPlugin
 {
     /**

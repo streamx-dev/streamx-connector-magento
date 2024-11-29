@@ -15,9 +15,6 @@ use Magento\Eav\Model\ResourceModel\Entity\Attribute\Option\CollectionFactory as
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Select;
 
-/**
- * Class AttributeMetadata
- */
 class AttributeMetadata
 {
 

@@ -5,9 +5,6 @@ namespace Divante\VsbridgeIndexerCatalog\Plugin\Indexer\Product\Save;
 use Divante\VsbridgeIndexerCatalog\Model\Indexer\ProductProcessor;
 use Magento\Catalog\Model\Product;
 
-/**
- * Class UpdateProductDataPlugin
- */
 class UpdateProductDataPlugin
 {
     /**

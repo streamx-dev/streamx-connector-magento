@@ -8,9 +8,6 @@ use Divante\VsbridgeIndexerCore\Indexer\StoreManager;
 use Divante\VsbridgeIndexerCore\Indexer\GenericIndexerHandler;
 use Divante\VsbridgeIndexerCore\Cache\Processor as CacheProcessor;
 
-/**
- * Class Product
- */
 class Product implements \Magento\Framework\Indexer\ActionInterface, \Magento\Framework\Mview\ActionInterface
 {
     /**
