@@ -72,10 +72,7 @@ class AttributeMetadata
         $this->optionCollectionFactory = $optionCollectionFactory;
     }
 
-    /**
-     * @return array
-     */
-    public function getAttributes(int $storeId)
+    public function getAttributes(int $storeId): array
     {
         if ($this->attributes === null) {
             $connection = $this->resource->getConnection();
@@ -94,9 +91,6 @@ class AttributeMetadata
         return $this->attributes;
     }
 
-    /**
-     * @return array
-     */
     public function getOptions(int $attributeId, int $storeId): array
     {
         return $this->optionsByStore[$storeId][$attributeId] ?? [];

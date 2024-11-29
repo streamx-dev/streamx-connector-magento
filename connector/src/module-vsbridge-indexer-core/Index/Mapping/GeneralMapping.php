@@ -22,10 +22,7 @@ class GeneralMapping
         ]
     ];
 
-    /**
-     * @return array
-     */
-    public function getCommonProperties()
+    public function getCommonProperties(): array
     {
         return $this->commonProperties;
     }

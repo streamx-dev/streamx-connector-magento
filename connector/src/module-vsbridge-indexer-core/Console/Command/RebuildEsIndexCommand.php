@@ -118,10 +118,7 @@ class RebuildEsIndexCommand extends AbstractIndexerCommand
         }
     }
 
-    /**
-     * @return array
-     */
-    private function getInvalidIndices()
+    private function getInvalidIndices(): array
     {
         $invalid = [];
 
@@ -264,7 +261,6 @@ class RebuildEsIndexCommand extends AbstractIndexerCommand
     }
 
     /**
-     * @return array
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     private function getStoresAllowedToReindex(): array

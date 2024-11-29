@@ -132,10 +132,9 @@ abstract class AbstractEavAttributes implements EavAttributesInterface
     }
 
     /**
-     * @return array
      * @throws \Exception
      */
-    private function processValues(array $values)
+    private function processValues(array $values): array
     {
         foreach ($values as $value) {
             $entityIdField = $this->getEntityMetaData()->getIdentifierField();

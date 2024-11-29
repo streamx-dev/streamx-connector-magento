@@ -44,10 +44,7 @@ class GetAttributeFields
         $this->convertValue = $convertValue;
     }
 
-    /**
-     * @return array
-     */
-    public function execute(array $row)
+    public function execute(array $row): array
     {
         $attribute['id'] = (int)$row['attribute_id'];
         $attribute['default_frontend_label'] = $row['frontend_label'];

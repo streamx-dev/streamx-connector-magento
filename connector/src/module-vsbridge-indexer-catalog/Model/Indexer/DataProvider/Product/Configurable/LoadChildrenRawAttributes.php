@@ -58,11 +58,10 @@ class LoadChildrenRawAttributes
     }
 
     /**
-     * @return array
      * @throws \Exception
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function execute(int $storeId, array $allChildren, array $configurableAttributeCodes)
+    public function execute(int $storeId, array $allChildren, array $configurableAttributeCodes): array
     {
         $requiredAttributes = $this->getRequiredChildrenAttributes($storeId);
 
@@ -130,9 +129,6 @@ class LoadChildrenRawAttributes
         return $allChildren;
     }
 
-    /**
-     * @return array
-     */
     private function getRequiredChildrenAttributes(int $storeId): array
     {
         return $this->configurableAttributes->getChildrenRequiredAttributes($storeId);

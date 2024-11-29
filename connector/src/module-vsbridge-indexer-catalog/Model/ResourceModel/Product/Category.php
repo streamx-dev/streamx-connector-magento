@@ -48,10 +48,9 @@ class Category
     }
 
     /**
-     * @return array
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function loadCategoryData(int $storeId, array $productIds)
+    public function loadCategoryData(int $storeId, array $productIds): array
     {
         $categoryData = $this->categoryResourceModel->getCategoryProductSelect($storeId, $productIds);
         $categoryIds = [];
@@ -99,10 +98,9 @@ class Category
     }
 
     /**
-     * @return array
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    private function loadCategoryName(array $loadCategoryIds, int $storeId)
+    private function loadCategoryName(array $loadCategoryIds, int $storeId): array
     {
         /** @var CategoryCollection $categoryCollection */
         $categoryCollection = $this->categoryCollectionFactory->create();

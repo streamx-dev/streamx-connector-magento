@@ -117,7 +117,6 @@ class ConfigurableData implements DataProviderInterface
     }
 
     /**
-     * @return array
      * @throws \Exception
      */
     private function prepareConfigurableChildrenAttributes(array $indexData, int $storeId): array
@@ -170,7 +169,6 @@ class ConfigurableData implements DataProviderInterface
     /**
      * Apply attributes to product variants + extra options for products necessary for vsf
      *
-     * @return array
      * @throws \Exception
      */
     private function applyConfigurableOptions(array $productDTO, int $storeId): array
@@ -217,17 +215,11 @@ class ConfigurableData implements DataProviderInterface
         return $productDTO;
     }
 
-    /**
-     * @return array
-     */
     private function prepareConfigurableProduct(array $productDTO): array
     {
         return $this->prepareConfigurableProduct->execute($productDTO);
     }
 
-    /**
-     * @return array
-     */
     private function filterData(array $productData): array
     {
         return $this->dataFilter->execute($productData, $this->childBlackListConfig);

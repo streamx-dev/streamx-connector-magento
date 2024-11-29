@@ -30,10 +30,8 @@ abstract class AbstractMapping
      * Return mapping for an attribute.
      *
      * @param Attribute $attribute Attribute we want the mapping for.
-     *
-     * @return array
      */
-    public function getAttributeMapping(Attribute $attribute)
+    public function getAttributeMapping(Attribute $attribute): array
     {
         $mapping = [];
         $attributeCode = $attribute->getAttributeCode();

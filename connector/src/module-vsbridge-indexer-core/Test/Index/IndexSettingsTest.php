@@ -85,10 +85,7 @@ class IndexSettingsTest extends TestCase
         );
     }
 
-    /**
-     * @return array
-     */
-    public function provideStores()
+    public function provideStores(): array
     {
         return [
             ['de_code'],

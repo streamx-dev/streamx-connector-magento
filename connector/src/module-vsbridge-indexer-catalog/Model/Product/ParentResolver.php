@@ -47,9 +47,6 @@ class ParentResolver
         }
     }
 
-    /**
-     * @return array
-     */
     public function resolveParentSku(int $childId): array
     {
         $fullSkuList = [];

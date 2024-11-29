@@ -4,9 +4,6 @@ namespace Divante\VsbridgeIndexerCatalog\Model\Indexer\DataProvider\Product\Conf
 
 class PrepareConfigurableProduct
 {
-    /**
-     * @return array
-     */
     public function execute(array $productDTO): array
     {
         $configurableChildren = $productDTO['configurable_children'];

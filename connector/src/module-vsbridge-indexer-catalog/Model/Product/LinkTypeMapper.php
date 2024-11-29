@@ -34,10 +34,7 @@ class LinkTypeMapper
         return null;
     }
 
-    /**
-     * @return array
-     */
-    public function getTypesMap()
+    public function getTypesMap(): array
     {
         return $this->linkTypesMap;
     }

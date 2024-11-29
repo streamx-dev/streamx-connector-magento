@@ -36,26 +36,16 @@ class Inventory
         $this->stockConfiguration = $stockConfiguration;
     }
 
-    /**
-     * @return array
-     */
     public function loadInventory(array $productIds): array
     {
         return $this->getInventoryData($productIds, $this->inventoryFields->getRequiredColumns());
     }
 
-    /**
-     * @return array
-     */
     public function loadChildrenInventory(array $productIds): array
     {
         return $this->getInventoryData($productIds, $this->inventoryFields->getChildRequiredColumns());
     }
 
-    /**
-     * @return array
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
     private function getInventoryData(array $productIds, array $fields): array
     {
         $websiteId = $this->getWebsiteId();

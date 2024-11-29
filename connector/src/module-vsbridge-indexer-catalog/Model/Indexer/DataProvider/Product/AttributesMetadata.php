@@ -48,9 +48,6 @@ class AttributesMetadata  implements DataProviderInterface
         return $indexData;
     }
 
-    /**
-     * @return array
-     */
     private function getAttributeMetadata(array $productDTO, int $storeId): array
     {
         $attributes = $this->resourceModel->getAttributes($storeId);
@@ -73,18 +70,12 @@ class AttributesMetadata  implements DataProviderInterface
         return $meta;
     }
 
-    /**
-     * @return array
-     */
     private function getProductOptions(array $productDTO, array $attribute, int $storeId): array
     {
         return $this->getOptionsForOptionAttributes($productDTO, $attribute, $storeId);
     }
 
-    /**
-     * @return array
-     */
-    private function getOptionsForOptionAttributes(array $productDTO, array $attribute, int $storeId)
+    private function getOptionsForOptionAttributes(array $productDTO, array $attribute, int $storeId): array
     {
         $attributeId = $attribute['attribute_id'];
         $attributeCode = $attribute['attribute_code'];

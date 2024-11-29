@@ -69,10 +69,7 @@ class BulkResponse implements BulkResponseInterface
         return array_values($errorByReason);
     }
 
-    /**
-     * @return array
-     */
-    private function prepareErrorByReason(array $item)
+    private function prepareErrorByReason(array $item): array
     {
         $operationType = current(array_keys($item));
         $itemData = $item[$operationType];

@@ -6,10 +6,7 @@ namespace Divante\VsbridgeIndexerCatalog\Model\Indexer\DataProvider\Product\Attr
 
 class GetProductValues
 {
-    /**
-     * @return array
-     */
-    public function execute(array $productDTO, string $attributeCode)
+    public function execute(array $productDTO, string $attributeCode): array
     {
         $attributeValue = isset($productDTO[$attributeCode]) ? $productDTO[$attributeCode] : '';
 
@@ -27,9 +24,6 @@ class GetProductValues
         return $options;
     }
 
-    /**
-     * @return array
-     */
     private function getOptionsForChildren(array $productDTO, string $attributeCode): array
     {
         if (!isset($productDTO['configurable_children'])) {

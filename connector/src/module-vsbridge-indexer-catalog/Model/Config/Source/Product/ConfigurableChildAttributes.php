@@ -46,10 +46,8 @@ class ConfigurableChildAttributes extends AbstractAttributeSource
 
     /**
      * Retrieve restricted attributes list
-     *
-     * @return array
      */
-    private function getRestrictedAttributes()
+    private function getRestrictedAttributes(): array
     {
         if (null === $this->restrictedAttributes) {
             $this->restrictedAttributes = array_merge(

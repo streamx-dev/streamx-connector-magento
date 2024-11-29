@@ -33,10 +33,9 @@ class ProductConfig
 
     /**
      *
-     * @return array
      * @throws \Exception
      */
-    public function getAttributesUsedForSortBy()
+    public function getAttributesUsedForSortBy(): array
     {
         $entityType = $this->productMetaData->get()->getEavEntityType();
         $connection = $this->resource->getConnection();

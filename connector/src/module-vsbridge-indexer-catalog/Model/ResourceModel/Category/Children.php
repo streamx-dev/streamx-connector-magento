@@ -51,10 +51,9 @@ class Children
     }
 
     /**
-     * @return array
      * @throws \Exception
      */
-    public function loadChildren(array $category, int $storeId)
+    public function loadChildren(array $category, int $storeId): array
     {
         $childIds = $this->getChildrenIds($category, $storeId);
 
@@ -72,10 +71,9 @@ class Children
     }
 
     /**
-     * @return array
      * @throws \Exception
      */
-    private function getChildrenIds(array $category, int $storeId)
+    private function getChildrenIds(array $category, int $storeId): array
     {
         $connection = $this->getConnection();
         $checkSql = $connection->getCheckSql('c.value_id > 0', 'c.value', 'd.value');

@@ -53,10 +53,7 @@ class Attribute
         } while (!empty($attributes));
     }
 
-    /**
-     * @return array
-     */
-    private function filterData(array $attributeData)
+    private function filterData(array $attributeData): array
     {
         foreach ($attributeData as $key => $value) {
             $value = $this->convertValue->execute($this->attributeMapping, $key, $value);

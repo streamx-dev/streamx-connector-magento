@@ -49,10 +49,7 @@ class Config
         $this->typeFactory = $typeInterfaceFactory;
     }
 
-    /**
-     * @return array
-     */
-    public function get()
+    public function get(): array
     {
         $configData = $this->configData->get();
         $indicesConfig = [];
@@ -64,10 +61,7 @@ class Config
         return $indicesConfig;
     }
 
-    /**
-     * @return array
-     */
-    private function initIndexConfig(array $indexConfigData)
+    private function initIndexConfig(array $indexConfigData): array
     {
         $types = [];
 

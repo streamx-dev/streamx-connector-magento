@@ -20,8 +20,6 @@ class CategoryChildAttributes
 
     /**
      * Retrieve required attributes for child category
-     *
-     * @return array
      */
     public function getRequiredAttributes(int $storeId): array
     {
