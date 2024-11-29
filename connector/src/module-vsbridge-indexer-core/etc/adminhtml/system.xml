@@ -29,39 +29,16 @@
                 </field>
             </group>
 
-            <group id="es_client" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="streamx_client" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>StreamX Connector Settings</label>
                 <depends>
                     <field id="vsbridge_indexer_settings/general_settings/enable">1</field>
                 </depends>
-                <field id="host" translate="label comment" type="text" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>StreamX host</label>
+                <field id="ingestion_base_url" translate="label comment" type="text" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>StreamX Rest Ingestion base URL</label>
                 </field>
-                <field id="port" translate="label comment" type="text" sortOrder="21" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>StreamX port number</label>
-                </field>
-                <field id="enable_https_mode" translate="label comment" type="select" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Use HTTPS</label>
-                    <comment>Select yes if you want to connect to your StreamX server over HTTPS.</comment>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-                <field id="enable_http_auth" translate="label comment" type="select" sortOrder="41" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Enable basic HTTP authentication</label>
-                    <comment>Enable this option when your StreamX server use basic HTTP authentication.</comment>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-                <field id="auth_user" translate="label comment" type="text" sortOrder="51" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Basic HTTP authentication user</label>
-                    <depends>
-                        <field id="enable_http_auth">1</field>
-                    </depends>
-                </field>
-                <field id="auth_pwd" translate="label comment" type="obscure" sortOrder="61" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Basic HTTP authentication password</label>
-                    <depends>
-                        <field id="enable_http_auth">1</field>
-                    </depends>
-                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                <field id="pages_schema_name" translate="label comment" type="text" sortOrder="21" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Pages schema name</label>
                 </field>
             </group>
 
