@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product;
+namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
-use Divante\VsbridgeIndexerCatalog\Model\ProductMetaData;
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product;
+use StreamX\ConnectorCatalog\Model\ProductMetaData;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
 use Magento\Eav\Model\Entity\Attribute;
 use Magento\Framework\App\ResourceConnection;

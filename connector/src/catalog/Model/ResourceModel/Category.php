@@ -1,9 +1,9 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model\ResourceModel;
+namespace StreamX\ConnectorCatalog\Model\ResourceModel;
 
-use Divante\VsbridgeIndexerCatalog\Model\CategoryMetaData;
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Category\BaseSelectModifierInterface;
+use StreamX\ConnectorCatalog\Model\CategoryMetaData;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Category\BaseSelectModifierInterface;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Catalog\Model\Category as CoreCategoryModel;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCore\Index\Indicies\Config;
+namespace StreamX\ConnectorCore\Index\Indicies\Config;
 
 use Magento\Framework\Config\CacheInterface;
 use Magento\Framework\Config\Data as DataConfig;

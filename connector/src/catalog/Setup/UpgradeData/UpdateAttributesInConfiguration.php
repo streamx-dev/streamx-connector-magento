@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Setup\UpgradeData;
+namespace StreamX\ConnectorCatalog\Setup\UpgradeData;
 
 use Magento\Config\Model\ResourceModel\Config;
 use Magento\Eav\Model\Config as EavConfig;

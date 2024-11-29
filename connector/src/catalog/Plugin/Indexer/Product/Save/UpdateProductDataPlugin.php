@@ -1,8 +1,8 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Plugin\Indexer\Product\Save;
+namespace StreamX\ConnectorCatalog\Plugin\Indexer\Product\Save;
 
-use Divante\VsbridgeIndexerCatalog\Model\Indexer\ProductProcessor;
+use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use Magento\Catalog\Model\Product;
 
 class UpdateProductDataPlugin

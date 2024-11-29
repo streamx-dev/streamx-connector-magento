@@ -1,16 +1,16 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Indexer\DataProvider\Category;
+namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Category;
 
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Category\Children as CategoryChildrenResource;
-use Divante\VsbridgeIndexerCore\Indexer\DataFilter;
-use Divante\VsbridgeIndexerCatalog\Model\Attributes\CategoryAttributes;
-use Divante\VsbridgeIndexerCatalog\Model\Attributes\CategoryChildAttributes;
-use Divante\VsbridgeIndexerCatalog\Model\SystemConfig\CategoryConfigInterface;
-use Divante\VsbridgeIndexerCatalog\Api\ApplyCategorySlugInterface;
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Category\AttributeDataProvider;
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Category\ProductCount as ProductCountResourceModel;
-use Divante\VsbridgeIndexerCatalog\Api\DataProvider\Category\AttributeDataProviderInterface;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Category\Children as CategoryChildrenResource;
+use StreamX\ConnectorCore\Indexer\DataFilter;
+use StreamX\ConnectorCatalog\Model\Attributes\CategoryAttributes;
+use StreamX\ConnectorCatalog\Model\Attributes\CategoryChildAttributes;
+use StreamX\ConnectorCatalog\Model\SystemConfig\CategoryConfigInterface;
+use StreamX\ConnectorCatalog\Api\ApplyCategorySlugInterface;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Category\AttributeDataProvider;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Category\ProductCount as ProductCountResourceModel;
+use StreamX\ConnectorCatalog\Api\DataProvider\Category\AttributeDataProviderInterface;
 
 class AttributeData implements AttributeDataProviderInterface
 {
@@ -58,7 +58,7 @@ class AttributeData implements AttributeDataProviderInterface
     private $productCountResource;
 
     /**
-     * @var \Divante\VsbridgeIndexerCore\Indexer\DataFilter
+     * @var \StreamX\ConnectorCore\Indexer\DataFilter
      */
     private $dataFilter;
 

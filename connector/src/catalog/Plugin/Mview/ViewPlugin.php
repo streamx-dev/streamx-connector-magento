@@ -1,9 +1,9 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Plugin\Mview;
+namespace StreamX\ConnectorCatalog\Plugin\Mview;
 
-use Divante\VsbridgeIndexerCatalog\Model\Indexer\ProductProcessor;
-use Divante\VsbridgeIndexerCatalog\Api\CatalogConfigurationInterface;
+use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
+use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
 use Magento\Framework\Mview\ViewInterface;
 
 class ViewPlugin

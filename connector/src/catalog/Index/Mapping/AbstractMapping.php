@@ -1,8 +1,8 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Index\Mapping;
+namespace StreamX\ConnectorCatalog\Index\Mapping;
 
-use Divante\VsbridgeIndexerCore\Api\Mapping\FieldInterface;
+use StreamX\ConnectorCore\Api\Mapping\FieldInterface;
 use Magento\Eav\Model\Entity\Attribute;
 
 abstract class AbstractMapping

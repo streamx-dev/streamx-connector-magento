@@ -1,8 +1,8 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCore\Index\Mapping;
+namespace StreamX\ConnectorCore\Index\Mapping;
 
-use Divante\VsbridgeIndexerCore\Api\Mapping\FieldInterface;
+use StreamX\ConnectorCore\Api\Mapping\FieldInterface;
 
 class GeneralMapping
 {

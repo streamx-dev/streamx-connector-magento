@@ -1,9 +1,9 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Setup;
+namespace StreamX\ConnectorCatalog\Setup;
 
-use Divante\VsbridgeIndexerCatalog\Setup\UpgradeData\SetCategoryDefaultAttributes;
-use Divante\VsbridgeIndexerCatalog\Setup\UpgradeData\SetProductDefaultAttributes;
+use StreamX\ConnectorCatalog\Setup\UpgradeData\SetCategoryDefaultAttributes;
+use StreamX\ConnectorCatalog\Setup\UpgradeData\SetProductDefaultAttributes;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\UpgradeDataInterface;

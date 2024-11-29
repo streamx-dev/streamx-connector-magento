@@ -1,8 +1,8 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product;
+namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
-use Divante\VsbridgeIndexerCatalog\Model\CategoryMetaData;
+use StreamX\ConnectorCatalog\Model\CategoryMetaData;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Catalog\Model\ResourceModel\Category\Collection as CategoryCollection;
 use Magento\Catalog\Model\ResourceModel\Category\CollectionFactory as CategoryCollectionFactory;
@@ -21,7 +21,7 @@ class Category
     private $categoryCollectionFactory;
 
     /**
-     * @var \Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Category
+     * @var \StreamX\ConnectorCatalog\Model\ResourceModel\Category
      */
     private $categoryResourceModel;
 
@@ -38,7 +38,7 @@ class Category
     public function __construct(
         ResourceConnection $resourceModel,
         CategoryMetaData $categoryMetaData,
-        \Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Category $categoryResourceModel,
+        \StreamX\ConnectorCatalog\Model\ResourceModel\Category $categoryResourceModel,
         CategoryCollectionFactory $categoryCollectionFactory
     ) {
         $this->resource = $resourceModel;

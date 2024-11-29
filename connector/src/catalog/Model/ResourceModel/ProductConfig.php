@@ -1,8 +1,8 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model\ResourceModel;
+namespace StreamX\ConnectorCatalog\Model\ResourceModel;
 
-use Divante\VsbridgeIndexerCatalog\Model\ProductMetaData;
+use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use Magento\Framework\App\ResourceConnection;
 
 class ProductConfig

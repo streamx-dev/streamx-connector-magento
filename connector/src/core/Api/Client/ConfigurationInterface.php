@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCore\Api\Client;
+namespace StreamX\ConnectorCore\Api\Client;
 
 interface ConfigurationInterface {
     public function getIngestionBaseUrl(int $storeId): string;

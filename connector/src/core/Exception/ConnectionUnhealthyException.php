@@ -1,6 +1,6 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCore\Exception;
+namespace StreamX\ConnectorCore\Exception;
 
 use Magento\Framework\Exception\LocalizedException;
 

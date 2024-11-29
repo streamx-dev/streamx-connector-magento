@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCore\Streamx;
+namespace StreamX\ConnectorCore\Streamx;
 
-use Divante\VsbridgeIndexerCore\Api\Client\ConfigurationInterface as ClientConfigurationInterface;
+use StreamX\ConnectorCore\Api\Client\ConfigurationInterface as ClientConfigurationInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
 

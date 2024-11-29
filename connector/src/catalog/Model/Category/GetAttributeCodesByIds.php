@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Category;
+namespace StreamX\ConnectorCatalog\Model\Category;
 
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Category\LoadAttributes;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Category\LoadAttributes;
 use Magento\Framework\Exception\LocalizedException;
 use Psr\Log\LoggerInterface;
 

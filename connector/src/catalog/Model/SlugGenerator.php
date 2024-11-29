@@ -1,8 +1,8 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model;
+namespace StreamX\ConnectorCatalog\Model;
 
-use Divante\VsbridgeIndexerCatalog\Api\SlugGeneratorInterface;
+use StreamX\ConnectorCatalog\Api\SlugGeneratorInterface;
 
 class SlugGenerator implements SlugGeneratorInterface
 {

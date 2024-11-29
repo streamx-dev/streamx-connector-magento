@@ -3,7 +3,7 @@
 
 declare(strict_types = 1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product;
+namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
 use Magento\Eav\Model\Entity\Attribute as EntityAttribute;
 use Magento\Framework\DB\Select;

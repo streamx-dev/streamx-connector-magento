@@ -1,6 +1,6 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCore\Api\Indexer;
+namespace StreamX\ConnectorCore\Api\Indexer;
 
 interface TransactionKeyInterface
 {

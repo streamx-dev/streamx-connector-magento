@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Product;
+namespace StreamX\ConnectorCatalog\Model\Product;
 
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\LoadAttributes;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\LoadAttributes;
 use Magento\Framework\Exception\LocalizedException;
 use Psr\Log\LoggerInterface;
 

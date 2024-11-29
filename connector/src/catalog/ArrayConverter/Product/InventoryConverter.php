@@ -1,12 +1,12 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\ArrayConverter\Product;
+namespace StreamX\ConnectorCatalog\ArrayConverter\Product;
 
 use Magento\CatalogInventory\Api\StockConfigurationInterface;
 use Magento\CatalogInventory\Api\Data\StockItemInterface;
-use Divante\VsbridgeIndexerCatalog\Api\ArrayConverter\Product\InventoryConverterInterface;
-use Divante\VsbridgeIndexerCatalog\Index\Mapping\StockMapping;
-use Divante\VsbridgeIndexerCore\Api\Mapping\FieldInterface;
+use StreamX\ConnectorCatalog\Api\ArrayConverter\Product\InventoryConverterInterface;
+use StreamX\ConnectorCatalog\Index\Mapping\StockMapping;
+use StreamX\ConnectorCore\Api\Mapping\FieldInterface;
 
 class InventoryConverter implements InventoryConverterInterface
 {

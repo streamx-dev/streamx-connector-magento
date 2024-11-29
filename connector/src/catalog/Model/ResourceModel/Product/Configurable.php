@@ -1,9 +1,9 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product;
+namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
-use Divante\VsbridgeIndexerCatalog\Model\ProductMetaData;
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product;
+use StreamX\ConnectorCatalog\Model\ProductMetaData;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable as ConfigurableType;
 use Magento\Framework\App\ResourceConnection;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCore\Api;
+namespace StreamX\ConnectorCore\Api;
 
 interface IndexInterface
 {
@@ -11,12 +11,12 @@ interface IndexInterface
     public function isNew(): bool;
 
     /**
-     * @return \Divante\VsbridgeIndexerCore\Api\Index\TypeInterface[]
+     * @return \StreamX\ConnectorCore\Api\Index\TypeInterface[]
      */
     public function getTypes();
 
     /**
-     * @return \Divante\VsbridgeIndexerCore\Api\Index\TypeInterface
+     * @return \StreamX\ConnectorCore\Api\Index\TypeInterface
      * @throws \InvalidArgumentException When the type does not exists.
      */
     public function getType(string $typeName);

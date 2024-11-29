@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model\SystemConfig;
+namespace StreamX\ConnectorCatalog\Model\SystemConfig;
 
-use Divante\VsbridgeIndexerCatalog\Api\CatalogConfigurationInterface;
-use Divante\VsbridgeIndexerCatalog\Model\Product\GetAttributeCodesByIds;
+use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
+use StreamX\ConnectorCatalog\Model\Product\GetAttributeCodesByIds;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
 

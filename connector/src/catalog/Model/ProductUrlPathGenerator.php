@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model;
+namespace StreamX\ConnectorCatalog\Model;
 
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\Rewrite as RewriteResource;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Rewrite as RewriteResource;
 
 class ProductUrlPathGenerator
 {

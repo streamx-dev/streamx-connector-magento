@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model\SystemConfig;
+namespace StreamX\ConnectorCatalog\Model\SystemConfig;
 
-use Divante\VsbridgeIndexerCatalog\Model\Category\GetAttributeCodesByIds;
+use StreamX\ConnectorCatalog\Model\Category\GetAttributeCodesByIds;
 use Magento\Catalog\Model\Config;
 use Magento\CatalogUrlRewrite\Model\CategoryUrlPathGenerator;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\ProductConfig as ConfigResource;
+use StreamX\ConnectorCatalog\Model\ResourceModel\ProductConfig as ConfigResource;
 
 class CategoryConfig implements CategoryConfigInterface
 {

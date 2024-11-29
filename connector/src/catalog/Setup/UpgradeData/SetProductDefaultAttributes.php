@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Setup\UpgradeData;
+namespace StreamX\ConnectorCatalog\Setup\UpgradeData;
 
-use Divante\VsbridgeIndexerCatalog\Api\CatalogConfigurationInterface;
+use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
 use Magento\Framework\Exception\LocalizedException;
 
 class SetProductDefaultAttributes

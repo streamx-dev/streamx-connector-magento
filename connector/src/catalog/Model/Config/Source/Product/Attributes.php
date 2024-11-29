@@ -1,6 +1,6 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Config\Source\Product;
+namespace StreamX\ConnectorCatalog\Model\Config\Source\Product;
 
 use Magento\Catalog\Api\Data\ProductAttributeInterface;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCore\Model;
+namespace StreamX\ConnectorCore\Model;
 
 class IndexerRegistry
 {

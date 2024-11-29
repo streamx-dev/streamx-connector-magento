@@ -1,9 +1,9 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCore\Indexer\DataProvider;
+namespace StreamX\ConnectorCore\Indexer\DataProvider;
 
-use Divante\VsbridgeIndexerCore\Api\Indexer\TransactionKeyInterface;
-use Divante\VsbridgeIndexerCore\Api\DataProviderInterface;
+use StreamX\ConnectorCore\Api\Indexer\TransactionKeyInterface;
+use StreamX\ConnectorCore\Api\DataProviderInterface;
 
 class TransactionKey implements DataProviderInterface
 {

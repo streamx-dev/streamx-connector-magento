@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\Type\Configurable;
+namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product\Type\Configurable;
 
-use Divante\VsbridgeIndexerCatalog\Model\Product\GetParentsByChildIdInterface;
+use StreamX\ConnectorCatalog\Model\Product\GetParentsByChildIdInterface;
 use Magento\ConfigurableProduct\Model\ResourceModel\Attribute\OptionProvider;
 use Magento\Framework\App\ResourceConnection;
 

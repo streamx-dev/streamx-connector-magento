@@ -1,20 +1,20 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCore\Index;
+namespace StreamX\ConnectorCore\Index;
 
-use Divante\VsbridgeIndexerCore\Api\BulkResponseInterface;
-use Divante\VsbridgeIndexerCore\Api\Client\ClientInterface;
-use Divante\VsbridgeIndexerCore\Api\BulkResponseInterfaceFactory as BulkResponseFactory;
-use Divante\VsbridgeIndexerCore\Api\BulkRequestInterface;
-use Divante\VsbridgeIndexerCore\Api\BulkRequestInterfaceFactory as BulkRequestFactory;
-use Divante\VsbridgeIndexerCore\Api\IndexInterface;
-use Divante\VsbridgeIndexerCore\Api\IndexInterfaceFactory as IndexFactory;
-use Divante\VsbridgeIndexerCore\Api\IndexOperationInterface;
-use Divante\VsbridgeIndexerCore\Api\Index\TypeInterface;
-use Divante\VsbridgeIndexerCore\Api\MappingInterface;
-use Divante\VsbridgeIndexerCore\Config\OptimizationSettings;
-use Divante\VsbridgeIndexerCore\Streamx\ClientResolver;
-use Divante\VsbridgeIndexerCore\Exception\ConnectionUnhealthyException;
+use StreamX\ConnectorCore\Api\BulkResponseInterface;
+use StreamX\ConnectorCore\Api\Client\ClientInterface;
+use StreamX\ConnectorCore\Api\BulkResponseInterfaceFactory as BulkResponseFactory;
+use StreamX\ConnectorCore\Api\BulkRequestInterface;
+use StreamX\ConnectorCore\Api\BulkRequestInterfaceFactory as BulkRequestFactory;
+use StreamX\ConnectorCore\Api\IndexInterface;
+use StreamX\ConnectorCore\Api\IndexInterfaceFactory as IndexFactory;
+use StreamX\ConnectorCore\Api\IndexOperationInterface;
+use StreamX\ConnectorCore\Api\Index\TypeInterface;
+use StreamX\ConnectorCore\Api\MappingInterface;
+use StreamX\ConnectorCore\Config\OptimizationSettings;
+use StreamX\ConnectorCore\Streamx\ClientResolver;
+use StreamX\ConnectorCore\Exception\ConnectionUnhealthyException;
 use Magento\Store\Api\Data\StoreInterface;
 
 class IndexOperations implements IndexOperationInterface

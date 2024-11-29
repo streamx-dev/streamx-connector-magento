@@ -1,8 +1,8 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Indexer\Action;
+namespace StreamX\ConnectorCatalog\Model\Indexer\Action;
 
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product as ResourceModel;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product as ResourceModel;
 
 class Product
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Config\Source\Product;
+namespace StreamX\ConnectorCatalog\Model\Config\Source\Product;
 
 use Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory;
-use Divante\VsbridgeIndexerCatalog\Model\Attributes\ConfigurableAttributes;
-use Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product as Resource;
+use StreamX\ConnectorCatalog\Model\Attributes\ConfigurableAttributes;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product as Resource;
 
 class ConfigurableChildAttributes extends AbstractAttributeSource
 {

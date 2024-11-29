@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCore\System;
+namespace StreamX\ConnectorCore\System;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Index\Mapping\Attribute;
+namespace StreamX\ConnectorCatalog\Index\Mapping\Attribute;
 
-use Divante\VsbridgeIndexerCatalog\Index\Mapping\FieldMappingInterface;
-use Divante\VsbridgeIndexerCore\Api\Mapping\FieldInterface;
+use StreamX\ConnectorCatalog\Index\Mapping\FieldMappingInterface;
+use StreamX\ConnectorCore\Api\Mapping\FieldInterface;
 
 class OptionMapping implements FieldMappingInterface
 {

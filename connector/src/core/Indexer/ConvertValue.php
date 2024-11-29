@@ -1,10 +1,10 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCore\Indexer;
+namespace StreamX\ConnectorCore\Indexer;
 
-use Divante\VsbridgeIndexerCore\Api\Mapping\FieldInterface;
-use Divante\VsbridgeIndexerCore\Api\MappingInterface;
-use Divante\VsbridgeIndexerCore\Api\ConvertValueInterface;
+use StreamX\ConnectorCore\Api\Mapping\FieldInterface;
+use StreamX\ConnectorCore\Api\MappingInterface;
+use StreamX\ConnectorCore\Api\ConvertValueInterface;
 
 class ConvertValue implements ConvertValueInterface
 {

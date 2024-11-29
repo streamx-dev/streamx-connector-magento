@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Product\Type\Bundle;
+namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product\Type\Bundle;
 
-use Divante\VsbridgeIndexerCatalog\Model\Product\GetParentsByChildIdInterface;
-use Divante\VsbridgeIndexerCatalog\Model\ProductMetaData;
+use StreamX\ConnectorCatalog\Model\Product\GetParentsByChildIdInterface;
+use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use Magento\Framework\App\ResourceConnection;
 
 class GetParentsByChildId implements GetParentsByChildIdInterface

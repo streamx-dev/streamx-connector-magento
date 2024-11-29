@@ -1,8 +1,8 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Console\Command;
+namespace StreamX\ConnectorCatalog\Console\Command;
 
-use Divante\VsbridgeIndexerCatalog\Model\Indexer\ProductCategoryProcessor;
+use StreamX\ConnectorCatalog\Model\Indexer\ProductCategoryProcessor;
 
 /**
  * @inheritDoc

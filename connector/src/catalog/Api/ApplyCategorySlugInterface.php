@@ -1,6 +1,6 @@
 <?php
 
-namespace Divante\VsbridgeIndexerCatalog\Api;
+namespace StreamX\ConnectorCatalog\Api;
 
 interface ApplyCategorySlugInterface
 {

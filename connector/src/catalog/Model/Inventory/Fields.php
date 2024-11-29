@@ -3,7 +3,7 @@
 
 declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Inventory;
+namespace StreamX\ConnectorCatalog\Model\Inventory;
 
 class Fields
 {

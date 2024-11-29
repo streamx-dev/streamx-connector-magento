@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Attribute;
+namespace StreamX\ConnectorCatalog\Model\Attribute;
 
 class LoadOptionById
 {

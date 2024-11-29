@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Divante\VsbridgeIndexerCatalog\Model\Config\Source\Category;
+namespace StreamX\ConnectorCatalog\Model\Config\Source\Category;
 
 use Magento\Eav\Model\Entity\Attribute;
 
