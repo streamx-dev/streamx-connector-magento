@@ -20,10 +20,7 @@ class LinkTypeMapper
         GroupedLink::LINK_TYPE_GROUPED => 'associated',
     ];
 
-    /**
-     * @return string|null
-     */
-    public function map(int $typeId)
+    public function map(int $typeId): ?string
     {
         $linksTypesMap = $this->getTypesMap();
 

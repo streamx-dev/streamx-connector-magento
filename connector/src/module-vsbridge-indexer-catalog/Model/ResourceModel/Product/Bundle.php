@@ -58,10 +58,9 @@ class Bundle
     }
 
     /**
-     * @return void
      * @throws \Exception
      */
-    public function setProducts(array $products)
+    public function setProducts(array $products): void
     {
         $linkField = $this->productMetaData->get()->getLinkField();
 
@@ -72,9 +71,8 @@ class Bundle
 
     /**
      * Clear data
-     * @return void
      */
-    public function clear()
+    public function clear(): void
     {
         $this->products = null;
         $this->bundleOptionsByProduct = [];
@@ -97,10 +95,8 @@ class Bundle
 
     /**
      * Init Options
-     *
-     * @return void
      */
-    private function initOptions(int $storeId)
+    private function initOptions(int $storeId): void
     {
         $bundleOptions = $this->getBundleOptionsFromResource($storeId);
 
@@ -123,10 +119,8 @@ class Bundle
 
     /**
      * Append Selection
-     *
-     * @return void
      */
-    private function initSelection(int $storeId)
+    private function initSelection(int $storeId): void
     {
         $bundleSelections = $this->getBundleSelections($storeId);
         $simpleIds = array_column($bundleSelections, 'product_id');
@@ -223,10 +217,7 @@ class Bundle
         return $this->getConnection()->fetchAll($select);
     }
 
-    /**
-     * @return Select
-     */
-    private function joinOptionValues(Select $select, int $storeId)
+    private function joinOptionValues(Select $select, int $storeId): Select
     {
         $select
             ->joinLeft(

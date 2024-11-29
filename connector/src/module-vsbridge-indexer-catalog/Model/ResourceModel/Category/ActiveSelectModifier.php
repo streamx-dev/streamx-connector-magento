@@ -99,7 +99,6 @@ class ActiveSelectModifier implements BaseSelectModifierInterface
     /**
      * Retrieve Vendor Attribute
      *
-     * @return Attribute
      * @throws LocalizedException
      */
     private function getIsActiveAttribute(): Attribute
@@ -109,8 +108,6 @@ class ActiveSelectModifier implements BaseSelectModifierInterface
 
     /**
      * Retrieve Connection
-     *
-     * @return AdapterInterface
      */
     private function getConnection(): AdapterInterface
     {

@@ -55,10 +55,7 @@ class Options implements DataProviderInterface
         return $this->loadOptions->execute($attributeData['attribute_code'], $storeId);
     }
 
-    /**
-     * @return bool
-     */
-    private function useSource(array $attributeData)
+    private function useSource(array $attributeData): bool
     {
         return $attributeData['frontend_input'] === 'select' || $attributeData['frontend_input'] === 'multiselect'
                || $attributeData['source_model'] != '';

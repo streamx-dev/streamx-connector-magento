@@ -44,10 +44,7 @@ class MediaGalleryData implements DataProviderInterface
         return $indexData;
     }
 
-    /**
-     * @return bool
-     */
-    private function canIndexMediaGallery(int $storeId)
+    private function canIndexMediaGallery(int $storeId): bool
     {
         if (null === $this->canIndexMediaGallery) {
             $attributes = $this->catalogConfig->getAllowedAttributesToIndex($storeId);

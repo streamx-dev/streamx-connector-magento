@@ -51,9 +51,6 @@ class SetProductDefaultAttributes
         );
     }
 
-    /**
-     * @return string
-     */
     private function getConfigPath(string $configField): string
     {
         return CatalogConfigurationInterface::CATALOG_SETTINGS_XML_PREFIX . '/' . $configField;

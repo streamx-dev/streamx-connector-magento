@@ -135,10 +135,9 @@ class RebuildEsIndexCommand extends AbstractIndexerCommand
      * @param $storeId
      * @param $allStores
      *
-     * @return int
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    private function reindex(OutputInterface $output, $storeId, $allStores)
+    private function reindex(OutputInterface $output, $storeId, $allStores): int
     {
         $this->eventManager->dispatch('vsbridge_indexer_reindex_before', [
             'storeId' => $storeId,
@@ -202,10 +201,8 @@ class RebuildEsIndexCommand extends AbstractIndexerCommand
 
     /**
      * Reindex each vsbridge index for the specified store
-     *
-     * @return int
      */
-    private function reindexStore(StoreInterface $store, OutputInterface $output)
+    private function reindexStore(StoreInterface $store, OutputInterface $output): int
     {
         $this->getIndexerStoreManager()->override([$store]);
         $index = $this->getIndexOperations()->createIndex(self::INDEX_IDENTIFIER, $store);

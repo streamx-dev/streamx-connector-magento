@@ -95,10 +95,9 @@ class Children
     /**
      * Retrieve category entity table
      *
-     * @return string
      * @throws \Exception
      */
-    private function getEntityTable()
+    private function getEntityTable(): string
     {
         return $this->categoryMetaData->get()->getEntityTable();
     }

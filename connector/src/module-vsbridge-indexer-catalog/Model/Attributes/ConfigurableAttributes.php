@@ -54,9 +54,6 @@ class ConfigurableAttributes
         return $this->requiredAttributes;
     }
 
-    /**
-     * @return bool
-     */
     public function canIndexMediaGallery(int $storeId): bool
     {
         if (null === $this->canIndexMediaGallery) {

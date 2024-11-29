@@ -114,10 +114,7 @@ class Processor
         }
     }
 
-    /**
-     * @return int
-     */
-    private function getInvalidateEntitiesBatchSize(int $storeId)
+    private function getInvalidateEntitiesBatchSize(int $storeId): int
     {
         return $this->config->getInvalidateEntitiesBatchSize($storeId);
     }
@@ -143,10 +140,7 @@ class Processor
         }
     }
 
-    /**
-     * @return string
-     */
-    private function getCacheInvalidateUrl(int $storeId, string $type, array $ids)
+    private function getCacheInvalidateUrl(int $storeId, string $type, array $ids): string
     {
         $fullUrl = $this->getInvalidateCacheUrl($storeId);
         $params = $this->prepareTagsByDocIds($type, $ids);
@@ -155,10 +149,7 @@ class Processor
         return $fullUrl;
     }
 
-    /**
-     * @return string
-     */
-    private function getInvalidateCacheUrl($storeId)
+    private function getInvalidateCacheUrl($storeId): string
     {
         $url = $this->config->getVsfBaseUrl($storeId);
         $url .= sprintf('invalidate?key=%s&tag=', $this->config->getInvalidateCacheKey($storeId));
@@ -166,10 +157,7 @@ class Processor
         return $url;
     }
 
-    /**
-     * @return string
-     */
-    public function prepareTagsByDocIds(string $type, array $ids)
+    public function prepareTagsByDocIds(string $type, array $ids): string
     {
         $params = '';
         $cacheTags = $this->getCacheTags();

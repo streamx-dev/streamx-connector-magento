@@ -18,18 +18,12 @@ class IndicesSettings
         $this->scopeConfig = $scopeConfig;
     }
 
-    /**
-     * @return string
-     */
-    public function getIndexNamePrefix()
+    public function getIndexNamePrefix(): string
     {
         return (string) $this->getConfigParam('index_name');
     }
 
-    /**
-     * @return string
-     */
-    public function getIndexIdentifier()
+    public function getIndexIdentifier(): string
     {
         return (string) $this->getConfigParam('index_identifier');
     }
@@ -42,26 +36,17 @@ class IndicesSettings
         return (bool) $this->getConfigParam('add_identifier_to_default');
     }
 
-    /**
-     * @return int
-     */
-    public function getBatchIndexingSize()
+    public function getBatchIndexingSize(): int
     {
         return (int) $this->getConfigParam('batch_indexing_size');
     }
 
-    /**
-     * @return int
-     */
-    public function getFieldsLimit()
+    public function getFieldsLimit(): int
     {
         return (int) $this->getConfigParam('fields_limit');
     }
 
-    /**
-     * @return string|null
-     */
-    private function getConfigParam(string $configField)
+    private function getConfigParam(string $configField): ?string
     {
         $path = self::INDICES_SETTINGS_CONFIG_XML_PREFIX . '/' . $configField;
 

@@ -16,10 +16,7 @@ class SlugGenerator implements SlugGeneratorInterface
         return $this->slugify($text);
     }
 
-    /**
-     * @return string
-     */
-    private function slugify(string $text)
+    private function slugify(string $text): string
     {
         $text = mb_strtolower($text);
         $text = preg_replace("/\s+/", '-', $text);// Replace spaces with -
