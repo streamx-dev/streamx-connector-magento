@@ -78,9 +78,6 @@ class AttributeData implements DataProviderInterface
         return $indexData;
     }
 
-    /**
-     * @return array
-     */
     private function applySlug(array $productData): array
     {
         $entityId = $productData['id'];

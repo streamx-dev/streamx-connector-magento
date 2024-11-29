@@ -45,8 +45,6 @@ class ProductType implements ArrayInterface
 
     /**
      * Retrieve Product Types
-     *
-     * @return array
      */
     private function getTypes(): array
     {

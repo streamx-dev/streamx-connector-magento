@@ -18,11 +18,6 @@ class ProductUrlPathGenerator
         $this->rewriteResource = $rewrite;
     }
 
-    /**
-     * Add URL path
-     *
-     * @return array
-     */
     public function addUrlPath(array $products, int $storeId): array
     {
         $productIds = array_keys($products);

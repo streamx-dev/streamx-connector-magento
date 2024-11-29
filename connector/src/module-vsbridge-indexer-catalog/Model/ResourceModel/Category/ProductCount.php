@@ -22,10 +22,7 @@ class ProductCount
         $this->resource = $resourceConnection;
     }
 
-    /**
-     * @return array
-     */
-    public function loadProductCount(array $categoryIds)
+    public function loadProductCount(array $categoryIds): array
     {
         if (null === $this->categoryProductCountCache) {
             $this->categoryProductCountCache = [];
@@ -55,10 +52,7 @@ class ProductCount
         return $this->categoryProductCountCache;
     }
 
-    /**
-     * @return array
-     */
-    public function getProductCount(array $categoryIds)
+    public function getProductCount(array $categoryIds): array
     {
         $productTable = $this->resource->getTableName('catalog_category_product');
 

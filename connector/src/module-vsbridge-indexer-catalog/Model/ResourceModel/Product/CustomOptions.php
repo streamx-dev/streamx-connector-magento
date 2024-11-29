@@ -31,9 +31,6 @@ class CustomOptions
         $this->resource = $resourceModel;
     }
 
-    /**
-     * @return array
-     */
     public function loadProductOptions(array $linkFieldIds, int $storeId): array
     {
         $select = $this->getProductOptionSelect($linkFieldIds, $storeId);

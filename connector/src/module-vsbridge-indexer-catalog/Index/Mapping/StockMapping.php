@@ -6,10 +6,7 @@ use Divante\VsbridgeIndexerCore\Api\Mapping\FieldInterface;
 
 class StockMapping
 {
-    /**
-     * @return array
-     */
-    public function get()
+    public function get(): array
     {
         return [
             'product_id' => ['type' => FieldInterface::TYPE_LONG],

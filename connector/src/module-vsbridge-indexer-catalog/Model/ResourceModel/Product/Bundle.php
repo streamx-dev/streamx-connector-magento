@@ -81,10 +81,7 @@ class Bundle
         $this->bundleProductIds = null;
     }
 
-    /**
-     * @return array
-     */
-    public function loadBundleOptions(int $storeId)
+    public function loadBundleOptions(int $storeId): array
     {
         $productIds = $this->getBundleIds();
 
@@ -159,10 +156,7 @@ class Bundle
         }
     }
 
-    /**
-     * @return array
-     */
-    private function getBundleSelections($storeId)
+    private function getBundleSelections($storeId): array
     {
         $productIds = $this->getBundleIds();
         $connection = $this->getConnection();
@@ -203,10 +197,7 @@ class Bundle
         return $this->getConnection()->fetchAll($select);
     }
 
-    /**
-     * @return array
-     */
-    private function getProductSku(array $productIds)
+    private function getProductSku(array $productIds): array
     {
         $select = $this->getConnection()->select();
         $select->from($this->resource->getTableName('catalog_product_entity'), ['entity_id', 'sku']);
@@ -215,10 +206,7 @@ class Bundle
         return $this->getConnection()->fetchPairs($select);
     }
 
-    /**
-     * @return array
-     */
-    private function getBundleOptionsFromResource(int $storeId)
+    private function getBundleOptionsFromResource(int $storeId): array
     {
         $productIds = $this->getBundleIds();
 
@@ -268,10 +256,9 @@ class Bundle
     }
 
     /**
-     * @return array
      * @throws \Exception
      */
-    private function getBundleIds()
+    private function getBundleIds(): array
     {
         if (null === $this->bundleProductIds) {
             $this->bundleProductIds = [];

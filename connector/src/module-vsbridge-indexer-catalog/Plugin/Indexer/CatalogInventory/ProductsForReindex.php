@@ -17,10 +17,7 @@ class ProductsForReindex
         $this->productsForReindex = $items;
     }
 
-    /**
-     * @return array
-     */
-    public function getProducts()
+    public function getProducts(): array
     {
         return $this->productsForReindex;
     }

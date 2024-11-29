@@ -70,10 +70,7 @@ class Links
         }
     }
 
-    /**
-     * @return array
-     */
-    public function getLinkedProduct(array $product)
+    public function getLinkedProduct(array $product): array
     {
         $links = $this->getAllLinkedProducts();
         $productId = $product['id'];
@@ -111,10 +108,7 @@ class Links
         return $this->linkTypeMapper->map($typeId);
     }
 
-    /**
-     * @return array
-     */
-    private function getAllLinkedProducts()
+    private function getAllLinkedProducts(): array
     {
         if (null === $this->links) {
             $select = $this->buildLinksSelect();
@@ -214,10 +208,7 @@ class Links
         return array_keys($products);
     }
 
-    /**
-     * @return array
-     */
-    private function getProducts()
+    private function getProducts(): array
     {
         return $this->products;
     }

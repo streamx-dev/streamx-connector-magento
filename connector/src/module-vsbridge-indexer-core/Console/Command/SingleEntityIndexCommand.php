@@ -51,10 +51,8 @@ class SingleEntityIndexCommand extends AbstractIndexerCommand
 
     /**
      * Get list of options and arguments for the command
-     *
-     * @return array
      */
-    private function getInputList()
+    private function getInputList(): array
     {
         return [
             new InputArgument(

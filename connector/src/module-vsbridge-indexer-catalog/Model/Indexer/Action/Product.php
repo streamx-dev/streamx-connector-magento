@@ -48,10 +48,7 @@ class Product
         } while (!empty($products));
     }
 
-    /**
-     * @return array
-     */
-    private function getProductIds(array $childrenIds)
+    private function getProductIds(array $childrenIds): array
     {
         $parentIds = $this->resourceModel->getRelationsByChild($childrenIds);
 

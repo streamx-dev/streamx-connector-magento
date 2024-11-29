@@ -49,9 +49,6 @@ class CustomOptionConverter implements CustomOptionConverterInterface
         return $groupOption;
     }
 
-    /**
-     * @return array
-     */
     private function prepareValue(array $option): array
     {
         $option = $this->unsetFields($option);
@@ -60,9 +57,6 @@ class CustomOptionConverter implements CustomOptionConverterInterface
         return $option;
     }
 
-    /**
-     * @return array
-     */
     private function unsetFields(array $option): array
     {
         $option = $this->dataFilter->execute($option, $this->fieldsToDelete);
@@ -78,9 +72,6 @@ class CustomOptionConverter implements CustomOptionConverterInterface
         return $option;
     }
 
-    /**
-     * @return array
-     */
     private function prepareOption(array $option): array
     {
         $option = $this->unsetFields($option);

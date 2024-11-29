@@ -126,10 +126,9 @@ class Configurable
      *
      * @param array $product Configurable product.
      *
-     * @return array
      * @throws \Exception
      */
-    public function getProductConfigurableAttributes(array $product, int $storeId)
+    public function getProductConfigurableAttributes(array $product, int $storeId): array
     {
         if ($product['type_id'] != ConfigurableType::TYPE_CODE) {
             return [];
@@ -154,10 +153,8 @@ class Configurable
 
     /**
      * Return array of configurable attribute ids of the given configurable product.
-     *
-     * @return array
      */
-    private function getProductConfigurableAttributeIds(array $product)
+    private function getProductConfigurableAttributeIds(array $product): array
     {
         $attributes = $this->getConfigurableProductAttributes();
         $linkField = $this->productMetaData->get()->getLinkField();
@@ -177,10 +174,8 @@ class Configurable
 
     /**
      * Load all configurable attributes used in the current product collection.
-     *
-     * @return array
      */
-    private function getConfigurableProductAttributes()
+    private function getConfigurableProductAttributes(): array
     {
         if (!$this->configurableProductAttributes) {
             $productIds = $this->getParentIds();
@@ -194,10 +189,8 @@ class Configurable
     /**
      * This method actually would belong into a resource model, but for easier
      * reference I dropped it into the helper here.
-     *
-     * @return array
      */
-    private function getConfigurableAttributesForProductsFromResource(array $productIds)
+    private function getConfigurableAttributesForProductsFromResource(array $productIds): array
     {
         $select = $this->getConnection()->select()
             ->from(
@@ -215,10 +208,9 @@ class Configurable
     }
 
     /**
-     * @return array
      * @throws \Exception
      */
-    public function getConfigurableAttributeCodes(int $storeId)
+    public function getConfigurableAttributeCodes(int $storeId): array
     {
         $attributes = $this->getConfigurableAttributeFullInfo($storeId);
 
@@ -228,10 +220,9 @@ class Configurable
     /**
      * Return array of all configurable attributes in the current collection.
      * Array indexes are the attribute ids, array values the attribute code
-     * @return array
      * @throws \Exception
      */
-    private function getConfigurableAttributeFullInfo(int $storeId)
+    private function getConfigurableAttributeFullInfo(int $storeId): array
     {
         if (null !== $this->configurableAttributesInfo) {
             return $this->configurableAttributesInfo;
@@ -261,10 +252,8 @@ class Configurable
 
     /**
      * Return array of ids of configurable products in the current product collection
-     *
-     * @return array
      */
-    private function getConfigurableProductIds()
+    private function getConfigurableProductIds(): array
     {
         if (null === $this->configurableProductIds) {
             $linkField = $this->productMetaData->get()->getLinkField();
@@ -285,10 +274,7 @@ class Configurable
         return $this->configurableProductIds;
     }
 
-    /**
-     * @return array
-     */
-    private function getParentIds()
+    private function getParentIds(): array
     {
         $productIds = $this->getConfigurableProductIds();
 
@@ -299,11 +285,10 @@ class Configurable
      * Return all associated simple products for the configurable products in
      * the current product collection.
      *
-     * @return array
      * @throws \Magento\Framework\Exception\LocalizedException
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getSimpleProducts(int $storeId)
+    public function getSimpleProducts(int $storeId): array
     {
         if (null === $this->simpleProducts) {
             $parentIds = $this->getParentIds();
@@ -322,10 +307,7 @@ class Configurable
         return $this->simpleProducts;
     }
 
-    /**
-     * @return array
-     */
-    private function mapLinkFieldToEntityId(array $linkIds)
+    private function mapLinkFieldToEntityId(array $linkIds): array
     {
         $productIds = [];
 

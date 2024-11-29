@@ -190,10 +190,7 @@ class Processor
         return $params;
     }
 
-    /**
-     * @return array
-     */
-    public function getCacheTags()
+    public function getCacheTags(): array
     {
         if (null === $this->cacheTags) {
             $tagsDataObject = new \Magento\Framework\DataObject();

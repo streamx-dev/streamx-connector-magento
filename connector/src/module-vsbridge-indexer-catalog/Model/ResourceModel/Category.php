@@ -49,10 +49,9 @@ class Category
     }
 
     /**
-     * @return array
      * @throws \Exception
      */
-    public function getCategories(int $storeId = 1, array $categoryIds = [], int $fromId = 0, int $limit = 1000)
+    public function getCategories(int $storeId = 1, array $categoryIds = [], int $fromId = 0, int $limit = 1000): array
     {
         $select = $this->filterByStore($storeId);
         $tableName = self::MAIN_TABLE_ALIAS;
@@ -69,10 +68,9 @@ class Category
     }
 
     /**
-     * @return array
      * @throws \Exception
      */
-    public function getCategoryProductSelect(int $storeId, array $productIds)
+    public function getCategoryProductSelect(int $storeId, array $productIds): array
     {
         $select = $this->filterByStore($storeId);
         $table = $this->resource->getTableName('catalog_category_product');
@@ -92,10 +90,9 @@ class Category
     }
 
     /**
-     * @return array
      * @throws \Exception
      */
-    public function getParentIds(array $categoryIds)
+    public function getParentIds(array $categoryIds): array
     {
         $metaData = $this->categoryMetaData->get();
         $entityField = $metaData->getIdentifierField();

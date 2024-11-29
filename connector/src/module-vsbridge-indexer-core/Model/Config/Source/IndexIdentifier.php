@@ -6,10 +6,8 @@ class IndexIdentifier implements \Magento\Framework\Option\ArrayInterface
 {
     /**
      * Options getter
-     *
-     * @return array
      */
-    public function toOptionArray()
+    public function toOptionArray(): array
     {
         return [
             ['value' => 'id', 'label' => __('Store ID')],
@@ -19,10 +17,8 @@ class IndexIdentifier implements \Magento\Framework\Option\ArrayInterface
 
     /**
      * Get options in "key-value" format
-     *
-     * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return ['id' => __('Store ID'), 'code' => __('Store Code')];
     }

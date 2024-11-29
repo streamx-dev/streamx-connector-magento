@@ -62,10 +62,7 @@ class InventoryConverter implements InventoryConverterInterface
         return $this->prepareStockData($inventory);
     }
 
-    /**
-     * @return array
-     */
-    public function prepareStockData(array $stockData)
+    public function prepareStockData(array $stockData): array
     {
         $stockMapping = $this->stockMapping->get();
 

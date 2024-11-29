@@ -27,10 +27,7 @@ class Rewrite
         $this->productMetaData = $productMetaData;
     }
 
-    /**
-     * @return array
-     */
-    public function getRawRewritesData(array $productIds, int $storeId)
+    public function getRawRewritesData(array $productIds, int $storeId): array
     {
         $connection = $this->resource->getConnection();
         $select = $this->resource->getConnection()->select();

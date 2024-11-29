@@ -26,9 +26,6 @@ class GetAttributeCodesByIds
         $this->loadAttributes = $loadAttributes;
     }
 
-    /**
-     * @return array
-     */
     public function execute(string $attributeIds): array
     {
         $attributes = explode(',', $attributeIds);

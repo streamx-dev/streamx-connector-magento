@@ -61,12 +61,11 @@ class Product
     }
 
     /**
-     * @return array
      * @throws \Exception
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getProducts(int $storeId = 1, array $productIds = [], int $fromId = 0, int $limit = 1000)
+    public function getProducts(int $storeId = 1, array $productIds = [], int $fromId = 0, int $limit = 1000): array
     {
         $select = $this->prepareBaseProductSelect($this->getRequiredColumns(), $storeId);
         $select = $this->addProductTypeFilter($select, $storeId);
@@ -101,10 +100,7 @@ class Product
         return $select;
     }
 
-    /**
-     * @return array
-     */
-    private function getRequiredColumns()
+    private function getRequiredColumns(): array
     {
         $productMetaData = $this->productMetaData->get();
         $columns = [
@@ -126,11 +122,10 @@ class Product
     }
 
     /**
-     * @return array
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function loadChildrenProducts(array $parentIds, int $storeId)
+    public function loadChildrenProducts(array $parentIds, int $storeId): array
     {
         $linkField = $this->productMetaData->get()->getLinkField();
         $entityId = $this->productMetaData->get()->getIdentifierField();
@@ -175,10 +170,9 @@ class Product
     }
 
     /**
-     * @return array
      * @throws \Exception
      */
-    public function getRelationsByChild(array $childrenIds)
+    public function getRelationsByChild(array $childrenIds): array
     {
         $metadata = $this->productMetaData->get();
         $linkFieldId = $metadata->getLinkField();
@@ -196,9 +190,8 @@ class Product
 
     /**
      * Get list of attribute ids used to create configurable products
-     * @return array
      */
-    public function getConfigurableAttributeIds()
+    public function getConfigurableAttributeIds(): array
     {
         if (null === $this->configurableAttributeIds) {
             $select = $this->getConnection()->select();

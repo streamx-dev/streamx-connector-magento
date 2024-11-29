@@ -56,9 +56,6 @@ class LoadOptions
         return $this->loadOptions($attributeModel);
     }
 
-    /**
-     * @return array
-     */
     private function loadOptions(Attribute $attribute): array
     {
         $key = $attribute->getId() . '_' . $attribute->getStoreId();
@@ -137,9 +134,6 @@ class LoadOptions
             || $attribute->getData('swatch_input_type') === Swatch::SWATCH_INPUT_TYPE_TEXT;
     }
 
-    /**
-     * @return array
-     */
     private function toOptionArray(OptionCollection $collection, array $additional): array
     {
         return $this->optionCollectionToArray->execute($collection, $additional);

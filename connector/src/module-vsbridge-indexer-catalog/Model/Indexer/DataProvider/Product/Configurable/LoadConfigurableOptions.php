@@ -33,9 +33,6 @@ class LoadConfigurableOptions
         $this->sortValues = $sortValues;
     }
 
-    /**
-     * @return array
-     */
     public function execute(string $attributeCode, int $storeId, array $configurableChildren): array
     {
         $values = [];

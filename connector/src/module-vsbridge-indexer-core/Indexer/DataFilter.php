@@ -22,10 +22,7 @@ class DataFilter
         $this->floatProperties = $floatProperties;
     }
 
-    /**
-     * @return array
-     */
-    public function execute(array $dtoToFilter, array $blackList = null)
+    public function execute(array $dtoToFilter, array $blackList = null): array
     {
         foreach ($dtoToFilter as $key => $val) {
             if ($blackList && in_array($key, $blackList)) {

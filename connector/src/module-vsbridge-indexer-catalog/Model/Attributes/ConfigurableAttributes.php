@@ -39,9 +39,6 @@ class ConfigurableAttributes
         $this->catalogConfig = $catalogConfiguration;
     }
 
-    /**
-     * @return array
-     */
     public function getChildrenRequiredAttributes(int $storeId): array
     {
         if (null === $this->requiredAttributes) {

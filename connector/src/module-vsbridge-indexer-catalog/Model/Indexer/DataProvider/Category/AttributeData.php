@@ -148,10 +148,7 @@ class AttributeData implements AttributeDataProviderInterface
         return $indexData;
     }
 
-    /**
-     * @return array
-     */
-    private function addChildrenData(array $category, array $groupedChildren, int $storeId)
+    private function addChildrenData(array $category, array $groupedChildren, int $storeId): array
     {
         $categoryId = $category['id'];
         $childrenData = $this->plotTree($groupedChildren, $categoryId, $storeId);
@@ -162,10 +159,7 @@ class AttributeData implements AttributeDataProviderInterface
         return $category;
     }
 
-    /**
-     * @return array
-     */
-    private function groupChildrenById(array $children)
+    private function groupChildrenById(array $children): array
     {
         $sortChildrenById = [];
 
@@ -177,10 +171,7 @@ class AttributeData implements AttributeDataProviderInterface
         return $sortChildrenById;
     }
 
-    /**
-     * @return array
-     */
-    private function plotTree(array $categories, int $rootId, int $storeId)
+    private function plotTree(array $categories, int $rootId, int $storeId): array
     {
         $categoryTree = [];
 
@@ -217,10 +208,7 @@ class AttributeData implements AttributeDataProviderInterface
         return $this->prepareCategory($categoryDTO, $storeId);
     }
 
-    /**
-     * @return array
-     */
-    private function prepareCategory(array $categoryDTO, int $storeId)
+    private function prepareCategory(array $categoryDTO, int $storeId): array
     {
         $categoryDTO['id'] = (int)$categoryDTO['entity_id'];
 
@@ -238,9 +226,6 @@ class AttributeData implements AttributeDataProviderInterface
         return $categoryDTO;
     }
 
-    /**
-     * @return array
-     */
     private function addAvailableSortByOption(array $category, int $storeId): array
     {
         if (!$this->categoryAttributes->canAddAvailableSortBy($storeId)) {
@@ -256,9 +241,6 @@ class AttributeData implements AttributeDataProviderInterface
         return $category;
     }
 
-    /**
-     * @return array
-     */
     private function addDefaultSortByOption(array $category, int $storeId): array
     {
         if (!$this->categoryAttributes->canAddDefaultSortBy($storeId)) {
@@ -274,18 +256,12 @@ class AttributeData implements AttributeDataProviderInterface
         return $category;
     }
 
-    /**
-     * @return array
-     */
-    private function addSlug(array $categoryDTO)
+    private function addSlug(array $categoryDTO): array
     {
         return $this->applyCategorySlug->execute($categoryDTO);
     }
 
-    /**
-     * @return array
-     */
-    private function filterData(array $categoryData)
+    private function filterData(array $categoryData): array
     {
         return $this->getDataFilter()->execute($categoryData);
     }
