@@ -19,11 +19,6 @@ class ProductType implements ArrayInterface
      */
     private $types;
 
-    /**
-     * ProductType constructor.
-     *
-     * @param ConfigInterface $config
-     */
     public function __construct(ConfigInterface $config)
     {
         $this->config = $config;

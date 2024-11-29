@@ -11,11 +11,6 @@ class Category
      */
     private $resourceModel;
 
-    /**
-     * Category constructor.
-     *
-     * @param ResourceModel $resourceModel
-     */
     public function __construct(ResourceModel $resourceModel)
     {
         $this->resourceModel = $resourceModel;

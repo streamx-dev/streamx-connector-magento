@@ -45,14 +45,6 @@ class Bundle
      */
     private $catalogHelper;
 
-    /**
-     * Bundle constructor.
-     *
-     * @param ProductMetaData $productMetaData
-     * @param ResourceConnection $resourceModel
-     * @param StoreManagerInterface $storeManager
-     * @param Data $catalogHelper
-     */
     public function __construct(
         ProductMetaData $productMetaData,
         ResourceConnection $resourceModel,

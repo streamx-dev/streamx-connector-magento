@@ -15,11 +15,6 @@ class LoadInventory implements LoadInventoryInterface
      */
     private $resource;
 
-    /**
-     * LoadChildrenInventory constructor.
-     *
-     * @param InventoryResource $resource
-     */
     public function __construct(InventoryResource $resource)
     {
         $this->resource = $resource;

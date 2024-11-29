@@ -11,11 +11,6 @@ class QtyCorrectPlugin
      */
     private $productsForReindex;
 
-    /**
-     * ProcessStockChangedPlugin constructor.
-     *
-     * @param ProductsForReindex $itemsForReindex
-     */
     public function __construct(
         ProductsForReindex $itemsForReindex
     ) {

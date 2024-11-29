@@ -18,12 +18,6 @@ class PriceData implements DataProviderInterface
      */
     private $tierPriceLoader;
 
-    /**
-     * PriceData constructor.
-     *
-     * @param Resource $resource
-     * @param LoadTierPricesInterface $loadTierPrices
-     */
     public function __construct(
         Resource $resource,
         LoadTierPricesInterface $loadTierPrices

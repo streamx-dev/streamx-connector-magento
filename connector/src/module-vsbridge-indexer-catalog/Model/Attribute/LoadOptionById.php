@@ -12,11 +12,6 @@ class LoadOptionById
      */
     private $loadOptions;
 
-    /**
-     * LoadOptionById constructor.
-     *
-     * @param LoadOptions $loadOptions
-     */
     public function __construct(LoadOptions $loadOptions)
     {
         $this->loadOptions = $loadOptions;

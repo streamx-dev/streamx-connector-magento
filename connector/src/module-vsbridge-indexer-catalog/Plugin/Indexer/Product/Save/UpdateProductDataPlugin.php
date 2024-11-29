@@ -12,11 +12,6 @@ class UpdateProductDataPlugin
      */
     private $productProcessor;
 
-    /**
-     * UpdateProductData constructor.
-     *
-     * @param ProductProcessor $processor
-     */
     public function __construct(ProductProcessor $processor)
     {
         $this->productProcessor = $processor;

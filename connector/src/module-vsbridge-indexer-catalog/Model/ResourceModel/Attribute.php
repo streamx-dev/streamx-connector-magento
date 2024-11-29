@@ -19,12 +19,6 @@ class Attribute
      */
     private $collectionFactory;
 
-    /**
-     * ProductAttribute constructor.
-     *
-     * @param ResourceConnection $resource
-     * @param CollectionFactory $collectionFactory
-     */
     public function __construct(ResourceConnection $resource, CollectionFactory $collectionFactory)
     {
         $this->resource = $resource;

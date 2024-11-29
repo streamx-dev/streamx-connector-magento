@@ -13,11 +13,6 @@ class ConfigurableOptionsMapping implements FieldMappingInterface
      */
     private $swatchMapping;
 
-    /**
-     * ConfigurableOptionsMapping constructor.
-     *
-     * @param SwatchMapping $swatchMapping
-     */
     public function __construct(SwatchMapping $swatchMapping)
     {
         $this->swatchMapping = $swatchMapping;

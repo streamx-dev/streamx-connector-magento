@@ -12,11 +12,6 @@ class CategoryData implements DataProviderInterface
      */
     private $resourceModel;
 
-    /**
-     * BundleData constructor.
-     *
-     * @param Resource $resource
-     */
     public function __construct(Resource $resource)
     {
         $this->resourceModel = $resource;

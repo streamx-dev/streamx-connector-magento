@@ -29,14 +29,6 @@ class ProductCategory implements \Magento\Framework\Indexer\ActionInterface, \Ma
      */
     private $cacheProcessor;
 
-    /**
-     * Category constructor.
-     *
-     * @param CacheProcessor $cacheProcessor
-     * @param GenericIndexerHandler $indexerHandler
-     * @param StoreManager $storeManager
-     * @param ProductAction $action
-     */
     public function __construct(
         CacheProcessor $cacheProcessor,
         GenericIndexerHandler $indexerHandler,

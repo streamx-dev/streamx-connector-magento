@@ -35,14 +35,6 @@ class Category
      */
     private $categoryMetaData;
 
-    /**
-     * Category constructor.
-     *
-     * @param ResourceConnection $resourceModel
-     * @param CategoryMetaData $categoryMetaData
-     * @param \Divante\VsbridgeIndexerCatalog\Model\ResourceModel\Category $categoryResourceModel
-     * @param CategoryCollectionFactory $categoryCollectionFactory
-     */
     public function __construct(
         ResourceConnection $resourceModel,
         CategoryMetaData $categoryMetaData,

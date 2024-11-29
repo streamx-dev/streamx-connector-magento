@@ -19,12 +19,6 @@ class TierPrices
      */
     private $productMetaData;
 
-    /**
-     * TierPrices constructor.
-     *
-     * @param ResourceConnection $resourceModel
-     * @param ProductMetaData $productMetaData
-     */
     public function __construct(
         ResourceConnection $resourceModel,
         ProductMetaData $productMetaData

@@ -19,12 +19,6 @@ class AttributeSavePlugin
      */
     private $processor;
 
-    /**
-     * AttributeSavePlugin constructor.
-     *
-     * @param Attribute $attributeHelper
-     * @param ProductProcessor $processor
-     */
     public function __construct(Attribute $attributeHelper, ProductProcessor $processor)
     {
         $this->attributeHelper = $attributeHelper;

@@ -26,11 +26,6 @@ class LoadAttributes
      */
     private $attributeCodeToId = [];
 
-    /**
-     * LoadAttributes constructor.
-     *
-     * @param CollectionFactory $attributeCollectionFactory
-     */
     public function __construct(CollectionFactory $attributeCollectionFactory)
     {
         $this->attributeCollectionFactory = $attributeCollectionFactory;

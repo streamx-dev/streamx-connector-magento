@@ -84,16 +84,6 @@ class Configurable
      */
     private $logger;
 
-    /**
-     * Configurable constructor.
-     *
-     * @param LoggerInterface $logger
-     * @param AttributeDataProvider $attributeDataProvider
-     * @param Product $productResource
-     * @param ProductMetaData $productMetaData
-     * @param ResourceConnection $resourceConnection
-     * @param DbHelper $dbHelper
-     */
     public function __construct(
         LoggerInterface $logger,
         AttributeDataProvider $attributeDataProvider,

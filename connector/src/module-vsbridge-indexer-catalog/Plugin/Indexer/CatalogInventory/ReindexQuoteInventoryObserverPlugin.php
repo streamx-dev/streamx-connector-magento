@@ -17,12 +17,6 @@ class ReindexQuoteInventoryObserverPlugin
      */
     private $productProcessor;
 
-    /**
-     * ProcessStockChangedPlugin constructor.
-     *
-     * @param ProductsForReindex $itemsForReindex
-     * @param ProductProcessor $processor
-     */
     public function __construct(
         ProductsForReindex $itemsForReindex,
         ProductProcessor $processor

@@ -11,11 +11,6 @@ class Product
      */
     private $resourceModel;
 
-    /**
-     * Product constructor.
-     *
-     * @param ResourceModel $resourceModel
-     */
     public function __construct(ResourceModel $resourceModel)
     {
         $this->resourceModel = $resourceModel;

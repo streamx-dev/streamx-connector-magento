@@ -25,9 +25,6 @@ class SchemaLocator implements SchemaLocatorInterface
      */
     private $perFileSchema = null;
 
-    /**
-     * @param \Magento\Framework\Module\Dir\Reader $moduleReader
-     */
     public function __construct(\Magento\Framework\Module\Dir\Reader $moduleReader)
     {
         $configDir = $moduleReader->getModuleDir(Dir::MODULE_ETC_DIR, 'Divante_VsbridgeIndexerCore');

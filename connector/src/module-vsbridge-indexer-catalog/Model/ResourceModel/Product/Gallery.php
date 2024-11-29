@@ -36,13 +36,6 @@ class Gallery
      */
     private $metadataPool;
 
-    /**
-     * Gallery constructor.
-     *
-     * @param ProductMetaData $metadataPool
-     * @param ResourceConnection $resourceModel
-     * @param EntityAttribute $attribute
-     */
     public function __construct(
         ProductMetaData $metadataPool,
         ResourceConnection $resourceModel,

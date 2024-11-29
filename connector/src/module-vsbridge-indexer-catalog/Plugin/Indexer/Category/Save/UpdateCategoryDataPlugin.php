@@ -19,12 +19,6 @@ class UpdateCategoryDataPlugin
      */
     private $categoryProcessor;
 
-    /**
-     * UpdateCategoryDataPlugin constructor.
-     *
-     * @param CategoryResourceModel $resourceModel
-     * @param CategoryProcessor $processor
-     */
     public function __construct(
         CategoryResourceModel $resourceModel,
         CategoryProcessor $processor

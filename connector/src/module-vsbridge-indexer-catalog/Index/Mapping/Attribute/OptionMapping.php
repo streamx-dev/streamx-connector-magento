@@ -14,11 +14,6 @@ class OptionMapping implements FieldMappingInterface
      */
     private $swatchMapping;
 
-    /**
-     * Attribute constructor.
-     *
-     * @param SwatchMapping $generalMapping
-     */
     public function __construct(SwatchMapping $generalMapping)
     {
         $this->swatchMapping = $generalMapping;

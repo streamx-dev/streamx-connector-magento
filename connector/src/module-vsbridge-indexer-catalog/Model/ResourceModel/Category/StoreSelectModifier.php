@@ -17,11 +17,6 @@ class StoreSelectModifier implements BaseSelectModifierInterface
      */
     private $storeManager;
 
-    /**
-     * StoreSelectModificator constructor.
-     *
-     * @param StoreManagerInterface $storeManager
-     */
     public function __construct(StoreManagerInterface $storeManager)
     {
         $this->storeManager = $storeManager;

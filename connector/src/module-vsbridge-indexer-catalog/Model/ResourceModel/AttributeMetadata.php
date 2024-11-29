@@ -58,15 +58,6 @@ class AttributeMetadata
      */
     private $labelByAttribute = [];
 
-    /**
-     * AttributeMetadata constructor.
-     *
-     * @param ResourceConnection $resource
-     * @param LoadAttributes $loadAttributes
-     * @param GetAttributeFields $getAttributeFields
-     * @param OptionCollectionFactory $optionCollectionFactory
-     * @param CollectionFactory $collectionFactory
-     */
     public function __construct(
         ResourceConnection $resource,
         LoadAttributes $loadAttributes,

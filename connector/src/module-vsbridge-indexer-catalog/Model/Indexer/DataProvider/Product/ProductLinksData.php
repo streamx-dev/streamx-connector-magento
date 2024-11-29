@@ -13,11 +13,6 @@ class ProductLinksData implements DataProviderInterface
      */
     private $resourceModel;
 
-    /**
-     * LinkData constructor.
-     *
-     * @param LinkResourceModel $resource
-     */
     public function __construct(LinkResourceModel $resource)
     {
         $this->resourceModel = $resource;

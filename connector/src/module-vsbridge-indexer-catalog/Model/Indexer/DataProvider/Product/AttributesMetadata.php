@@ -26,13 +26,6 @@ class AttributesMetadata  implements DataProviderInterface
      */
     private $configuration;
 
-    /**
-     * AttributesMetadata constructor.
-     *
-     * @param GetProductValues $getProductValues
-     * @param CatalogConfigurationInterface $configuration
-     * @param Resource $resourceModel
-     */
     public function __construct(
         GetProductValues $getProductValues,
         CatalogConfigurationInterface $configuration,

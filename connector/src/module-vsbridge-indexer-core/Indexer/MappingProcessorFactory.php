@@ -11,11 +11,6 @@ class MappingProcessorFactory
      */
     private $objectManager;
 
-    /**
-     * Constructor
-     *
-     * @param \Magento\Framework\ObjectManagerInterface $objectManager
-     */
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $objectManager
     ) {

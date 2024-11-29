@@ -34,15 +34,6 @@ class Product extends AbstractMapping implements MappingInterface
      */
     private $additionalMapping = [];
 
-    /**
-     * Product constructor.
-     *
-     * @param GeneralMapping $generalMapping
-     * @param StockMapping $stockMapping
-     * @param LoadAttributes $resourceModel
-     * @param array $staticFieldMapping
-     * @param array $additionalMapping
-     */
     public function __construct(
         GeneralMapping $generalMapping,
         StockMapping $stockMapping,

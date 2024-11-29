@@ -17,10 +17,6 @@ class ParentResolver
     private $parentSkus = [];
 
     /**
-     * ParentResolver constructor.
-     *
-     * @param array $handlers
-     *
      * @throws InputException
      */
     public function __construct(array $handlers)

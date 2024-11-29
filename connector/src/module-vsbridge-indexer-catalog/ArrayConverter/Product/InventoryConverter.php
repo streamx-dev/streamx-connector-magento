@@ -21,12 +21,6 @@ class InventoryConverter implements InventoryConverterInterface
      */
     private $stockMapping;
 
-    /**
-     * InventoryConverter constructor.
-     *
-     * @param StockMapping $generalMapping
-     * @param StockConfigurationInterface $stockConfiguration
-     */
     public function __construct(
         StockMapping $generalMapping,
         StockConfigurationInterface $stockConfiguration

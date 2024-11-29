@@ -26,13 +26,6 @@ class Inventory
      */
     private $inventoryFields;
 
-    /**
-     * Inventory constructor.
-     *
-     * @param StockConfigurationInterface $stockConfiguration
-     * @param InventoryFields $fields
-     * @param ResourceConnection $resourceModel
-     */
     public function __construct(
         StockConfigurationInterface $stockConfiguration,
         InventoryFields $fields,

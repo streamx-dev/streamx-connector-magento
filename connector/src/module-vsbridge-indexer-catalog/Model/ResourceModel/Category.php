@@ -36,14 +36,6 @@ class Category
      */
     private $categoryMetaData;
 
-    /**
-     * Category constructor.
-     *
-     * @param BaseSelectModifierInterface $baseSelectModifier
-     * @param ResourceConnection $resourceConnection
-     * @param CategoryMetaData $categoryMetaData
-     * @param StoreManagerInterface $storeManager
-     */
     public function __construct(
         BaseSelectModifierInterface $baseSelectModifier,
         ResourceConnection $resourceConnection,

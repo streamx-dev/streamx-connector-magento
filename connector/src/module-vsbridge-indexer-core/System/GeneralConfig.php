@@ -14,11 +14,6 @@ class GeneralConfig implements GeneralConfigInterface
      */
     private $scopeConfig;
 
-    /**
-     * ClientConfiguration constructor.
-     *
-     * @param ScopeConfigInterface $scopeConfig
-     */
     public function __construct(ScopeConfigInterface $scopeConfig)
     {
         $this->scopeConfig = $scopeConfig;

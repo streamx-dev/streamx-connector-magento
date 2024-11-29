@@ -30,14 +30,6 @@ class IndexSettings
      */
     private $dateTimeFactory;
 
-    /**
-     * IndexSettings constructor.
-     *
-     * @param StoreManagerInterface $storeManager
-     * @param IndicesConfig $config
-     * @param IndicesSettings $settingsConfig
-     * @param DateTimeFactory $dateTimeFactory
-     */
     public function __construct(
         StoreManagerInterface $storeManager,
         IndicesConfig $config,

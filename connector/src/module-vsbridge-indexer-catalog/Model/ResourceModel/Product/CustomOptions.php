@@ -23,12 +23,6 @@ class CustomOptions
      */
     private $entityAttribute;
 
-    /**
-     * Gallery constructor.
-     *
-     * @param ResourceConnection $resourceModel
-     * @param EntityAttribute $attribute
-     */
     public function __construct(
         ResourceConnection $resourceModel,
         EntityAttribute $attribute

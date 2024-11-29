@@ -33,14 +33,6 @@ class CustomOptions implements DataProviderInterface
      */
     private $productOptionProcessor;
 
-    /**
-     * CustomOptions constructor.
-     *
-     * @param Resource $resource
-     * @param OptionValuesResource $customOptionValues
-     * @param CustomOptionConverterInterface $processor
-     * @param ProductMetaData $productMetaData
-     */
     public function __construct(
         Resource $resource,
         OptionValuesResource $customOptionValues,

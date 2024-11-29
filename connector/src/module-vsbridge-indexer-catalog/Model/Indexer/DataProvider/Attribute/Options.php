@@ -19,12 +19,6 @@ class Options implements DataProviderInterface
      */
     private $entityAttributeResource;
 
-    /**
-     * Options constructor.
-     *
-     * @param LoadOptions $loadOptions
-     * @param EntityResource $entityResource
-     */
     public function __construct(
         LoadOptions $loadOptions,
         EntityResource $entityResource

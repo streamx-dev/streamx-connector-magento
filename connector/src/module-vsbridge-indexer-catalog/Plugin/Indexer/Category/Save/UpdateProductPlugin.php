@@ -17,12 +17,6 @@ class UpdateProductPlugin
      */
     private $productProcessor;
 
-    /**
-     * UpdateProduct constructor.
-     *
-     * @param ProductProcessor $productProcessor
-     * @param ProductCategoryProcessor $processor
-     */
     public function __construct(
         ProductProcessor $productProcessor,
         ProductCategoryProcessor $processor

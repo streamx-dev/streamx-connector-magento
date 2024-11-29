@@ -25,11 +25,6 @@ class CustomOptionConverter implements CustomOptionConverterInterface
      */
     private $dataFilter;
 
-    /**
-     * CustomOptionConverter constructor.
-     *
-     * @param DataFilter $dataFilter
-     */
     public function __construct(DataFilter $dataFilter)
     {
         $this->dataFilter = $dataFilter;

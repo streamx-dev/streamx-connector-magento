@@ -29,14 +29,6 @@ class Category implements \Magento\Framework\Indexer\ActionInterface, \Magento\F
      */
     private $cacheProcessor;
 
-    /**
-     * Category constructor.
-     *
-     * @param CacheProcessor $cacheProcessor
-     * @param GenericIndexerHandler $indexerHandler
-     * @param StoreManager $storeManager
-     * @param Action $action
-     */
     public function __construct(
         CacheProcessor $cacheProcessor,
         GenericIndexerHandler $indexerHandler,

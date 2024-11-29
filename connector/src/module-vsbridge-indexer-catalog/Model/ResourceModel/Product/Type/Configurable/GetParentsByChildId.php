@@ -18,12 +18,6 @@ class GetParentsByChildId implements GetParentsByChildIdInterface
      */
     private $optionProvider;
 
-    /**
-     * GetParentsByChildId constructor.
-     *
-     * @param OptionProvider $optionProvider
-     * @param ResourceConnection $resourceConnection
-     */
     public function __construct(
         OptionProvider $optionProvider,
         ResourceConnection $resourceConnection

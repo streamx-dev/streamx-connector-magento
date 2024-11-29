@@ -10,14 +10,6 @@ class Data extends DataConfig
 {
     const CACHE_ID = 'vsf_indices_config';
 
-    /**
-     * Config constructor.
-     *
-     * @param Reader $reader
-     * @param CacheInterface $cache
-     * @param string $cacheId
-     * @param SerializerInterface|null $serializer
-     */
     public function __construct(
         Reader $reader,
         CacheInterface $cache,

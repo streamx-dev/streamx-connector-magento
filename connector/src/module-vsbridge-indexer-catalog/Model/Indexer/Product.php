@@ -30,14 +30,6 @@ class Product implements \Magento\Framework\Indexer\ActionInterface, \Magento\Fr
      */
     private $cacheProcessor;
 
-    /**
-     * Product constructor.
-     *
-     * @param CacheProcessor $cacheProcessor
-     * @param GenericIndexerHandler $indexerHandler
-     * @param StoreManager $storeManager
-     * @param ProductAction $action
-     */
     public function __construct(
         CacheProcessor $cacheProcessor,
         GenericIndexerHandler $indexerHandler,

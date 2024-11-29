@@ -35,13 +35,6 @@ class LoadOptions
      */
     private $optionsByAttribute = [];
 
-    /**
-     * LoadOptions constructor.
-     *
-     * @param CollectionFactory $collectionFactory
-     * @param OptionCollectionToArray $optionCollectionToArray
-     * @param AttributeDataProvider $attributeDataProvider
-     */
     public function __construct(
         CollectionFactory $collectionFactory,
         OptionCollectionToArray $optionCollectionToArray,
