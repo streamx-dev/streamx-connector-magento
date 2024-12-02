@@ -46,14 +46,13 @@
     </type>
 
     <!-- Prevent sensitive fields from getting dumped with store config -->
-    <!-- TODO add any sensitive data such as auth tokens to the Rest Ingestion endpoint here -->
-    <!--    <type name="Magento\Config\Model\Config\TypePool">-->
-    <!--        <arguments>-->
-    <!--            <argument name="sensitive" xsi:type="array">-->
-    <!--                <item name="streamx_indexer_settings/streamx_client/auth_pwd" xsi:type="string">1</item>-->
-    <!--            </argument>-->
-    <!--        </arguments>-->
-    <!--    </type>-->
+    <type name="Magento\Config\Model\Config\TypePool">
+        <arguments>
+            <argument name="sensitive" xsi:type="array">
+                <item name="streamx_indexer_settings/streamx_client/auth_token" xsi:type="string">1</item>
+            </argument>
+        </arguments>
+    </type>
 
     <type name="Magento\Framework\Console\CommandListInterface">
         <arguments>
