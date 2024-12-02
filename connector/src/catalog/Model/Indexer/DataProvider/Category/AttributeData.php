@@ -105,10 +105,8 @@ class AttributeData implements AttributeDataProviderInterface
     public function addData(array $indexData, int $storeId): array
     {
         $this->settings->getAttributesUsedForSortBy();
-        /**
-         * TODO add option to load only specific categories
-         */
 
+        // There is no option yet to load only specific categories
         $categoryIds = array_keys($indexData);
         $attributes = $this->attributeResourceModel->loadAttributesData(
             $storeId,

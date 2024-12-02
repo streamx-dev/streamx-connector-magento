@@ -26,7 +26,6 @@ abstract class AbstractMapping
     ];
 
     /**
-     * TODO return only mapping information like ['type' -> [OPTIONS]]
      * Return mapping for an attribute.
      *
      * @param Attribute $attribute Attribute we want the mapping for.

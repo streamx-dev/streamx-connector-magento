@@ -73,7 +73,7 @@ class Category extends AbstractMapping implements MappingInterface
             $properties['children_data'] = ['properties' => $childMapping];
             $properties = array_merge($properties, $attributesMapping);
 
-            /*TODO grid_per_page -> not implemented yet*/
+            // grid_per_page -> not implemented yet
             $properties['grid_per_page'] = ['type' => FieldInterface::TYPE_INTEGER];
             $mapping = ['properties' => $properties];
             $mappingObject = new \Magento\Framework\DataObject();

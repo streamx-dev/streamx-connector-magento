@@ -16,9 +16,6 @@ use Magento\Framework\Indexer\SaveHandler\Batch;
 use Magento\Store\Api\Data\StoreInterface;
 use Traversable;
 
-/**
- * TODO refactor - coupling between objects
- */
 class GenericIndexerHandler
 {
     /**
