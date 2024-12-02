@@ -2,6 +2,7 @@
 
 namespace StreamX\ConnectorCore\Streamx;
 
+use Streamx\Clients\Ingestion\Exceptions\StreamxClientException;
 use StreamX\ConnectorCore\Api\Client\ClientInterface;
 use StreamX\ConnectorCore\Api\Client\ClientInterfaceFactory;
 use StreamX\ConnectorCore\Api\Client\ConfigurationInterface;
@@ -28,6 +29,9 @@ class ClientResolver {
         $this->streamxPublisherProvider = $streamxPublisherProvider;
     }
 
+    /**
+     * @throws StreamxClientException
+     */
     public function getClient(int $storeId): ClientInterface {
         if (!$this->config->isEnabled()) {
             throw new ConnectionDisabledException('StreamX indexer is disabled.');
@@ -36,7 +40,7 @@ class ClientResolver {
         if (!isset($this->clients[$storeId])) {
             /** @var ConfigurationInterface $configuration */
             $configuration = $this->clientConfigurationFactory->create(['storeId' => $storeId]);
-            $publisher = $this->streamxPublisherProvider->buildPublisher($configuration->getOptions($storeId));
+            $publisher = $this->streamxPublisherProvider->buildStreamxPublisher($configuration->getOptions($storeId));
             $this->clients[$storeId] = $this->clientFactory->create(['publisher' => $publisher]);
         }
 

@@ -96,7 +96,7 @@ class Client implements ClientInterface {
         $productId = $productData['id'];
         $this->logger->info("Publishing product $productId");
 
-        $page = [
+        $data = [
             'content' => [
                 'bytes' => sprintf("Admin has edited a Product at %s. Edited state:\n%s",
                     date("Y-m-d H:i:s"),
@@ -105,7 +105,7 @@ class Client implements ClientInterface {
             ]
         ];
         $key = "product_$productId";
-        $this->publisher->publish($key, $page);
+        $this->publisher->publish($key, $data);
     }
 
     // TODO: the below methods are from Elastic Search based indexer. Probably never needed by StreamX Indexer

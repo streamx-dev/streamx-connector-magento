@@ -5,7 +5,8 @@
         <streamx_indexer_settings>
             <streamx_client>
                 <ingestion_base_url>http://rest-ingestion:8080</ingestion_base_url>
-                <pages_schema_name>dev.streamx.blueprints.data.PageIngestionMessage</pages_schema_name>
+                <channel_name>data</channel_name>
+                <channel_schema_name>dev.streamx.blueprints.data.DataIngestionMessage</channel_schema_name>
             </streamx_client>
             <indices_settings>
                 <batch_indexing_size>1000</batch_indexing_size>
