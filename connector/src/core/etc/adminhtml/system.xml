@@ -37,8 +37,14 @@
                 <field id="ingestion_base_url" translate="label comment" type="text" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>StreamX Rest Ingestion base URL</label>
                 </field>
-                <field id="pages_schema_name" translate="label comment" type="text" sortOrder="21" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Pages schema name</label>
+                <field id="channel_name" translate="label comment" type="text" sortOrder="21" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Channel name</label>
+                </field>
+                <field id="channel_schema_name" translate="label comment" type="text" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Channel schema name</label>
+                </field>
+                <field id="auth_token" translate="label comment" type="text" sortOrder="41" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Auth token</label>
                 </field>
             </group>
 
