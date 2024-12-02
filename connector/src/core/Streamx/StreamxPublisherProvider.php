@@ -7,7 +7,6 @@ use Streamx\Clients\Ingestion\Builders\StreamxClientBuilders;
 use Streamx\Clients\Ingestion\Exceptions\StreamxClientException;
 use Streamx\Clients\Ingestion\Publisher\Publisher;
 use Streamx\Clients\Ingestion\StreamxClient;
-use StreamX\ConnectorCore\Api\Client\BuilderInterface;
 
 class StreamxPublisherProvider {
 
@@ -21,12 +20,19 @@ class StreamxPublisherProvider {
     /**
      * @throws StreamxClientException
      */
-    public function buildStreamxPublisher(array $options) {
+    public function getStreamxPublisher(array $options): Publisher {
         if (isset($this->publisher)) {
             $this->logger->info("Reusing publisher");
-            return $this->publisher;
+        } else {
+            $this->publisher = $this->createStreamxPublisher($options);
         }
+        return $this->publisher;
+    }
 
+    /**
+     * @throws StreamxClientException
+     */
+    private function createStreamxPublisher(array $options): Publisher {
         $ingestionBaseUrl = $options[ClientConfiguration::INGESTION_BASE_URL_FIELD];
         $channelName = $options[ClientConfiguration::CHANNEL_NAME_FIELD];
         $channelSchemaName = $options[ClientConfiguration::CHANNEL_SCHEMA_NAME_FIELD];
@@ -34,9 +40,7 @@ class StreamxPublisherProvider {
 
         $this->logger->info("Creating new publisher for $ingestionBaseUrl / $channelName / $channelSchemaName");
         $ingestionClient = $this->buildStreamxClient($ingestionBaseUrl, $authToken);
-        $this->publisher = $ingestionClient->newPublisher($channelName, $channelSchemaName);
-
-        return $this->publisher;
+        return $ingestionClient->newPublisher($channelName, $channelSchemaName);
     }
 
     /**

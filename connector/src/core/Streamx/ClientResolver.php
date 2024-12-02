@@ -40,7 +40,7 @@ class ClientResolver {
         if (!isset($this->clients[$storeId])) {
             /** @var ConfigurationInterface $configuration */
             $configuration = $this->clientConfigurationFactory->create(['storeId' => $storeId]);
-            $publisher = $this->streamxPublisherProvider->buildStreamxPublisher($configuration->getOptions($storeId));
+            $publisher = $this->streamxPublisherProvider->getStreamxPublisher($configuration->getOptions($storeId));
             $this->clients[$storeId] = $this->clientFactory->create(['publisher' => $publisher]);
         }
 
