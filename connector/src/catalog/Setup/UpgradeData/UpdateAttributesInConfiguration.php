@@ -37,11 +37,9 @@ class UpdateAttributesInConfiguration
     }
 
     /**
-     * @return void
-     *
      * @throws LocalizedException
      */
-    public function execute(array $attributeCodes, string $path)
+    public function execute(array $attributeCodes, string $path): void
     {
         $attributeIds = $this->getAttributeIdsByCodes($attributeCodes);
 

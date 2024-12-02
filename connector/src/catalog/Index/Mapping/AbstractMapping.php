@@ -58,10 +58,7 @@ abstract class AbstractMapping
         return $mapping;
     }
 
-    /**
-     * @return bool
-     */
-    private function addKeywordFieldToTextAttribute(Attribute $attribute, string $esType)
+    private function addKeywordFieldToTextAttribute(Attribute $attribute, string $esType): bool
     {
         $attributeCode = $attribute->getAttributeCode();
 
@@ -116,10 +113,7 @@ abstract class AbstractMapping
         return $type;
     }
 
-    /**
-     * @return bool
-     */
-    private function isDateType(Attribute $attribute)
+    private function isDateType(Attribute $attribute): bool
     {
         if ($attribute->getBackendType() == 'datetime' || $attribute->getFrontendInput() === 'date') {
             return true;
@@ -128,10 +122,7 @@ abstract class AbstractMapping
         return false;
     }
 
-    /**
-     * @return bool
-     */
-    private function isDoubleType(Attribute $attribute)
+    private function isDoubleType(Attribute $attribute): bool
     {
         if ($attribute->getBackendType() == 'decimal' || $attribute->getFrontendClass() == 'validate-number') {
             return true;
@@ -140,10 +131,7 @@ abstract class AbstractMapping
         return false;
     }
 
-    /**
-     * @return bool
-     */
-    private function isLongType(Attribute $attribute)
+    private function isLongType(Attribute $attribute): bool
     {
         if ($attribute->getBackendType() == 'int' || $attribute->getFrontendClass() == 'validate-digits') {
             return true;
@@ -152,10 +140,7 @@ abstract class AbstractMapping
         return false;
     }
 
-    /**
-     * @return bool
-     */
-    private function isBooleanType(Attribute $attribute)
+    private function isBooleanType(Attribute $attribute): bool
     {
         $attributeCode = $attribute->getAttributeCode();
 

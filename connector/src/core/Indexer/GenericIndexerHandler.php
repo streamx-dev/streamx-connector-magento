@@ -138,10 +138,9 @@ class GenericIndexerHandler
     /**
      * Save documents in ES
      *
-     * @return void
      * @throws ConnectionUnhealthyException
      */
-    public function saveIndex(Traversable $documents, StoreInterface $store)
+    public function saveIndex(Traversable $documents, StoreInterface $store): void
     {
         try {
             $index = $this->getIndex($store);
@@ -188,10 +187,8 @@ class GenericIndexerHandler
 
     /**
      * Removed unnecessary documents in ES by transaction key
-     *
-     * @return void
      */
-    public function cleanUpByTransactionKey(StoreInterface $store, array $docIds = null)
+    public function cleanUpByTransactionKey(StoreInterface $store, array $docIds = null): void
     {
         try {
             $indexAlias = $this->indexOperations->getIndexAlias($store);

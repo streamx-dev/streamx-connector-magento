@@ -4,23 +4,14 @@ namespace StreamX\ConnectorCore\Model;
 
 class IndexerRegistry
 {
-    /**
-     * @var bool
-     */
-    private $isFullReIndexationRunning = false;
+    private bool $isFullReIndexationRunning = false;
 
-    /**
-     * @return bool
-     */
-    public function isFullReIndexationRunning()
+    public function isFullReIndexationRunning(): bool
     {
         return $this->isFullReIndexationRunning;
     }
 
-    /**
-     * @return void
-     */
-    public function setFullReIndexationIsInProgress()
+    public function setFullReIndexationIsInProgress(): void
     {
         $this->isFullReIndexationRunning = true;
     }

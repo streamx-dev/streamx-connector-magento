@@ -18,7 +18,6 @@ class QtyCorrectPlugin
     }
 
     /**
-     * @return void
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function aroundCorrectItemsQty(
@@ -27,7 +26,7 @@ class QtyCorrectPlugin
         array $items,
         int $websiteId,
         string $operator
-    ) {
+    ): void {
         if (!empty($items)) {
             $productIds = array_keys($items);
             $this->productsForReindex->setProducts($productIds);
