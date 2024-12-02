@@ -28,10 +28,7 @@ class IndicesSettings
         return (string) $this->getConfigParam('index_identifier');
     }
 
-    /**
-     * @return bool
-     */
-    public function addIdentifierToDefaultStoreView()
+    public function addIdentifierToDefaultStoreView(): bool
     {
         return (bool) $this->getConfigParam('add_identifier_to_default');
     }

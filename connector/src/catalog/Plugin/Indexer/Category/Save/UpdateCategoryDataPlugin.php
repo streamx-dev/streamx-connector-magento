@@ -29,10 +29,8 @@ class UpdateCategoryDataPlugin
 
     /**
      * Reindex data after product save/delete resource commit
-     *
-     * @return void
      */
-    public function afterReindex(Category $category)
+    public function afterReindex(Category $category): void
     {
         $categoryIds = [];
         $originalUrlKey = $category->getOrigData('url_key');

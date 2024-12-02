@@ -183,7 +183,6 @@ class RebuildEsIndexCommand extends AbstractIndexerCommand
     /**
      * Check if Store is allowed to reindex
      *
-     * @return bool
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     private function isAllowedToReindex(\Magento\Store\Api\Data\StoreInterface $store): bool

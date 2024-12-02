@@ -18,26 +18,17 @@ class OptimizationSettings
         $this->scopeConfig = $scopeConfig;
     }
 
-    /**
-     * @return bool
-     */
-    public function checkClusterHealth()
+    public function checkClusterHealth(): bool
     {
         return (bool) $this->getConfigParam('cluster_health');
     }
 
-    /**
-     * @return bool
-     */
-    public function checkMaxBulkQueueRequirement()
+    public function checkMaxBulkQueueRequirement(): bool
     {
         return (bool) $this->getConfigParam('max_bulk_queue_requirement');
     }
 
-    /**
-     * @return bool
-     */
-    public function changeNumberOfReplicas()
+    public function changeNumberOfReplicas(): bool
     {
         return (bool) $this->getConfigParam('number_of_replicas');
     }
@@ -47,10 +38,7 @@ class OptimizationSettings
         return $this->getConfigParam('number_of_replicas_value');
     }
 
-    /**
-     * @return bool
-     */
-    public function changeRefreshInterval()
+    public function changeRefreshInterval(): bool
     {
         return (bool) $this->getConfigParam('refresh_interval');
     }

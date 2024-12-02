@@ -19,10 +19,8 @@ class UpdateProductDataPlugin
 
     /**
      * Reindex data after product save/delete resource commit
-     *
-     * @return void
      */
-    public function afterReindex(Product $product)
+    public function afterReindex(Product $product): void
     {
         $this->productProcessor->reindexRow($product->getId());
     }
