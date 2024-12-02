@@ -26,13 +26,7 @@ class UpdateAttributeDataPlugin
         $this->attributeProcessor = $attributeProcessor;
     }
 
-    /**
-     * TODO check if we add new attribute, after adding new attribute send request to elastic to add new mapping
-     * for field.
-     *
-     * @return Attribute
-     */
-    public function afterAfterSave(Attribute $attribute)
+    public function afterAfterSave(Attribute $attribute): Attribute
     {
         $this->attributeProcessor->reindexRow($attribute->getId());
 
@@ -41,10 +35,8 @@ class UpdateAttributeDataPlugin
 
     /**
      * After deleting attribute we should update all products
-     *
-     * @return Attribute
      */
-    public function afterAfterDeleteCommit(Attribute $attribute, Attribute $result)
+    public function afterAfterDeleteCommit(Attribute $attribute, Attribute $result): Attribute
     {
         $this->attributeProcessor->reindexRow($attribute->getId());
         $this->productProcessor->markIndexerAsInvalid();
