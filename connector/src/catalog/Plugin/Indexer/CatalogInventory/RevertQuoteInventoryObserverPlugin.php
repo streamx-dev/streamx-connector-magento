@@ -27,10 +27,8 @@ class RevertQuoteInventoryObserverPlugin
 
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     *
-     * @return void
      */
-    public function afterExecute(RevertQuoteInventoryObserver $subject)
+    public function afterExecute(RevertQuoteInventoryObserver $subject): void
     {
         $products = $this->productsForReindex->getProducts();
 

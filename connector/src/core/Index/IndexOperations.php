@@ -251,20 +251,15 @@ class IndexOperations implements IndexOperationInterface
         return $this->indicesConfiguration;
     }
 
-    /**
-     * @return ClientInterface
-     */
     private function resolveClient(int $storeId): ClientInterface
     {
         return $this->clientResolver->getClient($storeId);
     }
 
     /**
-     * @param $storeId
-     *
      * @throws ConnectionUnhealthyException
      */
-    private function checkEsCondition($storeId)
+    private function checkEsCondition(int $storeId)
     {
         $clusterHealth = $this->resolveClient($storeId)->getClustersHealth();
         $this->checkClustersHealth($clusterHealth);
@@ -297,10 +292,9 @@ class IndexOperations implements IndexOperationInterface
      *
      * @param $storeId
      *
-     * @return void
      * @throws ConnectionUnhealthyException
      */
-    private function checkMaxBulkQueueRequirement(array $clusterHealth, $storeId)
+    private function checkMaxBulkQueueRequirement(array $clusterHealth, $storeId): void
     {
         if ($this->optimizationSettings->checkMaxBulkQueueRequirement()) {
             $masterMaxQueueSize = $this->resolveClient($storeId)->getMasterMaxQueueSize();

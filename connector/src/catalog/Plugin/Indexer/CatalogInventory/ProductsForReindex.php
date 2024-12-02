@@ -9,10 +9,7 @@ class ProductsForReindex
      */
     private $productsForReindex = [];
 
-    /**
-     * @return void
-     */
-    public function setProducts(array $items)
+    public function setProducts(array $items): void
     {
         $this->productsForReindex = $items;
     }
@@ -22,10 +19,7 @@ class ProductsForReindex
         return $this->productsForReindex;
     }
 
-    /**
-     * @return void
-     */
-    public function clear()
+    public function clear(): void
     {
         $this->productsForReindex = [];
     }

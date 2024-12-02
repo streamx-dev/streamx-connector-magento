@@ -26,10 +26,8 @@ class ProductType implements ArrayInterface
 
     /**
      * @inheritDoc
-     *
-     * @return array
      */
-    public function toOptionArray()
+    public function toOptionArray(): array
     {
         $options = [];
 

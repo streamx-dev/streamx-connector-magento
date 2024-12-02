@@ -31,9 +31,6 @@ class ViewPlugin
         return $result;
     }
 
-    /**
-     * @return bool
-     */
     private function isStreamxProductIndexer(ViewInterface $subject): bool
     {
         return ProductProcessor::INDEXER_ID === $subject->getId();

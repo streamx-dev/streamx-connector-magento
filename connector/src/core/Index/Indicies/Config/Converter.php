@@ -28,10 +28,8 @@ class Converter implements ConverterInterface
 
     /**
      * @param \DOMDocument $source
-     *
-     * @return array
      */
-    public function convert($source)
+    public function convert($source): array
     {
         $indices = [];
 
