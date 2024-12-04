@@ -5,15 +5,15 @@ set -e # exit on 1st error
 # - streamx-ingestion-php repository cloned as sibling of streamx-connector-magento in your filesystem
 # - Composer authentication to download Magento images is configured - see README.md
 
-### FRESH RUN:
-# If you already have a Magento instance configured - to remove everything, execute:
-# cd magento
-# bin/removeall
-# cd ..
-# rm -rf magento
+## Remove previous instance, if exists
+if [ -d "magento" ]; then
+    cd magento
+    bin/removeall
+    cd ..
+    rm -rf magento
+fi
 
 ### Prepare directory for magento installation
-rm -rf magento
 mkdir magento
 cd magento
 
@@ -30,6 +30,9 @@ sed -i '' 's|--max_allowed_packet|--innodb-buffer-pool-size=512M --max_allowed_p
 ### To avoid conflicts with StreamX, replace known ports that are used by both StreamX and Magento by default:
 # 8080: ingestion port in StreamX and phpmyadmin port in Magento
 sed -i '' 's/8080:80/8090:80/g' compose.dev.yaml
+
+### Enable gathering code coverage
+echo -e "\nXDEBUG_MODE=coverage" >> env/phpfpm.env
 
 ### Install the magento docker machinery
 bin/setup magento.test
@@ -67,7 +70,8 @@ bin/composer config repositories.streamx-connector path app/code/StreamX/Connect
 bin/composer require \
   "streamx/ingestion-client" \
   "streamx/magento-connector" \
-  "markshust/magento2-module-disabletwofactorauth"
+  "markshust/magento2-module-disabletwofactorauth" \
+  "ext-xdebug"
 
 # Enable all modules
 bin/magento module:enable --all
