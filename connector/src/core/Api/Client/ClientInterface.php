@@ -9,8 +9,6 @@ interface ClientInterface {
 
     public function changeRefreshInterval(string $indexName, /* int|string */ $value): void;
 
-    public function changeNumberOfReplicas(string $indexName, int $value): void;
-
     public function createIndex(string $indexName, array $indexSettings): void;
 
     /**

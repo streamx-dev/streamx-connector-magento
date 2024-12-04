@@ -30,8 +30,6 @@
             <optimization_settings>
                 <cluster_health>0</cluster_health>
                 <max_bulk_queue_requirement>0</max_bulk_queue_requirement>
-                <number_of_replicas>1</number_of_replicas>
-                <number_of_replicas_value>1</number_of_replicas_value>
                 <refresh_interval>1</refresh_interval>
                 <refresh_interval_value>1</refresh_interval_value>
             </optimization_settings>

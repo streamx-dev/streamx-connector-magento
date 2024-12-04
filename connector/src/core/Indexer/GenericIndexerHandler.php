@@ -18,45 +18,17 @@ use Traversable;
 
 class GenericIndexerHandler
 {
-    /**
-     * @var Batch
-     */
-    private $batch;
-
-    /**
-     * @var IndexOperationInterface
-     */
-    private $indexOperations;
-
-    /**
-     * @var IndexerRegistry
-     */
-    private $indexerRegistry;
-
-    /**
-     * @var string
-     */
-    private $typeName;
-
-    /**
-     * @var string
-     */
-    private $indexIdentifier;
-
-    /**
-     * @var IndexerLogger
-     */
-    private $indexerLogger;
-
+    private Batch $batch;
+    private IndexOperationInterface $indexOperations;
+    private IndexerRegistry $indexerRegistry;
+    private string $typeName;
+    private string $indexIdentifier;
+    private IndexerLogger $indexerLogger;
     /**
      * @var int|string
      */
     private $transactionKey;
-
-    /**
-     * @var BulkLoggerInterface
-     */
-    private $bulkLogger;
+    private BulkLoggerInterface $bulkLogger;
 
     public function __construct(
         BulkLoggerInterface $bulkLogger,
@@ -215,12 +187,7 @@ class GenericIndexerHandler
         }
     }
 
-    /**
-     * Get Index
-     *
-     * @return IndexInterface
-     */
-    private function getIndex(StoreInterface $store)
+    private function getIndex(StoreInterface $store): IndexInterface
     {
         try {
             $index = $this->indexOperations->getIndexByName($this->indexIdentifier, $store);

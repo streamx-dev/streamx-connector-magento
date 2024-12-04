@@ -116,10 +116,6 @@ class Client implements ClientInterface {
         $this->logger->info("SUPPRESSING:: changing refresh interval of $indexName to $value");
     }
 
-    public function changeNumberOfReplicas(string $indexName, int $value): void {
-        $this->logger->info("SUPPRESSING:: changing number of replicas of $indexName to $value");
-    }
-
     public function createIndex(string $indexName, array $indexSettings): void {
         $this->logger->info("SUPPRESSING:: creation of an index with name $indexName and data: " . json_encode($indexSettings));
     }
