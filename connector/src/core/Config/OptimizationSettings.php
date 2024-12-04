@@ -28,16 +28,6 @@ class OptimizationSettings
         return (bool) $this->getConfigParam('max_bulk_queue_requirement');
     }
 
-    public function changeNumberOfReplicas(): bool
-    {
-        return (bool) $this->getConfigParam('number_of_replicas');
-    }
-
-    public function getDefaultNumberOfReplicas(): string
-    {
-        return $this->getConfigParam('number_of_replicas_value');
-    }
-
     public function changeRefreshInterval(): bool
     {
         return (bool) $this->getConfigParam('refresh_interval');
