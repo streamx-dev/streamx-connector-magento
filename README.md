@@ -151,3 +151,21 @@ bin/magento indexer:reindex
 # change mode of an indexer
 bin/magento indexer:set-mode schedule|realtime index_identifier
 ```
+
+## Troubleshooting REST endpoints
+ - make sure your endpoint relative path always starts with /V1/...
+ - endpoints are mounted at base url https://magento.test/rest/all/V1/...
+ - example endpoint that should be available out of the box: https://magento.test/rest/all/V1/directory/currency
+ - review https://magento.test/rest/all/schema for any errors or additional information
+
+## Measuring the Connector's code coverage on a running Magento PHP server
+ - start code coverage measurement: PUT https://magento.test/rest/all/V1/coverage/start
+ - perform actions on the UI or in database
+ - retrieve collected code coverage: GET https://magento.test/rest/all/V1/coverage/get
+ - TODO:
+     Xdebug's code coverage data is not persistent across requests.
+     Each PHP request runs in isolation, and Xdebug's coverage data is cleared at the end of each request.
+     When you call xdebug_start_code_coverage() at the beginning of the day and xdebug_get_code_coverage() later,
+      they only operate on the current request's lifecycle, not the cumulative execution across multiple requests.
+     To fix this and collect cumulative code coverage data across a day (or any time period),
+      you need to implement a mechanism to persist the coverage data between requests.

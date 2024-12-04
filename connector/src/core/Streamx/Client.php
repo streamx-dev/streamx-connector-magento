@@ -58,7 +58,9 @@ class Client implements ClientInterface {
         $payloadData = [];
         $payloadData['id'] = $data['sku'];
         $payloadData['name'] = $data['name'];
-        $payloadData['urlSafeName'] = $data['url_path'];
+        if (isset($data['url_path'])) {
+            $payloadData['urlSafeName'] = $data['url_path'];
+        }
 
         // Images
         $baseImageUrl = $this->baseUrl . "media/catalog/product";
