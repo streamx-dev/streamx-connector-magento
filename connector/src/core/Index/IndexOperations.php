@@ -21,49 +21,16 @@ class IndexOperations implements IndexOperationInterface
 {
     const GREEN_HEALTH_STATUS = 'green';
 
-    const NUMBER_OF_REPLICAS_DURING_INDEXING = 0;
-
     const REFRESH_INTERVAL_DURING_INDEXING = -1;
 
-    /**
-     * @var ClientResolver
-     */
-    private $clientResolver;
-
-    /**
-     * @var IndexFactory
-     */
-    private $indexFactory;
-
-    /**
-     * @var BulkResponseFactory
-     */
-    private $bulkResponseFactory;
-
-    /**
-     * @var BulkRequestFactory
-     */
-    private $bulkRequestFactory;
-
-    /**
-     * @var IndexSettings
-     */
-    private $indexSettings;
-
-    /**
-     * @var array
-     */
-    private $indicesConfiguration;
-
-    /**
-     * @var array
-     */
-    private $indicesByIdentifier;
-
-    /**
-     * @var OptimizationSettings
-     */
-    private $optimizationSettings;
+    private ClientResolver $clientResolver;
+    private IndexFactory $indexFactory;
+    private BulkResponseFactory $bulkResponseFactory;
+    private BulkRequestFactory $bulkRequestFactory;
+    private IndexSettings $indexSettings;
+    private ?array $indicesConfiguration = null;
+    private ?array $indicesByIdentifier = null;
+    private OptimizationSettings $optimizationSettings;
 
     public function __construct(
         ClientResolver $clientResolver,
@@ -313,13 +280,6 @@ class IndexOperations implements IndexOperationInterface
      */
     public function optimizeEsIndexing(int $storeId, string $indexName): void
     {
-        if ($this->optimizationSettings->changeNumberOfReplicas()) {
-            $this->resolveClient($storeId)->changeNumberOfReplicas(
-                $indexName,
-                self::NUMBER_OF_REPLICAS_DURING_INDEXING
-            );
-        }
-
         if ($this->optimizationSettings->changeRefreshInterval()) {
             $this->resolveClient($storeId)->changeRefreshInterval(
                 $indexName,
@@ -333,11 +293,6 @@ class IndexOperations implements IndexOperationInterface
      */
     public function cleanAfterOptimizeEsIndexing(int $storeId, string $indexName): void
     {
-        if ($this->optimizationSettings->changeNumberOfReplicas()) {
-            $numberOfReplicas = $this->optimizationSettings->getDefaultNumberOfReplicas();
-            $this->resolveClient($storeId)->changeNumberOfReplicas($indexName, $numberOfReplicas);
-        }
-
         if ($this->optimizationSettings->changeRefreshInterval()) {
             $refreshInterval = $this->optimizationSettings->getDefaultRefreshInterval();
             $this->resolveClient($storeId)->changeRefreshInterval($indexName, $refreshInterval);
