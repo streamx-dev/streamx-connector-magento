@@ -57,7 +57,7 @@ class IndexOperationsTest extends TestCase
 
     /** @var array[][]  */
     private $indicesXmlConfiguration  = [
-        'streamx' => [
+        IndexSettings::INDEX_NAME_PREFIX => [
             'types' => []
         ]
     ];
@@ -109,7 +109,7 @@ class IndexOperationsTest extends TestCase
 
     public function testGetExistingIndex()
     {
-        $name = 'streamx_1';
+        $name = IndexSettings::INDEX_NAME_PREFIX;
 
         $indexMock = new Index(
             $name,
@@ -129,7 +129,7 @@ class IndexOperationsTest extends TestCase
         $this->clientResolverMock->method('getClient')->with(1)->willReturn($this->clientMock);
         $this->storeMock->method('getId')->willReturn(1);
 
-        $index = $this->indexOperations->getIndexByName('streamx', $this->storeMock);
+        $index = $this->indexOperations->getIndex($this->storeMock);
         $this->assertEquals($indexMock, $index);
     }
 
@@ -137,7 +137,7 @@ class IndexOperationsTest extends TestCase
     {
         $this->storeMock->method('getId')->willReturn(1);
 
-        $name = 'streamx_1';
+        $name = IndexSettings::INDEX_NAME_PREFIX;
 
         $indexMock = new Index(
             $name,
@@ -156,7 +156,7 @@ class IndexOperationsTest extends TestCase
         $this->esIndexSettingsMock->method('createIndexName')->willReturn($name);
         $this->clientResolverMock->method('getClient')->with(1)->willReturn($this->clientMock);
 
-        $index = $this->indexOperations->createIndex('streamx', $this->storeMock);
+        $index = $this->indexOperations->createIndex($this->storeMock);
         $this->assertEquals($indexMock, $index);
     }
 }

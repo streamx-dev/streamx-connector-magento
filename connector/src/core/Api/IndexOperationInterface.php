@@ -10,7 +10,7 @@ interface IndexOperationInterface
 
     public function deleteByQuery(int $storeId, array $params): void;
 
-    public function getIndexByName(string $indexIdentifier, StoreInterface $store): IndexInterface;
+    public function getIndex(StoreInterface $store): IndexInterface;
 
     public function createBulk(): BulkRequestInterface;
 
