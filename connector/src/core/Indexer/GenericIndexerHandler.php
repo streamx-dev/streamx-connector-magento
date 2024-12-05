@@ -145,25 +145,21 @@ class GenericIndexerHandler
     public function cleanUpByTransactionKey(StoreInterface $store, array $docIds = null): void
     {
         try {
-            $indexAlias = $this->indexOperations->getIndexAlias($store);
+            $index = $this->indexOperations->getIndexByName($this->indexIdentifier, $store);
+            $transactionKeyQuery = ['must_not' => ['term' => ['tsk' => $this->transactionKey]]];
+            $query = ['query' => ['bool' => $transactionKeyQuery]];
 
-            if ($this->indexOperations->indexExists($store->getId(), $indexAlias)) {
-                $index = $this->indexOperations->getIndexByName($this->indexIdentifier, $store);
-                $transactionKeyQuery = ['must_not' => ['term' => ['tsk' => $this->transactionKey]]];
-                $query = ['query' => ['bool' => $transactionKeyQuery]];
-
-                if ($docIds) {
-                    $query['query']['bool']['must']['terms'] = ['_id' => array_values($docIds)];
-                }
-
-                $query = [
-                    'index' => $index->getName(),
-                    'type' => $this->typeName,
-                    'body' => $query,
-                ];
-
-                $this->indexOperations->deleteByQuery($store->getId(), $query);
+            if ($docIds) {
+                $query['query']['bool']['must']['terms'] = ['_id' => array_values($docIds)];
             }
+
+            $query = [
+                'index' => $index->getName(),
+                'type' => $this->typeName,
+                'body' => $query,
+            ];
+
+            $this->indexOperations->deleteByQuery($store->getId(), $query);
         } catch (ConnectionDisabledException $exception) {
             // do nothing, ES indexer disabled in configuration
         }
