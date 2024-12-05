@@ -8,22 +8,25 @@ use Magento\Store\Model\StoreManagerInterface;
 use Psr\Log\LoggerInterface;
 use Streamx\Clients\Ingestion\Exceptions\StreamxClientException;
 use Streamx\Clients\Ingestion\Publisher\Publisher;
-use function date;
 
 class Client implements ClientInterface {
 
     private Publisher $publisher;
     private LoggerInterface $logger;
+    private ?int $storeId;
     private string $baseUrl;
 
     public function __construct(StoreManagerInterface $storeManager, Publisher $publisher, LoggerInterface $logger) {
         $this->logger = $logger;
         $this->publisher = $publisher;
         try {
-            $this->baseUrl = $storeManager->getStore()->getBaseUrl();
+            $store = $storeManager->getStore();
+            $this->storeId = (int) $store->getId();
+            $this->baseUrl = $store->getBaseUrl();
         } catch (NoSuchEntityException $e) {
-            $this->baseUrl = "";
-            $this->logger->error("Cannot get base url" . $e->getMessage());
+            $this->storeId = null;
+            $this->baseUrl = '';
+            $this->logger->error("Cannot get store id and base url" . $e->getMessage());
         }
     }
 
@@ -41,7 +44,8 @@ class Client implements ClientInterface {
                 $payloadData = $this->mapProductData($data);
                 $this->logger->info("Data update requested");
                 try {
-                    $this->publishToStreamX($payloadData); // TODO make sure this is async
+                    $key = 'product_' . $payloadData['id'];
+                    $this->publishToStreamX($key, json_encode($payloadData)); // TODO make sure this is async
                     $this->logger->info("Data update processed");
                 } catch (StreamxClientException $e) {
                     $this->logger->error('Data update failed: ' . $e->getMessage(), ['exception' => $e]);
@@ -94,19 +98,13 @@ class Client implements ClientInterface {
     /**
      * @throws StreamxClientException
      */
-    private function publishToStreamX(array $productData) {
-        $productId = $productData['id'];
-        $this->logger->info("Publishing product $productId");
-
+    private function publishToStreamX(string $key, string $payload) {
+        $this->logger->info("Publishing product $key");
         $data = [
             'content' => [
-                'bytes' => sprintf("Admin has edited a Product at %s. Edited state:\n%s",
-                    date("Y-m-d H:i:s"),
-                    json_encode($productData)
-                )
+                'bytes' => $payload
             ]
         ];
-        $key = "product_$productId";
         $this->publisher->publish($key, $data);
     }
 

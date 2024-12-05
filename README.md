@@ -150,6 +150,10 @@ bin/magento indexer:reindex
 
 # change mode of an indexer
 bin/magento indexer:set-mode schedule|realtime index_identifier
+
+# review logs and errors of the Magento container (typically named magento-phpfpm-1)
+cat /var/www/html/var/log/system.log
+cat /var/www/html/var/log/exception.log
 ```
 
 ## Troubleshooting REST endpoints
