@@ -25,8 +25,4 @@ interface IndexOperationInterface
     public function createBulk(): BulkRequestInterface;
 
     public function getBatchIndexingSize(): int;
-
-    public function optimizeEsIndexing(int $storeId, string $indexName): void;
-
-    public function cleanAfterOptimizeEsIndexing(int $storeId, string $indexName): void;
 }
