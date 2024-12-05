@@ -130,39 +130,6 @@ class IndexOperations implements IndexOperationInterface
         $this->resolveClient($storeId)->refreshIndex($index->getName());
     }
 
-    public function switchIndexer($storeId, string $indexName, string $indexAlias): void
-    {
-        $aliasActions = [
-            [
-                'add' => [
-                    'index' => $indexName,
-                    'alias' => $indexAlias,
-                ]
-            ]
-        ];
-
-        $deletedIndices = [];
-        $oldIndices = $this->resolveClient($storeId)->getIndicesNameByAlias($indexAlias);
-
-        foreach ($oldIndices as $oldIndexName) {
-            if ($oldIndexName != $indexName) {
-                $deletedIndices[] = $oldIndexName;
-                $aliasActions[]   = [
-                    'remove' => [
-                        'index' => $oldIndexName,
-                        'alias' => $indexAlias,
-                    ]
-                ];
-            }
-        }
-
-        $this->resolveClient($storeId)->updateAliases($aliasActions);
-
-        foreach ($deletedIndices as $deletedIndex) {
-            $this->resolveClient($storeId)->deleteIndex($deletedIndex);
-        }
-    }
-
     /**
      * @param $indexIdentifier
      *
