@@ -141,6 +141,7 @@ class IndexOperations implements IndexOperationInterface
     {
         if ($this->optimizationSettings->checkClusterHealth()) {
             if ($clusterHealth[0]['status'] !== self::GREEN_HEALTH_STATUS) {
+                // TODO: rewrite to StreamX-specific error message
                 $message = 'Can not execute bulk. Cluster health status is ' . $clusterHealth[0]['status'];
                 throw new ConnectionUnhealthyException(__($message));
             }

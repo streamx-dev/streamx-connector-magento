@@ -2,7 +2,6 @@
 
 namespace StreamX\ConnectorCore\Api\Client;
 
-// TODO remove methods not required by StreamX indexer
 interface ClientInterface {
 
     public function bulk(array $bulkParams): array;
