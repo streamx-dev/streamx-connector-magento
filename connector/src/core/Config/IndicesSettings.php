@@ -18,11 +18,6 @@ class IndicesSettings
         $this->scopeConfig = $scopeConfig;
     }
 
-    public function addIdentifierToDefaultStoreView(): bool
-    {
-        return (bool) $this->getConfigParam('add_identifier_to_default');
-    }
-
     public function getBatchIndexingSize(): int
     {
         return (int) $this->getConfigParam('batch_indexing_size');
