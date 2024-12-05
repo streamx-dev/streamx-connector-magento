@@ -130,7 +130,6 @@ class IndexOperationsTest extends TestCase
         $this->esIndexSettingsMock->method('getIndicesConfig')->willReturn($this->indicesXmlConfiguration);
         $this->esIndexSettingsMock->method('getIndexAlias')->willReturn($alias);
         $this->esIndexSettingsMock->method('createIndexName')->willReturn($name);
-        $this->esIndexSettingsMock->method('getEsConfig')->willReturn([]);
         $this->clientResolverMock->method('getClient')->with(1)->willReturn($this->clientMock);
         $this->storeMock->method('getId')->willReturn(1);
 
@@ -164,7 +163,6 @@ class IndexOperationsTest extends TestCase
         $this->esIndexSettingsMock->method('getIndicesConfig')->willReturn($this->indicesXmlConfiguration);
         $this->esIndexSettingsMock->method('getIndexAlias')->willReturn($alias);
         $this->esIndexSettingsMock->method('createIndexName')->willReturn($name);
-        $this->esIndexSettingsMock->method('getEsConfig')->willReturn([]);
         $this->clientResolverMock->method('getClient')->with(1)->willReturn($this->clientMock);
 
         $index = $this->indexOperations->createIndex('streamx', $this->storeMock);

@@ -83,14 +83,7 @@ class IndexOperations implements IndexOperationInterface
 
     public function createIndex(string $indexIdentifier, StoreInterface $store): IndexInterface
     {
-        $index = $this->initIndex($indexIdentifier, $store, false);
-
-        $this->resolveClient($store->getId())->createIndex(
-            $index->getName(),
-            $this->indexSettings->getEsConfig()
-        );
-
-        return $index;
+        return $this->initIndex($indexIdentifier, $store, false);
     }
 
     /**

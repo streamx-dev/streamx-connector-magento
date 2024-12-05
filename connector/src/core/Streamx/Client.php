@@ -108,12 +108,6 @@ class Client implements ClientInterface {
         $this->publisher->publish($key, $data);
     }
 
-    // TODO: the below methods are from Elastic Search based indexer. Probably never needed by StreamX Indexer
-
-    public function createIndex(string $indexName, array $indexSettings): void {
-        $this->logger->info("SUPPRESSING:: creation of an index with name $indexName and data: " . json_encode($indexSettings));
-    }
-
     public function getClustersHealth(): array {
         $this->logger->info("SUPPRESSING:: Checking cluster health");
         return [['status' => 'green']];
