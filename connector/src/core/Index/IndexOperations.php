@@ -10,8 +10,6 @@ use StreamX\ConnectorCore\Api\BulkRequestInterfaceFactory as BulkRequestFactory;
 use StreamX\ConnectorCore\Api\IndexInterface;
 use StreamX\ConnectorCore\Api\IndexInterfaceFactory as IndexFactory;
 use StreamX\ConnectorCore\Api\IndexOperationInterface;
-use StreamX\ConnectorCore\Api\Index\TypeInterface;
-use StreamX\ConnectorCore\Api\MappingInterface;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
 use StreamX\ConnectorCore\Streamx\ClientResolver;
 use StreamX\ConnectorCore\Exception\ConnectionUnhealthyException;
@@ -91,19 +89,6 @@ class IndexOperations implements IndexOperationInterface
             $index->getName(),
             $this->indexSettings->getEsConfig()
         );
-
-        /** @var TypeInterface $type */
-        foreach ($index->getTypes() as $type) {
-            $mapping = $type->getMapping();
-
-            if ($mapping instanceof MappingInterface) {
-                $this->resolveClient($store->getId())->putMapping(
-                    $index->getName(),
-                    $type->getName(),
-                    $mapping->getMappingProperties()
-                );
-            }
-        }
 
         return $index;
     }
