@@ -2,6 +2,7 @@
 
 namespace StreamX\ConnectorCore\Console\Command;
 
+use StreamX\ConnectorCore\Index\IndexSettings;
 use StreamX\ConnectorCore\Indexer\StoreManager;
 use StreamX\ConnectorCore\Api\IndexOperationInterface;
 use Magento\Framework\App\ObjectManagerFactory;
@@ -23,7 +24,7 @@ class RebuildEsIndexCommand extends AbstractIndexerCommand
 
     const INPUT_ALL_STORES = 'all';
 
-    const INDEX_IDENTIFIER = 'streamx_storefront_catalog';
+    const INDEX_IDENTIFIER = IndexSettings::INDEX_NAME_PREFIX;
 
     /**
      * @var IndexOperationInterface

@@ -9,6 +9,7 @@ use StreamX\ConnectorCore\Api\Indexer\TransactionKeyInterface;
 use StreamX\ConnectorCore\Api\IndexOperationInterface;
 use StreamX\ConnectorCore\Exception\ConnectionDisabledException;
 use StreamX\ConnectorCore\Exception\ConnectionUnhealthyException;
+use StreamX\ConnectorCore\Index\IndexSettings;
 use StreamX\ConnectorCore\Logger\IndexerLogger;
 use Exception;
 use Magento\Framework\Indexer\SaveHandler\Batch;
@@ -34,14 +35,13 @@ class GenericIndexerHandler
         IndexerLogger $indexerLogger,
         Batch $batch,
         TransactionKeyInterface $transactionKey,
-        string $indexIdentifier,
         string $typeName
     ) {
         $this->bulkLogger = $bulkLogger;
         $this->batch = $batch;
         $this->indexOperations = $indexOperationProvider;
         $this->typeName = $typeName;
-        $this->indexIdentifier = $indexIdentifier;
+        $this->indexIdentifier = IndexSettings::INDEX_NAME_PREFIX; // TODO inline
         $this->indexerLogger = $indexerLogger;
         $this->transactionKey = $transactionKey->load();
     }
