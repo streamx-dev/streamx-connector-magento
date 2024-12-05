@@ -8,10 +8,7 @@ class OptimizationSettings
 {
     const OPTIMIZATION_SETTINGS_CONFIG_XML_PREFIX = 'streamx_indexer_settings/optimization_settings';
 
-    /**
-     * @var ScopeConfigInterface
-     */
-    private $scopeConfig;
+    private ScopeConfigInterface $scopeConfig;
 
     public function __construct(ScopeConfigInterface $scopeConfig)
     {
@@ -26,16 +23,6 @@ class OptimizationSettings
     public function checkMaxBulkQueueRequirement(): bool
     {
         return (bool) $this->getConfigParam('max_bulk_queue_requirement');
-    }
-
-    public function changeRefreshInterval(): bool
-    {
-        return (bool) $this->getConfigParam('refresh_interval');
-    }
-
-    public function getDefaultRefreshInterval(): string
-    {
-        return $this->getConfigParam('refresh_interval_value') . 's';
     }
 
     private function getConfigParam(string $configField): ?string

@@ -110,10 +110,6 @@ class Client implements ClientInterface {
 
     // TODO: the below methods are from Elastic Search based indexer. Probably never needed by StreamX Indexer
 
-    public function changeRefreshInterval(string $indexName, $value): void {
-        $this->logger->info("SUPPRESSING:: changing refresh interval of $indexName to $value");
-    }
-
     public function createIndex(string $indexName, array $indexSettings): void {
         $this->logger->info("SUPPRESSING:: creation of an index with name $indexName and data: " . json_encode($indexSettings));
     }
