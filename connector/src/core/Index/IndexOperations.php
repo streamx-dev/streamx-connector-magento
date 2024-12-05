@@ -25,7 +25,7 @@ class IndexOperations implements IndexOperationInterface
     private BulkRequestFactory $bulkRequestFactory;
     private IndexSettings $indexSettings;
     private ?array $indicesConfiguration = null;
-    private ?array $indicesByIdentifier = null;
+    private ?array $indicesByName = null;
     private OptimizationSettings $optimizationSettings;
 
     public function __construct(
@@ -67,18 +67,13 @@ class IndexOperations implements IndexOperationInterface
 
     public function getIndexByName(string $indexIdentifier, StoreInterface $store): IndexInterface
     {
-        $indexAlias = $this->getIndexAlias($store);
+        $indexName = $this->indexSettings->createIndexName($store);
 
-        if (!isset($this->indicesByIdentifier[$indexAlias])) {
+        if (!isset($this->indicesByName[$indexName])) {
             $this->initIndex($indexIdentifier, $store, true);
         }
 
-        return $this->indicesByIdentifier[$indexAlias];
-    }
-
-    public function getIndexAlias(StoreInterface $store): string
-    {
-        return $this->indexSettings->getIndexAlias($store);
+        return $this->indicesByName[$indexName];
     }
 
     public function createIndex(string $indexIdentifier, StoreInterface $store): IndexInterface
@@ -86,12 +81,7 @@ class IndexOperations implements IndexOperationInterface
         return $this->initIndex($indexIdentifier, $store, false);
     }
 
-    /**
-     * @param $indexIdentifier
-     *
-     * @return Index
-     */
-    private function initIndex($indexIdentifier, StoreInterface $store, bool $existingIndex)
+    private function initIndex(string $indexIdentifier, StoreInterface $store, bool $existingIndex): Index
     {
         $this->getIndicesConfiguration();
 
@@ -99,25 +89,18 @@ class IndexOperations implements IndexOperationInterface
             throw new \LogicException('No configuration found');
         }
 
-        $indexAlias = $this->getIndexAlias($store);
         $indexName = $this->indexSettings->createIndexName($store);
-
-        if ($existingIndex) {
-            $indexName = $indexAlias;
-        }
-
         $config = $this->indicesConfiguration[$indexIdentifier];
 
         /** @var Index $index */
         $index = $this->indexFactory->create(
             [
                 'name' => $indexName,
-                'alias' => $indexAlias,
                 'types' => $config['types'],
             ]
         );
 
-        return $this->indicesByIdentifier[$indexAlias] = $index;
+        return $this->indicesByName[$indexName] = $index;
     }
 
     public function createBulk(): BulkRequestInterface
@@ -178,11 +161,9 @@ class IndexOperations implements IndexOperationInterface
      * Check if pending tasks + batch indexer size (StreamxIndexer indices setting)
      * are lower than max bulk queue size master node
      *
-     * @param $storeId
-     *
      * @throws ConnectionUnhealthyException
      */
-    private function checkMaxBulkQueueRequirement(array $clusterHealth, $storeId): void
+    private function checkMaxBulkQueueRequirement(array $clusterHealth, int $storeId): void
     {
         if ($this->optimizationSettings->checkMaxBulkQueueRequirement()) {
             $masterMaxQueueSize = $this->resolveClient($storeId)->getMasterMaxQueueSize();

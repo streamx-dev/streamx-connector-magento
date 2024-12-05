@@ -106,6 +106,7 @@ class EditedProductStreamxPublishTest extends TestCase {
         while (time() - $startTime < self::TIMEOUT_SECONDS) {
             $response = @file_get_contents($url);
             if ($response !== false) {
+                echo "Published page content: $response\n";
                 $this->assertStringContainsString($contentSubstring, $response);
                 return;
             }

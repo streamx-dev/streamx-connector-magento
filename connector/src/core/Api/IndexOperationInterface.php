@@ -12,8 +12,6 @@ interface IndexOperationInterface
 
     public function getIndexByName(string $indexIdentifier, StoreInterface $store): IndexInterface;
 
-    public function getIndexAlias(StoreInterface $store): string;
-
     public function createBulk(): BulkRequestInterface;
 
     public function getBatchIndexingSize(): int;

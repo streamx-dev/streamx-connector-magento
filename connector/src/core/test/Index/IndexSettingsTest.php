@@ -71,7 +71,7 @@ class IndexSettingsTest extends TestCase
      */
     public function testGetIndexAlias(string $storeCode)
     {
-        $indexPrefix = 'streamx';
+        $indexPrefix = 'streamx_storefront_catalog';
         $this->indicesSettingsMock->method('addIdentifierToDefaultStoreView')->willReturn(true);
         $this->indicesSettingsMock->method('getIndexNamePrefix')->willReturn($indexPrefix);
         $this->indicesSettingsMock->method('getIndexIdentifier')->willReturn('code');
@@ -79,9 +79,9 @@ class IndexSettingsTest extends TestCase
 
         $expectedAlias = strtolower(sprintf('%s_%s', $indexPrefix, $storeCode));
 
-        $this->assertEquals(
+        $this->assertStringStartsWith(
             $expectedAlias,
-            $this->esIndexSettings->getIndexAlias($this->storeMock)
+            $this->esIndexSettings->createIndexName($this->storeMock)
         );
     }
 
