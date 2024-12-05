@@ -4,7 +4,6 @@ namespace StreamX\ConnectorCore\Console\Command;
 
 use StreamX\ConnectorCore\Indexer\StoreManager;
 use StreamX\ConnectorCore\Api\IndexOperationInterface;
-use StreamX\ConnectorCore\Model\IndexerRegistry;
 use Magento\Framework\App\ObjectManagerFactory;
 use Magento\Framework\Console\Cli;
 use Magento\Framework\Event\ManagerInterface;
@@ -39,11 +38,6 @@ class RebuildEsIndexCommand extends AbstractIndexerCommand
      * @var StoreManagerInterface
      */
     private $storeManager;
-
-    /**
-     * @var IndexerRegistry
-     */
-    private $indexerRegistry;
 
     /**
      * @var array
@@ -205,7 +199,6 @@ class RebuildEsIndexCommand extends AbstractIndexerCommand
     {
         $this->getIndexerStoreManager()->override([$store]);
         $index = $this->getIndexOperations()->createIndex(self::INDEX_IDENTIFIER, $store);
-        $this->getIndexerRegistry()->setFullReIndexationIsInProgress();
 
         $returnValue = Cli::RETURN_FAILURE;
 
@@ -226,8 +219,6 @@ class RebuildEsIndexCommand extends AbstractIndexerCommand
                 $output->writeln("<error>" . $e->getMessage() . "</error>");
             }
         }
-
-        $this->getIndexOperations()->switchIndexer($store->getId(), $index->getName(), $index->getAlias());
 
         $output->writeln(
             sprintf('<info>Index name: %s, index alias: %s</info>', $index->getName(), $index->getAlias())
@@ -286,18 +277,6 @@ class RebuildEsIndexCommand extends AbstractIndexerCommand
         }
 
         return $this->indexerStoreManager;
-    }
-
-    /**
-     * @return IndexerRegistry
-     */
-    private function getIndexerRegistry()
-    {
-        if (null === $this->indexerRegistry) {
-            $this->indexerRegistry = $this->getObjectManager()->get(IndexerRegistry::class);
-        }
-
-        return $this->indexerRegistry;
     }
 
     /**
