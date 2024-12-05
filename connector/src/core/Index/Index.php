@@ -10,10 +10,8 @@ class Index implements IndexInterface
 
     /**
      * Name of the index.
-     *
-     * @var string
      */
-    private $name;
+    private string $name;
 
     /**
      * Index types.
@@ -22,29 +20,12 @@ class Index implements IndexInterface
      */
     private $types;
 
-    /**
-     * @var string
-     */
-    private $alias;
-
     public function __construct(
         string $name,
-        string $alias,
         array $types
     ) {
-        $this->alias = $alias;
         $this->name = $name;
         $this->types = $this->prepareTypes($types);
-    }
-
-    public function isNew(): bool
-    {
-        return $this->alias !== $this->name;
-    }
-
-    public function getAlias(): string
-    {
-        return $this->alias;
     }
 
     /**
@@ -66,14 +47,6 @@ class Index implements IndexInterface
     public function getName(): string
     {
         return $this->name;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getTypes()
-    {
-        return $this->types;
     }
 
     /**

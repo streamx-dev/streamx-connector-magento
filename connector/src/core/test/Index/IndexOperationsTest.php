@@ -109,12 +109,10 @@ class IndexOperationsTest extends TestCase
 
     public function testGetExistingIndex()
     {
-        $alias =  'streamx_1';
         $name = 'streamx_1';
 
         $indexMock = new Index(
             $name,
-            $alias,
             []
         );
 
@@ -122,32 +120,27 @@ class IndexOperationsTest extends TestCase
             ->method('create')
             ->with([
                 'name' => $name,
-                'alias' => $alias,
                 'types' => [],
             ])
             ->willReturn($indexMock);
 
         $this->esIndexSettingsMock->method('getIndicesConfig')->willReturn($this->indicesXmlConfiguration);
-        $this->esIndexSettingsMock->method('getIndexAlias')->willReturn($alias);
         $this->esIndexSettingsMock->method('createIndexName')->willReturn($name);
         $this->clientResolverMock->method('getClient')->with(1)->willReturn($this->clientMock);
         $this->storeMock->method('getId')->willReturn(1);
 
         $index = $this->indexOperations->getIndexByName('streamx', $this->storeMock);
         $this->assertEquals($indexMock, $index);
-        $this->assertEquals($index->isNew(), false);
     }
 
     public function testCreateNewIndex()
     {
         $this->storeMock->method('getId')->willReturn(1);
 
-        $alias =  'streamx_de';
         $name = 'streamx_1';
 
         $indexMock = new Index(
             $name,
-            $alias,
             []
         );
 
@@ -155,18 +148,15 @@ class IndexOperationsTest extends TestCase
             ->method('create')
             ->with([
                 'name' => $name,
-                'alias' => $alias,
                 'types' => [],
             ])
             ->willReturn($indexMock);
 
         $this->esIndexSettingsMock->method('getIndicesConfig')->willReturn($this->indicesXmlConfiguration);
-        $this->esIndexSettingsMock->method('getIndexAlias')->willReturn($alias);
         $this->esIndexSettingsMock->method('createIndexName')->willReturn($name);
         $this->clientResolverMock->method('getClient')->with(1)->willReturn($this->clientMock);
 
         $index = $this->indexOperations->createIndex('streamx', $this->storeMock);
         $this->assertEquals($indexMock, $index);
-        $this->assertEquals($index->isNew(), true);
     }
 }

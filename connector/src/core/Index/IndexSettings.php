@@ -10,12 +10,11 @@ use Magento\Store\Model\StoreManagerInterface;
 
 class IndexSettings
 {
+    private const INDEX_NAME_PREFIX = 'streamx_storefront_catalog';
+
     private StoreManagerInterface $storeManager;
-
     private IndicesConfig $indicesConfig;
-
     private IndicesSettings $configuration;
-
     private DateTimeFactory $dateTimeFactory;
 
     public function __construct(
@@ -42,22 +41,17 @@ class IndexSettings
 
     public function createIndexName(StoreInterface $store): string
     {
-        $name = $this->getIndexAlias($store);
-        $currentDate = $this->dateTimeFactory->create();
-
-        return $name . '_' . $currentDate->getTimestamp();
-    }
-
-    public function getIndexAlias(StoreInterface $store): string
-    {
-        $indexNamePrefix = $this->configuration->getIndexNamePrefix();
+        $indexNamePrefix = self::INDEX_NAME_PREFIX;
         $storeIdentifier = $this->getStoreIdentifier($store);
 
         if ($storeIdentifier) {
             $indexNamePrefix .= '_' . $storeIdentifier;
         }
 
-        return strtolower($indexNamePrefix);
+        $name = strtolower($indexNamePrefix);
+        $currentDate = $this->dateTimeFactory->create();
+
+        return $name . '_' . $currentDate->getTimestamp();
     }
 
     private function getStoreIdentifier(StoreInterface $store): string
