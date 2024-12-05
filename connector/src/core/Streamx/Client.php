@@ -110,10 +110,12 @@ class Client implements ClientInterface {
 
     public function getClustersHealth(): array {
         $this->logger->info("SUPPRESSING:: Checking cluster health");
+        // TODO: implement rest-ingestion service availability check
         return [['status' => 'green']];
     }
 
     public function deleteByQuery(array $params) {
+        // TODO: implement unpublishing
         $this->logger->info("SUPPRESSING:: deleting by query: " . json_encode($params));
     }
 }
