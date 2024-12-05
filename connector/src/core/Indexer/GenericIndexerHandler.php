@@ -90,8 +90,6 @@ class GenericIndexerHandler
                 $this->bulkLogger->log($response);
                 $docs = null;
             }
-
-            $this->indexOperations->refreshIndex($store->getId(), $index);
         } catch (ConnectionDisabledException $exception) {
             // do nothing, ES indexer disabled in configuration
         } catch (ConnectionUnhealthyException $exception) {
@@ -133,8 +131,6 @@ class GenericIndexerHandler
 
                 $docs = null;
             }
-
-            $this->indexOperations->refreshIndex($store->getId(), $index);
         } catch (ConnectionDisabledException $exception) {
             // do nothing, ES indexer disabled in configuration
         } catch (ConnectionUnhealthyException $exception) {

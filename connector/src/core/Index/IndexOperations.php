@@ -125,11 +125,6 @@ class IndexOperations implements IndexOperationInterface
         return $index;
     }
 
-    public function refreshIndex(int $storeId, IndexInterface $index): void
-    {
-        $this->resolveClient($storeId)->refreshIndex($index->getName());
-    }
-
     /**
      * @param $indexIdentifier
      *
