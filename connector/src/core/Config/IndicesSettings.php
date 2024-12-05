@@ -18,11 +18,6 @@ class IndicesSettings
         $this->scopeConfig = $scopeConfig;
     }
 
-    public function getIndexNamePrefix(): string
-    {
-        return (string) $this->getConfigParam('index_name');
-    }
-
     public function addIdentifierToDefaultStoreView(): bool
     {
         return (bool) $this->getConfigParam('add_identifier_to_default');
