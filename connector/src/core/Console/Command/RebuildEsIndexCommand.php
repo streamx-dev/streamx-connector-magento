@@ -24,8 +24,6 @@ class RebuildEsIndexCommand extends AbstractIndexerCommand
 
     const INPUT_ALL_STORES = 'all';
 
-    const INDEX_IDENTIFIER = IndexSettings::INDEX_NAME_PREFIX;
-
     /**
      * @var IndexOperationInterface
      */
@@ -200,7 +198,7 @@ class RebuildEsIndexCommand extends AbstractIndexerCommand
     private function reindexStore(StoreInterface $store, OutputInterface $output): int
     {
         $this->getIndexerStoreManager()->override([$store]);
-        $index = $this->getIndexOperations()->createIndex(self::INDEX_IDENTIFIER, $store);
+        $index = $this->getIndexOperations()->createIndex($store);
 
         $returnValue = Cli::RETURN_FAILURE;
 
