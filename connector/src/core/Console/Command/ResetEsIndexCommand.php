@@ -9,6 +9,7 @@ use Magento\Indexer\Console\Command\AbstractIndexerCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+// TODO removal candidate
 class ResetEsIndexCommand extends AbstractIndexerCommand
 {
     const STREAMX_INDEXER_PREFIX = 'StreamX_';
