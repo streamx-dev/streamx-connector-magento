@@ -124,11 +124,6 @@ class Client implements ClientInterface {
         return 10000;
     }
 
-    public function indexExists(string $indexName): bool {
-        $this->logger->info("SUPPRESSING:: check of an index availability: $indexName");
-        return true;
-    }
-
     public function putMapping(string $indexName, string $type, array $mapping) {
         $requestPayload = [
             'index' => $indexName,

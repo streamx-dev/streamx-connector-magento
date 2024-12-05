@@ -134,8 +134,6 @@ class IndexOperationsTest extends TestCase
         $this->clientResolverMock->method('getClient')->with(1)->willReturn($this->clientMock);
         $this->storeMock->method('getId')->willReturn(1);
 
-        $this->clientMock->method('indexExists')->with($name)->willReturn(true);
-
         $index = $this->indexOperations->getIndexByName('streamx', $this->storeMock);
         $this->assertEquals($indexMock, $index);
         $this->assertEquals($index->isNew(), false);
