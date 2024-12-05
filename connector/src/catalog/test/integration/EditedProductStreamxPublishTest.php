@@ -17,36 +17,38 @@ class EditedProductStreamxPublishTest extends TestCase {
     private const STREAMX_DELIVERY_SERVICE_BASE_URL = "http://localhost:8081";
     private const TIMEOUT_SECONDS = 10;
 
-    private MagentoIndexerOperationsExecutor $indexerOperations;
+    private static MagentoIndexerOperationsExecutor $indexerOperations;
+    private static bool $wasProductIndexerOriginallyInUpdateOnSaveMode;
 
-    protected function setUp(): void {
-        $this->indexerOperations = new MagentoIndexerOperationsExecutor();
+    public static function setUpBeforeClass(): void {
+        self::$indexerOperations = new MagentoIndexerOperationsExecutor();
+
+        // read original mode of the indexer
+        self::$wasProductIndexerOriginallyInUpdateOnSaveMode = str_contains(
+            self::$indexerOperations->executeCommand('show-mode'),
+            MagentoIndexerOperationsExecutor::UPDATE_ON_SAVE_DISPLAY_NAME
+        );
+
+        // change to scheduled if needed
+        if (self::$wasProductIndexerOriginallyInUpdateOnSaveMode) {
+            self::$indexerOperations->setProductIndexerModeToUpdateBySchedule();
+        }
+    }
+
+    public static function tearDownAfterClass(): void {
+        // restore mode of indexer if needed
+        if (self::$wasProductIndexerOriginallyInUpdateOnSaveMode) {
+            self::$indexerOperations->setProductIndexerModeToUpdateOnSave();
+        }
     }
 
     /** @test */
     public function shouldPublishProductEditedDirectlyInDatabaseToStreamx() {
         // given
-        $productSku = '24-MB01';
+        $productId = '1';
         $productNewName = 'Name modified for testing, at ' . date("Y-m-d H:i:s");
 
-        // 1. Get current mode of indexer
-        $wasProductIndexerOriginallyInUpdateOnSaveMode = str_contains(
-            $this->indexerOperations->executeCommand('show-mode'),
-            MagentoIndexerOperationsExecutor::UPDATE_ON_SAVE_DISPLAY_NAME
-        );
-
-        // 2. Change to scheduled if needed
-        if ($wasProductIndexerOriginallyInUpdateOnSaveMode) {
-            $this->indexerOperations->setProductIndexerModeToUpdateBySchedule();
-        }
-
-        // 3. Read current name of the test product
-        $productId = MagentoMySqlQueryExecutor::selectFirstField(<<<EOD
-            SELECT entity_id 
-              FROM catalog_product_entity
-             WHERE sku = '$productSku'
-        EOD);
-
+        // 1. Read current name of the test product
         $entityTypeId = MagentoMySqlQueryExecutor::selectFirstField(<<<EOD
             SELECT entity_type_id
               FROM eav_entity_type
@@ -68,7 +70,7 @@ class EditedProductStreamxPublishTest extends TestCase {
         EOD);
         $this->assertNotEquals($productNewName, $productOldName);
 
-        // 4. Perform direct DB modification of a product
+        // 2. Perform direct DB modification of a product
         MagentoMySqlQueryExecutor::execute(<<<EOD
             UPDATE catalog_product_entity_varchar
                SET value = '$productNewName'
@@ -76,27 +78,26 @@ class EditedProductStreamxPublishTest extends TestCase {
                AND entity_id = $productId
         EOD);
 
-        // 5. Trigger reindexing
-        $this->indexerOperations->executeCommand('reindex');
+        // 3. Trigger reindexing
+        self::$indexerOperations->executeCommand('reindex');
 
-        // 6. Assert product is published to StreamX
+        // 4. Assert product is published to StreamX
         try {
-            $expectedKey = "product_$productSku";
+            $expectedKey = "product_$productId";
             $this->assertPageIsPublished($expectedKey, $productNewName);
         } finally {
-            // 6. Restore product name in DB
+            // 5. Restore product name in DB
             MagentoMySqlQueryExecutor::execute(<<<EOD
                 UPDATE catalog_product_entity_varchar
                    SET value = '$productOldName'
                  WHERE attribute_id = $productNameAttributeId
                    AND entity_id = $productId
             EOD);
-
-            // 7. Restore mode of indexer
-            if ($wasProductIndexerOriginallyInUpdateOnSaveMode) {
-                $this->indexerOperations->setProductIndexerModeToUpdateOnSave();
-            }
         }
+
+        // 5. Additionally, verify if as a result of full reindex made at app start, categories are also published
+        // TODO: set up dedicated test for category indexer, and move this assertion there
+        $this->assertPageIsPublished('category_2', 'Default Category');
     }
 
     private function assertPageIsPublished(string $key, string $contentSubstring) {

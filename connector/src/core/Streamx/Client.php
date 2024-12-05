@@ -14,6 +14,10 @@ class Client implements ClientInterface {
     private Publisher $publisher;
     private LoggerInterface $logger;
     private ?int $storeId;
+
+    // TODO use baseUrl to prepend to image paths, which are retuned as relative paths, like:
+    //  $baseImageUrl = $this->baseUrl . "media/catalog/product";
+    //  $fullImageUrl = $baseImageUrl . $data['image']
     private string $baseUrl;
 
     public function __construct(StoreManagerInterface $storeManager, Publisher $publisher, LoggerInterface $logger) {
@@ -30,69 +34,30 @@ class Client implements ClientInterface {
         }
     }
 
+    // TODO: adjust code that produced the $bulkParams array, to make it in StreamX format (originally it is in ElasticSearch format)
     public function bulk(array $bulkParams): array {
-        $this->logger->info("EXECUTING:: bulk update");
+        $this->logger->info("EXECUTING:: bulk");
 
-        // TODO: adjust code that produced the $bulkParams array, to make it in StreamX format (originally it is in ElasticSearch format)
-        $type = $bulkParams['body'][0]['index']['_type']; // product, category ...
+        if (!isset($bulkParams['body'][0]['index'])) {
+            // TODO diagnose why such inputs may be received by the method
+            return [];
+        }
+
+        $type = $bulkParams['body'][0]['index']['_type']; // product, category ... // TODO diagnose what are all possible types
         foreach ($bulkParams['body'] as $data) {
-            if (isset($data['index']['_index'])) {
-                // Skip the first element with index definition
+            if (!isset($data['id'])) {
+                // TODO diagnose why such inputs may be received by the method
                 continue;
             }
-            if ($type == 'product') {
-                $payloadData = $this->mapProductData($data);
-                $this->logger->info("Data update requested");
-                try {
-                    $key = 'product_' . $payloadData['id'];
-                    $this->publishToStreamX($key, json_encode($payloadData)); // TODO make sure this is async
-                    $this->logger->info("Data update processed");
-                } catch (StreamxClientException $e) {
-                    $this->logger->error('Data update failed: ' . $e->getMessage(), ['exception' => $e]);
-                }
-            } else {
-                $this->logger->info("Not a product: $type");
+            $key = $type . '_' . $data['id'];
+            try {
+                $this->publishToStreamX($key, json_encode($data)); // TODO make sure this is async
+            } catch (StreamxClientException $e) {
+                $this->logger->error('Data update failed: ' . $e->getMessage(), ['exception' => $e]);
             }
         }
 
-        return ['items' => [], 'errors' => ""]; // $this->client->bulk($bulkParams);
-    }
-
-    private function mapProductData($data): array {
-        $payloadData = [];
-        $payloadData['id'] = $data['sku'];
-        $payloadData['name'] = $data['name'];
-        if (isset($data['url_path'])) {
-            $payloadData['urlSafeName'] = $data['url_path'];
-        }
-
-        // Images
-        $baseImageUrl = $this->baseUrl . "media/catalog/product";
-        if (isset($data['image'])) {
-            $payloadData['mainImage'] = $baseImageUrl . $data['image'];
-        }
-        $images = [];
-        foreach ($data['media_gallery'] as $image) {
-            if (isset($image['image'])) {
-                $images[] = $baseImageUrl . $image['image'];
-            }
-        }
-        $payloadData['images'] = $images;
-
-        if (isset($data['final_price'])) {
-            $payloadData['price'] = $data['final_price'];
-        }
-
-        if (isset($data['short_description'])) {
-            $payloadData['description'] = $data['short_description'];
-        } else {
-            $payloadData['description'] = substr($data['description'], 0, 1600);
-        }
-        if (isset($data['category']['name'])) {
-            $payloadData['category'] = $data['category']['name'];
-        }
-
-        return $payloadData;
+        return ['items' => [], 'errors' => ""];
     }
 
     /**
