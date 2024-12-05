@@ -23,11 +23,6 @@ class IndicesSettings
         return (int) $this->getConfigParam('batch_indexing_size');
     }
 
-    public function getFieldsLimit(): int
-    {
-        return (int) $this->getConfigParam('fields_limit');
-    }
-
     private function getConfigParam(string $configField): ?string
     {
         $path = self::INDICES_SETTINGS_CONFIG_XML_PREFIX . '/' . $configField;

@@ -57,11 +57,6 @@
                     <label>Batch Indexing Size</label>
                     <validate>required-entry validate-digits</validate>
                 </field>
-                <field id="fields_limit" translate="label" type="text" sortOrder="300" showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>The maximum number of fields in an index</label>
-                    <comment>min value: 1000</comment>
-                    <validate>required-entry validate-digits validate-digits-range digits-range-1000-</validate>
-                </field>
             </group>
 
             <group id="redis_cache_settings" translate="label" type="text" sortOrder="300" showInDefault="1" showInWebsite="0" showInStore="1">
