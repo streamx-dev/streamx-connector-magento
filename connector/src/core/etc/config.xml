@@ -30,8 +30,6 @@
             <optimization_settings>
                 <cluster_health>0</cluster_health>
                 <max_bulk_queue_requirement>0</max_bulk_queue_requirement>
-                <refresh_interval>1</refresh_interval>
-                <refresh_interval_value>1</refresh_interval_value>
             </optimization_settings>
         </streamx_indexer_settings>
     </default>
