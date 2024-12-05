@@ -64,8 +64,6 @@ class IndexSettings
             }
         }
 
-        $indexIdentifier = $this->configuration->getIndexIdentifier();
-
-        return ('code' === $indexIdentifier) ? $store->getCode() : (string) $store->getId();
+        return (string) $store->getId();
     }
 }

@@ -69,15 +69,14 @@ class IndexSettingsTest extends TestCase
     /**
      * @dataProvider provideStores
      */
-    public function testGetIndexAlias(string $storeCode)
+    public function testGetIndexAlias(int $storeId)
     {
         $indexPrefix = 'streamx_storefront_catalog';
         $this->indicesSettingsMock->method('addIdentifierToDefaultStoreView')->willReturn(true);
         $this->indicesSettingsMock->method('getIndexNamePrefix')->willReturn($indexPrefix);
-        $this->indicesSettingsMock->method('getIndexIdentifier')->willReturn('code');
-        $this->storeMock->method('getCode')->willReturn($storeCode);
+        $this->storeMock->method('getId')->willReturn($storeId);
 
-        $expectedAlias = strtolower(sprintf('%s_%s', $indexPrefix, $storeCode));
+        $expectedAlias = strtolower(sprintf('%s_%d', $indexPrefix, $storeId));
 
         $this->assertStringStartsWith(
             $expectedAlias,
@@ -88,9 +87,9 @@ class IndexSettingsTest extends TestCase
     public function provideStores(): array
     {
         return [
-            ['de_code'],
-            ['De_code'],
-            ['DE_CODE'],
+            [1],
+            [2],
+            [3],
         ];
     }
 }
