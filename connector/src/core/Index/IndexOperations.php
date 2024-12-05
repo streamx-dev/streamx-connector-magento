@@ -127,7 +127,6 @@ class IndexOperations implements IndexOperationInterface
     {
         $clusterHealth = $this->resolveClient($storeId)->getClustersHealth();
         $this->checkClustersHealth($clusterHealth);
-        $this->checkMaxBulkQueueRequirement($clusterHealth, $storeId);
     }
 
     /**
@@ -148,25 +147,5 @@ class IndexOperations implements IndexOperationInterface
         }
 
         return $clusterHealth;
-    }
-
-    /**
-     * Check if pending tasks + batch indexer size (StreamxIndexer indices setting)
-     * are lower than max bulk queue size master node
-     *
-     * @throws ConnectionUnhealthyException
-     */
-    private function checkMaxBulkQueueRequirement(array $clusterHealth, int $storeId): void
-    {
-        if ($this->optimizationSettings->checkMaxBulkQueueRequirement()) {
-            $masterMaxQueueSize = $this->resolveClient($storeId)->getMasterMaxQueueSize();
-            if (
-                $masterMaxQueueSize &&
-                $clusterHealth[0]['pending_tasks'] + $this->getBatchIndexingSize() > $masterMaxQueueSize
-            ) {
-                $message = 'Can not execute bulk. Pending tasks and batch indexing size is greater than max queue size';
-                throw new ConnectionUnhealthyException(__($message));
-            }
-        }
     }
 }

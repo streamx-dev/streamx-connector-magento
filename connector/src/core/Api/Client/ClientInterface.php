@@ -12,10 +12,5 @@ interface ClientInterface {
      */
     public function getClustersHealth(): array;
 
-    /**
-     * Retrieve max queue size for master node
-     */
-    public function getMasterMaxQueueSize(): int;
-
     public function deleteByQuery(array $params);
 }
