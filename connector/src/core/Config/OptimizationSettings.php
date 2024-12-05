@@ -20,11 +20,6 @@ class OptimizationSettings
         return (bool) $this->getConfigParam('cluster_health');
     }
 
-    public function checkMaxBulkQueueRequirement(): bool
-    {
-        return (bool) $this->getConfigParam('max_bulk_queue_requirement');
-    }
-
     private function getConfigParam(string $configField): ?string
     {
         $path = self::OPTIMIZATION_SETTINGS_CONFIG_XML_PREFIX . '/' . $configField;

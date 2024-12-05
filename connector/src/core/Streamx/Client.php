@@ -113,11 +113,6 @@ class Client implements ClientInterface {
         return [['status' => 'green']];
     }
 
-    public function getMasterMaxQueueSize(): int {
-        $this->logger->info("SUPPRESSING:: checking for max queue size. Returning 10000");
-        return 10000;
-    }
-
     public function deleteByQuery(array $params) {
         $this->logger->info("SUPPRESSING:: deleting by query: " . json_encode($params));
     }

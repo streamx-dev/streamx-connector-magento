@@ -97,11 +97,6 @@
                     <comment>Set yes if you want to check before sending operation to update if status is green</comment>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="max_bulk_queue_requirement" translate="label comment" type="select" sortOrder="100" showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Check max bulk queue</label>
-                    <comment>Set yes if you want to check before sending operation to update if pending tasks + batch indexer size are lower than max bulk queue size master node</comment>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
             </group>
         </section>
     </system>
