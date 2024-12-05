@@ -21,7 +21,6 @@ class GenericIndexerHandler
     private Batch $batch;
     private IndexOperationInterface $indexOperations;
     private string $typeName;
-    private string $indexIdentifier;
     private IndexerLogger $indexerLogger;
     /**
      * @var int|string
@@ -41,7 +40,6 @@ class GenericIndexerHandler
         $this->batch = $batch;
         $this->indexOperations = $indexOperationProvider;
         $this->typeName = $typeName;
-        $this->indexIdentifier = IndexSettings::INDEX_NAME_PREFIX; // TODO inline
         $this->indexerLogger = $indexerLogger;
         $this->transactionKey = $transactionKey->load();
     }
@@ -145,7 +143,7 @@ class GenericIndexerHandler
     public function cleanUpByTransactionKey(StoreInterface $store, array $docIds = null): void
     {
         try {
-            $index = $this->indexOperations->getIndexByName($this->indexIdentifier, $store);
+            $index = $this->indexOperations->getIndex($store);
             $transactionKeyQuery = ['must_not' => ['term' => ['tsk' => $this->transactionKey]]];
             $query = ['query' => ['bool' => $transactionKeyQuery]];
 
@@ -168,9 +166,9 @@ class GenericIndexerHandler
     private function getIndex(StoreInterface $store): IndexInterface
     {
         try {
-            $index = $this->indexOperations->getIndexByName($this->indexIdentifier, $store);
+            $index = $this->indexOperations->getIndex($store);
         } catch (Exception $e) {
-            $index = $this->indexOperations->createIndex($this->indexIdentifier, $store);
+            $index = $this->indexOperations->createIndex($store);
         }
 
         return $index;

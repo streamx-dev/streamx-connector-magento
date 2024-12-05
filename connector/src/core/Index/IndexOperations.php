@@ -65,32 +65,34 @@ class IndexOperations implements IndexOperationInterface
         $this->resolveClient($storeId)->deleteByQuery($params);
     }
 
-    public function getIndexByName(string $indexIdentifier, StoreInterface $store): IndexInterface
+    public function getIndex(StoreInterface $store): IndexInterface
     {
         $indexName = $this->indexSettings->createIndexName($store);
 
         if (!isset($this->indicesByName[$indexName])) {
-            $this->initIndex($indexIdentifier, $store, true);
+            $this->initIndex($store);
         }
 
         return $this->indicesByName[$indexName];
     }
 
-    public function createIndex(string $indexIdentifier, StoreInterface $store): IndexInterface
+    public function createIndex(StoreInterface $store): IndexInterface
     {
-        return $this->initIndex($indexIdentifier, $store, false);
+        return $this->initIndex($store);
     }
 
-    private function initIndex(string $indexIdentifier, StoreInterface $store, bool $existingIndex): Index
+    private function initIndex(StoreInterface $store): Index
     {
-        $this->getIndicesConfiguration();
+        if (null === $this->indicesConfiguration) {
+            $this->indicesConfiguration = $this->indexSettings->getIndicesConfig();
+        }
 
-        if (!isset($this->indicesConfiguration[$indexIdentifier])) {
+        if (!isset($this->indicesConfiguration[IndexSettings::INDEX_NAME_PREFIX])) {
             throw new \LogicException('No configuration found');
         }
 
         $indexName = $this->indexSettings->createIndexName($store);
-        $config = $this->indicesConfiguration[$indexIdentifier];
+        $config = $this->indicesConfiguration[IndexSettings::INDEX_NAME_PREFIX];
 
         /** @var Index $index */
         $index = $this->indexFactory->create(
@@ -111,15 +113,6 @@ class IndexOperations implements IndexOperationInterface
     public function getBatchIndexingSize(): int
     {
         return $this->indexSettings->getBatchIndexingSize();
-    }
-
-    private function getIndicesConfiguration(): array
-    {
-        if (null === $this->indicesConfiguration) {
-            $this->indicesConfiguration = $this->indexSettings->getIndicesConfig();
-        }
-
-        return $this->indicesConfiguration;
     }
 
     private function resolveClient(int $storeId): ClientInterface
