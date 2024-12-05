@@ -10,7 +10,6 @@ use StreamX\ConnectorCore\Api\IndexOperationInterface;
 use StreamX\ConnectorCore\Exception\ConnectionDisabledException;
 use StreamX\ConnectorCore\Exception\ConnectionUnhealthyException;
 use StreamX\ConnectorCore\Logger\IndexerLogger;
-use StreamX\ConnectorCore\Model\IndexerRegistry;
 use Exception;
 use Magento\Framework\Indexer\SaveHandler\Batch;
 use Magento\Store\Api\Data\StoreInterface;
@@ -20,7 +19,6 @@ class GenericIndexerHandler
 {
     private Batch $batch;
     private IndexOperationInterface $indexOperations;
-    private IndexerRegistry $indexerRegistry;
     private string $typeName;
     private string $indexIdentifier;
     private IndexerLogger $indexerLogger;
@@ -34,7 +32,6 @@ class GenericIndexerHandler
         BulkLoggerInterface $bulkLogger,
         IndexOperationInterface $indexOperationProvider,
         IndexerLogger $indexerLogger,
-        IndexerRegistry $indexerRegistry,
         Batch $batch,
         TransactionKeyInterface $transactionKey,
         string $indexIdentifier,
@@ -46,7 +43,6 @@ class GenericIndexerHandler
         $this->typeName = $typeName;
         $this->indexIdentifier = $indexIdentifier;
         $this->indexerLogger = $indexerLogger;
-        $this->indexerRegistry = $indexerRegistry;
         $this->transactionKey = $transactionKey->load();
     }
 
@@ -136,10 +132,6 @@ class GenericIndexerHandler
                 }
 
                 $docs = null;
-            }
-
-            if ($index->isNew() && !$this->indexerRegistry->isFullReIndexationRunning()) {
-                $this->indexOperations->switchIndexer($store->getId(), $index->getName(), $index->getAlias());
             }
 
             $this->indexOperations->refreshIndex($store->getId(), $index);

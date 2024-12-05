@@ -119,11 +119,6 @@ class Client implements ClientInterface {
         return [['status' => 'green']];
     }
 
-    public function getIndicesNameByAlias(string $indexAlias): array {
-        $this->logger->info("SUPPRESSING:: getting index name by alias: $indexAlias");
-        return [];
-    }
-
     public function getIndexSettings(string $indexName): array {
         $this->logger->info("SUPPRESSING:: getting index settings for $indexName");
         return [];
@@ -134,10 +129,6 @@ class Client implements ClientInterface {
         return 10000;
     }
 
-    public function updateAliases(array $aliasActions): void {
-        $this->logger->info("SUPPRESSING:: alias update: " . json_encode($aliasActions));
-    }
-
     public function refreshIndex(string $indexName): void {
         $this->logger->info("SUPPRESSING:: index refresh: $indexName");
     }
@@ -145,11 +136,6 @@ class Client implements ClientInterface {
     public function indexExists(string $indexName): bool {
         $this->logger->info("SUPPRESSING:: check of an index availability: $indexName");
         return true;
-    }
-
-    public function deleteIndex(string $indexName): array {
-        $this->logger->info("SUPPRESSING:: index removal: $indexName");
-        return [];
     }
 
     public function putMapping(string $indexName, string $type, array $mapping) {

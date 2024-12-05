@@ -15,11 +15,6 @@ interface ClientInterface {
     public function getClustersHealth(): array;
 
     /**
-     * Retrieve the list of all index having a specified alias.
-     */
-    public function getIndicesNameByAlias(string $indexAlias): array;
-
-    /**
      * Retrieve information about index settings
      */
     public function getIndexSettings(string $indexName): array;
@@ -29,13 +24,9 @@ interface ClientInterface {
      */
     public function getMasterMaxQueueSize(): int;
 
-    public function updateAliases(array $aliasActions): void;
-
     public function refreshIndex(string $indexName): void;
 
     public function indexExists(string $indexName): bool;
-
-    public function deleteIndex(string $indexName): array;
 
     public function putMapping(string $indexName, string $type, array $mapping);
 

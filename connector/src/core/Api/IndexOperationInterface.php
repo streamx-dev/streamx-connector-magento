@@ -20,8 +20,6 @@ interface IndexOperationInterface
 
     public function refreshIndex(int $storeId, IndexInterface $index): void;
 
-    public function switchIndexer(int $storeId, string $indexName, string $indexAlias): void;
-
     public function createBulk(): BulkRequestInterface;
 
     public function getBatchIndexingSize(): int;
