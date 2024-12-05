@@ -67,28 +67,11 @@ class IndexOperations implements IndexOperationInterface
         $this->resolveClient($storeId)->deleteByQuery($params);
     }
 
-    public function indexExists(int $storeId, string $indexName): bool
-    {
-        $exists = true;
-
-        if (!isset($this->indicesByIdentifier[$indexName])) {
-            $exists = $this->resolveClient($storeId)->indexExists($indexName);
-        }
-
-        return $exists;
-    }
-
     public function getIndexByName(string $indexIdentifier, StoreInterface $store): IndexInterface
     {
         $indexAlias = $this->getIndexAlias($store);
 
         if (!isset($this->indicesByIdentifier[$indexAlias])) {
-            if (!$this->indexExists($store->getId(), $indexAlias)) {
-                throw new \LogicException(
-                    "{$indexIdentifier} index does not exist yet."
-                );
-            }
-
             $this->initIndex($indexIdentifier, $store, true);
         }
 

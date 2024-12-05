@@ -10,8 +10,6 @@ interface IndexOperationInterface
 
     public function deleteByQuery(int $storeId, array $params): void;
 
-    public function indexExists(int $storeId, string $indexName): bool;
-
     public function getIndexByName(string $indexIdentifier, StoreInterface $store): IndexInterface;
 
     public function getIndexAlias(StoreInterface $store): string;
