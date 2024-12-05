@@ -15,11 +15,6 @@ interface ClientInterface {
     public function getClustersHealth(): array;
 
     /**
-     * Retrieve information about index settings
-     */
-    public function getIndexSettings(string $indexName): array;
-
-    /**
      * Retrieve max queue size for master node
      */
     public function getMasterMaxQueueSize(): int;
