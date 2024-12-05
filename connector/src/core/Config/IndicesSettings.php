@@ -23,11 +23,6 @@ class IndicesSettings
         return (string) $this->getConfigParam('index_name');
     }
 
-    public function getIndexIdentifier(): string
-    {
-        return (string) $this->getConfigParam('index_identifier');
-    }
-
     public function addIdentifierToDefaultStoreView(): bool
     {
         return (bool) $this->getConfigParam('add_identifier_to_default');
