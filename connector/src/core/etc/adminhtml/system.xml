@@ -120,19 +120,6 @@
                     <comment>Set yes if you want to check before sending operation to update if pending tasks + batch indexer size are lower than max bulk queue size master node</comment>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="refresh_interval" translate="label comment" type="select" sortOrder="250" showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Change refresh interval</label>
-                    <comment>Set yes if you want to set refresh_interval=-1 during indexing</comment>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-                <field id="refresh_interval_value" translate="label comment" type="text" sortOrder="300" showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Default value of refresh interval</label>
-                    <comment>It's value which is set after indexing. Enter a value in seconds</comment>
-                    <validate>required-entry validate-digits</validate>
-                    <depends>
-                        <field id="refresh_interval">1</field>
-                    </depends>
-                </field>
             </group>
         </section>
     </system>

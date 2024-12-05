@@ -21,8 +21,6 @@ class IndexOperations implements IndexOperationInterface
 {
     const GREEN_HEALTH_STATUS = 'green';
 
-    const REFRESH_INTERVAL_DURING_INDEXING = -1;
-
     private ClientResolver $clientResolver;
     private IndexFactory $indexFactory;
     private BulkResponseFactory $bulkResponseFactory;
@@ -280,12 +278,7 @@ class IndexOperations implements IndexOperationInterface
      */
     public function optimizeEsIndexing(int $storeId, string $indexName): void
     {
-        if ($this->optimizationSettings->changeRefreshInterval()) {
-            $this->resolveClient($storeId)->changeRefreshInterval(
-                $indexName,
-                self::REFRESH_INTERVAL_DURING_INDEXING
-            );
-        }
+        // TODO remove this function
     }
 
     /**
@@ -293,9 +286,6 @@ class IndexOperations implements IndexOperationInterface
      */
     public function cleanAfterOptimizeEsIndexing(int $storeId, string $indexName): void
     {
-        if ($this->optimizationSettings->changeRefreshInterval()) {
-            $refreshInterval = $this->optimizationSettings->getDefaultRefreshInterval();
-            $this->resolveClient($storeId)->changeRefreshInterval($indexName, $refreshInterval);
-        }
+        // TODO remove this function
     }
 }
