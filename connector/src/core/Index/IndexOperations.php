@@ -272,20 +272,4 @@ class IndexOperations implements IndexOperationInterface
             }
         }
     }
-
-    /**
-     * Set specific values before indexing to optimize ES
-     */
-    public function optimizeEsIndexing(int $storeId, string $indexName): void
-    {
-        // TODO remove this function
-    }
-
-    /**
-     * Restore values that were set before optimization.
-     */
-    public function cleanAfterOptimizeEsIndexing(int $storeId, string $indexName): void
-    {
-        // TODO remove this function
-    }
 }

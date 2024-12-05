@@ -90,9 +90,7 @@ class GenericIndexerHandler
                     $docs
                 );
 
-                $this->indexOperations->optimizeEsIndexing($storeId, $index->getName());
                 $response = $this->indexOperations->executeBulk($storeId, $bulkRequest);
-                $this->indexOperations->cleanAfterOptimizeEsIndexing($storeId, $index->getName());
                 $this->bulkLogger->log($response);
                 $docs = null;
             }
@@ -102,7 +100,6 @@ class GenericIndexerHandler
             // do nothing, ES indexer disabled in configuration
         } catch (ConnectionUnhealthyException $exception) {
             $this->indexerLogger->error($exception->getMessage());
-            $this->indexOperations->cleanAfterOptimizeEsIndexing($storeId, $index->getName());
             throw $exception;
         }
     }
@@ -134,9 +131,7 @@ class GenericIndexerHandler
                         $docs
                     );
 
-                    $this->indexOperations->optimizeEsIndexing($storeId, $index->getName());
                     $response = $this->indexOperations->executeBulk($storeId, $bulkRequest);
-                    $this->indexOperations->cleanAfterOptimizeEsIndexing($storeId, $index->getName());
                     $this->bulkLogger->log($response);
                 }
 
@@ -152,7 +147,6 @@ class GenericIndexerHandler
             // do nothing, ES indexer disabled in configuration
         } catch (ConnectionUnhealthyException $exception) {
             $this->indexerLogger->error($exception->getMessage());
-            $this->indexOperations->cleanAfterOptimizeEsIndexing($storeId, $index->getName());
             throw $exception;
         }
     }
