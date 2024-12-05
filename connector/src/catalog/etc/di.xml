@@ -41,28 +41,24 @@
     <virtualType name="StreamX\ConnectorCatalog\Indexer\ProductIndexerHandlerVirtual"
                  type="StreamX\ConnectorCore\Indexer\GenericIndexerHandler">
         <arguments>
-            <argument name="indexIdentifier" xsi:type="string">streamx_storefront_catalog</argument>
             <argument name="typeName" xsi:type="string">product</argument>
         </arguments>
     </virtualType>
     <virtualType name="StreamX\ConnectorCatalog\Indexer\ProductCategoryHandlerVirtual"
                  type="StreamX\ConnectorCore\Indexer\GenericIndexerHandler">
         <arguments>
-            <argument name="indexIdentifier" xsi:type="string">streamx_storefront_catalog</argument>
             <argument name="typeName" xsi:type="string">product</argument>
         </arguments>
     </virtualType>
     <virtualType name="StreamX\ConnectorCatalog\Indexer\CategoryIndexerHandlerVirtual"
                  type="StreamX\ConnectorCore\Indexer\GenericIndexerHandler">
         <arguments>
-            <argument name="indexIdentifier" xsi:type="string">streamx_storefront_catalog</argument>
             <argument name="typeName" xsi:type="string">category</argument>
         </arguments>
     </virtualType>
     <virtualType name="StreamX\ConnectorCatalog\Indexer\AttributeIndexerHandlerVirtual"
                  type="StreamX\ConnectorCore\Indexer\GenericIndexerHandler">
         <arguments>
-            <argument name="indexIdentifier" xsi:type="string">streamx_storefront_catalog</argument>
             <argument name="typeName" xsi:type="string">attribute</argument>
         </arguments>
     </virtualType>

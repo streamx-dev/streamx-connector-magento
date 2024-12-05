@@ -57,10 +57,6 @@
                     <label>Batch Indexing Size</label>
                     <validate>required-entry validate-digits</validate>
                 </field>
-                <field id="index_name" translate="label" type="text" sortOrder="200" showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Index Alias Prefix</label>
-                    <comment>For each store view, store id or code will be added to index alias, e.g. "streamx_storefront_catalog_magento_1"</comment>
-                </field>
                 <field id="add_identifier_to_default" translate="label comment" type="select" sortOrder="250" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Add Index Identifier to Default Store View</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>

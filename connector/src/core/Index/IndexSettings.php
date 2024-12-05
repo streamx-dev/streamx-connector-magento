@@ -10,7 +10,7 @@ use Magento\Store\Model\StoreManagerInterface;
 
 class IndexSettings
 {
-    private const INDEX_NAME_PREFIX = 'streamx_storefront_catalog';
+    public const INDEX_NAME_PREFIX = 'streamx_storefront_catalog';
 
     private StoreManagerInterface $storeManager;
     private IndicesConfig $indicesConfig;

@@ -10,7 +10,6 @@
             </streamx_client>
             <indices_settings>
                 <batch_indexing_size>1000</batch_indexing_size>
-                <index_name>streamx_storefront_catalog</index_name>
                 <add_identifier_to_default>1</add_identifier_to_default>
                 <fields_limit>1000</fields_limit>
                 <category_products_update>0</category_products_update>
