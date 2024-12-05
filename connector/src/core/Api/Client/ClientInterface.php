@@ -7,8 +7,6 @@ interface ClientInterface {
 
     public function bulk(array $bulkParams): array;
 
-    public function createIndex(string $indexName, array $indexSettings): void;
-
     /**
      * Retrieve information about cluster health
      */

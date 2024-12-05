@@ -10,25 +10,13 @@ use Magento\Store\Model\StoreManagerInterface;
 
 class IndexSettings
 {
-    /**
-     * @var StoreManagerInterface
-     */
-    private $storeManager;
+    private StoreManagerInterface $storeManager;
 
-    /**
-     * @var IndicesConfig
-     */
-    private $indicesConfig;
+    private IndicesConfig $indicesConfig;
 
-    /**
-     * @var IndicesSettings
-     */
-    private $configuration;
+    private IndicesSettings $configuration;
 
-    /**
-     * @var DateTimeFactory
-     */
-    private $dateTimeFactory;
+    private DateTimeFactory $dateTimeFactory;
 
     public function __construct(
         StoreManagerInterface $storeManager,
@@ -50,32 +38,6 @@ class IndexSettings
     public function getIndicesConfig(): array
     {
         return $this->indicesConfig->get();
-    }
-
-    public function getEsConfig(): array
-    {
-        return [
-            'index.mapping.total_fields.limit' => $this->configuration->getFieldsLimit(),
-            'analysis' => [
-                'analyzer' => [
-                    'autocomplete' => [
-                        'tokenizer' => 'autocomplete',
-                        'filter' => ['lowercase'],
-                    ],
-                    'autocomplete_search' => [
-                        'tokenizer'=> 'lowercase'
-                    ]
-                ],
-                'tokenizer' => [
-                    'autocomplete' => [
-                        'type' => 'edge_ngram',
-                        'min_gram' => 2,
-                        'max_gram' => 10,
-                        'token_chars' => ['letter'],
-                    ]
-                ]
-            ]
-        ];
     }
 
     public function createIndexName(StoreInterface $store): string
