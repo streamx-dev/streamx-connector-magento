@@ -10,7 +10,6 @@
             </streamx_client>
             <indices_settings>
                 <batch_indexing_size>1000</batch_indexing_size>
-                <category_products_update>0</category_products_update>
             </indices_settings>
             <general_settings>
                 <allowed_stores>1</allowed_stores>
