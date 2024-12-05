@@ -124,15 +124,6 @@ class Client implements ClientInterface {
         return 10000;
     }
 
-    public function putMapping(string $indexName, string $type, array $mapping) {
-        $requestPayload = [
-            'index' => $indexName,
-            'type' => $type,
-            'body' => [$type => $mapping]
-        ];
-        $this->logger->info("SUPPRESSING:: mapping propagation: " . json_encode($requestPayload));
-    }
-
     public function deleteByQuery(array $params) {
         $this->logger->info("SUPPRESSING:: deleting by query: " . json_encode($params));
     }

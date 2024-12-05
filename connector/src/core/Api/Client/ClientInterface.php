@@ -19,7 +19,5 @@ interface ClientInterface {
      */
     public function getMasterMaxQueueSize(): int;
 
-    public function putMapping(string $indexName, string $type, array $mapping);
-
     public function deleteByQuery(array $params);
 }
