@@ -25,7 +25,6 @@
             </redis_cache_settings>
             <optimization_settings>
                 <cluster_health>0</cluster_health>
-                <max_bulk_queue_requirement>0</max_bulk_queue_requirement>
             </optimization_settings>
         </streamx_indexer_settings>
     </default>
