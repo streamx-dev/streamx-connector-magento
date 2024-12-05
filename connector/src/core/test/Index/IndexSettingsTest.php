@@ -6,7 +6,6 @@ use StreamX\ConnectorCore\Config\IndicesSettings;
 use StreamX\ConnectorCore\Index\IndexSettings;
 use StreamX\ConnectorCore\Index\Indicies\Config;
 use Magento\Store\Model\Store;
-use Magento\Store\Model\StoreManagerInterface;
 use PHPUnit\Framework\TestCase;
 use Magento\Framework\Intl\DateTimeFactory;
 
@@ -31,11 +30,6 @@ class IndexSettingsTest extends TestCase
     private $storeMock;
 
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject
-     */
-    private $storeManagerMock;
-
-    /**
      * @var IndexSettings
      */
     private $esIndexSettings;
@@ -45,12 +39,6 @@ class IndexSettingsTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->storeManagerMock = $this->getMockBuilder(
-            StoreManagerInterface::class)
-            ->disableOriginalConstructor()
-            ->setMethods([])
-            ->getMockForAbstractClass();
-
         $this->storeMock = $this->getMockBuilder(Store::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -59,7 +47,6 @@ class IndexSettingsTest extends TestCase
         $this->configurationSettings = $this->createMock(Config::class);
 
         $this->esIndexSettings = new IndexSettings(
-            $this->storeManagerMock,
             $this->configurationSettings,
             $this->indicesSettingsMock,
             new DateTimeFactory()
@@ -72,7 +59,6 @@ class IndexSettingsTest extends TestCase
     public function testGetIndexAlias(int $storeId)
     {
         $indexPrefix = 'streamx_storefront_catalog';
-        $this->indicesSettingsMock->method('addIdentifierToDefaultStoreView')->willReturn(true);
         $this->storeMock->method('getId')->willReturn($storeId);
 
         $expectedAlias = strtolower(sprintf('%s_%d', $indexPrefix, $storeId));
