@@ -119,11 +119,6 @@ class Client implements ClientInterface {
         return [['status' => 'green']];
     }
 
-    public function getIndexSettings(string $indexName): array {
-        $this->logger->info("SUPPRESSING:: getting index settings for $indexName");
-        return [];
-    }
-
     public function getMasterMaxQueueSize(): int {
         $this->logger->info("SUPPRESSING:: checking for max queue size. Returning 10000");
         return 10000;
