@@ -24,8 +24,6 @@ interface ClientInterface {
      */
     public function getMasterMaxQueueSize(): int;
 
-    public function refreshIndex(string $indexName): void;
-
     public function indexExists(string $indexName): bool;
 
     public function putMapping(string $indexName, string $type, array $mapping);
