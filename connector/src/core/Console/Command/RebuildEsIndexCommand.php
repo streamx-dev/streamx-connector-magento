@@ -222,7 +222,7 @@ class RebuildEsIndexCommand extends AbstractIndexerCommand
         }
 
         $output->writeln(
-            sprintf('<info>Index name: %s, index alias: %s</info>', $index->getName(), $index->getAlias())
+            sprintf('<info>Index name: %s</info>', $index->getName())
         );
 
         return $returnValue;
