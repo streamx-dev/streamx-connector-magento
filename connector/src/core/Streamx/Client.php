@@ -38,22 +38,45 @@ class Client implements ClientInterface {
     public function bulk(array $bulkParams): array {
         $this->logger->info("EXECUTING:: bulk");
 
-        if (!isset($bulkParams['body'][0]['index'])) {
-            // TODO diagnose why such inputs may be received by the method
-            return [];
-        }
+        // In the full reindex mode:
+        // The products are delivered to this method in bulks of max 1000 items. Currently, there are ca. 2050 items, so we receive 3 batches from full reindex.
+        // $bulkParams array comes in pairs: item 0 is "index": { "_index": "[unrelevant]", "_type": "product", "_id": 14 (which is also the product id) }
+        // item 1 is the product data array
+        // item 2 is the index for second product, item 3 is the second product data -> and so on
 
-        $type = $bulkParams['body'][0]['index']['_type']; // product, category ... // TODO diagnose what are all possible types
-        foreach ($bulkParams['body'] as $data) {
-            if (!isset($data['id'])) {
-                // TODO diagnose why such inputs may be received by the method
-                continue;
-            }
-            $key = $type . '_' . $data['id'];
-            try {
-                $this->publishToStreamX($key, json_encode($data)); // TODO make sure this is async
-            } catch (StreamxClientException $e) {
-                $this->logger->error('Data update failed: ' . $e->getMessage(), ['exception' => $e]);
+        // In the update on save mode (when a single product is updated via Magento UI):
+        // We receive the same format, but only one pair of array items: 0 = index definition and 1 = the product
+
+        // When installing the connector, automatic reindex of all is performed, but it contains additional items:
+        // 0 is "update" and 1 is "doc" (and so on, they come in pairs)
+        // The "doc" items are like smaller duplicates - they contain only some fields of the products, so we skip them
+
+        $bodyArray = $bulkParams['body'];
+
+        // The two vars serve to store types of the even items to correctly interpret the odd ones
+        $isUpdateDoc = false;
+        $entityType = null;
+
+        for ($i = 0; $i < count($bodyArray); $i++) {
+            $item = $bodyArray[$i];
+            if ($i % 2 == 0) {
+                if (isset($item['update'])) {
+                    $isUpdateDoc = true;
+                } else {
+                    $isUpdateDoc = false;
+                    $entityType = $item['index']['_type']; // product, category ...
+                }
+            } else {
+                if ($isUpdateDoc && isset($item['doc'])) {
+                    continue;
+                }
+                $entity = $item;
+                $key = $entityType . '_' . $entity['id'];
+                try {
+                    $this->publishToStreamX($key, json_encode($entity)); // TODO make sure this will never block
+                } catch (StreamxClientException $e) {
+                    $this->logger->error('Data update failed: ' . $e->getMessage(), ['exception' => $e]);
+                }
             }
         }
 

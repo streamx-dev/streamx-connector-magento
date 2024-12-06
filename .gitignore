@@ -1,6 +1,6 @@
 .DS_Store
 vendor
-connector/target
+target
 .vscode/launch.json
 .idea
 .phpunit.result.cache
