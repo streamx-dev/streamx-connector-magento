@@ -46,10 +46,12 @@ class Client implements ClientInterface {
 
         // In the update on save mode (when a single product is updated via Magento UI):
         // We receive the same format, but only one pair of array items: 0 = index definition and 1 = the product
+        // TODO: this seems to be used to update Products, Categories and Attributes
 
         // When installing the connector, automatic reindex of all is performed, but it contains additional items:
         // 0 is "update" and 1 is "doc" (and so on, they come in pairs)
         // The "doc" items are like smaller duplicates - they contain only some fields of the products, so we skip them
+        // TODO: this seems to be used to update Product Categories
 
         $bodyArray = $bulkParams['body'];
 
