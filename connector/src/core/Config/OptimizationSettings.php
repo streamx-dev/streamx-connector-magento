@@ -20,6 +20,11 @@ class OptimizationSettings
         return (bool) $this->getConfigParam('cluster_health');
     }
 
+    public function getBatchIndexingSize(): int
+    {
+        return (int) $this->getConfigParam('batch_indexing_size');
+    }
+
     private function getConfigParam(string $configField): ?string
     {
         $path = self::OPTIMIZATION_SETTINGS_CONFIG_XML_PREFIX . '/' . $configField;

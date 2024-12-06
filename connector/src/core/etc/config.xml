@@ -8,10 +8,6 @@
                 <channel_name>data</channel_name>
                 <channel_schema_name>dev.streamx.blueprints.data.DataIngestionMessage</channel_schema_name>
             </streamx_client>
-            <indices_settings>
-                <!-- TODO move to general settings? -->
-                <batch_indexing_size>1000</batch_indexing_size>
-            </indices_settings>
             <general_settings>
                 <allowed_stores>1</allowed_stores>
                 <enable>0</enable>
@@ -25,6 +21,7 @@
             </redis_cache_settings>
             <optimization_settings>
                 <cluster_health>0</cluster_health>
+                <batch_indexing_size>1000</batch_indexing_size>
             </optimization_settings>
         </streamx_indexer_settings>
     </default>
