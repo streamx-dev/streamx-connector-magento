@@ -4,8 +4,6 @@ namespace StreamX\ConnectorCore\Indexer;
 
 use StreamX\ConnectorCore\Api\BulkLoggerInterface;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
-use StreamX\ConnectorCore\Api\IndexInterface;
-use StreamX\ConnectorCore\Api\IndexInterfaceFactory as IndexFactory;
 use StreamX\ConnectorCore\Api\Indexer\TransactionKeyInterface;
 use StreamX\ConnectorCore\Api\IndexOperationInterface;
 use StreamX\ConnectorCore\Exception\ConnectionDisabledException;
@@ -22,7 +20,6 @@ class GenericIndexerHandler
 {
     private Batch $batch;
     public Config $indicesConfig;
-    public IndexFactory $indexFactory;
     private IndexOperationInterface $indexOperations;
     private string $typeName;
     private IndexerLogger $indexerLogger;
@@ -40,14 +37,12 @@ class GenericIndexerHandler
         IndexerLogger $indexerLogger,
         Batch $batch,
         Config $indicesConfig,
-        IndexFactory $indexFactory,
         TransactionKeyInterface $transactionKey,
         string $typeName
     ) {
         $this->bulkLogger = $bulkLogger;
         $this->batch = $batch;
         $this->indicesConfig = $indicesConfig;
-        $this->indexFactory = $indexFactory;
         $this->indexOperations = $indexOperationProvider;
         $this->typeName = $typeName;
         $this->indexerLogger = $indexerLogger;
@@ -173,12 +168,13 @@ class GenericIndexerHandler
         }
     }
 
-    private function getIndex(StoreInterface $store): IndexInterface
+    private function getIndex(StoreInterface $store): Index
     {
         $indexName = $this->createIndexName($store);
 
         if (!isset($this->indicesByName[$indexName])) {
-            $this->initIndex($store);
+            $index = $this->initIndex($store);
+            $this->indicesByName[$indexName] = $index;
         }
 
         return $this->indicesByName[$indexName];
@@ -206,16 +202,7 @@ class GenericIndexerHandler
         }
 
         $indexName = $this->createIndexName($store);
-
-        /** @var Index $index */
-        $index = $this->indexFactory->create(
-            [
-                'name' => $indexName,
-                'types' => $this->types,
-            ]
-        );
-
-        return $this->indicesByName[$indexName] = $index;
+        return new Index($indexName, $this->types);
     }
 
     public function getTypeName(): string
