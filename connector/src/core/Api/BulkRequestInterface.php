@@ -17,33 +17,20 @@ interface BulkRequestInterface
     public function prepareDocument(array $data): array;
 
     /**
-     * Add a several documents to the index.
-     *
      * $data format have to be an array of all documents with document id as key.
      *
-     * @param string $index Index the documents have to be added to.
      * @param string $type  Document type.
      * @param array  $data  Document data.
-     *
-     * @return \StreamX\ConnectorCore\Api\BulkRequestInterface
      */
-    public function addDocuments(string $index, string $type, array $data);
+    public function addDocuments(string $type, array $data): BulkRequestInterface;
+
+    public function deleteDocuments(string $type, array $docIds): BulkRequestInterface;
 
     /**
-     * @return \StreamX\ConnectorCore\Api\BulkRequestInterface
-     */
-    public function deleteDocuments(string $index, string $type, array $docIds);
-
-    /**
-     * Update several documents to the index.
-     *
      * $data format have to be an array of all documents with document id as key.
      *
-     * @param string $index Index the documents have to be added to.
      * @param string $type  Document type.
      * @param array  $data  Document data.
-     *
-     * @return \StreamX\ConnectorCore\Api\BulkRequestInterface
      */
-    public function updateDocuments(string $index, string $type, array $data);
+    public function updateDocuments(string $type, array $data): BulkRequestInterface;
 }

@@ -85,7 +85,6 @@ class GenericIndexerHandler
                 }
 
                 $bulkRequest = $this->indexOperations->createBulk()->updateDocuments(
-                    'dummy', // TODO remove param
                     $this->typeName,
                     $docs
                 );
@@ -122,7 +121,6 @@ class GenericIndexerHandler
 
                 if (!empty($docs)) {
                     $bulkRequest = $this->indexOperations->createBulk()->addDocuments(
-                        'dummy', // TODO remove param
                         $this->typeName,
                         $docs
                     );
@@ -155,7 +153,6 @@ class GenericIndexerHandler
             }
 
             $query = [
-                'index' => 'dummy', // TODO remove param
                 'type' => $this->typeName,
                 'body' => $query,
             ];

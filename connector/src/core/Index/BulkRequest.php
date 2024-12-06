@@ -8,49 +8,33 @@ class BulkRequest implements BulkRequestInterface
 {
     /**
      * Bulk operation stack.
-     *
-     * @var array
      */
-    private $bulkData = [];
+    private array $bulkData = [];
 
-    /**
-     * @inheritdoc
-     */
-    public function deleteDocuments(string $index, string $type, array $docIds)
-    {
+    public function deleteDocuments(string $type, array $docIds): BulkRequestInterface {
         foreach ($docIds as $docId) {
-            $this->deleteDocument($index, $type, $docId);
+            $this->deleteDocument($type, $docId);
         }
 
         return $this;
     }
 
-    /**
-     * @param $docId
-     *
-     * @return $this
-     */
-    private function deleteDocument(string $index, string $type, $docId)
-    {
+    private function deleteDocument(string $type, $docId): void {
         $this->bulkData[] = [
             'delete' => [
-                '_index' => $index,
                 '_type' => $type,
                 '_id' => $docId,
             ]
         ];
-
-        return $this;
     }
 
     /**
      * @inheritdoc
      */
-    public function addDocuments(string $index, string $type, array $data)
-    {
+    public function addDocuments(string $type, array $data): BulkRequestInterface {
         foreach ($data as $docId => $documentData) {
             $documentData = $this->prepareDocument($documentData);
-            $this->addDocument($index, $type, $docId, $documentData);
+            $this->addDocument($type, $docId, $documentData);
         }
 
         return $this;
@@ -64,68 +48,51 @@ class BulkRequest implements BulkRequestInterface
         return $data;
     }
 
-    /**
-     * @inheritdoc
-     */
-    private function addDocument($index, $type, $docId, array $data)
-    {
+    private function addDocument($type, $docId, array $data): void {
         $this->bulkData[] = [
             'index' => [
-                '_index' => $index,
                 '_type' => $type,
                 '_id' => $docId,
             ]
         ];
 
         $this->bulkData[] = $data;
-
-        return $this;
     }
 
     /**
      * @inheritdoc
      */
-    public function updateDocuments(string $index, string $type, array $data)
-    {
+    public function updateDocuments(string $type, array $data): BulkRequestInterface {
         foreach ($data as $docId => $documentData) {
             $documentData = $this->prepareDocument($documentData);
-            $this->updateDocument($index, $type, $docId, $documentData);
+            $this->updateDocument($type, $docId, $documentData);
         }
 
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
-    private function updateDocument($index, $type, $docId, array $data)
-    {
+    private function updateDocument($type, $docId, array $data): void {
         $this->bulkData[] = [
             'update' => [
-                '_index' => $index,
                 '_id' => $docId,
                 '_type' => $type,
             ]
         ];
 
         $this->bulkData[] = ['doc' => $data];
-
-        return $this;
     }
 
     /**
      * @inheritdoc
      */
-    public function isEmpty(): bool
-    {
+    public function isEmpty(): bool {
         return count($this->bulkData) == 0;
     }
 
     /**
      * @inheritdoc
      */
-    public function getOperations(): array
-    {
+    public function getOperations(): array {
         return $this->bulkData;
     }
 }
