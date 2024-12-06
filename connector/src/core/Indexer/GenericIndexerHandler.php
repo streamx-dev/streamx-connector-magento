@@ -2,7 +2,6 @@
 
 namespace StreamX\ConnectorCore\Indexer;
 
-use Magento\Framework\Intl\DateTimeFactory;
 use StreamX\ConnectorCore\Api\BulkLoggerInterface;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 use StreamX\ConnectorCore\Api\IndexInterface;
@@ -15,7 +14,6 @@ use StreamX\ConnectorCore\Index\Index;
 use StreamX\ConnectorCore\Index\IndexOperations;
 use StreamX\ConnectorCore\Index\Indicies\Config;
 use StreamX\ConnectorCore\Logger\IndexerLogger;
-use Exception;
 use Magento\Framework\Indexer\SaveHandler\Batch;
 use Magento\Store\Api\Data\StoreInterface;
 use Traversable;
@@ -33,9 +31,8 @@ class GenericIndexerHandler
      */
     private $transactionKey;
     private BulkLoggerInterface $bulkLogger;
-    public DateTimeFactory $dateTimeFactory;
-    public ?array $indicesConfiguration = null;
-    public ?array $indicesByName = null;
+    public array $types = [];
+    public array $indicesByName = [];
 
     public function __construct(
         BulkLoggerInterface $bulkLogger,
@@ -45,8 +42,7 @@ class GenericIndexerHandler
         Config $indicesConfig,
         IndexFactory $indexFactory,
         TransactionKeyInterface $transactionKey,
-        string $typeName,
-        DateTimeFactory $dateTimeFactory
+        string $typeName
     ) {
         $this->bulkLogger = $bulkLogger;
         $this->batch = $batch;
@@ -56,7 +52,6 @@ class GenericIndexerHandler
         $this->typeName = $typeName;
         $this->indexerLogger = $indexerLogger;
         $this->transactionKey = $transactionKey->load();
-        $this->dateTimeFactory = $dateTimeFactory;
     }
 
     /**
@@ -180,17 +175,6 @@ class GenericIndexerHandler
 
     private function getIndex(StoreInterface $store): IndexInterface
     {
-        try {
-            $index = $this->getOrInitIndex($store);
-        } catch (Exception $e) {
-            $index = $this->createIndex($store);
-        }
-
-        return $index;
-    }
-
-    public function getOrInitIndex(StoreInterface $store): IndexInterface
-    {
         $indexName = $this->createIndexName($store);
 
         if (!isset($this->indicesByName[$indexName])) {
@@ -200,44 +184,34 @@ class GenericIndexerHandler
         return $this->indicesByName[$indexName];
     }
 
-    public function createIndexName(StoreInterface $store): string
+    private function createIndexName(StoreInterface $store): string
     {
         $indexNamePrefix = IndexOperations::INDEX_NAME_PREFIX;
         $storeIdentifier = (string)$store->getId();
 
-        if ($storeIdentifier) {
-            $indexNamePrefix .= '_' . $storeIdentifier;
-        }
-
-        $name = strtolower($indexNamePrefix);
-        $currentDate = $this->dateTimeFactory->create();
-
-        return $name . '_' . $currentDate->getTimestamp();
+        return $storeIdentifier
+            ? $indexNamePrefix . '_' . $storeIdentifier
+            : $indexNamePrefix;
     }
 
-    public function createIndex(StoreInterface $store): IndexInterface
+    private function initIndex(StoreInterface $store): Index
     {
-        return $this->initIndex($store);
-    }
-
-    public function initIndex(StoreInterface $store): Index
-    {
-        if (null === $this->indicesConfiguration) {
-            $this->indicesConfiguration = $this->indicesConfig->get();
-        }
-
-        if (!isset($this->indicesConfiguration[IndexOperations::INDEX_NAME_PREFIX])) {
-            throw new \LogicException('No configuration found');
+        if (empty($this->types)) {
+            $indicesConfiguration = $this->indicesConfig->get();
+            if (!isset($indicesConfiguration[IndexOperations::INDEX_NAME_PREFIX])) {
+                throw new \LogicException('No configuration found');
+            }
+            $config = $indicesConfiguration[IndexOperations::INDEX_NAME_PREFIX];
+            $this->types = $config['types'];
         }
 
         $indexName = $this->createIndexName($store);
-        $config = $this->indicesConfiguration[IndexOperations::INDEX_NAME_PREFIX];
 
         /** @var Index $index */
         $index = $this->indexFactory->create(
             [
                 'name' => $indexName,
-                'types' => $config['types'],
+                'types' => $this->types,
             ]
         );
 
