@@ -48,17 +48,6 @@
                 </field>
             </group>
 
-            <group id="indices_settings" translate="label" type="text" sortOrder="200" showInDefault="1" showInWebsite="0" showInStore="0">
-                <label>Indices Settings</label>
-                <depends>
-                    <field id="streamx_indexer_settings/general_settings/enable">1</field>
-                </depends>
-                <field id="batch_indexing_size" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Batch Indexing Size</label>
-                    <validate>required-entry validate-digits</validate>
-                </field>
-            </group>
-
             <group id="redis_cache_settings" translate="label" type="text" sortOrder="300" showInDefault="1" showInWebsite="0" showInStore="1">
                 <label>Redis Cache Settings</label>
                 <depends>
@@ -96,6 +85,10 @@
                     <label>Check cluster health</label>
                     <comment>Set yes if you want to check before sending operation to update if status is green</comment>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="batch_indexing_size" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Batch Indexing Size</label> <!-- TODO rename to remove the "indexing" word -->
+                    <validate>required-entry validate-digits</validate>
                 </field>
             </group>
         </section>

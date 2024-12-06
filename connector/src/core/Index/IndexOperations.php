@@ -11,7 +11,6 @@ use StreamX\ConnectorCore\Api\BulkRequestInterfaceFactory as BulkRequestFactory;
 use StreamX\ConnectorCore\Api\IndexInterface;
 use StreamX\ConnectorCore\Api\IndexInterfaceFactory as IndexFactory;
 use StreamX\ConnectorCore\Api\IndexOperationInterface;
-use StreamX\ConnectorCore\Config\IndicesSettings;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
 use StreamX\ConnectorCore\Index\Indicies\Config;
 use StreamX\ConnectorCore\Streamx\ClientResolver;
@@ -24,7 +23,6 @@ class IndexOperations implements IndexOperationInterface
     const GREEN_HEALTH_STATUS = 'green';
 
     private Config $indicesConfig;
-    private IndicesSettings $indicesSettings;
     private ClientResolver $clientResolver;
     private IndexFactory $indexFactory;
     private BulkResponseFactory $bulkResponseFactory;
@@ -36,7 +34,6 @@ class IndexOperations implements IndexOperationInterface
 
     public function __construct(
         Config               $indicesConfig,
-        IndicesSettings      $indicesSettings,
         ClientResolver       $clientResolver,
         BulkResponseFactory  $bulkResponseFactory,
         BulkRequestFactory   $bulkRequestFactory,
@@ -45,7 +42,6 @@ class IndexOperations implements IndexOperationInterface
         DateTimeFactory $dateTimeFactory
     ) {
         $this->indicesConfig = $indicesConfig;
-        $this->indicesSettings = $indicesSettings;
         $this->clientResolver = $clientResolver;
         $this->indexFactory = $indexFactory;
         $this->bulkResponseFactory = $bulkResponseFactory;
@@ -137,7 +133,7 @@ class IndexOperations implements IndexOperationInterface
 
     public function getBatchIndexingSize(): int
     {
-        return $this->indicesSettings->getBatchIndexingSize();
+        return $this->optimizationSettings->getBatchIndexingSize();
     }
 
     private function resolveClient(int $storeId): ClientInterface

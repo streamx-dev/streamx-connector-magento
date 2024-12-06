@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use StreamX\ConnectorCore\Config\IndicesSettings;
 use StreamX\ConnectorCore\Index\IndexSettings;
 use StreamX\ConnectorCore\Index\Indicies\Config;
 use Magento\Store\Model\Store;
@@ -14,11 +13,6 @@ use Magento\Framework\Intl\DateTimeFactory;
  */
 class IndexSettingsTest extends TestCase
 {
-    /**
-     * @var PHPUnit_Framework_MockObject_MockObject
-     */
-    private $indicesSettingsMock;
-
     /**
      * @var IndicesSettings|PHPUnit_Framework_MockObject_MockObject
      */
@@ -43,12 +37,10 @@ class IndexSettingsTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->indicesSettingsMock = $this->createMock(IndicesSettings::class);
         $this->configurationSettings = $this->createMock(Config::class);
 
         $this->esIndexSettings = new IndexSettings(
             $this->configurationSettings,
-            $this->indicesSettingsMock,
             new DateTimeFactory()
         );
     }
