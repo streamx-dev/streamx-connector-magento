@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2ce653d37184bd9424fa9a83afa92c5e",
+    "content-hash": "bced0f404eb0bca9338ef827d5267eac",
     "packages": [
         {
             "name": "brick/math",
@@ -5453,10 +5453,16 @@
         {
             "name": "streamx/ingestion-client",
             "version": "0.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/streamx-dev/streamx-ingestion-php.git",
+                "reference": "194901148df0285c823dca94c7cf1a3c9d3097e2"
+            },
             "dist": {
-                "type": "path",
-                "url": "../streamx-ingestion-php",
-                "reference": "a3a7dc0a5e2172f1725210b387a69f16bde12608"
+                "type": "zip",
+                "url": "https://api.github.com/repos/streamx-dev/streamx-ingestion-php/zipball/194901148df0285c823dca94c7cf1a3c9d3097e2",
+                "reference": "194901148df0285c823dca94c7cf1a3c9d3097e2",
+                "shasum": ""
             },
             "require": {
                 "guzzlehttp/guzzle": "^7.0"
@@ -5480,9 +5486,11 @@
                 }
             },
             "description": "PHP ingestion client for StreamX - a Digital Experience Data Mesh.",
-            "transport-options": {
-                "relative": true
-            }
+            "support": {
+                "source": "https://github.com/streamx-dev/streamx-ingestion-php/tree/0.0.1",
+                "issues": "https://github.com/streamx-dev/streamx-ingestion-php/issues"
+            },
+            "time": "2024-12-05T12:00:49+00:00"
         },
         {
             "name": "symfony/console",

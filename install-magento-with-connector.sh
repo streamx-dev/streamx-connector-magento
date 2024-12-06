@@ -2,7 +2,7 @@
 set -e # exit on 1st error
 
 ### PREREQUISITES:
-# - streamx-ingestion-php repository cloned as sibling of streamx-connector-magento in your filesystem
+# - You can access the https://github.com/streamx-dev/streamx-ingestion-php repository
 # - Composer authentication to download Magento images is configured - see README.md
 
 ## Remove previous instance, if exists
@@ -40,39 +40,29 @@ bin/setup magento.test
 ### Install sample data
 bin/magento sampledata:deploy
 
-### Import php ingestion client for development
-# Note: in future, when the client is made publicly available - we will be just using `composer require streamx/ingestion-client`.
-# For now, manually copy the client's code to the project, to a path that is git ignored.
-# This script assumes you have both projects checked out as siblings in filesystem.
-cd ..
-rm -rf streamx-ingestion-php
-mkdir streamx-ingestion-php
-cp -R ../streamx-ingestion-php/* streamx-ingestion-php
-
-### Upload php ingestion client to Magento
-# Note: in future, when the client is made publicly available - we will be just using `composer require streamx/ingestion-client`.
-# For now, manually copy source code of the client to Magento
-bash copy_client_to_magento.sh
-
 ### Upload StreamX Connector to Magento
 # Note: in future, when the connector is made publicly available - we will be just using `composer require streamx/magento-connector`.
 # For now, manually copy source code of the connector to Magento
+cd ..
 bash copy_connector_to_magento.sh
 
-### Install StreamX Client and Connector to Magento
-# Point Magento to search for the client / connector source code in its directory
+### Install StreamX Connector to Magento
+# Point Magento to search for the connector source code in its directory
 cd magento
-bin/composer config repositories.streamx-client path app/code/StreamX/Client
-bin/composer config repositories.streamx-connector path app/code/StreamX/Connector
+bin/composer config repositories.streamx-client \
+  path app/code/StreamX/Client
 
-# Add streamx client / connector to Magento's composer.json file
-# Also turn off Two Factor Auth for development purposes and enable gathering code coverage
+# Register streamx-ingestion-php repository (the module is required by the connector)
+bin/composer config repositories.streamx-client \
+  vcs https://github.com/streamx-dev/streamx-ingestion-php
+
+# Add the connector to Magento's composer.json file (along with a module that turns off Two Factor Auth for development purposes and extension for gathering code coverage)
 bin/composer require \
-  "streamx/ingestion-client" \
   "streamx/magento-connector" \
   "markshust/magento2-module-disabletwofactorauth" \
   "ext-xdebug"
 
 # Enable all modules
 bin/magento module:enable --all
-cd ../ && bash reload_magento_modules.sh
+cd ..
+bash reload_magento_modules.sh
