@@ -40,7 +40,7 @@ class Client implements ClientInterface {
 
         // In the full reindex mode:
         // The products are delivered to this method in bulks of max 1000 items. Currently, there are ca. 2050 items, so we receive 3 batches from full reindex.
-        // $bulkParams array comes in pairs: item 0 is "index": { "_index": "[unrelevant]", "_type": "product", "_id": 14 (which is also the product id) }
+        // $bulkParams array comes in pairs: item 0 is "index": { "_type": "product", "_id": 14 (which is also the product id) }
         // item 1 is the product data array
         // item 2 is the index for second product, item 3 is the second product data -> and so on
 

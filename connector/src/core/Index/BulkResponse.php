@@ -53,10 +53,9 @@ class BulkResponse implements BulkResponseInterface
         foreach ($this->getErrorItems() as $item) {
             $operationType = current(array_keys($item));
             $itemData = $item[$operationType];
-            $index = $itemData['_index'];
             $documentType = $itemData['_type'];
             $errorData = $itemData['error'];
-            $errorKey = $operationType . $errorData['type'] . $errorData['reason'] . $index . $documentType;
+            $errorKey = $operationType . $errorData['type'] . $errorData['reason'] . $documentType;
 
             if (!isset($errorByReason[$errorKey])) {
                 $errorByReason[$errorKey] = $this->prepareErrorByReason($item);
@@ -76,7 +75,6 @@ class BulkResponse implements BulkResponseInterface
         $errorData = $itemData['error'];
 
         return [
-            'index' => $itemData['_index'],
             'document_type' => $itemData['_type'],
             'operation' => $operationType,
             'error' => [
