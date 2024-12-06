@@ -50,7 +50,7 @@ class GenericIndexerHandler
     }
 
     /**
-     * Update documents in ES
+     * Used to update Product Category
      *
      * @return $this
      * @throws ConnectionUnhealthyException
@@ -102,7 +102,7 @@ class GenericIndexerHandler
     }
 
     /**
-     * Save documents in ES
+     * Used to update Products, Categories and Attributes
      *
      * @throws ConnectionUnhealthyException
      */
