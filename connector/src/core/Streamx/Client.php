@@ -2,6 +2,7 @@
 
 namespace StreamX\ConnectorCore\Streamx;
 
+use Exception;
 use StreamX\ConnectorCore\Api\Client\ClientInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Store\Model\StoreManagerInterface;
@@ -46,33 +47,38 @@ class Client implements ClientInterface {
 
         // In the update on save mode (when a single product is updated via Magento UI):
         // We receive the same format, but only one pair of array items: 0 = index definition and 1 = the product
-        // TODO: this seems to be used to update Products, Categories and Attributes
+        // -> This is used to send updates for Products, Categories and Attributes
 
         // When installing the connector, automatic reindex of all is performed, but it contains additional items:
         // 0 is "update" and 1 is "doc" (and so on, they come in pairs)
-        // The "doc" items are like smaller duplicates - they contain only some fields of the products, so we skip them
-        // TODO: this seems to be used to update Product Categories
+        // The "_type" of "update" is always "product".
+        // And "doc" contains most important fields of the product and list of its categories (id/name/position of each)
+        // -> This is used to send updates for Product Categories
 
         $bodyArray = $bulkParams['body'];
 
-        // The two vars serve to store types of the even items to correctly interpret the odd ones
-        $isUpdateDoc = false;
+        // The var serves to store types of the even items to correctly interpret the odd ones
         $entityType = null;
 
         for ($i = 0; $i < count($bodyArray); $i++) {
             $item = $bodyArray[$i];
             if ($i % 2 == 0) {
                 if (isset($item['update'])) {
-                    $isUpdateDoc = true;
+                    $entityType = 'product_category'; // TODO add validation that we expect $item['doc']['_type'] == 'product'
+                } else if (isset($item['index'])) {
+                    $entityType = $item['index']['_type']; // product, category or attribute
+                    // TODO add test for publishing attributes
                 } else {
-                    $isUpdateDoc = false;
-                    $entityType = $item['index']['_type']; // product, category ...
+                    throw new Exception(json_encode($item, JSON_PRETTY_PRINT));
                 }
             } else {
-                if ($isUpdateDoc && isset($item['doc'])) {
-                    continue;
+                if (isset($item['doc'])) {
+                    $entity = $item['doc'];
+                    // TODO add test for publishing product categories
+                } else {
+                    $entity = $item;
                 }
-                $entity = $item;
+
                 $key = $entityType . '_' . $entity['id'];
                 try {
                     $this->publishToStreamX($key, json_encode($entity)); // TODO make sure this will never block
