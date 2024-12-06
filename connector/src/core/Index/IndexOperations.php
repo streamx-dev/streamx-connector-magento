@@ -2,6 +2,7 @@
 
 namespace StreamX\ConnectorCore\Index;
 
+use Magento\Framework\Intl\DateTimeFactory;
 use StreamX\ConnectorCore\Api\BulkResponseInterface;
 use StreamX\ConnectorCore\Api\Client\ClientInterface;
 use StreamX\ConnectorCore\Api\BulkResponseInterfaceFactory as BulkResponseFactory;
@@ -10,38 +11,47 @@ use StreamX\ConnectorCore\Api\BulkRequestInterfaceFactory as BulkRequestFactory;
 use StreamX\ConnectorCore\Api\IndexInterface;
 use StreamX\ConnectorCore\Api\IndexInterfaceFactory as IndexFactory;
 use StreamX\ConnectorCore\Api\IndexOperationInterface;
+use StreamX\ConnectorCore\Config\IndicesSettings;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
+use StreamX\ConnectorCore\Index\Indicies\Config;
 use StreamX\ConnectorCore\Streamx\ClientResolver;
 use StreamX\ConnectorCore\Exception\ConnectionUnhealthyException;
 use Magento\Store\Api\Data\StoreInterface;
 
 class IndexOperations implements IndexOperationInterface
 {
+    public const INDEX_NAME_PREFIX = 'streamx_storefront_catalog';
     const GREEN_HEALTH_STATUS = 'green';
 
+    private Config $indicesConfig;
+    private IndicesSettings $indicesSettings;
     private ClientResolver $clientResolver;
     private IndexFactory $indexFactory;
     private BulkResponseFactory $bulkResponseFactory;
     private BulkRequestFactory $bulkRequestFactory;
-    private IndexSettings $indexSettings;
     private ?array $indicesConfiguration = null;
     private ?array $indicesByName = null;
     private OptimizationSettings $optimizationSettings;
+    private DateTimeFactory $dateTimeFactory;
 
     public function __construct(
-        ClientResolver $clientResolver,
-        BulkResponseFactory $bulkResponseFactory,
-        BulkRequestFactory $bulkRequestFactory,
-        IndexSettings $indexSettings,
-        IndexFactory $indexFactory,
-        OptimizationSettings $optimizationSettings
+        Config               $indicesConfig,
+        IndicesSettings      $indicesSettings,
+        ClientResolver       $clientResolver,
+        BulkResponseFactory  $bulkResponseFactory,
+        BulkRequestFactory   $bulkRequestFactory,
+        IndexFactory         $indexFactory,
+        OptimizationSettings $optimizationSettings,
+        DateTimeFactory $dateTimeFactory
     ) {
+        $this->indicesConfig = $indicesConfig;
+        $this->indicesSettings = $indicesSettings;
         $this->clientResolver = $clientResolver;
         $this->indexFactory = $indexFactory;
-        $this->indexSettings = $indexSettings;
         $this->bulkResponseFactory = $bulkResponseFactory;
         $this->bulkRequestFactory = $bulkRequestFactory;
         $this->optimizationSettings = $optimizationSettings;
+        $this->dateTimeFactory = $dateTimeFactory;
     }
 
     public function executeBulk(int $storeId, BulkRequestInterface $bulk): BulkResponseInterface
@@ -67,13 +77,28 @@ class IndexOperations implements IndexOperationInterface
 
     public function getIndex(StoreInterface $store): IndexInterface
     {
-        $indexName = $this->indexSettings->createIndexName($store);
+        $indexName = $this->createIndexName($store);
 
         if (!isset($this->indicesByName[$indexName])) {
             $this->initIndex($store);
         }
 
         return $this->indicesByName[$indexName];
+    }
+
+    private function createIndexName(StoreInterface $store): string
+    {
+        $indexNamePrefix = self::INDEX_NAME_PREFIX;
+        $storeIdentifier = (string)$store->getId();
+
+        if ($storeIdentifier) {
+            $indexNamePrefix .= '_' . $storeIdentifier;
+        }
+
+        $name = strtolower($indexNamePrefix);
+        $currentDate = $this->dateTimeFactory->create();
+
+        return $name . '_' . $currentDate->getTimestamp();
     }
 
     public function createIndex(StoreInterface $store): IndexInterface
@@ -84,15 +109,15 @@ class IndexOperations implements IndexOperationInterface
     private function initIndex(StoreInterface $store): Index
     {
         if (null === $this->indicesConfiguration) {
-            $this->indicesConfiguration = $this->indexSettings->getIndicesConfig();
+            $this->indicesConfiguration = $this->indicesConfig->get();
         }
 
-        if (!isset($this->indicesConfiguration[IndexSettings::INDEX_NAME_PREFIX])) {
+        if (!isset($this->indicesConfiguration[self::INDEX_NAME_PREFIX])) {
             throw new \LogicException('No configuration found');
         }
 
-        $indexName = $this->indexSettings->createIndexName($store);
-        $config = $this->indicesConfiguration[IndexSettings::INDEX_NAME_PREFIX];
+        $indexName = $this->createIndexName($store);
+        $config = $this->indicesConfiguration[self::INDEX_NAME_PREFIX];
 
         /** @var Index $index */
         $index = $this->indexFactory->create(
@@ -112,7 +137,7 @@ class IndexOperations implements IndexOperationInterface
 
     public function getBatchIndexingSize(): int
     {
-        return $this->indexSettings->getBatchIndexingSize();
+        return $this->indicesSettings->getBatchIndexingSize();
     }
 
     private function resolveClient(int $storeId): ClientInterface

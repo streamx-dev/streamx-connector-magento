@@ -57,7 +57,7 @@ class IndexOperationsTest extends TestCase
 
     /** @var array[][]  */
     private $indicesXmlConfiguration  = [
-        IndexSettings::INDEX_NAME_PREFIX => [
+        IndexOperations::INDEX_NAME_PREFIX => [
             'types' => []
         ]
     ];
@@ -109,7 +109,7 @@ class IndexOperationsTest extends TestCase
 
     public function testGetExistingIndex()
     {
-        $name = IndexSettings::INDEX_NAME_PREFIX;
+        $name = IndexOperations::INDEX_NAME_PREFIX;
 
         $indexMock = new Index(
             $name,
@@ -137,7 +137,7 @@ class IndexOperationsTest extends TestCase
     {
         $this->storeMock->method('getId')->willReturn(1);
 
-        $name = IndexSettings::INDEX_NAME_PREFIX;
+        $name = IndexOperations::INDEX_NAME_PREFIX;
 
         $indexMock = new Index(
             $name,
