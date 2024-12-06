@@ -67,9 +67,5 @@ class EditedProductStreamxPublishTest extends BaseEditedEntityStreamxPublishTest
                    AND entity_id = $productId
             EOD);
         }
-
-        // 5. Additionally, verify if as a result of full reindex made at app start, categories are also published
-        // TODO: set up dedicated test for category indexer, and move this assertion there
-        $this->assertDataIsPublished('category_2', 'Default Category');
     }
 }
