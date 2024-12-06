@@ -2,14 +2,15 @@
 
 namespace StreamX\ConnectorCore\Indexer;
 
+use InvalidArgumentException;
+use LogicException;
 use StreamX\ConnectorCore\Api\BulkLoggerInterface;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
+use StreamX\ConnectorCore\Api\Index\TypeInterface;
 use StreamX\ConnectorCore\Api\Indexer\TransactionKeyInterface;
 use StreamX\ConnectorCore\Api\IndexOperationInterface;
 use StreamX\ConnectorCore\Exception\ConnectionDisabledException;
 use StreamX\ConnectorCore\Exception\ConnectionUnhealthyException;
-use StreamX\ConnectorCore\Index\Index;
-use StreamX\ConnectorCore\Index\IndexOperations;
 use StreamX\ConnectorCore\Index\Indicies\Config;
 use StreamX\ConnectorCore\Logger\IndexerLogger;
 use Magento\Framework\Indexer\SaveHandler\Batch;
@@ -18,18 +19,19 @@ use Traversable;
 
 class GenericIndexerHandler
 {
+    public const INDEX_NAME_PREFIX = 'streamx_storefront_catalog';
+
     private Batch $batch;
-    public Config $indicesConfig;
+    private Config $indicesConfig;
     private IndexOperationInterface $indexOperations;
     private string $typeName;
+    private TypeInterface $type;
     private IndexerLogger $indexerLogger;
     /**
      * @var int|string
      */
     private $transactionKey;
     private BulkLoggerInterface $bulkLogger;
-    public array $types = [];
-    public array $indicesByName = [];
 
     public function __construct(
         BulkLoggerInterface $bulkLogger,
@@ -45,6 +47,7 @@ class GenericIndexerHandler
         $this->indicesConfig = $indicesConfig;
         $this->indexOperations = $indexOperationProvider;
         $this->typeName = $typeName;
+        $this->type = $this->loadType($typeName);
         $this->indexerLogger = $indexerLogger;
         $this->transactionKey = $transactionKey->load();
     }
@@ -58,12 +61,10 @@ class GenericIndexerHandler
     public function updateIndex(Traversable $documents, StoreInterface $store, array $requireDataProvides)
     {
         try {
-            $index = $this->getIndex($store);
-            $type = $index->getType($this->typeName);
             $storeId = (int)$store->getId();
             $dataProviders = [];
 
-            foreach ($type->getDataProviders() as $name => $dataProvider) {
+            foreach ($this->type->getDataProviders() as $name => $dataProvider) {
                 if (in_array($name, $requireDataProvides)) {
                     $dataProviders[] = $dataProvider;
                 }
@@ -84,7 +85,7 @@ class GenericIndexerHandler
                 }
 
                 $bulkRequest = $this->indexOperations->createBulk()->updateDocuments(
-                    $index->getName(),
+                    'dummy', // TODO remove param
                     $this->typeName,
                     $docs
                 );
@@ -109,13 +110,11 @@ class GenericIndexerHandler
     public function saveIndex(Traversable $documents, StoreInterface $store): void
     {
         try {
-            $index = $this->getIndex($store);
-            $type = $index->getType($this->typeName);
             $storeId = (int)$store->getId();
             $batchSize = $this->indexOperations->getBatchIndexingSize();
 
             foreach ($this->batch->getItems($documents, $batchSize) as $docs) {
-                foreach ($type->getDataProviders() as $dataProvider) {
+                foreach ($this->type->getDataProviders() as $dataProvider) {
                     if (!empty($docs)) {
                         $docs = $dataProvider->addData($docs, $storeId);
                     }
@@ -123,7 +122,7 @@ class GenericIndexerHandler
 
                 if (!empty($docs)) {
                     $bulkRequest = $this->indexOperations->createBulk()->addDocuments(
-                        $index->getName(),
+                        'dummy', // TODO remove param
                         $this->typeName,
                         $docs
                     );
@@ -148,7 +147,6 @@ class GenericIndexerHandler
     public function cleanUpByTransactionKey(StoreInterface $store, array $docIds = null): void
     {
         try {
-            $index = $this->getIndex($store); // TODO remove
             $transactionKeyQuery = ['must_not' => ['term' => ['tsk' => $this->transactionKey]]];
             $query = ['query' => ['bool' => $transactionKeyQuery]];
 
@@ -157,7 +155,7 @@ class GenericIndexerHandler
             }
 
             $query = [
-                'index' => $index->getName(), // TODO remove
+                'index' => 'dummy', // TODO remove param
                 'type' => $this->typeName,
                 'body' => $query,
             ];
@@ -168,41 +166,18 @@ class GenericIndexerHandler
         }
     }
 
-    private function getIndex(StoreInterface $store): Index
+    public function loadType(string $typeName): TypeInterface
     {
-        $indexName = $this->createIndexName($store);
-
-        if (!isset($this->indicesByName[$indexName])) {
-            $index = $this->initIndex($store);
-            $this->indicesByName[$indexName] = $index;
-        }
-
-        return $this->indicesByName[$indexName];
-    }
-
-    private function createIndexName(StoreInterface $store): string
-    {
-        $indexNamePrefix = IndexOperations::INDEX_NAME_PREFIX;
-        $storeIdentifier = (string)$store->getId();
-
-        return $storeIdentifier
-            ? $indexNamePrefix . '_' . $storeIdentifier
-            : $indexNamePrefix;
-    }
-
-    private function initIndex(StoreInterface $store): Index
-    {
-        if (empty($this->types)) {
-            $indicesConfiguration = $this->indicesConfig->get();
-            if (!isset($indicesConfiguration[IndexOperations::INDEX_NAME_PREFIX])) {
-                throw new \LogicException('No configuration found');
+        $indicesConfiguration = $this->indicesConfig->get();
+        if (isset($indicesConfiguration[self::INDEX_NAME_PREFIX])) {
+            $config = $indicesConfiguration[self::INDEX_NAME_PREFIX];
+            $types = $config['types'];
+            if (isset($types[$typeName])) {
+                return $types[$typeName];
             }
-            $config = $indicesConfiguration[IndexOperations::INDEX_NAME_PREFIX];
-            $this->types = $config['types'];
+            throw new InvalidArgumentException("Type $typeName is not available");
         }
-
-        $indexName = $this->createIndexName($store);
-        return new Index($indexName, $this->types);
+        throw new LogicException('No configuration found');
     }
 
     public function getTypeName(): string
