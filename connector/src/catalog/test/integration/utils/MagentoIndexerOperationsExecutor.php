@@ -7,8 +7,6 @@ use function shell_exec;
 
 class MagentoIndexerOperationsExecutor {
 
-    private const INDEXER_NAME = 'streamx_product_indexer';
-
     public const UPDATE_ON_SAVE_DISPLAY_NAME = 'Update on Save';
     public const UPDATE_BY_SCHEDULE_DISPLAY_NAME = 'Update by Schedule';
 
@@ -16,9 +14,11 @@ class MagentoIndexerOperationsExecutor {
     private const UPDATE_BY_SCHEDULE_INTERNAL_NAME = 'schedule';
 
     private string $magentoFolder;
+    private string $indexerName;
 
-    public function __construct() {
+    public function __construct(string $indexerName) {
         $this->magentoFolder = self::findMagentoFolder();
+        $this->indexerName = $indexerName;
     }
 
     public function setProductIndexerModeToUpdateOnSave(): void {
@@ -31,7 +31,7 @@ class MagentoIndexerOperationsExecutor {
 
     public function executeCommand(string $indexerCommand): ?string {
         $cdCommand = 'cd ' . $this->magentoFolder;
-        $magentoCommand = 'bin/magento indexer:' . $indexerCommand . ' ' . self::INDEXER_NAME;
+        $magentoCommand = 'bin/magento indexer:' . $indexerCommand . ' ' . $this->indexerName;
         return shell_exec("$cdCommand && $magentoCommand");
     }
 
