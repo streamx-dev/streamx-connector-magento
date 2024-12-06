@@ -2,58 +2,33 @@
 
 namespace StreamX\ConnectorCore\Index;
 
-use StreamX\ConnectorCore\Api\IndexInterface;
 use StreamX\ConnectorCore\Api\Index\TypeInterface;
 
-class Index implements IndexInterface
+class Index
 {
-
-    /**
-     * Name of the index.
-     */
     private string $name;
 
     /**
-     * Index types.
-     *
      * @var TypeInterface[]
      */
-    private $types;
+    private array $types = [];
 
-    public function __construct(
-        string $name,
-        array $types
-    ) {
+    public function __construct(string $name, array $types) {
         $this->name = $name;
-        $this->types = $this->prepareTypes($types);
-    }
-
-    /**
-     * @param TypeInterface[] $types
-     *
-     * @return TypeInterface[]
-     */
-    private function prepareTypes($types)
-    {
-        $preparedTypes = [];
 
         foreach ($types as $type) {
-            $preparedTypes[$type->getName()] = $type;
+            $this->types[$type->getName()] = $type;
         }
-
-        return $preparedTypes;
     }
 
-    public function getName(): string
-    {
+    public function getName(): string {
         return $this->name;
     }
 
     /**
-     * @inheritdoc
+     * @throws \InvalidArgumentException When the type does not exists.
      */
-    public function getType(string $typeName)
-    {
+    public function getType(string $typeName): TypeInterface {
         if (!isset($this->types[$typeName])) {
             throw new \InvalidArgumentException("Type $typeName is not available in index.");
         }
