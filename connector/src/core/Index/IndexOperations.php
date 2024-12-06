@@ -14,7 +14,6 @@ use StreamX\ConnectorCore\Exception\ConnectionUnhealthyException;
 
 class IndexOperations implements IndexOperationInterface
 {
-    public const INDEX_NAME_PREFIX = 'streamx_storefront_catalog';
     const GREEN_HEALTH_STATUS = 'green';
 
     private ClientResolver $clientResolver;

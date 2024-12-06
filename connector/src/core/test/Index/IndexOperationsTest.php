@@ -8,6 +8,7 @@ use StreamX\ConnectorCore\Api\BulkResponseInterfaceFactory as BulkResponseFactor
 use StreamX\ConnectorCore\Api\BulkRequestInterfaceFactory as BulkRequestFactory;
 use StreamX\ConnectorCore\Api\IndexInterfaceFactory as IndexFactory;
 use StreamX\ConnectorCore\Index\Index;
+use StreamX\ConnectorCore\Indexer\GenericIndexerHandler;
 use StreamX\ConnectorCore\Streamx\ClientResolver;
 use PHPUnit\Framework\TestCase;
 use Magento\Store\Model\Store;
@@ -57,7 +58,7 @@ class IndexOperationsTest extends TestCase
 
     /** @var array[][]  */
     private $indicesXmlConfiguration  = [
-        IndexOperations::INDEX_NAME_PREFIX => [
+        GenericIndexerHandler::INDEX_NAME_PREFIX => [
             'types' => []
         ]
     ];
@@ -109,7 +110,7 @@ class IndexOperationsTest extends TestCase
 
     public function testGetExistingIndex()
     {
-        $name = IndexOperations::INDEX_NAME_PREFIX;
+        $name = GenericIndexerHandler::INDEX_NAME_PREFIX;
 
         $indexMock = new Index(
             $name,
@@ -137,7 +138,7 @@ class IndexOperationsTest extends TestCase
     {
         $this->storeMock->method('getId')->willReturn(1);
 
-        $name = IndexOperations::INDEX_NAME_PREFIX;
+        $name = GenericIndexerHandler::INDEX_NAME_PREFIX;
 
         $indexMock = new Index(
             $name,
