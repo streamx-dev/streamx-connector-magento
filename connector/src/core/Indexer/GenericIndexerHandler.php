@@ -9,7 +9,6 @@ use StreamX\ConnectorCore\Api\Indexer\TransactionKeyInterface;
 use StreamX\ConnectorCore\Api\IndexOperationInterface;
 use StreamX\ConnectorCore\Exception\ConnectionDisabledException;
 use StreamX\ConnectorCore\Exception\ConnectionUnhealthyException;
-use StreamX\ConnectorCore\Index\IndexSettings;
 use StreamX\ConnectorCore\Logger\IndexerLogger;
 use Exception;
 use Magento\Framework\Indexer\SaveHandler\Batch;
