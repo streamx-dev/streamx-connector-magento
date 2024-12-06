@@ -10,7 +10,7 @@ class ProductProcessor extends \Magento\Framework\Indexer\AbstractProcessor
     /**
      * Indexer ID
      */
-    const INDEXER_ID = 'streamx_product_indexer';
+    public const INDEXER_ID = 'streamx_product_indexer';
 
     /**
      * @var DependencyInfoProviderInterface

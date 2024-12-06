@@ -2,44 +2,17 @@
 
 namespace StreamX\ConnectorCatalog\test\integration;
 
-use PHPUnit\Framework\TestCase;
-use StreamX\ConnectorCatalog\test\integration\utils\MagentoIndexerOperationsExecutor;
+use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
 use function date;
 
 /**
- * Prerequisites to running this test
- * 1. markshust/docker-magento images must be running
- * 2. StreamX must be running (with the add-rest-ingestion-to-magento-network.sh script executed)
+ * See base class for prerequisites to run this test
  */
-class EditedProductStreamxPublishTest extends TestCase {
+class EditedProductStreamxPublishTest extends BaseEditedEntityStreamxPublishTest {
 
-    private const STREAMX_DELIVERY_SERVICE_BASE_URL = "http://localhost:8081";
-    private const TIMEOUT_SECONDS = 10;
-
-    private static MagentoIndexerOperationsExecutor $indexerOperations;
-    private static bool $wasProductIndexerOriginallyInUpdateOnSaveMode;
-
-    public static function setUpBeforeClass(): void {
-        self::$indexerOperations = new MagentoIndexerOperationsExecutor();
-
-        // read original mode of the indexer
-        self::$wasProductIndexerOriginallyInUpdateOnSaveMode = str_contains(
-            self::$indexerOperations->executeCommand('show-mode'),
-            MagentoIndexerOperationsExecutor::UPDATE_ON_SAVE_DISPLAY_NAME
-        );
-
-        // change to scheduled if needed
-        if (self::$wasProductIndexerOriginallyInUpdateOnSaveMode) {
-            self::$indexerOperations->setProductIndexerModeToUpdateBySchedule();
-        }
-    }
-
-    public static function tearDownAfterClass(): void {
-        // restore mode of indexer if needed
-        if (self::$wasProductIndexerOriginallyInUpdateOnSaveMode) {
-            self::$indexerOperations->setProductIndexerModeToUpdateOnSave();
-        }
+    protected function getIndexerName(): string {
+        return ProductProcessor::INDEXER_ID;
     }
 
     /** @test */
@@ -79,12 +52,12 @@ class EditedProductStreamxPublishTest extends TestCase {
         EOD);
 
         // 3. Trigger reindexing
-        self::$indexerOperations->executeCommand('reindex');
+        $this->indexerOperations->executeCommand('reindex');
 
         // 4. Assert product is published to StreamX
         try {
             $expectedKey = "product_$productId";
-            $this->assertPageIsPublished($expectedKey, $productNewName);
+            $this->assertDataIsPublished($expectedKey, $productNewName);
         } finally {
             // 5. Restore product name in DB
             MagentoMySqlQueryExecutor::execute(<<<EOD
@@ -97,23 +70,6 @@ class EditedProductStreamxPublishTest extends TestCase {
 
         // 5. Additionally, verify if as a result of full reindex made at app start, categories are also published
         // TODO: set up dedicated test for category indexer, and move this assertion there
-        $this->assertPageIsPublished('category_2', 'Default Category');
-    }
-
-    private function assertPageIsPublished(string $key, string $contentSubstring) {
-        $url = self::STREAMX_DELIVERY_SERVICE_BASE_URL . '/' . $key;
-
-        $startTime = time();
-        while (time() - $startTime < self::TIMEOUT_SECONDS) {
-            $response = @file_get_contents($url);
-            if ($response !== false) {
-                echo "Published page content: $response\n";
-                $this->assertStringContainsString($contentSubstring, $response);
-                return;
-            }
-            usleep(100000); // sleep for 100 milliseconds
-        }
-
-        $this->fail("$url: page not found");
+        $this->assertDataIsPublished('category_2', 'Default Category');
     }
 }
