@@ -2,13 +2,18 @@
 
 namespace StreamX\ConnectorCore\Indexer;
 
+use Magento\Framework\Intl\DateTimeFactory;
 use StreamX\ConnectorCore\Api\BulkLoggerInterface;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 use StreamX\ConnectorCore\Api\IndexInterface;
+use StreamX\ConnectorCore\Api\IndexInterfaceFactory as IndexFactory;
 use StreamX\ConnectorCore\Api\Indexer\TransactionKeyInterface;
 use StreamX\ConnectorCore\Api\IndexOperationInterface;
 use StreamX\ConnectorCore\Exception\ConnectionDisabledException;
 use StreamX\ConnectorCore\Exception\ConnectionUnhealthyException;
+use StreamX\ConnectorCore\Index\Index;
+use StreamX\ConnectorCore\Index\IndexOperations;
+use StreamX\ConnectorCore\Index\Indicies\Config;
 use StreamX\ConnectorCore\Logger\IndexerLogger;
 use Exception;
 use Magento\Framework\Indexer\SaveHandler\Batch;
@@ -18,6 +23,8 @@ use Traversable;
 class GenericIndexerHandler
 {
     private Batch $batch;
+    public Config $indicesConfig;
+    public IndexFactory $indexFactory;
     private IndexOperationInterface $indexOperations;
     private string $typeName;
     private IndexerLogger $indexerLogger;
@@ -26,21 +33,30 @@ class GenericIndexerHandler
      */
     private $transactionKey;
     private BulkLoggerInterface $bulkLogger;
+    public DateTimeFactory $dateTimeFactory;
+    public ?array $indicesConfiguration = null;
+    public ?array $indicesByName = null;
 
     public function __construct(
         BulkLoggerInterface $bulkLogger,
         IndexOperationInterface $indexOperationProvider,
         IndexerLogger $indexerLogger,
         Batch $batch,
+        Config $indicesConfig,
+        IndexFactory $indexFactory,
         TransactionKeyInterface $transactionKey,
-        string $typeName
+        string $typeName,
+        DateTimeFactory $dateTimeFactory
     ) {
         $this->bulkLogger = $bulkLogger;
         $this->batch = $batch;
+        $this->indicesConfig = $indicesConfig;
+        $this->indexFactory = $indexFactory;
         $this->indexOperations = $indexOperationProvider;
         $this->typeName = $typeName;
         $this->indexerLogger = $indexerLogger;
         $this->transactionKey = $transactionKey->load();
+        $this->dateTimeFactory = $dateTimeFactory;
     }
 
     /**
@@ -142,7 +158,7 @@ class GenericIndexerHandler
     public function cleanUpByTransactionKey(StoreInterface $store, array $docIds = null): void
     {
         try {
-            $index = $this->indexOperations->getIndex($store);
+            $index = $this->getIndex($store); // TODO remove
             $transactionKeyQuery = ['must_not' => ['term' => ['tsk' => $this->transactionKey]]];
             $query = ['query' => ['bool' => $transactionKeyQuery]];
 
@@ -151,7 +167,7 @@ class GenericIndexerHandler
             }
 
             $query = [
-                'index' => $index->getName(),
+                'index' => $index->getName(), // TODO remove
                 'type' => $this->typeName,
                 'body' => $query,
             ];
@@ -165,12 +181,67 @@ class GenericIndexerHandler
     private function getIndex(StoreInterface $store): IndexInterface
     {
         try {
-            $index = $this->indexOperations->getIndex($store);
+            $index = $this->getOrInitIndex($store);
         } catch (Exception $e) {
-            $index = $this->indexOperations->createIndex($store);
+            $index = $this->createIndex($store);
         }
 
         return $index;
+    }
+
+    public function getOrInitIndex(StoreInterface $store): IndexInterface
+    {
+        $indexName = $this->createIndexName($store);
+
+        if (!isset($this->indicesByName[$indexName])) {
+            $this->initIndex($store);
+        }
+
+        return $this->indicesByName[$indexName];
+    }
+
+    public function createIndexName(StoreInterface $store): string
+    {
+        $indexNamePrefix = IndexOperations::INDEX_NAME_PREFIX;
+        $storeIdentifier = (string)$store->getId();
+
+        if ($storeIdentifier) {
+            $indexNamePrefix .= '_' . $storeIdentifier;
+        }
+
+        $name = strtolower($indexNamePrefix);
+        $currentDate = $this->dateTimeFactory->create();
+
+        return $name . '_' . $currentDate->getTimestamp();
+    }
+
+    public function createIndex(StoreInterface $store): IndexInterface
+    {
+        return $this->initIndex($store);
+    }
+
+    public function initIndex(StoreInterface $store): Index
+    {
+        if (null === $this->indicesConfiguration) {
+            $this->indicesConfiguration = $this->indicesConfig->get();
+        }
+
+        if (!isset($this->indicesConfiguration[IndexOperations::INDEX_NAME_PREFIX])) {
+            throw new \LogicException('No configuration found');
+        }
+
+        $indexName = $this->createIndexName($store);
+        $config = $this->indicesConfiguration[IndexOperations::INDEX_NAME_PREFIX];
+
+        /** @var Index $index */
+        $index = $this->indexFactory->create(
+            [
+                'name' => $indexName,
+                'types' => $config['types'],
+            ]
+        );
+
+        return $this->indicesByName[$indexName] = $index;
     }
 
     public function getTypeName(): string

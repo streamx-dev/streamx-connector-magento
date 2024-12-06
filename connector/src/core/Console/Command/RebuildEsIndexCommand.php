@@ -197,7 +197,8 @@ class RebuildEsIndexCommand extends AbstractIndexerCommand
     private function reindexStore(StoreInterface $store, OutputInterface $output): int
     {
         $this->getIndexerStoreManager()->override([$store]);
-        $index = $this->getIndexOperations()->createIndex($store);
+        $index = $this->getIndexOperations()->createIndex($store); // TODO: no such method anymore, write own method when it is decided that this Command should remain here
+        // @see GenericIndexerHandler::createIndex
 
         $returnValue = Cli::RETURN_FAILURE;
 
