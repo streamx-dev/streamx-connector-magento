@@ -2,7 +2,6 @@
 
 namespace StreamX\ConnectorCore\Console\Command;
 
-use StreamX\ConnectorCore\Index\IndexSettings;
 use StreamX\ConnectorCore\Indexer\StoreManager;
 use StreamX\ConnectorCore\Api\IndexOperationInterface;
 use Magento\Framework\App\ObjectManagerFactory;
