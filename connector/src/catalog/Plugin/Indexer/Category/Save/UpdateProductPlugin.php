@@ -2,20 +2,14 @@
 
 namespace StreamX\ConnectorCatalog\Plugin\Indexer\Category\Save;
 
+use Magento\Catalog\Model\Category;
 use StreamX\ConnectorCatalog\Model\Indexer\ProductCategoryProcessor;
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 
 class UpdateProductPlugin
 {
-    /**
-     * @var ProductCategoryProcessor
-     */
-    private $productCategoryProcessor;
-
-    /**
-     * @var ProductProcessor
-     */
-    private $productProcessor;
+    private ProductCategoryProcessor $productCategoryProcessor;
+    private ProductProcessor $productProcessor;
 
     public function __construct(
         ProductProcessor $productProcessor,
@@ -27,10 +21,8 @@ class UpdateProductPlugin
 
     /**
      * Update product category data in ES after changing category products
-     *
-     * @return \Magento\Catalog\Model\Category
      */
-    public function afterSave(\Magento\Catalog\Model\Category $category)
+    public function afterSave(Category $category): Category
     {
         $isChangedProductList = $category->getData('is_changed_product_list');
 

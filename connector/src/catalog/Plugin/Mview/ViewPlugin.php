@@ -8,10 +8,7 @@ use Magento\Framework\Mview\ViewInterface;
 
 class ViewPlugin
 {
-    /**
-     * @var CatalogConfigurationInterface
-     */
-    private $catalogSettings;
+    private CatalogConfigurationInterface $catalogSettings;
 
     public function __construct(CatalogConfigurationInterface $catalogSettings)
     {

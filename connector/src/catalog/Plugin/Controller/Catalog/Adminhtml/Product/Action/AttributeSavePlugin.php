@@ -9,15 +9,8 @@ use Magento\Catalog\Helper\Product\Edit\Action\Attribute;
 
 class AttributeSavePlugin
 {
-    /**
-     * @var Attribute
-     */
-    private $attributeHelper;
-
-    /**
-     * @var ProductProcessor
-     */
-    private $processor;
+    private Attribute $attributeHelper;
+    private ProductProcessor $processor;
 
     public function __construct(Attribute $attributeHelper, ProductProcessor $processor)
     {
@@ -26,11 +19,9 @@ class AttributeSavePlugin
     }
 
     /**
-     * @return Redirect
-     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function afterExecute(Save $subject, Redirect $result)
+    public function afterExecute(Save $subject, Redirect $result): Redirect
     {
         $productIds = $this->attributeHelper->getProductIds();
 

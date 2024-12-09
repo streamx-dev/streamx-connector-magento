@@ -7,15 +7,8 @@ use Magento\CatalogInventory\Observer\RevertQuoteInventoryObserver;
 
 class RevertQuoteInventoryObserverPlugin
 {
-    /**
-     * @var ProductsForReindex
-     */
-    private $productsForReindex;
-
-    /**
-     * @var ProductProcessor
-     */
-    private $productProcessor;
+    private ProductsForReindex $productsForReindex;
+    private ProductProcessor $productProcessor;
 
     public function __construct(
         ProductsForReindex $itemsForReindex,

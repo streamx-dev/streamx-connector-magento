@@ -6,10 +6,7 @@ use Magento\CatalogInventory\Model\ResourceModel\QtyCounterInterface;
 
 class QtyCorrectPlugin
 {
-    /**
-     * @var ProductsForReindex
-     */
-    private $productsForReindex;
+    private ProductsForReindex $productsForReindex;
 
     public function __construct(
         ProductsForReindex $itemsForReindex
