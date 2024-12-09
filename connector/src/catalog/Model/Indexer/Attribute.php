@@ -8,20 +8,9 @@ use StreamX\ConnectorCore\Indexer\StoreManager;
 
 class Attribute implements \Magento\Framework\Indexer\ActionInterface, \Magento\Framework\Mview\ActionInterface
 {
-    /**
-     * @var GenericIndexerHandler
-     */
-    private $indexHandler;
-
-    /**
-     * @var AttributeAction
-     */
-    private $attributeAction;
-
-    /**
-     * @var StoreManager
-     */
-    private $storeManager;
+    private GenericIndexerHandler $indexHandler;
+    private AttributeAction $attributeAction;
+    private StoreManager $storeManager;
 
     public function __construct(
         GenericIndexerHandler $indexerHandler,

@@ -2,24 +2,24 @@
 
 namespace StreamX\ConnectorCatalog\Model\Indexer;
 
-use StreamX\ConnectorCatalog\Model\Indexer\Action\Category as Action;
+use StreamX\ConnectorCatalog\Model\Indexer\Action\Category as CategoryAction;
 use StreamX\ConnectorCore\Indexer\GenericIndexerHandler;
 use StreamX\ConnectorCore\Indexer\StoreManager;
 
 class Category implements \Magento\Framework\Indexer\ActionInterface, \Magento\Framework\Mview\ActionInterface
 {
     private GenericIndexerHandler $indexHandler;
-    private Action $categoryAction;
+    private CategoryAction $categoryAction;
     private StoreManager $storeManager;
 
     public function __construct(
         GenericIndexerHandler $indexerHandler,
         StoreManager $storeManager,
-        Action $action
+        CategoryAction $action
     ) {
+        $this->indexHandler = $indexerHandler;
         $this->categoryAction = $action;
         $this->storeManager = $storeManager;
-        $this->indexHandler = $indexerHandler;
     }
 
     /**

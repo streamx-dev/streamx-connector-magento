@@ -3,9 +3,8 @@
 namespace StreamX\ConnectorCatalog\Model\Indexer;
 
 use StreamX\ConnectorCatalog\Model\Indexer\Action\Product as ProductAction;
-
-use StreamX\ConnectorCore\Indexer\StoreManager;
 use StreamX\ConnectorCore\Indexer\GenericIndexerHandler;
+use StreamX\ConnectorCore\Indexer\StoreManager;
 
 class Product implements \Magento\Framework\Indexer\ActionInterface, \Magento\Framework\Mview\ActionInterface
 {
@@ -18,8 +17,8 @@ class Product implements \Magento\Framework\Indexer\ActionInterface, \Magento\Fr
         StoreManager $storeManager,
         ProductAction $action
     ) {
-        $this->productAction = $action;
         $this->indexHandler = $indexerHandler;
+        $this->productAction = $action;
         $this->storeManager = $storeManager;
     }
 
