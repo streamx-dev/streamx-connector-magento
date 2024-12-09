@@ -29,21 +29,6 @@
         </arguments>
     </type>
 
-    <type name="StreamX\ConnectorCore\Cache\Logger\CacheLogger">
-        <arguments>
-            <argument name="name" xsi:type="string">streamxIndexerCacheLogger</argument>
-            <argument name="handlers"  xsi:type="array">
-                <item name="info" xsi:type="object">StreamX\ConnectorCore\Cache\Logger\Handler\Info</item>
-            </argument>
-        </arguments>
-    </type>
-
-    <type name="StreamX\ConnectorCore\Cache\Processor">
-        <arguments>
-            <argument name="logger" xsi:type="object">StreamX\ConnectorCore\Cache\Logger\CacheLogger</argument>
-        </arguments>
-    </type>
-
     <!-- Prevent sensitive fields from getting dumped with store config -->
     <type name="Magento\Config\Model\Config\TypePool">
         <arguments>
