@@ -6,32 +6,14 @@ use StreamX\ConnectorCatalog\Model\Indexer\Action\Product as ProductAction;
 
 use StreamX\ConnectorCore\Indexer\StoreManager;
 use StreamX\ConnectorCore\Indexer\GenericIndexerHandler;
-use StreamX\ConnectorCore\Cache\Processor as CacheProcessor;
 
 class Product implements \Magento\Framework\Indexer\ActionInterface, \Magento\Framework\Mview\ActionInterface
 {
-    /**
-     * @var GenericIndexerHandler
-     */
-    private $indexHandler;
-
-    /**
-     * @var ProductAction
-     */
-    private $productAction;
-
-    /**
-     * @var StoreManager
-     */
-    private $storeManager;
-
-    /**
-     * @var CacheProcessor
-     */
-    private $cacheProcessor;
+    private GenericIndexerHandler $indexHandler;
+    private ProductAction $productAction;
+    private StoreManager $storeManager;
 
     public function __construct(
-        CacheProcessor $cacheProcessor,
         GenericIndexerHandler $indexerHandler,
         StoreManager $storeManager,
         ProductAction $action
@@ -39,7 +21,6 @@ class Product implements \Magento\Framework\Indexer\ActionInterface, \Magento\Fr
         $this->productAction = $action;
         $this->indexHandler = $indexerHandler;
         $this->storeManager = $storeManager;
-        $this->cacheProcessor = $cacheProcessor;
     }
 
     /**
@@ -53,7 +34,6 @@ class Product implements \Magento\Framework\Indexer\ActionInterface, \Magento\Fr
             $storeId = $store->getId();
             $this->indexHandler->saveIndex($this->productAction->rebuild($storeId, $ids), $store);
             $this->indexHandler->cleanUpByTransactionKey($store, $ids);
-            $this->cacheProcessor->cleanCacheByDocIds($storeId, $this->indexHandler->getTypeName(), $ids);
         }
     }
 
@@ -67,7 +47,6 @@ class Product implements \Magento\Framework\Indexer\ActionInterface, \Magento\Fr
         foreach ($stores as $store) {
             $this->indexHandler->saveIndex($this->productAction->rebuild($store->getId()), $store);
             $this->indexHandler->cleanUpByTransactionKey($store);
-            $this->cacheProcessor->cleanCacheByTags($store->getId(), [$this->indexHandler->getTypeName()]);
         }
     }
 
