@@ -9,15 +9,8 @@ use Magento\Catalog\Model\Category;
 
 class UpdateCategoryDataPlugin
 {
-    /**
-     * @var CategoryResourceModel
-     */
-    private $resourceModel;
-
-    /**
-     * @var CategoryProcessor
-     */
-    private $categoryProcessor;
+    private CategoryResourceModel $resourceModel;
+    private CategoryProcessor $categoryProcessor;
 
     public function __construct(
         CategoryResourceModel $resourceModel,

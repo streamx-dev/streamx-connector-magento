@@ -7,10 +7,7 @@ use Magento\Catalog\Model\Product;
 
 class UpdateProductDataPlugin
 {
-    /**
-     * @var ProductProcessor
-     */
-    private $productProcessor;
+    private ProductProcessor $productProcessor;
 
     public function __construct(ProductProcessor $processor)
     {
