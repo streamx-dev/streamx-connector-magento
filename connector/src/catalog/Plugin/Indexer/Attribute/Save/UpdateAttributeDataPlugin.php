@@ -8,15 +8,8 @@ use Magento\Catalog\Model\ResourceModel\Eav\Attribute;
 
 class UpdateAttributeDataPlugin
 {
-    /**
-     * @var AttributeProcessor
-     */
-    private $attributeProcessor;
-
-    /**
-     * @var ProductProcessor
-     */
-    private $productProcessor;
+    private AttributeProcessor $attributeProcessor;
+    private ProductProcessor $productProcessor;
 
     public function __construct(
         ProductProcessor $processor,
