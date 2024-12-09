@@ -4,15 +4,20 @@ namespace StreamX\ConnectorCore\Console\Command;
 
 use Magento\Framework\App\ObjectManagerFactory;
 use Magento\Framework\Exception\LocalizedException;
-use Magento\Framework\Indexer\IndexerInterface;
+use Magento\Framework\Indexer\StateInterface;
 use Magento\Indexer\Console\Command\AbstractIndexerCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-// TODO removal candidate
+/**
+ * Resets all streamx_.* indexers
+ * Usage: bin/magento streamx:reset
+ */
 class ResetEsIndexCommand extends AbstractIndexerCommand
 {
-    const STREAMX_INDEXER_PREFIX = 'StreamX_';
+    use StreamxIndexerCommandTraits;
+
+    const DESCRIPTION = 'Resets StreamX indexers status to invalid';
 
     public function __construct(ObjectManagerFactory $objectManagerFactory)
     {
@@ -25,7 +30,7 @@ class ResetEsIndexCommand extends AbstractIndexerCommand
     protected function configure()
     {
         $this->setName('streamx:reset')
-            ->setDescription('Resets streamx indices status to invalid');
+            ->setDescription(self::DESCRIPTION);
 
         parent::configure();
     }
@@ -33,17 +38,18 @@ class ResetEsIndexCommand extends AbstractIndexerCommand
     /**
      * @inheritdoc
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->invalidateIndices($output);
+        $this->invalidateIndexes($output);
+        return 0;
     }
 
-    private function invalidateIndices(OutputInterface $output)
+    private function invalidateIndexes(OutputInterface $output)
     {
-        foreach ($this->getIndexers() as $indexer) {
+        foreach ($this->getStreamxIndexers() as $indexer) {
             try {
                 $indexer->getState()
-                    ->setStatus(\Magento\Framework\Indexer\StateInterface::STATUS_INVALID)
+                    ->setStatus(StateInterface::STATUS_INVALID)
                     ->save();
                 $output->writeln($indexer->getTitle() . ' indexer has been invalidated.');
             } catch (LocalizedException $e) {
@@ -51,25 +57,5 @@ class ResetEsIndexCommand extends AbstractIndexerCommand
                 $output->writeln("<error>" . $e->getMessage() . "</error>");
             }
         }
-    }
-
-    /**
-     * @return IndexerInterface[]
-     */
-    private function getIndexers()
-    {
-        /** @var IndexerInterface[] */
-        $indexers = $this->getAllIndexers();
-        $streamxIndexers = [];
-
-        foreach ($indexers as $indexer) {
-            $indexId = $indexer->getId();
-
-            if (substr($indexId, 0, 9) === self::STREAMX_INDEXER_PREFIX) {
-                $streamxIndexers[] = $indexer;
-            }
-        }
-
-        return $streamxIndexers;
     }
 }
