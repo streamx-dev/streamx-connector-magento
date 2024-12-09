@@ -76,12 +76,7 @@ class Processor
 
     public function cleanCacheInBatches(int $storeId, string $dataType, array $entityIds)
     {
-        $batchSize = $this->getInvalidateEntitiesBatchSize($storeId);
         $batches = [$entityIds];
-
-        if ($batchSize) {
-            $batches = array_chunk($entityIds, $batchSize);
-        }
 
         foreach ($batches as $batch) {
             $cacheInvalidateUrl = $this->getCacheInvalidateUrl($storeId, $dataType, $entityIds);
@@ -112,11 +107,6 @@ class Processor
                 $this->logger->error($e->getMessage());
             }
         }
-    }
-
-    private function getInvalidateEntitiesBatchSize(int $storeId): int
-    {
-        return $this->config->getInvalidateEntitiesBatchSize($storeId);
     }
 
     private function call(string $storeId, string $uri)
