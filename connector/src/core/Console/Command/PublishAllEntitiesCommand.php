@@ -4,6 +4,7 @@ namespace StreamX\ConnectorCore\Console\Command;
 
 use Exception;
 use Magento\Framework\Exception\NoSuchEntityException;
+use StreamX\ConnectorCatalog\Model\Indexer\ProductCategoryProcessor;
 use StreamX\ConnectorCore\Indexer\StoreManager;
 use Magento\Framework\App\ObjectManagerFactory;
 use Magento\Framework\Console\Cli;
@@ -23,7 +24,7 @@ use Magento\Store\Model\StoreManagerInterface;
  * or
  *      bin/magento streamx:reindex --all
  */
-class RebuildEsIndexCommand extends AbstractIndexerCommand
+class PublishAllEntitiesCommand extends AbstractIndexerCommand
 {
     use StreamxIndexerCommandTraits;
 
@@ -34,15 +35,12 @@ class RebuildEsIndexCommand extends AbstractIndexerCommand
 
     private ?StoreManager $indexerStoreManager = null;
     private ?StoreManagerInterface $storeManager = null;
-    private array $excludeIndices;
     private ManagerInterface $eventManager;
 
     public function __construct(
         ObjectManagerFactory $objectManagerFactory,
-        ManagerInterface $eventManager, // Proxy
-        array $excludeIndices = []
+        ManagerInterface $eventManager // Proxy
     ) {
-        $this->excludeIndices = $excludeIndices;
         parent::__construct($objectManagerFactory);
         $this->eventManager = $eventManager;
     }
@@ -192,6 +190,9 @@ class RebuildEsIndexCommand extends AbstractIndexerCommand
         $returnValue = Cli::RETURN_FAILURE;
 
         foreach ($this->getStreamxIndexers() as $indexer) {
+            if ($indexer->getId() === ProductCategoryProcessor::INDEXER_ID) {
+                continue;
+            }
             try {
                 $startTime = microtime(true);
                 $indexer->reindexAll();

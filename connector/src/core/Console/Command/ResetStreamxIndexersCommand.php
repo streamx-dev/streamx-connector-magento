@@ -13,7 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Resets all streamx_.* indexers
  * Usage: bin/magento streamx:reset
  */
-class ResetEsIndexCommand extends AbstractIndexerCommand
+class ResetStreamxIndexersCommand extends AbstractIndexerCommand
 {
     use StreamxIndexerCommandTraits;
 
@@ -40,12 +40,6 @@ class ResetEsIndexCommand extends AbstractIndexerCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->invalidateIndexes($output);
-        return 0;
-    }
-
-    private function invalidateIndexes(OutputInterface $output)
-    {
         foreach ($this->getStreamxIndexers() as $indexer) {
             try {
                 $indexer->getState()
@@ -53,9 +47,10 @@ class ResetEsIndexCommand extends AbstractIndexerCommand
                     ->save();
                 $output->writeln($indexer->getTitle() . ' indexer has been invalidated.');
             } catch (LocalizedException $e) {
-                //catch exception
                 $output->writeln("<error>" . $e->getMessage() . "</error>");
+                return -1;
             }
         }
+        return 0;
     }
 }
