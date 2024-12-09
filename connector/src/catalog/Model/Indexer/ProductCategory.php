@@ -2,6 +2,7 @@
 
 namespace StreamX\ConnectorCatalog\Model\Indexer;
 
+use Magento\Store\Api\Data\StoreInterface;
 use StreamX\ConnectorCatalog\Model\Indexer\Action\Product as ProductAction;
 use StreamX\ConnectorCore\Indexer\GenericIndexerHandler;
 use StreamX\ConnectorCore\Indexer\StoreManager;
@@ -17,9 +18,9 @@ class ProductCategory implements \Magento\Framework\Indexer\ActionInterface, \Ma
         StoreManager $storeManager,
         ProductAction $action
     ) {
+        $this->indexHandler = $indexerHandler;
         $this->productAction = $action;
         $this->storeManager = $storeManager;
-        $this->indexHandler = $indexerHandler;
     }
 
     /**
@@ -47,11 +48,9 @@ class ProductCategory implements \Magento\Framework\Indexer\ActionInterface, \Ma
     }
 
     /**
-     * @param \Magento\Store\Api\Data\StoreInterface $store
-     *
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    private function rebuild($store, array $productIds = [])
+    private function rebuild(StoreInterface $store, array $productIds = [])
     {
         $this->indexHandler->updateIndex(
             $this->productAction->rebuild($store->getId(), $productIds),
