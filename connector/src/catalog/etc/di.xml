@@ -269,12 +269,4 @@
             </argument>
         </arguments>
     </type>
-
-    <type name="StreamX\ConnectorCore\Console\Command\RebuildEsIndexCommand">
-        <arguments>
-            <argument name="excludeIndices" xsi:type="array">
-                <item name="product_category" xsi:type="const">StreamX\ConnectorCatalog\Model\Indexer\ProductCategoryProcessor::INDEXER_ID</item>
-            </argument>
-        </arguments>
-    </type>
 </config>
