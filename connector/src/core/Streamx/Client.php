@@ -67,7 +67,6 @@ class Client implements ClientInterface {
                     $entityType = 'product_category'; // TODO add validation that we expect $item['doc']['_type'] == 'product'
                 } else if (isset($item['index'])) {
                     $entityType = $item['index']['_type']; // product, category or attribute
-                    // TODO add test for publishing attributes
                 } else {
                     throw new Exception(json_encode($item, JSON_PRETTY_PRINT));
                 }
