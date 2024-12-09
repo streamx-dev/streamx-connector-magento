@@ -26,16 +26,6 @@ class Config implements ConfigInterface
         return (bool) $this->getConfigParam(self::CLEAR_CACHE_FIELD, $storeId);
     }
 
-    public function getVsfBaseUrl(int $storeId): string
-    {
-        return (string) $this->getConfigParam(self::VSF_BASE_URL_FIELD, $storeId);
-    }
-
-    public function getInvalidateCacheKey(int $storeId): string
-    {
-        return (string) $this->getConfigParam(self::INVALIDATE_CACHE_FIELD, $storeId);
-    }
-
     public function getTimeout(int $storeId): int
     {
         return (int) $this->getConfigParam(self::CONNECTION_TIMEOUT_FIELD, $storeId);
