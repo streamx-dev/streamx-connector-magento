@@ -48,17 +48,6 @@
                 </field>
             </group>
 
-            <group id="redis_cache_settings" translate="label" type="text" sortOrder="300" showInDefault="1" showInWebsite="0" showInStore="1">
-                <label>Redis Cache Settings</label>
-                <depends>
-                    <field id="streamx_indexer_settings/general_settings/enable">1</field>
-                </depends>
-                <field id="clear_cache" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="1">
-                    <label>Clear cache</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-            </group>
-
             <group id="optimization_settings" translate="label" type="text" sortOrder="350" showInDefault="1" showInWebsite="0" showInStore="0">
                 <label>Optimization Settings</label>
                 <depends>
