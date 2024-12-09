@@ -26,11 +26,6 @@ class Config implements ConfigInterface
         return (bool) $this->getConfigParam(self::CLEAR_CACHE_FIELD, $storeId);
     }
 
-    public function getInvalidateEntitiesBatchSize(int $storeId): int
-    {
-        return (int) $this->getConfigParam(self::INVALIDATE_CACHE_ENTITIES_BATCH_SIZE_FIELD, $storeId);
-    }
-
     public function getVsfBaseUrl(int $storeId): string
     {
         return (string) $this->getConfigParam(self::VSF_BASE_URL_FIELD, $storeId);

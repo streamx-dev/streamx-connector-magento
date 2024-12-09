@@ -16,11 +16,7 @@ interface ConfigInterface
     const INVALIDATE_CACHE_FIELD = 'invalidate_cache_key';
     const CONNECTION_TIMEOUT_FIELD = 'connection_timeout';
 
-    const INVALIDATE_CACHE_ENTITIES_BATCH_SIZE_FIELD = 'entity_invalidate_batch_size';
-
     public function clearCache(int $storeId): bool;
-
-    public function getInvalidateEntitiesBatchSize(int $storeId): int;
 
     public function getVsfBaseUrl(int $storeId): string;
 
