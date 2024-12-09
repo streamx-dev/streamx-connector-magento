@@ -14,8 +14,6 @@
             </general_settings>
             <redis_cache_settings>
                 <clear_cache>0</clear_cache>
-                <vsf_base_url>http://localhost:3000/</vsf_base_url>
-                <invalidate_cache_key>aeSu7aip</invalidate_cache_key>
                 <connection_timeout>10</connection_timeout>
             </redis_cache_settings>
             <optimization_settings>
