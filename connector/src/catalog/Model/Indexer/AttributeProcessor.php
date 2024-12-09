@@ -9,5 +9,5 @@ class AttributeProcessor extends AbstractProcessor
     /**
      * Indexer ID
      */
-    const INDEXER_ID = 'streamx_attribute_indexer';
+    public const INDEXER_ID = 'streamx_attribute_indexer';
 }
