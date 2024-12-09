@@ -12,9 +12,6 @@
                 <allowed_stores>1</allowed_stores>
                 <enable>0</enable>
             </general_settings>
-            <redis_cache_settings>
-                <clear_cache>0</clear_cache>
-            </redis_cache_settings>
             <optimization_settings>
                 <cluster_health>0</cluster_health>
                 <batch_indexing_size>1000</batch_indexing_size>
