@@ -12,11 +12,6 @@ interface ConfigInterface
     const CACHE_SETTINGS_XML_PREFIX = 'streamx_indexer_settings/redis_cache_settings';
 
     const CLEAR_CACHE_FIELD = 'clear_cache';
-    const CONNECTION_TIMEOUT_FIELD = 'connection_timeout';
 
     public function clearCache(int $storeId): bool;
-
-    public function getTimeout(int $storeId): int;
-
-    public function getConnectionOptions(int $storeId): array;
 }

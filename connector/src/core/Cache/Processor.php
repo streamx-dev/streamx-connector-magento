@@ -111,10 +111,8 @@ class Processor
 
     private function call(string $storeId, string $uri)
     {
-        $config = $this->config->getConnectionOptions($storeId);
         /** @var \Magento\Framework\HTTP\Adapter\Curl $curl */
         $curl = $this->curlFactory->create();
-        $curl->setConfig($config);
         $curl->write(\Zend_Http_Client::GET, $uri, '1.0');
         $response = $curl->read();
 
