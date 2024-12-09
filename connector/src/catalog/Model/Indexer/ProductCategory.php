@@ -5,32 +5,14 @@ namespace StreamX\ConnectorCatalog\Model\Indexer;
 use StreamX\ConnectorCatalog\Model\Indexer\Action\Product as ProductAction;
 use StreamX\ConnectorCore\Indexer\GenericIndexerHandler;
 use StreamX\ConnectorCore\Indexer\StoreManager;
-use StreamX\ConnectorCore\Cache\Processor as CacheProcessor;
 
 class ProductCategory implements \Magento\Framework\Indexer\ActionInterface, \Magento\Framework\Mview\ActionInterface
 {
-    /**
-     * @var GenericIndexerHandler
-     */
-    private $indexHandler;
-
-    /**
-     * @var ProductAction
-     */
-    private $productAction;
-
-    /**
-     * @var StoreManager
-     */
-    private $storeManager;
-
-    /**
-     * @var CacheProcessor
-     */
-    private $cacheProcessor;
+    private GenericIndexerHandler $indexHandler;
+    private ProductAction $productAction;
+    private StoreManager $storeManager;
 
     public function __construct(
-        CacheProcessor $cacheProcessor,
         GenericIndexerHandler $indexerHandler,
         StoreManager $storeManager,
         ProductAction $action
@@ -38,7 +20,6 @@ class ProductCategory implements \Magento\Framework\Indexer\ActionInterface, \Ma
         $this->productAction = $action;
         $this->storeManager = $storeManager;
         $this->indexHandler = $indexerHandler;
-        $this->cacheProcessor = $cacheProcessor;
     }
 
     /**
