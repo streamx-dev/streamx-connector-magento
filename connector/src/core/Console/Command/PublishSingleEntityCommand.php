@@ -16,7 +16,7 @@ use Symfony\Component\Console\Input\InputArgument;
  * Where the arguments are, in the order: indexer name, store ID, entity ID.
  * Example: bin/magento streamx:index streamx_product_indexer 1 123
  */
-class SingleEntityIndexCommand extends AbstractIndexerCommand
+class PublishSingleEntityCommand extends AbstractIndexerCommand
 {
     use StreamxIndexerCommandTraits;
 
