@@ -18,11 +18,6 @@ class Processor
     ];
 
     /**
-     * @var ConfigInterface
-     */
-    private $config;
-
-    /**
      * @var LoggerInterface
      */
     private $logger;
@@ -44,14 +39,12 @@ class Processor
 
     public function __construct(
         CurlFactory $curlFactory,
-        ConfigInterface $config,
         EventManager $manager,
         LoggerInterface $logger
     ) {
         $this->eventManager = $manager;
         $this->curlFactory = $curlFactory;
         $this->logger = $logger;
-        $this->config = $config;
     }
 
     /**
@@ -59,7 +52,7 @@ class Processor
      */
     public function cleanCacheByDocIds(int $storeId, string $dataType, array $entityIds)
     {
-        if ($this->config->clearCache($storeId)) {
+        if (false) {
             if (!empty($entityIds)) {
                 $this->cleanCacheInBatches($storeId, $dataType, $entityIds);
             } else {
@@ -97,7 +90,7 @@ class Processor
     {
         $storeId = (int) $storeId;
 
-        if ($this->config->clearCache($storeId)) {
+        if (false) {
             $cacheTags = implode(',', $tags);
             $cacheInvalidateUrl = $this->getInvalidateCacheUrl() . $cacheTags;
 

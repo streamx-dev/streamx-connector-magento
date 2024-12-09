@@ -12,7 +12,6 @@
     <preference for="StreamX\ConnectorCore\Api\ConvertValueInterface" type="StreamX\ConnectorCore\Indexer\ConvertValue"/>
     <preference for="StreamX\ConnectorCore\Api\IndexOperationInterface" type="StreamX\ConnectorCore\Index\IndexOperations"/>
     <preference for="StreamX\ConnectorCore\System\GeneralConfigInterface" type="StreamX\ConnectorCore\System\GeneralConfig"/>
-    <preference for="StreamX\ConnectorCore\Cache\ConfigInterface" type="StreamX\ConnectorCore\Cache\Config"/>
     <preference for="StreamX\ConnectorCore\Api\Rest\CodeCoverageEndpointInterface" type="StreamX\ConnectorCore\Rest\CodeCoverageEndpoint"/>
 
     <type name="StreamX\ConnectorCore\Logger\IndexerLogger">
