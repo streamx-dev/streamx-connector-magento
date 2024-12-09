@@ -79,7 +79,7 @@ class Processor
         $batches = [$entityIds];
 
         foreach ($batches as $batch) {
-            $cacheInvalidateUrl = $this->getCacheInvalidateUrl($storeId, $dataType, $entityIds);
+            $cacheInvalidateUrl = $this->getCacheInvalidateUrl($dataType, $entityIds);
             $this->logger->debug('BATCHES ' . implode(', ', $batch));
             $this->logger->debug('Cache invalidate url ' . $cacheInvalidateUrl);
             $this->logger->debug('Store id ' . $storeId);
@@ -99,7 +99,7 @@ class Processor
 
         if ($this->config->clearCache($storeId)) {
             $cacheTags = implode(',', $tags);
-            $cacheInvalidateUrl = $this->getInvalidateCacheUrl($storeId) . $cacheTags;
+            $cacheInvalidateUrl = $this->getInvalidateCacheUrl() . $cacheTags;
 
             try {
                 $this->call($storeId, $cacheInvalidateUrl);
@@ -130,21 +130,18 @@ class Processor
         }
     }
 
-    private function getCacheInvalidateUrl(int $storeId, string $type, array $ids): string
+    private function getCacheInvalidateUrl(string $type, array $ids): string
     {
-        $fullUrl = $this->getInvalidateCacheUrl($storeId);
+        $fullUrl = $this->getInvalidateCacheUrl();
         $params = $this->prepareTagsByDocIds($type, $ids);
         $fullUrl .= $params;
 
         return $fullUrl;
     }
 
-    private function getInvalidateCacheUrl($storeId): string
+    private function getInvalidateCacheUrl(): string
     {
-        $url = $this->config->getVsfBaseUrl($storeId);
-        $url .= sprintf('invalidate?key=%s&tag=', $this->config->getInvalidateCacheKey($storeId));
-
-        return $url;
+        return 'http://localhost:3000/invalidate?key=aeSu7aip&tag=';
     }
 
     public function prepareTagsByDocIds(string $type, array $ids): string

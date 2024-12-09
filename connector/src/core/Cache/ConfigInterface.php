@@ -12,15 +12,9 @@ interface ConfigInterface
     const CACHE_SETTINGS_XML_PREFIX = 'streamx_indexer_settings/redis_cache_settings';
 
     const CLEAR_CACHE_FIELD = 'clear_cache';
-    const VSF_BASE_URL_FIELD = 'vsf_base_url';
-    const INVALIDATE_CACHE_FIELD = 'invalidate_cache_key';
     const CONNECTION_TIMEOUT_FIELD = 'connection_timeout';
 
     public function clearCache(int $storeId): bool;
-
-    public function getVsfBaseUrl(int $storeId): string;
-
-    public function getInvalidateCacheKey(int $storeId): string;
 
     public function getTimeout(int $storeId): int;
 
