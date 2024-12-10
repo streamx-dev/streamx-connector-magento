@@ -8,7 +8,7 @@ set -e # exit on 1st error
 ## Remove previous instance, if exists
 if [ -d "magento" ]; then
     cd magento
-    bin/removeall
+    bin/removeall || true # continue also if the magento instance wasn't yet installed
     cd ..
     rm -rf magento
 fi
@@ -47,14 +47,15 @@ cd ..
 bash copy_connector_to_magento.sh
 
 ### Install StreamX Connector to Magento
-# Point Magento to search for the connector source code in its directory
 cd magento
-bin/composer config repositories.streamx-client \
-  path app/code/StreamX/Client
 
 # Register streamx-ingestion-php repository (the module is required by the connector)
 bin/composer config repositories.streamx-client \
   vcs https://github.com/streamx-dev/streamx-ingestion-php
+
+# Point Magento to search for the connector source code in its directory
+bin/composer config repositories.streamx-connector \
+  path app/code/StreamX/Connector
 
 # Add the connector to Magento's composer.json file (along with a module that turns off Two Factor Auth for development purposes and extension for gathering code coverage)
 bin/composer require \
