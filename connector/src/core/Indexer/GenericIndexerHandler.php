@@ -53,8 +53,6 @@ class GenericIndexerHandler
     }
 
     /**
-     * Used to update Product Category
-     *
      * @return $this
      * @throws ConnectionUnhealthyException
      */
@@ -102,8 +100,6 @@ class GenericIndexerHandler
     }
 
     /**
-     * Used to update Products, Categories and Attributes
-     *
      * @throws ConnectionUnhealthyException
      */
     public function saveIndex(Traversable $documents, StoreInterface $store): void
