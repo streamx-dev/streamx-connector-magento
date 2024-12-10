@@ -7,7 +7,7 @@ class ProductCategoryProcessor extends \Magento\Framework\Indexer\AbstractProces
     /**
      * Indexer ID
      */
-    const INDEXER_ID = 'streamx_product_category';
+    public const INDEXER_ID = 'streamx_product_category_indexer';
 
     /**
      * Mark StreamX Product indexer as invalid

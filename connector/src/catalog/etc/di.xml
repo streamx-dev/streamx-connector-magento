@@ -269,4 +269,12 @@
             </argument>
         </arguments>
     </type>
+
+    <type name="StreamX\ConnectorCore\Console\Command\PublishAllEntitiesCommand">
+        <arguments>
+            <argument name="excludedIndexes" xsi:type="array">
+                <item name="product_category" xsi:type="const">StreamX\ConnectorCatalog\Model\Indexer\ProductCategoryProcessor::INDEXER_ID</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
