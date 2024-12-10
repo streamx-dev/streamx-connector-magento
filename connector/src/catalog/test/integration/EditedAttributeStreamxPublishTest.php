@@ -50,7 +50,7 @@ class EditedAttributeStreamxPublishTest extends BaseEditedEntityStreamxPublishTe
         EOD);
 
         // 3. Trigger reindexing
-        $this->indexerOperations->executeCommand('reindex');
+        $this->indexerOperations->reindex();
 
         // 4. Assert attribute is published to StreamX
         try {
