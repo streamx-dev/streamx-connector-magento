@@ -19,7 +19,7 @@
     </view>
 
     <!--"By schedule" streamx_product_indexer will be used -->
-    <view id="streamx_product_category" class="StreamX\ConnectorCatalog\Model\Indexer\ProductCategory" group="indexer">
+    <view id="streamx_product_category_indexer" class="StreamX\ConnectorCatalog\Model\Indexer\ProductCategory" group="indexer">
     </view>
 
     <view id="streamx_category_indexer" class="StreamX\ConnectorCatalog\Model\Indexer\Category" group="indexer">
