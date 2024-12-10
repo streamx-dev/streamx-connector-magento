@@ -19,7 +19,7 @@
         <title translate="true">StreamX Attributes Indexer</title>
         <description translate="true">Update Product Attributes Meta Data in StreamX</description>
     </indexer>
-    <indexer id="streamx_product_category" view_id="streamx_product_category"
+    <indexer id="streamx_product_category_indexer" view_id="streamx_product_category_indexer"
              class="StreamX\ConnectorCatalog\Model\Indexer\ProductCategory">
         <title translate="true">StreamX Product Category Indexer</title>
         <description translate="true">Partial Product update - update category, category_ids fields in StreamX</description>
