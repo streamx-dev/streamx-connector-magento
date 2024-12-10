@@ -18,54 +18,30 @@ class EditedCategoryStreamxPublishTest extends BaseEditedEntityStreamxPublishTes
     /** @test */
     public function shouldPublishCategoryEditedDirectlyInDatabaseToStreamx() {
         // given
-        $categoryId = '6';
+        $categoryOldName = 'Watches';
         $categoryNewName = 'Name modified for testing, at ' . date("Y-m-d H:i:s");
+        $categoryId = MagentoMySqlQueryExecutor::getCategoryId($categoryOldName);
 
-        // 1. Read current name of the test category
-        $entityTypeId = MagentoMySqlQueryExecutor::selectFirstField(<<<EOD
-            SELECT entity_type_id
-              FROM eav_entity_type
-             WHERE entity_table = 'catalog_category_entity'
-        EOD);
+        // when
+        self::renameCategoryInDb($categoryId, $categoryNewName);
+        $this->indexerOperations->reindex();
 
-        $categoryNameAttributeId = MagentoMySqlQueryExecutor::selectFirstField(<<<EOD
-            SELECT attribute_id
-              FROM eav_attribute
-             WHERE attribute_code = 'name'
-               AND entity_type_id = $entityTypeId
-        EOD);
-
-        $categoryOldName = MagentoMySqlQueryExecutor::selectFirstField(<<<EOD
-            SELECT value
-              FROM catalog_category_entity_varchar
-             WHERE attribute_id = $categoryNameAttributeId
-               AND entity_id = $categoryId
-        EOD);
-        $this->assertNotEquals($categoryNewName, $categoryOldName);
-
-        // 2. Perform direct DB modification of a category
-        MagentoMySqlQueryExecutor::execute(<<<EOD
-            UPDATE catalog_category_entity_varchar
-               SET value = '$categoryNewName'
-             WHERE attribute_id = $categoryNameAttributeId
-               AND entity_id = $categoryId
-        EOD);
-
-        // 3. Trigger reindexing
-        $this->indexerOperations->executeCommand('reindex');
-
-        // 4. Assert category is published to StreamX
+        // then
         try {
             $expectedKey = "category_$categoryId";
             $this->assertDataIsPublished($expectedKey, $categoryNewName);
         } finally {
-            // 5. Restore category name in DB
-            MagentoMySqlQueryExecutor::execute(<<<EOD
-                UPDATE catalog_category_entity_varchar
-                   SET value = '$categoryOldName'
-                 WHERE attribute_id = $categoryNameAttributeId
-                   AND entity_id = $categoryId
-            EOD);
+            self::renameCategoryInDb($categoryId, $categoryOldName);
         }
+    }
+
+    private static function renameCategoryInDb(int $categoryId, string $newName) {
+        $categoryNameAttributeId = MagentoMySqlQueryExecutor::getCategoryNameAttributeId();
+        MagentoMySqlQueryExecutor::execute(<<<EOD
+            UPDATE catalog_category_entity_varchar
+               SET value = '$newName'
+             WHERE attribute_id = $categoryNameAttributeId
+               AND entity_id = $categoryId
+        EOD);
     }
 }

@@ -29,6 +29,10 @@ class MagentoIndexerOperationsExecutor {
         $this->executeCommand("set-mode " . self::UPDATE_BY_SCHEDULE_INTERNAL_NAME);
     }
 
+    public function reindex(): void {
+        $this->executeCommand('reindex');
+    }
+
     public function executeCommand(string $indexerCommand): ?string {
         $cdCommand = 'cd ' . $this->magentoFolder;
         $magentoCommand = 'bin/magento indexer:' . $indexerCommand . ' ' . $this->indexerName;
