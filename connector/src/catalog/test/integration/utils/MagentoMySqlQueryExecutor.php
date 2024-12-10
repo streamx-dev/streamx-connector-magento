@@ -46,4 +46,55 @@ class MagentoMySqlQueryExecutor {
     private static function getConnection(): mysqli {
         return new mysqli(self::SERVER_NAME, self::USER, self::PASSWORD, self::DB_NAME);
     }
+
+    public static function getProductId(string $productName): string {
+        $productNameAttributeId = self::getProductNameAttributeId();
+
+        return self::selectFirstField(<<<EOD
+            SELECT entity_id
+              FROM catalog_product_entity_varchar
+             WHERE attribute_id = $productNameAttributeId
+               AND value = '$productName'
+        EOD);
+    }
+
+    public static function getCategoryId(string $categoryName): string {
+        $categoryNameAttributeId = self::getCategoryNameAttributeId();
+
+        return self::selectFirstField(<<<EOD
+            SELECT entity_id
+              FROM catalog_category_entity_varchar
+             WHERE attribute_id = $categoryNameAttributeId
+               AND value = '$categoryName'
+        EOD);
+    }
+
+    public static function getProductNameAttributeId(): string {
+        $productEntityTypeId = self::getEntityTypeId('catalog_product_entity');
+        return self::getNameAttributeId($productEntityTypeId);
+    }
+
+    public static function getCategoryNameAttributeId(): string {
+        $categoryEntityTypeId = self::getEntityTypeId('catalog_category_entity');
+        return self::getNameAttributeId($categoryEntityTypeId);
+    }
+
+    public static function getEntityTypeId(string $table): string {
+        return self::selectFirstField(<<<EOD
+            SELECT entity_type_id
+              FROM eav_entity_type
+             WHERE entity_table = '$table'
+        EOD
+        );
+    }
+
+    public static function getNameAttributeId($entityTypeId): string {
+        return self::selectFirstField(<<<EOD
+            SELECT attribute_id
+              FROM eav_attribute
+             WHERE attribute_code = 'name'
+               AND entity_type_id = $entityTypeId
+        EOD
+        );
+    }
 }
