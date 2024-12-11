@@ -8,7 +8,7 @@ use StreamX\ConnectorCatalog\test\integration\utils\MagentoIndexerOperationsExec
 /**
  * @inheritdoc
  */
-abstract class BaseEditedEntityStreamxPublishTest extends BaseStreamxPublishTest {
+abstract class BaseAppEntityUpdateStreamxPublishTest extends BaseStreamxPublishTest {
 
     protected const REST_API_BASE_URL = 'https://magento.test/rest/all/V1';
 
