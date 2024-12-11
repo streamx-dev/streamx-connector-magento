@@ -3,45 +3,41 @@
 namespace StreamX\ConnectorCatalog\test\integration;
 
 use PHPUnit\Framework\TestCase;
-use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoIndexerOperationsExecutor;
-use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
-use function date;
 
 /**
  * Prerequisites to run these tests:
  * 1. markshust/docker-magento images must be running
- * 2. StreamX must be running (with the add-rest-ingestion-to-magento-network.sh script executed)
+ * 2. StreamX Connector must be deployed to the Magento instance
+ * 3. StreamX must be running (with the add-rest-ingestion-to-magento-network.sh script executed)
  */
-abstract class BaseEditedEntityStreamxPublishTest extends TestCase {
+abstract class BaseStreamxPublishTest extends TestCase {
 
     private const STREAMX_DELIVERY_SERVICE_BASE_URL = "http://localhost:8081";
     private const DATA_PUBLISH_TIMEOUT_SECONDS = 10;
 
-    private bool $wasProductIndexerOriginallyInUpdateOnSaveMode;
     protected MagentoIndexerOperationsExecutor $indexerOperations;
+    private string $originalIndexerMode;
+    private bool $indexModeNeedsRestoring;
 
-    protected abstract function getIndexerName(): string;
+    protected abstract function indexerName(): string;
+    protected abstract function desiredIndexerMode(): string;
 
     public function setUp(): void {
-        $this->indexerOperations = new MagentoIndexerOperationsExecutor($this->getIndexerName());
+        $this->indexerOperations = new MagentoIndexerOperationsExecutor($this->indexerName());
+        $this->originalIndexerMode = $this->indexerOperations->getIndexerMode();
 
-        // read original mode of the indexer
-        $this->wasProductIndexerOriginallyInUpdateOnSaveMode = str_contains(
-            $this->indexerOperations->executeCommand('show-mode'),
-            MagentoIndexerOperationsExecutor::UPDATE_ON_SAVE_DISPLAY_NAME
-        );
-
-        // change to scheduled if needed
-        if ($this->wasProductIndexerOriginallyInUpdateOnSaveMode) {
-            $this->indexerOperations->setProductIndexerModeToUpdateBySchedule();
+        if ($this->desiredIndexerMode() !== $this->originalIndexerMode) {
+            $this->indexerOperations->setIndexerMode($this->desiredIndexerMode());
+            $this->indexModeNeedsRestoring = true;
+        } else {
+            $this->indexModeNeedsRestoring = false;
         }
     }
 
     public function tearDown(): void {
-        // restore mode of indexer if needed
-        if ($this->wasProductIndexerOriginallyInUpdateOnSaveMode) {
-            $this->indexerOperations->setProductIndexerModeToUpdateOnSave();
+        if ($this->indexModeNeedsRestoring) {
+            $this->indexerOperations->setIndexerMode($this->originalIndexerMode);
         }
     }
 
