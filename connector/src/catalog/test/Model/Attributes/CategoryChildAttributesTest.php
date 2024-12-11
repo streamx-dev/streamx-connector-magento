@@ -2,31 +2,18 @@
 
 namespace StreamX\ConnectorCatalog\Test\Model\Attributes;
 
+use PHPUnit\Framework\TestCase;
 use StreamX\ConnectorCatalog\Model\Attributes\CategoryAttributes;
 use StreamX\ConnectorCatalog\Model\Attributes\CategoryChildAttributes;
 use StreamX\ConnectorCatalog\Model\SystemConfig\CategoryConfigInterface;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 
-class CategoryChildAttributesTest extends \PHPUnit\Framework\TestCase
+class CategoryChildAttributesTest extends TestCase
 {
-    /**
-     * @var
-     */
-    private $objectManager;
+    private ObjectManager $objectManager;
+    private CategoryConfigInterface $catalogConfigMock;
+    private CategoryChildAttributes $categoryChildAttributes;
 
-    /**
-     * @var CategoryConfigInterface
-     */
-    private $catalogConfigMock;
-
-    /**
-     * @var CategoryChildAttributes
-     */
-    private $categoryChildAttributes;
-
-    /**
-     *
-     */
     protected function setUp(): void
     {
         $this->objectManager = new ObjectManager($this);
@@ -56,9 +43,6 @@ class CategoryChildAttributesTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    /**
-     *
-     */
     public function testGetAllAttributes()
     {
         $storeId = 1;
