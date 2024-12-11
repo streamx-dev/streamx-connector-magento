@@ -1,17 +1,17 @@
 <?php
 
-namespace StreamX\ConnectorCatalog\test\integration;
+namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
 use function date;
 
 /**
- * See base class for prerequisites to run this test
+ * @inheritdoc
  */
 class EditedProductStreamxPublishTest extends BaseEditedEntityStreamxPublishTest {
 
-    protected function getIndexerName(): string {
+    protected function indexerName(): string {
         return ProductProcessor::INDEXER_ID;
     }
 

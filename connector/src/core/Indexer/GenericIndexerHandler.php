@@ -75,6 +75,7 @@ class GenericIndexerHandler
             $batchSize = $this->indexOperations->getBatchIndexingSize();
 
             foreach ($this->batch->getItems($documents, $batchSize) as $docs) {
+
                 /** @var DataProviderInterface $datasource */
                 foreach ($dataProviders as $datasource) {
                     if (!empty($docs)) {
@@ -171,10 +172,5 @@ class GenericIndexerHandler
             throw new InvalidArgumentException("Type $typeName is not available");
         }
         throw new LogicException('No configuration found');
-    }
-
-    public function getTypeName(): string
-    {
-        return $this->typeName;
     }
 }
