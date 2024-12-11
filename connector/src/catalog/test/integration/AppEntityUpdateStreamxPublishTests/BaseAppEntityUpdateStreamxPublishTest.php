@@ -28,6 +28,6 @@ abstract class BaseAppEntityUpdateStreamxPublishTest extends BaseStreamxPublishT
         $request = new Request('PUT', $endpointUrl, $headers, $jsonBody);
         $httpClient = new Client([ 'verify' => false ]);
         $response = $httpClient->sendRequest($request);
-        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals(200, $response->getStatusCode(), $response->getBody());
     }
 }

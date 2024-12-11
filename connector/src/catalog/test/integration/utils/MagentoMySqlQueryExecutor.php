@@ -69,6 +69,17 @@ class MagentoMySqlQueryExecutor {
         EOD);
     }
 
+    public static function getAttributeId(string $attributeCode): string {
+        $productEntityTypeId = self::getEntityTypeId('catalog_product_entity');
+
+        return self::selectFirstField(<<<EOD
+            SELECT attribute_id
+              FROM eav_attribute
+             WHERE entity_type_id = $productEntityTypeId
+               AND attribute_code = '$attributeCode'
+        EOD);
+    }
+
     public static function getProductNameAttributeId(): string {
         $productEntityTypeId = self::getEntityTypeId('catalog_product_entity');
         return self::getNameAttributeId($productEntityTypeId);
@@ -84,17 +95,23 @@ class MagentoMySqlQueryExecutor {
             SELECT entity_type_id
               FROM eav_entity_type
              WHERE entity_table = '$table'
-        EOD
-        );
+        EOD);
     }
 
-    public static function getNameAttributeId($entityTypeId): string {
+    public static function getNameAttributeId(int $entityTypeId): string {
         return self::selectFirstField(<<<EOD
             SELECT attribute_id
               FROM eav_attribute
              WHERE attribute_code = 'name'
                AND entity_type_id = $entityTypeId
-        EOD
-        );
+        EOD);
+    }
+
+    public static function getAttributeDisplayName(int $attributeId): string {
+        return MagentoMySqlQueryExecutor::selectFirstField(<<<EOD
+            SELECT frontend_label
+              FROM eav_attribute
+             WHERE attribute_id = $attributeId
+        EOD);
     }
 }
