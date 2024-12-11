@@ -2,30 +2,17 @@
 
 namespace StreamX\ConnectorCatalog\Test\Model\Attributes;
 
+use PHPUnit\Framework\TestCase;
 use StreamX\ConnectorCatalog\Model\Attributes\ConfigurableAttributes;
 use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 
-class ConfigurableAttributesTest extends \PHPUnit\Framework\TestCase
+class ConfigurableAttributesTest extends TestCase
 {
-    /**
-     * @var
-     */
-    private $objectManager;
+    private ObjectManager $objectManager;
+    private CatalogConfigurationInterface $catalogConfigMock;
+    private ConfigurableAttributes $configurableAttributes;
 
-    /**
-     * @var CatalogConfigurationInterface
-     */
-    private $catalogConfigMock;
-
-    /**
-     * @var ConfigurableAttributes
-     */
-    private $configurableAttributes;
-
-    /**
-     *
-     */
     protected function setUp(): void
     {
         $this->objectManager = new ObjectManager($this);
@@ -55,9 +42,6 @@ class ConfigurableAttributesTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    /**
-     *
-     */
     public function testGetAllAttributes()
     {
         $storeId = 1;
