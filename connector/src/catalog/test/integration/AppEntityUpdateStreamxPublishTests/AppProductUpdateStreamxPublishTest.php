@@ -2,8 +2,6 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
 use function date;
@@ -25,28 +23,22 @@ class AppProductUpdateStreamxPublishTest extends BaseAppEntityUpdateStreamxPubli
         $productId = MagentoMySqlQueryExecutor::getProductId($productOldName);
 
         // when
-        self::renameProductUsingEndpoint($productId, $productNewName);
+        self::renameProduct($productId, $productNewName);
 
         // then
         $expectedKey = "product_$productId";
         try {
             $this->assertDataIsPublished($expectedKey, $productNewName);
         } finally {
-            self::renameProductUsingEndpoint($productId, $productOldName);
+            self::renameProduct($productId, $productOldName);
             $this->assertDataIsPublished($expectedKey, $productOldName);
         }
     }
 
-    private function renameProductUsingEndpoint(int $productId, string $newName) {
-        $endpointUrl = self::REST_API_BASE_URL .'/product/rename';
-        $jsonBody = json_encode([
+    private function renameProduct(int $productId, string $newName) {
+        $this->callRestApiEndpoint('product/rename', [
             'productId' => $productId,
             'newName' => $newName
         ]);
-
-        $request = new Request('PUT', $endpointUrl, ['Content-Type' => 'application/json; charset=UTF-8'], $jsonBody);
-        $httpClient = new Client([ 'verify' => false ]);
-        $response = $httpClient->sendRequest($request);
-        $this->assertEquals(200, $response->getStatusCode());
     }
 }
