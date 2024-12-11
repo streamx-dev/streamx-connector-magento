@@ -86,7 +86,7 @@ bin/start
 When developing changes in the StreamX Connector - there's no need to restart Magento. Upload and apply changes to Magento using:
 ```bash
 # cd to root directory of the project, and:
-bash copy_connector_to_magento_and_reload.sh
+bash copy-connector-to-magento-and-reload.sh
 ```
 
 ## Restart Magento:
@@ -128,7 +128,6 @@ export XDEBUG_MODE=coverage
 
 3. Run tests with coverage and open results in web browser:
 ```bash
-cd connector
 composer update # enough to execute this only once - will create the './vendor/bin/phpunit' directory
 ./vendor/bin/phpunit --coverage-text --coverage-html target/coverage-report
 open target/coverage-report/index.html

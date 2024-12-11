@@ -1,2 +1,0 @@
-bash copy_connector_to_magento.sh
-bash reload_magento_modules.sh
