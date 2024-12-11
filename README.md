@@ -151,6 +151,11 @@ bin/magento indexer:reindex
 # change mode of an indexer
 bin/magento indexer:set-mode schedule|realtime index_identifier
 
+# you can also use dedicated streamx indexers commands, such as:
+bin/magento streamx:reset # see class ResetStreamxIndexersCommand
+bin/magento streamx:index streamx_product_indexer 1 123 # see PublishSingleEntityCommand
+bin/magento streamx:reindex --all #see PublishAllEntitiesCommand
+
 # review logs and errors of the Magento container (typically named magento-phpfpm-1)
 cat /var/www/html/var/log/system.log
 cat /var/www/html/var/log/exception.log
