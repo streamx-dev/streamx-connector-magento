@@ -44,7 +44,7 @@ bin/magento sampledata:deploy
 # Note: in future, when the connector is made publicly available - we will be just using `composer require streamx/magento-connector`.
 # For now, manually copy source code of the connector to Magento
 cd ..
-bash copy_connector_to_magento.sh
+bash copy-connector-to-magento.sh
 
 ### Install StreamX Connector to Magento
 cd magento
@@ -66,4 +66,4 @@ bin/composer require \
 # Enable all modules
 bin/magento module:enable --all
 cd ..
-bash reload_magento_modules.sh
+bash reload-magento-modules.sh
