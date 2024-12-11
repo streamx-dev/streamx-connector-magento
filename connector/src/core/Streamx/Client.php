@@ -80,7 +80,7 @@ class Client implements ClientInterface {
 
                 $key = $entityType . '_' . $entity['id'];
                 try {
-                    $this->publishToStreamX($key, json_encode($entity)); // TODO make sure this will never block
+                    $this->publishToStreamX($key, json_encode($entity)); // TODO make sure this will never block. Best by turning off Pulsar container
                 } catch (StreamxClientException $e) {
                     $this->logger->error('Data update failed: ' . $e->getMessage(), ['exception' => $e]);
                 }

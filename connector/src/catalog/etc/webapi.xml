@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+  <!-- TODO do not deploy to production, deploy only for testing -->
+  <route url="/V1/product/rename" method="PUT">
+    <service class="StreamX\ConnectorCatalog\Api\Rest\EditProductEndpointInterface" method="renameProduct"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+</routes>

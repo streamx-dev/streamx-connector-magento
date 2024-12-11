@@ -1,16 +1,16 @@
 <?php
 
-namespace StreamX\ConnectorCatalog\test\integration;
+namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
 
 /**
- * See base class for prerequisites to run this test
+ * @inheritdoc
  */
 class EditedProductCategoryStreamxPublishTest extends BaseEditedEntityStreamxPublishTest {
 
-    protected function getIndexerName(): string {
+    protected function indexerName(): string {
         // note 1: no mview based indexer is implemented directly for Product-Category mappings
         // note 2: it is currently implemented via product indexer's mview
         return ProductProcessor::INDEXER_ID;
