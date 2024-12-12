@@ -6,7 +6,7 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 
 class OptimizationSettings
 {
-    const OPTIMIZATION_SETTINGS_CONFIG_XML_PREFIX = 'streamx_indexer_settings/optimization_settings';
+    const OPTIMIZATION_SETTINGS_CONFIG_XML_PREFIX = 'streamx_connector_settings/optimization_settings';
 
     private ScopeConfigInterface $scopeConfig;
 

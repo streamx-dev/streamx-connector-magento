@@ -17,5 +17,5 @@ class Info extends Base
      * File name
      * @var string
      */
-    protected $fileName = '/var/log/streamx-indexer/info.log';
+    protected $fileName = '/var/log/streamx-connector/info.log';
 }

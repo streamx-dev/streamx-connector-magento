@@ -4,7 +4,7 @@
     <acl>
         <resources>
             <resource id="Magento_Backend::admin">
-                <resource id="StreamX_ConnectorCore::configuration" title="StreamX Indexer Configuration" />
+                <resource id="StreamX_ConnectorCore::configuration" title="StreamX Connector Configuration" />
             </resource>
         </resources>
     </acl>

@@ -32,7 +32,7 @@
     <type name="Magento\Config\Model\Config\TypePool">
         <arguments>
             <argument name="sensitive" xsi:type="array">
-                <item name="streamx_indexer_settings/streamx_client/auth_token" xsi:type="string">1</item>
+                <item name="streamx_connector_settings/streamx_client/auth_token" xsi:type="string">1</item>
             </argument>
         </arguments>
     </type>

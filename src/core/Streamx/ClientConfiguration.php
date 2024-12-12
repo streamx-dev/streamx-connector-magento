@@ -7,7 +7,7 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
 
 class ClientConfiguration implements ConfigurationInterface {
-    const STREAMX_CLIENT_CONFIG_XML_PREFIX = 'streamx_indexer_settings/streamx_client';
+    const STREAMX_CLIENT_CONFIG_XML_PREFIX = 'streamx_connector_settings/streamx_client';
     const INGESTION_BASE_URL_FIELD = 'ingestion_base_url';
     const CHANNEL_NAME_FIELD = 'channel_name';
     const CHANNEL_SCHEMA_NAME_FIELD = 'channel_schema_name';

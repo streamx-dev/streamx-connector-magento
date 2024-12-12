@@ -2,11 +2,11 @@
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <section id="streamx_indexer_settings">
+        <section id="streamx_connector_settings">
             <group id="catalog_settings" translate="label" type="text" sortOrder="500" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Catalog Settings</label>
                 <depends>
-                    <field id="streamx_indexer_settings/general_settings/enable">1</field>
+                    <field id="streamx_connector_settings/general_settings/enable">1</field>
                 </depends>
                 <field id="use_magento_url_keys" translate="label comment" type="select" sortOrder="41" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Use Catalog Url Keys</label>
@@ -75,7 +75,7 @@
             <group id="catalog_category_settings" translate="label" type="text" sortOrder="500" showInDefault="1" showInWebsite="1" showInStore="1" >
                 <label>Category Settings</label>
                 <depends>
-                    <field id="streamx_indexer_settings/general_settings/enable">1</field>
+                    <field id="streamx_connector_settings/general_settings/enable">1</field>
                 </depends>
                 <field id="category_attributes" translate="label comment" type="multiselect" sortOrder="102" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Category attributes to export</label>
