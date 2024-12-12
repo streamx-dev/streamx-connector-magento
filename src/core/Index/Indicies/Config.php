@@ -3,7 +3,6 @@
 namespace StreamX\ConnectorCore\Index\Indicies;
 
 use StreamX\ConnectorCore\Api\Index\TypeInterfaceFactory as TypeFactoryInterface;
-use StreamX\ConnectorCore\Indexer\DataProvider\TransactionKey;
 use StreamX\ConnectorCore\Indexer\DataProviderProcessorFactory;
 use StreamX\ConnectorCore\Indexer\MappingProcessorFactory;
 
@@ -15,18 +14,15 @@ class Config
     private TypeFactoryInterface $typeFactory;
     private DataProviderProcessorFactory $dataProviderFactoryProcessor;
     private MappingProcessorFactory $mappingProviderProcessorFactory;
-    private TransactionKey $transactionKey;
     private Config\Data $configData;
 
     public function __construct(
         Config\Data $configData,
-        TransactionKey $transactionKey,
         TypeFactoryInterface $typeInterfaceFactory,
         MappingProcessorFactory $mappingProcessorFactory,
         DataProviderProcessorFactory $dataProviderFactoryProcessor
     ) {
         $this->configData = $configData;
-        $this->transactionKey = $transactionKey;
         $this->mappingProviderProcessorFactory = $mappingProcessorFactory;
         $this->dataProviderFactoryProcessor = $dataProviderFactoryProcessor;
         $this->typeFactory = $typeInterfaceFactory;
@@ -49,7 +45,7 @@ class Config
         $types = [];
 
         foreach ($indexConfigData['types'] as $typeName => $typeConfigData) {
-            $dataProviders = ['transaction_key' => $this->transactionKey];
+            $dataProviders = [];
 
             foreach ($typeConfigData['data_providers'] as $dataProviderName => $dataProviderClass) {
                 $dataProviders[$dataProviderName] =
