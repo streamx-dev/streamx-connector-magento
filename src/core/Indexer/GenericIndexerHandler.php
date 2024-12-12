@@ -2,12 +2,12 @@
 
 namespace StreamX\ConnectorCore\Indexer;
 
+use DateTime;
 use InvalidArgumentException;
 use LogicException;
 use StreamX\ConnectorCore\Api\BulkLoggerInterface;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 use StreamX\ConnectorCore\Api\Index\TypeInterface;
-use StreamX\ConnectorCore\Indexer\TransactionKey;
 use StreamX\ConnectorCore\Api\IndexOperationInterface;
 use StreamX\ConnectorCore\Exception\ConnectionDisabledException;
 use StreamX\ConnectorCore\Exception\ConnectionUnhealthyException;
@@ -27,10 +27,7 @@ class GenericIndexerHandler
     private string $typeName;
     private TypeInterface $type;
     private IndexerLogger $indexerLogger;
-    /**
-     * @var int|string
-     */
-    private $transactionKey;
+    private int $transactionKey;
     private BulkLoggerInterface $bulkLogger;
 
     public function __construct(
@@ -39,7 +36,6 @@ class GenericIndexerHandler
         IndexerLogger $indexerLogger,
         Batch $batch,
         Config $indicesConfig,
-        TransactionKey $transactionKey,
         string $typeName
     ) {
         $this->bulkLogger = $bulkLogger;
@@ -49,7 +45,7 @@ class GenericIndexerHandler
         $this->typeName = $typeName;
         $this->type = $this->loadType($typeName);
         $this->indexerLogger = $indexerLogger;
-        $this->transactionKey = $transactionKey->load();
+        $this->transactionKey = (new DateTime())->getTimestamp();
     }
 
     /**
