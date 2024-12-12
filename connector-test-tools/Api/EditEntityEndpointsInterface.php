@@ -1,10 +1,10 @@
 <?php
 
-namespace StreamX\ConnectorCatalog\Api\Rest;
+namespace StreamX\ConnectorTestTools\Api;
 
 use Exception;
 
-interface EditEntityRestApiInterface {
+interface EditEntityEndpointsInterface {
 
     /**
      * Renames a product

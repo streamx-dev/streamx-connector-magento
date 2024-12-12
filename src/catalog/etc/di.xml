@@ -13,7 +13,6 @@
     <preference for="StreamX\ConnectorCatalog\Api\LoadTierPricesInterface" type="StreamX\ConnectorCatalog\Model\Product\LoadTierPrices" />
     <preference for="StreamX\ConnectorCatalog\Model\SystemConfig\CategoryConfigInterface" type="StreamX\ConnectorCatalog\Model\SystemConfig\CategoryConfig"/>
     <preference for="StreamX\ConnectorCatalog\Model\ResourceModel\Product\CategorySelectBuilderInterface" type="StreamX\ConnectorCatalog\Model\ResourceModel\Product\CategorySelectBuilder"/>
-    <preference for="StreamX\ConnectorCatalog\Api\Rest\EditEntityRestApiInterface" type="StreamX\ConnectorCatalog\Rest\EditEntityRestApi"/>
 
     <type name="StreamX\ConnectorCatalog\Logger\CatalogIndexerLogger">
         <arguments>
