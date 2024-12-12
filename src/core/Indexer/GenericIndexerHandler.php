@@ -129,30 +129,6 @@ class GenericIndexerHandler
         }
     }
 
-    /**
-     * Removed unnecessary documents in ES by transaction key
-     */
-    public function cleanUpByIds(StoreInterface $store, array $docIds = null): void
-    {
-        try {
-            $transactionKeyQuery = [];
-            $query = ['query' => ['bool' => $transactionKeyQuery]];
-
-            if ($docIds) {
-                $query['query']['bool']['must']['terms'] = ['_id' => array_values($docIds)];
-            }
-
-            $query = [
-                'type' => $this->typeName,
-                'body' => $query,
-            ];
-
-            $this->indexOperations->deleteByQuery($store->getId(), $query);
-        } catch (ConnectionDisabledException $exception) {
-            // do nothing, ES indexer disabled in configuration
-        }
-    }
-
     public function loadType(string $typeName): TypeInterface
     {
         $indicesConfiguration = $this->indicesConfig->get();

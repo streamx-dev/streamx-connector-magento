@@ -81,6 +81,7 @@ class Client implements ClientInterface {
                 $key = $entityType . '_' . $entity['id'];
                 try {
                     $this->publishToStreamX($key, json_encode($entity)); // TODO make sure this will never block. Best by turning off Pulsar container
+                    // TODO implement also unpublishing
                 } catch (StreamxClientException $e) {
                     $this->logger->error('Data update failed: ' . $e->getMessage(), ['exception' => $e]);
                 }
@@ -107,10 +108,5 @@ class Client implements ClientInterface {
         $this->logger->info("SUPPRESSING:: Checking cluster health");
         // TODO: implement rest-ingestion service availability check
         return [['status' => 'green']];
-    }
-
-    public function deleteByQuery(array $params) {
-        // TODO: implement unpublishing
-        $this->logger->info("SUPPRESSING:: deleting by query: " . json_encode($params));
     }
 }
