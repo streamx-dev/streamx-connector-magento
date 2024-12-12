@@ -19,13 +19,13 @@ class DirectDbAttributeUpdateStreamxPublishTest extends BaseDirectDbEntityUpdate
     public function shouldPublishAttributeEditedDirectlyInDatabaseToStreamx() {
         // given
         $attributeCode = 'description';
-        $attributeId = MagentoMySqlQueryExecutor::getAttributeId($attributeCode);
+        $attributeId = MagentoMySqlQueryExecutor::getProductAttributeId($attributeCode);
 
         $newDisplayName = 'Description attribute name modified for testing, at ' . date("Y-m-d H:i:s");
         $oldDisplayName = MagentoMySqlQueryExecutor::getAttributeDisplayName($attributeId);
 
         // when
-        self::renameAttribute($attributeId, $newDisplayName);
+        self::renameAttributeInDb($attributeId, $newDisplayName);
         $this->indexerOperations->reindex();
 
         // then
@@ -33,11 +33,11 @@ class DirectDbAttributeUpdateStreamxPublishTest extends BaseDirectDbEntityUpdate
             $expectedKey = "attribute_$attributeId";
             $this->assertDataIsPublished($expectedKey, $newDisplayName);
         } finally {
-            self::renameAttribute($attributeId, $oldDisplayName);
+            self::renameAttributeInDb($attributeId, $oldDisplayName);
         }
     }
 
-    private static function renameAttribute($attributeId, string $newDisplayName): void {
+    private static function renameAttributeInDb($attributeId, string $newDisplayName): void {
         MagentoMySqlQueryExecutor::execute(<<<EOD
             UPDATE eav_attribute
                SET frontend_label = '$newDisplayName'

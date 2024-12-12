@@ -103,16 +103,36 @@ class GenericIndexerHandler
             $batchSize = $this->indexOperations->getBatchIndexingSize();
 
             foreach ($this->batch->getItems($documents, $batchSize) as $docs) {
-                foreach ($this->type->getDataProviders() as $dataProvider) {
-                    if (!empty($docs)) {
-                        $docs = $dataProvider->addData($docs, $storeId);
+                $docsToPublish = [];
+                $docsToUnpublish = [];
+                foreach ($docs as $id => $doc) {
+                    if (self::isArrayWithSingleIdKey($doc)) {
+                        $docsToUnpublish[$id] = $doc;
+                    } else {
+                        $docsToPublish[$id] = $doc;
                     }
                 }
 
-                if (!empty($docs)) {
+                foreach ($this->type->getDataProviders() as $dataProvider) {
+                    if (!empty($docsToPublish)) {
+                        $docsToPublish = $dataProvider->addData($docsToPublish, $storeId);
+                    }
+                }
+
+                if (!empty($docsToPublish)) {
                     $bulkRequest = $this->indexOperations->createBulk()->addDocuments(
                         $this->typeName,
-                        $docs
+                        $docsToPublish
+                    );
+
+                    $response = $this->indexOperations->executeBulk($storeId, $bulkRequest);
+                    $this->bulkLogger->log($response);
+                }
+
+                if (!empty($docsToUnpublish)) {
+                    $bulkRequest = $this->indexOperations->createBulk()->deleteDocuments(
+                        $this->typeName,
+                        $docsToUnpublish
                     );
 
                     $response = $this->indexOperations->executeBulk($storeId, $bulkRequest);
@@ -127,6 +147,10 @@ class GenericIndexerHandler
             $this->indexerLogger->error($exception->getMessage());
             throw $exception;
         }
+    }
+
+    private static function isArrayWithSingleIdKey($array): bool {
+        return count($array) === 1 && array_key_exists('id', $array);
     }
 
     public function loadType(string $typeName): TypeInterface

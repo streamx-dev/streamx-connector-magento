@@ -2,6 +2,7 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\utils;
 
+use Exception;
 use mysqli;
 
 class MagentoMySqlQueryExecutor {
@@ -16,7 +17,7 @@ class MagentoMySqlQueryExecutor {
     /**
      * Returns the value of first field from first row, or null or error or no result data
      */
-    public static function selectFirstField($selectQuery) {
+    public static function selectFirstField(string $selectQuery) {
         $connection = self::getConnection();
 
         try {
@@ -33,14 +34,23 @@ class MagentoMySqlQueryExecutor {
         }
     }
 
-    public static function execute($query) {
+    public static function executeAll(array $queries) {
         $connection = self::getConnection();
 
         try {
-            $connection->query($query);
+            foreach ($queries as $query) {
+                $result = $connection->query($query);
+                if (!$result) {
+                    throw new Exception("Query $query failed: " . $connection->error);
+                }
+            }
         } finally {
             $connection->close();
         }
+    }
+
+    public static function execute(string $query) {
+        self::executeAll([$query]);
     }
 
     private static function getConnection(): mysqli {
@@ -69,15 +79,9 @@ class MagentoMySqlQueryExecutor {
         EOD);
     }
 
-    public static function getAttributeId(string $attributeCode): string {
+    public static function getProductAttributeId(string $attributeCode): string {
         $productEntityTypeId = self::getEntityTypeId('catalog_product_entity');
-
-        return self::selectFirstField(<<<EOD
-            SELECT attribute_id
-              FROM eav_attribute
-             WHERE entity_type_id = $productEntityTypeId
-               AND attribute_code = '$attributeCode'
-        EOD);
+        return self::getAttributeId($attributeCode, $productEntityTypeId);
     }
 
     public static function getProductNameAttributeId(): string {
@@ -99,16 +103,20 @@ class MagentoMySqlQueryExecutor {
     }
 
     public static function getNameAttributeId(int $entityTypeId): string {
+        return self::getAttributeId('name', $entityTypeId);
+    }
+
+    public static function getAttributeId(string $attributeCode, int $entityTypeId): string {
         return self::selectFirstField(<<<EOD
             SELECT attribute_id
               FROM eav_attribute
-             WHERE attribute_code = 'name'
+             WHERE attribute_code = '$attributeCode'
                AND entity_type_id = $entityTypeId
         EOD);
     }
 
     public static function getAttributeDisplayName(int $attributeId): string {
-        return MagentoMySqlQueryExecutor::selectFirstField(<<<EOD
+        return self::selectFirstField(<<<EOD
             SELECT frontend_label
               FROM eav_attribute
              WHERE attribute_id = $attributeId

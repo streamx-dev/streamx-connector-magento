@@ -2,48 +2,23 @@
 
 namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
+use Exception;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use Magento\Catalog\Helper\Data;
 use Magento\Framework\App\ResourceConnection;
+use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\DB\Select;
 use Magento\Store\Model\StoreManagerInterface;
 
 class Bundle
 {
-    /**
-     * @var ResourceConnection
-     */
-    private $resource;
-
-    /**
-     * @var array
-     */
-    private $products;
-
-    /**
-     * @var array
-     */
-    private $bundleProductIds;
-
-    /**
-     * @var array
-     */
+    private ResourceConnection $resource;
+    private ?array $products;
+    private ?array $bundleProductIds;
     private $bundleOptionsByProduct = [];
-
-    /**
-     * @var ProductMetaData
-     */
-    private $productMetaData;
-
-    /**
-     * @var StoreManagerInterface
-     */
-    private $storeManager;
-
-    /**
-     * @var Data
-     */
-    private $catalogHelper;
+    private ProductMetaData $productMetaData;
+    private StoreManagerInterface $storeManager;
+    private Data $catalogHelper;
 
     public function __construct(
         ProductMetaData $productMetaData,
@@ -58,7 +33,7 @@ class Bundle
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function setProducts(array $products): void
     {
@@ -247,7 +222,7 @@ class Bundle
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     private function getBundleIds(): array
     {
@@ -265,10 +240,7 @@ class Bundle
         return $this->bundleProductIds;
     }
 
-    /**
-     * @return \Magento\Framework\DB\Adapter\AdapterInterface
-     */
-    private function getConnection()
+    private function getConnection(): AdapterInterface
     {
         return $this->resource->getConnection();
     }

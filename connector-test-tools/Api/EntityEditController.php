@@ -4,7 +4,7 @@ namespace StreamX\ConnectorTestTools\Api;
 
 use Exception;
 
-interface EditEntityEndpointsInterface {
+interface EntityEditController {
 
     /**
      * Renames a product
