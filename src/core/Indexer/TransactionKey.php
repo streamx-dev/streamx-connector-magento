@@ -2,9 +2,8 @@
 
 namespace StreamX\ConnectorCore\Indexer;
 
-use StreamX\ConnectorCore\Api\Indexer\TransactionKeyInterface;
 
-class TransactionKey implements TransactionKeyInterface
+class TransactionKey
 {
     /**
      * @var int|string

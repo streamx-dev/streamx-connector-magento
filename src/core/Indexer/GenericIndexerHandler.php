@@ -7,7 +7,7 @@ use LogicException;
 use StreamX\ConnectorCore\Api\BulkLoggerInterface;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 use StreamX\ConnectorCore\Api\Index\TypeInterface;
-use StreamX\ConnectorCore\Api\Indexer\TransactionKeyInterface;
+use StreamX\ConnectorCore\Indexer\TransactionKey;
 use StreamX\ConnectorCore\Api\IndexOperationInterface;
 use StreamX\ConnectorCore\Exception\ConnectionDisabledException;
 use StreamX\ConnectorCore\Exception\ConnectionUnhealthyException;
@@ -39,7 +39,7 @@ class GenericIndexerHandler
         IndexerLogger $indexerLogger,
         Batch $batch,
         Config $indicesConfig,
-        TransactionKeyInterface $transactionKey,
+        TransactionKey $transactionKey,
         string $typeName
     ) {
         $this->bulkLogger = $bulkLogger;
@@ -139,7 +139,7 @@ class GenericIndexerHandler
     /**
      * Removed unnecessary documents in ES by transaction key
      */
-    public function cleanUpByTransactionKey(StoreInterface $store, array $docIds = null): void
+    public function cleanUpByIds(StoreInterface $store, array $docIds = null): void
     {
         try {
             $transactionKeyQuery = ['must_not' => ['term' => ['tsk' => $this->transactionKey]]];

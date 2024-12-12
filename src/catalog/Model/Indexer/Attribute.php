@@ -33,7 +33,7 @@ class Attribute implements \Magento\Framework\Indexer\ActionInterface, \Magento\
 
         foreach ($stores as $store) {
             $this->indexHandler->saveIndex($this->attributeAction->rebuild($ids), $store);
-            $this->indexHandler->cleanUpByTransactionKey($store, $ids);
+            $this->indexHandler->cleanUpByIds($store, $ids);
         }
     }
 
@@ -46,7 +46,7 @@ class Attribute implements \Magento\Framework\Indexer\ActionInterface, \Magento\
 
         foreach ($stores as $store) {
             $this->indexHandler->saveIndex($this->attributeAction->rebuild(), $store);
-            $this->indexHandler->cleanUpByTransactionKey($store);
+            $this->indexHandler->cleanUpByIds($store);
         }
     }
 
