@@ -135,7 +135,7 @@ class GenericIndexerHandler
     public function cleanUpByIds(StoreInterface $store, array $docIds = null): void
     {
         try {
-            $transactionKeyQuery = ['must_not' => ['term' => ['tsk' => 1]]];
+            $transactionKeyQuery = [];
             $query = ['query' => ['bool' => $transactionKeyQuery]];
 
             if ($docIds) {
