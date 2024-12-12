@@ -160,6 +160,28 @@ cat /var/www/html/var/log/system.log
 cat /var/www/html/var/log/exception.log
 ```
 
+## Some useful MySQL commands (when using markshust/docker-magento)
+SQL db root user is:
+ - login: `root`
+ - password: `magento`
+
+Turn on logging all SQL queries to log file:
+```sql
+SET GLOBAL general_log = 'ON';
+SET GLOBAL log_output = 'FILE';
+```
+
+The queries are logged to the following directory and file:
+```sql
+SHOW VARIABLES LIKE 'datadir';
+SHOW VARIABLES LIKE 'general_log_file';
+```
+
+Turn off when done:
+```sql
+SET GLOBAL general_log = 'OFF';
+```
+
 ## Troubleshooting REST endpoints
  - make sure your endpoint relative path always starts with /V1/...
  - endpoints are mounted at base url https://magento.test/rest/all/V1/...

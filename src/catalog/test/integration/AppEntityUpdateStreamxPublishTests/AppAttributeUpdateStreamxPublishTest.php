@@ -19,7 +19,7 @@ class AppAttributeUpdateStreamxPublishTest extends BaseAppEntityUpdateStreamxPub
     public function shouldPublishAttributeEditedUsingMagentoApplicationToStreamx() {
         // given
         $attributeCode = 'description';
-        $attributeId = MagentoMySqlQueryExecutor::getAttributeId($attributeCode);
+        $attributeId = MagentoMySqlQueryExecutor::getProductAttributeId($attributeCode);
 
         $newDisplayName = 'Description attribute name modified for testing, at ' . date("Y-m-d H:i:s");
         $oldDisplayName = MagentoMySqlQueryExecutor::getAttributeDisplayName($attributeId);
