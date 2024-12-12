@@ -2,16 +2,16 @@
 
 namespace StreamX\ConnectorCore\Indexer\DataProvider;
 
-use StreamX\ConnectorCore\Indexer\TransactionKey as IndexerTransactionKey;
+use DateTime;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 
 class TransactionKey implements DataProviderInterface
 {
-    private $transactionKey;
+    private int $transactionKey;
 
-    public function __construct(IndexerTransactionKey $transactionKey)
+    public function __construct()
     {
-        $this->transactionKey = $transactionKey->load();
+        $this->transactionKey = (new DateTime())->getTimestamp();
     }
 
     /**
