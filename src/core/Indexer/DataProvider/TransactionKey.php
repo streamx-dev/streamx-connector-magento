@@ -2,14 +2,14 @@
 
 namespace StreamX\ConnectorCore\Indexer\DataProvider;
 
-use StreamX\ConnectorCore\Api\Indexer\TransactionKeyInterface;
+use StreamX\ConnectorCore\Indexer\TransactionKey as IndexerTransactionKey;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 
 class TransactionKey implements DataProviderInterface
 {
     private $transactionKey;
 
-    public function __construct(TransactionKeyInterface $transactionKey)
+    public function __construct(IndexerTransactionKey $transactionKey)
     {
         $this->transactionKey = $transactionKey->load();
     }
