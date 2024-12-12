@@ -20,7 +20,7 @@ abstract class BaseAppEntityUpdateStreamxPublishTest extends BaseStreamxPublishT
         return MagentoIndexerOperationsExecutor::UPDATE_ON_SAVE_DISPLAY_NAME;
     }
 
-    protected function callRestApiEndpoint(string $relativeUrl, array $params): void {
+    protected function callRestApiEndpoint(string $relativeUrl, array $params): string {
         $endpointUrl = self::REST_API_BASE_URL . '/' . $relativeUrl;
         $jsonBody = json_encode($params);
         $headers = ['Content-Type' => 'application/json; charset=UTF-8'];
@@ -28,6 +28,9 @@ abstract class BaseAppEntityUpdateStreamxPublishTest extends BaseStreamxPublishT
         $request = new Request('PUT', $endpointUrl, $headers, $jsonBody);
         $httpClient = new Client([ 'verify' => false ]);
         $response = $httpClient->sendRequest($request);
-        $this->assertEquals(200, $response->getStatusCode(), $response->getBody());
+        $responseBody = (string) $response->getBody();
+        $this->assertEquals(200, $response->getStatusCode(), $responseBody);
+
+        return $responseBody;
     }
 }

@@ -57,4 +57,20 @@ abstract class BaseStreamxPublishTest extends TestCase {
 
         $this->fail("$url: not found");
     }
+
+    protected function assertDataIsUnpublished(string $key) {
+        $url = self::STREAMX_DELIVERY_SERVICE_BASE_URL . '/' . $key;
+
+        $startTime = time();
+        while (time() - $startTime < self::DATA_PUBLISH_TIMEOUT_SECONDS) {
+            $response = @file_get_contents($url);
+            if (empty($response)) {
+                $this->assertTrue(true);
+                return;
+            }
+            usleep(100000); // sleep for 100 milliseconds
+        }
+
+        $this->fail("$url: exists");
+    }
 }

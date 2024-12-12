@@ -30,6 +30,9 @@ class Product
             $productIds = $this->getProductIds($productIds);
         }
 
+        $yieldedProductIds = [];
+
+        // 1. Publish edited products (TODO verify if added products are also processed here)
         do {
             $products = $this->resourceModel->getProducts($storeId, $productIds, $lastProductId);
 
@@ -44,8 +47,15 @@ class Product
                 unset($product['required_options']);
                 unset($product['has_options']);
                 yield $lastProductId => $product;
+                $yieldedProductIds[] = $lastProductId;
             }
         } while (!empty($products));
+
+        // 2. Unpublish deleted products
+        $unYieldedProductIds = array_diff($productIds, $yieldedProductIds);
+        foreach ($unYieldedProductIds as $unYieldedProductId) {
+            yield $lastProductId => ['id' => $unYieldedProductId];
+        }
     }
 
     private function getProductIds(array $childrenIds): array

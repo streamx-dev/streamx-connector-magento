@@ -6,24 +6,20 @@ use Exception;
 use Magento\Catalog\Api\CategoryRepositoryInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Eav\Api\AttributeRepositoryInterface;
-use Magento\Framework\App\Helper\AbstractHelper;
-use Magento\Framework\App\Helper\Context;
 use Magento\Framework\Exception\NoSuchEntityException;
-use StreamX\ConnectorTestTools\Api\EditEntityEndpointsInterface;
+use StreamX\ConnectorTestTools\Api\EntityEditController;
 
-class EditEntityEndpoints extends AbstractHelper implements EditEntityEndpointsInterface {
+class EntityEditControllerImpl  implements EntityEditController {
 
     private ProductRepositoryInterface $productRepository;
     private CategoryRepositoryInterface $categoryRepository;
     private AttributeRepositoryInterface $attributeRepository;
 
     public function __construct(
-        Context $context,
         ProductRepositoryInterface $productRepository,
         CategoryRepositoryInterface $categoryRepository,
         AttributeRepositoryInterface $attributeRepository
     ) {
-        parent::__construct($context);
         $this->productRepository = $productRepository;
         $this->categoryRepository = $categoryRepository;
         $this->attributeRepository = $attributeRepository;
