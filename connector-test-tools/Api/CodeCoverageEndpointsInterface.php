@@ -1,8 +1,8 @@
 <?php
 
-namespace StreamX\ConnectorCore\Api\Rest;
+namespace StreamX\ConnectorTestTools\Api;
 
-interface CodeCoverageEndpointInterface {
+interface CodeCoverageEndpointsInterface {
 
     /**
      * Starts code coverage measurement

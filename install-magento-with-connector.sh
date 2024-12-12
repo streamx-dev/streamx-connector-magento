@@ -46,6 +46,9 @@ bin/magento sampledata:deploy
 cd ..
 bash copy-connector-to-magento.sh
 
+# For testing purposes, upload also the StreamX Connector Test Tools to Magento
+bash copy-connector-test-tools-to-magento.sh
+
 ### Install StreamX Connector to Magento
 cd magento
 
@@ -57,9 +60,14 @@ bin/composer config repositories.streamx-client \
 bin/composer config repositories.streamx-connector \
   path app/code/StreamX/Connector
 
+# For testing purposes, register also the connector test tools module
+bin/composer config repositories.streamx-collector-test-tools \
+  path app/code/StreamX/ConnectorTestTools
+
 # Add the connector to Magento's composer.json file (along with a module that turns off Two Factor Auth for development purposes and extension for gathering code coverage)
 bin/composer require \
   "streamx/magento-connector" \
+  "streamx/magento-connector-test-tools" \
   "markshust/magento2-module-disabletwofactorauth" \
   "ext-xdebug"
 
