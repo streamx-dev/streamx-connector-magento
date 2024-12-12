@@ -10,6 +10,4 @@ interface ClientInterface {
      * Retrieve information about cluster health
      */
     public function getClustersHealth(): array;
-
-    public function deleteByQuery(array $params);
 }

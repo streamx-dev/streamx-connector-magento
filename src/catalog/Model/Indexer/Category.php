@@ -32,7 +32,6 @@ class Category implements \Magento\Framework\Indexer\ActionInterface, \Magento\F
         foreach ($stores as $store) {
             $storeId = $store->getId();
             $this->indexHandler->saveIndex($this->categoryAction->rebuild($storeId, $ids), $store);
-            $this->indexHandler->cleanUpByIds($store, $ids);
         }
     }
 
@@ -45,7 +44,6 @@ class Category implements \Magento\Framework\Indexer\ActionInterface, \Magento\F
 
         foreach ($stores as $store) {
             $this->indexHandler->saveIndex($this->categoryAction->rebuild($store->getId()), $store);
-            $this->indexHandler->cleanUpByIds($store);
         }
     }
 

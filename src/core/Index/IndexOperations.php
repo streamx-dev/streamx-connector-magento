@@ -49,11 +49,6 @@ class IndexOperations implements IndexOperationInterface
         );
     }
 
-    public function deleteByQuery(int $storeId, array $params): void
-    {
-        $this->resolveClient($storeId)->deleteByQuery($params);
-    }
-
     public function createBulk(): BulkRequestInterface
     {
         return $this->bulkRequestFactory->create();
