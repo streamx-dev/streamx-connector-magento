@@ -1,10 +1,10 @@
 <?php
 
-namespace StreamX\ConnectorCore\Rest;
+namespace StreamX\ConnectorTestTools\Impl;
 
-use StreamX\ConnectorCore\Api\Rest\CodeCoverageEndpointInterface;
+use StreamX\ConnectorTestTools\Api\CodeCoverageEndpointsInterface;
 
-class CodeCoverageEndpoint implements CodeCoverageEndpointInterface {
+class CodeCoverageEndpoints implements CodeCoverageEndpointsInterface {
 
     /**
      * @inheritdoc

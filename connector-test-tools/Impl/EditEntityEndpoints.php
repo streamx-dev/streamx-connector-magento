@@ -1,6 +1,6 @@
 <?php
 
-namespace StreamX\ConnectorCatalog\Rest;
+namespace StreamX\ConnectorTestTools\Impl;
 
 use Exception;
 use Magento\Catalog\Api\CategoryRepositoryInterface;
@@ -9,9 +9,9 @@ use Magento\Eav\Api\AttributeRepositoryInterface;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\Exception\NoSuchEntityException;
-use StreamX\ConnectorCatalog\Api\Rest\EditEntityRestApiInterface;
+use StreamX\ConnectorTestTools\Api\EditEntityEndpointsInterface;
 
-class EditEntityRestApi extends AbstractHelper implements EditEntityRestApiInterface {
+class EditEntityEndpoints extends AbstractHelper implements EditEntityEndpointsInterface {
 
     private ProductRepositoryInterface $productRepository;
     private CategoryRepositoryInterface $categoryRepository;
