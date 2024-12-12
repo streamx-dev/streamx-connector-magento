@@ -2,7 +2,6 @@
 
 namespace StreamX\ConnectorCore\Indexer;
 
-use DateTime;
 use InvalidArgumentException;
 use LogicException;
 use StreamX\ConnectorCore\Api\BulkLoggerInterface;
@@ -27,7 +26,6 @@ class GenericIndexerHandler
     private string $typeName;
     private TypeInterface $type;
     private IndexerLogger $indexerLogger;
-    private int $transactionKey;
     private BulkLoggerInterface $bulkLogger;
 
     public function __construct(
@@ -45,7 +43,6 @@ class GenericIndexerHandler
         $this->typeName = $typeName;
         $this->type = $this->loadType($typeName);
         $this->indexerLogger = $indexerLogger;
-        $this->transactionKey = (new DateTime())->getTimestamp();
     }
 
     /**
@@ -138,7 +135,7 @@ class GenericIndexerHandler
     public function cleanUpByIds(StoreInterface $store, array $docIds = null): void
     {
         try {
-            $transactionKeyQuery = ['must_not' => ['term' => ['tsk' => $this->transactionKey]]];
+            $transactionKeyQuery = ['must_not' => ['term' => ['tsk' => 1]]];
             $query = ['query' => ['bool' => $transactionKeyQuery]];
 
             if ($docIds) {
