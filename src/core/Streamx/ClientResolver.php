@@ -34,7 +34,7 @@ class ClientResolver {
      */
     public function getClient(int $storeId): ClientInterface {
         if (!$this->config->isEnabled()) {
-            throw new ConnectionDisabledException('StreamX indexer is disabled.');
+            throw new ConnectionDisabledException('StreamX Connector is disabled.');
         }
 
         if (!isset($this->clients[$storeId])) {

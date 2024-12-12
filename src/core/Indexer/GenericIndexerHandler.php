@@ -19,7 +19,7 @@ use Traversable;
 
 class GenericIndexerHandler
 {
-    public const INDEX_NAME_PREFIX = 'streamx_storefront_catalog';
+    public const INDEX_IDENTIFIER = 'streamx_storefront_catalog';
 
     private Batch $batch;
     private Config $indicesConfig;
@@ -163,8 +163,8 @@ class GenericIndexerHandler
     public function loadType(string $typeName): TypeInterface
     {
         $indicesConfiguration = $this->indicesConfig->get();
-        if (isset($indicesConfiguration[self::INDEX_NAME_PREFIX])) {
-            $config = $indicesConfiguration[self::INDEX_NAME_PREFIX];
+        if (isset($indicesConfiguration[self::INDEX_IDENTIFIER])) {
+            $config = $indicesConfiguration[self::INDEX_IDENTIFIER];
             $types = $config['types'];
             if (isset($types[$typeName])) {
                 return $types[$typeName];
