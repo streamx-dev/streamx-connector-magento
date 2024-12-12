@@ -4,7 +4,7 @@ namespace StreamX\ConnectorCatalog\Api;
 
 interface CatalogConfigurationInterface
 {
-    const CATALOG_SETTINGS_XML_PREFIX = 'streamx_indexer_settings/catalog_settings';
+    const CATALOG_SETTINGS_XML_PREFIX = 'streamx_connector_settings/catalog_settings';
 
     /**
      * Slug/url key config

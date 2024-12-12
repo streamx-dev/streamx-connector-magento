@@ -17,5 +17,5 @@ class Error extends Base
      * File name
      * @var string
      */
-    protected $fileName = '/var/log/streamx-indexer/error.log';
+    protected $fileName = '/var/log/streamx-connector/error.log';
 }

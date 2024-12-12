@@ -2,7 +2,7 @@
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
-        <streamx_indexer_settings>
+        <streamx_connector_settings>
             <streamx_client>
                 <ingestion_base_url>http://rest-ingestion:8080</ingestion_base_url>
                 <channel_name>data</channel_name>
@@ -16,6 +16,6 @@
                 <cluster_health>0</cluster_health>
                 <batch_indexing_size>1000</batch_indexing_size>
             </optimization_settings>
-        </streamx_indexer_settings>
+        </streamx_connector_settings>
     </default>
 </config>

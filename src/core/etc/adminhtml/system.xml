@@ -6,9 +6,9 @@
             <label>StreamX</label>
         </tab>
 
-        <section id="streamx_indexer_settings" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+        <section id="streamx_connector_settings" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
             <class>separator-top</class>
-            <label>Indexer</label>
+            <label>Connector</label>
             <tab>streamx_config</tab>
             <resource>StreamX_ConnectorCore::configuration</resource>
 
@@ -32,7 +32,7 @@
             <group id="streamx_client" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>StreamX Connector Settings</label>
                 <depends>
-                    <field id="streamx_indexer_settings/general_settings/enable">1</field>
+                    <field id="streamx_connector_settings/general_settings/enable">1</field>
                 </depends>
                 <field id="ingestion_base_url" translate="label comment" type="text" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>StreamX Rest Ingestion base URL</label>
@@ -51,7 +51,7 @@
             <group id="optimization_settings" translate="label" type="text" sortOrder="350" showInDefault="1" showInWebsite="0" showInStore="0">
                 <label>Optimization Settings</label>
                 <depends>
-                    <field id="streamx_indexer_settings/general_settings/enable">1</field>
+                    <field id="streamx_connector_settings/general_settings/enable">1</field>
                 </depends>
                 <field id="cluster_health" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Check cluster health</label>
