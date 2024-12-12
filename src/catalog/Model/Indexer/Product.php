@@ -32,7 +32,7 @@ class Product implements \Magento\Framework\Indexer\ActionInterface, \Magento\Fr
         foreach ($stores as $store) {
             $storeId = $store->getId();
             $this->indexHandler->saveIndex($this->productAction->rebuild($storeId, $ids), $store);
-            $this->indexHandler->cleanUpByTransactionKey($store, $ids);
+            $this->indexHandler->cleanUpByIds($store, $ids);
         }
     }
 
@@ -45,7 +45,7 @@ class Product implements \Magento\Framework\Indexer\ActionInterface, \Magento\Fr
 
         foreach ($stores as $store) {
             $this->indexHandler->saveIndex($this->productAction->rebuild($store->getId()), $store);
-            $this->indexHandler->cleanUpByTransactionKey($store);
+            $this->indexHandler->cleanUpByIds($store);
         }
     }
 

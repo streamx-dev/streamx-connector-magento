@@ -3,6 +3,7 @@
 namespace StreamX\ConnectorCore\Index\Indicies;
 
 use StreamX\ConnectorCore\Api\Index\TypeInterfaceFactory as TypeFactoryInterface;
+use StreamX\ConnectorCore\Indexer\DataProvider\TransactionKey;
 use StreamX\ConnectorCore\Indexer\DataProviderProcessorFactory;
 use StreamX\ConnectorCore\Indexer\MappingProcessorFactory;
 
@@ -10,34 +11,16 @@ class Config
 {
     /**
      * Factory used to build mapping types.
-     *
-     * @var TypeFactoryInterface
      */
-    private $typeFactory;
-
-    /**
-     * @var DataProviderProcessorFactory
-     */
-    private $dataProviderFactoryProcessor;
-
-    /**
-     * @var MappingProcessorFactory
-     */
-    private $mappingProviderProcessorFactory;
-
-    /**
-     * @var \StreamX\ConnectorCore\Indexer\DataProvider\TransactionKey
-     */
-    private $transactionKey;
-
-    /**
-     * Config\Data
-     */
-    private $configData;
+    private TypeFactoryInterface $typeFactory;
+    private DataProviderProcessorFactory $dataProviderFactoryProcessor;
+    private MappingProcessorFactory $mappingProviderProcessorFactory;
+    private TransactionKey $transactionKey;
+    private Config\Data $configData;
 
     public function __construct(
         Config\Data $configData,
-        \StreamX\ConnectorCore\Indexer\DataProvider\TransactionKey $transactionKey,
+        TransactionKey $transactionKey,
         TypeFactoryInterface $typeInterfaceFactory,
         MappingProcessorFactory $mappingProcessorFactory,
         DataProviderProcessorFactory $dataProviderFactoryProcessor
