@@ -60,23 +60,23 @@ class MagentoMySqlQueryExecutor {
     public static function getProductId(string $productName): string {
         $productNameAttributeId = self::getProductNameAttributeId();
 
-        return self::selectFirstField(<<<EOD
+        return self::selectFirstField("
             SELECT entity_id
               FROM catalog_product_entity_varchar
              WHERE attribute_id = $productNameAttributeId
                AND value = '$productName'
-        EOD);
+        ");
     }
 
     public static function getCategoryId(string $categoryName): string {
         $categoryNameAttributeId = self::getCategoryNameAttributeId();
 
-        return self::selectFirstField(<<<EOD
+        return self::selectFirstField("
             SELECT entity_id
               FROM catalog_category_entity_varchar
              WHERE attribute_id = $categoryNameAttributeId
                AND value = '$categoryName'
-        EOD);
+        ");
     }
 
     public static function getProductAttributeId(string $attributeCode): string {
@@ -95,11 +95,11 @@ class MagentoMySqlQueryExecutor {
     }
 
     public static function getEntityTypeId(string $table): string {
-        return self::selectFirstField(<<<EOD
+        return self::selectFirstField("
             SELECT entity_type_id
               FROM eav_entity_type
              WHERE entity_table = '$table'
-        EOD);
+        ");
     }
 
     public static function getNameAttributeId(int $entityTypeId): string {
@@ -107,19 +107,19 @@ class MagentoMySqlQueryExecutor {
     }
 
     public static function getAttributeId(string $attributeCode, int $entityTypeId): string {
-        return self::selectFirstField(<<<EOD
+        return self::selectFirstField("
             SELECT attribute_id
               FROM eav_attribute
              WHERE attribute_code = '$attributeCode'
                AND entity_type_id = $entityTypeId
-        EOD);
+        ");
     }
 
     public static function getAttributeDisplayName(int $attributeId): string {
-        return self::selectFirstField(<<<EOD
+        return self::selectFirstField("
             SELECT frontend_label
               FROM eav_attribute
              WHERE attribute_id = $attributeId
-        EOD);
+        ");
     }
 }

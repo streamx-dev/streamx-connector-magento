@@ -38,10 +38,10 @@ class DirectDbAttributeUpdateStreamxPublishTest extends BaseDirectDbEntityUpdate
     }
 
     private static function renameAttributeInDb($attributeId, string $newDisplayName): void {
-        MagentoMySqlQueryExecutor::execute(<<<EOD
+        MagentoMySqlQueryExecutor::execute("
             UPDATE eav_attribute
                SET frontend_label = '$newDisplayName'
              WHERE attribute_id = $attributeId
-        EOD);
+        ");
     }
 }
