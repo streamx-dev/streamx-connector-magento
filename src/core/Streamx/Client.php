@@ -7,6 +7,7 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Store\Model\StoreManagerInterface;
 use Psr\Log\LoggerInterface;
 use Streamx\Clients\Ingestion\Exceptions\StreamxClientException;
+use Streamx\Clients\Ingestion\Publisher\Message;
 use Streamx\Clients\Ingestion\Publisher\Publisher;
 use StreamX\ConnectorCore\Api\Client\ClientInterface;
 use StreamX\ConnectorCore\Streamx\Model\Data;
@@ -120,7 +121,17 @@ class Client implements ClientInterface {
     private function publishToStreamX(string $key, string $payload) {
         $this->logger->info("Publishing $key");
         $data = new Data($payload);
-        $this->publisher->publish($key, $data);
+
+        $this->logger->info("Publishing $key");
+        $message = Message::newPublishMessage($key, $data)->build();
+        $messageStatuses = $this->publisher->sendMulti([$message]);
+
+        $messageStatus = $messageStatuses[0]; // TODO implement sending batches of messages at once
+        if ($messageStatus->getFailure() !== null) {
+            $this->logger->error("Error response from sending $key: " . json_encode($messageStatus->getFailure()));
+        } else {
+            $this->logger->info("Success response from sending $key: " . json_encode($messageStatus->getSuccess()));
+        }
     }
 
     /**
