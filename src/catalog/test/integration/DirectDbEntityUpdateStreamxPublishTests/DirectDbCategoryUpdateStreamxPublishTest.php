@@ -37,11 +37,11 @@ class DirectDbCategoryUpdateStreamxPublishTest extends BaseDirectDbEntityUpdateS
 
     private static function renameCategoryInDb(int $categoryId, string $newName) {
         $categoryNameAttributeId = MagentoMySqlQueryExecutor::getCategoryNameAttributeId();
-        MagentoMySqlQueryExecutor::execute(<<<EOD
+        MagentoMySqlQueryExecutor::execute("
             UPDATE catalog_category_entity_varchar
                SET value = '$newName'
              WHERE attribute_id = $categoryNameAttributeId
                AND entity_id = $categoryId
-        EOD);
+        ");
     }
 }

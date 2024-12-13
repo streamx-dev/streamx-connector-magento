@@ -24,11 +24,11 @@ class DirectDbProductCategoryUpdateStreamxPublishTest extends BaseDirectDbEntity
         $newCategoryId = MagentoMySqlQueryExecutor::getCategoryId($newCategoryName);
 
         // read ID of first category assigned to the product
-        $oldCategoryId = MagentoMySqlQueryExecutor::selectFirstField(<<<EOD
+        $oldCategoryId = MagentoMySqlQueryExecutor::selectFirstField("
             SELECT MIN(category_id)
               FROM catalog_category_product
              WHERE product_id = $productId
-        EOD);
+        ");
 
         $this->assertNotEquals($newCategoryId, $oldCategoryId);
 
@@ -46,11 +46,11 @@ class DirectDbProductCategoryUpdateStreamxPublishTest extends BaseDirectDbEntity
     }
 
     private static function changeProductCategoryInDb(int $productId, string $oldCategoryId, string $newCategoryId) {
-        MagentoMySqlQueryExecutor::execute(<<<EOD
+        MagentoMySqlQueryExecutor::execute("
             UPDATE catalog_category_product
                SET category_id = $newCategoryId
              WHERE category_id = $oldCategoryId
                AND product_id = $productId
-        EOD);
+        ");
     }
 }
