@@ -37,11 +37,11 @@ class DirectDbProductUpdateStreamxPublishTest extends BaseDirectDbEntityUpdateSt
 
     private static function renameProductInDb(int $productId, string $newName) {
         $productNameAttributeId = MagentoMySqlQueryExecutor::getProductNameAttributeId();
-        MagentoMySqlQueryExecutor::execute(<<<EOD
+        MagentoMySqlQueryExecutor::execute("
             UPDATE catalog_product_entity_varchar
                SET value = '$newName'
              WHERE attribute_id = $productNameAttributeId
                AND entity_id = $productId
-        EOD);
+        ");
     }
 }
