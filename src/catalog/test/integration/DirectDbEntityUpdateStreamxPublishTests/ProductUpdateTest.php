@@ -9,7 +9,7 @@ use function date;
 /**
  * @inheritdoc
  */
-class DirectDbProductUpdateStreamxPublishTest extends BaseDirectDbEntityUpdateStreamxPublishTest {
+class ProductUpdateTest extends BaseDirectDbEntityUpdateTest {
 
     protected function indexerName(): string {
         return ProductProcessor::INDEXER_ID;
