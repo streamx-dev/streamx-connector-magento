@@ -8,7 +8,7 @@ use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
 /**
  * @inheritdoc
  */
-class DirectDbProductCategoryUpdateStreamxPublishTest extends BaseDirectDbEntityUpdateStreamxPublishTest {
+class ProductCategoryUpdateTest extends BaseDirectDbEntityUpdateTest {
 
     protected function indexerName(): string {
         // note 1: no mview based indexer is implemented directly for Product-Category mappings

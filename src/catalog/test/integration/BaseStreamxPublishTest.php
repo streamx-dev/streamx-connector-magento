@@ -9,7 +9,8 @@ use StreamX\ConnectorCatalog\test\integration\utils\MagentoIndexerOperationsExec
  * Prerequisites to run these tests:
  * 1. markshust/docker-magento images must be running
  * 2. StreamX Connector must be deployed to the Magento instance
- * 3. StreamX must be running (with the add-rest-ingestion-to-magento-network.sh script executed)
+ * 3. StreamX Connector must be enabled and configured in Magento
+ * 4. StreamX must be running (with the add-rest-ingestion-to-magento-network.sh script executed)
  */
 abstract class BaseStreamxPublishTest extends TestCase {
 
