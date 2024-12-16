@@ -19,7 +19,9 @@ class ProductCategoryUpdateTest extends BaseDirectDbEntityUpdateTest {
     /** @test */
     public function shouldPublishProductCategoryEditedDirectlyInDatabaseToStreamx() {
         // given
-        $productId = 1;
+        $productName = 'Joust Duffle Bag';
+        $productId = MagentoMySqlQueryExecutor::getProductId($productName);
+
         $newCategoryName = 'Jackets';
         $newCategoryId = MagentoMySqlQueryExecutor::getCategoryId($newCategoryName);
 
