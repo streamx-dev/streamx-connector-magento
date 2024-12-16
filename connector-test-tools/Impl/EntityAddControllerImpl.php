@@ -12,9 +12,9 @@ use Magento\Catalog\Model\Product\Type;
 use Magento\Catalog\Model\Product\Visibility;
 use Magento\Catalog\Model\ProductFactory;
 use Magento\Store\Model\StoreManager;
-use StreamX\ConnectorTestTools\Api\EntityAddController;
+use StreamX\ConnectorTestTools\Api\EntityAddControllerInterface;
 
-class EntityAddControllerImpl implements EntityAddController {
+class EntityAddControllerImpl implements EntityAddControllerInterface {
 
     private StoreManager $storeManager;
     private ProductFactory $productFactory;

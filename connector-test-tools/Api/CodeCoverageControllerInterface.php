@@ -2,7 +2,7 @@
 
 namespace StreamX\ConnectorTestTools\Api;
 
-interface CodeCoverageEndpointsInterface {
+interface CodeCoverageControllerInterface {
 
     /**
      * Starts code coverage measurement
