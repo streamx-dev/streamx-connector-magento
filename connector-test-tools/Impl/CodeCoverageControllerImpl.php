@@ -2,9 +2,9 @@
 
 namespace StreamX\ConnectorTestTools\Impl;
 
-use StreamX\ConnectorTestTools\Api\CodeCoverageEndpointsInterface;
+use StreamX\ConnectorTestTools\Api\CodeCoverageControllerInterface;
 
-class CodeCoverageEndpoints implements CodeCoverageEndpointsInterface {
+class CodeCoverageControllerImpl implements CodeCoverageControllerInterface {
 
     /**
      * @inheritdoc

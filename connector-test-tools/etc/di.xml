@@ -3,19 +3,19 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
 
     <preference
-      for="StreamX\ConnectorTestTools\Api\EntityAddController"
+      for="StreamX\ConnectorTestTools\Api\EntityAddControllerInterface"
       type="StreamX\ConnectorTestTools\Impl\EntityAddControllerImpl"/>
 
     <preference
-      for="StreamX\ConnectorTestTools\Api\EntityEditController"
+      for="StreamX\ConnectorTestTools\Api\EntityEditControllerInterface"
       type="StreamX\ConnectorTestTools\Impl\EntityEditControllerImpl"/>
 
     <preference
-      for="StreamX\ConnectorTestTools\Api\EntityDeleteController"
+      for="StreamX\ConnectorTestTools\Api\EntityDeleteControllerInterface"
       type="StreamX\ConnectorTestTools\Impl\EntityDeleteControllerImpl"/>
 
     <preference
-      for="StreamX\ConnectorTestTools\Api\CodeCoverageEndpointsInterface"
-      type="StreamX\ConnectorTestTools\Impl\CodeCoverageEndpoints"/>
+      for="StreamX\ConnectorTestTools\Api\CodeCoverageControllerInterface"
+      type="StreamX\ConnectorTestTools\Impl\CodeCoverageControllerImpl"/>
 
 </config>

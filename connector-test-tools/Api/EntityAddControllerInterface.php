@@ -4,7 +4,7 @@ namespace StreamX\ConnectorTestTools\Api;
 
 use Exception;
 
-interface EntityAddController {
+interface EntityAddControllerInterface {
 
     /**
      * Adds a product

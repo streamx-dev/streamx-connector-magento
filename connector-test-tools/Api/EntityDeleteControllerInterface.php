@@ -4,7 +4,7 @@ namespace StreamX\ConnectorTestTools\Api;
 
 use Exception;
 
-interface EntityDeleteController {
+interface EntityDeleteControllerInterface {
 
     /**
      * Deletes a product
