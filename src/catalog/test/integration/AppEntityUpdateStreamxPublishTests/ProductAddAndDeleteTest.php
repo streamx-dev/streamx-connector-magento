@@ -9,7 +9,7 @@ use function date;
 /**
  * @inheritdoc
  */
-class AppProductAddStreamxPublishTest extends BaseAppEntityUpdateStreamxPublishTest {
+class ProductAddAndDeleteTest extends BaseAppEntityUpdateTest {
 
     protected function indexerName(): string {
         return ProductProcessor::INDEXER_ID;

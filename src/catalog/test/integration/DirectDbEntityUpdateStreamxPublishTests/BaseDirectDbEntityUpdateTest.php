@@ -8,7 +8,7 @@ use StreamX\ConnectorCatalog\test\integration\utils\MagentoIndexerOperationsExec
 /**
  * @inheritdoc
  */
-abstract class BaseDirectDbEntityUpdateStreamxPublishTest extends BaseStreamxPublishTest {
+abstract class BaseDirectDbEntityUpdateTest extends BaseStreamxPublishTest {
 
     protected abstract function indexerName(): string;
 

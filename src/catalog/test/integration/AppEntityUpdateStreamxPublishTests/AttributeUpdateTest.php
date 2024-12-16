@@ -1,6 +1,6 @@
 <?php
 
-namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
+namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
@@ -9,14 +9,14 @@ use function date;
 /**
  * @inheritdoc
  */
-class DirectDbAttributeUpdateStreamxPublishTest extends BaseDirectDbEntityUpdateStreamxPublishTest {
+class AttributeUpdateTest extends BaseAppEntityUpdateTest {
 
     protected function indexerName(): string {
         return AttributeProcessor::INDEXER_ID;
     }
 
     /** @test */
-    public function shouldPublishAttributeEditedDirectlyInDatabaseToStreamx() {
+    public function shouldPublishAttributeEditedUsingMagentoApplicationToStreamx() {
         // given
         $attributeCode = 'description';
         $attributeId = MagentoMySqlQueryExecutor::getProductAttributeId($attributeCode);
@@ -25,23 +25,22 @@ class DirectDbAttributeUpdateStreamxPublishTest extends BaseDirectDbEntityUpdate
         $oldDisplayName = MagentoMySqlQueryExecutor::getAttributeDisplayName($attributeId);
 
         // when
-        self::renameAttributeInDb($attributeId, $newDisplayName);
-        $this->indexerOperations->reindex();
+        self::renameAttribute($attributeCode, $newDisplayName);
 
         // then
+        $expectedKey = "attribute_$attributeId";
         try {
-            $expectedKey = "attribute_$attributeId";
             $this->assertDataIsPublished($expectedKey, $newDisplayName);
         } finally {
-            self::renameAttributeInDb($attributeId, $oldDisplayName);
+            self::renameAttribute($attributeCode, $oldDisplayName);
+            $this->assertDataIsPublished($expectedKey, $oldDisplayName);
         }
     }
 
-    private static function renameAttributeInDb($attributeId, string $newDisplayName): void {
-        MagentoMySqlQueryExecutor::execute("
-            UPDATE eav_attribute
-               SET frontend_label = '$newDisplayName'
-             WHERE attribute_id = $attributeId
-        ");
+    private function renameAttribute(string $attributeCode, string $newName) {
+        $this->callRestApiEndpoint('attribute/rename', [
+            'attributeCode' => $attributeCode,
+            'newName' => $newName
+        ]);
     }
 }

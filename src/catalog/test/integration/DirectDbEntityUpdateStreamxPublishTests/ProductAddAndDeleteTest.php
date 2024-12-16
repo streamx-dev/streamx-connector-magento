@@ -9,7 +9,7 @@ use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor as
 /**
  * @inheritdoc
  */
-class DirectDbProductAddStreamxPublishTest extends BaseDirectDbEntityUpdateStreamxPublishTest {
+class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
     protected function indexerName(): string {
         return ProductProcessor::INDEXER_ID;
@@ -30,7 +30,10 @@ class DirectDbProductAddStreamxPublishTest extends BaseDirectDbEntityUpdateStrea
         try {
             $this->assertDataIsPublished($expectedKey, $productName);
         } finally {
-            self::deleteProduct($productId); // note: currently this event is not sent to StreamX
+            self::deleteProduct($productId);
+            // TODO currently product deleted from DB directly is not unpublished from StreamX.
+            //  this assertion doesn't pass:
+            //  $this->assertDataIsUnpublished($expectedKey);
         }
     }
 
