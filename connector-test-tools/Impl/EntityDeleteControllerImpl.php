@@ -4,9 +4,9 @@ namespace StreamX\ConnectorTestTools\Impl;
 
 use Exception;
 use Magento\Catalog\Api\ProductRepositoryInterface;
-use StreamX\ConnectorTestTools\Api\EntityDeleteController;
+use StreamX\ConnectorTestTools\Api\EntityDeleteControllerInterface;
 
-class EntityDeleteControllerImpl implements EntityDeleteController {
+class EntityDeleteControllerImpl implements EntityDeleteControllerInterface {
 
     private ProductRepositoryInterface $productRepository;
 

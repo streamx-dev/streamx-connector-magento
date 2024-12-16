@@ -7,9 +7,9 @@ use Magento\Catalog\Api\CategoryRepositoryInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Eav\Api\AttributeRepositoryInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
-use StreamX\ConnectorTestTools\Api\EntityEditController;
+use StreamX\ConnectorTestTools\Api\EntityEditControllerInterface;
 
-class EntityEditControllerImpl  implements EntityEditController {
+class EntityEditControllerImpl  implements EntityEditControllerInterface {
 
     private ProductRepositoryInterface $productRepository;
     private CategoryRepositoryInterface $categoryRepository;
