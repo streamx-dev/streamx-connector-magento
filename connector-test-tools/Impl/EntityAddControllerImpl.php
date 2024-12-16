@@ -11,25 +11,21 @@ use Magento\Catalog\Model\Product\Attribute\Source\Status;
 use Magento\Catalog\Model\Product\Type;
 use Magento\Catalog\Model\Product\Visibility;
 use Magento\Catalog\Model\ProductFactory;
-use Magento\Store\Model\StoreManager;
 use StreamX\ConnectorTestTools\Api\EntityAddControllerInterface;
 
 class EntityAddControllerImpl implements EntityAddControllerInterface {
 
-    private StoreManager $storeManager;
     private ProductFactory $productFactory;
     private ProductRepositoryInterface $productRepository;
     private CategoryLinkRepositoryInterface $categoryLinkRepository;
     private CategoryProductLinkInterfaceFactory $categoryProductLinkFactory;
 
     public function __construct(
-        StoreManager $storeManager,
         ProductFactory $productFactory,
         ProductRepositoryInterface $productRepository,
         CategoryLinkRepositoryInterface $categoryLinkRepository,
         CategoryProductLinkInterfaceFactory $categoryProductLinkFactory
     ) {
-        $this->storeManager = $storeManager;
         $this->productFactory = $productFactory;
         $this->productRepository = $productRepository;
         $this->categoryLinkRepository = $categoryLinkRepository;

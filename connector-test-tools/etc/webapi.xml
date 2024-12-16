@@ -26,6 +26,12 @@
       <resource ref="anonymous"/>
     </resources>
   </route>
+  <route url="/V1/product/category/change" method="PUT">
+    <service class="StreamX\ConnectorTestTools\Api\EntityEditControllerInterface" method="changeProductCategory"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
 
   <route url="/V1/product/delete" method="PUT">
     <service class="StreamX\ConnectorTestTools\Api\EntityDeleteControllerInterface" method="deleteProduct"/>
