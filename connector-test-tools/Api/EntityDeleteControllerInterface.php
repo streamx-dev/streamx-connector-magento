@@ -13,4 +13,12 @@ interface EntityDeleteControllerInterface {
      * @throws Exception
      */
     public function deleteProduct(int $productId): void;
+
+    /**
+     * Deletes a category
+     * @param int $categoryId ID of the category to be renamed
+     * @return void
+     * @throws Exception
+     */
+    public function deleteCategory(int $categoryId): void;
 }
