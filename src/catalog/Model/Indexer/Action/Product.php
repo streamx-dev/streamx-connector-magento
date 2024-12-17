@@ -27,7 +27,6 @@ class Product {
         // 1. Publish edited and added products
         $publishedProductIds = [];
         do {
-            // TODO:
             $products = $this->resourceModel->getProducts($storeId, $productIds, $lastProductId);
 
             foreach ($products as $product) {
