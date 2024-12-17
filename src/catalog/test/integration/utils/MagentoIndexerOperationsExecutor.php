@@ -37,11 +37,7 @@ class MagentoIndexerOperationsExecutor {
         $this->executeCommand("set-mode $modeInternalName");
     }
 
-    public function reindex(): void {
-        $this->executeCommand('reindex');
-    }
-
-    public function executeCommand(string $indexerCommand): ?string {
+    private function executeCommand(string $indexerCommand): ?string {
         $cdCommand = 'cd ' . $this->magentoFolder;
         $magentoCommand = 'bin/magento indexer:' . $indexerCommand . ' ' . $this->indexerName;
         return shell_exec("$cdCommand && $magentoCommand");

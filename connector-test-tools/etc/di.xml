@@ -18,4 +18,8 @@
       for="StreamX\ConnectorTestTools\Api\CodeCoverageControllerInterface"
       type="StreamX\ConnectorTestTools\Impl\CodeCoverageControllerImpl"/>
 
+    <preference
+      for="StreamX\ConnectorTestTools\Api\MviewReindexerInterface"
+      type="StreamX\ConnectorTestTools\Impl\MviewReindexerImpl"/>
+
 </config>

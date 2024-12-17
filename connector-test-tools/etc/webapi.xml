@@ -59,4 +59,11 @@
     </resources>
   </route>
 
+  <route url="/V1/mview/reindex" method="PUT">
+    <service class="StreamX\ConnectorTestTools\Api\MviewReindexerInterface" method="reindexMview"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+
 </routes>
