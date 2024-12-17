@@ -79,7 +79,6 @@ class EntityEditControllerImpl  implements EntityEditControllerInterface {
                 }
             }
 
-            // TODO find a better way - now old category is not removed from the product
             $this->categoryLinkManagement->assignProductToCategories($sku, $categoryIds);
         } catch (Exception $e) {
             throw new Exception("Error changing product $productId category from $oldCategoryId to $newCategoryId: " . $e->getMessage(), -1, $e);
