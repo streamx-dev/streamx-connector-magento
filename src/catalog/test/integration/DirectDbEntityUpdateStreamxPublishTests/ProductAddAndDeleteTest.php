@@ -16,24 +16,26 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
     }
 
     /** @test */
-    public function shouldPublishProductAddedDirectlyInDatabaseToStreamx() {
+    public function shouldPublishProductAddedDirectlyInDatabaseToStreamx_AndUnpublishDeletedProduct() {
         // given
         $productName = 'The new great watch!';
         $categoryName = 'Watches';
 
         // when
         $productId = self::insertNewProduct($productName, $categoryName);
-        $this->indexerOperations->reindex(); // TODO: in all places, attempt to make the indexer execute based on schedule - instead of performing full reindexation of all entities
+        $this->reindexMview();
 
         // then
         $expectedKey = "product_$productId";
         try {
             $this->assertDataIsPublished($expectedKey, $productName);
         } finally {
+            // and when
             self::deleteProduct($productId);
-            // TODO currently product deleted from DB directly is not unpublished from StreamX.
-            //  this assertion doesn't pass:
-            //  $this->assertDataIsUnpublished($expectedKey);
+            $this->reindexMview();
+
+            // then
+            $this->assertDataIsUnpublished($expectedKey);
         }
     }
 

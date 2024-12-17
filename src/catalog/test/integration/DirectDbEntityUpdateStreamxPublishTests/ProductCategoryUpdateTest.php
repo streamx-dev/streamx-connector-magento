@@ -40,7 +40,7 @@ class ProductCategoryUpdateTest extends BaseDirectDbEntityUpdateTest {
 
         // when
         self::changeProductCategoryInDb($productId, $oldCategoryId, $newCategoryId);
-        $this->indexerOperations->reindex();
+        $this->reindexMview();
 
         // then
         try {

@@ -30,7 +30,7 @@ class AttributeUpdateTest extends BaseDirectDbEntityUpdateTest {
 
         // when
         self::renameAttributeInDb($attributeId, $newDisplayName);
-        $this->indexerOperations->reindex();
+        $this->reindexMview();
 
         // then
         try {

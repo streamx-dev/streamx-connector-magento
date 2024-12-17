@@ -55,7 +55,7 @@ class ProductCategoryUpdateTest extends BaseAppEntityUpdateTest {
     }
 
     private function changeProductCategory(int $productId, int $oldCategoryId, int $newCategoryId): void {
-        $this->callRestApiEndpoint('product/category/change', [
+        $this->callMagentoEndpoint('product/category/change', [
             'productId' => $productId,
             'oldCategoryId' => $oldCategoryId,
             'newCategoryId' => $newCategoryId
