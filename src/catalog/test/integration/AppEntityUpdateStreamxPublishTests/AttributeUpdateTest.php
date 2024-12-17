@@ -41,7 +41,7 @@ class AttributeUpdateTest extends BaseAppEntityUpdateTest {
     }
 
     private function renameAttribute(string $attributeCode, string $newName) {
-        $this->callRestApiEndpoint('attribute/rename', [
+        $this->callMagentoEndpoint('attribute/rename', [
             'attributeCode' => $attributeCode,
             'newName' => $newName
         ]);
