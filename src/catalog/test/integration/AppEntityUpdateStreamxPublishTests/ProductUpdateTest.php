@@ -22,11 +22,14 @@ class ProductUpdateTest extends BaseAppEntityUpdateTest {
         $productNewName = 'Name modified for testing, at ' . date("Y-m-d H:i:s");
         $productId = MagentoMySqlQueryExecutor::getProductId($productOldName);
 
+        // and
+        $expectedKey = "product_$productId";
+        self::removeFromStreamX($expectedKey);
+
         // when
         self::renameProduct($productId, $productNewName);
 
         // then
-        $expectedKey = "product_$productId";
         try {
             $this->assertDataIsPublished($expectedKey, $productNewName);
         } finally {

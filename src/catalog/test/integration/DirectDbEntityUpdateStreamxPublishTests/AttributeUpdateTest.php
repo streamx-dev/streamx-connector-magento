@@ -24,13 +24,16 @@ class AttributeUpdateTest extends BaseDirectDbEntityUpdateTest {
         $newDisplayName = 'Description attribute name modified for testing, at ' . date("Y-m-d H:i:s");
         $oldDisplayName = MagentoMySqlQueryExecutor::getAttributeDisplayName($attributeId);
 
+        // and
+        $expectedKey = "attribute_$attributeId";
+        self::removeFromStreamX($expectedKey);
+
         // when
         self::renameAttributeInDb($attributeId, $newDisplayName);
         $this->indexerOperations->reindex();
 
         // then
         try {
-            $expectedKey = "attribute_$attributeId";
             $this->assertDataIsPublished($expectedKey, $newDisplayName);
         } finally {
             self::renameAttributeInDb($attributeId, $oldDisplayName);

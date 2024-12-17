@@ -74,7 +74,7 @@ class EntityEditControllerImpl  implements EntityEditControllerInterface {
 
             $categoryIds = [$newCategoryId];
             foreach ($product->getCategoryIds() as $existingCategoryId) {
-                if ($existingCategoryId !== $oldCategoryId) {
+                if ((int) $existingCategoryId !== $oldCategoryId) {
                     $categoryIds[] = $existingCategoryId;
                 }
             }

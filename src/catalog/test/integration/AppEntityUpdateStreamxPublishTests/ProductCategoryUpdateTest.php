@@ -38,18 +38,19 @@ class ProductCategoryUpdateTest extends BaseAppEntityUpdateTest {
 
         $this->assertNotEquals($newCategoryId, $oldCategoryId);
 
+        // and
+        $expectedKey = "product_category_$productId";
+        self::removeFromStreamX($expectedKey);
+
         // when
         self::changeProductCategory($productId, $oldCategoryId, $newCategoryId);
 
         // then
         try {
-            $this->assertDataIsPublished("product_category_$productId", $newCategoryName);
-            // TODO: with current impl of changeProductCategory method, the below assertion does not pass. When product category is changed in Admin UI - it passes
-            //  $this->assertDataIsPublished("product_$productId", $newCategoryName);
+            $this->assertDataIsPublished($expectedKey, $newCategoryName);
         } finally {
             self::changeProductCategory($productId, $newCategoryId, $oldCategoryId);
-            $this->assertDataIsPublished("product_$productId", $oldCategoryName);
-            $this->assertDataIsPublished("product_category_$productId", $oldCategoryName);
+            $this->assertDataIsPublished($expectedKey, $oldCategoryName);
         }
     }
 

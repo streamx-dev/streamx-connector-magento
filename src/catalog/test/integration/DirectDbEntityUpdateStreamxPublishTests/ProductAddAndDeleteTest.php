@@ -23,7 +23,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
         // when
         $productId = self::insertNewProduct($productName, $categoryName);
-        $this->indexerOperations->reindex();
+        $this->indexerOperations->reindex(); // TODO: in all places, attempt to make the indexer execute based on schedule - instead of performing full reindexation of all entities
 
         // then
         $expectedKey = "product_$productId";

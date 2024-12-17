@@ -24,11 +24,14 @@ class AttributeUpdateTest extends BaseAppEntityUpdateTest {
         $newDisplayName = 'Description attribute name modified for testing, at ' . date("Y-m-d H:i:s");
         $oldDisplayName = MagentoMySqlQueryExecutor::getAttributeDisplayName($attributeId);
 
+        // and
+        $expectedKey = "attribute_$attributeId";
+        self::removeFromStreamX($expectedKey);
+
         // when
         self::renameAttribute($attributeCode, $newDisplayName);
 
         // then
-        $expectedKey = "attribute_$attributeId";
         try {
             $this->assertDataIsPublished($expectedKey, $newDisplayName);
         } finally {
