@@ -3,6 +3,7 @@
 namespace StreamX\ConnectorCatalog\test\integration;
 
 use PHPUnit\Framework\TestCase;
+use Streamx\Clients\Ingestion\Builders\StreamxClientBuilders;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoIndexerOperationsExecutor;
 
 /**
@@ -15,7 +16,10 @@ use StreamX\ConnectorCatalog\test\integration\utils\MagentoIndexerOperationsExec
 abstract class BaseStreamxPublishTest extends TestCase {
 
     private const STREAMX_DELIVERY_SERVICE_BASE_URL = "http://localhost:8081";
-    private const DATA_PUBLISH_TIMEOUT_SECONDS = 10;
+    private const STREAMX_REST_INGESTION_URL = "http://localhost:8080";
+    private const DATA_PUBLISH_TIMEOUT_SECONDS = 3;
+    private const CHANNEL_SCHEMA_NAME = "dev.streamx.blueprints.data.DataIngestionMessage";
+    private const CHANNEL_NAME = "data";
 
     protected MagentoIndexerOperationsExecutor $indexerOperations;
     private string $originalIndexerMode;
@@ -42,36 +46,50 @@ abstract class BaseStreamxPublishTest extends TestCase {
         }
     }
 
-    protected function assertDataIsPublished(string $key, string $contentSubstring) {
+    protected function assertDataIsPublished(string $key, string $contentSubstring): void {
         $url = self::STREAMX_DELIVERY_SERVICE_BASE_URL . '/' . $key;
 
         $startTime = time();
+        $response = null;
         while (time() - $startTime < self::DATA_PUBLISH_TIMEOUT_SECONDS) {
             $response = @file_get_contents($url);
             if ($response !== false) {
                 echo "Published content: $response\n";
-                $this->assertStringContainsString($contentSubstring, $response);
-                return;
+                if (str_contains($response, $contentSubstring)) {
+                    $this->assertTrue(true); // needed to work around the "This test did not perform any assertions" warning
+                    return;
+                }
             }
             usleep(100000); // sleep for 100 milliseconds
         }
 
-        $this->fail("$url: not found");
+        if ($response !== false) {
+            $this->assertStringContainsString($contentSubstring, $response);
+        } else {
+            $this->fail("$url: not found");
+        }
     }
 
-    protected function assertDataIsUnpublished(string $key) {
+    protected function assertDataIsUnpublished(string $key): void {
         $url = self::STREAMX_DELIVERY_SERVICE_BASE_URL . '/' . $key;
 
         $startTime = time();
         while (time() - $startTime < self::DATA_PUBLISH_TIMEOUT_SECONDS) {
             $response = @file_get_contents($url);
             if (empty($response)) {
-                $this->assertTrue(true);
+                $this->assertTrue(true); // needed to work around the "This test did not perform any assertions" warning
                 return;
             }
             usleep(100000); // sleep for 100 milliseconds
         }
 
         $this->fail("$url: exists");
+    }
+
+    protected function removeFromStreamX(string $key): void {
+        StreamxClientBuilders::create(self::STREAMX_REST_INGESTION_URL)
+            ->build()
+            ->newPublisher(self::CHANNEL_NAME, self::CHANNEL_SCHEMA_NAME)
+            ->unpublish($key);
     }
 }

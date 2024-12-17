@@ -22,11 +22,14 @@ class CategoryUpdateTest extends BaseAppEntityUpdateTest {
         $categoryNewName = 'Name modified for testing, at ' . date("Y-m-d H:i:s");
         $categoryId = MagentoMySqlQueryExecutor::getCategoryId($categoryOldName);
 
+        // and
+        $expectedKey = "category_$categoryId";
+        self::removeFromStreamX($expectedKey);
+
         // when
         self::renameCategory($categoryId, $categoryNewName);
 
         // then
-        $expectedKey = "category_$categoryId";
         try {
             $this->assertDataIsPublished($expectedKey, $categoryNewName);
         } finally {

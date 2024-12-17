@@ -34,13 +34,16 @@ class ProductCategoryUpdateTest extends BaseDirectDbEntityUpdateTest {
 
         $this->assertNotEquals($newCategoryId, $oldCategoryId);
 
+        // and
+        $expectedKey = "product_$productId";
+        self::removeFromStreamX($expectedKey);
+
         // when
         self::changeProductCategoryInDb($productId, $oldCategoryId, $newCategoryId);
         $this->indexerOperations->reindex();
 
         // then
         try {
-            $expectedKey = "product_$productId";
             $this->assertDataIsPublished($expectedKey, $newCategoryName);
         } finally {
             self::changeProductCategoryInDb($productId, $newCategoryId, $oldCategoryId);

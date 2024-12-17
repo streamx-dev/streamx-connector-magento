@@ -22,13 +22,16 @@ class ProductUpdateTest extends BaseDirectDbEntityUpdateTest {
         $productNewName = 'Name modified for testing, at ' . date("Y-m-d H:i:s");
         $productId = MagentoMySqlQueryExecutor::getProductId($productOldName);
 
+        // and
+        $expectedKey = "product_$productId";
+        self::removeFromStreamX($expectedKey);
+
         // when
         self::renameProductInDb($productId, $productNewName);
         $this->indexerOperations->reindex();
 
         // then
         try {
-            $expectedKey = "product_$productId";
             $this->assertDataIsPublished($expectedKey, $productNewName);
         } finally {
             self::renameProductInDb($productId, $productOldName);

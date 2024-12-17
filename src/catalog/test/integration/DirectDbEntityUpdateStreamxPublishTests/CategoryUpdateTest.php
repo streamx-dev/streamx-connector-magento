@@ -22,13 +22,16 @@ class CategoryUpdateTest extends BaseDirectDbEntityUpdateTest {
         $categoryNewName = 'Name modified for testing, at ' . date("Y-m-d H:i:s");
         $categoryId = MagentoMySqlQueryExecutor::getCategoryId($categoryOldName);
 
+        // and
+        $expectedKey = "category_$categoryId";
+        self::removeFromStreamX($expectedKey);
+
         // when
         self::renameCategoryInDb($categoryId, $categoryNewName);
         $this->indexerOperations->reindex();
 
         // then
         try {
-            $expectedKey = "category_$categoryId";
             $this->assertDataIsPublished($expectedKey, $categoryNewName);
         } finally {
             self::renameCategoryInDb($categoryId, $categoryOldName);
