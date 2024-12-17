@@ -16,8 +16,7 @@ use Magento\Framework\Indexer\SaveHandler\Batch;
 use Magento\Store\Api\Data\StoreInterface;
 use Traversable;
 
-class GenericIndexerHandler
-{
+class GenericIndexerHandler {
     public const INDEX_IDENTIFIER = 'streamx_storefront_catalog';
 
     private Batch $batch;
@@ -46,11 +45,10 @@ class GenericIndexerHandler
     }
 
     /**
-     * @return $this
      * @throws ConnectionUnhealthyException
      */
-    public function updateIndex(Traversable $documents, StoreInterface $store, array $requireDataProvides)
-    {
+    public function updateIndex(Traversable $documents, StoreInterface $store, array $requireDataProvides): void {
+        // TODO adjust this method to handle unpublishes (similar like in the saveIndex() method)
         try {
             $storeId = (int)$store->getId();
             $dataProviders = [];
@@ -62,7 +60,7 @@ class GenericIndexerHandler
             }
 
             if (empty($dataProviders)) {
-                return $this;
+                return;
             }
 
             $batchSize = $this->indexOperations->getBatchIndexingSize();
@@ -82,7 +80,7 @@ class GenericIndexerHandler
                 );
 
                 $response = $this->indexOperations->executeBulk($storeId, $bulkRequest);
-                $this->bulkLogger->log($response);
+                $this->bulkLogger->logErrors($response);
                 $docs = null;
             }
         } catch (ConnectionDisabledException $exception) {
@@ -96,56 +94,41 @@ class GenericIndexerHandler
     /**
      * @throws ConnectionUnhealthyException
      */
-    public function saveIndex(Traversable $documents, StoreInterface $store): void
-    {
+    public function saveIndex(Traversable $documents, StoreInterface $store): void {
         try {
             $storeId = (int)$store->getId();
             $batchSize = $this->indexOperations->getBatchIndexingSize();
 
             foreach ($this->batch->getItems($documents, $batchSize) as $docs) {
-                $docsToPublish = [];
-                $docsToUnpublish = [];
-                foreach ($docs as $id => $doc) {
-                    if (self::isArrayWithSingleIdKey($doc)) {
-                        $docsToUnpublish[$id] = $doc;
-                    } else {
-                        $docsToPublish[$id] = $doc;
-                    }
-                }
-
-                foreach ($this->type->getDataProviders() as $dataProvider) {
-                    if (!empty($docsToPublish)) {
-                        $docsToPublish = $dataProvider->addData($docsToPublish, $storeId);
-                    }
-                }
-
-                if (!empty($docsToPublish)) {
-                    $bulkRequest = $this->indexOperations->createBulk()->addDocuments(
-                        $this->typeName,
-                        $docsToPublish
-                    );
-
-                    $response = $this->indexOperations->executeBulk($storeId, $bulkRequest);
-                    $this->bulkLogger->log($response);
-                }
-
-                if (!empty($docsToUnpublish)) {
-                    $bulkRequest = $this->indexOperations->createBulk()->deleteDocuments(
-                        $this->typeName,
-                        $docsToUnpublish
-                    );
-
-                    $response = $this->indexOperations->executeBulk($storeId, $bulkRequest);
-                    $this->bulkLogger->log($response);
-                }
-
-                $docs = null;
+                $this->processDocsBatch($docs, $storeId);
             }
         } catch (ConnectionDisabledException $exception) {
-            // do nothing, ES indexer disabled in configuration
+            // do nothing, StreamX indexer disabled in configuration
         } catch (ConnectionUnhealthyException $exception) {
             $this->indexerLogger->error($exception->getMessage());
             throw $exception;
+        }
+    }
+
+    private function processDocsBatch(array $docs, int $storeId): void {
+        $docsToPublish = [];
+        $docsToUnpublish = [];
+        foreach ($docs as $id => $doc) {
+            if (self::isArrayWithSingleIdKey($doc)) {
+                $docsToUnpublish[$id] = $doc;
+            } else {
+                $docsToPublish[$id] = $doc;
+            }
+        }
+
+        $docsToPublish = $this->enrichDocs($docsToPublish, $storeId);
+
+        if (!empty($docsToPublish)) {
+            $this->publishDocs($docsToPublish, $storeId);
+        }
+
+        if (!empty($docsToUnpublish)) {
+            $this->unpublishDocs($docsToUnpublish, $storeId);
         }
     }
 
@@ -153,8 +136,36 @@ class GenericIndexerHandler
         return count($array) === 1 && array_key_exists('id', $array);
     }
 
-    public function loadType(string $typeName): TypeInterface
-    {
+    private function enrichDocs(array $docsToPublish, int $storeId): array {
+        foreach ($this->type->getDataProviders() as $dataProvider) {
+            if (!empty($docsToPublish)) {
+                $docsToPublish = $dataProvider->addData($docsToPublish, $storeId);
+            }
+        }
+        return $docsToPublish;
+    }
+
+    private function publishDocs(array $docsToPublish, int $storeId): void {
+        $bulkRequest = $this->indexOperations->createBulk()->addDocuments(
+            $this->typeName,
+            $docsToPublish
+        );
+
+        $response = $this->indexOperations->executeBulk($storeId, $bulkRequest);
+        $this->bulkLogger->logErrors($response);
+    }
+
+    private function unpublishDocs(array $docsToUnpublish, int $storeId): void {
+        $bulkRequest = $this->indexOperations->createBulk()->deleteDocuments(
+            $this->typeName,
+            $docsToUnpublish
+        );
+
+        $response = $this->indexOperations->executeBulk($storeId, $bulkRequest);
+        $this->bulkLogger->logErrors($response);
+    }
+
+    private function loadType(string $typeName): TypeInterface {
         $indicesConfiguration = $this->indicesConfig->get();
         if (isset($indicesConfiguration[self::INDEX_IDENTIFIER])) {
             $config = $indicesConfiguration[self::INDEX_IDENTIFIER];

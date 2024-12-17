@@ -2,41 +2,34 @@
 
 namespace StreamX\ConnectorCatalog\Model\Indexer\Action;
 
+use Generator;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product as ResourceModel;
 
-class Product
-{
-    /**
-     * @var ResourceModel
-     */
-    private $resourceModel;
+class Product {
+    private ResourceModel $resourceModel;
 
-    public function __construct(ResourceModel $resourceModel)
-    {
+    public function __construct(ResourceModel $resourceModel) {
         $this->resourceModel = $resourceModel;
     }
 
     /**
-     * @return \Generator
      * @throws \Magento\Framework\Exception\LocalizedException
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function rebuild(int $storeId = 1, array $productIds = [])
-    {
+    public function rebuild(int $storeId = 1, array $productIds = []): Generator {
         $lastProductId = 0;
 
         // Ensure to reindex also the parents product ids
         if (!empty($productIds)) {
-            $productIds = $this->getProductIds($productIds);
+            $productIds = $this->withParentIds($productIds);
         }
 
-        $yieldedProductIds = [];
-
-        // 1. Publish edited products (TODO verify if added products are also processed here)
+        // 1. Publish edited and added products
+        $publishedProductIds = [];
         do {
+            // TODO:
             $products = $this->resourceModel->getProducts($storeId, $productIds, $lastProductId);
 
-            /** @var array $product */
             foreach ($products as $product) {
                 $lastProductId = (int)$product['entity_id'];
                 $product['id'] = $lastProductId;
@@ -47,19 +40,18 @@ class Product
                 unset($product['required_options']);
                 unset($product['has_options']);
                 yield $lastProductId => $product;
-                $yieldedProductIds[] = $lastProductId;
+                $publishedProductIds[] = $lastProductId;
             }
         } while (!empty($products));
 
         // 2. Unpublish deleted products
-        $unYieldedProductIds = array_diff($productIds, $yieldedProductIds);
-        foreach ($unYieldedProductIds as $unYieldedProductId) {
-            yield $lastProductId => ['id' => $unYieldedProductId];
+        $idsOfProductsToUnpublish = array_diff($productIds, $publishedProductIds);
+        foreach ($idsOfProductsToUnpublish as $productId) {
+            yield $productId => ['id' => $productId];
         }
     }
 
-    private function getProductIds(array $childrenIds): array
-    {
+    private function withParentIds(array $childrenIds): array {
         $parentIds = $this->resourceModel->getRelationsByChild($childrenIds);
 
         if (!empty($parentIds)) {

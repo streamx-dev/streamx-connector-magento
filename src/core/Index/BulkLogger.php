@@ -6,20 +6,14 @@ use StreamX\ConnectorCore\Api\BulkLoggerInterface;
 use StreamX\ConnectorCore\Api\BulkResponseInterface;
 use Psr\Log\LoggerInterface;
 
-class BulkLogger implements BulkLoggerInterface
-{
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+class BulkLogger implements BulkLoggerInterface {
+    private LoggerInterface $logger;
 
-     public function __construct(LoggerInterface $logger)
-    {
+    public function __construct(LoggerInterface $logger) {
         $this->logger = $logger;
     }
 
-    public function log(BulkResponseInterface $bulkResponse): void
-    {
+    public function logErrors(BulkResponseInterface $bulkResponse): void {
         if ($bulkResponse->hasErrors()) {
             $aggregateErrorsByReason = $bulkResponse->aggregateErrorsByReason();
 

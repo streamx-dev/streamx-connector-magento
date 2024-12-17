@@ -4,6 +4,7 @@ namespace StreamX\ConnectorCatalog\test\integration\utils;
 
 use Exception;
 use mysqli;
+use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor as DB;
 
 class MagentoMySqlQueryExecutor {
 
@@ -84,6 +85,11 @@ class MagentoMySqlQueryExecutor {
         return self::getAttributeId($attributeCode, $productEntityTypeId);
     }
 
+    public static function getCategoryAttributeId(string $attributeCode): string {
+        $categoryEntityTypeId = self::getEntityTypeId('catalog_category_entity');
+        return self::getAttributeId($attributeCode, $categoryEntityTypeId);
+    }
+
     public static function getProductNameAttributeId(): string {
         $productEntityTypeId = self::getEntityTypeId('catalog_product_entity');
         return self::getNameAttributeId($productEntityTypeId);
@@ -120,6 +126,24 @@ class MagentoMySqlQueryExecutor {
             SELECT frontend_label
               FROM eav_attribute
              WHERE attribute_id = $attributeId
+        ");
+    }
+
+    public static function getDefaultProductAttributeSetId(): int {
+        return self::getDefaultAttributeSetId('catalog_product_entity');
+    }
+
+    public static function getDefaultCategoryAttributeSetId(): int {
+        return self::getDefaultAttributeSetId('catalog_category_entity');
+    }
+
+    private static function getDefaultAttributeSetId(string $table): int {
+        $entityTypeId = DB::getEntityTypeId($table);
+        return DB::selectFirstField("
+            SELECT attribute_set_id
+              FROM eav_attribute_set
+             WHERE entity_type_id = $entityTypeId
+              AND attribute_set_name = 'Default'
         ");
     }
 }

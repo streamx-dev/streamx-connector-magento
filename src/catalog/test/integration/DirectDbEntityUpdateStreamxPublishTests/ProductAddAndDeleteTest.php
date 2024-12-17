@@ -54,17 +54,11 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $websiteId = 1;
 
         $categoryId = DB::getCategoryId($categoryName);
-        $productEntityTypeId = DB::getEntityTypeId('catalog_product_entity');
-        $attributeSetId = DB::selectFirstField("
-            SELECT attribute_set_id
-              FROM eav_attribute_set
-             WHERE entity_type_id = $productEntityTypeId
-              AND attribute_set_name = 'Default'
-        ");
+        $attributeSetId = DB::getDefaultCategoryAttributeSetId();
 
         DB::execute("
-            INSERT INTO catalog_product_entity (attribute_set_id, type_id, sku, has_options, required_options, created_at, updated_at) VALUES
-                ($attributeSetId, 'simple', '$sku', FALSE, FALSE, NOW(), NOW())
+            INSERT INTO catalog_product_entity (attribute_set_id, type_id, sku, has_options, required_options) VALUES
+                ($attributeSetId, 'simple', '$sku', FALSE, FALSE)
         ");
 
         $productId = DB::selectFirstField("
