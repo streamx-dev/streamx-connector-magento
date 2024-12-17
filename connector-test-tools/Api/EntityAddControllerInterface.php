@@ -14,4 +14,12 @@ interface EntityAddControllerInterface {
      * @throws Exception
      */
     public function addProduct(string $productName, int $categoryId): int;
+
+    /**
+     * Adds a category
+     * @param string $categoryName The display name for the new category
+     * @return int ID of the inserted category
+     * @throws Exception
+     */
+    public function addCategory(string $categoryName): int;
 }

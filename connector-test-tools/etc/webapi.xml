@@ -7,6 +7,12 @@
       <resource ref="anonymous"/>
     </resources>
   </route>
+  <route url="/V1/category/add" method="PUT">
+    <service class="StreamX\ConnectorTestTools\Api\EntityAddControllerInterface" method="addCategory"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
 
   <route url="/V1/product/rename" method="PUT">
     <service class="StreamX\ConnectorTestTools\Api\EntityEditControllerInterface" method="renameProduct"/>
@@ -35,6 +41,13 @@
 
   <route url="/V1/product/delete" method="PUT">
     <service class="StreamX\ConnectorTestTools\Api\EntityDeleteControllerInterface" method="deleteProduct"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+
+  <route url="/V1/category/delete" method="PUT">
+    <service class="StreamX\ConnectorTestTools\Api\EntityDeleteControllerInterface" method="deleteCategory"/>
     <resources>
       <resource ref="anonymous"/>
     </resources>
