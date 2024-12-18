@@ -2,8 +2,8 @@
 
 namespace StreamX\ConnectorCatalog\Model\Indexer\Action;
 
-use Generator;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category as ResourceModel;
+use Traversable;
 
 class Category {
     private ResourceModel $resourceModel;
@@ -15,7 +15,7 @@ class Category {
     /**
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function rebuild(int $storeId = 1, array $categoryIds = []): Generator {
+    public function rebuild(int $storeId = 1, array $categoryIds = []): Traversable {
         $lastCategoryId = 0;
 
         // Ensure to reindex also the parents category ids
