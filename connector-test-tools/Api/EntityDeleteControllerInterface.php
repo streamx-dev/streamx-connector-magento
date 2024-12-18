@@ -21,4 +21,12 @@ interface EntityDeleteControllerInterface {
      * @throws Exception
      */
     public function deleteCategory(int $categoryId): void;
+
+    /**
+     * Deletes an attribute
+     * @param int $attributeId ID of the attribute to be removed
+     * @return void
+     * @throws Exception
+     */
+    public function deleteAttribute(int $attributeId): void;
 }

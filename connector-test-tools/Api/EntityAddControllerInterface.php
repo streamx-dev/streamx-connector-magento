@@ -22,4 +22,12 @@ interface EntityAddControllerInterface {
      * @throws Exception
      */
     public function addCategory(string $categoryName): int;
+
+    /**
+     * Adds a product attribute
+     * @param string $attributeCode Internal code of the new attribute
+     * @return int ID of the inserted attribute
+     * @throws Exception
+     */
+    public function addAttribute(string $attributeCode): int;
 }
