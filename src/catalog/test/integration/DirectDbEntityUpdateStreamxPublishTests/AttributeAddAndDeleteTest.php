@@ -56,8 +56,8 @@ class AttributeAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         ");
 
         DB::execute("
-            INSERT INTO catalog_eav_attribute (attribute_id, is_visible, is_visible_on_front, used_in_product_listing, is_visible_in_advanced_search)
-                VALUES ($attributeId, TRUE, TRUE, TRUE, TRUE)
+            INSERT INTO catalog_eav_attribute (attribute_id, is_visible, is_visible_on_front, used_in_product_listing, is_visible_in_advanced_search) VALUES
+                ($attributeId, TRUE, TRUE, TRUE, TRUE)
         ");
 
         return $attributeId;
