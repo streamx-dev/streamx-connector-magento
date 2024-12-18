@@ -9,16 +9,23 @@ use Magento\Catalog\Api\CategoryRepositoryInterface;
 use Magento\Catalog\Api\Data\CategoryProductLinkInterfaceFactory;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\CategoryFactory;
+use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
 use Magento\Catalog\Model\Product\Type;
 use Magento\Catalog\Model\Product\Visibility;
 use Magento\Catalog\Model\ProductFactory;
+use Magento\Catalog\Model\ResourceModel\Eav\AttributeFactory;
+use Magento\Eav\Setup\EavSetupFactory;
+use Magento\Framework\Setup\ModuleDataSetupInterface;
 use StreamX\ConnectorTestTools\Api\EntityAddControllerInterface;
 
 class EntityAddControllerImpl implements EntityAddControllerInterface {
 
     private ProductFactory $productFactory;
     private CategoryFactory $categoryFactory;
+    private EavSetupFactory $eavSetupFactory;
+    private AttributeFactory $attributeFactory;
+    private ModuleDataSetupInterface $moduleDataSetup;
     private ProductRepositoryInterface $productRepository;
     private CategoryRepositoryInterface $categoryRepository;
     private CategoryLinkRepositoryInterface $categoryLinkRepository;
@@ -27,6 +34,9 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
     public function __construct(
         ProductFactory $productFactory,
         CategoryFactory $categoryFactory,
+        EavSetupFactory $eavSetupFactory,
+        AttributeFactory $attributeFactory,
+        ModuleDataSetupInterface $moduleDataSetup,
         ProductRepositoryInterface $productRepository,
         CategoryRepositoryInterface $categoryRepository,
         CategoryLinkRepositoryInterface $categoryLinkRepository,
@@ -34,6 +44,9 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
     ) {
         $this->productFactory = $productFactory;
         $this->categoryFactory = $categoryFactory;
+        $this->eavSetupFactory = $eavSetupFactory;
+        $this->attributeFactory = $attributeFactory;
+        $this->moduleDataSetup = $moduleDataSetup;
         $this->productRepository = $productRepository;
         $this->categoryRepository = $categoryRepository;
         $this->categoryLinkRepository = $categoryLinkRepository;
@@ -96,10 +109,8 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
         $parentCategoryId = 2;
 
         try {
-            $category = $this->categoryFactory->create();
-            $category->setName($categoryName);
-
-            $category->setName($categoryName)
+            $category = $this->categoryFactory->create()
+                ->setName($categoryName)
                 ->setParentId($parentCategoryId)
                 ->setIsActive(true);
 
@@ -119,5 +130,31 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
         $category = $this->categoryRepository->get($categoryId);
         $category->setPath("$parentCategoryId/$categoryId");
         $this->categoryRepository->save($category);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function addAttribute(string $attributeCode): int {
+        $displayName = "The $attributeCode attribute";
+        try {
+            $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
+            $entityTypeId = $eavSetup->getEntityTypeId(Product::ENTITY);
+
+            $attribute = $this->attributeFactory->create()
+                ->setAttributeCode($attributeCode)
+                ->setEntityTypeId($entityTypeId)
+                ->setBackendType('text')
+                ->setFrontendInput('textarea')
+                ->setDefaultFrontendLabel($displayName)
+                ->setIsUserDefined(true)
+                ->setIsVisible(true)
+                ->setIsVisibleOnFront(true)
+                ->setUsedInProductListing(true);
+
+            return $attribute->save()->getAttributeId();
+        } catch (Exception $e) {
+            throw new Exception("Error adding attribute $attributeCode: " . $e->getMessage(), -1, $e);
+        }
     }
 }
