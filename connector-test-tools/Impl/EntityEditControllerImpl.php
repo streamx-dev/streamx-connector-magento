@@ -6,6 +6,7 @@ use Exception;
 use Magento\Catalog\Api\CategoryLinkManagementInterface;
 use Magento\Catalog\Api\CategoryRepositoryInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
+use Magento\Catalog\Model\Product;
 use Magento\Eav\Api\AttributeRepositoryInterface;
 use StreamX\ConnectorTestTools\Api\EntityEditControllerInterface;
 
@@ -59,7 +60,7 @@ class EntityEditControllerImpl  implements EntityEditControllerInterface {
      */
     public function renameAttribute(string $attributeCode, string $newName): void {
         try {
-            $attribute = $this->attributeRepository->get('catalog_product', $attributeCode);
+            $attribute = $this->attributeRepository->get(Product::ENTITY, $attributeCode);
             $attribute->setDefaultFrontendLabel($newName);
             $this->attributeRepository->save($attribute);
         } catch (Exception $e) {

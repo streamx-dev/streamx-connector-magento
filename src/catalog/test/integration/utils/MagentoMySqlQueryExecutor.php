@@ -81,26 +81,34 @@ class MagentoMySqlQueryExecutor {
     }
 
     public static function getProductAttributeId(string $attributeCode): string {
-        $productEntityTypeId = self::getEntityTypeId('catalog_product_entity');
+        $productEntityTypeId = self::getProductEntityTypeId();
         return self::getAttributeId($attributeCode, $productEntityTypeId);
     }
 
     public static function getCategoryAttributeId(string $attributeCode): string {
-        $categoryEntityTypeId = self::getEntityTypeId('catalog_category_entity');
+        $categoryEntityTypeId = self::getCategoryEntityTypeId();
         return self::getAttributeId($attributeCode, $categoryEntityTypeId);
     }
 
     public static function getProductNameAttributeId(): string {
-        $productEntityTypeId = self::getEntityTypeId('catalog_product_entity');
+        $productEntityTypeId = self::getProductEntityTypeId();
         return self::getNameAttributeId($productEntityTypeId);
     }
 
     public static function getCategoryNameAttributeId(): string {
-        $categoryEntityTypeId = self::getEntityTypeId('catalog_category_entity');
+        $categoryEntityTypeId = self::getCategoryEntityTypeId();
         return self::getNameAttributeId($categoryEntityTypeId);
     }
 
-    public static function getEntityTypeId(string $table): string {
+    public static function getProductEntityTypeId(): string {
+        return self::getEntityTypeId('catalog_product_entity');
+    }
+
+    public static function getCategoryEntityTypeId(): string {
+        return self::getEntityTypeId('catalog_category_entity');
+    }
+
+    private static function getEntityTypeId(string $table): string {
         return self::selectFirstField("
             SELECT entity_type_id
               FROM eav_entity_type
