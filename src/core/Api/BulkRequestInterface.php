@@ -23,12 +23,4 @@ interface BulkRequestInterface
     public function addDocuments(string $type, array $data): BulkRequestInterface;
 
     public function deleteDocuments(string $type, array $docIds): BulkRequestInterface;
-
-    /**
-     * $data format have to be an array of all documents with document id as key.
-     *
-     * @param string $type  Document type.
-     * @param array  $data  Document data.
-     */
-    public function updateDocuments(string $type, array $data): BulkRequestInterface;
 }

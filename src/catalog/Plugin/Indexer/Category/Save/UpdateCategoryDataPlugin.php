@@ -3,6 +3,7 @@
 namespace StreamX\ConnectorCatalog\Plugin\Indexer\Category\Save;
 
 use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
+use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category as CategoryResourceModel;
 
 use Magento\Catalog\Model\Category;
@@ -11,13 +12,16 @@ class UpdateCategoryDataPlugin
 {
     private CategoryResourceModel $resourceModel;
     private CategoryProcessor $categoryProcessor;
+    private ProductProcessor $productProcessor;
 
     public function __construct(
         CategoryResourceModel $resourceModel,
-        CategoryProcessor $processor
+        CategoryProcessor $categoryProcessor,
+        ProductProcessor $productProcessor
     ) {
-        $this->categoryProcessor = $processor;
         $this->resourceModel = $resourceModel;
+        $this->categoryProcessor = $categoryProcessor;
+        $this->productProcessor = $productProcessor;
     }
 
     /**
@@ -37,5 +41,16 @@ class UpdateCategoryDataPlugin
         $categoryIds[] = $categoryId;
 
         $this->categoryProcessor->reindexList($categoryIds);
+        $this->reindexAffectedProducts($category);
+    }
+
+    private function reindexAffectedProducts(Category $category): void{
+        if (!$this->productProcessor->isIndexerScheduled()) {
+            $isChangedProductList = $category->getData('is_changed_product_list');
+
+            if ($isChangedProductList) {
+                $this->productProcessor->reindexList($category->getAffectedProductIds());
+            }
+        }
     }
 }
