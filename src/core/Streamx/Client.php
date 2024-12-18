@@ -108,7 +108,7 @@ class Client implements ClientInterface {
             $isOddItem = !$isOddItem;
         }
 
-        return ['items' => [], 'errors' => ""];
+        return ['items' => [], 'errors' => ""]; // TODO return any errors here, BulkLogger's logErrors method is designed to log them afterwards
     }
 
     private static function createStreamxEntityKey(string $entityType, int $entityId): string {
@@ -120,17 +120,14 @@ class Client implements ClientInterface {
      */
     private function publishToStreamX(string $key, string $payload) {
         $this->logger->info("Publishing $key");
-        $data = new Data($payload);
 
-        $this->logger->info("Publishing $key");
+        $data = new Data($payload);
         $message = Message::newPublishMessage($key, $data)->build();
         $messageStatuses = $this->publisher->sendMulti([$message]);
 
         $messageStatus = $messageStatuses[0]; // TODO implement sending batches of messages at once
-        if ($messageStatus->getFailure() !== null) {
+        if ($messageStatus->getSuccess() === null) {
             $this->logger->error("Error response from sending $key: " . json_encode($messageStatus->getFailure()));
-        } else {
-            $this->logger->info("Success response from sending $key: " . json_encode($messageStatus->getSuccess()));
         }
     }
 
