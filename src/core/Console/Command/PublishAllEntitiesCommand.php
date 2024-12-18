@@ -34,17 +34,14 @@ class PublishAllEntitiesCommand extends AbstractIndexerCommand
 
     private ?StoreManager $indexerStoreManager = null;
     private ?StoreManagerInterface $storeManager = null;
-    private array $excludedIndexes;
     private ManagerInterface $eventManager;
 
     public function __construct(
         ObjectManagerFactory $objectManagerFactory,
-        ManagerInterface $eventManager, // Proxy
-        array $excludedIndexes
+        ManagerInterface $eventManager // Proxy
     ) {
         parent::__construct($objectManagerFactory);
         $this->eventManager = $eventManager;
-        $this->excludedIndexes = $excludedIndexes;
     }
 
     /**
@@ -192,9 +189,6 @@ class PublishAllEntitiesCommand extends AbstractIndexerCommand
         $returnValue = Cli::RETURN_FAILURE;
 
         foreach ($this->getStreamxIndexers() as $indexer) {
-            if (in_array($indexer->getId(), $this->excludedIndexes)) {
-                continue;
-            }
             try {
                 $startTime = microtime(true);
                 $indexer->reindexAll();
