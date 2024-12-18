@@ -40,12 +40,6 @@
             <argument name="typeName" xsi:type="string">product</argument>
         </arguments>
     </virtualType>
-    <virtualType name="StreamX\ConnectorCatalog\Indexer\ProductCategoryHandlerVirtual"
-                 type="StreamX\ConnectorCore\Indexer\GenericIndexerHandler">
-        <arguments>
-            <argument name="typeName" xsi:type="string">product</argument>
-        </arguments>
-    </virtualType>
     <virtualType name="StreamX\ConnectorCatalog\Indexer\CategoryIndexerHandlerVirtual"
                  type="StreamX\ConnectorCore\Indexer\GenericIndexerHandler">
         <arguments>
@@ -66,11 +60,6 @@
     <type name="StreamX\ConnectorCatalog\Model\Indexer\Product">
         <arguments>
             <argument name="indexerHandler" xsi:type="object">StreamX\ConnectorCatalog\Indexer\ProductIndexerHandlerVirtual</argument>
-        </arguments>
-    </type>
-    <type name="StreamX\ConnectorCatalog\Model\Indexer\ProductCategory">
-        <arguments>
-            <argument name="indexerHandler" xsi:type="object">StreamX\ConnectorCatalog\Indexer\ProductCategoryHandlerVirtual</argument>
         </arguments>
     </type>
     <type name="StreamX\ConnectorCatalog\Model\Indexer\Category">
@@ -167,7 +156,6 @@
 
     <type name="Magento\Catalog\Model\Category">
         <plugin name="update_category_in_es" type="StreamX\ConnectorCatalog\Plugin\Indexer\Category\Save\UpdateCategoryDataPlugin"/>
-        <plugin name="update_product_in_es" type="StreamX\ConnectorCatalog\Plugin\Indexer\Category\Save\UpdateProductPlugin"/>
     </type>
 
     <type name="Magento\Catalog\Model\ResourceModel\Eav\Attribute">

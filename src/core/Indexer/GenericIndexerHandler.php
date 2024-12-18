@@ -5,7 +5,6 @@ namespace StreamX\ConnectorCore\Indexer;
 use InvalidArgumentException;
 use LogicException;
 use StreamX\ConnectorCore\Api\BulkLoggerInterface;
-use StreamX\ConnectorCore\Api\DataProviderInterface;
 use StreamX\ConnectorCore\Api\Index\TypeInterface;
 use StreamX\ConnectorCore\Api\IndexOperationInterface;
 use StreamX\ConnectorCore\Exception\ConnectionDisabledException;
@@ -42,53 +41,6 @@ class GenericIndexerHandler {
         $this->typeName = $typeName;
         $this->type = $this->loadType($typeName);
         $this->indexerLogger = $indexerLogger;
-    }
-
-    /**
-     * @throws ConnectionUnhealthyException
-     */
-    public function updateIndex(Traversable $documents, StoreInterface $store, array $requireDataProvides): void {
-        // TODO adjust this method to handle unpublishes (similar like in the saveIndex() method)
-        try {
-            $storeId = (int)$store->getId();
-            $dataProviders = [];
-
-            foreach ($this->type->getDataProviders() as $name => $dataProvider) {
-                if (in_array($name, $requireDataProvides)) {
-                    $dataProviders[] = $dataProvider;
-                }
-            }
-
-            if (empty($dataProviders)) {
-                return;
-            }
-
-            $batchSize = $this->indexOperations->getBatchIndexingSize();
-
-            foreach ($this->batch->getItems($documents, $batchSize) as $docs) {
-
-                /** @var DataProviderInterface $datasource */
-                foreach ($dataProviders as $datasource) {
-                    if (!empty($docs)) {
-                        $docs = $datasource->addData($docs, $storeId);
-                    }
-                }
-
-                $bulkRequest = $this->indexOperations->createBulk()->updateDocuments(
-                    $this->typeName,
-                    $docs
-                );
-
-                $response = $this->indexOperations->executeBulk($storeId, $bulkRequest);
-                $this->bulkLogger->logErrors($response);
-                $docs = null;
-            }
-        } catch (ConnectionDisabledException $exception) {
-            // do nothing, ES indexer disabled in configuration
-        } catch (ConnectionUnhealthyException $exception) {
-            $this->indexerLogger->error($exception->getMessage());
-            throw $exception;
-        }
     }
 
     /**
