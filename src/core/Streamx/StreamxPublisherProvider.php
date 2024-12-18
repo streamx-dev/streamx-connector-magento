@@ -24,6 +24,7 @@ class StreamxPublisherProvider {
         if (isset($this->publisher)) {
             $this->logger->info("Reusing publisher");
         } else {
+            // TODO by analysing logs, publisher is never reused and always created. Optimize that
             $this->publisher = $this->createStreamxPublisher($options);
         }
         return $this->publisher;

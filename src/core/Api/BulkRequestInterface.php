@@ -14,8 +14,6 @@ interface BulkRequestInterface
      */
     public function getOperations(): array;
 
-    public function prepareDocument(array $data): array;
-
     /**
      * $data format have to be an array of all documents with document id as key.
      *
