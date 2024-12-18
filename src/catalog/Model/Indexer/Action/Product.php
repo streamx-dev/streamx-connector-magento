@@ -2,8 +2,8 @@
 
 namespace StreamX\ConnectorCatalog\Model\Indexer\Action;
 
-use Generator;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product as ResourceModel;
+use Traversable;
 
 class Product {
     private ResourceModel $resourceModel;
@@ -16,7 +16,7 @@ class Product {
      * @throws \Magento\Framework\Exception\LocalizedException
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function rebuild(int $storeId = 1, array $productIds = []): Generator {
+    public function rebuild(int $storeId = 1, array $productIds = []): Traversable {
         $lastProductId = 0;
 
         // Ensure to reindex also the parents product ids
