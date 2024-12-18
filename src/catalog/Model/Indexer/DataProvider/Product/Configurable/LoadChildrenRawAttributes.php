@@ -8,6 +8,7 @@ use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Prices as PriceResource
 use StreamX\ConnectorCatalog\Api\LoadTierPricesInterface;
 use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
 use StreamX\ConnectorCatalog\Api\LoadMediaGalleryInterface;
+use Traversable;
 
 class LoadChildrenRawAttributes
 {
@@ -134,10 +135,7 @@ class LoadChildrenRawAttributes
         return $this->configurableAttributes->getChildrenRequiredAttributes($storeId);
     }
 
-    /**
-     * @return \Generator
-     */
-    private function getChildrenInBatches(array $documents, int $storeId)
+    private function getChildrenInBatches(array $documents, int $storeId): Traversable
     {
         $batchSize = $this->getBatchSize($storeId);
         $i = 0;
