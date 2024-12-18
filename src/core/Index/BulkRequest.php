@@ -2,16 +2,14 @@
 
 namespace StreamX\ConnectorCore\Index;
 
-use StreamX\ConnectorCore\Api\BulkRequestInterface;
-
-class BulkRequest implements BulkRequestInterface
+class BulkRequest
 {
     /**
      * Bulk operation stack.
      */
     private array $bulkData = [];
 
-    public function deleteDocuments(string $type, array $docIds): BulkRequestInterface {
+    public function deleteDocuments(string $type, array $docIds): BulkRequest {
         foreach ($docIds as $docId) {
             $this->deleteDocument($type, $docId);
         }
@@ -29,9 +27,12 @@ class BulkRequest implements BulkRequestInterface
     }
 
     /**
-     * @inheritdoc
+     * $data format have to be an array of all documents with document id as key.
+     *
+     * @param string $type  Document type.
+     * @param array  $data  Document data.
      */
-    public function addDocuments(string $type, array $data): BulkRequestInterface {
+    public function addDocuments(string $type, array $data): BulkRequest {
         foreach ($data as $docId => $documentData) {
             $this->prepareDocument($documentData);
             $this->addDocument($type, $docId, $documentData);
@@ -58,14 +59,14 @@ class BulkRequest implements BulkRequestInterface
     }
 
     /**
-     * @inheritdoc
+     * Indicates if the current bulk contains operation.
      */
     public function isEmpty(): bool {
         return count($this->bulkData) == 0;
     }
 
     /**
-     * @inheritdoc
+     * Return list of operations to be executed as an array.
      */
     public function getOperations(): array {
         return $this->bulkData;

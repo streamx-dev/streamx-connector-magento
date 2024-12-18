@@ -2,14 +2,9 @@
 
 namespace StreamX\ConnectorCore\Index;
 
-use StreamX\ConnectorCore\Api\BulkResponseInterface;
-
-class BulkResponse implements BulkResponseInterface
+class BulkResponse
 {
-    /**
-     * @var array
-     */
-    private $rawResponse;
+    private array $rawResponse;
 
     /**
      * @param array $rawResponse StreamX raw response.
