@@ -33,19 +33,16 @@ class BulkRequest implements BulkRequestInterface
      */
     public function addDocuments(string $type, array $data): BulkRequestInterface {
         foreach ($data as $docId => $documentData) {
-            $documentData = $this->prepareDocument($documentData);
+            $this->prepareDocument($documentData);
             $this->addDocument($type, $docId, $documentData);
         }
 
         return $this;
     }
 
-    public function prepareDocument(array $data): array
-    {
+    private function prepareDocument(array $data): void {
         unset($data['entity_id']);
         unset($data['row_id']);
-
-        return $data;
     }
 
     private function addDocument($type, $docId, array $data): void {

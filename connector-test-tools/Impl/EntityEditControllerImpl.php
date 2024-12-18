@@ -68,21 +68,34 @@ class EntityEditControllerImpl  implements EntityEditControllerInterface {
         }
     }
 
-    public function changeProductCategory(int $productId, int $oldCategoryId, int $newCategoryId): void {
+    /**
+     * @inheritdoc
+     */
+    public function changeProductCategory(int $productId, int $oldCategoryId, int $newCategoryId): void
+    {
         try {
             $product = $this->productRepository->getById($productId);
-            $sku = $product->getSku();
 
-            $categoryIds = [$newCategoryId];
-            foreach ($product->getCategoryIds() as $existingCategoryId) {
-                if ((int) $existingCategoryId !== $oldCategoryId) {
-                    $categoryIds[] = $existingCategoryId;
-                }
-            }
+            /** @var string[] $oldCategoryIds */
+            $oldCategoryIds = $product->getCategoryIds();
+            $newCategoryIds = $this->computeNewCategoryIds($oldCategoryIds, (string)$oldCategoryId, $newCategoryId);
 
-            $this->categoryLinkManagement->assignProductToCategories($sku, $categoryIds);
+            $this->categoryLinkManagement->assignProductToCategories($product->getSku(), $newCategoryIds);
         } catch (Exception $e) {
             throw new Exception("Error changing product $productId category from $oldCategoryId to $newCategoryId: " . $e->getMessage(), -1, $e);
         }
+    }
+
+    private function computeNewCategoryIds(array $oldCategoryIds, string $categoryIdToRemove, string $newCategoryId): array {
+        $newCategoryIds = [];
+        foreach ($oldCategoryIds as $existingCategoryId) {
+            if ($existingCategoryId !== $categoryIdToRemove) {
+                $newCategoryIds[] = $existingCategoryId;
+            }
+        }
+        if (!in_array($newCategoryId, $newCategoryIds)) {
+            $newCategoryIds[] = $newCategoryId;
+        }
+        return $newCategoryIds;
     }
 }
