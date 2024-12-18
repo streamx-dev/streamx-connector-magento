@@ -46,6 +46,7 @@ class BulkRequest implements BulkRequestInterface
     }
 
     private function addDocument($type, $docId, array $data): void {
+        // TODO: put all in one bulkData[] array item instead of two?
         $this->bulkData[] = [
             'index' => [
                 '_type' => $type,
@@ -54,29 +55,6 @@ class BulkRequest implements BulkRequestInterface
         ];
 
         $this->bulkData[] = $data;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function updateDocuments(string $type, array $data): BulkRequestInterface {
-        foreach ($data as $docId => $documentData) {
-            $documentData = $this->prepareDocument($documentData);
-            $this->updateDocument($type, $docId, $documentData);
-        }
-
-        return $this;
-    }
-
-    private function updateDocument($type, $docId, array $data): void {
-        $this->bulkData[] = [
-            'update' => [
-                '_id' => $docId,
-                '_type' => $type,
-            ]
-        ];
-
-        $this->bulkData[] = ['doc' => $data];
     }
 
     /**

@@ -54,12 +54,6 @@ class Client implements ClientInterface {
         // We receive the same format, but only one pair of array items: 0 = index definition and 1 = the product
         // -> This is used to send updates for Products, Categories and Attributes
 
-        // When installing the connector, automatic reindex of all is performed, but it contains additional items:
-        // 0 is "update" and 1 is "doc" (and so on, they come in pairs)
-        // The "_type" of "update" is always "product".
-        // And "doc" contains most important fields of the product and list of its categories (id/name/position of each)
-        // -> This is used to send updates for Product Categories
-
         $bodyArray = $bulkParams['body'];
         $isOddItem = true;
 
@@ -82,20 +76,13 @@ class Client implements ClientInterface {
             if ($isOddItem) {
                 // TODO: maybe modify the code that produces the bodyArray to not have pairs of items, but only single items with all data inside?
                 //  For example, it could contain 3 items on the same level: entity type + entity id + the entity content array
-                if (isset($item['update'])) {
-                    $entityType = 'product_category'; // TODO add validation that we expect $item['doc']['_type'] == 'product'
-                } else if (isset($item['index'])) {
+                if (isset($item['index'])) {
                     $entityType = $item['index']['_type']; // product, category or attribute
                 } else {
-                    throw new Exception(json_encode($item, JSON_PRETTY_PRINT));
+                    throw new Exception('Unexpected item: ' . json_encode($item, JSON_PRETTY_PRINT));
                 }
             } else {
-                if (isset($item['doc'])) {
-                    $entity = $item['doc'];
-                } else {
-                    $entity = $item;
-                }
-
+                $entity = $item;
                 $key = $this->createStreamxEntityKey($entityType, $entity['id']);
                 try {
                     // TODO: upgrade to php client in version 1.0.0 and use the new `sendMulti` method of the publisher

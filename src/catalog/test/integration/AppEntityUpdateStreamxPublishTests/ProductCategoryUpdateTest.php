@@ -39,7 +39,7 @@ class ProductCategoryUpdateTest extends BaseAppEntityUpdateTest {
         $this->assertNotEquals($newCategoryId, $oldCategoryId);
 
         // and
-        $expectedKey = "product_category_$productId";
+        $expectedKey = "product_$productId";
         self::removeFromStreamX($expectedKey);
 
         // when
