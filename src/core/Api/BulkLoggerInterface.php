@@ -2,7 +2,9 @@
 
 namespace StreamX\ConnectorCore\Api;
 
+use StreamX\ConnectorCore\Index\BulkResponse;
+
 interface BulkLoggerInterface {
 
-    public function logErrors(BulkResponseInterface $bulkResponse): void;
+    public function logErrors(BulkResponse $bulkResponse): void;
 }

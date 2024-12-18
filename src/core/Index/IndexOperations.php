@@ -2,11 +2,7 @@
 
 namespace StreamX\ConnectorCore\Index;
 
-use StreamX\ConnectorCore\Api\BulkResponseInterface;
 use StreamX\ConnectorCore\Api\Client\ClientInterface;
-use StreamX\ConnectorCore\Api\BulkResponseInterfaceFactory as BulkResponseFactory;
-use StreamX\ConnectorCore\Api\BulkRequestInterface;
-use StreamX\ConnectorCore\Api\BulkRequestInterfaceFactory as BulkRequestFactory;
 use StreamX\ConnectorCore\Api\IndexOperationInterface;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
 use StreamX\ConnectorCore\Streamx\ClientResolver;
@@ -17,23 +13,14 @@ class IndexOperations implements IndexOperationInterface
     const GREEN_HEALTH_STATUS = 'green';
 
     private ClientResolver $clientResolver;
-    private BulkResponseFactory $bulkResponseFactory;
-    private BulkRequestFactory $bulkRequestFactory;
     private OptimizationSettings $optimizationSettings;
 
-    public function __construct(
-        ClientResolver       $clientResolver,
-        BulkResponseFactory  $bulkResponseFactory,
-        BulkRequestFactory   $bulkRequestFactory,
-        OptimizationSettings $optimizationSettings
-    ) {
+    public function __construct(ClientResolver $clientResolver, OptimizationSettings $optimizationSettings) {
         $this->clientResolver = $clientResolver;
-        $this->bulkResponseFactory = $bulkResponseFactory;
-        $this->bulkRequestFactory = $bulkRequestFactory;
         $this->optimizationSettings = $optimizationSettings;
     }
 
-    public function executeBulk(int $storeId, BulkRequestInterface $bulk): BulkResponseInterface
+    public function executeBulk(int $storeId, BulkRequest $bulk): BulkResponse
     {
         $this->checkEsCondition($storeId);
 
@@ -41,17 +28,10 @@ class IndexOperations implements IndexOperationInterface
             throw new \LogicException('Can not execute empty bulk.');
         }
 
-        $bulkParams = ['body' => $bulk->getOperations()];
+        $bulkParams = ['body' => $bulk->getOperations()]; // TODO think of commonizing/improving names
         $rawBulkResponse = $this->resolveClient($storeId)->bulk($bulkParams);
 
-        return $this->bulkResponseFactory->create(
-            ['rawResponse' => $rawBulkResponse]
-        );
-    }
-
-    public function createBulk(): BulkRequestInterface
-    {
-        return $this->bulkRequestFactory->create();
+        return new BulkResponse($rawBulkResponse);
     }
 
     public function getBatchIndexingSize(): int

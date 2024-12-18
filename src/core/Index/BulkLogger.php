@@ -3,7 +3,6 @@
 namespace StreamX\ConnectorCore\Index;
 
 use StreamX\ConnectorCore\Api\BulkLoggerInterface;
-use StreamX\ConnectorCore\Api\BulkResponseInterface;
 use Psr\Log\LoggerInterface;
 
 class BulkLogger implements BulkLoggerInterface {
@@ -13,7 +12,7 @@ class BulkLogger implements BulkLoggerInterface {
         $this->logger = $logger;
     }
 
-    public function logErrors(BulkResponseInterface $bulkResponse): void {
+    public function logErrors(BulkResponse $bulkResponse): void {
         if ($bulkResponse->hasErrors()) {
             $aggregateErrorsByReason = $bulkResponse->aggregateErrorsByReason();
 
