@@ -9,6 +9,7 @@ use StreamX\ConnectorCore\Api\Index\TypeInterface;
 use StreamX\ConnectorCore\Api\IndexOperationInterface;
 use StreamX\ConnectorCore\Exception\ConnectionDisabledException;
 use StreamX\ConnectorCore\Exception\ConnectionUnhealthyException;
+use StreamX\ConnectorCore\Index\BulkRequest;
 use StreamX\ConnectorCore\Index\Indicies\Config;
 use StreamX\ConnectorCore\Logger\IndexerLogger;
 use Magento\Framework\Indexer\SaveHandler\Batch;
@@ -98,7 +99,7 @@ class GenericIndexerHandler {
     }
 
     private function publishDocs(array $docsToPublish, int $storeId): void {
-        $bulkRequest = $this->indexOperations->createBulk()->addDocuments(
+        $bulkRequest = (new BulkRequest())->addDocuments(
             $this->typeName,
             $docsToPublish
         );
@@ -108,7 +109,7 @@ class GenericIndexerHandler {
     }
 
     private function unpublishDocs(array $docsToUnpublish, int $storeId): void {
-        $bulkRequest = $this->indexOperations->createBulk()->deleteDocuments(
+        $bulkRequest = (new BulkRequest())->deleteDocuments(
             $this->typeName,
             $docsToUnpublish
         );

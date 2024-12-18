@@ -6,8 +6,6 @@
     <preference for="StreamX\ConnectorCore\Api\Client\ClientInterface" type="StreamX\ConnectorCore\Streamx\Client"/>
     <preference for="StreamX\ConnectorCore\Api\Client\ConfigurationInterface" type="StreamX\ConnectorCore\Streamx\ClientConfiguration"/>
     <preference for="StreamX\ConnectorCore\Api\Index\TypeInterface" type="StreamX\ConnectorCore\Index\Type"/>
-    <preference for="StreamX\ConnectorCore\Api\BulkRequestInterface" type="StreamX\ConnectorCore\Index\BulkRequest"/>
-    <preference for="StreamX\ConnectorCore\Api\BulkResponseInterface" type="StreamX\ConnectorCore\Index\BulkResponse"/>
     <preference for="StreamX\ConnectorCore\Api\ConvertValueInterface" type="StreamX\ConnectorCore\Indexer\ConvertValue"/>
     <preference for="StreamX\ConnectorCore\Api\IndexOperationInterface" type="StreamX\ConnectorCore\Index\IndexOperations"/>
     <preference for="StreamX\ConnectorCore\System\GeneralConfigInterface" type="StreamX\ConnectorCore\System\GeneralConfig"/>
