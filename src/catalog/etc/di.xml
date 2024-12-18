@@ -1,8 +1,5 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <preference for="Magento\Indexer\Console\Command\IndexerInfoCommand" type="StreamX\ConnectorCatalog\Console\Command\IndexerInfoCommand"/>
-    <preference for="Magento\Indexer\Console\Command\IndexerReindexCommand" type="StreamX\ConnectorCatalog\Console\Command\IndexerReindexCommand"/>
-
     <preference for="StreamX\ConnectorCatalog\Api\SlugGeneratorInterface" type="StreamX\ConnectorCatalog\Model\SlugGenerator"/>
     <preference for="StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface" type="StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig"/>
     <preference for="StreamX\ConnectorCatalog\Api\ApplyCategorySlugInterface" type="StreamX\ConnectorCatalog\Model\Category\ApplyCategorySlug"/>
@@ -12,7 +9,6 @@
     <preference for="StreamX\ConnectorCatalog\Api\LoadMediaGalleryInterface" type="StreamX\ConnectorCatalog\Model\Product\LoadMediaGallery"/>
     <preference for="StreamX\ConnectorCatalog\Api\LoadTierPricesInterface" type="StreamX\ConnectorCatalog\Model\Product\LoadTierPrices" />
     <preference for="StreamX\ConnectorCatalog\Model\SystemConfig\CategoryConfigInterface" type="StreamX\ConnectorCatalog\Model\SystemConfig\CategoryConfig"/>
-    <preference for="StreamX\ConnectorCatalog\Model\ResourceModel\Product\CategorySelectBuilderInterface" type="StreamX\ConnectorCatalog\Model\ResourceModel\Product\CategorySelectBuilder"/>
 
     <type name="StreamX\ConnectorCatalog\Logger\CatalogIndexerLogger">
         <arguments>
@@ -65,10 +61,6 @@
 
     <type name="Magento\Framework\Mview\ViewInterface">
         <plugin name="updateMviewSubscriptions" type="StreamX\ConnectorCatalog\Plugin\Mview\ViewPlugin"/>
-    </type>
-    <type name="Magento\Indexer\Ui\DataProvider\Indexer\DataCollection">
-        <plugin name="hideStreamxProductCategoryIndexer"
-                type="StreamX\ConnectorCatalog\Plugin\Ui\DataProvider\Indexer\DataCollectionPlugin" />
     </type>
 
     <type name="StreamX\ConnectorCatalog\Model\Indexer\Product">
@@ -266,14 +258,6 @@
                 <item name="configurable" xsi:type="object">StreamX\ConnectorCatalog\Model\ResourceModel\Product\Type\Configurable\GetParentsByChildId</item>
                 <item name="grouped" xsi:type="object">StreamX\ConnectorCatalog\Model\ResourceModel\Product\Type\Grouped\GetParentsByChildId</item>
                 <item name="bundle" xsi:type="object">StreamX\ConnectorCatalog\Model\ResourceModel\Product\Type\Bundle\GetParentsByChildId</item>
-            </argument>
-        </arguments>
-    </type>
-
-    <type name="StreamX\ConnectorCore\Console\Command\PublishAllEntitiesCommand">
-        <arguments>
-            <argument name="excludedIndexes" xsi:type="array">
-                <item name="product_category" xsi:type="const">StreamX\ConnectorCatalog\Model\Indexer\ProductCategoryProcessor::INDEXER_ID</item>
             </argument>
         </arguments>
     </type>
