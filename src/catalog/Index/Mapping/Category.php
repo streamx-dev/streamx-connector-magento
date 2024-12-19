@@ -4,59 +4,29 @@ declare(strict_types=1);
 
 namespace StreamX\ConnectorCatalog\Index\Mapping;
 
-use StreamX\ConnectorCatalog\Model\Attributes\CategoryChildAttributes;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category\LoadAttributes;
 use StreamX\ConnectorCore\Api\MappingInterface;
 use StreamX\ConnectorCore\Api\Mapping\FieldInterface;
 use StreamX\ConnectorCore\Index\Mapping\GeneralMapping;
-use Magento\Framework\Event\ManagerInterface as EventManager;
 
 class Category extends AbstractMapping implements MappingInterface
 {
-    /**
-     * @var array
-     */
-    private $omitAttributes = [
+    private array $omitAttributes = [
         'children',
         'all_children',
     ];
 
-    /**
-     * @var EventManager
-     */
-    private $eventManager;
-
-    /**
-     * @var GeneralMapping
-     */
-    private $generalMapping;
-
-    /**
-     * @var LoadAttributes
-     */
-    private $loadAttributes;
-
-    /**
-     * @var array
-     */
-    private $properties;
-
-    /**
-     * @var CategoryChildAttributes
-     */
-    private $childAttributes;
+    private GeneralMapping $generalMapping;
+    private LoadAttributes $loadAttributes;
+    private ?array $properties = null;
 
     public function __construct(
-        EventManager $eventManager,
         GeneralMapping $generalMapping,
-        CategoryChildAttributes $categoryChildAttributes,
         LoadAttributes $resourceModel,
         array $staticFieldMapping
     ) {
-        $this->eventManager = $eventManager;
         $this->generalMapping = $generalMapping;
         $this->loadAttributes = $resourceModel;
-        $this->childAttributes = $categoryChildAttributes;
         parent::__construct($staticFieldMapping);
     }
 

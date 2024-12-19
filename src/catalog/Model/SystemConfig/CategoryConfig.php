@@ -2,7 +2,6 @@
 
 namespace StreamX\ConnectorCatalog\Model\SystemConfig;
 
-use StreamX\ConnectorCatalog\Model\Category\GetAttributeCodesByIds;
 use Magento\Catalog\Model\Config;
 use Magento\CatalogUrlRewrite\Model\CategoryUrlPathGenerator;
 use Magento\Framework\App\Config\ScopeConfigInterface;
@@ -11,81 +10,17 @@ use StreamX\ConnectorCatalog\Model\ResourceModel\ProductConfig as ConfigResource
 
 class CategoryConfig implements CategoryConfigInterface
 {
-    /**
-     * @var array
-     */
-    private $settings = [];
-
-    /**
-     * @var array
-     */
-    private $attributesSortBy = [];
-
-    /**
-     * @var ScopeConfigInterface
-     */
-    private $scopeConfig;
-
-    /**
-     * @var GetAttributeCodesByIds
-     */
-    private $getAttributeCodesByIds;
-
-    /**
-     * @var ConfigResource
-     */
-    private $catalogConfigResource;
+    private array $settings = [];
+    private array $attributesSortBy = [];
+    private ScopeConfigInterface $scopeConfig;
+    private ConfigResource $catalogConfigResource;
 
     public function __construct(
         ScopeConfigInterface $scopeConfig,
-        GetAttributeCodesByIds $getAttributeCodesByIds,
         ConfigResource $configResource
     ) {
         $this->scopeConfig = $scopeConfig;
-        $this->getAttributeCodesByIds = $getAttributeCodesByIds;
         $this->catalogConfigResource = $configResource;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getAllowedAttributesToIndex(int $storeId): array
-    {
-        $cacheKey = sprintf('allowed_attributes_%d', $storeId);
-
-        if (isset($this->settings[$cacheKey])) {
-            return $this->settings[$cacheKey];
-        }
-
-        $attributes = (string)$this->getConfigParam(
-            CategoryConfigInterface::CATEGORY_ATTRIBUTES,
-            $storeId
-        );
-
-        $this->settings[$cacheKey] = $this->getAttributeCodesByIds->execute($attributes);
-
-        return $this->settings[$cacheKey];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getAllowedChildAttributesToIndex(int $storeId): array
-    {
-        $cacheKey = sprintf('child_allowed_attributes_%d', $storeId);
-
-        if (isset($this->settings[$cacheKey])) {
-            return $this->settings[$cacheKey];
-        }
-
-        $attributes = (string)$this->getConfigParam(
-            CategoryConfigInterface::CHILD_ATTRIBUTES,
-            $storeId
-        );
-
-        $this->settings[$cacheKey] = $this->getAttributeCodesByIds->execute($attributes);
-
-        return $this->getAttributeCodesByIds->execute($attributes);
     }
 
     /**
@@ -142,24 +77,6 @@ class CategoryConfig implements CategoryConfigInterface
                 $storeId
             );
             $this->settings[$key] = (string) $configValue;
-        }
-
-        return $this->settings[$key];
-    }
-
-    /**
-     * Retrieve config value by path and scope.
-     */
-    private function getConfigParam(string $configField, int $storeId = null): ?string
-    {
-        $key = $configField . (string) $storeId;
-
-        if (!isset($this->settings[$key])) {
-            $path = CategoryConfigInterface::CATEGORY_SETTINGS_XML_PREFIX . '/' . $configField;
-            $scopeType = ($storeId) ? ScopeInterface::SCOPE_STORES : ScopeConfigInterface::SCOPE_TYPE_DEFAULT;
-
-            $configValue = $this->scopeConfig->getValue($path, $scopeType, $storeId);
-            $this->settings[$key] = $configValue;
         }
 
         return $this->settings[$key];

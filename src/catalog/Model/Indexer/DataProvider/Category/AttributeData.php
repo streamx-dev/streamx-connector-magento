@@ -4,8 +4,6 @@ namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Category;
 
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category\Children as CategoryChildrenResource;
 use StreamX\ConnectorCore\Indexer\DataFilter;
-use StreamX\ConnectorCatalog\Model\Attributes\CategoryAttributes;
-use StreamX\ConnectorCatalog\Model\Attributes\CategoryChildAttributes;
 use StreamX\ConnectorCatalog\Model\SystemConfig\CategoryConfigInterface;
 use StreamX\ConnectorCatalog\Api\ApplyCategorySlugInterface;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category\AttributeDataProvider;
@@ -31,16 +29,6 @@ class AttributeData implements AttributeDataProviderInterface
         'updated_at',
         'request_path',
     ];
-
-    /**
-     * @var CategoryChildAttributes
-     */
-    private $childAttributes;
-
-    /**
-     * @var CategoryAttributes
-     */
-    private $categoryAttributes;
 
     /**
      * @var AttributeDataProvider
@@ -88,8 +76,6 @@ class AttributeData implements AttributeDataProviderInterface
         ProductCountResourceModel $productCountResource,
         ApplyCategorySlugInterface $applyCategorySlug,
         CategoryConfigInterface $configSettings,
-        CategoryAttributes $categoryAttributes,
-        CategoryChildAttributes $categoryChildAttributes,
         DataFilter $dataFilter
     ) {
         $this->settings = $configSettings;
@@ -98,8 +84,6 @@ class AttributeData implements AttributeDataProviderInterface
         $this->attributeResourceModel = $attributeResource;
         $this->childrenResourceModel = $childrenResource;
         $this->dataFilter = $dataFilter;
-        $this->categoryAttributes = $categoryAttributes;
-        $this->childAttributes = $categoryChildAttributes;
     }
 
     public function addData(array $indexData, int $storeId): array
@@ -110,8 +94,7 @@ class AttributeData implements AttributeDataProviderInterface
         $categoryIds = array_keys($indexData);
         $attributes = $this->attributeResourceModel->loadAttributesData(
             $storeId,
-            $categoryIds,
-            $this->categoryAttributes->getRequiredAttributes($storeId)
+            $categoryIds
         );
         $productCount = $this->productCountResource->loadProductCount($categoryIds);
 
@@ -133,8 +116,7 @@ class AttributeData implements AttributeDataProviderInterface
             $this->childrenRowAttributes =
                 $this->attributeResourceModel->loadAttributesData(
                     $storeId,
-                    array_keys($groupedChildrenById),
-                    $this->childAttributes->getRequiredAttributes($storeId)
+                    array_keys($groupedChildrenById)
                 );
 
             $this->childrenProductCount = $this->productCountResource->loadProductCount(
@@ -226,10 +208,6 @@ class AttributeData implements AttributeDataProviderInterface
 
     private function addAvailableSortByOption(array $category, int $storeId): array
     {
-        if (!$this->categoryAttributes->canAddAvailableSortBy($storeId)) {
-            return $category;
-        }
-
         if (isset($category['available_sort_by'])) {
             return $category;
         }
@@ -241,10 +219,6 @@ class AttributeData implements AttributeDataProviderInterface
 
     private function addDefaultSortByOption(array $category, int $storeId): array
     {
-        if (!$this->categoryAttributes->canAddDefaultSortBy($storeId)) {
-            return $category;
-        }
-
         if (isset($category['default_sort_by'])) {
             return $category;
         }
