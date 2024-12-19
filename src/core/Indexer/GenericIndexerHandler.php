@@ -4,7 +4,6 @@ namespace StreamX\ConnectorCore\Indexer;
 
 use InvalidArgumentException;
 use LogicException;
-use StreamX\ConnectorCore\Api\BulkLoggerInterface;
 use StreamX\ConnectorCore\Api\Index\TypeInterface;
 use StreamX\ConnectorCore\Api\IndexOperationInterface;
 use StreamX\ConnectorCore\Exception\ConnectionDisabledException;
@@ -25,17 +24,14 @@ class GenericIndexerHandler {
     private string $typeName;
     private TypeInterface $type;
     private IndexerLogger $indexerLogger;
-    private BulkLoggerInterface $bulkLogger;
 
     public function __construct(
-        BulkLoggerInterface $bulkLogger,
         IndexOperationInterface $indexOperationProvider,
         IndexerLogger $indexerLogger,
         Batch $batch,
         Config $indicesConfig,
         string $typeName
     ) {
-        $this->bulkLogger = $bulkLogger;
         $this->batch = $batch;
         $this->indicesConfig = $indicesConfig;
         $this->indexOperations = $indexOperationProvider;
@@ -101,7 +97,6 @@ class GenericIndexerHandler {
         );
 
         $response = $this->indexOperations->executeBulk($storeId, $bulkRequest);
-        $this->bulkLogger->logErrors($response);
     }
 
     private function unpublishEntities(array $ids, int $storeId): void {
@@ -111,7 +106,6 @@ class GenericIndexerHandler {
         );
 
         $response = $this->indexOperations->executeBulk($storeId, $bulkRequest);
-        $this->bulkLogger->logErrors($response);
     }
 
     private function loadType(string $typeName): TypeInterface {
