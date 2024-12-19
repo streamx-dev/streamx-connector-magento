@@ -59,7 +59,7 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
                 <field id="batch_indexing_size" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Batch Indexing Size</label> <!-- TODO rename to remove the "indexing" word -->
+                    <label>Batch Indexing Size</label>
                     <validate>required-entry validate-digits</validate>
                 </field>
             </group>

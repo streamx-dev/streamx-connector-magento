@@ -39,33 +39,44 @@ class Client implements ClientInterface {
 
     // TODO: adjust code that produced the $bulkOperations array, to make it in StreamX format (originally it is in ElasticSearch format)
     public function ingest(array $bulkOperations): void {
-        $this->logger->info("EXECUTING:: bulk");
+        $this->logger->info('Ingesting ' . count($bulkOperations) . ' operations');
 
-        foreach ($bulkOperations as $item) {
-            if (isset($item['unpublish'])) {
-                $entityType = $item['unpublish']['type']; // product, category or attribute
-                $entityId = $item['unpublish']['id'];
-                $key = $this->createStreamxEntityKey($entityType, $entityId);
-                try {
-                    $this->unpublishFromStreamX($key);
-                } catch (StreamxClientException $e) {
-                    $this->logger->error("Unpublishing $key from StreamX failed: " . $e->getMessage(), ['exception' => $e]);
-                }
-            }
+        $ingestionMessages = array_map(
+            function (array $item) {
+                return self::mapToIngestionMessage($item);
+            },
+            $bulkOperations
+        );
 
-            else if (isset($item['publish'])) {
-                $entityType = $item['publish']['type']; // product, category or attribute
-                $entity = $item['publish']['entity'];
-                $key = $this->createStreamxEntityKey($entityType, $entity['id']);
-                try {
-                    $this->publishToStreamX($key, json_encode($entity)); // TODO make sure this will never block. Best by turning off Pulsar container
-                } catch (StreamxClientException $e) {
-                    $this->logger->error("Publishing $key to StreamX failed: " . $e->getMessage(), ['exception' => $e]);
-                }
-            } else {
-                throw new Exception('Unexpected bulk item type: ' . json_encode($item, JSON_PRETTY_PRINT));
-            }
+        if (!empty($ingestionMessages)) {
+            $this->ingestToStreamX($ingestionMessages);
         }
+    }
+
+    private static function mapToIngestionMessage(array $item): Message {
+        if (isset($item['publish'])) {
+            return self::createPublishMessage($item['publish']);
+        }
+        if (isset($item['unpublish'])) {
+            return self::createUnpublishMessage($item['unpublish']);
+        }
+        throw new Exception('Unexpected bulk item type: ' . json_encode($item, JSON_PRETTY_PRINT));
+    }
+
+    private static function createPublishMessage(array $publishItem): Message {
+        $entityType = $publishItem['type'];
+        $entity = $publishItem['entity'];
+        $entityId = $entity['id'];
+        $key = self::createStreamxEntityKey($entityType, $entityId);
+        $payload = new Data(json_encode($entity));
+        return Message::newPublishMessage($key, $payload)->build();
+    }
+
+    private static function createUnpublishMessage(array $unpublishItem): Message {
+        $entityType = $unpublishItem['type'];
+        $entityId = $unpublishItem['id'];
+        $key = self::createStreamxEntityKey($entityType, $entityId);
+        return Message::newUnpublishMessage($key)->build();
     }
 
     private static function createStreamxEntityKey(string $entityType, int $entityId): string {
@@ -73,29 +84,23 @@ class Client implements ClientInterface {
     }
 
     /**
-     * @throws StreamxClientException
+     * @param Message[] $messages Ingestion messages
      */
-    private function publishToStreamX(string $key, string $payload) {
-        $this->logger->info("Publishing $key");
+    private function ingestToStreamX(array $messages): void {
+        try {
+            // TODO make sure this will never block. Best by turning off Pulsar container
+            $messageStatuses = $this->publisher->sendMulti($messages);
 
-        $data = new Data($payload);
-        $message = Message::newPublishMessage($key, $data)->build();
-        $messageStatuses = $this->publisher->sendMulti([$message]);
-
-        $messageStatus = $messageStatuses[0]; // TODO implement sending batches of messages at once
-        // TODO: send as much messages from the batch as possible at once, to not reach the limit of body size of a single request
-
-        if ($messageStatus->getSuccess() === null) {
-            $this->logger->error("Error response from sending $key: " . json_encode($messageStatus->getFailure()));
+            foreach ($messageStatuses as $messageStatus) {
+                if ($messageStatus->getSuccess() === null) {
+                    $this->logger->error('Ingestion failure: ' . json_encode($messageStatus->getFailure()));
+                } else {
+                    $this->logger->info('Ingestion success: ' . json_encode($messageStatus->getSuccess()));
+                }
+            }
+        } catch (StreamxClientException $e) {
+            $this->logger->error('Ingestion exception: ' . $e->getMessage(), ['exception' => $e]);
         }
-    }
-
-    /**
-     * @throws StreamxClientException
-     */
-    private function unpublishFromStreamX(string $key) {
-        $this->logger->info("Unpublishing $key");
-        $this->publisher->unpublish($key);
     }
 
     public function getClustersHealth(): array {
