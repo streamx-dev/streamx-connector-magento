@@ -77,7 +77,7 @@ class GenericIndexerHandler {
         $entitiesToPublish = $this->enrichDocs($entitiesToPublish, $storeId);
 
         if (!empty($entitiesToPublish)) {
-            $this->publishEntities($entitiesToPublish, $storeId);
+            $this->publishEntities(array_values($entitiesToPublish), $storeId);
         }
 
         if (!empty($idsToUnpublish)) {

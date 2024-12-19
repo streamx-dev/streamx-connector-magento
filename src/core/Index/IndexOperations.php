@@ -28,8 +28,8 @@ class IndexOperations implements IndexOperationInterface
 
         $this->checkEsCondition($storeId);
 
-        $bulkParams = ['body' => $bulk->getOperations()]; // TODO remove 'body' parent item?
-        $rawBulkResponse = $this->resolveClient($storeId)->bulk($bulkParams);
+        $bulkOperations = $bulk->getOperations();
+        $rawBulkResponse = $this->resolveClient($storeId)->bulk($bulkOperations);
 
         return new BulkResponse($rawBulkResponse);
     }

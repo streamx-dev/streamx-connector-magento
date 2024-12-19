@@ -38,61 +38,29 @@ class Client implements ClientInterface {
     }
 
     // TODO: adjust code that produced the $bulkParams array, to make it in StreamX format (originally it is in ElasticSearch format)
-    public function bulk(array $bulkParams): array {
+    public function bulk(array $bulkOperations): array {
         $this->logger->info("EXECUTING:: bulk");
 
-        // Delete items don't come in pairs, but as single items.
-
-        // Updating products:
-        // In the full reindex mode:
-        // The products are delivered to this method in bulks of max 1000 items. Currently, there are ca. 2050 items, so we receive 3 batches from full reindex.
-        // $bulkParams array comes in pairs: item 0 is "index": { "_type": "product", "_id": 14 (which is also the product id) }
-        // item 1 is the product data array
-        // item 2 is the index for second product, item 3 is the second product data -> and so on
-
-        // In the update on save mode (when a single product is updated via Magento UI):
-        // We receive the same format, but only one pair of array items: 0 = index definition and 1 = the product
-        // -> This is used to send updates for Products, Categories and Attributes
-
-        $bodyArray = $bulkParams['body'];
-        $isOddItem = true;
-
-        // The var serves to store types of the even items to correctly interpret the odd ones
-        $entityType = null;
-
-        for ($i = 0; $i < count($bodyArray); $i++) {
-            $item = $bodyArray[$i];
-
-            // handle unpublishing deleted entities
-            if (isset($item['delete'])) {
-                $entityType = $item['delete']['type']; // product, category or attribute
-                $entityId = (int) $item['delete']['id'];
+        foreach ($bulkOperations as $item) {
+            if (isset($item['unpublish'])) {
+                $entityType = $item['unpublish']['type']; // product, category or attribute
+                $entityId = $item['unpublish']['id'];
                 $key = $this->createStreamxEntityKey($entityType, $entityId);
                 $this->unpublishFromStreamX($key);
-                continue;
             }
 
-            // handle publishing edited entities
-            if ($isOddItem) {
-                // TODO: maybe modify the code that produces the bodyArray to not have pairs of items, but only single items with all data inside?
-                //  For example, it could contain 3 items on the same level: entity type + entity id + the entity content array
-                if (isset($item['index'])) {
-                    $entityType = $item['index']['_type']; // product, category or attribute
-                } else {
-                    throw new Exception('Unexpected item: ' . json_encode($item, JSON_PRETTY_PRINT));
-                }
-            } else {
-                $entity = $item;
+            else if (isset($item['publish'])) {
+                $entityType = $item['publish']['type']; // product, category or attribute
+                $entity = $item['publish']['entity'];
                 $key = $this->createStreamxEntityKey($entityType, $entity['id']);
                 try {
-                    // TODO: upgrade to php client in version 1.0.0 and use the new `sendMulti` method of the publisher
-                    // TODO: send as much messages from the batch as possible at once, to not reach the limit of body size of a single request
                     $this->publishToStreamX($key, json_encode($entity)); // TODO make sure this will never block. Best by turning off Pulsar container
                 } catch (StreamxClientException $e) {
                     $this->logger->error('Data update failed: ' . $e->getMessage(), ['exception' => $e]);
                 }
+            } else {
+                throw new Exception('Unexpected bulk item type: ' . json_encode($item, JSON_PRETTY_PRINT));
             }
-            $isOddItem = !$isOddItem;
         }
 
         return ['items' => [], 'errors' => ""]; // TODO return any errors here, BulkLogger's logErrors method is designed to log them afterwards
@@ -113,6 +81,8 @@ class Client implements ClientInterface {
         $messageStatuses = $this->publisher->sendMulti([$message]);
 
         $messageStatus = $messageStatuses[0]; // TODO implement sending batches of messages at once
+        // TODO: send as much messages from the batch as possible at once, to not reach the limit of body size of a single request
+
         if ($messageStatus->getSuccess() === null) {
             $this->logger->error("Error response from sending $key: " . json_encode($messageStatus->getFailure()));
         }
