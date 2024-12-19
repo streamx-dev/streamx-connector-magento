@@ -18,11 +18,11 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
     /** @test */
     public function shouldPublishProductAddedDirectlyInDatabaseToStreamx_AndUnpublishDeletedProduct() {
         // given
+        $watchesCategoryId = DB::getCategoryId('Watches');
         $productName = 'The new great watch!';
-        $categoryName = 'Watches';
 
         // when
-        $productId = self::insertNewProduct($productName, $categoryName);
+        $productId = self::insertNewProduct($productName, $watchesCategoryId);
         $this->reindexMview();
 
         // then
@@ -39,11 +39,48 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         }
     }
 
+    /** @test */
+    public function shouldPublishMultipleProductsAddedDirectlyInDatabaseToStreamx_AndUnpublishDeletedProducts() {
+        // given
+        $watchesCategoryId = DB::getCategoryId('Watches');
+        $product1Name = 'First new watch';
+        $product2Name = 'Second new watch';
+        $product3Name = 'Third new watch';
+
+        // when
+        $product1Id = self::insertNewProduct($product1Name, $watchesCategoryId);
+        $product2Id = self::insertNewProduct($product2Name, $watchesCategoryId);
+        $product3Id = self::insertNewProduct($product3Name, $watchesCategoryId);
+        $this->reindexMview();
+
+        // then
+        $expectedProduct1Key = 'product_' . $product1Id;
+        $expectedProduct2Key = 'product_' . $product2Id;
+        $expectedProduct3Key = 'product_' . $product3Id;
+
+        try {
+            $this->assertDataIsPublished($expectedProduct1Key, $product1Name);
+            $this->assertDataIsPublished($expectedProduct2Key, $product2Name);
+            $this->assertDataIsPublished($expectedProduct3Key, $product3Name);
+        } finally {
+            // and when
+            self::deleteProduct($product1Id);
+            self::deleteProduct($product2Id);
+            self::deleteProduct($product3Id);
+            $this->reindexMview();
+
+            // then
+            $this->assertDataIsUnpublished($expectedProduct1Key);
+            $this->assertDataIsUnpublished($expectedProduct2Key);
+            $this->assertDataIsUnpublished($expectedProduct3Key);
+        }
+    }
+
     /**
      * Inserts new product to database
      * @return int ID of the inserted product
      */
-    private static function insertNewProduct(string $productName, string $categoryName): int {
+    private static function insertNewProduct(string $productName, string $categoryId): int {
         $sku = (string) (new DateTime())->getTimestamp();
         $productInternalName = strtolower(str_replace(' ', '_', $productName));
 
@@ -53,7 +90,6 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $price = 35;
         $websiteId = 1;
 
-        $categoryId = DB::getCategoryId($categoryName);
         $attributeSetId = DB::getDefaultCategoryAttributeSetId();
 
         DB::execute("
