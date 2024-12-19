@@ -14,7 +14,7 @@ class BulkRequest {
         $bulkRequest = new BulkRequest();
         foreach ($entityIds as $id) {
             $bulkRequest->bulkData[] = [
-                'delete' => [
+                'unpublish' => [
                     'type' => $entityType,
                     'id' => $id,
                 ]
@@ -24,21 +24,18 @@ class BulkRequest {
         return $bulkRequest;
     }
 
-    public static function buildPublishRequest(string $entityType, array $entityIdAndContentMap): BulkRequest {
+    public static function buildPublishRequest(string $entityType, array $entities): BulkRequest {
         $bulkRequest = new BulkRequest();
-        foreach ($entityIdAndContentMap as $id => $entityData) {
+        foreach ($entities as $entityData) {
             unset($entityData['entity_id']);
             unset($entityData['row_id']);
 
-            // TODO: put all in one bulkData[] array item instead of two?
             $bulkRequest->bulkData[] = [
-                'index' => [
-                    '_type' => $entityType,
-                    '_id' => $id,
+                'publish' => [
+                    'type' => $entityType,
+                    'entity' => $entityData,
                 ]
             ];
-
-            $bulkRequest->bulkData[] = $entityData;
         }
 
         return $bulkRequest;
