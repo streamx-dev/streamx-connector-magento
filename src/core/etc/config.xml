@@ -14,7 +14,7 @@
             </general_settings>
             <optimization_settings>
                 <cluster_health>0</cluster_health>
-                <batch_indexing_size>1000</batch_indexing_size>
+                <batch_indexing_size>100</batch_indexing_size>
             </optimization_settings>
         </streamx_connector_settings>
     </default>
