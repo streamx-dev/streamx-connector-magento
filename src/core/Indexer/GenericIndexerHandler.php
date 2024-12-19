@@ -96,7 +96,7 @@ class GenericIndexerHandler {
             $entities
         );
 
-        $response = $this->indexOperations->executeBulk($storeId, $bulkRequest);
+        $this->indexOperations->executeBulk($storeId, $bulkRequest);
     }
 
     private function unpublishEntities(array $ids, int $storeId): void {
@@ -105,7 +105,7 @@ class GenericIndexerHandler {
             $ids
         );
 
-        $response = $this->indexOperations->executeBulk($storeId, $bulkRequest);
+        $this->indexOperations->executeBulk($storeId, $bulkRequest);
     }
 
     private function loadType(string $typeName): TypeInterface {
