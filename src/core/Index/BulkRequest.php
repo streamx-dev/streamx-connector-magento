@@ -2,65 +2,48 @@
 
 namespace StreamX\ConnectorCore\Index;
 
-class BulkRequest
-{
-    /**
-     * Bulk operation stack.
-     */
+class BulkRequest {
+
     private array $bulkData = [];
 
-    public function deleteDocuments(string $type, array $docIds): BulkRequest {
-        foreach ($docIds as $docId) {
-            $this->deleteDocument($type, $docId);
+    private function __construct() {
+        // use builders instead
+    }
+
+    public static function buildUnpublishRequest(string $entityType, array $entityIds): BulkRequest {
+        $bulkRequest = new BulkRequest();
+        foreach ($entityIds as $id) {
+            $bulkRequest->bulkData[] = [
+                'delete' => [
+                    'type' => $entityType,
+                    'id' => $id,
+                ]
+            ];
         }
 
-        return $this;
+        return $bulkRequest;
     }
 
-    private function deleteDocument(string $type, $docId): void {
-        $this->bulkData[] = [
-            'delete' => [
-                '_type' => $type,
-                '_id' => $docId,
-            ]
-        ];
-    }
+    public static function buildPublishRequest(string $entityType, array $entityIdAndContentMap): BulkRequest {
+        $bulkRequest = new BulkRequest();
+        foreach ($entityIdAndContentMap as $id => $entityData) {
+            unset($entityData['entity_id']);
+            unset($entityData['row_id']);
 
-    /**
-     * $data format have to be an array of all documents with document id as key.
-     *
-     * @param string $type  Document type.
-     * @param array  $data  Document data.
-     */
-    public function addDocuments(string $type, array $data): BulkRequest {
-        foreach ($data as $docId => $documentData) {
-            $this->prepareDocument($documentData);
-            $this->addDocument($type, $docId, $documentData);
+            // TODO: put all in one bulkData[] array item instead of two?
+            $bulkRequest->bulkData[] = [
+                'index' => [
+                    '_type' => $entityType,
+                    '_id' => $id,
+                ]
+            ];
+
+            $bulkRequest->bulkData[] = $entityData;
         }
 
-        return $this;
+        return $bulkRequest;
     }
 
-    private function prepareDocument(array $data): void {
-        unset($data['entity_id']);
-        unset($data['row_id']);
-    }
-
-    private function addDocument($type, $docId, array $data): void {
-        // TODO: put all in one bulkData[] array item instead of two?
-        $this->bulkData[] = [
-            'index' => [
-                '_type' => $type,
-                '_id' => $docId,
-            ]
-        ];
-
-        $this->bulkData[] = $data;
-    }
-
-    /**
-     * Indicates if the current bulk contains operation.
-     */
     public function isEmpty(): bool {
         return count($this->bulkData) == 0;
     }

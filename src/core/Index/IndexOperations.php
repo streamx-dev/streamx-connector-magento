@@ -22,13 +22,13 @@ class IndexOperations implements IndexOperationInterface
 
     public function executeBulk(int $storeId, BulkRequest $bulk): BulkResponse
     {
-        $this->checkEsCondition($storeId);
-
         if ($bulk->isEmpty()) {
             throw new \LogicException('Can not execute empty bulk.');
         }
 
-        $bulkParams = ['body' => $bulk->getOperations()]; // TODO think of commonizing/improving names
+        $this->checkEsCondition($storeId);
+
+        $bulkParams = ['body' => $bulk->getOperations()]; // TODO remove 'body' parent item?
         $rawBulkResponse = $this->resolveClient($storeId)->bulk($bulkParams);
 
         return new BulkResponse($rawBulkResponse);

@@ -41,7 +41,7 @@ class Category {
         // 2. Unpublish deleted categories
         $idsOfCategoriesToUnpublish = array_diff($categoryIds, $publishedCategoryIds);
         foreach ($idsOfCategoriesToUnpublish as $categoryId) {
-            yield $categoryId => ['id' => $categoryId];
+            yield $categoryId => [];
         }
     }
 
