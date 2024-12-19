@@ -37,7 +37,7 @@ class Client implements ClientInterface {
         }
     }
 
-    // TODO: adjust code that produced the $bulkParams array, to make it in StreamX format (originally it is in ElasticSearch format)
+    // TODO: adjust code that produced the $bulkOperations array, to make it in StreamX format (originally it is in ElasticSearch format)
     public function bulk(array $bulkOperations): array {
         $this->logger->info("EXECUTING:: bulk");
 
@@ -46,7 +46,11 @@ class Client implements ClientInterface {
                 $entityType = $item['unpublish']['type']; // product, category or attribute
                 $entityId = $item['unpublish']['id'];
                 $key = $this->createStreamxEntityKey($entityType, $entityId);
-                $this->unpublishFromStreamX($key);
+                try {
+                    $this->unpublishFromStreamX($key);
+                } catch (StreamxClientException $e) {
+                    $this->logger->error("Unpublishing $key from StreamX failed: " . $e->getMessage(), ['exception' => $e]);
+                }
             }
 
             else if (isset($item['publish'])) {
@@ -56,14 +60,14 @@ class Client implements ClientInterface {
                 try {
                     $this->publishToStreamX($key, json_encode($entity)); // TODO make sure this will never block. Best by turning off Pulsar container
                 } catch (StreamxClientException $e) {
-                    $this->logger->error('Data update failed: ' . $e->getMessage(), ['exception' => $e]);
+                    $this->logger->error("Publishing $key to StreamX failed: " . $e->getMessage(), ['exception' => $e]);
                 }
             } else {
                 throw new Exception('Unexpected bulk item type: ' . json_encode($item, JSON_PRETTY_PRINT));
             }
         }
 
-        return ['items' => [], 'errors' => ""]; // TODO return any errors here, BulkLogger's logErrors method is designed to log them afterwards
+        return ['items' => [], 'errors' => ""]; // TODO don't need to return anything
     }
 
     private static function createStreamxEntityKey(string $entityType, int $entityId): string {
