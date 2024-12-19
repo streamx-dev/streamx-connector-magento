@@ -65,8 +65,8 @@ class Client implements ClientInterface {
 
             // handle unpublishing deleted entities
             if (isset($item['delete'])) {
-                $entityType = $item['delete']['_type']; // product, category or attribute
-                $entityId = (int) $item['delete']['_id']['id'];
+                $entityType = $item['delete']['type']; // product, category or attribute
+                $entityId = (int) $item['delete']['id'];
                 $key = $this->createStreamxEntityKey($entityType, $entityId);
                 $this->unpublishFromStreamX($key);
                 continue;

@@ -64,29 +64,25 @@ class GenericIndexerHandler {
     }
 
     private function processDocsBatch(array $docs, int $storeId): void {
-        $docsToPublish = [];
-        $docsToUnpublish = [];
+        $entitiesToPublish = [];
+        $idsToUnpublish = [];
         foreach ($docs as $id => $doc) {
-            if (self::isArrayWithSingleIdKey($doc)) {
-                $docsToUnpublish[$id] = $doc;
+            if (empty($doc)) {
+                $idsToUnpublish[] = $id;
             } else {
-                $docsToPublish[$id] = $doc;
+                $entitiesToPublish[$id] = $doc;
             }
         }
 
-        $docsToPublish = $this->enrichDocs($docsToPublish, $storeId);
+        $entitiesToPublish = $this->enrichDocs($entitiesToPublish, $storeId);
 
-        if (!empty($docsToPublish)) {
-            $this->publishDocs($docsToPublish, $storeId);
+        if (!empty($entitiesToPublish)) {
+            $this->publishEntities($entitiesToPublish, $storeId);
         }
 
-        if (!empty($docsToUnpublish)) {
-            $this->unpublishDocs($docsToUnpublish, $storeId);
+        if (!empty($idsToUnpublish)) {
+            $this->unpublishEntities($idsToUnpublish, $storeId);
         }
-    }
-
-    private static function isArrayWithSingleIdKey($array): bool {
-        return count($array) === 1 && array_key_exists('id', $array);
     }
 
     private function enrichDocs(array $docsToPublish, int $storeId): array {
@@ -98,20 +94,20 @@ class GenericIndexerHandler {
         return $docsToPublish;
     }
 
-    private function publishDocs(array $docsToPublish, int $storeId): void {
-        $bulkRequest = (new BulkRequest())->addDocuments(
+    private function publishEntities(array $entities, int $storeId): void {
+        $bulkRequest = BulkRequest::buildPublishRequest(
             $this->typeName,
-            $docsToPublish
+            $entities
         );
 
         $response = $this->indexOperations->executeBulk($storeId, $bulkRequest);
         $this->bulkLogger->logErrors($response);
     }
 
-    private function unpublishDocs(array $docsToUnpublish, int $storeId): void {
-        $bulkRequest = (new BulkRequest())->deleteDocuments(
+    private function unpublishEntities(array $ids, int $storeId): void {
+        $bulkRequest = BulkRequest::buildUnpublishRequest(
             $this->typeName,
-            $docsToUnpublish
+            $ids
         );
 
         $response = $this->indexOperations->executeBulk($storeId, $bulkRequest);
