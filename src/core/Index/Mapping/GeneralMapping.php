@@ -4,12 +4,9 @@ namespace StreamX\ConnectorCore\Index\Mapping;
 
 use StreamX\ConnectorCore\Api\Mapping\FieldInterface;
 
-class GeneralMapping
-{
-    /**
-     * @var array
-     */
-    private $commonProperties = [
+class GeneralMapping {
+
+    private array $commonProperties = [
         'position' => ['type' => FieldInterface::TYPE_LONG],
         'level' => ['type' => FieldInterface::TYPE_INTEGER],
         'created_at' => [
@@ -22,8 +19,7 @@ class GeneralMapping
         ]
     ];
 
-    public function getCommonProperties(): array
-    {
+    public function getCommonProperties(): array {
         return $this->commonProperties;
     }
 }

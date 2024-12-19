@@ -38,7 +38,7 @@ class Client implements ClientInterface {
     }
 
     // TODO: adjust code that produced the $bulkOperations array, to make it in StreamX format (originally it is in ElasticSearch format)
-    public function bulk(array $bulkOperations): array {
+    public function ingest(array $bulkOperations): void {
         $this->logger->info("EXECUTING:: bulk");
 
         foreach ($bulkOperations as $item) {
@@ -66,8 +66,6 @@ class Client implements ClientInterface {
                 throw new Exception('Unexpected bulk item type: ' . json_encode($item, JSON_PRETTY_PRINT));
             }
         }
-
-        return ['items' => [], 'errors' => ""]; // TODO don't need to return anything
     }
 
     private static function createStreamxEntityKey(string $entityType, int $entityId): string {

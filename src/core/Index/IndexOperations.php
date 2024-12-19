@@ -20,7 +20,7 @@ class IndexOperations implements IndexOperationInterface
         $this->optimizationSettings = $optimizationSettings;
     }
 
-    public function executeBulk(int $storeId, BulkRequest $bulk): BulkResponse
+    public function executeBulk(int $storeId, BulkRequest $bulk): void
     {
         if ($bulk->isEmpty()) {
             throw new \LogicException('Can not execute empty bulk.');
@@ -29,9 +29,7 @@ class IndexOperations implements IndexOperationInterface
         $this->checkEsCondition($storeId);
 
         $bulkOperations = $bulk->getOperations();
-        $rawBulkResponse = $this->resolveClient($storeId)->bulk($bulkOperations);
-
-        return new BulkResponse($rawBulkResponse);
+        $this->resolveClient($storeId)->ingest($bulkOperations);
     }
 
     public function getBatchIndexingSize(): int
