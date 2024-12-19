@@ -44,7 +44,7 @@ class Attribute
         // 2. Unpublish deleted attributes
         $idsOfAttributesToUnpublish = array_diff($attributeIds, $publishedAttributeIds);
         foreach ($idsOfAttributesToUnpublish as $attributeId) {
-            yield $attributeId => ['id' => $attributeId];
+            yield $attributeId => [];
         }
     }
 

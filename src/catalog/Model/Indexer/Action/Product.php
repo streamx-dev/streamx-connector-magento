@@ -46,7 +46,7 @@ class Product {
         // 2. Unpublish deleted products
         $idsOfProductsToUnpublish = array_diff($productIds, $publishedProductIds);
         foreach ($idsOfProductsToUnpublish as $productId) {
-            yield $productId => ['id' => $productId];
+            yield $productId => [];
         }
     }
 
