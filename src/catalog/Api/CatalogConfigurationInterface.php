@@ -26,12 +26,6 @@ interface CatalogConfigurationInterface
     const ALLOWED_PRODUCT_TYPES = 'allowed_product_types';
 
     /**
-     * Product attributes to reindex
-     */
-    const PRODUCT_ATTRIBUTES = 'product_attributes';
-    const CHILD_ATTRIBUTES = 'child_attributes';
-
-    /**
      * Export attributes metadata config field
      */
     const EXPORT_ATTRIBUTES_METADATA = 'export_attributes_metadata';
@@ -61,10 +55,6 @@ interface CatalogConfigurationInterface
     public function addSwatchesToConfigurableOptions();
 
     public function getAllowedProductTypes(int $storeId): array;
-
-    public function getAllowedAttributesToIndex(int $storeId): array;
-
-    public function getAllowedChildAttributesToIndex(int $storeId): array;
 
     public function getConfigurableChildrenBatchSize(int $storeId): int;
 }

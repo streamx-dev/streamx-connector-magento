@@ -23,11 +23,6 @@
             <argument name="logger" xsi:type="object">StreamX\ConnectorCatalog\Logger\CatalogIndexerLogger</argument>
         </arguments>
     </type>
-    <type name="StreamX\ConnectorCatalog\Model\Product\GetAttributeCodesByIds">
-        <arguments>
-            <argument name="logger" xsi:type="object">StreamX\ConnectorCatalog\Logger\CatalogIndexerLogger</argument>
-        </arguments>
-    </type>
     <type name="StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\ConfigurableData">
         <arguments>
             <argument name="loadInventory" xsi:type="object">StreamX\ConnectorCatalog\Model\LoadChildrenInventory</argument>
@@ -174,33 +169,6 @@
     </type>
     <type name="Magento\Catalog\Controller\Adminhtml\Product\Action\Attribute\Save">
         <plugin name="update_product_in_es" type="StreamX\ConnectorCatalog\Plugin\Controller\Catalog\Adminhtml\Product\Action\AttributeSavePlugin"/>
-    </type>
-
-    <type name="StreamX\ConnectorCatalog\Setup\UpgradeData\SetProductDefaultAttributes">
-        <arguments>
-            <argument name="productAttributes" xsi:type="array">
-                <item name="description" xsi:type="string">description</item>
-                <item name="image" xsi:type="string">image</item>
-                <item name="small_image" xsi:type="string">small_image</item>
-                <item name="thumbnail" xsi:type="string">thumbnail</item>
-                <item name="media_gallery" xsi:type="string">media_gallery</item>
-                <item name="meta_title" xsi:type="string">meta_title</item>
-                <item name="meta_description" xsi:type="string">meta_description</item>
-                <item name="special_price" xsi:type="string">special_price</item>
-                <item name="special_from_date" xsi:type="string">special_from_date</item>
-                <item name="special_to_date" xsi:type="string">special_to_date</item>
-                <item name="tax_class_id" xsi:type="string">tax_class_id</item>
-            </argument>
-            <argument name="childAttributes" xsi:type="array">
-                <item name="image" xsi:type="string">image</item>
-                <item name="small_image" xsi:type="string">small_image</item>
-                <item name="thumbnail" xsi:type="string">thumbnail</item>
-                <item name="media_gallery" xsi:type="string">media_gallery</item>
-                <item name="special_price" xsi:type="string">special_price</item>
-                <item name="special_from_date" xsi:type="string">special_from_date</item>
-                <item name="special_to_date" xsi:type="string">special_to_date</item>
-            </argument>
-        </arguments>
     </type>
 
     <type name="StreamX\ConnectorCatalog\Index\Mapping\Product">

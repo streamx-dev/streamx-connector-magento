@@ -2,7 +2,6 @@
 
 namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\Configurable;
 
-use StreamX\ConnectorCatalog\Model\Attributes\ConfigurableAttributes;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\AttributeDataProvider;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Prices as PriceResourceModel;
 use StreamX\ConnectorCatalog\Api\LoadTierPricesInterface;
@@ -12,40 +11,15 @@ use Traversable;
 
 class LoadChildrenRawAttributes
 {
-    /**
-     * @var LoadTierPricesInterface
-     */
-    private $loadTierPrices;
-
-    /**
-     * @var PriceResourceModel
-     */
-    private $priceResourceModel;
-
-    /**
-     * @var  AttributeDataProvider
-     */
-    private $resourceAttributeModel;
-
-    /**
-     * @var ConfigurableAttributes
-     */
-    private $configurableAttributes;
-
-    /**
-     * @var LoadMediaGalleryInterface
-     */
-    private $mediaGalleryLoader;
-
-    /**
-     * @var CatalogConfigurationInterface
-     */
-    private $settings;
+    private LoadTierPricesInterface $loadTierPrices;
+    private PriceResourceModel $priceResourceModel;
+    private AttributeDataProvider $resourceAttributeModel;
+    private LoadMediaGalleryInterface $mediaGalleryLoader;
+    private CatalogConfigurationInterface $settings;
 
     public function __construct(
         CatalogConfigurationInterface $catalogConfiguration,
         AttributeDataProvider $attributeDataProvider,
-        ConfigurableAttributes $configurableAttributes,
         LoadTierPricesInterface $loadTierPrices,
         LoadMediaGalleryInterface $loadMediaGallery,
         PriceResourceModel $priceResourceModel
@@ -55,7 +29,6 @@ class LoadChildrenRawAttributes
         $this->mediaGalleryLoader = $loadMediaGallery;
         $this->priceResourceModel = $priceResourceModel;
         $this->resourceAttributeModel = $attributeDataProvider;
-        $this->configurableAttributes = $configurableAttributes;
     }
 
     /**
@@ -64,25 +37,13 @@ class LoadChildrenRawAttributes
      */
     public function execute(int $storeId, array $allChildren, array $configurableAttributeCodes): array
     {
-        $requiredAttributes = $this->getRequiredChildrenAttributes($storeId);
-
-        if (!empty($requiredAttributes)) {
-            $requiredAttributes = array_merge(
-                $requiredAttributes,
-                $configurableAttributeCodes
-            );
-        }
-
-        $requiredAttribute = array_unique($requiredAttributes);
-
         foreach ($this->getChildrenInBatches($allChildren, $storeId) as $batch) {
             $childIds = array_keys($batch);
             $priceData = $this->priceResourceModel->loadPriceData($storeId, $childIds);
 
             $allAttributesData = $this->resourceAttributeModel->loadAttributesData(
                 $storeId,
-                $childIds,
-                $requiredAttribute
+                $childIds
             );
 
             foreach ($priceData as $childId => $priceDataRow) {
@@ -99,40 +60,20 @@ class LoadChildrenRawAttributes
                     $attributes
                 );
 
-                if (
-                    $this->settings->syncTierPrices() ||
-                    $this->configurableAttributes->canIndexMediaGallery($storeId)
-                ) {
-                    /*we need some extra attributes to apply tier prices*/
-                    $batch[$productId] = $newProductData;
-                } else {
-                    $allChildren[$productId] = $newProductData;
-                }
+                /*we need some extra attributes to apply tier prices*/
+                $batch[$productId] = $newProductData;
             }
-
-            $replace = false;
 
             if ($this->settings->syncTierPrices()) {
                 $batch = $this->loadTierPrices->execute($batch, $storeId);
-                $replace = true;
             }
 
-            if ($this->configurableAttributes->canIndexMediaGallery($storeId)) {
-                $batch = $this->mediaGalleryLoader->execute($batch, $storeId);
-                $replace = true;
-            }
+            $batch = $this->mediaGalleryLoader->execute($batch, $storeId);
 
-            if ($replace) {
-                $allChildren = array_replace_recursive($allChildren, $batch);
-            }
+            $allChildren = array_replace_recursive($allChildren, $batch);
         }
 
         return $allChildren;
-    }
-
-    private function getRequiredChildrenAttributes(int $storeId): array
-    {
-        return $this->configurableAttributes->getChildrenRequiredAttributes($storeId);
     }
 
     private function getChildrenInBatches(array $documents, int $storeId): Traversable

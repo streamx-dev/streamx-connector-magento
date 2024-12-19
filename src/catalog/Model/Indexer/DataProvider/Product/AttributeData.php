@@ -8,53 +8,23 @@ use StreamX\ConnectorCore\Indexer\DataFilter;
 use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
 use StreamX\ConnectorCatalog\Api\SlugGeneratorInterface;
 use StreamX\ConnectorCatalog\Model\ProductUrlPathGenerator;
-use StreamX\ConnectorCatalog\Model\Attributes\ProductAttributes;
 
 class AttributeData implements DataProviderInterface
 {
-    /**
-     * @var AttributeDataProvider
-     */
-    private $resourceModel;
-
-    /**
-     * @var DataFilter
-     */
-    private $dataFilter;
-
-    /**
-     * @var CatalogConfigurationInterface
-     */
-    private $settings;
-
-    /**
-     * @var SlugGeneratorInterface
-     */
-    private $slugGenerator;
-
-    /**
-     * @var ProductAttributes
-     */
-    private $productAttributes;
-
-    /**
-     * @var AttributeDataProvider
-     */
-    private $productUrlPathGenerator;
+    private AttributeDataProvider $resourceModel;
+    private CatalogConfigurationInterface $settings;
+    private SlugGeneratorInterface $slugGenerator;
+    private ProductUrlPathGenerator $productUrlPathGenerator;
 
     public function __construct(
-        ProductAttributes $productAttributes,
         CatalogConfigurationInterface $configSettings,
         SlugGeneratorInterface $slugGenerator,
         ProductUrlPathGenerator $productUrlPathGenerator,
-        DataFilter $dataFilter,
         AttributeDataProvider $resourceModel
     ) {
         $this->slugGenerator = $slugGenerator;
         $this->settings = $configSettings;
         $this->resourceModel = $resourceModel;
-        $this->dataFilter = $dataFilter;
-        $this->productAttributes = $productAttributes;
         $this->productUrlPathGenerator = $productUrlPathGenerator;
     }
 
@@ -63,8 +33,7 @@ class AttributeData implements DataProviderInterface
      */
     public function addData(array $indexData, int $storeId): array
     {
-        $requiredAttributes = $this->productAttributes->getAttributes($storeId);
-        $attributes = $this->resourceModel->loadAttributesData($storeId, array_keys($indexData), $requiredAttributes);
+        $attributes = $this->resourceModel->loadAttributesData($storeId, array_keys($indexData));
 
         foreach ($attributes as $entityId => $attributesData) {
             $productData = array_merge($indexData[$entityId], $attributesData);

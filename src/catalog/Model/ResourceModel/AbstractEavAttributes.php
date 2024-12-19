@@ -76,7 +76,7 @@ abstract class AbstractEavAttributes implements EavAttributesInterface
     /**
      * @throws \Exception
      */
-    public function loadAttributesData(int $storeId, array $entityIds, array $requiredAttributes = null): array
+    public function loadAttributesData(int $storeId, array $entityIds): array
     {
         $this->attributesById = $this->initAttributes();
         $tableAttributes = [];
@@ -84,7 +84,7 @@ abstract class AbstractEavAttributes implements EavAttributesInterface
         $selects = [];
 
         foreach ($this->attributesById as $attributeId => $attribute) {
-            if ($this->canIndexAttribute($attribute, $requiredAttributes)) {
+            if ($this->canIndexAttribute($attribute)) {
                 $tableAttributes[$attribute->getBackendTable()][] = $attributeId;
 
                 if (!isset($attributeTypes[$attribute->getBackendTable()])) {
@@ -113,7 +113,7 @@ abstract class AbstractEavAttributes implements EavAttributesInterface
     /**
      * @throws \Exception
      */
-    public function canIndexAttribute(\Magento\Eav\Model\Entity\Attribute $attribute, array $allowedAttributes = null): bool
+    public function canIndexAttribute(\Magento\Eav\Model\Entity\Attribute $attribute): bool
     {
         if ($attribute->isStatic()) {
             return false;
@@ -123,11 +123,7 @@ abstract class AbstractEavAttributes implements EavAttributesInterface
             return false;
         }
 
-        if (null === $allowedAttributes || empty($allowedAttributes)) {
-            return true;
-        }
-
-        return in_array($attribute->getAttributeCode(), $allowedAttributes);
+        return true;
     }
 
     /**

@@ -3,33 +3,17 @@
 namespace StreamX\ConnectorCatalog\Model\SystemConfig;
 
 use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
-use StreamX\ConnectorCatalog\Model\Product\GetAttributeCodesByIds;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
 
 class CatalogConfig implements CatalogConfigurationInterface
 {
-    /**
-     * @var array
-     */
-    private $settings = [];
+    private array $settings = [];
+    private ScopeConfigInterface $scopeConfig;
 
-    /**
-     * @var ScopeConfigInterface
-     */
-    private $scopeConfig;
-
-    /**
-     * @var GetAttributeCodesByIds
-     */
-    private $getAttributeCodesByIds;
-
-    public function __construct(
-        ScopeConfigInterface $scopeConfig,
-        GetAttributeCodesByIds $getAttributeCodesByIds
-    ) {
+    public function __construct(ScopeConfigInterface $scopeConfig)
+    {
         $this->scopeConfig = $scopeConfig;
-        $this->getAttributeCodesByIds = $getAttributeCodesByIds;
     }
 
     public function useMagentoUrlKeys(): bool
@@ -78,26 +62,6 @@ class CatalogConfig implements CatalogConfigurationInterface
         }
 
         return $types;
-    }
-
-    public function getAllowedAttributesToIndex(int $storeId): array
-    {
-        $attributes = (string)$this->getConfigParam(
-            CatalogConfigurationInterface::PRODUCT_ATTRIBUTES,
-            $storeId
-        );
-
-        return $this->getAttributeCodesByIds->execute($attributes);
-    }
-
-    public function getAllowedChildAttributesToIndex(int $storeId): array
-    {
-        $attributes = (string)$this->getConfigParam(
-            CatalogConfigurationInterface::CHILD_ATTRIBUTES,
-            $storeId
-        );
-
-        return $this->getAttributeCodesByIds->execute($attributes);
     }
 
     public function getConfigurableChildrenBatchSize(int $storeId): int
