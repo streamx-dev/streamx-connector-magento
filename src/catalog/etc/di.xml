@@ -176,14 +176,6 @@
         <plugin name="update_product_in_es" type="StreamX\ConnectorCatalog\Plugin\Controller\Catalog\Adminhtml\Product\Action\AttributeSavePlugin"/>
     </type>
 
-    <type name="StreamX\ConnectorCatalog\Setup\UpgradeData\SetCategoryDefaultAttributes">
-        <arguments>
-            <argument name="childAttributes" xsi:type="array">
-                <item name="image" xsi:type="string">image</item>
-            </argument>
-        </arguments>
-    </type>
-
     <type name="StreamX\ConnectorCatalog\Setup\UpgradeData\SetProductDefaultAttributes">
         <arguments>
             <argument name="productAttributes" xsi:type="array">

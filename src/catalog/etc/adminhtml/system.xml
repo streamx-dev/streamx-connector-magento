@@ -72,26 +72,6 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
             </group>
-            <group id="catalog_category_settings" translate="label" type="text" sortOrder="500" showInDefault="1" showInWebsite="1" showInStore="1" >
-                <label>Category Settings</label>
-                <depends>
-                    <field id="streamx_connector_settings/general_settings/enable">1</field>
-                </depends>
-                <field id="category_attributes" translate="label comment" type="multiselect" sortOrder="102" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Category attributes to export</label>
-                    <source_model>StreamX\ConnectorCatalog\Model\Config\Source\Category\Attributes</source_model>
-                    <backend_model>StreamX\ConnectorCatalog\Model\Config\Backend\Attributes</backend_model>
-                    <can_be_empty>1</can_be_empty>
-                    <comment>Select which product attributes should be exported. Some attributes will be always exported: name, url_key, is_active, url_path.</comment>
-                </field>
-                <field id="child_attributes" translate="label comment" type="multiselect" sortOrder="103" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Category children data attributes to export</label>
-                    <source_model>StreamX\ConnectorCatalog\Model\Config\Source\Category\Attributes</source_model>
-                    <backend_model>StreamX\ConnectorCatalog\Model\Config\Backend\Attributes</backend_model>
-                    <can_be_empty>1</can_be_empty>
-                    <comment>Select which product attributes should be exported for 'child_data'. Some attributes will be always exported: name, url_key, is_active, url_path.</comment>
-                </field>
-            </group>
         </section>
     </system>
 </config>
