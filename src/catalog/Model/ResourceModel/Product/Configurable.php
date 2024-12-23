@@ -2,6 +2,10 @@
 
 namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
+use Exception;
+use Magento\Framework\DB\Adapter\AdapterInterface;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
@@ -12,77 +16,31 @@ use Psr\Log\LoggerInterface;
 
 class Configurable
 {
-
-    /**
-     * @var DbHelper
-     */
-    private $dbHelper;
-
-    /**
-     * @var AttributeDataProvider
-     */
-    private $attributeDataProvider;
-
-    /**
-     * @var ResourceConnection
-     */
-    private $resource;
-
-    /**
-     * @var Product
-     */
-    private $productResource;
-
-    /**
-     * @var ProductMetaData
-     */
-    private $productMetaData;
+    private DbHelper $dbHelper;
+    private AttributeDataProvider $attributeDataProvider;
+    private ResourceConnection $resource;
+    private Product $productResource;
+    private ProductMetaData $productMetaData;
 
     /**
      * Array of the ids of configurable products from $productCollection
-     *
-     * @var array
      */
-    private $configurableProductIds;
+    private ?array $configurableProductIds = null;
 
     /**
      * All associated simple products from configurables in $configurableProductIds
-     *
-     * @var array
      */
-    private $simpleProducts;
-
-    /**
-     * Array of associated simple product ids.
-     * The array index are configurable product ids, the array values are
-     * arrays of the associated simple product ids.
-     *
-     * @var array
-     */
-    private $associatedSimpleProducts;
+    private ?array $simpleProducts = null;
 
     /**
      * Array keys are the configurable product ids,
      * Values: super_product_attribute_id, attribute_id, position
-     *
-     * @var array
      */
-    private $configurableProductAttributes;
+    private ?array $configurableProductAttributes = null;
+    private ?array $configurableAttributesInfo = null;
+    private ?array $productsData = null;
 
-    /**
-     * @var array
-     */
-    private $configurableAttributesInfo;
-
-    /**
-     * @var array
-     */
-    private $productsData;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    private LoggerInterface $logger;
 
     public function __construct(
         LoggerInterface $logger,
@@ -103,7 +61,6 @@ class Configurable
     public function clear(): void
     {
         $this->productsData = null;
-        $this->associatedSimpleProducts = null;
         $this->configurableAttributesInfo = null;
         $this->configurableProductAttributes = null;
         $this->simpleProducts = null;
@@ -120,7 +77,7 @@ class Configurable
      *
      * @param array $product Configurable product.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getProductConfigurableAttributes(array $product, int $storeId): array
     {
@@ -202,7 +159,7 @@ class Configurable
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function getConfigurableAttributeCodes(int $storeId): array
     {
@@ -214,7 +171,7 @@ class Configurable
     /**
      * Return array of all configurable attributes in the current collection.
      * Array indexes are the attribute ids, array values the attribute code
-     * @throws \Exception
+     * @throws Exception
      */
     private function getConfigurableAttributeFullInfo(int $storeId): array
     {
@@ -279,8 +236,8 @@ class Configurable
      * Return all associated simple products for the configurable products in
      * the current product collection.
      *
-     * @throws \Magento\Framework\Exception\LocalizedException
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws LocalizedException
+     * @throws NoSuchEntityException
      */
     public function getSimpleProducts(int $storeId): ?array
     {
@@ -312,10 +269,7 @@ class Configurable
         return $productIds;
     }
 
-    /**
-     * @return \Magento\Framework\DB\Adapter\AdapterInterface
-     */
-    private function getConnection()
+    private function getConnection(): AdapterInterface
     {
         return $this->resource->getConnection();
     }

@@ -2,6 +2,7 @@
 
 namespace StreamX\ConnectorCatalog\Model\Indexer;
 
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Indexer\Config\DependencyInfoProviderInterface;
 use Magento\Framework\Indexer\IndexerRegistry;
 
@@ -12,10 +13,7 @@ class ProductProcessor extends \Magento\Framework\Indexer\AbstractProcessor
      */
     public const INDEXER_ID = 'streamx_product_indexer';
 
-    /**
-     * @var DependencyInfoProviderInterface
-     */
-    private $dependencyInfoProvider;
+    private DependencyInfoProviderInterface $dependencyInfoProvider;
 
     public function __construct(
         DependencyInfoProviderInterface $dependencyInfoProvider,
@@ -25,9 +23,6 @@ class ProductProcessor extends \Magento\Framework\Indexer\AbstractProcessor
         $this->dependencyInfoProvider = $dependencyInfoProvider;
     }
 
-    /**
-     * Mark StreamX Product indexer as invalid
-     */
     public function markIndexerAsInvalid(): void
     {
         $this->getIndexer()->invalidate();
@@ -58,7 +53,7 @@ class ProductProcessor extends \Magento\Framework\Indexer\AbstractProcessor
     }
 
     /**
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws NoSuchEntityException
      */
     private function hasToReindex(): bool
     {

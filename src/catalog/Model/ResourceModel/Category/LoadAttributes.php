@@ -5,26 +5,21 @@ namespace StreamX\ConnectorCatalog\Model\ResourceModel\Category;
 use Magento\Catalog\Model\ResourceModel\Category\Attribute\Collection;
 use Magento\Catalog\Model\ResourceModel\Category\Attribute\CollectionFactory;
 use Magento\Eav\Model\Entity\Attribute;
+use Magento\Framework\Exception\LocalizedException;
 
 class LoadAttributes
 {
-    /**
-     * @var CollectionFactory
-     */
-    private $attributeCollectionFactory;
+    private CollectionFactory $attributeCollectionFactory;
 
     /**
      * Product attributes by id
-     *
-     * @var array
      */
-    private $attributesById;
+    private ?array $attributesById = null;
 
     /**
      * Mapping attribute code to id
-     * @var array
      */
-    private $attributeCodeToId = [];
+    private array $attributeCodeToId = [];
 
     public function __construct(CollectionFactory $attributeCollectionFactory)
     {
@@ -34,7 +29,7 @@ class LoadAttributes
     /**
      * @return Attribute[]
      */
-    public function execute()
+    public function execute(): array
     {
         return $this->initAttributes();
     }
@@ -42,7 +37,7 @@ class LoadAttributes
     /**
      * @return Attribute[]
      */
-    private function initAttributes()
+    private function initAttributes(): array
     {
         if (null === $this->attributesById) {
             $this->attributesById = [];
@@ -58,7 +53,7 @@ class LoadAttributes
     }
 
     /**
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     public function getAttributeById(int $attributeId): Attribute
     {
@@ -68,11 +63,11 @@ class LoadAttributes
             return $this->attributesById[$attributeId];
         }
 
-        throw new \Magento\Framework\Exception\LocalizedException(__('Attribute not found.'));
+        throw new LocalizedException(__('Attribute not found.'));
     }
 
     /**
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     public function getAttributeByCode(string $attributeCode): Attribute
     {
@@ -84,7 +79,7 @@ class LoadAttributes
             return $this->attributesById[$attributeId];
         }
 
-        throw new \Magento\Framework\Exception\LocalizedException(__('Attribute not found.'));
+        throw new LocalizedException(__('Attribute not found.'));
     }
 
     private function getAttributeCollection(): Collection

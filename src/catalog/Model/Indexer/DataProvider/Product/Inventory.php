@@ -8,16 +8,8 @@ use StreamX\ConnectorCore\Api\DataProviderInterface;
 
 class Inventory implements DataProviderInterface
 {
-
-    /**
-     * @var LoadInventoryInterface
-     */
-    private $getInventory;
-
-    /**
-     * @var InventoryConverterInterface
-     */
-    private $inventoryProcessor;
+    private LoadInventoryInterface $getInventory;
+    private InventoryConverterInterface $inventoryProcessor;
 
     public function __construct(
         LoadInventoryInterface $getInventory,

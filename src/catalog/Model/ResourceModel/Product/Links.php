@@ -2,6 +2,7 @@
 
 namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
+use Magento\Framework\DB\Adapter\AdapterInterface;
 use StreamX\ConnectorCatalog\Model\Product\LinkTypeMapper;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use Magento\Framework\App\ResourceConnection;
@@ -9,35 +10,12 @@ use Magento\Framework\DB\Select;
 
 class Links
 {
-    /**
-     * @const string
-     */
-    const POSITION_ATTRIBUTE_CODE = 'position';
-
-    /**
-     * @var array
-     */
-    private $products = [];
-
-    /**
-     * @var array
-     */
-    private $links;
-
-    /**
-     * @var ResourceConnection
-     */
-    private $resource;
-
-    /**
-     * @var LinkTypeMapper
-     */
-    private $linkTypeMapper;
-    
-    /**
-     * @var ProductMetaData
-     */
-    private $productMetaData;
+    private const POSITION_ATTRIBUTE_CODE = 'position';
+    private ?array $products = [];
+    private ?array $links = null;
+    private ResourceConnection $resource;
+    private LinkTypeMapper $linkTypeMapper;
+    private ProductMetaData $productMetaData;
 
     public function __construct(
         ProductMetaData $productMetaData,
@@ -165,10 +143,7 @@ class Links
         return $select;
     }
 
-    /**
-     * @return \Magento\Framework\DB\Adapter\AdapterInterface
-     */
-    private function getConnection()
+    private function getConnection(): AdapterInterface
     {
         return $this->resource->getConnection();
     }
@@ -183,7 +158,7 @@ class Links
      *
      * @return int[]
      */
-    private function getProductsIds()
+    private function getProductsIds(): array
     {
         $products = $this->getProducts();
 

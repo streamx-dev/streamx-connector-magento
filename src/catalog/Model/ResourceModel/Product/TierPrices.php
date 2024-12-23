@@ -2,22 +2,16 @@
 
 namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
+use Exception;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Customer\Model\Group;
+use Magento\Framework\DB\Adapter\AdapterInterface;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 
 class TierPrices
 {
-
-    /**
-     * @var ResourceConnection
-     */
-    private $resource;
-
-    /**
-     * @var ProductMetaData
-     */
-    private $productMetaData;
+    private ResourceConnection $resource;
+    private ProductMetaData $productMetaData;
 
     public function __construct(
         ResourceConnection $resourceModel,
@@ -28,7 +22,7 @@ class TierPrices
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function loadTierPrices(int $websiteId, array $linkFieldIds): array
     {
@@ -82,10 +76,7 @@ class TierPrices
         return $tierPrices;
     }
 
-    /**
-     * @return \Magento\Framework\DB\Adapter\AdapterInterface
-     */
-    private function getConnection()
+    private function getConnection(): AdapterInterface
     {
         return $this->resource->getConnection();
     }

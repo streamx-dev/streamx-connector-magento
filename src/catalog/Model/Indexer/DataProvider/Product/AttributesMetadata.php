@@ -11,20 +11,9 @@ use StreamX\ConnectorCore\Api\DataProviderInterface;
 
 class AttributesMetadata  implements DataProviderInterface
 {
-    /**
-     * @var Resource
-     */
-    private $resourceModel;
-
-    /**
-     * @var GetProductValues
-     */
-    private $getProductValues;
-
-    /**
-     * @var CatalogConfigurationInterface
-     */
-    private $configuration;
+    private Resource $resourceModel;
+    private GetProductValues $getProductValues;
+    private CatalogConfigurationInterface $configuration;
 
     public function __construct(
         GetProductValues $getProductValues,

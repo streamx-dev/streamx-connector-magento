@@ -6,9 +6,6 @@ use StreamX\ConnectorCatalog\Api\SlugGeneratorInterface;
 
 class SlugGenerator implements SlugGeneratorInterface
 {
-    /**
-     * @inheritdoc
-     */
     public function generate(string $text, int $id): string
     {
         $text = $text . '-' . $id;

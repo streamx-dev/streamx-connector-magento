@@ -15,7 +15,7 @@ class Bundle
     private ResourceConnection $resource;
     private ?array $products;
     private ?array $bundleProductIds;
-    private $bundleOptionsByProduct = [];
+    private array $bundleOptionsByProduct = [];
     private ProductMetaData $productMetaData;
     private StoreManagerInterface $storeManager;
     private Data $catalogHelper;

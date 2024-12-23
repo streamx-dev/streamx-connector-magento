@@ -2,6 +2,8 @@
 
 namespace StreamX\ConnectorCatalog\Model\ResourceModel\Category;
 
+use Magento\Catalog\Api\Data\CategoryInterface;
+use Magento\Framework\Exception\LocalizedException;
 use StreamX\ConnectorCatalog\Index\Mapping\Category as CategoryMapping;
 use StreamX\ConnectorCatalog\Model\ResourceModel\AbstractEavAttributes;
 use StreamX\ConnectorCore\Api\ConvertValueInterface;
@@ -14,11 +16,7 @@ use Magento\Framework\EntityManager\MetadataPool;
  */
 class AttributeDataProvider extends AbstractEavAttributes
 {
-
-    /**
-     * @var LoadAttributes
-     */
-    private $loadAttributes;
+    private LoadAttributes $loadAttributes;
 
     public function __construct(
         LoadAttributes $loadAttributes,
@@ -26,7 +24,7 @@ class AttributeDataProvider extends AbstractEavAttributes
         ResourceConnection $resourceConnection,
         ConvertValueInterface $castValue,
         MetadataPool $metadataPool,
-        $entityType = \Magento\Catalog\Api\Data\CategoryInterface::class
+        $entityType = CategoryInterface::class
     ) {
         $this->loadAttributes = $loadAttributes;
 
@@ -34,7 +32,7 @@ class AttributeDataProvider extends AbstractEavAttributes
     }
 
     /**
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     public function getAttributeByCode(string $attributeCode): Attribute
     {

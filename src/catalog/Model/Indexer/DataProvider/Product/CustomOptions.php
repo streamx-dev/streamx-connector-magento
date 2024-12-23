@@ -13,25 +13,10 @@ use StreamX\ConnectorCatalog\Model\ResourceModel\Product\CustomOptionValues as O
 
 class CustomOptions implements DataProviderInterface
 {
-    /**
-     * @var Resource
-     */
-    private $optionsResourceModel;
-
-    /**
-     * @var OptionValuesResource
-     */
-    private $optionValuesResourceModel;
-
-    /**
-     * @var ProductMetaData
-     */
-    private $productMetaData;
-
-    /**
-     * @var CustomOptionConverterInterface
-     */
-    private $productOptionProcessor;
+    private Resource $optionsResourceModel;
+    private OptionValuesResource $optionValuesResourceModel;
+    private ProductMetaData $productMetaData;
+    private CustomOptionConverterInterface $productOptionProcessor;
 
     public function __construct(
         Resource $resource,

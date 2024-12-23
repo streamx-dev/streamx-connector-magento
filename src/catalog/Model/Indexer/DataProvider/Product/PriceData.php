@@ -2,21 +2,17 @@
 
 namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
+use Exception;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 use StreamX\ConnectorCatalog\Api\LoadTierPricesInterface;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Prices as Resource;
 
 class PriceData implements DataProviderInterface
 {
-    /**
-     * @var \StreamX\ConnectorCatalog\Model\ResourceModel\Product\Prices
-     */
-    private $resourcePriceModel;
-
-    /**
-     * @var LoadTierPricesInterface
-     */
-    private $tierPriceLoader;
+    private Resource $resourcePriceModel;
+    private LoadTierPricesInterface $tierPriceLoader;
 
     public function __construct(
         Resource $resource,
@@ -27,9 +23,9 @@ class PriceData implements DataProviderInterface
     }
 
     /**
-     * @throws \Exception
-     * @throws \Magento\Framework\Exception\LocalizedException
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws Exception
+     * @throws LocalizedException
+     * @throws NoSuchEntityException
      */
     public function addData(array $indexData, int $storeId): array
     {

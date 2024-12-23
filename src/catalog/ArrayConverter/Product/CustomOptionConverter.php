@@ -7,10 +7,7 @@ use StreamX\ConnectorCatalog\Api\ArrayConverter\Product\CustomOptionConverterInt
 
 class CustomOptionConverter implements CustomOptionConverterInterface
 {
-    /**
-     * @var array
-     */
-    private $fieldsToDelete = [
+    private array $fieldsToDelete = [
         'default_title',
         'store_title',
         'default_price',
@@ -20,10 +17,7 @@ class CustomOptionConverter implements CustomOptionConverterInterface
         'product_id',
     ];
 
-    /**
-     * @var DataFilter
-     */
-    private $dataFilter;
+    private DataFilter $dataFilter;
 
     public function __construct(DataFilter $dataFilter)
     {

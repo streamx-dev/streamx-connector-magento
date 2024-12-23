@@ -15,25 +15,10 @@ use Magento\Swatches\Model\Swatch;
 
 class LoadOptions
 {
-    /**
-     * @var AttributeDataProvider
-     */
-    private $attributeDataProvider;
-
-    /**
-     * @var CollectionFactory
-     */
-    private $collectionFactory;
-
-    /**
-     * @var OptionCollectionToArray
-     */
-    private $optionCollectionToArray;
-
-    /**
-     * @var array
-     */
-    private $optionsByAttribute = [];
+    private AttributeDataProvider $attributeDataProvider;
+    private CollectionFactory $collectionFactory;
+    private OptionCollectionToArray $optionCollectionToArray;
+    private array $optionsByAttribute = [];
 
     public function __construct(
         CollectionFactory $collectionFactory,
@@ -90,10 +75,7 @@ class LoadOptions
         return false;
     }
 
-    /**
-     * @return OptionCollection
-     */
-    private function getOptionCollection(Attribute $attribute)
+    private function getOptionCollection(Attribute $attribute): OptionCollection
     {
         $loadSwatches = $this->isVisualSwatch($attribute);
         $attributeId = $attribute->getAttributeId();

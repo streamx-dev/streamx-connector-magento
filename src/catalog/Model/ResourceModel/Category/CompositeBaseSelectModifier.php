@@ -12,7 +12,7 @@ class CompositeBaseSelectModifier implements BaseSelectModifierInterface
     /**
      * @var BaseSelectModifierInterface[]
      */
-    private $baseSelectModifiers;
+    private array $baseSelectModifiers;
 
     /**
      * @param BaseSelectModifierInterface[] $baseSelectModifiers

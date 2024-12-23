@@ -7,10 +7,7 @@ use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Category as Resource;
 
 class CategoryData implements DataProviderInterface
 {
-    /**
-     * @var \StreamX\ConnectorCatalog\Model\ResourceModel\Product\Category
-     */
-    private $resourceModel;
+    private Resource $resourceModel;
 
     public function __construct(Resource $resource)
     {

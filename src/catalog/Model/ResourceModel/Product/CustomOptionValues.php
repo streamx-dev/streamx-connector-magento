@@ -5,30 +5,17 @@ declare(strict_types = 1);
 
 namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
-use StreamX\ConnectorCatalog\Model\ProductMetaData;
-use Magento\Eav\Model\Entity\Attribute as EntityAttribute;
+use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\DB\Select;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Store\Model\Store;
 
 class CustomOptionValues
 {
+    private ResourceConnection $resource;
 
-    /**
-     * @var ResourceConnection
-     */
-    private $resource;
-
-    /**
-     * @var EntityAttribute
-     */
-    private $entityAttribute;
-
-    public function __construct(
-        ResourceConnection $resourceModel,
-        EntityAttribute $attribute
-    ) {
-        $this->entityAttribute = $attribute;
+    public function __construct(ResourceConnection $resourceModel)
+    {
         $this->resource = $resourceModel;
     }
 
@@ -125,10 +112,7 @@ class CustomOptionValues
         return $select;
     }
 
-    /**
-     * @return \Magento\Framework\DB\Adapter\AdapterInterface
-     */
-    private function getConnection()
+    private function getConnection(): AdapterInterface
     {
         return $this->resource->getConnection();
     }

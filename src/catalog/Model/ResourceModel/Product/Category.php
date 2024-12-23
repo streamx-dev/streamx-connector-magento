@@ -2,6 +2,8 @@
 
 namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
+use Magento\Framework\DB\Adapter\AdapterInterface;
+use Magento\Framework\Exception\LocalizedException;
 use StreamX\ConnectorCatalog\Model\CategoryMetaData;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Catalog\Model\ResourceModel\Category\Collection as CategoryCollection;
@@ -9,31 +11,16 @@ use Magento\Catalog\Model\ResourceModel\Category\CollectionFactory as CategoryCo
 
 class Category
 {
-
-    /**
-     * @var ResourceConnection
-     */
-    private $resource;
-
-    /**
-     * @var CategoryCollectionFactory
-     */
-    private $categoryCollectionFactory;
-
-    /**
-     * @var \StreamX\ConnectorCatalog\Model\ResourceModel\Category
-     */
-    private $categoryResourceModel;
+    private ResourceConnection $resource;
+    private CategoryCollectionFactory $categoryCollectionFactory;
+    private \StreamX\ConnectorCatalog\Model\ResourceModel\Category $categoryResourceModel;
 
     /**
      * @var array Local cache for category names
      */
-    private $categoryNameCache = [];
+    private array $categoryNameCache = [];
 
-    /**
-     * @var CategoryMetaData
-     */
-    private $categoryMetaData;
+    private CategoryMetaData $categoryMetaData;
 
     public function __construct(
         ResourceConnection $resourceModel,
@@ -48,7 +35,7 @@ class Category
     }
 
     /**
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     public function loadCategoryData(int $storeId, array $productIds): array
     {
@@ -73,7 +60,7 @@ class Category
 
     /**
      * @return array|mixed
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     private function loadCategoryNames(array $categoryIds, int $storeId)
     {
@@ -94,11 +81,11 @@ class Category
             }
         }
 
-        return isset($this->categoryNameCache[$storeId]) ? $this->categoryNameCache[$storeId] : [];
+        return $this->categoryNameCache[$storeId] ?? [];
     }
 
     /**
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     private function loadCategoryName(array $loadCategoryIds, int $storeId): array
     {
@@ -116,10 +103,7 @@ class Category
         return $this->getConnection()->fetchAll($select);
     }
 
-    /**
-     * @return \Magento\Framework\DB\Adapter\AdapterInterface
-     */
-    private function getConnection()
+    private function getConnection(): AdapterInterface
     {
         return $this->resource->getConnection();
     }

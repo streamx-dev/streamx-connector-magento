@@ -2,6 +2,7 @@
 
 namespace StreamX\ConnectorCatalog\Model\Indexer;
 
+use Magento\Framework\Exception\NoSuchEntityException;
 use StreamX\ConnectorCatalog\Model\Indexer\Action\Attribute as AttributeAction;
 use StreamX\ConnectorCore\Indexer\GenericIndexerHandler;
 use StreamX\ConnectorCore\Indexer\StoreManager;
@@ -25,7 +26,7 @@ class Attribute implements \Magento\Framework\Indexer\ActionInterface, \Magento\
     /**
      * @param int[] $ids
      *
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws NoSuchEntityException
      */
     public function execute($ids)
     {

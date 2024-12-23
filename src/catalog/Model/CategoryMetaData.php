@@ -2,20 +2,15 @@
 
 namespace StreamX\ConnectorCatalog\Model;
 
+use Exception;
+use Magento\Catalog\Api\Data\CategoryInterface;
+use Magento\Framework\EntityManager\EntityMetadataInterface;
 use Magento\Framework\EntityManager\MetadataPool;
 
 class CategoryMetaData
 {
-
-    /**
-     * @var \Magento\Framework\EntityManager\EntityMetadataInterface
-     */
-    private $categoryMetaData;
-
-    /**
-     * @var \Magento\Framework\EntityManager\MetadataPool
-     */
-    private $metadataPool;
+    private ?EntityMetadataInterface $categoryMetaData = null;
+    private MetadataPool $metadataPool;
 
     public function __construct(MetadataPool $metadataPool)
     {
@@ -23,14 +18,13 @@ class CategoryMetaData
     }
 
     /**
-     * @return \Magento\Framework\EntityManager\EntityMetadataInterface
-     * @throws \Exception
+     * @throws Exception
      */
-    public function get()
+    public function get(): EntityMetadataInterface
     {
         if (null === $this->categoryMetaData) {
             $this->categoryMetaData = $this->metadataPool->getMetadata(
-                \Magento\Catalog\Api\Data\CategoryInterface::class
+                CategoryInterface::class
             );
         }
 

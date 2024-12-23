@@ -10,15 +10,8 @@ use Magento\GroupedProduct\Model\ResourceModel\Product\Link;
 
 class GetParentsByChildId implements GetParentsByChildIdInterface
 {
-    /**
-     * @var ResourceConnection
-     */
-    private $resourceConnection;
-
-    /**
-     * @var ProductMetaData
-     */
-    private $productMetaData;
+    private ResourceConnection $resourceConnection;
+    private ProductMetaData $productMetaData;
 
     public function __construct(
         ProductMetaData $productMetaData,

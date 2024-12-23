@@ -8,19 +8,13 @@ use StreamX\ConnectorCore\Api\Mapping\FieldInterface;
 
 class ConfigurableOptionsMapping implements FieldMappingInterface
 {
-    /**
-     * @var SwatchMapping
-     */
-    private $swatchMapping;
+    private SwatchMapping $swatchMapping;
 
     public function __construct(SwatchMapping $swatchMapping)
     {
         $this->swatchMapping = $swatchMapping;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function get(): array
     {
         return [

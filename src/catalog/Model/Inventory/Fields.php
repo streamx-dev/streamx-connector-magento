@@ -7,10 +7,7 @@ namespace StreamX\ConnectorCatalog\Model\Inventory;
 
 class Fields
 {
-    /**
-     * @var array
-     */
-    private $childRequiredFields = [
+    private array $childRequiredFields = [
         'product_id',
         'is_in_stock',
         'min_qty',
@@ -19,10 +16,7 @@ class Fields
         'qty',
     ];
 
-    /**
-     * @var array
-     */
-    private $fields = [
+    private array $fields = [
         'product_id',
         'item_id',
         'stock_id',

@@ -5,32 +5,19 @@ namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 use Magento\Catalog\Model\ResourceModel\Product\Attribute\Collection;
 use Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory as AttributeCollectionFactory;
 use Magento\Catalog\Model\ResourceModel\Eav\Attribute;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Serialize\Serializer\Json;
 
 class LoadAttributes
 {
-    /**
-     * @var AttributeCollectionFactory
-     */
-    private $attributeCollectionFactory;
-
-    /**
-     * @var Json
-     */
-    private $serializer;
+    private AttributeCollectionFactory $attributeCollectionFactory;
+    private Json $serializer;
 
     /**
      * Product attributes by id
-     *
-     * @var array
      */
-    private $attributesById;
-
-    /**
-     * Mapping attribute code to id
-     * @var array
-     */
-    private $attributeCodeToId = [];
+    private ?array $attributesById = null;
+    private array $attributeCodeToId = [];
 
     public function __construct(
         Json $serializer,
@@ -43,7 +30,7 @@ class LoadAttributes
     /**
      * @return Attribute[]
      */
-    public function execute()
+    public function execute(): array
     {
         return $this->initAttributes();
     }
@@ -51,9 +38,10 @@ class LoadAttributes
     /**
      * @return Attribute[]
      */
-    private function initAttributes()
+    private function initAttributes(): array
     {
         if (null === $this->attributesById) {
+            $this->attributesById = [];
             $attributeCollection = $this->getAttributeCollection();
 
             foreach ($attributeCollection as $attribute) {
@@ -65,7 +53,7 @@ class LoadAttributes
     }
 
     /**
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     public function getAttributeById(int $attributeId): Attribute
     {
@@ -75,11 +63,11 @@ class LoadAttributes
             return $this->attributesById[$attributeId];
         }
 
-        throw new \Magento\Framework\Exception\LocalizedException(__('Attribute not found.'));
+        throw new LocalizedException(__('Attribute not found.'));
     }
 
     /**
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     public function getAttributeByCode(string $attributeCode): Attribute
     {
@@ -92,7 +80,7 @@ class LoadAttributes
             return $this->attributesById[$attributeId];
         }
 
-        throw new \Magento\Framework\Exception\LocalizedException(__('Attribute not found.'));
+        throw new LocalizedException(__('Attribute not found.'));
     }
 
     private function loadAttributeByCode(string $attributeCode)

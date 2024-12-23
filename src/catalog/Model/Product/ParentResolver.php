@@ -9,12 +9,9 @@ class ParentResolver
     /**
      * @var GetParentsByChildIdInterface[]
      */
-    private $parentProviders = [];
+    private array $parentProviders = [];
 
-    /**
-     * @var array
-     */
-    private $parentSkus = [];
+    private array $parentSkus = [];
 
     /**
      * @throws InputException

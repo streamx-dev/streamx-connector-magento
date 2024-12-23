@@ -5,19 +5,12 @@ namespace StreamX\ConnectorCatalog\Model\ResourceModel;
 use Magento\Catalog\Model\ResourceModel\Product\Attribute\Collection;
 use Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory;
 use Magento\Framework\App\ResourceConnection;
+use Magento\Framework\DB\Select;
 
 class Attribute
 {
-
-    /**
-     * @var ResourceConnection
-     */
-    private $resource;
-
-    /**
-     * @var CollectionFactory
-     */
-    private $collectionFactory;
+    private ResourceConnection $resource;
+    private CollectionFactory $collectionFactory;
 
     public function __construct(ResourceConnection $resource, CollectionFactory $collectionFactory)
     {
@@ -44,14 +37,8 @@ class Attribute
         return $connection->fetchAll($select);
     }
 
-    /**
-     * @return \Magento\Framework\DB\Select
-     */
-    private function getAttributeCollectionSelect()
+    private function getAttributeCollectionSelect(): Select
     {
-        /** @var Collection $collection */
-        $collection = $this->collectionFactory->create();
-
-        return $collection->getSelect();
+        return $this->collectionFactory->create()->getSelect();
     }
 }

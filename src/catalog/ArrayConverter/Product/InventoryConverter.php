@@ -11,15 +11,8 @@ use StreamX\ConnectorCore\Api\Mapping\FieldInterface;
 class InventoryConverter implements InventoryConverterInterface
 {
 
-    /**
-     * @var StockConfigurationInterface
-     */
-    private $stockConfiguration;
-
-    /**
-     * @var StockMapping
-     */
-    private $stockMapping;
+    private StockConfigurationInterface $stockConfiguration;
+    private StockMapping $stockMapping;
 
     public function __construct(
         StockMapping $generalMapping,

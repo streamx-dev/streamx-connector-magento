@@ -2,10 +2,12 @@
 
 namespace StreamX\ConnectorCatalog\Model\ResourceModel;
 
+use Exception;
+use Magento\Framework\DB\Adapter\AdapterInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
 use StreamX\ConnectorCatalog\Model\CategoryMetaData;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category\BaseSelectModifierInterface;
 use Magento\Framework\App\ResourceConnection;
-use Magento\Store\Model\StoreManagerInterface;
 use Magento\Catalog\Model\Category as CoreCategoryModel;
 use Magento\Framework\DB\Select;
 
@@ -14,42 +16,24 @@ class Category
     /**
      * Alias form category entity table
      */
-    const MAIN_TABLE_ALIAS = 'entity';
+    private const MAIN_TABLE_ALIAS = 'entity';
 
-    /**
-     * @var ResourceConnection
-     */
-    private $resource;
-
-    /**
-     * @var StoreManagerInterface
-     */
-    private $storeManager;
-
-    /**
-     * @var BaseSelectModifierInterface
-     */
-    private $baseSelectModifier;
-
-    /**
-     * @var CategoryMetaData
-     */
-    private $categoryMetaData;
+    private ResourceConnection $resource;
+    private BaseSelectModifierInterface $baseSelectModifier;
+    private CategoryMetaData $categoryMetaData;
 
     public function __construct(
         BaseSelectModifierInterface $baseSelectModifier,
         ResourceConnection $resourceConnection,
-        CategoryMetaData $categoryMetaData,
-        StoreManagerInterface $storeManager
+        CategoryMetaData $categoryMetaData
     ) {
         $this->resource = $resourceConnection;
         $this->categoryMetaData = $categoryMetaData;
-        $this->storeManager = $storeManager;
         $this->baseSelectModifier = $baseSelectModifier;
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function getCategories(int $storeId = 1, array $categoryIds = [], int $fromId = 0, int $limit = 1000): array
     {
@@ -68,7 +52,7 @@ class Category
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function getCategoryProductSelect(int $storeId, array $productIds): array
     {
@@ -90,7 +74,7 @@ class Category
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function getParentIds(array $categoryIds): array
     {
@@ -127,7 +111,7 @@ class Category
 
     /**
      * @return int[]
-     * @throws \Exception
+     * @throws Exception
      */
     public function getAllSubCategories(int $categoryId): array
     {
@@ -146,11 +130,10 @@ class Category
     }
 
     /**
-     * @return \Magento\Framework\DB\Select
-     * @throws \Exception
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws Exception
+     * @throws NoSuchEntityException
      */
-    private function filterByStore(int $storeId)
+    private function filterByStore(int $storeId): Select
     {
         $metaData = $this->categoryMetaData->get();
         $select = $this->getConnection()->select()->from(
@@ -160,10 +143,7 @@ class Category
         return $this->baseSelectModifier->execute($select, (int) $storeId);
     }
 
-    /**
-     * @return \Magento\Framework\DB\Adapter\AdapterInterface
-     */
-    private function getConnection()
+    private function getConnection(): AdapterInterface
     {
         return $this->resource->getConnection();
     }

@@ -7,10 +7,7 @@ use StreamX\ConnectorCore\Api\DataProviderInterface;
 
 class BundleOptionsData implements DataProviderInterface
 {
-    /**
-     * @var \StreamX\ConnectorCatalog\Model\ResourceModel\Product\Bundle
-     */
-    private $resourceModel;
+    private Resource $resourceModel;
 
     public function __construct(Resource $resource)
     {

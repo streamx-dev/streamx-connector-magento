@@ -6,11 +6,7 @@ namespace StreamX\ConnectorCatalog\Model\Attribute;
 
 class LoadOptionById
 {
-
-    /**
-     * @var LoadOptions
-     */
-    private $loadOptions;
+    private LoadOptions $loadOptions;
 
     public function __construct(LoadOptions $loadOptions)
     {

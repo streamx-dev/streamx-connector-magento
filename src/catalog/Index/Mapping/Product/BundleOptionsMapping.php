@@ -7,9 +7,6 @@ use StreamX\ConnectorCore\Api\Mapping\FieldInterface;
 
 class BundleOptionsMapping implements FieldMappingInterface
 {
-    /**
-     * @inheritdoc
-     */
     public function get(): array
     {
         return [

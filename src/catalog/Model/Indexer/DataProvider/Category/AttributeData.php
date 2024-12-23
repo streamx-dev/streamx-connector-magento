@@ -14,10 +14,8 @@ class AttributeData implements AttributeDataProviderInterface
 {
     /**
      * List of fields from category
-     *
-     * @var array
      */
-    private $fieldsToRemove = [
+    private array $fieldsToRemove = [
         'row_id',
         'created_in',
         'updated_in',
@@ -30,45 +28,14 @@ class AttributeData implements AttributeDataProviderInterface
         'request_path',
     ];
 
-    /**
-     * @var AttributeDataProvider
-     */
-    private $attributeResourceModel;
-
-    /**
-     * @var CategoryChildrenResource
-     */
-    private $childrenResourceModel;
-
-    /**
-     * @var ProductCountResourceModel
-     */
-    private $productCountResource;
-
-    /**
-     * @var \StreamX\ConnectorCore\Indexer\DataFilter
-     */
-    private $dataFilter;
-
-    /**
-     * @var array
-     */
-    private $childrenRowAttributes = [];
-
-    /**
-     * @var array
-     */
-    private $childrenProductCount = [];
-
-    /**
-     * @var CategoryConfigInterface
-     */
-    private $settings;
-
-    /**
-     * @var ApplyCategorySlugInterface
-     */
-    private $applyCategorySlug;
+    private AttributeDataProvider $attributeResourceModel;
+    private CategoryChildrenResource $childrenResourceModel;
+    private ProductCountResourceModel $productCountResource;
+    private DataFilter $dataFilter;
+    private array $childrenRowAttributes = [];
+    private array $childrenProductCount = [];
+    private CategoryConfigInterface $settings;
+    private ApplyCategorySlugInterface $applyCategorySlug;
 
     public function __construct(
         AttributeDataProvider $attributeResource,

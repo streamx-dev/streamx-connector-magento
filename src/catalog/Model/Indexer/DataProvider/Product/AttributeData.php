@@ -47,9 +47,7 @@ class AttributeData implements DataProviderInterface
         }
 
         $attributes = null;
-        $indexData = $this->productUrlPathGenerator->addUrlPath($indexData, $storeId);
-
-        return $indexData;
+        return $this->productUrlPathGenerator->addUrlPath($indexData, $storeId);
     }
 
     private function applySlug(array $productData): array

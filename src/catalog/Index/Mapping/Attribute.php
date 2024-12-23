@@ -8,20 +8,14 @@ use StreamX\ConnectorCore\Api\Mapping\FieldInterface;
 
 class Attribute implements MappingInterface
 {
-    /**
-     * @var OptionMapping
-     */
-    private $optionMapping;
+    private OptionMapping $optionMapping;
 
     public function __construct(OptionMapping $optionMapping)
     {
         $this->optionMapping = $optionMapping;
     }
 
-    /**
-     * @var array
-     */
-    private $booleanProperties = [
+    private array $booleanProperties = [
         'is_required',
         'is_user_defined',
         'is_unique',
@@ -41,10 +35,7 @@ class Attribute implements MappingInterface
         'is_used_for_promo_rules',
     ];
 
-    /**
-     * @var array
-     */
-    private $longProperties = [
+    private array $longProperties = [
         'attribute_id',
         'id',
         'search_weight',
@@ -52,17 +43,11 @@ class Attribute implements MappingInterface
         'position',
     ];
 
-    /**
-     * @var array
-     */
-    private $integerProperties = [
+    private array $integerProperties = [
         'is_filterable',
     ];
 
-    /**
-     * @var array
-     */
-    private $stringProperties  = [
+    private array $stringProperties  = [
         'attribute_code',
         'swatch_input_type',
         'attribute_model',

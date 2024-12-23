@@ -2,8 +2,9 @@
 
 namespace StreamX\ConnectorCatalog\Model\ResourceModel\Category;
 
+use Exception;
+use Magento\Framework\DB\Adapter\AdapterInterface;
 use StreamX\ConnectorCatalog\Model\CategoryMetaData;
-use StreamX\ConnectorCatalog\Model\ResourceModel\Category\BaseSelectModifierInterface;
 use Magento\Framework\App\ResourceConnection;
 
 class Children
@@ -11,47 +12,24 @@ class Children
     /**
      * Alias form category entity table
      */
-    const MAIN_TABLE_ALIAS = 'entity';
+    private const MAIN_TABLE_ALIAS = 'entity';
 
-    /**
-     * @var ResourceConnection
-     */
-    private $resource;
-
-    /**
-     * @var int
-     */
-    private $isActiveAttributeId;
-
-    /**
-     * @var LoadAttributes
-     */
-    private $attributeDataProvider;
-
-    /**
-     * @var BaseSelectModifierInterface
-     */
-    private $baseSelectModifier;
-
-    /**
-     * @var CategoryMetaData
-     */
-    private $categoryMetaData;
+    private ResourceConnection $resource;
+    private BaseSelectModifierInterface $baseSelectModifier;
+    private CategoryMetaData $categoryMetaData;
 
     public function __construct(
-        LoadAttributes $attributeDataProvider,
         BaseSelectModifierInterface $baseSelectModifier,
         ResourceConnection $resourceModel,
         CategoryMetaData $categoryMetaData
     ) {
-        $this->attributeDataProvider = $attributeDataProvider;
         $this->resource = $resourceModel;
         $this->categoryMetaData = $categoryMetaData;
         $this->baseSelectModifier = $baseSelectModifier;
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function loadChildren(array $category, int $storeId): array
     {
@@ -71,7 +49,7 @@ class Children
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     private function getChildrenIds(array $category, int $storeId): array
     {
@@ -95,17 +73,14 @@ class Children
     /**
      * Retrieve category entity table
      *
-     * @throws \Exception
+     * @throws Exception
      */
     private function getEntityTable(): string
     {
         return $this->categoryMetaData->get()->getEntityTable();
     }
 
-    /**
-     * @return \Magento\Framework\DB\Adapter\AdapterInterface
-     */
-    private function getConnection()
+    private function getConnection(): AdapterInterface
     {
         return $this->resource->getConnection();
     }

@@ -2,6 +2,8 @@
 
 namespace StreamX\ConnectorCatalog\Model\Indexer\Action;
 
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product as ResourceModel;
 use Traversable;
 
@@ -13,8 +15,8 @@ class Product {
     }
 
     /**
-     * @throws \Magento\Framework\Exception\LocalizedException
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws LocalizedException
+     * @throws NoSuchEntityException
      */
     public function rebuild(int $storeId = 1, array $productIds = []): Traversable {
         $lastProductId = 0;

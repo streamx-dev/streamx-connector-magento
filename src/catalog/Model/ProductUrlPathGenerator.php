@@ -8,10 +8,7 @@ use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Rewrite as RewriteResou
 
 class ProductUrlPathGenerator
 {
-    /**
-     * @var RewriteResource
-     */
-    private $rewriteResource;
+    private RewriteResource $rewriteResource;
 
     public function __construct(RewriteResource $rewrite)
     {

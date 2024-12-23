@@ -2,11 +2,13 @@
 
 namespace StreamX\ConnectorCatalog\Model\ResourceModel;
 
+use Exception;
+
 interface EavAttributesInterface
 {
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function loadAttributesData(int $storeId, array $entityIds, array $requiredAttributes = null): array;
 

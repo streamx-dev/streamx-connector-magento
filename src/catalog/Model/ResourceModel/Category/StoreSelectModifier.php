@@ -12,10 +12,7 @@ use Magento\Store\Model\StoreManagerInterface;
 
 class StoreSelectModifier implements BaseSelectModifierInterface
 {
-    /**
-     * @var StoreManagerInterface
-     */
-    private $storeManager;
+    private StoreManagerInterface $storeManager;
 
     public function __construct(StoreManagerInterface $storeManager)
     {

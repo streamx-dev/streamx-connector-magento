@@ -8,9 +8,8 @@ class QtyCorrectPlugin
 {
     private ProductsForReindex $productsForReindex;
 
-    public function __construct(
-        ProductsForReindex $itemsForReindex
-    ) {
+    public function __construct(ProductsForReindex $itemsForReindex)
+    {
         $this->productsForReindex = $itemsForReindex;
     }
 

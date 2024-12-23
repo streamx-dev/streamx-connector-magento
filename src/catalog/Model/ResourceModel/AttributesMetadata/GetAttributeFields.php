@@ -9,10 +9,7 @@ use StreamX\ConnectorCatalog\Index\Mapping\Attribute as AttributeMapping;
 
 class GetAttributeFields
 {
-    /**
-     * @var array
-     */
-    private $requiredColumns = [
+    private array $requiredColumns = [
         'is_visible_on_front',
         'is_visible',
         'attribute_id',
@@ -26,15 +23,8 @@ class GetAttributeFields
         'attribute_code',
     ];
 
-    /**
-     * @var ConvertValueInterface
-     */
-    private $convertValue;
-
-    /**
-     * @var AttributeMapping
-     */
-    private $attributeMapping;
+    private ConvertValueInterface $convertValue;
+    private AttributeMapping $attributeMapping;
 
     public function __construct(
         AttributeMapping $attributeMapping,
