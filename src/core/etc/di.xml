@@ -9,16 +9,6 @@
     <preference for="StreamX\ConnectorCore\Api\IndexOperationInterface" type="StreamX\ConnectorCore\Index\IndexOperations"/>
     <preference for="StreamX\ConnectorCore\System\GeneralConfigInterface" type="StreamX\ConnectorCore\System\GeneralConfig"/>
 
-    <type name="StreamX\ConnectorCore\Logger\IndexerLogger">
-        <arguments>
-            <argument name="name" xsi:type="string">streamxIndexerLogger</argument>
-            <argument name="handlers"  xsi:type="array">
-                <item name="info" xsi:type="object">StreamX\ConnectorCore\Logger\Handler\Info</item>
-                <item name="error" xsi:type="object">StreamX\ConnectorCore\Logger\Handler\Error</item>
-            </argument>
-        </arguments>
-    </type>
-
     <!-- Prevent sensitive fields from getting dumped with store config -->
     <type name="Magento\Config\Model\Config\TypePool">
         <arguments>
