@@ -9,20 +9,9 @@ use Magento\Store\Model\ScopeInterface;
 
 class CatalogConfig implements CatalogConfigurationInterface
 {
-    /**
-     * @var array
-     */
-    private $settings = [];
-
-    /**
-     * @var ScopeConfigInterface
-     */
-    private $scopeConfig;
-
-    /**
-     * @var GetAttributeCodesByIds
-     */
-    private $getAttributeCodesByIds;
+    private array $settings = [];
+    private ScopeConfigInterface $scopeConfig;
+    private GetAttributeCodesByIds $getAttributeCodesByIds;
 
     public function __construct(
         ScopeConfigInterface $scopeConfig,

@@ -9,7 +9,6 @@ class ConfigurableAttributes
 
     /**
      * This product attributes always be exported for configurable_children
-     * @var array
      */
     const MINIMAL_ATTRIBUTE_SET = [
         'sku',
@@ -19,20 +18,9 @@ class ConfigurableAttributes
         'price',
     ];
 
-    /**
-     * @var CatalogConfigurationInterface
-     */
-    private $catalogConfig;
-
-    /**
-     * @var array
-     */
-    private $requiredAttributes;
-
-    /**
-     * @var bool
-     */
-    private $canIndexMediaGallery;
+    private CatalogConfigurationInterface $catalogConfig;
+    private ?array $requiredAttributes = null;
+    private ?bool $canIndexMediaGallery = null;
 
     public function __construct(CatalogConfigurationInterface $catalogConfiguration)
     {

@@ -2,6 +2,8 @@
 
 namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\Configurable;
 
+use Exception;
+use Magento\Framework\Exception\LocalizedException;
 use StreamX\ConnectorCatalog\Model\Attributes\ConfigurableAttributes;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\AttributeDataProvider;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Prices as PriceResourceModel;
@@ -12,35 +14,12 @@ use Traversable;
 
 class LoadChildrenRawAttributes
 {
-    /**
-     * @var LoadTierPricesInterface
-     */
-    private $loadTierPrices;
-
-    /**
-     * @var PriceResourceModel
-     */
-    private $priceResourceModel;
-
-    /**
-     * @var  AttributeDataProvider
-     */
-    private $resourceAttributeModel;
-
-    /**
-     * @var ConfigurableAttributes
-     */
-    private $configurableAttributes;
-
-    /**
-     * @var LoadMediaGalleryInterface
-     */
-    private $mediaGalleryLoader;
-
-    /**
-     * @var CatalogConfigurationInterface
-     */
-    private $settings;
+    private LoadTierPricesInterface $loadTierPrices;
+    private PriceResourceModel $priceResourceModel;
+    private AttributeDataProvider $resourceAttributeModel;
+    private ConfigurableAttributes $configurableAttributes;
+    private LoadMediaGalleryInterface $mediaGalleryLoader;
+    private CatalogConfigurationInterface $settings;
 
     public function __construct(
         CatalogConfigurationInterface $catalogConfiguration,
@@ -59,8 +38,8 @@ class LoadChildrenRawAttributes
     }
 
     /**
-     * @throws \Exception
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws Exception
+     * @throws LocalizedException
      */
     public function execute(int $storeId, array $allChildren, array $configurableAttributeCodes): array
     {

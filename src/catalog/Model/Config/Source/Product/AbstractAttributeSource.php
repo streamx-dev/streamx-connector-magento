@@ -11,15 +11,8 @@ use Magento\Framework\Option\ArrayInterface;
 
 abstract class AbstractAttributeSource implements ArrayInterface
 {
-    /**
-     * @var array|null
-     */
-    private $options;
-
-    /**
-     * @var CollectionFactory
-     */
-    private $collectionFactory;
+    private ?array $options = null;
+    private CollectionFactory $collectionFactory;
 
     public function __construct(CollectionFactory $collectionFactory)
     {

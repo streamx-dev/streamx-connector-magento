@@ -8,21 +8,9 @@ use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
 
 class MediaGalleryData implements DataProviderInterface
 {
-
-    /**
-     * @var CatalogConfigurationInterface
-     */
-    private $catalogConfig;
-
-    /**
-     * @var LoadMediaGalleryInterface
-     */
-    private $loadMediaGallery;
-
-    /**
-     * @var boolean
-     */
-    private $canIndexMediaGallery;
+    private CatalogConfigurationInterface $catalogConfig;
+    private LoadMediaGalleryInterface $loadMediaGallery;
+    private ?bool $canIndexMediaGallery = null;
 
     public function __construct(
         CatalogConfigurationInterface $catalogConfig,

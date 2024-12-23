@@ -9,30 +9,15 @@ use StreamX\ConnectorCatalog\Model\ResourceModel\Product\LoadAttributes;
 
 class Product extends AbstractMapping implements MappingInterface
 {
-    /**
-     * @var GeneralMapping
-     */
-    private $generalMapping;
-
-    /**
-     * @var StockMapping
-     */
-    private $stockMapping;
-
-    /**
-     * @var LoadAttributes
-     */
-    private $resourceModel;
-
-    /**
-     * @var array
-     */
-    private $properties;
+    private GeneralMapping $generalMapping;
+    private StockMapping $stockMapping;
+    private LoadAttributes $resourceModel;
+    private ?array $properties = null;
 
     /**
      * @var FieldMappingInterface[]
      */
-    private $additionalMapping = [];
+    private array $additionalMapping;
 
     public function __construct(
         GeneralMapping $generalMapping,

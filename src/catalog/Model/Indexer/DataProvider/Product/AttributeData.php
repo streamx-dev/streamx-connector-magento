@@ -2,9 +2,9 @@
 
 namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
+use Exception;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\AttributeDataProvider;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
-use StreamX\ConnectorCore\Indexer\DataFilter;
 use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
 use StreamX\ConnectorCatalog\Api\SlugGeneratorInterface;
 use StreamX\ConnectorCatalog\Model\ProductUrlPathGenerator;
@@ -12,54 +12,28 @@ use StreamX\ConnectorCatalog\Model\Attributes\ProductAttributes;
 
 class AttributeData implements DataProviderInterface
 {
-    /**
-     * @var AttributeDataProvider
-     */
-    private $resourceModel;
-
-    /**
-     * @var DataFilter
-     */
-    private $dataFilter;
-
-    /**
-     * @var CatalogConfigurationInterface
-     */
-    private $settings;
-
-    /**
-     * @var SlugGeneratorInterface
-     */
-    private $slugGenerator;
-
-    /**
-     * @var ProductAttributes
-     */
-    private $productAttributes;
-
-    /**
-     * @var AttributeDataProvider
-     */
-    private $productUrlPathGenerator;
+    private AttributeDataProvider $resourceModel;
+    private CatalogConfigurationInterface $settings;
+    private SlugGeneratorInterface $slugGenerator;
+    private ProductAttributes $productAttributes;
+    private ProductUrlPathGenerator $productUrlPathGenerator;
 
     public function __construct(
         ProductAttributes $productAttributes,
         CatalogConfigurationInterface $configSettings,
         SlugGeneratorInterface $slugGenerator,
         ProductUrlPathGenerator $productUrlPathGenerator,
-        DataFilter $dataFilter,
         AttributeDataProvider $resourceModel
     ) {
         $this->slugGenerator = $slugGenerator;
         $this->settings = $configSettings;
         $this->resourceModel = $resourceModel;
-        $this->dataFilter = $dataFilter;
         $this->productAttributes = $productAttributes;
         $this->productUrlPathGenerator = $productUrlPathGenerator;
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function addData(array $indexData, int $storeId): array
     {
