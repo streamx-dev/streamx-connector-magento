@@ -6,8 +6,5 @@ interface ClientInterface {
 
     public function ingest(array $bulkOperations): void;
 
-    /**
-     * Retrieve information about cluster health
-     */
-    public function getClustersHealth(): array;
+    public function isStreamxAvailable(): bool;
 }

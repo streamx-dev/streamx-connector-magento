@@ -103,9 +103,9 @@ class Client implements ClientInterface {
         }
     }
 
-    public function getClustersHealth(): array {
-        $this->logger->info("SUPPRESSING:: Checking cluster health");
+    public function isStreamxAvailable(): bool {
+        $this->logger->info("SUPPRESSING:: Checking if StreamX is available");
         // TODO: implement rest-ingestion service availability check
-        return [['status' => 'green']];
+        return true;
     }
 }
