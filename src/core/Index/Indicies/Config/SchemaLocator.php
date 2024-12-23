@@ -14,16 +14,13 @@ class SchemaLocator implements SchemaLocatorInterface
 
     /**
      * Path to corresponding XSD file with validation rules for merged config
-     *
-     * @var string
      */
-    private $schema = null;
+    private string $schema;
 
     /**
      * Path to corresponding XSD file with validation rules for separate config files
-     * @var string
      */
-    private $perFileSchema = null;
+    private string $perFileSchema;
 
     public function __construct(\Magento\Framework\Module\Dir\Reader $moduleReader)
     {

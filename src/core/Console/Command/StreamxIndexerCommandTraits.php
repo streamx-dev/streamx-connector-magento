@@ -15,7 +15,7 @@ trait StreamxIndexerCommandTraits {
 
         $streamxIndexers = [];
         foreach ($indexers as $indexer) {
-            if (self::startsWith($indexer->getId(), 'streamx_')) {
+            if (str_starts_with($indexer->getId(), 'streamx_')) {
                 $streamxIndexers[] = $indexer;
             }
         }
@@ -37,7 +37,4 @@ trait StreamxIndexerCommandTraits {
         return null;
     }
 
-    public static function startsWith(string $str, string $substr): bool {
-        return substr($str, 0, strlen($substr)) === $substr;
-    }
 }

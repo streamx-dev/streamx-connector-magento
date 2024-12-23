@@ -2,6 +2,8 @@
 
 namespace StreamX\ConnectorCore\Indexer;
 
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Store\Api\Data\StoreInterface;
 use StreamX\ConnectorCore\System\GeneralConfigInterface;
 use Magento\Store\Model\StoreManagerInterface;
 
@@ -10,20 +12,9 @@ use Magento\Store\Model\StoreManagerInterface;
  */
 class StoreManager
 {
-    /**
-     * @var StoreManagerInterface
-     */
-    private $storeManager;
-
-    /**
-     * @var GeneralConfigInterface
-     */
-    private $generalSettings;
-
-    /**
-     * @var array|null
-     */
-    private $loadedStores = null;
+    private StoreManagerInterface $storeManager;
+    private GeneralConfigInterface $generalSettings;
+    private ?array $loadedStores = null;
 
     public function __construct(
         GeneralConfigInterface $generalSettings,
@@ -34,10 +25,10 @@ class StoreManager
     }
 
     /**
-     * @return array|\Magento\Store\Api\Data\StoreInterface[]
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @return StoreInterface[]
+     * @throws NoSuchEntityException
      */
-    public function getStores(int $storeId = null)
+    public function getStores(int $storeId = null): array
     {
         if ($this->loadedStores) {
             return $this->loadedStores;
@@ -61,7 +52,7 @@ class StoreManager
         return $this->loadedStores = $allowedStores;
     }
 
-    public function override(array $stores)
+    public function override(array $stores): void
     {
         $this->loadedStores = $stores;
     }

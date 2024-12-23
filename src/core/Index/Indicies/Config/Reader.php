@@ -13,10 +13,8 @@ class Reader extends Filesystem
 
     /**
      * List of attributes by XPath used as ids during the file merge process.
-     *
-     * @var array
      */
-    private $idAttributes = [
+    private array $idAttributes = [
         '/indices/index' => 'identifier',
         '/indices/index/type' => 'name',
         '/indices/index/type/data_providers/data_provider' => 'name',

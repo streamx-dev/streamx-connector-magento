@@ -2,6 +2,8 @@
 
 namespace StreamX\ConnectorCore\Exception;
 
-class ConnectionDisabledException extends \RuntimeException
+use RuntimeException;
+
+class ConnectionDisabledException extends RuntimeException
 {
 }

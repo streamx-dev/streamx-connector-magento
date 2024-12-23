@@ -2,7 +2,7 @@
 
 namespace StreamX\ConnectorCore\Index\Indicies;
 
-use StreamX\ConnectorCore\Api\Index\TypeInterfaceFactory as TypeFactoryInterface;
+use StreamX\ConnectorCore\Api\Index\TypeInterfaceFactory;
 use StreamX\ConnectorCore\Indexer\DataProviderProcessorFactory;
 use StreamX\ConnectorCore\Indexer\MappingProcessorFactory;
 
@@ -11,14 +11,14 @@ class Config
     /**
      * Factory used to build mapping types.
      */
-    private TypeFactoryInterface $typeFactory;
+    private TypeInterfaceFactory $typeFactory;
     private DataProviderProcessorFactory $dataProviderFactoryProcessor;
     private MappingProcessorFactory $mappingProviderProcessorFactory;
     private Config\Data $configData;
 
     public function __construct(
         Config\Data $configData,
-        TypeFactoryInterface $typeInterfaceFactory,
+        TypeInterfaceFactory $typeInterfaceFactory,
         MappingProcessorFactory $mappingProcessorFactory,
         DataProviderProcessorFactory $dataProviderFactoryProcessor
     ) {

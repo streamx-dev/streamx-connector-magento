@@ -2,22 +2,19 @@
 
 namespace StreamX\ConnectorCore\Api\Index;
 
+use StreamX\ConnectorCore\Api\DataProviderInterface;
+use StreamX\ConnectorCore\Api\MappingInterface;
+
 interface TypeInterface
 {
     public function getName(): string;
 
-    /**
-     * @return \StreamX\ConnectorCore\Api\MappingInterface
-     */
-    public function getMapping();
+    public function getMapping(): MappingInterface;
 
     /**
-     * @return \StreamX\ConnectorCore\Api\DataProviderInterface[]
+     * @return DataProviderInterface[]
      */
-    public function getDataProviders();
+    public function getDataProviders(): array;
 
-    /**
-     * @return \StreamX\ConnectorCore\Api\DataProviderInterface
-     */
-    public function getDataProvider(string $name);
+    public function getDataProvider(string $name): DataProviderInterface;
 }
