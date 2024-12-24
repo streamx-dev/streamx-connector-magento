@@ -23,11 +23,13 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
         // when
         $productId = self::insertNewProduct($productName, $watchesCategoryId);
-        $this->reindexMview();
-
-        // then
         $expectedKey = "product_$productId";
+
         try {
+            // and
+            $this->reindexMview();
+
+            // then
             $this->assertDataIsPublished($expectedKey, $productName);
         } finally {
             // and when
@@ -51,17 +53,15 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $product1Id = self::insertNewProduct($product1Name, $watchesCategoryId);
         $product2Id = self::insertNewProduct($product2Name, $watchesCategoryId);
         $product3Id = self::insertNewProduct($product3Name, $watchesCategoryId);
-        $this->reindexMview();
-
-        // then
-        $expectedProduct1Key = 'product_' . $product1Id;
-        $expectedProduct2Key = 'product_' . $product2Id;
-        $expectedProduct3Key = 'product_' . $product3Id;
 
         try {
-            $this->assertDataIsPublished($expectedProduct1Key, $product1Name);
-            $this->assertDataIsPublished($expectedProduct2Key, $product2Name);
-            $this->assertDataIsPublished($expectedProduct3Key, $product3Name);
+            // and
+            $this->reindexMview();
+
+            // then
+            $this->assertDataIsPublished("product_$product1Id", $product1Name);
+            $this->assertDataIsPublished("product_$product2Id", $product2Name);
+            $this->assertDataIsPublished("product_$product3Id", $product3Name);
         } finally {
             // and when
             self::deleteProduct($product1Id);
@@ -70,9 +70,9 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
             $this->reindexMview();
 
             // then
-            $this->assertDataIsUnpublished($expectedProduct1Key);
-            $this->assertDataIsUnpublished($expectedProduct2Key);
-            $this->assertDataIsUnpublished($expectedProduct3Key);
+            $this->assertDataIsUnpublished("product_$product1Id");
+            $this->assertDataIsUnpublished("product_$product2Id");
+            $this->assertDataIsUnpublished("product_$product3Id");
         }
     }
 

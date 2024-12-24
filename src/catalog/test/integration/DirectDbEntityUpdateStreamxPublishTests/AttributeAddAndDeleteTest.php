@@ -15,17 +15,19 @@ class AttributeAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
     }
 
     /** @test */
-    public function shouldPublishAttributeAddedUsingMagentoApplicationToStreamx_AndUnpublishDeletedAttribute() {
+    public function shouldPublishAttributeAddedDirectlyInDatabaseToStreamx_AndUnpublishDeletedAttribute() {
         // given
         $attributeCode = 'the_new_attribute';
 
         // when
         $attributeId = self::insertNewAttribute($attributeCode);
-        $this->reindexMview();
-
-        // then
         $expectedKey = "attribute_$attributeId";
+
         try {
+            // and
+            $this->reindexMview();
+
+            // then
             $this->assertDataIsPublished($expectedKey, $attributeCode);
         } finally {
             // and when

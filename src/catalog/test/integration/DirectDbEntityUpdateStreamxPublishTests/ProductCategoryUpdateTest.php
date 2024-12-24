@@ -40,10 +40,12 @@ class ProductCategoryUpdateTest extends BaseDirectDbEntityUpdateTest {
 
         // when
         self::changeProductCategoryInDb($productId, $oldCategoryId, $newCategoryId);
-        $this->reindexMview();
 
-        // then
         try {
+            // and
+            $this->reindexMview();
+
+            // then
             $this->assertDataIsPublished($expectedKey, $newCategoryName);
         } finally {
             self::changeProductCategoryInDb($productId, $newCategoryId, $oldCategoryId);

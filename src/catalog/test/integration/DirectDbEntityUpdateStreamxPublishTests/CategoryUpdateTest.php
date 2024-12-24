@@ -28,10 +28,12 @@ class CategoryUpdateTest extends BaseDirectDbEntityUpdateTest {
 
         // when
         self::renameCategoryInDb($categoryId, $categoryNewName);
-        $this->reindexMview();
 
-        // then
         try {
+            // and
+            $this->reindexMview();
+
+            // then
             $this->assertDataIsPublished($expectedKey, $categoryNewName);
         } finally {
             self::renameCategoryInDb($categoryId, $categoryOldName);
