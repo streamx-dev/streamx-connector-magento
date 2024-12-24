@@ -11,6 +11,7 @@ use Streamx\Clients\Ingestion\Publisher\Message;
 use Streamx\Clients\Ingestion\Publisher\Publisher;
 use StreamX\ConnectorCore\Api\Client\ClientInterface;
 use StreamX\ConnectorCore\Streamx\Model\Data;
+use UnexpectedValueException;
 
 class Client implements ClientInterface {
 
@@ -104,8 +105,16 @@ class Client implements ClientInterface {
     }
 
     public function isStreamxAvailable(): bool {
-        $this->logger->info("SUPPRESSING:: Checking if StreamX is available");
-        // TODO: implement rest-ingestion service availability check
-        return true;
+        $this->logger->info('Checking isStreamxAvailable');
+        try {
+            $schema = $this->publisher->fetchSchema();
+            if (!str_contains($schema, 'IngestionMessage')) {
+                throw new UnexpectedValueException("Unexpected response of the fetchSchema operation: $schema");
+            }
+            return true;
+        } catch (Exception $e) {
+            $this->logger->error('Fetch schema exception: ' . $e->getMessage(), ['exception' => $e]);
+            return false;
+        }
     }
 }
