@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+  <group id="index"> <!-- Stores > Configuration > Advanced > System > Cron (Scheduled Tasks) -->
+    <job name="streamx_product_indexer_cron" instance="StreamX\ConnectorCatalog\Cron\MView\StreamxProductIndexerMviewTrigger" method="reindexMview">
+      <schedule>* * * * *</schedule>
+    </job>
+    <job name="streamx_category_indexer_cron" instance="StreamX\ConnectorCatalog\Cron\MView\StreamxCategoryIndexerMviewTrigger" method="reindexMview">
+      <schedule>* * * * *</schedule>
+    </job>
+    <job name="streamx_attribute_indexer_cron" instance="StreamX\ConnectorCatalog\Cron\MView\StreamxAttributeIndexerMviewTrigger" method="reindexMview">
+      <schedule>* * * * *</schedule>
+    </job>
+  </group>
+</config>
