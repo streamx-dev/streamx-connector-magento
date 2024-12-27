@@ -26,7 +26,7 @@
                 <field id="allowed_product_types" translate="label comment" type="multiselect" sortOrder="101" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Types of products to export</label>
                     <source_model>StreamX\ConnectorCatalog\Model\Config\Source\Product\ProductType</source_model>
-                    <comment>by default all product types will be sent to elastic.
+                    <comment>By default all product types will be sent to StreamX.
                         If you changed configuration after running full reindex it might be required to re-create index.
                     </comment>
                 </field>

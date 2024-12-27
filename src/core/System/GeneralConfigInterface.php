@@ -25,7 +25,7 @@ interface GeneralConfigInterface
     public function getStoresToIndex(): array;
 
     /**
-     * Check if ES indexing enabled
+     * Check if StreamX Connector is enabled
      */
     public function isEnabled(): bool;
 }

@@ -15,9 +15,9 @@ class OptimizationSettings
         $this->scopeConfig = $scopeConfig;
     }
 
-    public function checkClusterHealth(): bool
+    public function shouldPerformStreamxAvailabilityCheck(): bool
     {
-        return (bool) $this->getConfigParam('cluster_health');
+        return (bool) $this->getConfigParam('should_perform_streamx_availability_check');
     }
 
     public function getBatchIndexingSize(): int
