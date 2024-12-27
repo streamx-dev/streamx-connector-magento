@@ -22,12 +22,4 @@
       for="StreamX\ConnectorTestTools\Api\MviewReindexerInterface"
       type="StreamX\ConnectorTestTools\Impl\MviewReindexerImpl"/>
 
-    <type name="StreamX\ConnectorTestTools\Impl\MviewReindexerImpl">
-        <arguments>
-            <argument name="productIndexer" xsi:type="object">StreamX\ConnectorCatalog\Cron\MView\StreamxProductIndexerMviewTrigger</argument>
-            <argument name="categoryIndexer" xsi:type="object">StreamX\ConnectorCatalog\Cron\MView\StreamxCategoryIndexerMviewTrigger</argument>
-            <argument name="attributeIndexer" xsi:type="object">StreamX\ConnectorCatalog\Cron\MView\StreamxAttributeIndexerMviewTrigger</argument>
-        </arguments>
-    </type>
-
 </config>

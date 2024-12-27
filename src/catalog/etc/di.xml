@@ -35,25 +35,6 @@
         </arguments>
     </virtualType>
 
-    <virtualType name="StreamX\ConnectorCatalog\Cron\MView\StreamxProductIndexerMviewTrigger"
-                 type="StreamX\ConnectorCatalog\Cron\MView\StreamxIndexerMviewTrigger">
-        <arguments>
-            <argument name="indexerViewId" xsi:type="string">streamx_product_indexer</argument>
-        </arguments>
-    </virtualType>
-    <virtualType name="StreamX\ConnectorCatalog\Cron\MView\StreamxCategoryIndexerMviewTrigger"
-                 type="StreamX\ConnectorCatalog\Cron\MView\StreamxIndexerMviewTrigger">
-        <arguments>
-            <argument name="indexerViewId" xsi:type="string">streamx_category_indexer</argument>
-        </arguments>
-    </virtualType>
-    <virtualType name="StreamX\ConnectorCatalog\Cron\MView\StreamxAttributeIndexerMviewTrigger"
-                 type="StreamX\ConnectorCatalog\Cron\MView\StreamxIndexerMviewTrigger">
-        <arguments>
-            <argument name="indexerViewId" xsi:type="string">streamx_attribute_indexer</argument>
-        </arguments>
-    </virtualType>
-
     <type name="Magento\Framework\Mview\ViewInterface">
         <plugin name="updateMviewSubscriptions" type="StreamX\ConnectorCatalog\Plugin\Mview\ViewPlugin"/>
     </type>

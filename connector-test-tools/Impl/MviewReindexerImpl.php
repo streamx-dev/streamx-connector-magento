@@ -3,27 +3,21 @@
 namespace StreamX\ConnectorTestTools\Impl;
 
 use Exception;
-use StreamX\ConnectorCatalog\Cron\MView\StreamxIndexerMviewTrigger;
+use StreamX\ConnectorCatalog\Cron\MView\StreamxIndexerMviewProcessor;
 use StreamX\ConnectorTestTools\Api\MviewReindexerInterface;
 
 class MviewReindexerImpl implements MviewReindexerInterface {
 
-    private array $streamxIndexers = [];
+    private StreamxIndexerMviewProcessor $streamxIndexerMviewProcessor;
 
-    public function __construct(
-        StreamxIndexerMviewTrigger $productIndexer,
-        StreamxIndexerMviewTrigger $categoryIndexer,
-        StreamxIndexerMviewTrigger $attributeIndexer
-    ) {
-        $this->streamxIndexers[$productIndexer->getIndexerViewId()] = $productIndexer;
-        $this->streamxIndexers[$categoryIndexer->getIndexerViewId()] = $categoryIndexer;
-        $this->streamxIndexers[$attributeIndexer->getIndexerViewId()] = $attributeIndexer;
+    public function __construct(StreamxIndexerMviewProcessor $streamxIndexerMviewProcessor) {
+        $this->streamxIndexerMviewProcessor = $streamxIndexerMviewProcessor;
     }
 
     /**
      * @throws Exception
      */
     public function reindexMview(string $indexerViewId): void {
-        $this->streamxIndexers[$indexerViewId]->reindexMview();
+        $this->streamxIndexerMviewProcessor->reindexMview($indexerViewId);
     }
 }

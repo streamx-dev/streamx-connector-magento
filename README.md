@@ -158,6 +158,10 @@ bin/magento streamx:reindex --all #see PublishAllEntitiesCommand
 # review logs and errors of the Magento container (typically named magento-phpfpm-1)
 cat /var/www/html/var/log/system.log
 cat /var/www/html/var/log/exception.log
+
+# execute all scheduled jobs - including StreamxIndexerMviewProcessor to process changelog tables for indexers in Update by Schedule mode:
+bin/magento cron:run
+cat /var/www/html/var/log/cron.log
 ```
 
 ## Some useful MySQL commands (when using markshust/docker-magento)
