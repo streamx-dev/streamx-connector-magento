@@ -9,19 +9,13 @@ use StreamX\ConnectorCore\Api\Mapping\FieldInterface;
 
 class OptionMapping implements FieldMappingInterface
 {
-    /**
-     * @var SwatchMapping
-     */
-    private $swatchMapping;
+    private SwatchMapping $swatchMapping;
 
     public function __construct(SwatchMapping $generalMapping)
     {
         $this->swatchMapping = $generalMapping;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function get(): array
     {
         return [

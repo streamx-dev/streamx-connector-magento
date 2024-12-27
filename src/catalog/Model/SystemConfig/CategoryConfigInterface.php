@@ -2,6 +2,8 @@
 
 namespace StreamX\ConnectorCatalog\Model\SystemConfig;
 
+use Exception;
+
 /**
  * @api
  */
@@ -15,7 +17,7 @@ interface CategoryConfigInterface
     /**
      * Retrieve attributes used for sort by
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getAttributesUsedForSortBy(): array;
 

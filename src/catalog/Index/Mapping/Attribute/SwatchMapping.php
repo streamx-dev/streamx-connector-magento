@@ -7,9 +7,6 @@ use StreamX\ConnectorCore\Api\Mapping\FieldInterface;
 
 class SwatchMapping implements FieldMappingInterface
 {
-    /**
-     * Retrieve Swatch Mapping
-     */
     public function get(): array
     {
         return [

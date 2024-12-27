@@ -2,6 +2,8 @@
 
 namespace StreamX\ConnectorCatalog\Model\Product;
 
+use Exception;
+use Magento\Framework\Exception\LocalizedException;
 use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
 use StreamX\ConnectorCatalog\Api\LoadTierPricesInterface;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
@@ -13,30 +15,11 @@ use Magento\Store\Model\StoreManagerInterface;
 
 class LoadTierPrices implements LoadTierPricesInterface
 {
-    /**
-     * @var \StreamX\ConnectorCatalog\Model\ResourceModel\Product\TierPrices
-     */
-    private $tierPriceResource;
-
-    /**
-     * @var AttributeDataProvider
-     */
-    private $attributeDataProvider;
-
-    /**
-     * @var StoreManagerInterface
-     */
-    private $storeManager;
-
-    /**
-     * @var ProductMetaData
-     */
-    private $productMetaData;
-
-    /**
-     * @var CatalogConfigurationInterface
-     */
-    private $configSettings;
+    private TierPricesResource $tierPriceResource;
+    private AttributeDataProvider $attributeDataProvider;
+    private StoreManagerInterface $storeManager;
+    private ProductMetaData $productMetaData;
+    private CatalogConfigurationInterface $configSettings;
 
     public function __construct(
         CatalogConfigurationInterface $configSettings,
@@ -53,8 +36,8 @@ class LoadTierPrices implements LoadTierPricesInterface
     }
 
     /**
-     * @throws \Exception
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws Exception
+     * @throws LocalizedException
      */
     public function execute(array $indexData, int $storeId): array
     {
@@ -112,25 +95,22 @@ class LoadTierPrices implements LoadTierPricesInterface
     }
 
     /**
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     private function getWebsiteId(int $storeId): int
     {
         $attribute = $this->getTierPriceAttribute();
-        $websiteId = 0;
 
         if ($attribute->isScopeGlobal()) {
-            $websiteId = 0;
+            return 0;
         } elseif ($storeId) {
-            $websiteId = (int) ($this->storeManager->getStore($storeId)->getWebsiteId());
+            return (int) ($this->storeManager->getStore($storeId)->getWebsiteId());
         }
-
-        return $websiteId;
     }
 
     /**
      * @return \Magento\Eav\Model\Entity\Attribute\AbstractAttribute
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     private function getTierPriceAttribute()
     {

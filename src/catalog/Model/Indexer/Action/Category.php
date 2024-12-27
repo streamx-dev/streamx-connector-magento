@@ -2,6 +2,7 @@
 
 namespace StreamX\ConnectorCatalog\Model\Indexer\Action;
 
+use Magento\Framework\Exception\NoSuchEntityException;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category as ResourceModel;
 use Traversable;
 
@@ -13,7 +14,7 @@ class Category {
     }
 
     /**
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws NoSuchEntityException
      */
     public function rebuild(int $storeId = 1, array $categoryIds = []): Traversable {
         $lastCategoryId = 0;

@@ -8,16 +8,8 @@ use Magento\Eav\Model\ResourceModel\Entity\Attribute as EntityResource;
 
 class Options implements DataProviderInterface
 {
-
-    /**
-     * @var LoadOptions
-     */
-    private $loadOptions;
-
-    /**
-     * @var EntityResource
-     */
-    private $entityAttributeResource;
+    private LoadOptions $loadOptions;
+    private EntityResource $entityAttributeResource;
 
     public function __construct(
         LoadOptions $loadOptions,

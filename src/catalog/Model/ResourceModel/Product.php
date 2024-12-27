@@ -2,6 +2,10 @@
 
 namespace StreamX\ConnectorCatalog\Model\ResourceModel;
 
+use Exception;
+use Magento\Framework\DB\Adapter\AdapterInterface;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
 use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\BaseSelectModifierInterface;
@@ -14,37 +18,14 @@ class Product
     /**
      * Alias for catalog_product_entity table
      */
-    const MAIN_TABLE_ALIAS = 'entity';
+    public const MAIN_TABLE_ALIAS = 'entity';
 
-    /**
-     * @var ResourceConnection
-     */
-    private $resourceConnection;
-
-    /**
-     * @var DbHelper
-     */
-    private $dbHelper;
-
-    /**
-     * @var CatalogConfigurationInterface
-     */
-    private $productSettings;
-
-    /**
-     * @var array
-     */
-    private $configurableAttributeIds;
-
-    /**
-     * @var ProductMetaData
-     */
-    private $productMetaData;
-
-    /**
-     * @var BaseSelectModifierInterface
-     */
-    private $baseSelectModifier;
+    private ResourceConnection $resourceConnection;
+    private DbHelper $dbHelper;
+    private CatalogConfigurationInterface $productSettings;
+    private ?array $configurableAttributeIds = null;
+    private ProductMetaData $productMetaData;
+    private BaseSelectModifierInterface $baseSelectModifier;
 
     public function __construct(
         CatalogConfigurationInterface $configSettings,
@@ -61,9 +42,9 @@ class Product
     }
 
     /**
-     * @throws \Exception
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws Exception
+     * @throws NoSuchEntityException
+     * @throws LocalizedException
      */
     public function getProducts(int $storeId = 1, array $productIds = [], int $fromId = 0, int $limit = 1000): array
     {
@@ -83,8 +64,8 @@ class Product
     }
 
     /**
-     * @throws \Magento\Framework\Exception\LocalizedException
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws LocalizedException
+     * @throws NoSuchEntityException
      */
     public function prepareBaseProductSelect(array $requiredColumns, int $storeId): Select
     {
@@ -94,9 +75,7 @@ class Product
                 $requiredColumns
             );
 
-        $select = $this->baseSelectModifier->execute($select, $storeId);
-
-        return $select;
+        return $this->baseSelectModifier->execute($select, $storeId);
     }
 
     private function getRequiredColumns(): array
@@ -121,8 +100,8 @@ class Product
     }
 
     /**
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws NoSuchEntityException
+     * @throws LocalizedException
      */
     public function loadChildrenProducts(array $parentIds, int $storeId): array
     {
@@ -154,10 +133,7 @@ class Product
         return $this->getConnection()->fetchAll($select);
     }
 
-    /**
-     * @return \Magento\Framework\DB\Select
-     */
-    private function addProductTypeFilter(Select $select, int $storeId)
+    private function addProductTypeFilter(Select $select, int $storeId): Select
     {
         $types = $this->productSettings->getAllowedProductTypes($storeId);
 
@@ -169,7 +145,7 @@ class Product
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function getRelationsByChild(array $childrenIds): array
     {
@@ -207,10 +183,7 @@ class Product
         return $this->configurableAttributeIds;
     }
 
-    /**
-     * @return \Magento\Framework\DB\Adapter\AdapterInterface
-     */
-    private function getConnection()
+    private function getConnection(): AdapterInterface
     {
         return $this->resourceConnection->getConnection();
     }

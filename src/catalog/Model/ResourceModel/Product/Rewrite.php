@@ -2,29 +2,18 @@
 
 namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
+use Magento\CatalogUrlRewrite\Model\ProductUrlRewriteGenerator;
 use Magento\Framework\App\ResourceConnection;
-use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use Magento\UrlRewrite\Model\Storage\DbStorage;
 use Magento\UrlRewrite\Service\V1\Data\UrlRewrite;
 
 class Rewrite
 {
-    /**
-     * @var ResourceConnection
-     */
-    private $resource;
+    private ResourceConnection $resource;
 
-    /**
-     * @var ProductMetaData
-     */
-    private $productMetaData;
-
-    public function __construct(
-        ResourceConnection $resourceModel,
-        ProductMetaData $productMetaData
-    ) {
+    public function __construct(ResourceConnection $resourceModel)
+    {
         $this->resource = $resourceModel;
-        $this->productMetaData = $productMetaData;
     }
 
     public function getRawRewritesData(array $productIds, int $storeId): array
@@ -41,7 +30,7 @@ class Rewrite
 
         $select->where(
             UrlRewrite::ENTITY_TYPE . ' = ? ',
-            \Magento\CatalogUrlRewrite\Model\ProductUrlRewriteGenerator::ENTITY_TYPE
+            ProductUrlRewriteGenerator::ENTITY_TYPE
         );
         $select->where('entity_id IN (?)', $productIds);
         $select->where('store_id = ? ', $storeId);

@@ -12,15 +12,8 @@ use Magento\Store\Model\StoreManagerInterface;
 
 class WebsiteSelectModifier implements BaseSelectModifierInterface
 {
-    /**
-     * @var ResourceConnection
-     */
-    private $resourceConnection;
-
-    /**
-     * @var StoreManagerInterface
-     */
-    private $storeManager;
+    private ResourceConnection $resourceConnection;
+    private StoreManagerInterface $storeManager;
 
     public function __construct(
         ResourceConnection $resourceConnection,

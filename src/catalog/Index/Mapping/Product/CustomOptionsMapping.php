@@ -7,9 +7,6 @@ use StreamX\ConnectorCore\Api\Mapping\FieldInterface;
 
 class CustomOptionsMapping implements FieldMappingInterface
 {
-    /**
-     * @inheritDoc
-     */
     public function get(): array
     {
         return [

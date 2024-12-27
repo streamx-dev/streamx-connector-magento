@@ -7,20 +7,9 @@ use Magento\Framework\Exception\LocalizedException;
 
 class SetProductDefaultAttributes
 {
-    /**
-     * @var UpdateAttributesInConfigurationFactory
-     */
-    private $updateAttributesInConfiguration;
-
-    /**
-     * @var array
-     */
-    private $productAttributes;
-
-    /**
-     * @var array
-     */
-    private $childAttributes;
+    private UpdateAttributesInConfigurationFactory $updateAttributesInConfiguration;
+    private array $productAttributes;
+    private array $childAttributes;
 
     public function __construct(
         UpdateAttributesInConfigurationFactory $updateAttributesInConfiguration,

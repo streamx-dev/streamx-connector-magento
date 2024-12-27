@@ -6,9 +6,6 @@ use Magento\Catalog\Api\Data\ProductAttributeInterface;
 
 class Attributes extends AbstractAttributeSource
 {
-    /**
-     *
-     */
     const GENERAL_RESTRICTED_ATTRIBUTES = [
         'sku',
         'url_path',

@@ -11,20 +11,10 @@ use StreamX\ConnectorCatalog\Model\Product\ParentResolver;
  */
 class ParentSku implements DataProviderInterface
 {
-    /**
-     * @const string
-     */
-    const FIELD_NAME = 'parent_sku';
+    private const FIELD_NAME = 'parent_sku';
 
-    /**
-     * @var ParentResolver
-     */
-    private $parentResolver;
-
-    /**
-     * @var CatalogConfigurationInterface
-     */
-    private $configSettings;
+    private ParentResolver $parentResolver;
+    private CatalogConfigurationInterface $configSettings;
 
     public function __construct(
         ParentResolver $parentResolver,

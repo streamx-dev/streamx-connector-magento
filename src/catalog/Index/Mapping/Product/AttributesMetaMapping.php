@@ -10,10 +10,7 @@ use StreamX\ConnectorCore\Api\Mapping\FieldInterface;
 
 class AttributesMetaMapping implements FieldMappingInterface
 {
-    /**
-     * @var OptionMapping
-     */
-    private $optionMapping;
+    private OptionMapping $optionMapping;
 
     public function __construct(OptionMapping $optionMapping)
     {

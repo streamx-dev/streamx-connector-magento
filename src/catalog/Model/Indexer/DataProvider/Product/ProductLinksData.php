@@ -7,11 +7,7 @@ use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Links as LinkResourceMo
 
 class ProductLinksData implements DataProviderInterface
 {
-
-    /**
-     * @var LinkResourceModel
-     */
-    private $resourceModel;
+    private LinkResourceModel $resourceModel;
 
     public function __construct(LinkResourceModel $resource)
     {

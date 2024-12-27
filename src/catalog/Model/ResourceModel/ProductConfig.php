@@ -2,26 +2,15 @@
 
 namespace StreamX\ConnectorCatalog\Model\ResourceModel;
 
+use Exception;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use Magento\Framework\App\ResourceConnection;
 
 class ProductConfig
 {
-
-    /**
-     * @var ResourceConnection
-     */
-    private $resource;
-
-    /**
-     * @var ProductMetaData
-     */
-    private $productMetaData;
-
-    /**
-     * @var
-     */
-    private $entityTypeId;
+    private ResourceConnection $resource;
+    private ProductMetaData $productMetaData;
+    private ?int $entityTypeId = null;
 
     public function __construct(
         ProductMetaData $productMetaData,
@@ -32,8 +21,7 @@ class ProductConfig
     }
 
     /**
-     *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getAttributesUsedForSortBy(): array
     {
@@ -69,9 +57,9 @@ class ProductConfig
 
             $select->where('entity_type_code = ?', $entityTypeCode);
 
-            $this->entityTypeId = $connection->fetchOne($select);
+            $this->entityTypeId = (int) $connection->fetchOne($select);
         }
 
-        return (int) $this->entityTypeId;
+        return $this->entityTypeId;
     }
 }

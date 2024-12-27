@@ -8,15 +8,8 @@ use Psr\Log\LoggerInterface;
 
 class GetAttributeCodesByIds
 {
-    /**
-     * @var LoadAttributes
-     */
-    private $loadAttributes;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    private LoadAttributes $loadAttributes;
+    private LoggerInterface $logger;
 
     public function __construct(
         LoadAttributes $loadAttributes,

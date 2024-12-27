@@ -2,34 +2,24 @@
 
 namespace StreamX\ConnectorCatalog\Index\Mapping;
 
+use Magento\Catalog\Model\Product\Attribute\Source\Boolean;
 use StreamX\ConnectorCore\Api\Mapping\FieldInterface;
 use Magento\Eav\Model\Entity\Attribute;
 
 abstract class AbstractMapping
 {
-    /**
-     * @var array
-     */
-    private $staticFieldMapping;
+    private array $staticFieldMapping;
 
     public function __construct(array $staticFieldMapping)
     {
         $this->staticFieldMapping = $staticFieldMapping;
     }
 
-    /**
-     * @var array
-     */
-    private $staticTextMapping = [
+    private array $staticTextMapping = [
         'available_sort_by',
         'default_sort_by',
     ];
 
-    /**
-     * Return mapping for an attribute.
-     *
-     * @param Attribute $attribute Attribute we want the mapping for.
-     */
     public function getAttributeMapping(Attribute $attribute): array
     {
         $mapping = [];
@@ -144,11 +134,11 @@ abstract class AbstractMapping
     {
         $attributeCode = $attribute->getAttributeCode();
 
-        if (substr($attributeCode, 0, 3) === 'is_') {
+        if (str_starts_with($attributeCode, 'is_')) {
             return true;
         }
         
-        if ($attribute->getSourceModel() == \Magento\Catalog\Model\Product\Attribute\Source\Boolean::class) {
+        if ($attribute->getSourceModel() == Boolean::class) {
             return true;
         }
 

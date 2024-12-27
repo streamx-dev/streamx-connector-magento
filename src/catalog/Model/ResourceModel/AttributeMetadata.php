@@ -4,12 +4,12 @@ declare(strict_types = 1);
 
 namespace StreamX\ConnectorCatalog\Model\ResourceModel;
 
+use Magento\Framework\Exception\LocalizedException;
 use StreamX\ConnectorCatalog\Model\ResourceModel\AttributesMetadata\GetAttributeFields;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\LoadAttributes;
 
 use Magento\Catalog\Model\ResourceModel\Product\Attribute\Collection;
 use Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory;
-use Magento\Eav\Model\Entity\Attribute;
 use Magento\Eav\Model\Entity\Attribute\Source\Table as SourceTable;
 use Magento\Eav\Model\ResourceModel\Entity\Attribute\Option\CollectionFactory as OptionCollectionFactory;
 use Magento\Framework\App\ResourceConnection;
@@ -17,46 +17,14 @@ use Magento\Framework\DB\Select;
 
 class AttributeMetadata
 {
-
-    /**
-     * @var ResourceConnection
-     */
-    private $resource;
-
-    /**
-     * @var CollectionFactory
-     */
-    private $collectionFactory;
-
-    /**
-     * @var OptionCollectionFactory
-     */
-    private $optionCollectionFactory;
-
-    /**
-     * @var GetAttributeFields
-     */
-    private $getAttributeFields;
-
-    /**
-     * @var LoadAttributes
-     */
-    private $loadAttributes;
-
-    /**
-     * @var array
-     */
-    private $attributes;
-
-    /**
-     * @var array
-     */
-    private $optionsByStore = [];
-
-    /**
-     * @var array
-     */
-    private $labelByAttribute = [];
+    private ResourceConnection $resource;
+    private CollectionFactory $collectionFactory;
+    private OptionCollectionFactory $optionCollectionFactory;
+    private GetAttributeFields $getAttributeFields;
+    private LoadAttributes $loadAttributes;
+    private ?array $attributes = null;
+    private array $optionsByStore = [];
+    private array $labelByAttribute = [];
 
     public function __construct(
         ResourceConnection $resource,
@@ -129,9 +97,9 @@ class AttributeMetadata
     }
 
     /**
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
-    private function loadSourceModelOptions(array $attributes, int $storeId)
+    private function loadSourceModelOptions(array $attributes, int $storeId): void
     {
         foreach ($attributes as $attribute) {
             if ($this->useSourceModel($attribute)) {

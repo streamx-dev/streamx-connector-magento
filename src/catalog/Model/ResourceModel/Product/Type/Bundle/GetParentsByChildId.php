@@ -8,15 +8,8 @@ use Magento\Framework\App\ResourceConnection;
 
 class GetParentsByChildId implements GetParentsByChildIdInterface
 {
-    /**
-     * @var ResourceConnection
-     */
-    private $resourceConnection;
-
-    /**
-     * @var ProductMetaData
-     */
-    private $metadata;
+    private ResourceConnection $resourceConnection;
+    private ProductMetaData $metadata;
 
     public function __construct(
         ProductMetaData $productMetaData,

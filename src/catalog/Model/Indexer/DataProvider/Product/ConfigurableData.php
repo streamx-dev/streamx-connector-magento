@@ -2,6 +2,7 @@
 
 namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
+use Exception;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 use StreamX\ConnectorCore\Indexer\DataFilter;
 
@@ -16,10 +17,7 @@ use Magento\ConfigurableProduct\Model\Product\Type\Configurable as ConfigurableT
 
 class ConfigurableData implements DataProviderInterface
 {
-    /**
-     * @var array
-     */
-    private $childBlackListConfig = [
+    private array $childBlackListConfig = [
         'entity_id',
         'row_id',
         'type_id',
@@ -27,40 +25,13 @@ class ConfigurableData implements DataProviderInterface
         'parent_ids',
     ];
 
-    /**
-     * @var DataFilter
-     */
-    private $dataFilter;
-
-    /**
-     * @var ConfigurableResource
-     */
-    private $configurableResource;
-
-    /**
-     * @var LoadInventoryInterface
-     */
-    private $loadInventory;
-
-    /**
-     * @var InventoryConverterInterface
-     */
-    private $inventoryProcessor;
-
-    /**
-     * @var LoadChildrenRawAttributes
-     */
-    private $childrenAttributeProcessor;
-
-    /**
-     * @var LoadConfigurableOptions
-     */
-    private $configurableProcessor;
-
-    /**
-     * @var PrepareConfigurableProduct
-     */
-    private $prepareConfigurableProduct;
+    private DataFilter $dataFilter;
+    private ConfigurableResource $configurableResource;
+    private LoadInventoryInterface $loadInventory;
+    private InventoryConverterInterface $inventoryProcessor;
+    private LoadChildrenRawAttributes $childrenAttributeProcessor;
+    private LoadConfigurableOptions $configurableProcessor;
+    private PrepareConfigurableProduct $prepareConfigurableProduct;
 
     public function __construct(
         DataFilter $dataFilter,
@@ -117,7 +88,7 @@ class ConfigurableData implements DataProviderInterface
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     private function prepareConfigurableChildrenAttributes(array $indexData, int $storeId): array
     {
@@ -169,7 +140,7 @@ class ConfigurableData implements DataProviderInterface
     /**
      * Apply attributes to product variants + extra options for products necessary for vsf
      *
-     * @throws \Exception
+     * @throws Exception
      */
     private function applyConfigurableOptions(array $productDTO, int $storeId): array
     {

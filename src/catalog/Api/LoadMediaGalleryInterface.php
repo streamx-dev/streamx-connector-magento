@@ -2,10 +2,12 @@
 
 namespace StreamX\ConnectorCatalog\Api;
 
+use Exception;
+
 interface LoadMediaGalleryInterface
 {
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function execute(array $indexData, int $storeId): array;
 }

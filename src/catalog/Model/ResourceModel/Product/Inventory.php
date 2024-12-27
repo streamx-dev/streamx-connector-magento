@@ -11,20 +11,9 @@ use Magento\CatalogInventory\Api\StockConfigurationInterface;
 
 class Inventory
 {
-    /**
-     * @var StockConfigurationInterface
-     */
-    private $stockConfiguration;
-
-    /**
-     * @var ResourceConnection
-     */
-    private $resource;
-
-    /**
-     * @var InventoryFields
-     */
-    private $inventoryFields;
+    private StockConfigurationInterface $stockConfiguration;
+    private ResourceConnection $resource;
+    private InventoryFields $inventoryFields;
 
     public function __construct(
         StockConfigurationInterface $stockConfiguration,

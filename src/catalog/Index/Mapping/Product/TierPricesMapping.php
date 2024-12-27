@@ -7,9 +7,6 @@ use StreamX\ConnectorCore\Api\Mapping\FieldInterface;
 
 class TierPricesMapping implements FieldMappingInterface
 {
-    /**
-     * @inheritdoc
-     */
     public function get(): array
     {
         return [

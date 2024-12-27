@@ -8,20 +8,9 @@ use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
 
 class LoadConfigurableOptions
 {
-    /**
-     * @var CatalogConfigurationInterface
-     */
-    private $catalogSettings;
-
-    /**
-     * @var LoadOptionById
-     */
-    private $loadOptionById;
-
-    /**
-     * @var SortValues
-     */
-    private $sortValues;
+    private CatalogConfigurationInterface $catalogSettings;
+    private LoadOptionById $loadOptionById;
+    private SortValues $sortValues;
 
     public function __construct(
         LoadOptionById $loadOptionById,

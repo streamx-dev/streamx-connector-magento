@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace StreamX\ConnectorCatalog\Index\Mapping;
 
+use Magento\Framework\DataObject;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category\LoadAttributes;
 use StreamX\ConnectorCore\Api\MappingInterface;
 use StreamX\ConnectorCore\Api\Mapping\FieldInterface;
@@ -46,7 +47,7 @@ class Category extends AbstractMapping implements MappingInterface
             // grid_per_page -> not implemented yet
             $properties['grid_per_page'] = ['type' => FieldInterface::TYPE_INTEGER];
             $mapping = ['properties' => $properties];
-            $mappingObject = new \Magento\Framework\DataObject();
+            $mappingObject = new DataObject();
             $mappingObject->setData($mapping);
 
             $this->properties = $mappingObject->getData();

@@ -11,20 +11,9 @@ use Magento\Framework\Exception\LocalizedException;
 
 class UpdateAttributesInConfiguration
 {
-    /**
-     * @var Config
-     */
-    private $resourceConfig;
-
-    /**
-     * @var EavConfig
-     */
-    private $eavConfig;
-
-    /**
-     * @var string
-     */
-    private $entityType;
+    private Config $resourceConfig;
+    private EavConfig $eavConfig;
+    private string $entityType;
 
     public function __construct(
         Config $resourceConfig,

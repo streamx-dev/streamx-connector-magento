@@ -3,19 +3,12 @@
 namespace StreamX\ConnectorCatalog\Model\ResourceModel\Category;
 
 use Magento\Framework\App\ResourceConnection;
+use Magento\Framework\DB\Adapter\AdapterInterface;
 
 class ProductCount
 {
-
-    /**
-     * @var ResourceConnection
-     */
-    private $resource;
-
-    /**
-     * @var array
-     */
-    private $categoryProductCountCache = [];
+    private ResourceConnection $resource;
+    private array $categoryProductCountCache = [];
 
     public function __construct(ResourceConnection $resourceConnection)
     {
@@ -24,10 +17,6 @@ class ProductCount
 
     public function loadProductCount(array $categoryIds): array
     {
-        if (null === $this->categoryProductCountCache) {
-            $this->categoryProductCountCache = [];
-        }
-
         $loadCategoryIds = $categoryIds;
 
         if (!empty($this->categoryProductCountCache)) {
@@ -69,10 +58,7 @@ class ProductCount
         return $this->getConnection()->fetchPairs($select);
     }
 
-    /**
-     * @return \Magento\Framework\DB\Adapter\AdapterInterface
-     */
-    private function getConnection()
+    private function getConnection(): AdapterInterface
     {
         return $this->resource->getConnection();
     }

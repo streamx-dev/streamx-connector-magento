@@ -10,36 +10,17 @@ class LoadMediaGallery implements LoadMediaGalleryInterface
 {
     const VIDEO_TYPE = 'external-video';
 
-    /**
-     * Youtube regex
-     * @var string
-     */
-    private $youtubeRegex =
+    private string $youtubeRegex =
         '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i';
 
-    /**
-     * Vimeo regex
-     * @var array
-     */
-    private $vimeoRegex = [
+    private array $vimeoRegex = [
         '%^https?:\/\/(?:www\.|player\.)?vimeo.com\/(?:channels\/(?:\w+\/)',
         "?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|video\/|)(\d+)(?:$|\/|\?)(?:[?]?.*)$%im",
     ];
 
-    /**
-     * @var \StreamX\ConnectorCatalog\Model\ResourceModel\Product\Gallery
-     */
-    private $resourceModel;
-
-    /**
-     * @var ProductMetaData
-     */
-    private $productMetaData;
-
-    /**
-     * @var array
-     */
-    private $rowIdToEntityId = [];
+    private Resource $resourceModel;
+    private ProductMetaData $productMetaData;
+    private array $rowIdToEntityId = [];
 
     public function __construct(
         Resource $resource,
@@ -88,9 +69,6 @@ class LoadMediaGallery implements LoadMediaGalleryInterface
         return $indexData;
     }
 
-    /**
-     * Map Row Id to Entity Id
-     */
     private function mapRowIdToEntityId(array $products): void
     {
         $linkField = $this->productMetaData->get()->getLinkField();

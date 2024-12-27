@@ -10,10 +10,7 @@ use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Inventory as InventoryR
 
 class LoadChildrenInventory implements LoadInventoryInterface
 {
-    /**
-     * @var InventoryResource
-     */
-    private $resource;
+    private InventoryResource $resource;
 
     public function __construct(InventoryResource $resource)
     {
@@ -23,7 +20,6 @@ class LoadChildrenInventory implements LoadInventoryInterface
     public function execute(array $indexData, int $storeId): array
     {
         $productIds = array_keys($indexData);
-
         return $this->resource->loadChildrenInventory($productIds);
     }
 }

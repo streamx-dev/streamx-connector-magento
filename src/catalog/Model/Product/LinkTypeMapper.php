@@ -10,10 +10,8 @@ class LinkTypeMapper
 
     /**
      * Product link type mapping, used for references and validation
-     *
-     * @var array
      */
-    private $linkTypesMap = [
+    private array $linkTypesMap = [
         ProductLink::LINK_TYPE_RELATED => 'related',
         ProductLink::LINK_TYPE_UPSELL => 'upsell',
         ProductLink::LINK_TYPE_CROSSSELL => 'crosssell',

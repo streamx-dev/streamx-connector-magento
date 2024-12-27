@@ -8,16 +8,8 @@ use StreamX\ConnectorCatalog\Api\SlugGeneratorInterface;
 
 class ApplyCategorySlug implements ApplyCategorySlugInterface
 {
-
-    /**
-     * @var CatalogConfigurationInterface
-     */
-    private $settings;
-
-    /**
-     * @var SlugGeneratorInterface
-     */
-    private $slugGenerator;
+    private CatalogConfigurationInterface $settings;
+    private SlugGeneratorInterface $slugGenerator;
 
     public function __construct(
         SlugGeneratorInterface $slugGenerator,

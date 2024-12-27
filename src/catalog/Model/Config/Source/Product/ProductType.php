@@ -9,15 +9,8 @@ use Magento\Framework\Option\ArrayInterface;
 
 class ProductType implements ArrayInterface
 {
-    /**
-     * @var \Magento\Catalog\Model\ProductTypes\ConfigInterface
-     */
-    private $config;
-
-    /**
-     * @var array
-     */
-    private $types;
+    private ConfigInterface $config;
+    private ?array $types = null;
 
     public function __construct(ConfigInterface $config)
     {
@@ -31,7 +24,7 @@ class ProductType implements ArrayInterface
     {
         $options = [];
 
-        foreach ($this->getTypes() as $typeId => $type) {
+        foreach ($this->getProductTypes() as $typeId => $type) {
             $options[] = [
                 'value' => $typeId,
                 'label' => (string)$type['label']
@@ -41,10 +34,7 @@ class ProductType implements ArrayInterface
         return $options;
     }
 
-    /**
-     * Retrieve Product Types
-     */
-    private function getTypes(): array
+    private function getProductTypes(): array
     {
         if ($this->types === null) {
             $productTypes = $this->config->getAll();

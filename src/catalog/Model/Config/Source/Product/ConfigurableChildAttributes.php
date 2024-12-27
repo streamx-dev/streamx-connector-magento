@@ -2,22 +2,15 @@
 
 namespace StreamX\ConnectorCatalog\Model\Config\Source\Product;
 
+use Magento\Catalog\Api\Data\ProductAttributeInterface;
 use Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory;
 use StreamX\ConnectorCatalog\Model\Attributes\ConfigurableAttributes;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product as Resource;
 
 class ConfigurableChildAttributes extends AbstractAttributeSource
 {
-
-    /**
-     * @var
-     */
-    private $restrictedAttributes;
-
-    /**
-     * @var Resource
-     */
-    private $productResource;
+    private ?array $restrictedAttributes = null;
+    private Resource $productResource;
 
     public function __construct(CollectionFactory $collectionFactory, Resource $productResource)
     {
@@ -29,7 +22,7 @@ class ConfigurableChildAttributes extends AbstractAttributeSource
     /**
      * @inheritDoc
      */
-    public function canAddAttribute(\Magento\Catalog\Api\Data\ProductAttributeInterface $attribute): bool
+    public function canAddAttribute(ProductAttributeInterface $attribute): bool
     {
         if (in_array($attribute->getAttributeCode(), $this->getRestrictedAttributes())) {
             return false;

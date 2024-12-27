@@ -4,7 +4,7 @@ namespace StreamX\ConnectorCatalog\Plugin\Indexer\CatalogInventory;
 
 class ProductsForReindex
 {
-    private $productsForReindex = [];
+    private array $productsForReindex = [];
 
     public function setProducts(array $items): void
     {

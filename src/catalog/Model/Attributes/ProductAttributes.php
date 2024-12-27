@@ -6,9 +6,6 @@ use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
 
 class ProductAttributes
 {
-    /**
-     * @var array
-     */
     const REQUIRED_ATTRIBUTES = [
         'sku',
         'url_path',
@@ -20,10 +17,7 @@ class ProductAttributes
         'price_type',
     ];
 
-    /**
-     * @var CatalogConfigurationInterface
-     */
-    private $catalogConfig;
+    private CatalogConfigurationInterface $catalogConfig;
 
     public function __construct(CatalogConfigurationInterface $catalogConfiguration)
     {

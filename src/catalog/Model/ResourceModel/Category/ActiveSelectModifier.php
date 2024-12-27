@@ -5,47 +5,24 @@ declare(strict_types=1);
 namespace StreamX\ConnectorCatalog\Model\ResourceModel\Category;
 
 use StreamX\ConnectorCatalog\Model\CategoryMetaData;
-use StreamX\ConnectorCatalog\Model\ResourceModel\Category;
-use Magento\Catalog\Api\Data\CategoryInterface;
-use Magento\Catalog\Model\Product\Attribute\Source\Status;
 use Magento\Eav\Model\Entity\Attribute as Attribute;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\DB\Select;
-use Magento\Framework\EntityManager\MetadataPool;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Store\Model\StoreManagerInterface;
 
 class ActiveSelectModifier implements BaseSelectModifierInterface
 {
-    /**
-     * @var LoadAttributes
-     */
-    private $loadAttributes;
-
-    /**
-     * @var CategoryMetaData
-     */
-    private $categoryMetadata;
-
-    /**
-     * @var StoreManagerInterface
-     */
-    private $storeManager;
-
-    /**
-     * @var ResourceConnection
-     */
-    private $resourceConnection;
+    private LoadAttributes $loadAttributes;
+    private CategoryMetaData $categoryMetadata;
+    private ResourceConnection $resourceConnection;
 
     public function __construct(
         CategoryMetaData $metadataPool,
-        StoreManagerInterface $storeManager,
         LoadAttributes $loadAttributes,
         ResourceConnection $resourceConnection
     ) {
-        $this->storeManager = $storeManager;
         $this->categoryMetadata = $metadataPool;
         $this->loadAttributes = $loadAttributes;
         $this->resourceConnection = $resourceConnection;

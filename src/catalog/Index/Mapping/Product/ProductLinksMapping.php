@@ -7,9 +7,6 @@ use StreamX\ConnectorCore\Api\Mapping\FieldInterface;
 
 class ProductLinksMapping implements FieldMappingInterface
 {
-    /**
-     * @inheritdoc
-     */
     public function get(): array
     {
         return [

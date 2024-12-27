@@ -2,6 +2,9 @@
 
 namespace StreamX\ConnectorCatalog\Model\ResourceModel;
 
+use Exception;
+use Magento\Framework\DB\Adapter\AdapterInterface;
+use Magento\Framework\DB\Select;
 use StreamX\ConnectorCore\Api\ConvertValueInterface;
 use StreamX\ConnectorCore\Api\MappingInterface;
 use Magento\Framework\App\ResourceConnection;
@@ -10,55 +13,25 @@ use Magento\Framework\EntityManager\EntityMetadataInterface;
 
 abstract class AbstractEavAttributes implements EavAttributesInterface
 {
-    /**
-     * @var array
-     */
-    private $restrictedAttribute = [
+    private array $restrictedAttribute = [
         'quantity_and_stock_status',
         'options_container',
     ];
 
-    /**
-     * @var ResourceConnection
-     */
-    private $resourceConnection;
-
-    /**
-     * @var array
-     */
-    private $attributesById;
-
-    /**
-     * @var string
-     */
-    private $entityType;
-
-    /**
-     * @var array
-     */
-    private $valuesByEntityId;
-
-    /**
-     * @var MetadataPool
-     */
-    private $metadataPool;
-
-    /**
-     * @var MappingInterface
-     */
-    private $mapping;
-
-    /**
-     * @var ConvertValueInterface
-     */
-    private $convertValue;
+    private ResourceConnection $resourceConnection;
+    private ?array $attributesById = null;
+    private string $entityType;
+    private ?array $valuesByEntityId = null;
+    private MetadataPool $metadataPool;
+    private MappingInterface $mapping;
+    private ConvertValueInterface $convertValue;
 
     public function __construct(
         ResourceConnection $resourceConnection,
         MetadataPool $metadataPool,
         ConvertValueInterface $convertValue,
         MappingInterface $mapping,
-        $entityType
+        string $entityType
     ) {
         $this->resourceConnection = $resourceConnection;
         $this->metadataPool = $metadataPool;
@@ -74,7 +47,7 @@ abstract class AbstractEavAttributes implements EavAttributesInterface
     abstract public function initAttributes();
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function loadAttributesData(int $storeId, array $entityIds, array $requiredAttributes = null): array
     {
@@ -111,7 +84,7 @@ abstract class AbstractEavAttributes implements EavAttributesInterface
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function canIndexAttribute(\Magento\Eav\Model\Entity\Attribute $attribute, array $allowedAttributes = null): bool
     {
@@ -131,7 +104,7 @@ abstract class AbstractEavAttributes implements EavAttributesInterface
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     private function processValues(array $values): array
     {
@@ -166,7 +139,7 @@ abstract class AbstractEavAttributes implements EavAttributesInterface
      * @param array|string $value
      *
      * @return array|string|int|float
-     * @throws \Exception
+     * @throws Exception
      */
     private function prepareValue(string $attributeCode, $value)
     {
@@ -190,10 +163,9 @@ abstract class AbstractEavAttributes implements EavAttributesInterface
     /**
      * Retrieve attributes load select
      *
-     * @return \Magento\Framework\DB\Select
-     * @throws \Exception
+     * @throws Exception
      */
-    private function getLoadAttributesSelect(int $storeId, string $table, array $attributeIds, array $entityIds)
+    private function getLoadAttributesSelect(int $storeId, string $table, array $attributeIds, array $entityIds): Select
     {
         //  Either row_id (enterpise/commerce version) or entity_id.
         $linkField = $this->getEntityMetaData()->getLinkField();
@@ -239,18 +211,14 @@ abstract class AbstractEavAttributes implements EavAttributesInterface
     /**
      * Retrieve Metadata for an entity (product or category)
      *
-     * @return EntityMetadataInterface
-     * @throws \Exception
+     * @throws Exception
      */
-    private function getEntityMetaData()
+    private function getEntityMetaData(): EntityMetadataInterface
     {
         return $this->metadataPool->getMetadata($this->entityType);
     }
 
-    /**
-     * @return \Magento\Framework\DB\Adapter\AdapterInterface
-     */
-    private function getConnection()
+    private function getConnection(): AdapterInterface
     {
         return $this->resourceConnection->getConnection();
     }

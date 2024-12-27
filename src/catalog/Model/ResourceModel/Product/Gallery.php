@@ -2,6 +2,10 @@
 
 namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
+use Exception;
+use Magento\Catalog\Model\Product;
+use Magento\Framework\DB\Adapter\AdapterInterface;
+use Magento\Framework\Exception\LocalizedException;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use Magento\Catalog\Model\ResourceModel\Product\Gallery as GalleryResource;
 use Magento\Eav\Model\Entity\Attribute as EntityAttribute;
@@ -11,30 +15,16 @@ use Magento\Store\Model\Store;
 
 class Gallery
 {
-    /**
-     * @var array
-     */
-    private $videoProperties = [
+    private array $videoProperties = [
         'url' => 'url',
         'title' => 'title',
         'desc' => 'description',
         'meta' => 'metadata',
     ];
 
-    /**
-     * @var ResourceConnection
-     */
-    private $resource;
-
-    /**
-     * @var EntityAttribute
-     */
-    private $entityAttribute;
-
-    /**
-     * @var ProductMetaData
-     */
-    private $metadataPool;
+    private ResourceConnection $resource;
+    private EntityAttribute $entityAttribute;
+    private ProductMetaData $metadataPool;
 
     public function __construct(
         ProductMetaData $metadataPool,
@@ -47,7 +37,7 @@ class Gallery
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function loadGallerySet(array $linkFieldIds, int $storeId): array
     {
@@ -57,11 +47,11 @@ class Gallery
     }
 
     /**
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     private function getMediaGalleryAttributeId(): int
     {
-        $attribute = $this->entityAttribute->loadByCode(\Magento\Catalog\Model\Product::ENTITY, 'media_gallery');
+        $attribute = $this->entityAttribute->loadByCode(Product::ENTITY, 'media_gallery');
 
         return $attribute->getId();
     }
@@ -138,7 +128,7 @@ class Gallery
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     private function getLoadGallerySelect(array $linkFieldIds, int $storeId): Select
     {
@@ -154,7 +144,7 @@ class Gallery
         );
 
         // Select gallery images for product
-        $select = $connection->select()
+        return $connection->select()
             ->from(
                 [$mainTableAlias => $this->resource->getTableName(GalleryResource::GALLERY_TABLE)],
                 [
@@ -203,14 +193,9 @@ class Gallery
             ->where('default_value.disabled is NULL or default_value.disabled != 1')
             ->where('value.disabled is NULL or value.disabled != 1')
             ->order($positionCheckSql . ' ' . Select::SQL_ASC);
-
-        return $select;
     }
 
-    /**
-     * @return \Magento\Framework\DB\Adapter\AdapterInterface
-     */
-    private function getConnection()
+    private function getConnection(): AdapterInterface
     {
         return $this->resource->getConnection();
     }

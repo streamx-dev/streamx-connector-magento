@@ -14,12 +14,7 @@ class PriceTableResolverProxy
 {
     const DEFAULT_PRICE_INDEXER_TABLE = 'catalog_product_index_price';
 
-    /**
-     * Object Manager instance
-     *
-     * @var \Magento\Framework\ObjectManagerInterface
-     */
-    private $objectManager;
+    private ObjectManagerInterface $objectManager;
 
     /**
      * available from Magento 2.6
@@ -33,10 +28,7 @@ class PriceTableResolverProxy
      */
     private $priceTableResolver;
 
-    /**
-     * @var array
-     */
-    private $priceIndexTableName = [];
+    private array $priceIndexTableName = [];
 
     public function __construct(ObjectManagerInterface $objectManager)
     {
@@ -65,7 +57,7 @@ class PriceTableResolverProxy
                     ]
                 );
 
-                $this->priceIndexTableName[$key] = (string)$priceIndexTableName;
+                $this->priceIndexTableName[$key] = $priceIndexTableName;
             }
 
             return $this->priceIndexTableName[$key];

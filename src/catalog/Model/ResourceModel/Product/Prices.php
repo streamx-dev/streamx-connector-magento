@@ -3,6 +3,9 @@
 namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
 use Magento\Framework\App\ResourceConnection;
+use Magento\Framework\DB\Adapter\AdapterInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Store\Api\Data\StoreInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\CatalogRule\Model\ResourceModel\Rule\Product\Price as CatalogRulePrice;
 
@@ -12,35 +15,12 @@ use StreamX\ConnectorCatalog\Model\Product\PriceTableResolverProxy;
 
 class Prices
 {
-    /**
-     * @var ResourceConnection
-     */
-    private $resource;
-
-    /**
-     * @var CatalogConfigurationInterface
-     */
-    private $settings;
-
-    /**
-     * @var StoreManagerInterface
-     */
-    private $storeManager;
-
-    /**
-     * @var ProductMetaData
-     */
-    private $productMetaData;
-
-    /**
-     * @var PriceTableResolverProxy
-     */
-    private $priceTableResolver;
-
-    /**
-     * @var CatalogRulePrice
-     */
-    private $catalogPriceResourceModel;
+    private ResourceConnection $resource;
+    private CatalogConfigurationInterface $settings;
+    private StoreManagerInterface $storeManager;
+    private ProductMetaData $productMetaData;
+    private PriceTableResolverProxy $priceTableResolver;
+    private CatalogRulePrice $catalogPriceResourceModel;
 
     public function __construct(
         ResourceConnection $resourceModel,
@@ -61,7 +41,7 @@ class Prices
     /**
      * Only default customer Group ID (0) is supported now
      *
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws NoSuchEntityException
      */
     public function loadPriceData(int $storeId, array $productIds): array
     {
@@ -135,18 +115,14 @@ class Prices
     }
 
     /**
-     * @return \Magento\Store\Api\Data\StoreInterface
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws NoSuchEntityException
      */
-    private function getStore(int $storeId)
+    private function getStore(int $storeId): StoreInterface
     {
         return $this->storeManager->getStore($storeId);
     }
 
-    /**
-     * @return \Magento\Framework\DB\Adapter\AdapterInterface
-     */
-    private function getConnection()
+    private function getConnection(): AdapterInterface
     {
         return $this->resource->getConnection();
     }

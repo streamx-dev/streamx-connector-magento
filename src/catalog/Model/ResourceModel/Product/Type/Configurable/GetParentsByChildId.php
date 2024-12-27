@@ -8,15 +8,8 @@ use Magento\Framework\App\ResourceConnection;
 
 class GetParentsByChildId implements GetParentsByChildIdInterface
 {
-    /**
-     * @var ResourceConnection
-     */
-    private $resourceConnection;
-
-    /**
-     * @var OptionProvider
-     */
-    private $optionProvider;
+    private ResourceConnection $resourceConnection;
+    private OptionProvider $optionProvider;
 
     public function __construct(
         OptionProvider $optionProvider,
