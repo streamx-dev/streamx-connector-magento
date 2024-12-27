@@ -12,7 +12,7 @@ use StreamX\ConnectorCatalog\test\integration\utils\ValidationFileUtils;
  * 1. markshust/docker-magento images must be running
  * 2. StreamX Connector must be deployed to the Magento instance
  * 3. StreamX Connector must be enabled and configured in Magento
- * 4. StreamX must be running (with the add-rest-ingestion-to-magento-network.sh script executed)
+ * 4. StreamX must be running (src/test/resources/mesh.yaml as minimal mesh setup)
  */
 abstract class BaseStreamxTest extends TestCase {
 
