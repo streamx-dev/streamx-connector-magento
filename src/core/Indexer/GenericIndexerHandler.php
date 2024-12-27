@@ -4,13 +4,13 @@ namespace StreamX\ConnectorCore\Indexer;
 
 use InvalidArgumentException;
 use LogicException;
+use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCore\Api\Index\TypeInterface;
 use StreamX\ConnectorCore\Api\IndexOperationInterface;
 use StreamX\ConnectorCore\Exception\ConnectionDisabledException;
 use StreamX\ConnectorCore\Exception\ConnectionUnhealthyException;
 use StreamX\ConnectorCore\Index\BulkRequest;
 use StreamX\ConnectorCore\Index\Indicies\Config;
-use StreamX\ConnectorCore\Logger\IndexerLogger;
 use Magento\Framework\Indexer\SaveHandler\Batch;
 use Magento\Store\Api\Data\StoreInterface;
 use Traversable;
@@ -23,11 +23,11 @@ class GenericIndexerHandler {
     private IndexOperationInterface $indexOperations;
     private string $typeName;
     private TypeInterface $type;
-    private IndexerLogger $indexerLogger;
+    private LoggerInterface $logger;
 
     public function __construct(
         IndexOperationInterface $indexOperationProvider,
-        IndexerLogger $indexerLogger,
+        LoggerInterface $logger,
         Batch $batch,
         Config $indicesConfig,
         string $typeName
@@ -37,7 +37,7 @@ class GenericIndexerHandler {
         $this->indexOperations = $indexOperationProvider;
         $this->typeName = $typeName;
         $this->type = $this->loadType($typeName);
-        $this->indexerLogger = $indexerLogger;
+        $this->logger = $logger;
     }
 
     /**
@@ -54,7 +54,7 @@ class GenericIndexerHandler {
         } catch (ConnectionDisabledException $exception) {
             // do nothing, StreamX indexer disabled in configuration
         } catch (ConnectionUnhealthyException $exception) {
-            $this->indexerLogger->error($exception->getMessage());
+            $this->logger->error($exception->getMessage());
             throw $exception;
         }
     }
