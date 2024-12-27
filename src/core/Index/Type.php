@@ -2,33 +2,18 @@
 
 namespace StreamX\ConnectorCore\Index;
 
+use Exception;
+use StreamX\ConnectorCore\Api\DataProviderInterface;
 use StreamX\ConnectorCore\Api\Index\TypeInterface;
 use StreamX\ConnectorCore\Api\MappingInterface;
 
 class Type implements TypeInterface
 {
-    /**
-     * Type name.
-     *
-     * @var string
-     */
-    private $name;
+    private string $name;
+    private MappingInterface $mapping;
+    private array $dataProviders;
 
-    /**
-     * Type mapping.
-     *
-     * @var
-     */
-    private $mapping;
-
-    /**
-     * Type dataProviders.
-     *
-     * @var
-     */
-    private $dataProviders;
-
-    public function __construct($name, MappingInterface $mapping = null, array $dataProviders)
+    public function __construct(string $name, MappingInterface $mapping = null, array $dataProviders)
     {
         $this->name = $name;
         $this->mapping = $mapping;
@@ -40,10 +25,7 @@ class Type implements TypeInterface
         return $this->name;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getMapping()
+    public function getMapping(): MappingInterface
     {
         return $this->mapping;
     }
@@ -51,18 +33,15 @@ class Type implements TypeInterface
     /**
      * @inheritdoc
      */
-    public function getDataProviders()
+    public function getDataProviders(): array
     {
         return $this->dataProviders;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getDataProvider(string $name)
+    public function getDataProvider(string $name): DataProviderInterface
     {
         if (!isset($this->dataProviders[$name])) {
-            throw new \Exception("DataProvider $name does not exists.");
+            throw new Exception("DataProvider $name does not exists.");
         }
 
         return $this->dataProviders[$name];

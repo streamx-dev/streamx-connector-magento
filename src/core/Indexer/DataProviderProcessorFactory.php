@@ -2,18 +2,13 @@
 
 namespace StreamX\ConnectorCore\Indexer;
 
+use Magento\Framework\ObjectManagerInterface;
+
 class DataProviderProcessorFactory
 {
-    /**
-     * Object Manager instance
-     *
-     * @var \Magento\Framework\ObjectManagerInterface
-     */
-    private $objectManager;
+    private ObjectManagerInterface $objectManager;
 
-    public function __construct(
-        \Magento\Framework\ObjectManagerInterface $objectManager
-    ) {
+    public function __construct(ObjectManagerInterface $objectManager) {
         $this->objectManager = $objectManager;
     }
 

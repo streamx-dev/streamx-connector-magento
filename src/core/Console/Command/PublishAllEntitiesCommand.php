@@ -112,7 +112,7 @@ class PublishAllEntitiesCommand extends AbstractIndexerCommand
         return $invalid;
     }
 
-    /***
+    /**
      * @param $storeId
      * @param $allStores
      *
@@ -235,7 +235,7 @@ class PublishAllEntitiesCommand extends AbstractIndexerCommand
         return $this->indexerStoreManager;
     }
 
-    private function initObjectManager()
+    private function initObjectManager(): void
     {
         $this->getObjectManager();
     }

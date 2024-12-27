@@ -4,15 +4,9 @@ namespace StreamX\ConnectorCore\System;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 
-/**
- * @inheritdoc
- */
 class GeneralConfig implements GeneralConfigInterface
 {
-    /**
-     * @var ScopeConfigInterface
-     */
-    private $scopeConfig;
+    private ScopeConfigInterface $scopeConfig;
 
     public function __construct(ScopeConfigInterface $scopeConfig)
     {

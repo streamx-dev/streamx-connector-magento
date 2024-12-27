@@ -45,7 +45,7 @@ class IndexOperations implements IndexOperationInterface
     /**
      * @throws ConnectionUnhealthyException
      */
-    private function checkEsCondition(int $storeId)
+    private function checkEsCondition(int $storeId): void
     {
         $clusterHealth = $this->resolveClient($storeId)->getClustersHealth();
         $this->checkClustersHealth($clusterHealth);

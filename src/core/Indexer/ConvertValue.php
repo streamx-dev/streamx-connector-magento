@@ -8,10 +8,7 @@ use StreamX\ConnectorCore\Api\ConvertValueInterface;
 
 class ConvertValue implements ConvertValueInterface
 {
-    /**
-     * @var array
-     */
-    private $castMapping = [
+    private array $castMapping = [
         FieldInterface::TYPE_LONG => 'int',
         FieldInterface::TYPE_INTEGER => 'int',
         FieldInterface::TYPE_BOOLEAN => 'bool',

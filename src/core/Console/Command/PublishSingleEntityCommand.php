@@ -118,7 +118,7 @@ class PublishSingleEntityCommand extends AbstractIndexerCommand
         return $this->indexerStoreManager;
     }
 
-    private function initObjectManager()
+    private function initObjectManager(): void
     {
         $this->getObjectManager();
     }

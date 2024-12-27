@@ -4,15 +4,8 @@ namespace StreamX\ConnectorCore\Indexer;
 
 class DataFilter
 {
-    /**
-     * @var array
-     */
-    private $integerProperties = [];
-
-    /**
-     * @var array
-     */
-    private $floatProperties = [];
+    private array $integerProperties;
+    private array $floatProperties;
 
     public function __construct(
         array $integerProperties = [],
