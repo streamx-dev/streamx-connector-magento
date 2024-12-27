@@ -28,10 +28,12 @@ class ProductUpdateTest extends BaseDirectDbEntityUpdateTest {
 
         // when
         self::renameProductInDb($productId, $productNewName);
-        $this->reindexMview();
 
-        // then
         try {
+            // and
+            $this->reindexMview();
+
+            // then
             $this->assertDataIsPublished($expectedKey, $productNewName);
         } finally {
             self::renameProductInDb($productId, $productOldName);

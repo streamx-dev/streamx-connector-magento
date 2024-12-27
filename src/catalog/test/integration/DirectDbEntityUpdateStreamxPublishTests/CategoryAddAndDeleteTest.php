@@ -15,17 +15,19 @@ class CategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
     }
 
     /** @test */
-    public function shouldPublishCategoryAddedUsingMagentoApplicationToStreamx_AndUnpublishDeletedCategory() {
+    public function shouldPublishCategoryAddedDirectlyInDatabaseToStreamx_AndUnpublishDeletedCategory() {
         // given
         $categoryName = 'The new Category';
 
         // when
         $categoryId = self::insertNewCategory($categoryName);
-        $this->reindexMview();
-
-        // then
         $expectedKey = "category_$categoryId";
+
         try {
+            // and
+            $this->reindexMview();
+
+            // then
             $this->assertDataIsPublished($expectedKey, $categoryName);
         } finally {
             // and when
