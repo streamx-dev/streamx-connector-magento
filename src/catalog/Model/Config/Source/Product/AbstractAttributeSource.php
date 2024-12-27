@@ -48,7 +48,7 @@ abstract class AbstractAttributeSource implements ArrayInterface
 
                     $this->options[] = [
                         'label' => $label,
-                        'value' => $attribute->getAttributeId(),
+                        'value' => $attribute->getAttributeCode(),
                     ];
                 }
             }

@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
-<!--
 
--->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
         <streamx_connector_settings>
             <catalog_settings>
                 <use_magento_url_keys>0</use_magento_url_keys>
                 <use_url_key_to_generate_slug>0</use_url_key_to_generate_slug>
-                <sync_tier_prices>0</sync_tier_prices>
-                <use_catalog_rules>0</use_catalog_rules>
+                <product_attributes>description,image,small_image,thumbnail,media_gallery,meta_title,meta_description,special_price,special_from_date,special_to_date,tax_class_id</product_attributes>
+                <child_attributes>image,small_image,thumbnail,media_gallery,special_price,special_from_date,special_to_date</child_attributes>
                 <export_attributes_metadata>0</export_attributes_metadata>
+                <sync_tier_prices>0</sync_tier_prices>
                 <add_swatches_to_configurable_options>0</add_swatches_to_configurable_options>
+                <use_catalog_rules>0</use_catalog_rules>
                 <configurable_children_batch_size>500</configurable_children_batch_size>
                 <add_parent_sku>0</add_parent_sku>
             </catalog_settings>
