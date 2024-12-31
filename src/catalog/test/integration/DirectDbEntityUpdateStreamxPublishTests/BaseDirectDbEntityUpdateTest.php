@@ -2,13 +2,13 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
-use StreamX\ConnectorCatalog\test\integration\BaseStreamxPublishTest;
+use StreamX\ConnectorCatalog\test\integration\BaseStreamxConnectorPublishTest;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoIndexerOperationsExecutor;
 
 /**
  * @inheritdoc
  */
-abstract class BaseDirectDbEntityUpdateTest extends BaseStreamxPublishTest {
+abstract class BaseDirectDbEntityUpdateTest extends BaseStreamxConnectorPublishTest {
 
     protected abstract function indexerName(): string;
 
