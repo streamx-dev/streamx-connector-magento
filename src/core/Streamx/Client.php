@@ -3,7 +3,6 @@
 namespace StreamX\ConnectorCore\Streamx;
 
 use Exception;
-use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Store\Model\StoreManagerInterface;
 use Psr\Log\LoggerInterface;
 use Streamx\Clients\Ingestion\Exceptions\StreamxClientException;
@@ -16,25 +15,20 @@ class Client implements ClientInterface {
 
     private Publisher $publisher;
     private LoggerInterface $logger;
-    private ?int $storeId;
 
     // TODO use baseUrl to prepend to image paths, which are retuned as relative paths, like:
     //  $baseImageUrl = $this->baseUrl . "media/catalog/product";
     //  $fullImageUrl = $baseImageUrl . $data['image']
     private string $baseUrl;
 
-    public function __construct(StoreManagerInterface $storeManager, Publisher $publisher, LoggerInterface $logger) {
+    public function __construct(
+        StoreManagerInterface $storeManager,
+        Publisher $publisher,
+        LoggerInterface $logger
+    ) {
         $this->logger = $logger;
         $this->publisher = $publisher;
-        try {
-            $store = $storeManager->getStore();
-            $this->storeId = (int) $store->getId();
-            $this->baseUrl = $store->getBaseUrl();
-        } catch (NoSuchEntityException $e) {
-            $this->storeId = null;
-            $this->baseUrl = '';
-            $this->logger->error("Cannot get store id and base url" . $e->getMessage());
-        }
+        $this->baseUrl = $storeManager->getStore()->getBaseUrl();
     }
 
     // TODO: adjust code that produced the $bulkOperations array, to make it in StreamX format (originally it is in ElasticSearch format)
@@ -104,8 +98,13 @@ class Client implements ClientInterface {
     }
 
     public function isStreamxAvailable(): bool {
-        $this->logger->info("SUPPRESSING:: Checking if StreamX is available");
-        // TODO: implement rest-ingestion service availability check
-        return true;
+        try {
+            // TODO: update php client version to gain access to this method:
+            return $this->publisher->isIngestionServiceAvailable();
+            // TODO: adjust StreamxConnectorClientAvailabilityTest
+        } catch (Exception $e) {
+            $this->logger->error('Exception checking if StreamX is available: ' . $e->getMessage(), ['exception' => $e]);
+            return false;
+        }
     }
 }
