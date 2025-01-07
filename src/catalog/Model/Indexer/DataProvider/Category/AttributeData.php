@@ -73,9 +73,7 @@ class AttributeData implements DataProviderInterface
         foreach ($attributes as $entityId => $attributesData) {
             $categoryData = array_merge($indexData[$entityId], $attributesData);
             $categoryData = $this->prepareCategory($categoryData, $storeId);
-            /*$categoryData = $this->addDefaultSortByOption($categoryData, $storeId);
-            $categoryData = $this->addAvailableSortByOption($categoryData, $storeId);*/
-            $categoryData['product_count'] = $productCount[$entityId];
+            $categoryData['productCount'] = $productCount[$entityId];
 
             $indexData[$entityId] = $categoryData;
         }
@@ -119,7 +117,7 @@ class AttributeData implements DataProviderInterface
         $childrenData = $this->plotTree($groupedChildren, $categoryId, $storeId);
 
         $category['subcategories'] = $childrenData;
-        $category['subcategories_count'] = count($childrenData);
+        $category['subcategoriesCount'] = count($childrenData);
 
         return $category;
     }
@@ -152,10 +150,10 @@ class AttributeData implements DataProviderInterface
                     $categoryData = array_merge($categoryData, $this->childrenRowAttributes[$categoryId]);
                 }
 
-                $categoryData['product_count'] = $this->childrenProductCount[$categoryId];
+                $categoryData['productCount'] = $this->childrenProductCount[$categoryId];
                 $categoryData = $this->prepareCategory($categoryData, $storeId);
                 $categoryData['subcategories'] = $this->plotTree($categories, $categoryId, $storeId);
-                $categoryData['subcategories_count'] = count($categoryData['subcategories']);
+                $categoryData['subcategoriesCount'] = count($categoryData['subcategories']);
                 $categoryTree[] = $categoryData;
             }
         }
