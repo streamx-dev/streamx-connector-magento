@@ -13,7 +13,7 @@
                 <enable>0</enable>
             </general_settings>
             <optimization_settings>
-                <should_perform_streamx_availability_check>1</should_perform_streamx_availability_check>
+                <should_perform_streamx_availability_check>0</should_perform_streamx_availability_check>
                 <batch_indexing_size>100</batch_indexing_size>
             </optimization_settings>
         </streamx_connector_settings>
