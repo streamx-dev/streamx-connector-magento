@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0627b5e0b01ee665d7d2414f4008b939",
+    "content-hash": "6cf5dd28cdc1cfa5d808bbbef6c17045",
     "packages": [
         {
             "name": "brick/math",
@@ -68,16 +68,16 @@
         },
         {
             "name": "colinmollenhour/credis",
-            "version": "v1.16.1",
+            "version": "v1.16.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/colinmollenhour/credis.git",
-                "reference": "f11a89fd068d3e5db0c2b5a9ba8663bc36162e95"
+                "reference": "db2c0323292e360fdba39bf98c7a405fe3cb05b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/colinmollenhour/credis/zipball/f11a89fd068d3e5db0c2b5a9ba8663bc36162e95",
-                "reference": "f11a89fd068d3e5db0c2b5a9ba8663bc36162e95",
+                "url": "https://api.github.com/repos/colinmollenhour/credis/zipball/db2c0323292e360fdba39bf98c7a405fe3cb05b0",
+                "reference": "db2c0323292e360fdba39bf98c7a405fe3cb05b0",
                 "shasum": ""
             },
             "require": {
@@ -109,9 +109,9 @@
             "homepage": "https://github.com/colinmollenhour/credis",
             "support": {
                 "issues": "https://github.com/colinmollenhour/credis/issues",
-                "source": "https://github.com/colinmollenhour/credis/tree/v1.16.1"
+                "source": "https://github.com/colinmollenhour/credis/tree/v1.16.2"
             },
-            "time": "2024-07-04T15:08:03+00:00"
+            "time": "2024-12-17T02:24:03+00:00"
         },
         {
             "name": "colinmollenhour/php-redis-session-abstract",
@@ -2314,11 +2314,11 @@
         },
         {
             "name": "magento/composer-dependency-version-audit-plugin",
-            "version": "0.1.5",
+            "version": "0.1.6",
             "dist": {
                 "type": "zip",
-                "url": "https://repo.magento.com/archives/magento/composer-dependency-version-audit-plugin/magento-composer-dependency-version-audit-plugin-0.1.5.0.zip",
-                "shasum": "5bbab92d2727217628a6806ad59d6c7fe1ec0651"
+                "url": "https://repo.magento.com/archives/magento/composer-dependency-version-audit-plugin/magento-composer-dependency-version-audit-plugin-0.1.6.0.zip",
+                "shasum": "62f455a259a54aa1869127f7b911345266105bf7"
             },
             "require": {
                 "composer-plugin-api": "^1.0 || ^2.0",
@@ -2487,10 +2487,10 @@
             },
             "type": "composer-plugin",
             "extra": {
+                "class": "MagentoHackathon\\Composer\\Magento\\Plugin",
                 "composer-command-registry": [
                     "MagentoHackathon\\Composer\\Magento\\Command\\DeployCommand"
-                ],
-                "class": "MagentoHackathon\\Composer\\Magento\\Plugin"
+                ]
             },
             "autoload": {
                 "psr-0": {
@@ -5452,16 +5452,16 @@
         },
         {
             "name": "streamx/ingestion-client",
-            "version": "1.0.0",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/streamx-dev/streamx-ingestion-php.git",
-                "reference": "bd773ddcd0eb500b03a5c9393d21b7d7d14a8546"
+                "reference": "471274b3d9967d34b1dd288feec2ee57661a6baf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/streamx-dev/streamx-ingestion-php/zipball/bd773ddcd0eb500b03a5c9393d21b7d7d14a8546",
-                "reference": "bd773ddcd0eb500b03a5c9393d21b7d7d14a8546",
+                "url": "https://api.github.com/repos/streamx-dev/streamx-ingestion-php/zipball/471274b3d9967d34b1dd288feec2ee57661a6baf",
+                "reference": "471274b3d9967d34b1dd288feec2ee57661a6baf",
                 "shasum": ""
             },
             "require": {
@@ -5481,17 +5481,16 @@
                     "Streamx\\Clients\\Ingestion\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Streamx\\Clients\\Ingestion\\Tests\\": "tests/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache License Version 2.0"
+            ],
             "description": "PHP ingestion client for StreamX - a Digital Experience Data Mesh.",
             "support": {
-                "source": "https://github.com/streamx-dev/streamx-ingestion-php/tree/1.0.0",
-                "issues": "https://github.com/streamx-dev/streamx-ingestion-php/issues"
+                "issues": "https://github.com/streamx-dev/streamx-ingestion-php/issues",
+                "source": "https://github.com/streamx-dev/streamx-ingestion-php/tree/1.0.3"
             },
-            "time": "2024-12-13T08:51:23+00:00"
+            "time": "2025-01-07T12:11:47+00:00"
         },
         {
             "name": "symfony/console",
@@ -5602,12 +5601,12 @@
             },
             "type": "library",
             "extra": {
+                "thanks": {
+                    "url": "https://github.com/symfony/contracts",
+                    "name": "symfony/contracts"
+                },
                 "branch-alias": {
                     "dev-main": "2.5-dev"
-                },
-                "thanks": {
-                    "name": "symfony/contracts",
-                    "url": "https://github.com/symfony/contracts"
                 }
             },
             "autoload": {
@@ -6424,12 +6423,12 @@
             },
             "type": "library",
             "extra": {
+                "thanks": {
+                    "url": "https://github.com/symfony/contracts",
+                    "name": "symfony/contracts"
+                },
                 "branch-alias": {
                     "dev-main": "2.5-dev"
-                },
-                "thanks": {
-                    "name": "symfony/contracts",
-                    "url": "https://github.com/symfony/contracts"
                 }
             },
             "autoload": {
@@ -6868,16 +6867,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v5.3.1",
+            "version": "v5.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "8eea230464783aa9671db8eea6f8c6ac5285794b"
+                "reference": "447a020a1f875a434d62f2a401f53b82a396e494"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/8eea230464783aa9671db8eea6f8c6ac5285794b",
-                "reference": "8eea230464783aa9671db8eea6f8c6ac5285794b",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/447a020a1f875a434d62f2a401f53b82a396e494",
+                "reference": "447a020a1f875a434d62f2a401f53b82a396e494",
                 "shasum": ""
             },
             "require": {
@@ -6920,9 +6919,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/v5.3.1"
+                "source": "https://github.com/nikic/PHP-Parser/tree/v5.4.0"
             },
-            "time": "2024-10-08T18:51:32+00:00"
+            "time": "2024-12-30T11:07:19+00:00"
         },
         {
             "name": "phar-io/manifest",
