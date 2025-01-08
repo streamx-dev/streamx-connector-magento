@@ -59,7 +59,7 @@ class Client implements ClientInterface {
         $entityType = $publishItem['type'];
         $entity = $publishItem['entity'];
         $entityId = $entity['id'];
-        $key = self::createStreamxEntityKey($entityType, $entityId);
+        $key = $entityType . '_' . $entityId;
         $payload = new Data(json_encode($entity));
         return Message::newPublishMessage($key, $payload)->build();
     }
@@ -67,12 +67,8 @@ class Client implements ClientInterface {
     private static function createUnpublishMessage(array $unpublishItem): Message {
         $entityType = $unpublishItem['type'];
         $entityId = $unpublishItem['id'];
-        $key = self::createStreamxEntityKey($entityType, $entityId);
+        $key = $entityType . '_' . $entityId;
         return Message::newUnpublishMessage($key)->build();
-    }
-
-    private static function createStreamxEntityKey(string $entityType, int $entityId): string {
-        return $entityType . '_' . $entityId;
     }
 
     /**

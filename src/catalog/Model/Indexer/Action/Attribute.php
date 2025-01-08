@@ -3,24 +3,14 @@
 namespace StreamX\ConnectorCatalog\Model\Indexer\Action;
 
 use StreamX\ConnectorCatalog\Model\ResourceModel\Attribute as ResourceModel;
-use StreamX\ConnectorCatalog\Index\Mapping\Attribute as AttributeMapping;
-use StreamX\ConnectorCore\Api\ConvertValueInterface;
 use Traversable;
 
 class Attribute
 {
     private ResourceModel $resourceModel;
-    private AttributeMapping $attributeMapping;
-    private ConvertValueInterface $convertValue;
 
-    public function __construct(
-        ConvertValueInterface $convertValue,
-        AttributeMapping $attributeMapping,
-        ResourceModel $resourceModel
-    ) {
-        $this->convertValue = $convertValue;
+    public function __construct(ResourceModel $resourceModel) {
         $this->resourceModel = $resourceModel;
-        $this->attributeMapping = $attributeMapping;
     }
 
     public function rebuild(array $attributeIds = []): Traversable {
@@ -34,7 +24,6 @@ class Attribute
             foreach ($attributes as $attributeData) {
                 $lastAttributeId = $attributeData['attribute_id'];
                 $attributeData['id'] = $attributeData['attribute_id'];
-                $attributeData = $this->filterData($attributeData);
 
                 yield $lastAttributeId => $attributeData;
                 $publishedAttributeIds[] = $lastAttributeId;
@@ -46,14 +35,5 @@ class Attribute
         foreach ($idsOfAttributesToUnpublish as $attributeId) {
             yield $attributeId => [];
         }
-    }
-
-    private function filterData(array $attributeData): array {
-        foreach ($attributeData as $key => $value) {
-            $value = $this->convertValue->execute($this->attributeMapping, $key, $value);
-            $attributeData[$key] = $value;
-        }
-
-        return $attributeData;
     }
 }

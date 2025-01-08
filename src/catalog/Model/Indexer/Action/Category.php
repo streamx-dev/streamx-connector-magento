@@ -6,7 +6,8 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category as ResourceModel;
 use Traversable;
 
-class Category {
+class Category
+{
     private ResourceModel $resourceModel;
 
     public function __construct(ResourceModel $resourceModel) {
