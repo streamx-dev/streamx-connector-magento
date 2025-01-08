@@ -3,9 +3,7 @@
 namespace StreamX\ConnectorCatalog\test\integration\utils;
 
 use PHPUnit\Framework\TestCase;
-use RuntimeException;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
-use SebastianBergmann\CodeCoverage\Driver\Driver;
 use SebastianBergmann\CodeCoverage\Filter;
 use SebastianBergmann\CodeCoverage\RawCodeCoverageData;
 use SebastianBergmann\CodeCoverage\Report\Html\Facade;
@@ -17,12 +15,8 @@ final class CodeCoverageReportGenerator {
     public static function generateCodeCoverageReport(string $coverage, TestCase $caller): void {
         $localConnectorRootDir = DirectoryUtils::findFolder('streamx-connector-magento');
 
-        $coverage = self::unwrapJsonFromString($coverage);
-        $coverageArray = json_decode($coverage, true);
-        $coverageArray = self::changeFilePathsToLocalPathsAndRemoveNonStreamxConnectorEntries($coverageArray, $localConnectorRootDir);
-
-        $parsedCoverage = RawCodeCoverageData::fromXdebugWithoutPathCoverage($coverageArray);
-        $codeCoverage = new CodeCoverage(new DriverMock(), new Filter());
+        $parsedCoverage = self::parseCoverage($coverage, $localConnectorRootDir);
+        $codeCoverage = new CodeCoverage(new CodeCoverageDriverMock(), new Filter());
         $codeCoverage->append($parsedCoverage, $caller);
 
         $htmlReportFacade = new Facade();
@@ -30,25 +24,35 @@ final class CodeCoverageReportGenerator {
         $htmlReportFacade->process($codeCoverage, $reportDirectory);
     }
 
-    private static function unwrapJsonFromString(string $coverage): string {
-        $coverage = substr($coverage, 1, strlen($coverage) - 2);
-        $coverage = str_replace('\\"', '"', $coverage);
-        return str_replace('\\\\\\/', '/', $coverage);
+    private static function parseCoverage(string $coverage, string $localConnectorRootDir): RawCodeCoverageData {
+        $coverage = self::cleanUpJson($coverage);
+        $coverage = self::changeFilePathsToLocalPaths($coverage, $localConnectorRootDir);
+        $coverageArray = json_decode($coverage, true);
+        $coverageArray = self::removeNonStreamxConnectorEntries($coverageArray, $localConnectorRootDir);
+        return RawCodeCoverageData::fromXdebugWithoutPathCoverage($coverageArray);
     }
 
-    private static function changeFilePathsToLocalPathsAndRemoveNonStreamxConnectorEntries(array $coverageData, string $localConnectorRootDir): array {
-        $result = [];
-        foreach ($coverageData as $magentoPhpFilePath => $data) {
-            if (str_contains($magentoPhpFilePath, self::STREAMX_CONNECTOR_ROOT_DIR_IN_MAGENTO_SERVER)) {
-                $localPhpFilePath = str_replace(
-                    self::STREAMX_CONNECTOR_ROOT_DIR_IN_MAGENTO_SERVER,
-                    $localConnectorRootDir,
-                    $magentoPhpFilePath
-                );
-                $result[$localPhpFilePath] = $data;
+    private static function cleanUpJson(string $escapedJson): string {
+        $escapedJson = substr($escapedJson, 1, strlen($escapedJson) - 2); // unwrap from ' '
+        $escapedJson = str_replace('\\"', '"', $escapedJson); // unescape double quotes
+        return str_replace('\\\\\\/', '/', $escapedJson); // unescape slashes
+    }
+
+    private static function changeFilePathsToLocalPaths(string $coverage, string $localConnectorRootDir): string {
+        return str_replace(
+            self::STREAMX_CONNECTOR_ROOT_DIR_IN_MAGENTO_SERVER,
+            $localConnectorRootDir,
+            $coverage
+        );
+    }
+
+    private static function removeNonStreamxConnectorEntries(array $coverageData, string $localConnectorRootDir): array {
+        foreach ($coverageData as $filePath => $value) {
+            if (!str_starts_with($filePath, $localConnectorRootDir)) {
+                unset($coverageData[$filePath]);
             }
         }
-        return $result;
+        return $coverageData;
     }
 
     private static function createCoverageReportDirectory(string $localConnectorRootDir, TestCase $caller): string {
@@ -60,22 +64,5 @@ final class CodeCoverageReportGenerator {
         }
         mkdir($dir, 0777, true);
         return $dir;
-    }
-}
-
-// SebastianBergmann\CodeCoverage\CodeCoverage class is mostly designed to measure coverage, so it needs xdebug driver.
-// But for our use case it only parses already collected coverage data. So a Driver mock is enough
-class DriverMock extends Driver {
-
-    public function nameAndVersion(): string {
-        throw new RuntimeException('Not implemented');
-    }
-
-    public function start(): void {
-        throw new RuntimeException('Not implemented');
-    }
-
-    public function stop(): RawCodeCoverageData {
-        throw new RuntimeException('Not implemented');
     }
 }
