@@ -4,7 +4,7 @@ namespace StreamX\ConnectorTestTools\Impl;
 
 trait CoverageMeasurementTraits {
 
-    protected function doWithCoverageMeasurement(callable $customCode): string {
+    protected function executeWithCoverageMeasurement(callable $customCode): string {
         xdebug_start_code_coverage();
 
         $customCode();

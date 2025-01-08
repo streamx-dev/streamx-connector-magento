@@ -35,7 +35,7 @@ class EntityEditControllerImpl  implements EntityEditControllerInterface {
      * @inheritdoc
      */
     public function renameProduct(int $productId, string $newName): string {
-        return $this->doWithCoverageMeasurement(function() use ($productId, $newName) {
+        return $this->executeWithCoverageMeasurement(function() use ($productId, $newName) {
             try {
                 $product = $this->productRepository->getById($productId);
                 $product->setName($newName);
@@ -50,7 +50,7 @@ class EntityEditControllerImpl  implements EntityEditControllerInterface {
      * @inheritdoc
      */
     public function renameCategory(int $categoryId, string $newName): string {
-        return $this->doWithCoverageMeasurement(function() use ($categoryId, $newName) {
+        return $this->executeWithCoverageMeasurement(function() use ($categoryId, $newName) {
             try {
                 $category = $this->categoryRepository->get($categoryId);
                 $category->setName($newName);
@@ -65,7 +65,7 @@ class EntityEditControllerImpl  implements EntityEditControllerInterface {
      * @inheritdoc
      */
     public function renameAttribute(string $attributeCode, string $newName): string {
-        return $this->doWithCoverageMeasurement(function() use ($attributeCode, $newName) {
+        return $this->executeWithCoverageMeasurement(function() use ($attributeCode, $newName) {
             try {
                 $attribute = $this->attributeRepository->get(Product::ENTITY, $attributeCode);
                 $attribute->setDefaultFrontendLabel($newName);
@@ -80,7 +80,7 @@ class EntityEditControllerImpl  implements EntityEditControllerInterface {
      * @inheritdoc
      */
     public function changeProductCategory(int $productId, int $oldCategoryId, int $newCategoryId): string {
-        return $this->doWithCoverageMeasurement(function() use ($productId, $oldCategoryId, $newCategoryId) {
+        return $this->executeWithCoverageMeasurement(function() use ($productId, $oldCategoryId, $newCategoryId) {
             try {
                 $product = $this->productRepository->getById($productId);
 

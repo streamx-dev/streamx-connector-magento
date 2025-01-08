@@ -20,7 +20,7 @@ class MviewReindexerImpl implements MviewReindexerInterface {
      * @throws Exception
      */
     public function reindexMview(string $indexerViewId): string {
-        return $this->doWithCoverageMeasurement(function() use ($indexerViewId) {
+        return $this->executeWithCoverageMeasurement(function() use ($indexerViewId) {
             $this->streamxIndexerMviewProcessor->reindexMview($indexerViewId);
         });
     }
