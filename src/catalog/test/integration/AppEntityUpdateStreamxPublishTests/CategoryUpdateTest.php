@@ -38,7 +38,7 @@ class CategoryUpdateTest extends BaseAppEntityUpdateTest {
     }
 
     private function renameCategory(int $categoryId, string $newName) {
-        $this->callMagentoEndpoint('category/rename', [
+        $this->callMagentoPutEndpoint('category/rename', [
             'categoryId' => $categoryId,
             'newName' => $newName
         ]);
