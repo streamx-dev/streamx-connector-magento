@@ -21,6 +21,9 @@ abstract class BaseStreamxTest extends TestCase {
     private const STREAMX_DELIVERY_SERVICE_BASE_URL = "http://localhost:8081";
     private const DATA_PUBLISH_TIMEOUT_SECONDS = 3;
 
+    /**
+     * @deprecated move to use assertExactDataIsPublished instead, as it gives more exact verification
+     */
     protected function assertDataIsPublished(string $key, string $contentSubstring): void {
         $url = self::STREAMX_DELIVERY_SERVICE_BASE_URL . '/' . $key;
 
@@ -40,6 +43,33 @@ abstract class BaseStreamxTest extends TestCase {
 
         if ($response !== false) {
             $this->assertStringContainsString($contentSubstring, $response);
+        } else {
+            $this->fail("$url: not found");
+        }
+    }
+
+    protected function assertExactDataIsPublished(string $key, string $expectedJson): void {
+        $url = self::STREAMX_DELIVERY_SERVICE_BASE_URL . '/' . $key;
+        $expectedFormattedJson = self::formatJson($expectedJson);
+        $actualFormattedJson = '';
+
+        $startTime = time();
+        $response = null;
+        while (time() - $startTime < self::DATA_PUBLISH_TIMEOUT_SECONDS) {
+            $response = @file_get_contents($url);
+            if ($response !== false) {
+                echo "Published content: $response\n";
+                $actualFormattedJson = self::formatJson($response);
+                if ($expectedFormattedJson === $actualFormattedJson) {
+                    $this->assertTrue(true); // needed to work around the "This test did not perform any assertions" warning
+                    return;
+                }
+            }
+            usleep(100000); // sleep for 100 milliseconds
+        }
+
+        if ($response !== false) {
+            $this->assertEquals($expectedFormattedJson, $actualFormattedJson);
         } else {
             $this->fail("$url: not found");
         }
@@ -66,5 +96,9 @@ abstract class BaseStreamxTest extends TestCase {
             ->build()
             ->newPublisher(self::CHANNEL_NAME, self::CHANNEL_SCHEMA_NAME)
             ->unpublish($key);
+    }
+
+    private static function formatJson(string $json): string {
+        return json_encode(json_decode($json), JSON_PRETTY_PRINT);
     }
 }
