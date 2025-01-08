@@ -3,7 +3,6 @@
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
-use function date;
 
 /**
  * @inheritdoc
@@ -18,7 +17,7 @@ class ProductUpdateTest extends BaseDirectDbEntityUpdateTest {
     public function shouldPublishProductEditedDirectlyInDatabaseToStreamx() {
         // given
         $productOldName = 'Joust Duffle Bag';
-        $productNewName = 'Name modified for testing, at ' . date("Y-m-d H:i:s");
+        $productNewName = 'Name modified for testing';
         $productId = $this->db->getProductId($productOldName);
 
         // and
@@ -33,13 +32,13 @@ class ProductUpdateTest extends BaseDirectDbEntityUpdateTest {
             $this->reindexMview();
 
             // then
-            $this->assertDataIsPublished($expectedKey, $productNewName);
+            $this->assertExactDataIsPublished($expectedKey, 'edited-bag-product.json');
         } finally {
             $this->renameProductInDb($productId, $productOldName);
         }
     }
 
-    private function renameProductInDb(int $productId, string $newName) {
+    private function renameProductInDb(int $productId, string $newName): void {
         $productNameAttributeId = $this->db->getProductNameAttributeId();
         $this->db->execute("
             UPDATE catalog_product_entity_varchar

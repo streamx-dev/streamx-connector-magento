@@ -4,7 +4,6 @@ namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublis
 
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageReportGenerator;
-use function date;
 
 /**
  * @inheritdoc
@@ -19,7 +18,7 @@ class ProductUpdateTest extends BaseAppEntityUpdateTest {
     public function shouldPublishProductEditedUsingMagentoApplicationToStreamx() {
         // given
         $productOldName = 'Joust Duffle Bag';
-        $productNewName = 'Name modified for testing, at ' . date("Y-m-d H:i:s");
+        $productNewName = 'Name modified for testing';
         $productId = $this->db->getProductId($productOldName);
 
         // and
@@ -31,14 +30,14 @@ class ProductUpdateTest extends BaseAppEntityUpdateTest {
 
         // then
         try {
-            $this->assertDataIsPublished($expectedKey, $productNewName);
+            $this->assertExactDataIsPublished($expectedKey, 'edited-bag-product.json');
         } finally {
             self::renameProduct($productId, $productOldName);
-            $this->assertDataIsPublished($expectedKey, $productOldName);
+            $this->assertExactDataIsPublished($expectedKey, 'original-bag-product.json');
         }
     }
 
-    private function renameProduct(int $productId, string $newName) {
+    private function renameProduct(int $productId, string $newName): void {
         $coverage = $this->callMagentoPutEndpoint('product/rename', [
             'productId' => $productId,
             'newName' => $newName

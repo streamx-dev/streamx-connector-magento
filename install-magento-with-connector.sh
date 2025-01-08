@@ -7,7 +7,7 @@ set -e # exit on 1st error
 ## Remove previous instance, if exists
 if [ -d "magento" ]; then
     cd magento
-    bin/removeall || true # continue also if the magento instance wasn't yet installed
+    yes | bin/removeall || true # say yes to remove all containers; continue also if the magento instance wasn't yet installed
     cd ..
     rm -rf magento
 fi
