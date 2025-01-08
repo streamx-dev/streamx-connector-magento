@@ -2,6 +2,7 @@
 
 namespace StreamX\ConnectorCatalog\Model\Indexer;
 
+use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCatalog\Model\Indexer\Action\Category as CategoryAction;
 use StreamX\ConnectorCore\Indexer\GenericIndexerHandler;
 use StreamX\ConnectorCore\Indexer\StoreManager;
@@ -11,15 +12,18 @@ class Category implements \Magento\Framework\Indexer\ActionInterface, \Magento\F
     private GenericIndexerHandler $indexHandler;
     private CategoryAction $categoryAction;
     private StoreManager $storeManager;
+    private LoggerInterface $logger;
 
     public function __construct(
         GenericIndexerHandler $indexerHandler,
         StoreManager $storeManager,
-        CategoryAction $action
+        CategoryAction $action,
+        LoggerInterface $logger
     ) {
         $this->indexHandler = $indexerHandler;
         $this->categoryAction = $action;
         $this->storeManager = $storeManager;
+        $this->logger = $logger;
     }
 
     /**
@@ -27,12 +31,7 @@ class Category implements \Magento\Framework\Indexer\ActionInterface, \Magento\F
      */
     public function execute($ids)
     {
-        $stores = $this->storeManager->getStores();
-
-        foreach ($stores as $store) {
-            $storeId = $store->getId();
-            $this->indexHandler->saveIndex($this->categoryAction->rebuild($storeId, $ids), $store);
-        }
+        $this->loadDocumentsAndSaveIndex($ids);
     }
 
     /**
@@ -40,10 +39,19 @@ class Category implements \Magento\Framework\Indexer\ActionInterface, \Magento\F
      */
     public function executeFull()
     {
+        $this->loadDocumentsAndSaveIndex();
+    }
+
+    private function loadDocumentsAndSaveIndex($ids = []): void {
         $stores = $this->storeManager->getStores();
 
         foreach ($stores as $store) {
-            $this->indexHandler->saveIndex($this->categoryAction->rebuild($store->getId()), $store);
+            $storeId = $store->getId();
+            $this->logger->info("Indexing Categories from store $storeId");
+
+            $documents = $this->categoryAction->rebuild($storeId, $ids);
+            $this->indexHandler->saveIndex($documents, $store);
+            $this->logger->info("Indexed Categories from store {$store->getId()}");
         }
     }
 

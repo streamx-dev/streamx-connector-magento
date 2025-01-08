@@ -3,7 +3,6 @@
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
-use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
 use function date;
 
 /**
@@ -19,17 +18,17 @@ class AttributeUpdateTest extends BaseDirectDbEntityUpdateTest {
     public function shouldPublishAttributeEditedDirectlyInDatabaseToStreamx() {
         // given
         $attributeCode = 'description';
-        $attributeId = MagentoMySqlQueryExecutor::getProductAttributeId($attributeCode);
+        $attributeId = $this->db->getProductAttributeId($attributeCode);
 
         $newDisplayName = 'Description attribute name modified for testing, at ' . date("Y-m-d H:i:s");
-        $oldDisplayName = MagentoMySqlQueryExecutor::getAttributeDisplayName($attributeId);
+        $oldDisplayName = $this->db->getAttributeDisplayName($attributeId);
 
         // and
         $expectedKey = "attribute_$attributeId";
         self::removeFromStreamX($expectedKey);
 
         // when
-        self::renameAttributeInDb($attributeId, $newDisplayName);
+        $this->renameAttributeInDb($attributeId, $newDisplayName);
 
         try {
             // and
@@ -38,12 +37,12 @@ class AttributeUpdateTest extends BaseDirectDbEntityUpdateTest {
             // then
             $this->assertDataIsPublished($expectedKey, $newDisplayName);
         } finally {
-            self::renameAttributeInDb($attributeId, $oldDisplayName);
+            $this->renameAttributeInDb($attributeId, $oldDisplayName);
         }
     }
 
-    private static function renameAttributeInDb($attributeId, string $newDisplayName): void {
-        MagentoMySqlQueryExecutor::execute("
+    private function renameAttributeInDb($attributeId, string $newDisplayName): void {
+        $this->db->execute("
             UPDATE eav_attribute
                SET frontend_label = '$newDisplayName'
              WHERE attribute_id = $attributeId

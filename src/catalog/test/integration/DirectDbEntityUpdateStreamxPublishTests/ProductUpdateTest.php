@@ -3,7 +3,6 @@
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
-use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
 use function date;
 
 /**
@@ -20,14 +19,14 @@ class ProductUpdateTest extends BaseDirectDbEntityUpdateTest {
         // given
         $productOldName = 'Joust Duffle Bag';
         $productNewName = 'Name modified for testing, at ' . date("Y-m-d H:i:s");
-        $productId = MagentoMySqlQueryExecutor::getProductId($productOldName);
+        $productId = $this->db->getProductId($productOldName);
 
         // and
         $expectedKey = "product_$productId";
         self::removeFromStreamX($expectedKey);
 
         // when
-        self::renameProductInDb($productId, $productNewName);
+        $this->renameProductInDb($productId, $productNewName);
 
         try {
             // and
@@ -36,13 +35,13 @@ class ProductUpdateTest extends BaseDirectDbEntityUpdateTest {
             // then
             $this->assertDataIsPublished($expectedKey, $productNewName);
         } finally {
-            self::renameProductInDb($productId, $productOldName);
+            $this->renameProductInDb($productId, $productOldName);
         }
     }
 
-    private static function renameProductInDb(int $productId, string $newName) {
-        $productNameAttributeId = MagentoMySqlQueryExecutor::getProductNameAttributeId();
-        MagentoMySqlQueryExecutor::execute("
+    private function renameProductInDb(int $productId, string $newName) {
+        $productNameAttributeId = $this->db->getProductNameAttributeId();
+        $this->db->execute("
             UPDATE catalog_product_entity_varchar
                SET value = '$newName'
              WHERE attribute_id = $productNameAttributeId

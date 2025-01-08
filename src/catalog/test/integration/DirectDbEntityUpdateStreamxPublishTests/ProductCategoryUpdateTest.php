@@ -3,7 +3,6 @@
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
-use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
 
 /**
  * @inheritdoc
@@ -20,13 +19,13 @@ class ProductCategoryUpdateTest extends BaseDirectDbEntityUpdateTest {
     public function shouldPublishProductCategoryEditedDirectlyInDatabaseToStreamx() {
         // given
         $productName = 'Joust Duffle Bag';
-        $productId = MagentoMySqlQueryExecutor::getProductId($productName);
+        $productId = $this->db->getProductId($productName);
 
         $newCategoryName = 'Jackets';
-        $newCategoryId = MagentoMySqlQueryExecutor::getCategoryId($newCategoryName);
+        $newCategoryId = $this->db->getCategoryId($newCategoryName);
 
         // read ID of first category assigned to the product
-        $oldCategoryId = MagentoMySqlQueryExecutor::selectFirstField("
+        $oldCategoryId = $this->db->selectFirstField("
             SELECT MIN(category_id)
               FROM catalog_category_product
              WHERE product_id = $productId
@@ -39,7 +38,7 @@ class ProductCategoryUpdateTest extends BaseDirectDbEntityUpdateTest {
         self::removeFromStreamX($expectedKey);
 
         // when
-        self::changeProductCategoryInDb($productId, $oldCategoryId, $newCategoryId);
+        $this->changeProductCategoryInDb($productId, $oldCategoryId, $newCategoryId);
 
         try {
             // and
@@ -48,12 +47,12 @@ class ProductCategoryUpdateTest extends BaseDirectDbEntityUpdateTest {
             // then
             $this->assertDataIsPublished($expectedKey, $newCategoryName);
         } finally {
-            self::changeProductCategoryInDb($productId, $newCategoryId, $oldCategoryId);
+            $this->changeProductCategoryInDb($productId, $newCategoryId, $oldCategoryId);
         }
     }
 
-    private static function changeProductCategoryInDb(int $productId, string $oldCategoryId, string $newCategoryId) {
-        MagentoMySqlQueryExecutor::execute("
+    private function changeProductCategoryInDb(int $productId, string $oldCategoryId, string $newCategoryId) {
+        $this->db->execute("
             UPDATE catalog_category_product
                SET category_id = $newCategoryId
              WHERE category_id = $oldCategoryId

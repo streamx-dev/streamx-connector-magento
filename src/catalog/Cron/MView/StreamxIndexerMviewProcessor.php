@@ -40,11 +40,12 @@ class StreamxIndexerMviewProcessor {
      */
     public function reindexMview(string $indexerViewId): void {
         try {
+            $this->logger->info("Start processing mview for $indexerViewId");
             $mView = $this->viewInterface->load($indexerViewId);
             $mView->update();
-            $this->logger->info("Incremental reindexing executed successfully for $indexerViewId");
+            $this->logger->info("Finished processing mview for $indexerViewId");
         } catch (Exception $e) {
-            throw new Exception("Error during incremental reindexing $indexerViewId: " . $e->getMessage(), -1, $e);
+            throw new Exception("Error processing mview for $indexerViewId: " . $e->getMessage(), -1, $e);
         }
     }
 

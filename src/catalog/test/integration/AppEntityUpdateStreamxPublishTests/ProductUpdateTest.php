@@ -3,7 +3,6 @@
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
-use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
 use function date;
 
 /**
@@ -20,7 +19,7 @@ class ProductUpdateTest extends BaseAppEntityUpdateTest {
         // given
         $productOldName = 'Joust Duffle Bag';
         $productNewName = 'Name modified for testing, at ' . date("Y-m-d H:i:s");
-        $productId = MagentoMySqlQueryExecutor::getProductId($productOldName);
+        $productId = $this->db->getProductId($productOldName);
 
         // and
         $expectedKey = "product_$productId";
