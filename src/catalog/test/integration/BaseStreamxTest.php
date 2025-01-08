@@ -4,6 +4,8 @@ namespace StreamX\ConnectorCatalog\test\integration;
 
 use PHPUnit\Framework\TestCase;
 use Streamx\Clients\Ingestion\Builders\StreamxClientBuilders;
+use StreamX\ConnectorCatalog\test\integration\utils\JsonFormatter;
+use StreamX\ConnectorCatalog\test\integration\utils\ValidationFileUtils;
 
 /**
  * Prerequisites to run these tests:
@@ -14,14 +16,14 @@ use Streamx\Clients\Ingestion\Builders\StreamxClientBuilders;
  */
 abstract class BaseStreamxTest extends TestCase {
 
+    use ValidationFileUtils;
+
     protected const STREAMX_REST_INGESTION_URL = "http://localhost:8080";
     protected const CHANNEL_SCHEMA_NAME = "dev.streamx.blueprints.data.DataIngestionMessage";
     protected const CHANNEL_NAME = "data";
 
     private const STREAMX_DELIVERY_SERVICE_BASE_URL = "http://localhost:8081";
     private const DATA_PUBLISH_TIMEOUT_SECONDS = 3;
-
-    private const VALIDATION_FILES_RELATIVE_DIR = '../resources/validation';
 
     /**
      * @deprecated move to use assertExactDataIsPublished instead, as it gives more exact verification
@@ -54,8 +56,7 @@ abstract class BaseStreamxTest extends TestCase {
         $url = self::STREAMX_DELIVERY_SERVICE_BASE_URL . '/' . $key;
 
         $expectedJson = $this->readValidationFileContent($validationFileName);
-        $expectedFormattedJson = self::formatJson($expectedJson);
-        $actualFormattedJson = '';
+        $expectedFormattedJson = JsonFormatter::formatJson($expectedJson);
 
         $startTime = time();
         $response = null;
@@ -63,9 +64,7 @@ abstract class BaseStreamxTest extends TestCase {
             $response = @file_get_contents($url);
             if ($response !== false) {
                 echo "Published content: $response\n";
-                $actualFormattedJson = self::formatJson($response);
-                if ($expectedFormattedJson === $actualFormattedJson) {
-                    $this->assertTrue(true); // needed to work around the "This test did not perform any assertions" warning
+                if ($this->verifySameJsonsSilently($expectedFormattedJson, $response)) {
                     return;
                 }
             }
@@ -73,7 +72,7 @@ abstract class BaseStreamxTest extends TestCase {
         }
 
         if ($response !== false) {
-            $this->assertEquals($expectedFormattedJson, $actualFormattedJson);
+            $this->verifySameJsonsOrThrow($expectedFormattedJson, $response);
         } else {
             $this->fail("$url: not found");
         }
@@ -100,18 +99,5 @@ abstract class BaseStreamxTest extends TestCase {
             ->build()
             ->newPublisher(self::CHANNEL_NAME, self::CHANNEL_SCHEMA_NAME)
             ->unpublish($key);
-    }
-
-    private function readValidationFileContent(string $validationFileName): string {
-        $validationFilePath = join(DIRECTORY_SEPARATOR, [
-            __DIR__,
-            self::VALIDATION_FILES_RELATIVE_DIR,
-            $validationFileName
-        ]);
-        return file_get_contents($validationFilePath);
-    }
-
-    private static function formatJson(string $json): string {
-        return json_encode(json_decode($json), JSON_PRETTY_PRINT);
     }
 }

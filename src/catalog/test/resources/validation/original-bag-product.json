@@ -1,0 +1,159 @@
+{
+  "attribute_set_id": 15,
+  "created_at": "2025-01-08 11:01:02",
+  "updated_at": "2025-01-08 11:12:08",
+  "type_id": "simple",
+  "sku": "24-MB01",
+  "id": 1,
+  "media_gallery": [
+    {
+      "typ": "image",
+      "image": "\/m\/b\/mb01-blue-0.jpg",
+      "lab": "Image",
+      "pos": 1
+    }
+  ],
+  "name": "Joust Duffle Bag",
+  "image": "\/m\/b\/mb01-blue-0.jpg",
+  "small_image": "\/m\/b\/mb01-blue-0.jpg",
+  "thumbnail": "\/m\/b\/mb01-blue-0.jpg",
+  "url_key": "joust-duffle-bag-1",
+  "description": "<p>The sporty Joust Duffle Bag can't be beat - not in the gym, not on the luggage carousel, not anywhere. Big enough to haul a basketball or soccer ball and some sneakers with plenty of room to spare, it's ideal for athletes with places to go.<p>\n<ul>\n<li>Dual top handles.<\/li>\n<li>Adjustable shoulder strap.<\/li>\n<li>Full-length zipper.<\/li>\n<li>L 29\" x W 13\" x H 11\".<\/li>\n<\/ul>",
+  "price": 34,
+  "status": 1,
+  "visibility": 4,
+  "tax_class_id": 2,
+  "slug": "joust-duffle-bag-1",
+  "url_path": "joust-duffle-bag.html",
+  "category": [
+    {
+      "category_id": 4,
+      "name": "Bags",
+      "position": 0
+    },
+    {
+      "category_id": 3,
+      "name": "Gear",
+      "position": 0
+    }
+  ],
+  "category_ids": [
+    4,
+    3
+  ],
+  "final_price": 34,
+  "regular_price": 34,
+  "product_links": [
+    {
+      "sku": "24-MB01",
+      "link_type": "crosssell",
+      "linked_product_sku": "24-UG01",
+      "linked_product_type": "simple",
+      "position": 3
+    },
+    {
+      "sku": "24-MB01",
+      "link_type": "crosssell",
+      "linked_product_sku": "24-WG083-blue",
+      "linked_product_type": "simple",
+      "position": 2
+    },
+    {
+      "sku": "24-MB01",
+      "link_type": "crosssell",
+      "linked_product_sku": "24-WG086",
+      "linked_product_type": "simple",
+      "position": 1
+    },
+    {
+      "sku": "24-MB01",
+      "link_type": "crosssell",
+      "linked_product_sku": "24-WG085_Group",
+      "linked_product_type": "grouped",
+      "position": 4
+    },
+    {
+      "sku": "24-MB01",
+      "link_type": "upsell",
+      "linked_product_sku": "24-MB03",
+      "linked_product_type": "simple",
+      "position": 2
+    },
+    {
+      "sku": "24-MB01",
+      "link_type": "upsell",
+      "linked_product_sku": "24-MB05",
+      "linked_product_type": "simple",
+      "position": 3
+    },
+    {
+      "sku": "24-MB01",
+      "link_type": "upsell",
+      "linked_product_sku": "24-MB06",
+      "linked_product_type": "simple",
+      "position": 4
+    },
+    {
+      "sku": "24-MB01",
+      "link_type": "upsell",
+      "linked_product_sku": "24-MB02",
+      "linked_product_type": "simple",
+      "position": 1
+    },
+    {
+      "sku": "24-MB01",
+      "link_type": "upsell",
+      "linked_product_sku": "24-UB02",
+      "linked_product_type": "simple",
+      "position": 5
+    },
+    {
+      "sku": "24-MB01",
+      "link_type": "upsell",
+      "linked_product_sku": "24-WB03",
+      "linked_product_type": "simple",
+      "position": 6
+    },
+    {
+      "sku": "24-MB01",
+      "link_type": "upsell",
+      "linked_product_sku": "24-WB07",
+      "linked_product_type": "simple",
+      "position": 8
+    },
+    {
+      "sku": "24-MB01",
+      "link_type": "upsell",
+      "linked_product_sku": "24-WB04",
+      "linked_product_type": "simple",
+      "position": 7
+    }
+  ],
+  "stock": {
+    "product_id": 1,
+    "item_id": 1,
+    "stock_id": 1,
+    "qty": 100,
+    "is_in_stock": true,
+    "is_qty_decimal": false,
+    "use_config_min_qty": true,
+    "min_qty": 0,
+    "use_config_min_sale_qty": true,
+    "min_sale_qty": 1,
+    "use_config_max_sale_qty": true,
+    "max_sale_qty": 10000,
+    "use_config_notify_stock_qty": true,
+    "notify_stock_qty": 1,
+    "use_config_qty_increments": true,
+    "backorders": false,
+    "use_config_backorders": true,
+    "qty_increments": 1,
+    "use_config_enable_qty_inc": true,
+    "enable_qty_increments": false,
+    "use_config_manage_stock": true,
+    "manage_stock": false,
+    "low_stock_date": null,
+    "stock_status": 1
+  },
+  "configurable_children": []
+}
