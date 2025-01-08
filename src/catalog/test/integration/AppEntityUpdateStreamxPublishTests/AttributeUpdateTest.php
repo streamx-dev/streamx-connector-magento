@@ -4,7 +4,6 @@ namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublis
 
 use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageReportGenerator;
-use function date;
 
 /**
  * @inheritdoc
@@ -21,7 +20,7 @@ class AttributeUpdateTest extends BaseAppEntityUpdateTest {
         $attributeCode = 'description';
         $attributeId = $this->db->getProductAttributeId($attributeCode);
 
-        $newDisplayName = 'Description attribute name modified for testing, at ' . date("Y-m-d H:i:s");
+        $newDisplayName = 'Description attribute name modified for testing';
         $oldDisplayName = $this->db->getAttributeDisplayName($attributeId);
 
         // and
@@ -33,14 +32,14 @@ class AttributeUpdateTest extends BaseAppEntityUpdateTest {
 
         // then
         try {
-            $this->assertDataIsPublished($expectedKey, $newDisplayName);
+            $this->assertExactDataIsPublished($expectedKey, 'edited-description-attribute.json');
         } finally {
             self::renameAttribute($attributeCode, $oldDisplayName);
-            $this->assertDataIsPublished($expectedKey, $oldDisplayName);
+            $this->assertExactDataIsPublished($expectedKey, 'original-description-attribute.json');
         }
     }
 
-    private function renameAttribute(string $attributeCode, string $newName) {
+    private function renameAttribute(string $attributeCode, string $newName): void {
         $coverage = $this->callMagentoPutEndpoint('attribute/rename', [
             'attributeCode' => $attributeCode,
             'newName' => $newName

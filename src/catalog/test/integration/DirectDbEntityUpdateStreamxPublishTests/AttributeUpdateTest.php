@@ -3,7 +3,6 @@
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
-use function date;
 
 /**
  * @inheritdoc
@@ -20,7 +19,7 @@ class AttributeUpdateTest extends BaseDirectDbEntityUpdateTest {
         $attributeCode = 'description';
         $attributeId = $this->db->getProductAttributeId($attributeCode);
 
-        $newDisplayName = 'Description attribute name modified for testing, at ' . date("Y-m-d H:i:s");
+        $newDisplayName = 'Description attribute name modified for testing';
         $oldDisplayName = $this->db->getAttributeDisplayName($attributeId);
 
         // and
@@ -35,7 +34,7 @@ class AttributeUpdateTest extends BaseDirectDbEntityUpdateTest {
             $this->reindexMview();
 
             // then
-            $this->assertDataIsPublished($expectedKey, $newDisplayName);
+            $this->assertExactDataIsPublished($expectedKey, 'edited-description-attribute.json');
         } finally {
             $this->renameAttributeInDb($attributeId, $oldDisplayName);
         }
