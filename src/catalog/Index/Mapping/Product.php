@@ -7,7 +7,7 @@ use StreamX\ConnectorCore\Api\MappingInterface;
 use StreamX\ConnectorCore\Index\Mapping\GeneralMapping;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\LoadAttributes;
 
-class Product extends AbstractMapping implements MappingInterface
+class Product extends AbstractMapping implements MappingInterface // TODO AbstractMapping is used only by this class. Inline it here
 {
     private GeneralMapping $generalMapping;
     private StockMapping $stockMapping;

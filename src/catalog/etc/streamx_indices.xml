@@ -17,7 +17,7 @@
                 <data_provider name="parent_data">StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\ParentSku</data_provider>
             </data_providers>
         </type>
-        <type name="category" mapping="StreamX\ConnectorCatalog\Index\Mapping\Category">
+        <type name="category" mapping="StreamX\ConnectorCatalog\Index\Mapping\NoOpMapping">
             <data_providers>
                 <data_provider name="category_data">StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Category\AttributeData</data_provider>
             </data_providers>
