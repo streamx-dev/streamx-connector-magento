@@ -2,19 +2,11 @@
 
 namespace StreamX\ConnectorCatalog\Index\Mapping;
 
-use StreamX\ConnectorCatalog\Index\Mapping\Attribute\OptionMapping;
 use StreamX\ConnectorCore\Api\MappingInterface;
 use StreamX\ConnectorCore\Api\Mapping\FieldInterface;
 
 class Attribute implements MappingInterface
 {
-    private OptionMapping $optionMapping;
-
-    public function __construct(OptionMapping $optionMapping)
-    {
-        $this->optionMapping = $optionMapping;
-    }
-
     private array $booleanProperties = [
         'is_required',
         'is_user_defined',
@@ -82,8 +74,6 @@ class Attribute implements MappingInterface
         foreach ($this->stringProperties as $property) {
             $properties[$property] = ['type' => FieldInterface::TYPE_TEXT];
         }
-
-        $properties['options'] = $this->optionMapping->get();
 
         return ['properties' => $properties];
     }
