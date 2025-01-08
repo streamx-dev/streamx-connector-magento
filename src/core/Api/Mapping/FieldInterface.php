@@ -4,7 +4,6 @@ namespace StreamX\ConnectorCore\Api\Mapping;
 
 interface FieldInterface
 {
-    const TYPE_KEYWORD = 'keyword';
     const TYPE_BOOLEAN = 'boolean';
     const TYPE_DOUBLE = 'double';
     const TYPE_INTEGER = 'integer';
