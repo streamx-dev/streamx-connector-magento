@@ -8,6 +8,8 @@ use StreamX\ConnectorTestTools\Api\MviewReindexerInterface;
 
 class MviewReindexerImpl implements MviewReindexerInterface {
 
+    use CoverageMeasurementTraits;
+
     private StreamxIndexerMviewProcessor $streamxIndexerMviewProcessor;
 
     public function __construct(StreamxIndexerMviewProcessor $streamxIndexerMviewProcessor) {
@@ -17,7 +19,9 @@ class MviewReindexerImpl implements MviewReindexerInterface {
     /**
      * @throws Exception
      */
-    public function reindexMview(string $indexerViewId): void {
-        $this->streamxIndexerMviewProcessor->reindexMview($indexerViewId);
+    public function reindexMview(string $indexerViewId): string {
+        return $this->doWithCoverageMeasurement(function() use ($indexerViewId) {
+            $this->streamxIndexerMviewProcessor->reindexMview($indexerViewId);
+        });
     }
 }

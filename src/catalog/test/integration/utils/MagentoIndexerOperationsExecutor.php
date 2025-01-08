@@ -2,7 +2,6 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\utils;
 
-use Exception;
 use function shell_exec;
 
 class MagentoIndexerOperationsExecutor {
@@ -19,7 +18,7 @@ class MagentoIndexerOperationsExecutor {
     private string $indexerName;
 
     public function __construct(string $indexerName) {
-        $this->magentoFolder = self::findMagentoFolder();
+        $this->magentoFolder = DirectoryUtils::findFolder('magento');
         $this->indexerName = $indexerName;
     }
 
@@ -42,25 +41,4 @@ class MagentoIndexerOperationsExecutor {
         $magentoCommand = 'bin/magento indexer:' . $indexerCommand . ' ' . $this->indexerName;
         return shell_exec("$cdCommand && $magentoCommand");
     }
-
-    private static function findMagentoFolder(): string {
-        $currentDir = __DIR__; // Start from the current directory
-
-        while (true) {
-            if (is_dir("$currentDir/magento")) {
-                return "$currentDir/magento";
-            }
-
-            $parentDir = dirname($currentDir);
-
-            if ($parentDir === $currentDir) { // root dir reached
-                break;
-            }
-
-            $currentDir = $parentDir;
-        }
-
-        throw new Exception("magento folder not found");
-    }
-
 }

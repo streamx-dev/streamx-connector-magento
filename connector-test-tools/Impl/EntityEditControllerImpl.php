@@ -12,6 +12,8 @@ use StreamX\ConnectorTestTools\Api\EntityEditControllerInterface;
 
 class EntityEditControllerImpl  implements EntityEditControllerInterface {
 
+    use CoverageMeasurementTraits;
+
     private ProductRepositoryInterface $productRepository;
     private CategoryRepositoryInterface $categoryRepository;
     private AttributeRepositoryInterface $attributeRepository;
@@ -32,58 +34,65 @@ class EntityEditControllerImpl  implements EntityEditControllerInterface {
     /**
      * @inheritdoc
      */
-    public function renameProduct(int $productId, string $newName): void {
-        try {
-            $product = $this->productRepository->getById($productId);
-            $product->setName($newName);
-            $this->productRepository->save($product);
-        } catch (Exception $e) {
-            throw new Exception("Error renaming product with ID $productId: " . $e->getMessage(), -1, $e);
-        }
+    public function renameProduct(int $productId, string $newName): string {
+        return $this->doWithCoverageMeasurement(function() use ($productId, $newName) {
+            try {
+                $product = $this->productRepository->getById($productId);
+                $product->setName($newName);
+                $this->productRepository->save($product);
+            } catch (Exception $e) {
+                throw new Exception("Error renaming product with ID $productId: " . $e->getMessage(), -1, $e);
+            }
+        });
     }
 
     /**
      * @inheritdoc
      */
-    public function renameCategory(int $categoryId, string $newName): void {
-        try {
-            $category = $this->categoryRepository->get($categoryId);
-            $category->setName($newName);
-            $this->categoryRepository->save($category);
-        } catch (Exception $e) {
-            throw new Exception("Error renaming category with ID $categoryId: " . $e->getMessage(), -1, $e);
-        }
+    public function renameCategory(int $categoryId, string $newName): string {
+        return $this->doWithCoverageMeasurement(function() use ($categoryId, $newName) {
+            try {
+                $category = $this->categoryRepository->get($categoryId);
+                $category->setName($newName);
+                $this->categoryRepository->save($category);
+            } catch (Exception $e) {
+                throw new Exception("Error renaming category with ID $categoryId: " . $e->getMessage(), -1, $e);
+            }
+        });
     }
 
     /**
      * @inheritdoc
      */
-    public function renameAttribute(string $attributeCode, string $newName): void {
-        try {
-            $attribute = $this->attributeRepository->get(Product::ENTITY, $attributeCode);
-            $attribute->setDefaultFrontendLabel($newName);
-            $this->attributeRepository->save($attribute);
-        } catch (Exception $e) {
-            throw new Exception("Error renaming product attribute '$attributeCode': " . $e->getMessage(), -1, $e);
-        }
+    public function renameAttribute(string $attributeCode, string $newName): string {
+        return $this->doWithCoverageMeasurement(function() use ($attributeCode, $newName) {
+            try {
+                $attribute = $this->attributeRepository->get(Product::ENTITY, $attributeCode);
+                $attribute->setDefaultFrontendLabel($newName);
+                $this->attributeRepository->save($attribute);
+            } catch (Exception $e) {
+                throw new Exception("Error renaming product attribute '$attributeCode': " . $e->getMessage(), -1, $e);
+            }
+        });
     }
 
     /**
      * @inheritdoc
      */
-    public function changeProductCategory(int $productId, int $oldCategoryId, int $newCategoryId): void
-    {
-        try {
-            $product = $this->productRepository->getById($productId);
+    public function changeProductCategory(int $productId, int $oldCategoryId, int $newCategoryId): string {
+        return $this->doWithCoverageMeasurement(function() use ($productId, $oldCategoryId, $newCategoryId) {
+            try {
+                $product = $this->productRepository->getById($productId);
 
-            /** @var string[] $oldCategoryIds */
-            $oldCategoryIds = $product->getCategoryIds();
-            $newCategoryIds = $this->computeNewCategoryIds($oldCategoryIds, (string)$oldCategoryId, $newCategoryId);
+                /** @var string[] $oldCategoryIds */
+                $oldCategoryIds = $product->getCategoryIds();
+                $newCategoryIds = $this->computeNewCategoryIds($oldCategoryIds, (string)$oldCategoryId, $newCategoryId);
 
-            $this->categoryLinkManagement->assignProductToCategories($product->getSku(), $newCategoryIds);
-        } catch (Exception $e) {
-            throw new Exception("Error changing product $productId category from $oldCategoryId to $newCategoryId: " . $e->getMessage(), -1, $e);
-        }
+                $this->categoryLinkManagement->assignProductToCategories($product->getSku(), $newCategoryIds);
+            } catch (Exception $e) {
+                throw new Exception("Error changing product $productId category from $oldCategoryId to $newCategoryId: " . $e->getMessage(), -1, $e);
+            }
+        });
     }
 
     private function computeNewCategoryIds(array $oldCategoryIds, string $categoryIdToRemove, string $newCategoryId): array {
