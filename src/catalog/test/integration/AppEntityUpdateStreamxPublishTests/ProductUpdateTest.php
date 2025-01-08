@@ -38,7 +38,7 @@ class ProductUpdateTest extends BaseAppEntityUpdateTest {
     }
 
     private function renameProduct(int $productId, string $newName) {
-        $this->callMagentoEndpoint('product/rename', [
+        $this->callMagentoPutEndpoint('product/rename', [
             'productId' => $productId,
             'newName' => $newName
         ]);

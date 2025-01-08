@@ -36,14 +36,14 @@ class ProductAddAndDeleteTest extends BaseAppEntityUpdateTest {
     }
 
     private function addProduct(string $productName, int $categoryId): int {
-        return (int) $this->callMagentoEndpoint('product/add', [
+        return (int) $this->callMagentoPutEndpoint('product/add', [
             'productName' => $productName,
             'categoryId' => $categoryId
         ]);
     }
 
     private function deleteProduct(int $productId): void {
-        $this->callMagentoEndpoint('product/delete', [
+        $this->callMagentoPutEndpoint('product/delete', [
             'productId' => $productId
         ]);
     }
