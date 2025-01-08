@@ -4,7 +4,6 @@ namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublis
 
 use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageReportGenerator;
-use function date;
 
 /**
  * @inheritdoc
@@ -18,8 +17,8 @@ class CategoryUpdateTest extends BaseAppEntityUpdateTest {
     /** @test */
     public function shouldPublishCategoryEditedUsingMagentoApplicationToStreamx() {
         // given
-        $categoryOldName = 'Watches';
-        $categoryNewName = 'Name modified for testing, at ' . date("Y-m-d H:i:s");
+        $categoryOldName = 'Gear';
+        $categoryNewName = 'Gear Articles';
         $categoryId = $this->db->getCategoryId($categoryOldName);
 
         // and
@@ -31,14 +30,14 @@ class CategoryUpdateTest extends BaseAppEntityUpdateTest {
 
         // then
         try {
-            $this->assertDataIsPublished($expectedKey, $categoryNewName);
+            $this->assertExactDataIsPublished($expectedKey, 'edited-gear-category.json');
         } finally {
             self::renameCategory($categoryId, $categoryOldName);
-            $this->assertDataIsPublished($expectedKey, $categoryOldName);
+            $this->assertExactDataIsPublished($expectedKey, 'original-gear-category.json');
         }
     }
 
-    private function renameCategory(int $categoryId, string $newName) {
+    private function renameCategory(int $categoryId, string $newName): void {
         $coverage = $this->callMagentoPutEndpoint('category/rename', [
             'categoryId' => $categoryId,
             'newName' => $newName

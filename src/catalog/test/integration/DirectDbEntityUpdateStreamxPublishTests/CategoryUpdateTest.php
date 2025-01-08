@@ -3,7 +3,6 @@
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
-use function date;
 
 /**
  * @inheritdoc
@@ -17,8 +16,8 @@ class CategoryUpdateTest extends BaseDirectDbEntityUpdateTest {
     /** @test */
     public function shouldPublishCategoryEditedDirectlyInDatabaseToStreamx() {
         // given
-        $categoryOldName = 'Watches';
-        $categoryNewName = 'Name modified for testing, at ' . date("Y-m-d H:i:s");
+        $categoryOldName = 'Gear';
+        $categoryNewName = 'Gear Articles';
         $categoryId = $this->db->getCategoryId($categoryOldName);
 
         // and
@@ -33,13 +32,13 @@ class CategoryUpdateTest extends BaseDirectDbEntityUpdateTest {
             $this->reindexMview();
 
             // then
-            $this->assertDataIsPublished($expectedKey, $categoryNewName);
+            $this->assertExactDataIsPublished($expectedKey, 'edited-gear-category.json');
         } finally {
             $this->renameCategoryInDb($categoryId, $categoryOldName);
         }
     }
 
-    private function renameCategoryInDb(int $categoryId, string $newName) {
+    private function renameCategoryInDb(int $categoryId, string $newName): void {
         $categoryNameAttributeId = $this->db->getCategoryNameAttributeId();
         $this->db->execute("
             UPDATE catalog_category_entity_varchar
