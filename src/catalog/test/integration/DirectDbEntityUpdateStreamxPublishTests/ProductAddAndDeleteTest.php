@@ -4,7 +4,6 @@ namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxP
 
 use DateTime;
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
-use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor as DB;
 
 /**
  * @inheritdoc
@@ -18,11 +17,11 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
     /** @test */
     public function shouldPublishProductAddedDirectlyInDatabaseToStreamx_AndUnpublishDeletedProduct() {
         // given
-        $watchesCategoryId = DB::getCategoryId('Watches');
+        $watchesCategoryId = $this->db->getCategoryId('Watches');
         $productName = 'The new great watch!';
 
         // when
-        $productId = self::insertNewProduct($productName, $watchesCategoryId);
+        $productId = $this->insertNewProduct($productName, $watchesCategoryId);
         $expectedKey = "product_$productId";
 
         try {
@@ -33,7 +32,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
             $this->assertDataIsPublished($expectedKey, $productName);
         } finally {
             // and when
-            self::deleteProduct($productId);
+            $this->deleteProduct($productId);
             $this->reindexMview();
 
             // then
@@ -44,35 +43,36 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
     /** @test */
     public function shouldPublishMultipleProductsAddedDirectlyInDatabaseToStreamx_AndUnpublishDeletedProducts() {
         // given
-        $watchesCategoryId = DB::getCategoryId('Watches');
-        $product1Name = 'First new watch';
-        $product2Name = 'Second new watch';
-        $product3Name = 'Third new watch';
+        $watchesCategoryId = $this->db->getCategoryId('Watches');
+        $productsCount = 200;
 
         // when
-        $product1Id = self::insertNewProduct($product1Name, $watchesCategoryId);
-        $product2Id = self::insertNewProduct($product2Name, $watchesCategoryId);
-        $product3Id = self::insertNewProduct($product3Name, $watchesCategoryId);
+        $productNames = [];
+        $productIds = [];
+        for ($i = 0; $i < $productsCount; $i++) {
+            $productNames[] = "New watch $i";
+            $productIds[] = $this->insertNewProduct($productNames[$i], $watchesCategoryId);
+        }
 
         try {
             // and
             $this->reindexMview();
 
             // then
-            $this->assertDataIsPublished("product_$product1Id", $product1Name);
-            $this->assertDataIsPublished("product_$product2Id", $product2Name);
-            $this->assertDataIsPublished("product_$product3Id", $product3Name);
+            for ($i = 0; $i < $productsCount; $i++) {
+                $this->assertDataIsPublished('product_' . $productIds[$i], $productNames[$i]);
+            }
         } finally {
             // and when
-            self::deleteProduct($product1Id);
-            self::deleteProduct($product2Id);
-            self::deleteProduct($product3Id);
+            for ($i = 0; $i < $productsCount; $i++) {
+                $this->deleteProduct($productIds[$i]);
+            }
             $this->reindexMview();
 
             // then
-            $this->assertDataIsUnpublished("product_$product1Id");
-            $this->assertDataIsUnpublished("product_$product2Id");
-            $this->assertDataIsUnpublished("product_$product3Id");
+            for ($i = 0; $i < $productsCount; $i++) {
+                $this->assertDataIsUnpublished('product_' . $productIds[$i]);
+            }
         }
     }
 
@@ -80,7 +80,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
      * Inserts new product to database
      * @return int ID of the inserted product
      */
-    private static function insertNewProduct(string $productName, string $categoryId): int {
+    private function insertNewProduct(string $productName, string $categoryId): int {
         $sku = (string) (new DateTime())->getTimestamp();
         $productInternalName = strtolower(str_replace(' ', '_', $productName));
 
@@ -90,19 +90,19 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $price = 35;
         $websiteId = 1;
 
-        $attributeSetId = DB::getDefaultCategoryAttributeSetId();
+        $attributeSetId = $this->db->getDefaultCategoryAttributeSetId();
 
-        DB::execute("
+        $this->db->execute("
             INSERT INTO catalog_product_entity (attribute_set_id, type_id, sku, has_options, required_options) VALUES
                 ($attributeSetId, 'simple', '$sku', FALSE, FALSE)
         ");
 
-        $productId = DB::selectFirstField("
+        $productId = $this->db->selectFirstField("
             SELECT MAX(entity_id)
               FROM catalog_product_entity
         ");
 
-        DB::execute("
+        $this->db->execute("
             INSERT INTO catalog_product_entity_varchar (entity_id, attribute_id, store_id, value) VALUES
                 ($productId, " . self::attrId('name') . ", $defaultStoreId, '$productName'),
                 ($productId, " . self::attrId('meta_title') . ", $defaultStoreId, '$productName'),
@@ -110,34 +110,34 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
                 ($productId, " . self::attrId('url_key') . ", $defaultStoreId, '$productInternalName')
         ");
 
-        DB::execute("
+        $this->db->execute("
             INSERT INTO catalog_product_entity_decimal (entity_id, attribute_id, store_id, value) VALUES
                 ($productId, " . self::attrId('price') . ", $defaultStoreId, $price)
         ");
 
-        DB::execute("
+        $this->db->execute("
             INSERT INTO catalog_product_entity_int (entity_id, attribute_id, store_id, value) VALUES
                 ($productId, " . self::attrId('visibility') . ", $defaultStoreId, 4), -- visibility in Catalog and Search
                 ($productId, " . self::attrId('status') . ", $defaultStoreId, 1), -- enabled
                 ($productId, " . self::attrId('tax_class_id') . ", $defaultStoreId, 2) -- standard tax rate                
         ");
 
-        DB::execute("
+        $this->db->execute("
             INSERT INTO catalog_product_website (product_id, website_id) VALUES
                 ($productId, $websiteId)
         ");
 
-        DB::execute("
+        $this->db->execute("
             INSERT INTO catalog_category_product (category_id, product_id, position) VALUES
                 ($categoryId, $productId, 0)
         ");
 
-        DB::execute("
+        $this->db->execute("
             INSERT INTO cataloginventory_stock_item (product_id, stock_id, qty, is_in_stock, is_qty_decimal, manage_stock) VALUES
                 ($productId, $stockId, $quantity, TRUE, FALSE, TRUE)
         ");
 
-        DB::execute("
+        $this->db->execute("
             INSERT INTO cataloginventory_stock_status (product_id, website_id, stock_id, qty, stock_status) VALUES
                 ($productId, $websiteId, $stockId, $quantity, 1)
         ");
@@ -145,8 +145,8 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         return $productId;
     }
 
-    private static function deleteProduct(int $productId): void {
-        DB::executeAll([
+    private function deleteProduct(int $productId): void {
+        $this->db->executeAll([
             "DELETE FROM cataloginventory_stock_status WHERE product_id = $productId",
             "DELETE FROM cataloginventory_stock_item WHERE product_id = $productId",
             "DELETE FROM catalog_category_product WHERE product_id = $productId",
@@ -158,7 +158,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         ]);
     }
 
-    private static function attrId($attrCode): string {
-        return DB::getProductAttributeId($attrCode);
+    private function attrId($attrCode): string {
+        return $this->db->getProductAttributeId($attrCode);
     }
 }

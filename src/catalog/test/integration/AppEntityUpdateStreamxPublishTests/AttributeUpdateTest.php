@@ -3,7 +3,6 @@
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
-use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
 use function date;
 
 /**
@@ -19,10 +18,10 @@ class AttributeUpdateTest extends BaseAppEntityUpdateTest {
     public function shouldPublishAttributeEditedUsingMagentoApplicationToStreamx() {
         // given
         $attributeCode = 'description';
-        $attributeId = MagentoMySqlQueryExecutor::getProductAttributeId($attributeCode);
+        $attributeId = $this->db->getProductAttributeId($attributeCode);
 
         $newDisplayName = 'Description attribute name modified for testing, at ' . date("Y-m-d H:i:s");
-        $oldDisplayName = MagentoMySqlQueryExecutor::getAttributeDisplayName($attributeId);
+        $oldDisplayName = $this->db->getAttributeDisplayName($attributeId);
 
         // and
         $expectedKey = "attribute_$attributeId";

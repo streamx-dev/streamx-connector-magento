@@ -3,7 +3,6 @@
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
-use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
 
 /**
  * @inheritdoc
@@ -18,21 +17,21 @@ class ProductCategoryUpdateTest extends BaseAppEntityUpdateTest {
     public function shouldPublishProductCategoryEditedUsingMagentoApplicationToStreamx() {
         // given
         $productName = 'Joust Duffle Bag';
-        $productId = MagentoMySqlQueryExecutor::getProductId($productName);
+        $productId = $this->db->getProductId($productName);
 
         $newCategoryName = 'Jackets';
-        $newCategoryId = MagentoMySqlQueryExecutor::getCategoryId($newCategoryName);
+        $newCategoryId = $this->db->getCategoryId($newCategoryName);
 
         // read ID (and name) of first category assigned to the product
-        $oldCategoryId = MagentoMySqlQueryExecutor::selectFirstField("
+        $oldCategoryId = $this->db->selectFirstField("
             SELECT MIN(category_id)
               FROM catalog_category_product
              WHERE product_id = $productId
         ");
-        $oldCategoryName = MagentoMySqlQueryExecutor::selectFirstField("
+        $oldCategoryName = $this->db->selectFirstField("
             SELECT value
               FROM catalog_category_entity_varchar
-             WHERE attribute_id = " . MagentoMySqlQueryExecutor::getCategoryNameAttributeId() . "
+             WHERE attribute_id = " . $this->db->getCategoryNameAttributeId() . "
                AND entity_id = $oldCategoryId
         ");
 

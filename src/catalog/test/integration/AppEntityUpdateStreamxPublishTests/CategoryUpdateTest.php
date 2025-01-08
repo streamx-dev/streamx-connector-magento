@@ -3,7 +3,6 @@
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
-use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
 use function date;
 
 /**
@@ -20,7 +19,7 @@ class CategoryUpdateTest extends BaseAppEntityUpdateTest {
         // given
         $categoryOldName = 'Watches';
         $categoryNewName = 'Name modified for testing, at ' . date("Y-m-d H:i:s");
-        $categoryId = MagentoMySqlQueryExecutor::getCategoryId($categoryOldName);
+        $categoryId = $this->db->getCategoryId($categoryOldName);
 
         // and
         $expectedKey = "category_$categoryId";

@@ -7,6 +7,7 @@ use GuzzleHttp\Psr7\Request;
 use PHPUnit\Framework\TestCase;
 use Streamx\Clients\Ingestion\Builders\StreamxClientBuilders;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoIndexerOperationsExecutor;
+use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
 
 /**
  * Prerequisites to run these tests:
@@ -29,6 +30,8 @@ abstract class BaseStreamxPublishTest extends TestCase {
     private string $originalIndexerMode;
     private bool $indexModeNeedsRestoring;
 
+    protected MagentoMySqlQueryExecutor $db;
+
     protected abstract function indexerName(): string;
     protected abstract function desiredIndexerMode(): string;
 
@@ -42,12 +45,17 @@ abstract class BaseStreamxPublishTest extends TestCase {
         } else {
             $this->indexModeNeedsRestoring = false;
         }
+
+        $this->db = new MagentoMySqlQueryExecutor();
+        $this->db->connect();
     }
 
     public function tearDown(): void {
         if ($this->indexModeNeedsRestoring) {
             $this->indexerOperations->setIndexerMode($this->originalIndexerMode);
         }
+
+        $this->db->disconnect();
     }
 
     protected function assertDataIsPublished(string $key, string $contentSubstring): void {

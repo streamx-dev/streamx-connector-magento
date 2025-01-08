@@ -3,6 +3,7 @@
 namespace StreamX\ConnectorCatalog\Model\Indexer;
 
 use Magento\Framework\Exception\NoSuchEntityException;
+use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCatalog\Model\Indexer\Action\Attribute as AttributeAction;
 use StreamX\ConnectorCore\Indexer\GenericIndexerHandler;
 use StreamX\ConnectorCore\Indexer\StoreManager;
@@ -12,29 +13,26 @@ class Attribute implements \Magento\Framework\Indexer\ActionInterface, \Magento\
     private GenericIndexerHandler $indexHandler;
     private AttributeAction $attributeAction;
     private StoreManager $storeManager;
+    private LoggerInterface $logger;
 
     public function __construct(
         GenericIndexerHandler $indexerHandler,
         StoreManager $storeManager,
-        AttributeAction $action
+        AttributeAction $action,
+        LoggerInterface $logger
     ) {
         $this->indexHandler = $indexerHandler;
         $this->attributeAction = $action;
         $this->storeManager = $storeManager;
+        $this->logger = $logger;
     }
 
     /**
-     * @param int[] $ids
-     *
-     * @throws NoSuchEntityException
+     * @inheritdoc
      */
     public function execute($ids)
     {
-        $stores = $this->storeManager->getStores();
-
-        foreach ($stores as $store) {
-            $this->indexHandler->saveIndex($this->attributeAction->rebuild($ids), $store);
-        }
+        $this->loadDocumentsAndSaveIndex($ids);
     }
 
     /**
@@ -42,10 +40,19 @@ class Attribute implements \Magento\Framework\Indexer\ActionInterface, \Magento\
      */
     public function executeFull()
     {
+        $this->loadDocumentsAndSaveIndex();
+    }
+
+    private function loadDocumentsAndSaveIndex($ids = []): void {
         $stores = $this->storeManager->getStores();
 
         foreach ($stores as $store) {
-            $this->indexHandler->saveIndex($this->attributeAction->rebuild(), $store);
+            $storeId = $store->getId();
+            $this->logger->info("Indexing Attributes from store $storeId");
+
+            $documents = $this->attributeAction->rebuild($ids);
+            $this->indexHandler->saveIndex($documents, $store);
+            $this->logger->info("Indexed Attributes from store $storeId");
         }
     }
 

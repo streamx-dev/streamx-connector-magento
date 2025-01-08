@@ -39,7 +39,8 @@ class Client implements ClientInterface {
 
     // TODO: adjust code that produced the $bulkOperations array, to make it in StreamX format (originally it is in ElasticSearch format)
     public function ingest(array $bulkOperations): void {
-        $this->logger->info('Ingesting ' . count($bulkOperations) . ' operations');
+        $operationsCount = count($bulkOperations);
+        $this->logger->info("Start ingesting $operationsCount operations");
 
         $ingestionMessages = array_map(
             function (array $item) {
@@ -51,6 +52,7 @@ class Client implements ClientInterface {
         if (!empty($ingestionMessages)) {
             $this->ingestToStreamX($ingestionMessages);
         }
+        $this->logger->info("Finished ingesting $operationsCount operations");
     }
 
     private static function mapToIngestionMessage(array $item): Message {
@@ -94,8 +96,6 @@ class Client implements ClientInterface {
             foreach ($messageStatuses as $messageStatus) {
                 if ($messageStatus->getSuccess() === null) {
                     $this->logger->error('Ingestion failure: ' . json_encode($messageStatus->getFailure()));
-                } else {
-                    $this->logger->info('Ingestion success: ' . json_encode($messageStatus->getSuccess()));
                 }
             }
         } catch (StreamxClientException $e) {

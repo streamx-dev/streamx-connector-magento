@@ -3,7 +3,6 @@
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
-use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
 use function date;
 
 /**
@@ -20,14 +19,14 @@ class CategoryUpdateTest extends BaseDirectDbEntityUpdateTest {
         // given
         $categoryOldName = 'Watches';
         $categoryNewName = 'Name modified for testing, at ' . date("Y-m-d H:i:s");
-        $categoryId = MagentoMySqlQueryExecutor::getCategoryId($categoryOldName);
+        $categoryId = $this->db->getCategoryId($categoryOldName);
 
         // and
         $expectedKey = "category_$categoryId";
         self::removeFromStreamX($expectedKey);
 
         // when
-        self::renameCategoryInDb($categoryId, $categoryNewName);
+        $this->renameCategoryInDb($categoryId, $categoryNewName);
 
         try {
             // and
@@ -36,13 +35,13 @@ class CategoryUpdateTest extends BaseDirectDbEntityUpdateTest {
             // then
             $this->assertDataIsPublished($expectedKey, $categoryNewName);
         } finally {
-            self::renameCategoryInDb($categoryId, $categoryOldName);
+            $this->renameCategoryInDb($categoryId, $categoryOldName);
         }
     }
 
-    private static function renameCategoryInDb(int $categoryId, string $newName) {
-        $categoryNameAttributeId = MagentoMySqlQueryExecutor::getCategoryNameAttributeId();
-        MagentoMySqlQueryExecutor::execute("
+    private function renameCategoryInDb(int $categoryId, string $newName) {
+        $categoryNameAttributeId = $this->db->getCategoryNameAttributeId();
+        $this->db->execute("
             UPDATE catalog_category_entity_varchar
                SET value = '$newName'
              WHERE attribute_id = $categoryNameAttributeId

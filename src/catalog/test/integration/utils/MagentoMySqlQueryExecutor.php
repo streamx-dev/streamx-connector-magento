@@ -4,7 +4,6 @@ namespace StreamX\ConnectorCatalog\test\integration\utils;
 
 use Exception;
 use mysqli;
-use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor as DB;
 
 class MagentoMySqlQueryExecutor {
 
@@ -15,53 +14,50 @@ class MagentoMySqlQueryExecutor {
     private const PASSWORD = "magento";
     private const DB_NAME = "magento";
 
+    private ?mysqli $connection = null;
+
+    public function connect(): void {
+        $this->connection = new mysqli(self::SERVER_NAME, self::USER, self::PASSWORD, self::DB_NAME);
+    }
+
+    public function disconnect(): void {
+        if ($this->connection) {
+            $this->connection->close();
+            $this->connection = null;
+        }
+    }
+
     /**
      * Returns the value of first field from first row, or null or error or no result data
      */
-    public static function selectFirstField(string $selectQuery) {
-        $connection = self::getConnection();
-
-        try {
-            $result = $connection->query($selectQuery);
-            if ($result && $result->num_rows > 0) {
-                $row = $result->fetch_row();
-                $result->free();
-                return $row[0];
-            } else {
-                return null;
-            }
-        } finally {
-            $connection->close();
+    public function selectFirstField(string $selectQuery) {
+        $result = $this->connection->query($selectQuery);
+        if ($result && $result->num_rows > 0) {
+            $row = $result->fetch_row();
+            $result->free();
+            return $row[0];
+        } else {
+            return null;
         }
     }
 
-    public static function executeAll(array $queries) {
-        $connection = self::getConnection();
-
-        try {
-            foreach ($queries as $query) {
-                $result = $connection->query($query);
-                if (!$result) {
-                    throw new Exception("Query $query failed: " . $connection->error);
-                }
-            }
-        } finally {
-            $connection->close();
+    public function execute(string $query): void {
+        $result = $this->connection->query($query);
+        if (!$result) {
+            throw new Exception("Query $query failed: " . $this->connection->error);
         }
     }
 
-    public static function execute(string $query) {
-        self::executeAll([$query]);
+    public function executeAll(array $queries): void {
+        foreach ($queries as $query) {
+            $this->execute($query);
+        }
     }
 
-    private static function getConnection(): mysqli {
-        return new mysqli(self::SERVER_NAME, self::USER, self::PASSWORD, self::DB_NAME);
-    }
+    public function getProductId(string $productName): string {
+        $productNameAttributeId = $this->getProductNameAttributeId();
 
-    public static function getProductId(string $productName): string {
-        $productNameAttributeId = self::getProductNameAttributeId();
-
-        return self::selectFirstField("
+        return $this->selectFirstField("
             SELECT entity_id
               FROM catalog_product_entity_varchar
              WHERE attribute_id = $productNameAttributeId
@@ -69,10 +65,10 @@ class MagentoMySqlQueryExecutor {
         ");
     }
 
-    public static function getCategoryId(string $categoryName): string {
-        $categoryNameAttributeId = self::getCategoryNameAttributeId();
+    public function getCategoryId(string $categoryName): string {
+        $categoryNameAttributeId = $this->getCategoryNameAttributeId();
 
-        return self::selectFirstField("
+        return $this->selectFirstField("
             SELECT entity_id
               FROM catalog_category_entity_varchar
              WHERE attribute_id = $categoryNameAttributeId
@@ -80,48 +76,48 @@ class MagentoMySqlQueryExecutor {
         ");
     }
 
-    public static function getProductAttributeId(string $attributeCode): string {
-        $productEntityTypeId = self::getProductEntityTypeId();
-        return self::getAttributeId($attributeCode, $productEntityTypeId);
+    public function getProductAttributeId(string $attributeCode): string {
+        $productEntityTypeId = $this->getProductEntityTypeId();
+        return $this->getAttributeId($attributeCode, $productEntityTypeId);
     }
 
-    public static function getCategoryAttributeId(string $attributeCode): string {
-        $categoryEntityTypeId = self::getCategoryEntityTypeId();
-        return self::getAttributeId($attributeCode, $categoryEntityTypeId);
+    public function getCategoryAttributeId(string $attributeCode): string {
+        $categoryEntityTypeId = $this->getCategoryEntityTypeId();
+        return $this->getAttributeId($attributeCode, $categoryEntityTypeId);
     }
 
-    public static function getProductNameAttributeId(): string {
-        $productEntityTypeId = self::getProductEntityTypeId();
-        return self::getNameAttributeId($productEntityTypeId);
+    public function getProductNameAttributeId(): string {
+        $productEntityTypeId = $this->getProductEntityTypeId();
+        return $this->getNameAttributeId($productEntityTypeId);
     }
 
-    public static function getCategoryNameAttributeId(): string {
-        $categoryEntityTypeId = self::getCategoryEntityTypeId();
-        return self::getNameAttributeId($categoryEntityTypeId);
+    public function getCategoryNameAttributeId(): string {
+        $categoryEntityTypeId = $this->getCategoryEntityTypeId();
+        return $this->getNameAttributeId($categoryEntityTypeId);
     }
 
-    public static function getProductEntityTypeId(): string {
-        return self::getEntityTypeId('catalog_product_entity');
+    public function getProductEntityTypeId(): string {
+        return $this->getEntityTypeId('catalog_product_entity');
     }
 
-    public static function getCategoryEntityTypeId(): string {
-        return self::getEntityTypeId('catalog_category_entity');
+    public function getCategoryEntityTypeId(): string {
+        return $this->getEntityTypeId('catalog_category_entity');
     }
 
-    private static function getEntityTypeId(string $table): string {
-        return self::selectFirstField("
+    private function getEntityTypeId(string $table): string {
+        return $this->selectFirstField("
             SELECT entity_type_id
               FROM eav_entity_type
              WHERE entity_table = '$table'
         ");
     }
 
-    public static function getNameAttributeId(int $entityTypeId): string {
-        return self::getAttributeId('name', $entityTypeId);
+    public function getNameAttributeId(int $entityTypeId): string {
+        return $this->getAttributeId('name', $entityTypeId);
     }
 
-    public static function getAttributeId(string $attributeCode, int $entityTypeId): string {
-        return self::selectFirstField("
+    public function getAttributeId(string $attributeCode, int $entityTypeId): string {
+        return $this->selectFirstField("
             SELECT attribute_id
               FROM eav_attribute
              WHERE attribute_code = '$attributeCode'
@@ -129,25 +125,25 @@ class MagentoMySqlQueryExecutor {
         ");
     }
 
-    public static function getAttributeDisplayName(int $attributeId): string {
-        return self::selectFirstField("
+    public function getAttributeDisplayName(int $attributeId): string {
+        return $this->selectFirstField("
             SELECT frontend_label
               FROM eav_attribute
              WHERE attribute_id = $attributeId
         ");
     }
 
-    public static function getDefaultProductAttributeSetId(): int {
-        return self::getDefaultAttributeSetId('catalog_product_entity');
+    public function getDefaultProductAttributeSetId(): int {
+        return $this->getDefaultAttributeSetId('catalog_product_entity');
     }
 
-    public static function getDefaultCategoryAttributeSetId(): int {
-        return self::getDefaultAttributeSetId('catalog_category_entity');
+    public function getDefaultCategoryAttributeSetId(): int {
+        return $this->getDefaultAttributeSetId('catalog_category_entity');
     }
 
-    private static function getDefaultAttributeSetId(string $table): int {
-        $entityTypeId = DB::getEntityTypeId($table);
-        return DB::selectFirstField("
+    private function getDefaultAttributeSetId(string $table): int {
+        $entityTypeId = $this->getEntityTypeId($table);
+        return $this->selectFirstField("
             SELECT attribute_set_id
               FROM eav_attribute_set
              WHERE entity_type_id = $entityTypeId
