@@ -21,6 +21,8 @@ abstract class BaseStreamxTest extends TestCase {
     private const STREAMX_DELIVERY_SERVICE_BASE_URL = "http://localhost:8081";
     private const DATA_PUBLISH_TIMEOUT_SECONDS = 3;
 
+    private const VALIDATION_FILES_RELATIVE_DIR = '../resources/validation';
+
     /**
      * @deprecated move to use assertExactDataIsPublished instead, as it gives more exact verification
      */
@@ -48,8 +50,10 @@ abstract class BaseStreamxTest extends TestCase {
         }
     }
 
-    protected function assertExactDataIsPublished(string $key, string $expectedJson): void {
+    protected function assertExactDataIsPublished(string $key, string $validationFileName): void {
         $url = self::STREAMX_DELIVERY_SERVICE_BASE_URL . '/' . $key;
+
+        $expectedJson = $this->readValidationFileContent($validationFileName);
         $expectedFormattedJson = self::formatJson($expectedJson);
         $actualFormattedJson = '';
 
@@ -96,6 +100,15 @@ abstract class BaseStreamxTest extends TestCase {
             ->build()
             ->newPublisher(self::CHANNEL_NAME, self::CHANNEL_SCHEMA_NAME)
             ->unpublish($key);
+    }
+
+    private function readValidationFileContent(string $validationFileName): string {
+        $validationFilePath = join(DIRECTORY_SEPARATOR, [
+            __DIR__,
+            self::VALIDATION_FILES_RELATIVE_DIR,
+            $validationFileName
+        ]);
+        return file_get_contents($validationFilePath);
     }
 
     private static function formatJson(string $json): string {
