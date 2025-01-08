@@ -3,6 +3,7 @@
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
+use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageReportGenerator;
 use function date;
 
 /**
@@ -38,9 +39,13 @@ class CategoryUpdateTest extends BaseAppEntityUpdateTest {
     }
 
     private function renameCategory(int $categoryId, string $newName) {
-        $this->callMagentoPutEndpoint('category/rename', [
+        $coverage = $this->callMagentoPutEndpoint('category/rename', [
             'categoryId' => $categoryId,
             'newName' => $newName
         ]);
+
+        if (getenv('GENERATE_CODE_COVERAGE_REPORT') === 'true') {
+            CodeCoverageReportGenerator::generateCodeCoverageReport($coverage, $this);
+        }
     }
 }

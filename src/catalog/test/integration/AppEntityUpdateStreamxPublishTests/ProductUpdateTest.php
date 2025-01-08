@@ -3,6 +3,7 @@
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
+use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageReportGenerator;
 use function date;
 
 /**
@@ -38,9 +39,13 @@ class ProductUpdateTest extends BaseAppEntityUpdateTest {
     }
 
     private function renameProduct(int $productId, string $newName) {
-        $this->callMagentoPutEndpoint('product/rename', [
+        $coverage = $this->callMagentoPutEndpoint('product/rename', [
             'productId' => $productId,
             'newName' => $newName
         ]);
+
+        if (getenv('GENERATE_CODE_COVERAGE_REPORT') === 'true') {
+            CodeCoverageReportGenerator::generateCodeCoverageReport($coverage, $this);
+        }
     }
 }

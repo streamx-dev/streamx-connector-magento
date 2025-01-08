@@ -3,6 +3,7 @@
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
+use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageReportGenerator;
 use function date;
 
 /**
@@ -40,9 +41,13 @@ class AttributeUpdateTest extends BaseAppEntityUpdateTest {
     }
 
     private function renameAttribute(string $attributeCode, string $newName) {
-        $this->callMagentoPutEndpoint('attribute/rename', [
+        $coverage = $this->callMagentoPutEndpoint('attribute/rename', [
             'attributeCode' => $attributeCode,
             'newName' => $newName
         ]);
+
+        if (getenv('GENERATE_CODE_COVERAGE_REPORT') === 'true') {
+            CodeCoverageReportGenerator::generateCodeCoverageReport($coverage, $this);
+        }
     }
 }
