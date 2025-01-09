@@ -96,17 +96,17 @@ class AttributeData implements DataProviderInterface
             $indexData[$categoryId] = $this->addChildrenData($categoryData, $groupedChildrenById, $storeId);
         }
 
-        $this->cleanup($indexData);
+        $this->removeTemporaryFields($indexData);
 
         return $indexData;
     }
 
-    function cleanup(array &$categories) {
+    private function removeTemporaryFields(array &$categories): void {
         foreach ($categories as &$category) {
             unset($category['url_path'], $category['url_key'], $category['path']);
 
             if (!empty($category['subcategories'])) {
-                $this->cleanup($category['subcategories']);
+                $this->removeTemporaryFields($category['subcategories']);
             }
         }
     }
