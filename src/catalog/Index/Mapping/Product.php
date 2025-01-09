@@ -14,22 +14,15 @@ class Product extends AbstractMapping implements MappingInterface // TODO Abstra
     private LoadAttributes $resourceModel;
     private ?array $properties = null;
 
-    /**
-     * @var FieldMappingInterface[]
-     */
-    private array $additionalMapping;
-
     public function __construct(
         GeneralMapping $generalMapping,
         StockMapping $stockMapping,
         LoadAttributes $resourceModel,
-        array $staticFieldMapping,
-        array $additionalMapping
+        array $staticFieldMapping
     ) {
         $this->stockMapping = $stockMapping;
         $this->generalMapping = $generalMapping;
         $this->resourceModel = $resourceModel;
-        $this->additionalMapping = $additionalMapping;
 
         parent::__construct($staticFieldMapping);
     }
@@ -99,15 +92,7 @@ class Product extends AbstractMapping implements MappingInterface // TODO Abstra
 
     private function getCustomProperties(): array
     {
-        $customProperties = ['attribute_set_id' => ['type' => FieldInterface::TYPE_LONG]];
-
-        foreach ($this->additionalMapping as $propertyName => $properties) {
-            if ($properties instanceof FieldMappingInterface) {
-                $customProperties[$propertyName] = $properties->get();
-            }
-        }
-
-        return $customProperties;
+        return ['attribute_set_id' => ['type' => FieldInterface::TYPE_LONG]];
     }
 
     public function getAttributes(): array
