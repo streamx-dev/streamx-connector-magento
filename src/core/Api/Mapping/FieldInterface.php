@@ -8,7 +8,6 @@ interface FieldInterface
     const TYPE_BOOLEAN = 'boolean';
     const TYPE_DOUBLE = 'double';
     const TYPE_INTEGER = 'integer';
-    const TYPE_SHORT = 'short';
     const TYPE_LONG = 'long';
     const TYPE_TEXT = 'text';
     const TYPE_DATE = 'date';

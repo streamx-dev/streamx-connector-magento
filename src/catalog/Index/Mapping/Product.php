@@ -10,17 +10,14 @@ use StreamX\ConnectorCatalog\Model\ResourceModel\Product\LoadAttributes;
 class Product extends AbstractMapping implements MappingInterface // TODO AbstractMapping is used only by this class. Inline it here
 {
     private GeneralMapping $generalMapping;
-    private StockMapping $stockMapping;
     private LoadAttributes $resourceModel;
     private ?array $properties = null;
 
     public function __construct(
         GeneralMapping $generalMapping,
-        StockMapping $stockMapping,
         LoadAttributes $resourceModel,
         array $staticFieldMapping
     ) {
-        $this->stockMapping = $stockMapping;
         $this->generalMapping = $generalMapping;
         $this->resourceModel = $resourceModel;
 
@@ -64,7 +61,6 @@ class Product extends AbstractMapping implements MappingInterface // TODO Abstra
     private function getCommonMappingProperties(): array
     {
         $attributesMapping = [];
-        $attributesMapping['stock']['properties'] = $this->stockMapping->get();
         $attributesMapping['media_gallery'] = [
             'properties' => [
                 'type' => ['type' => FieldInterface::TYPE_TEXT],
