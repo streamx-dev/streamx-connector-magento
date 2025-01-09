@@ -4,7 +4,6 @@ namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Category;
 
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category\Children as CategoryChildrenResource;
 use StreamX\ConnectorCore\Indexer\DataFilter;
-use StreamX\ConnectorCatalog\Model\SystemConfig\CategoryConfigInterface;
 use StreamX\ConnectorCatalog\Api\ApplyCategorySlugInterface;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category\AttributeDataProvider;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category\ProductCount as ProductCountResourceModel;
@@ -38,7 +37,6 @@ class AttributeData implements DataProviderInterface
     private DataFilter $dataFilter;
     private array $childrenRowAttributes = [];
     private array $childrenProductCount = [];
-    private CategoryConfigInterface $settings;
     private ApplyCategorySlugInterface $applyCategorySlug;
 
     public function __construct(
@@ -46,10 +44,8 @@ class AttributeData implements DataProviderInterface
         CategoryChildrenResource $childrenResource,
         ProductCountResourceModel $productCountResource,
         ApplyCategorySlugInterface $applyCategorySlug,
-        CategoryConfigInterface $configSettings,
         DataFilter $dataFilter
     ) {
-        $this->settings = $configSettings;
         $this->applyCategorySlug = $applyCategorySlug;
         $this->productCountResource = $productCountResource;
         $this->attributeResourceModel = $attributeResource;
@@ -59,8 +55,6 @@ class AttributeData implements DataProviderInterface
 
     public function addData(array $indexData, int $storeId): array
     {
-        $this->settings->getAttributesUsedForSortBy();
-
         // There is no option yet to load only specific categories
         $categoryIds = array_keys($indexData);
         $attributes = $this->attributeResourceModel->loadAttributesData(
