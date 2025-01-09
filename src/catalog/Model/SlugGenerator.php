@@ -2,18 +2,14 @@
 
 namespace StreamX\ConnectorCatalog\Model;
 
-use StreamX\ConnectorCatalog\Api\SlugGeneratorInterface;
-
-class SlugGenerator implements SlugGeneratorInterface
+class SlugGenerator
 {
-    public function generate(string $text, int $id): string
+    public static function generate(string $text, int $id): string
     {
-        $text = $text . '-' . $id;
-
-        return $this->slugify($text);
+        return self::slugify("$text-$id");
     }
 
-    private function slugify(string $text): string
+    private static function slugify(string $text): string
     {
         $text = mb_strtolower($text);
         $text = preg_replace("/\s+/", '-', $text);// Replace spaces with -

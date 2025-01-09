@@ -4,9 +4,9 @@ namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
 use Exception;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\AttributeDataProvider;
+use StreamX\ConnectorCatalog\Model\SlugGenerator;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
-use StreamX\ConnectorCatalog\Api\SlugGeneratorInterface;
 use StreamX\ConnectorCatalog\Model\ProductUrlPathGenerator;
 use StreamX\ConnectorCatalog\Model\Attributes\ProductAttributes;
 
@@ -14,18 +14,15 @@ class AttributeData implements DataProviderInterface
 {
     private AttributeDataProvider $resourceModel;
     private CatalogConfigurationInterface $settings;
-    private SlugGeneratorInterface $slugGenerator;
     private ProductAttributes $productAttributes;
     private ProductUrlPathGenerator $productUrlPathGenerator;
 
     public function __construct(
         ProductAttributes $productAttributes,
         CatalogConfigurationInterface $configSettings,
-        SlugGeneratorInterface $slugGenerator,
         ProductUrlPathGenerator $productUrlPathGenerator,
         AttributeDataProvider $resourceModel
     ) {
-        $this->slugGenerator = $slugGenerator;
         $this->settings = $configSettings;
         $this->resourceModel = $resourceModel;
         $this->productAttributes = $productAttributes;
@@ -89,7 +86,7 @@ class AttributeData implements DataProviderInterface
                 $text = $productData['url_key'];
             }
 
-            $slug = $this->slugGenerator->generate($text, $entityId);
+            $slug = SlugGenerator::generate($text, $entityId);
             $productData['slug'] = $slug;
             $productData['url_key'] = $slug;
         }
