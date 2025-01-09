@@ -45,16 +45,7 @@
   "regular_price": 34,
   "stock": {
     "product_id": "1",
-    "item_id": "1",
-    "stock_id": "1",
     "qty": "100.0000",
-    "is_in_stock": "1",
-    "is_qty_decimal": "0",
-    "use_config_min_qty": "1",
-    "use_config_min_sale_qty": "1",
-    "use_config_manage_stock": "1",
-    "manage_stock": "0",
-    "low_stock_date": null,
     "stock_status": "1"
   },
   "configurable_children": []

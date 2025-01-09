@@ -8,12 +8,6 @@
     <preference for="StreamX\ConnectorCatalog\Api\LoadMediaGalleryInterface" type="StreamX\ConnectorCatalog\Model\Product\LoadMediaGallery"/>
     <preference for="StreamX\ConnectorCatalog\Api\LoadTierPricesInterface" type="StreamX\ConnectorCatalog\Model\Product\LoadTierPrices" />
 
-    <type name="StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\ConfigurableData">
-        <arguments>
-            <argument name="loadInventory" xsi:type="object">StreamX\ConnectorCatalog\Model\LoadChildrenInventory</argument>
-        </arguments>
-    </type>
-
     <virtualType name="StreamX\ConnectorCatalog\Indexer\ProductIndexerHandlerVirtual"
                  type="StreamX\ConnectorCore\Indexer\GenericIndexerHandler">
         <arguments>
