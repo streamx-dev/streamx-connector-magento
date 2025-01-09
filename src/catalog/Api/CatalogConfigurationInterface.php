@@ -32,11 +32,6 @@ interface CatalogConfigurationInterface
     const CHILD_ATTRIBUTES = 'child_attributes';
 
     /**
-     * Export attributes metadata config field
-     */
-    const EXPORT_ATTRIBUTES_METADATA = 'export_attributes_metadata';
-
-    /**
      * @const string
      */
     const CONFIGURABLE_CHILDREN_BATCH_SIZE = 'configurable_children_batch_size';
@@ -55,8 +50,6 @@ interface CatalogConfigurationInterface
     public function syncTierPrices(): bool;
 
     public function addParentSku(): bool;
-
-    public function canExportAttributesMetadata(): bool;
 
     public function addSwatchesToConfigurableOptions();
 

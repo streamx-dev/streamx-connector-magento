@@ -13,7 +13,6 @@
                 <data_provider name="inventory_data">StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\Inventory</data_provider>
                 <data_provider name="configurable_data">StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\ConfigurableData</data_provider>
                 <data_provider name="custom_options">StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\CustomOptions</data_provider>
-                <data_provider name="attributes_meta">StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\AttributesMetadata</data_provider>
                 <data_provider name="parent_data">StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\ParentSku</data_provider>
             </data_providers>
         </type>
