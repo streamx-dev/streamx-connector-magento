@@ -129,8 +129,8 @@ export XDEBUG_MODE=coverage
 3. Run tests with coverage and open results in web browser:
 ```bash
 composer update # enough to execute this only once - will create the './vendor/bin/phpunit' directory
-./vendor/bin/phpunit --coverage-text --coverage-html target/coverage-report
-open target/coverage-report/index.html
+./vendor/bin/phpunit --coverage-text --coverage-html target/coverage-reports
+open target/coverage-reports/index.html
 ```
 
 ## Some useful magento commands (when using markshust/docker-magento)
@@ -158,6 +158,10 @@ bin/magento streamx:reindex --all #see PublishAllEntitiesCommand
 # review logs and errors of the Magento container (typically named magento-phpfpm-1)
 cat /var/www/html/var/log/system.log
 cat /var/www/html/var/log/exception.log
+
+# execute all scheduled jobs - including StreamxIndexerMviewProcessor to process changelog tables for indexers in Update by Schedule mode:
+bin/magento cron:run
+cat /var/www/html/var/log/cron.log
 ```
 
 ## Some useful MySQL commands (when using markshust/docker-magento)
@@ -189,13 +193,13 @@ SET GLOBAL general_log = 'OFF';
  - review https://magento.test/rest/all/schema for any errors or additional information
 
 ## Measuring the Connector's code coverage on a running Magento PHP server
- - start code coverage measurement: PUT https://magento.test/rest/all/V1/coverage/start
- - perform actions on the UI or in database
- - retrieve collected code coverage: GET https://magento.test/rest/all/V1/coverage/get
+ - in PHP, coverage can be measured for a Http Request (all code executed by the code that handles the request is measured)
+ - some of the test REST endpoints from `connector-test-tools` are enriched with measuring coverage measurement (you can add more)
+ - coverage data (returned by `xdebug`) is originally an associative array, but the endpoints return it json-serialized to a string
+ - integration tests generate coverage reports if you start them with `GENERATE_CODE_COVERAGE_REPORT=true` env variable added to your Run/Debug configuration for the tests
+ - the coverage reports are generated to `target/coverage-reports` in the root directory of the project, with folder names corresponding to test names
+ - open `index.html` of a report in your browser for a report in clickable / navigable form
+ - Known issues:
+   - in summary view, the reports display classes as 100% covered, but when you open any class, the coverage is correct (green areas mark the actual covered code)
  - TODO:
-     Xdebug's code coverage data is not persistent across requests.
-     Each PHP request runs in isolation, and Xdebug's coverage data is cleared at the end of each request.
-     When you call xdebug_start_code_coverage() at the beginning of the day and xdebug_get_code_coverage() later,
-      they only operate on the current request's lifecycle, not the cumulative execution across multiple requests.
-     To fix this and collect cumulative code coverage data across a day (or any time period),
-      you need to implement a mechanism to persist the coverage data between requests.
+   - it should be possible to measure summary view, by dumping raw results from each test, and then calling `$codeCoverage->append` on all of them

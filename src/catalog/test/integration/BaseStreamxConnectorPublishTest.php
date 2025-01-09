@@ -5,6 +5,7 @@ namespace StreamX\ConnectorCatalog\test\integration;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoIndexerOperationsExecutor;
+use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
 
 /**
  * @inheritDoc
@@ -16,6 +17,8 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
     protected MagentoIndexerOperationsExecutor $indexerOperations;
     private string $originalIndexerMode;
     private bool $indexModeNeedsRestoring;
+
+    protected MagentoMySqlQueryExecutor $db;
 
     protected abstract function indexerName(): string;
     protected abstract function desiredIndexerMode(): string;
@@ -30,15 +33,20 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
         } else {
             $this->indexModeNeedsRestoring = false;
         }
+
+        $this->db = new MagentoMySqlQueryExecutor();
+        $this->db->connect();
     }
 
     public function tearDown(): void {
         if ($this->indexModeNeedsRestoring) {
             $this->indexerOperations->setIndexerMode($this->originalIndexerMode);
         }
+
+        $this->db->disconnect();
     }
 
-    protected function callMagentoEndpoint(string $relativeUrl, array $params): string {
+    protected function callMagentoPutEndpoint(string $relativeUrl, array $params): string {
         $endpointUrl = self::MAGENTO_REST_API_BASE_URL . '/' . $relativeUrl;
         $jsonBody = json_encode($params);
         $headers = ['Content-Type' => 'application/json; charset=UTF-8'];

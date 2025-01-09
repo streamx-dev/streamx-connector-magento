@@ -5,7 +5,6 @@
     <preference for="StreamX\ConnectorCore\Api\Client\ClientInterface" type="StreamX\ConnectorCore\Streamx\Client"/>
     <preference for="StreamX\ConnectorCore\Api\Client\ConfigurationInterface" type="StreamX\ConnectorCore\Streamx\ClientConfiguration"/>
     <preference for="StreamX\ConnectorCore\Api\Index\TypeInterface" type="StreamX\ConnectorCore\Index\Type"/>
-    <preference for="StreamX\ConnectorCore\Api\ConvertValueInterface" type="StreamX\ConnectorCore\Indexer\ConvertValue"/>
     <preference for="StreamX\ConnectorCore\Api\IndexOperationInterface" type="StreamX\ConnectorCore\Index\IndexOperations"/>
     <preference for="StreamX\ConnectorCore\System\GeneralConfigInterface" type="StreamX\ConnectorCore\System\GeneralConfig"/>
 
@@ -21,15 +20,9 @@
     <type name="Magento\Framework\Console\CommandListInterface">
         <arguments>
             <argument name="commands" xsi:type="array">
-                <item name="publish_single_entity" xsi:type="object">
-                    StreamX\ConnectorCore\Console\Command\PublishSingleEntityCommand
-                </item>
-                <item name="publish_all_entities" xsi:type="object">
-                    StreamX\ConnectorCore\Console\Command\PublishAllEntitiesCommand
-                </item>
-                <item name="reset_streamx_indexers" xsi:type="object">
-                    StreamX\ConnectorCore\Console\Command\ResetStreamxIndexersCommand
-                </item>
+                <item name="publish_single_entity" xsi:type="object">StreamX\ConnectorCore\Console\Command\PublishSingleEntityCommand</item>
+                <item name="publish_all_entities" xsi:type="object">StreamX\ConnectorCore\Console\Command\PublishAllEntitiesCommand</item>
+                <item name="reset_streamx_indexers" xsi:type="object">StreamX\ConnectorCore\Console\Command\ResetStreamxIndexersCommand</item>
             </argument>
         </arguments>
     </type>

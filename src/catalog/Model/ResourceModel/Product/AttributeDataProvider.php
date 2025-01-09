@@ -4,8 +4,6 @@ namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Framework\Exception\LocalizedException;
-use StreamX\ConnectorCore\Api\ConvertValueInterface;
-use StreamX\ConnectorCatalog\Index\Mapping\Product as ProductMapping;
 use StreamX\ConnectorCatalog\Model\ResourceModel\AbstractEavAttributes;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\EntityManager\MetadataPool;
@@ -20,14 +18,12 @@ class AttributeDataProvider extends AbstractEavAttributes
 
     public function __construct(
         LoadAttributes $loadAttributes,
-        ProductMapping $productMapping,
         ResourceConnection $resourceConnection,
-        ConvertValueInterface $convertValue,
         MetadataPool $metadataPool,
         $entityType = ProductInterface::class
     ) {
         $this->loadAttributes = $loadAttributes;
-        parent::__construct($resourceConnection, $metadataPool, $convertValue, $productMapping, $entityType);
+        parent::__construct($resourceConnection, $metadataPool, $entityType);
     }
 
     /**

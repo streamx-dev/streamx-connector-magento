@@ -2,13 +2,12 @@
 set -e # exit on 1st error
 
 ### PREREQUISITES:
-# - You can access the https://github.com/streamx-dev/streamx-ingestion-php repository
 # - Composer authentication to download Magento images is configured - see README.md
 
 ## Remove previous instance, if exists
 if [ -d "magento" ]; then
     cd magento
-    bin/removeall || true # continue also if the magento instance wasn't yet installed
+    yes | bin/removeall || true # say yes to remove all containers; continue also if the magento instance wasn't yet installed
     cd ..
     rm -rf magento
 fi
@@ -51,10 +50,6 @@ bash copy-connector-test-tools-to-magento.sh
 
 ### Install StreamX Connector to Magento
 cd magento
-
-# Register streamx-ingestion-php repository (the module is required by the connector)
-bin/composer config repositories.streamx-client \
-  vcs https://github.com/streamx-dev/streamx-ingestion-php
 
 # Point Magento to search for the connector source code in its directory
 bin/composer config repositories.streamx-connector \

@@ -3,8 +3,7 @@
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
-use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
-use function date;
+use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageReportGenerator;
 
 /**
  * @inheritdoc
@@ -18,9 +17,9 @@ class CategoryUpdateTest extends BaseAppEntityUpdateTest {
     /** @test */
     public function shouldPublishCategoryEditedUsingMagentoApplicationToStreamx() {
         // given
-        $categoryOldName = 'Watches';
-        $categoryNewName = 'Name modified for testing, at ' . date("Y-m-d H:i:s");
-        $categoryId = MagentoMySqlQueryExecutor::getCategoryId($categoryOldName);
+        $categoryOldName = 'Gear';
+        $categoryNewName = 'Gear Articles';
+        $categoryId = $this->db->getCategoryId($categoryOldName);
 
         // and
         $expectedKey = "category_$categoryId";
@@ -31,17 +30,21 @@ class CategoryUpdateTest extends BaseAppEntityUpdateTest {
 
         // then
         try {
-            $this->assertDataIsPublished($expectedKey, $categoryNewName);
+            $this->assertExactDataIsPublished($expectedKey, 'edited-gear-category.json');
         } finally {
             self::renameCategory($categoryId, $categoryOldName);
-            $this->assertDataIsPublished($expectedKey, $categoryOldName);
+            $this->assertExactDataIsPublished($expectedKey, 'original-gear-category.json');
         }
     }
 
-    private function renameCategory(int $categoryId, string $newName) {
-        $this->callMagentoEndpoint('category/rename', [
+    private function renameCategory(int $categoryId, string $newName): void {
+        $coverage = $this->callMagentoPutEndpoint('category/rename', [
             'categoryId' => $categoryId,
             'newName' => $newName
         ]);
+
+        if (getenv('GENERATE_CODE_COVERAGE_REPORT') === 'true') {
+            CodeCoverageReportGenerator::generateCodeCoverageReport($coverage, $this);
+        }
     }
 }

@@ -13,19 +13,15 @@ use StreamX\ConnectorCore\Streamx\Model\Data;
 
 class Client implements ClientInterface {
 
-    private Publisher $publisher;
     private LoggerInterface $logger;
+    private Publisher $publisher;
 
     // TODO use baseUrl to prepend to image paths, which are retuned as relative paths, like:
     //  $baseImageUrl = $this->baseUrl . "media/catalog/product";
     //  $fullImageUrl = $baseImageUrl . $data['image']
     private string $baseUrl;
 
-    public function __construct(
-        StoreManagerInterface $storeManager,
-        Publisher $publisher,
-        LoggerInterface $logger
-    ) {
+    public function __construct(LoggerInterface $logger, Publisher $publisher, StoreManagerInterface $storeManager) {
         $this->logger = $logger;
         $this->publisher = $publisher;
         $this->baseUrl = $storeManager->getStore()->getBaseUrl();
@@ -33,7 +29,8 @@ class Client implements ClientInterface {
 
     // TODO: adjust code that produced the $bulkOperations array, to make it in StreamX format (originally it is in ElasticSearch format)
     public function ingest(array $bulkOperations): void {
-        $this->logger->info('Ingesting ' . count($bulkOperations) . ' operations');
+        $operationsCount = count($bulkOperations);
+        $this->logger->info("Start ingesting $operationsCount operations");
 
         $ingestionMessages = array_map(
             function (array $item) {
@@ -45,6 +42,7 @@ class Client implements ClientInterface {
         if (!empty($ingestionMessages)) {
             $this->ingestToStreamX($ingestionMessages);
         }
+        $this->logger->info("Finished ingesting $operationsCount operations");
     }
 
     private static function mapToIngestionMessage(array $item): Message {
@@ -61,7 +59,7 @@ class Client implements ClientInterface {
         $entityType = $publishItem['type'];
         $entity = $publishItem['entity'];
         $entityId = $entity['id'];
-        $key = self::createStreamxEntityKey($entityType, $entityId);
+        $key = $entityType . '_' . $entityId;
         $payload = new Data(json_encode($entity));
         return Message::newPublishMessage($key, $payload)->build();
     }
@@ -69,12 +67,8 @@ class Client implements ClientInterface {
     private static function createUnpublishMessage(array $unpublishItem): Message {
         $entityType = $unpublishItem['type'];
         $entityId = $unpublishItem['id'];
-        $key = self::createStreamxEntityKey($entityType, $entityId);
+        $key = $entityType . '_' . $entityId;
         return Message::newUnpublishMessage($key)->build();
-    }
-
-    private static function createStreamxEntityKey(string $entityType, int $entityId): string {
-        return $entityType . '_' . $entityId;
     }
 
     /**
@@ -88,8 +82,6 @@ class Client implements ClientInterface {
             foreach ($messageStatuses as $messageStatus) {
                 if ($messageStatus->getSuccess() === null) {
                     $this->logger->error('Ingestion failure: ' . json_encode($messageStatus->getFailure()));
-                } else {
-                    $this->logger->info('Ingestion success: ' . json_encode($messageStatus->getSuccess()));
                 }
             }
         } catch (StreamxClientException $e) {
@@ -99,9 +91,7 @@ class Client implements ClientInterface {
 
     public function isStreamxAvailable(): bool {
         try {
-            // TODO: update php client version to gain access to this method:
             return $this->publisher->isIngestionServiceAvailable();
-            // TODO: adjust StreamxConnectorClientAvailabilityTest
         } catch (Exception $e) {
             $this->logger->error('Exception checking if StreamX is available: ' . $e->getMessage(), ['exception' => $e]);
             return false;

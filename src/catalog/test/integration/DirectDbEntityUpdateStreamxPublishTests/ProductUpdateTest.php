@@ -3,8 +3,6 @@
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
-use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
-use function date;
 
 /**
  * @inheritdoc
@@ -19,30 +17,30 @@ class ProductUpdateTest extends BaseDirectDbEntityUpdateTest {
     public function shouldPublishProductEditedDirectlyInDatabaseToStreamx() {
         // given
         $productOldName = 'Joust Duffle Bag';
-        $productNewName = 'Name modified for testing, at ' . date("Y-m-d H:i:s");
-        $productId = MagentoMySqlQueryExecutor::getProductId($productOldName);
+        $productNewName = 'Name modified for testing';
+        $productId = $this->db->getProductId($productOldName);
 
         // and
         $expectedKey = "product_$productId";
         self::removeFromStreamX($expectedKey);
 
         // when
-        self::renameProductInDb($productId, $productNewName);
+        $this->renameProductInDb($productId, $productNewName);
 
         try {
             // and
             $this->reindexMview();
 
             // then
-            $this->assertDataIsPublished($expectedKey, $productNewName);
+            $this->assertExactDataIsPublished($expectedKey, 'edited-bag-product.json');
         } finally {
-            self::renameProductInDb($productId, $productOldName);
+            $this->renameProductInDb($productId, $productOldName);
         }
     }
 
-    private static function renameProductInDb(int $productId, string $newName) {
-        $productNameAttributeId = MagentoMySqlQueryExecutor::getProductNameAttributeId();
-        MagentoMySqlQueryExecutor::execute("
+    private function renameProductInDb(int $productId, string $newName): void {
+        $productNameAttributeId = $this->db->getProductNameAttributeId();
+        $this->db->execute("
             UPDATE catalog_product_entity_varchar
                SET value = '$newName'
              WHERE attribute_id = $productNameAttributeId

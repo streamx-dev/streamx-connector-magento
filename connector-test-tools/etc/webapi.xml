@@ -64,25 +64,6 @@
     </resources>
   </route>
 
-  <route url="/V1/coverage/start" method="PUT">
-    <service class="StreamX\ConnectorTestTools\Api\CodeCoverageControllerInterface" method="startCoverage"/>
-    <resources>
-      <resource ref="anonymous"/>
-    </resources>
-  </route>
-  <route url="/V1/coverage/stop-and-reset" method="PUT">
-    <service class="StreamX\ConnectorTestTools\Api\CodeCoverageControllerInterface" method="stopAndResetCoverage"/>
-    <resources>
-      <resource ref="anonymous"/>
-    </resources>
-  </route>
-  <route url="/V1/coverage/get" method="GET">
-    <service class="StreamX\ConnectorTestTools\Api\CodeCoverageControllerInterface" method="getCoverage"/>
-    <resources>
-      <resource ref="anonymous"/>
-    </resources>
-  </route>
-
   <route url="/V1/mview/reindex" method="PUT">
     <service class="StreamX\ConnectorTestTools\Api\MviewReindexerInterface" method="reindexMview"/>
     <resources>

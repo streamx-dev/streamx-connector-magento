@@ -3,8 +3,7 @@
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
-use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
-use function date;
+use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageReportGenerator;
 
 /**
  * @inheritdoc
@@ -19,8 +18,8 @@ class ProductUpdateTest extends BaseAppEntityUpdateTest {
     public function shouldPublishProductEditedUsingMagentoApplicationToStreamx() {
         // given
         $productOldName = 'Joust Duffle Bag';
-        $productNewName = 'Name modified for testing, at ' . date("Y-m-d H:i:s");
-        $productId = MagentoMySqlQueryExecutor::getProductId($productOldName);
+        $productNewName = 'Name modified for testing';
+        $productId = $this->db->getProductId($productOldName);
 
         // and
         $expectedKey = "product_$productId";
@@ -31,17 +30,21 @@ class ProductUpdateTest extends BaseAppEntityUpdateTest {
 
         // then
         try {
-            $this->assertDataIsPublished($expectedKey, $productNewName);
+            $this->assertExactDataIsPublished($expectedKey, 'edited-bag-product.json');
         } finally {
             self::renameProduct($productId, $productOldName);
-            $this->assertDataIsPublished($expectedKey, $productOldName);
+            $this->assertExactDataIsPublished($expectedKey, 'original-bag-product.json');
         }
     }
 
-    private function renameProduct(int $productId, string $newName) {
-        $this->callMagentoEndpoint('product/rename', [
+    private function renameProduct(int $productId, string $newName): void {
+        $coverage = $this->callMagentoPutEndpoint('product/rename', [
             'productId' => $productId,
             'newName' => $newName
         ]);
+
+        if (getenv('GENERATE_CODE_COVERAGE_REPORT') === 'true') {
+            CodeCoverageReportGenerator::generateCodeCoverageReport($coverage, $this);
+        }
     }
 }

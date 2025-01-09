@@ -3,8 +3,7 @@
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
-use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
-use function date;
+use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageReportGenerator;
 
 /**
  * @inheritdoc
@@ -19,10 +18,10 @@ class AttributeUpdateTest extends BaseAppEntityUpdateTest {
     public function shouldPublishAttributeEditedUsingMagentoApplicationToStreamx() {
         // given
         $attributeCode = 'description';
-        $attributeId = MagentoMySqlQueryExecutor::getProductAttributeId($attributeCode);
+        $attributeId = $this->db->getProductAttributeId($attributeCode);
 
-        $newDisplayName = 'Description attribute name modified for testing, at ' . date("Y-m-d H:i:s");
-        $oldDisplayName = MagentoMySqlQueryExecutor::getAttributeDisplayName($attributeId);
+        $newDisplayName = 'Description attribute name modified for testing';
+        $oldDisplayName = $this->db->getAttributeDisplayName($attributeId);
 
         // and
         $expectedKey = "attribute_$attributeId";
@@ -33,17 +32,21 @@ class AttributeUpdateTest extends BaseAppEntityUpdateTest {
 
         // then
         try {
-            $this->assertDataIsPublished($expectedKey, $newDisplayName);
+            $this->assertExactDataIsPublished($expectedKey, 'edited-description-attribute.json');
         } finally {
             self::renameAttribute($attributeCode, $oldDisplayName);
-            $this->assertDataIsPublished($expectedKey, $oldDisplayName);
+            $this->assertExactDataIsPublished($expectedKey, 'original-description-attribute.json');
         }
     }
 
-    private function renameAttribute(string $attributeCode, string $newName) {
-        $this->callMagentoEndpoint('attribute/rename', [
+    private function renameAttribute(string $attributeCode, string $newName): void {
+        $coverage = $this->callMagentoPutEndpoint('attribute/rename', [
             'attributeCode' => $attributeCode,
             'newName' => $newName
         ]);
+
+        if (getenv('GENERATE_CODE_COVERAGE_REPORT') === 'true') {
+            CodeCoverageReportGenerator::generateCodeCoverageReport($coverage, $this);
+        }
     }
 }

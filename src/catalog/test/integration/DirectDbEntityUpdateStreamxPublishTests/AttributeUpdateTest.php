@@ -3,8 +3,6 @@
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
-use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
-use function date;
 
 /**
  * @inheritdoc
@@ -19,31 +17,31 @@ class AttributeUpdateTest extends BaseDirectDbEntityUpdateTest {
     public function shouldPublishAttributeEditedDirectlyInDatabaseToStreamx() {
         // given
         $attributeCode = 'description';
-        $attributeId = MagentoMySqlQueryExecutor::getProductAttributeId($attributeCode);
+        $attributeId = $this->db->getProductAttributeId($attributeCode);
 
-        $newDisplayName = 'Description attribute name modified for testing, at ' . date("Y-m-d H:i:s");
-        $oldDisplayName = MagentoMySqlQueryExecutor::getAttributeDisplayName($attributeId);
+        $newDisplayName = 'Description attribute name modified for testing';
+        $oldDisplayName = $this->db->getAttributeDisplayName($attributeId);
 
         // and
         $expectedKey = "attribute_$attributeId";
         self::removeFromStreamX($expectedKey);
 
         // when
-        self::renameAttributeInDb($attributeId, $newDisplayName);
+        $this->renameAttributeInDb($attributeId, $newDisplayName);
 
         try {
             // and
             $this->reindexMview();
 
             // then
-            $this->assertDataIsPublished($expectedKey, $newDisplayName);
+            $this->assertExactDataIsPublished($expectedKey, 'edited-description-attribute.json');
         } finally {
-            self::renameAttributeInDb($attributeId, $oldDisplayName);
+            $this->renameAttributeInDb($attributeId, $oldDisplayName);
         }
     }
 
-    private static function renameAttributeInDb($attributeId, string $newDisplayName): void {
-        MagentoMySqlQueryExecutor::execute("
+    private function renameAttributeInDb($attributeId, string $newDisplayName): void {
+        $this->db->execute("
             UPDATE eav_attribute
                SET frontend_label = '$newDisplayName'
              WHERE attribute_id = $attributeId

@@ -3,7 +3,6 @@
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
-use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
 
 /**
  * @inheritdoc
@@ -18,7 +17,7 @@ class ProductAddAndDeleteTest extends BaseAppEntityUpdateTest {
     public function shouldPublishProductAddedUsingMagentoApplicationToStreamx_AndUnpublishDeletedProduct() {
         // given
         $productName = 'The new great watch!';
-        $categoryId = MagentoMySqlQueryExecutor::getCategoryId('Watches');
+        $categoryId = $this->db->getCategoryId('Watches');
 
         // when
         $productId = self::addProduct($productName, $categoryId);
@@ -37,14 +36,14 @@ class ProductAddAndDeleteTest extends BaseAppEntityUpdateTest {
     }
 
     private function addProduct(string $productName, int $categoryId): int {
-        return (int) $this->callMagentoEndpoint('product/add', [
+        return (int) $this->callMagentoPutEndpoint('product/add', [
             'productName' => $productName,
             'categoryId' => $categoryId
         ]);
     }
 
     private function deleteProduct(int $productId): void {
-        $this->callMagentoEndpoint('product/delete', [
+        $this->callMagentoPutEndpoint('product/delete', [
             'productId' => $productId
         ]);
     }

@@ -61,15 +61,8 @@ class Converter implements ConverterInterface
     private function parseTypeConfig(DOMXPath $xpath, DOMNode $typeRootNode): array
     {
         $datasources = $this->parseDataProviders($xpath, $typeRootNode);
-        $mapping = $typeRootNode->getAttribute('mapping');
-        $mappingOptions = [];
-
-        if ($mapping) {
-            $mappingOptions[] = $mapping;
-        }
 
         return [
-            'mapping' => $mappingOptions,
             'data_providers' => $datasources,
         ];
     }

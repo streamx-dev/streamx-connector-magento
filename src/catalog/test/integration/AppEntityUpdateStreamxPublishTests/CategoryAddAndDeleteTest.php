@@ -35,13 +35,13 @@ class CategoryAddAndDeleteTest extends BaseAppEntityUpdateTest {
     }
 
     private function addCategory(string $categoryName): int {
-        return (int) $this->callMagentoEndpoint('category/add', [
+        return (int) $this->callMagentoPutEndpoint('category/add', [
             'categoryName' => $categoryName
         ]);
     }
 
     private function deleteCategory(int $categoryId): void {
-        $this->callMagentoEndpoint('category/delete', [
+        $this->callMagentoPutEndpoint('category/delete', [
             'categoryId' => $categoryId
         ]);
     }

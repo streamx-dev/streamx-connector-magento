@@ -158,35 +158,6 @@
         <plugin name="update_product_in_es" type="StreamX\ConnectorCatalog\Plugin\Controller\Catalog\Adminhtml\Product\Action\AttributeSavePlugin"/>
     </type>
 
-    <type name="StreamX\ConnectorCatalog\Index\Mapping\Product">
-        <arguments>
-            <argument name="additionalMapping" xsi:type="array">
-                <item name="bundle_options" xsi:type="object">StreamX\ConnectorCatalog\Index\Mapping\Product\BundleOptionsMapping</item>
-                <item name="product_links" xsi:type="object">StreamX\ConnectorCatalog\Index\Mapping\Product\ProductLinksMapping</item>
-                <item name="configurable_options" xsi:type="object">StreamX\ConnectorCatalog\Index\Mapping\Product\ConfigurableOptionsMapping</item>
-                <item name="category" xsi:type="object">StreamX\ConnectorCatalog\Index\Mapping\Product\CategoryMapping</item>
-                <item name="custom_options" xsi:type="object">StreamX\ConnectorCatalog\Index\Mapping\Product\CustomOptionsMapping</item>
-                <item name="tier_prices" xsi:type="object">StreamX\ConnectorCatalog\Index\Mapping\Product\TierPricesMapping</item>
-                <item name="attributes_meta" xsi:type="object">StreamX\ConnectorCatalog\Index\Mapping\Product\AttributesMetaMapping</item>
-            </argument>
-        </arguments>
-    </type>
-
-    <type name="StreamX\ConnectorCatalog\Index\Mapping\AbstractMapping">
-        <arguments>
-            <argument name="staticFieldMapping" xsi:type="array">
-                <item name="status" xsi:type="const">StreamX\ConnectorCore\Api\Mapping\FieldInterface::TYPE_INTEGER</item>
-                <item name="visibility" xsi:type="const">StreamX\ConnectorCore\Api\Mapping\FieldInterface::TYPE_INTEGER</item>
-                <item name="position" xsi:type="const">StreamX\ConnectorCore\Api\Mapping\FieldInterface::TYPE_LONG</item>
-                <item name="level" xsi:type="const">StreamX\ConnectorCore\Api\Mapping\FieldInterface::TYPE_INTEGER</item>
-                <item name="category_ids" xsi:type="const">StreamX\ConnectorCore\Api\Mapping\FieldInterface::TYPE_LONG</item>
-                <item name="sku" xsi:type="const">StreamX\ConnectorCore\Api\Mapping\FieldInterface::TYPE_KEYWORD</item>
-                <item name="url_path" xsi:type="const">StreamX\ConnectorCore\Api\Mapping\FieldInterface::TYPE_KEYWORD</item>
-                <item name="url_key" xsi:type="const">StreamX\ConnectorCore\Api\Mapping\FieldInterface::TYPE_KEYWORD</item>
-            </argument>
-        </arguments>
-    </type>
-
     <type name="StreamX\ConnectorCatalog\Model\Product\ParentResolver">
         <arguments>
             <argument name="handlers" xsi:type="array">

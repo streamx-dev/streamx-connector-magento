@@ -10,89 +10,79 @@ use StreamX\ConnectorCatalog\test\integration\BaseStreamxTest;
 use StreamX\ConnectorCore\Streamx\Client;
 
 class StreamxConnectorClientAvailabilityTest extends BaseStreamxTest {
-    private Store $storeMock;
-    private StoreManagerInterface $storeManagerMock;
+
+    private const NOT_EXISTING_HOST = 'c793qwh0uqw3fg94ow';
+    private const WRONG_INGESTION_PORT = 1234;
+
     private LoggerInterface $loggerMock;
+    private StoreManagerInterface $storeManagerMock;
 
     protected function setUp(): void {
-        $this->storeMock = $this->createMock(Store::class);
-        $this->storeMock->method('getBaseUrl')->willReturn('https://magento-store.com');
+        $this->setupLoggerMock();
+        $this->setupStoreManagerMock();
+    }
 
-        $this->storeManagerMock = $this->createMock(StoreManagerInterface::class);
-        $this->storeManagerMock->method('getStore')->willReturn($this->storeMock);
-
+    private function setupLoggerMock(): void {
         $this->loggerMock = $this->createMock(LoggerInterface::class);
         $this->loggerMock->method('error')->will($this->returnCallback(function ($arg) {
             echo $arg; // redirect errors to test console
         }));
     }
 
+    private function setupStoreManagerMock(): void {
+        $storeMock = $this->createMock(Store::class);
+        $storeMock->method('getBaseUrl')->willReturn('https://dummy-magento-store.com');
+
+        $this->storeManagerMock = $this->createMock(StoreManagerInterface::class);
+        $this->storeManagerMock->method('getStore')->willReturn($storeMock);
+    }
+
     /** @test */
     public function clientShouldBeAvailable() {
-        $client = $this->createClient(
-            self::STREAMX_REST_INGESTION_URL,
-            self::CHANNEL_NAME,
-            self::CHANNEL_SCHEMA_NAME
-        );
+        // given
+        $restIngestionUrl = parent::STREAMX_REST_INGESTION_URL;
+
+        // when
+        $client = $this->createClient($restIngestionUrl);
+
+        // then
         $this->assertTrue($client->isStreamxAvailable());
     }
 
     /** @test */
     public function clientShouldNotBeAvailable_WhenNotExistingHost() {
-        $client = $this->createClient(
-            self::changeHost(self::STREAMX_REST_INGESTION_URL, "c793qwh0uqw3fg94ow"),
-            self::CHANNEL_NAME,
-            self::CHANNEL_SCHEMA_NAME
-        );
+        // given
+        $restIngestionUrl = self::changedRestIngestionUrl('host', self::NOT_EXISTING_HOST);
+
+        // when
+        $client = $this->createClient($restIngestionUrl);
+
+        // then
         $this->assertFalse($client->isStreamxAvailable());
     }
 
     /** @test */
     public function clientShouldNotBeAvailable_WhenWrongPort() {
-        $client = $this->createClient(
-            self::changePort(self::STREAMX_REST_INGESTION_URL, 1234),
-            self::CHANNEL_NAME,
-            self::CHANNEL_SCHEMA_NAME
-        );
+        // given
+        $restIngestionUrl = self::changedRestIngestionUrl('port', self::WRONG_INGESTION_PORT);
+
+        // when
+        $client = $this->createClient($restIngestionUrl);
+
+        // then
         $this->assertFalse($client->isStreamxAvailable());
     }
 
-    /** @test */
-    public function clientShouldNotBeAvailable_WhenWrongChannel() {
-        $client = $this->createClient(
-            self::STREAMX_REST_INGESTION_URL,
-            'foo',
-            self::CHANNEL_SCHEMA_NAME
-        );
-        $this->assertFalse($client->isStreamxAvailable());
-    }
-
-    /** @test */
-    public function clientShouldNotBeAvailable_WhenWrongChannelSchemaName() {
-        $client = $this->createClient(
-            self::STREAMX_REST_INGESTION_URL,
-            self::CHANNEL_NAME,
-            'FooIngestionMessage'
-        );
-        $this->assertFalse($client->isStreamxAvailable());
-    }
-
-    private function createClient(string $restIngestionUrl, string $channelName, string $channelSchemaName): Client {
+    private function createClient(string $restIngestionUrl): Client {
         $publisher = StreamxClientBuilders::create($restIngestionUrl)
             ->build()
-            ->newPublisher($channelName, $channelSchemaName);
-        return new Client($this->storeManagerMock, $publisher, $this->loggerMock, $channelSchemaName);
+            ->newPublisher(parent::CHANNEL_NAME, parent::CHANNEL_SCHEMA_NAME);
+        return new Client($this->loggerMock, $publisher, $this->storeManagerMock);
     }
 
-    private static function changeHost(string $url, string $newHost): string {
-        $parsedUrl = parse_url($url);
-        $oldHost = $parsedUrl['host'];
-        return str_replace($oldHost, $newHost, $url);
-    }
-
-    private static function changePort(string $url, int $newPort): string {
-        $parsedUrl = parse_url($url);
-        $oldPort = $parsedUrl['port'];
-        return str_replace($oldPort, $newPort, $url);
+    private static function changedRestIngestionUrl(string $urlPartName, $newValue): string {
+        $parsedUrl = parse_url(parent::STREAMX_REST_INGESTION_URL);
+        $oldValue = $parsedUrl[$urlPartName];
+        return str_replace($oldValue, $newValue, parent::STREAMX_REST_INGESTION_URL);
     }
 }

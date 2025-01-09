@@ -35,13 +35,13 @@ class AttributeAddAndDeleteTest extends BaseAppEntityUpdateTest {
     }
 
     private function addAttribute(string $attributeCode): int {
-        return (int) $this->callMagentoEndpoint('attribute/add', [
+        return (int) $this->callMagentoPutEndpoint('attribute/add', [
             'attributeCode' => $attributeCode
         ]);
     }
 
     private function deleteAttribute(int $attributeId): void {
-        $this->callMagentoEndpoint('attribute/delete', [
+        $this->callMagentoPutEndpoint('attribute/delete', [
             'attributeId' => $attributeId
         ]);
     }

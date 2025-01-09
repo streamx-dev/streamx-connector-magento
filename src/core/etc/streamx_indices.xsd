@@ -20,7 +20,6 @@
             <xs:element name="data_providers" type="dataProvidersDefinition" minOccurs="0"/>
         </xs:all>
         <xs:attribute type="xs:string" name="name" use="required"/>
-        <xs:attribute type="xs:string" name="mapping" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="dataProvidersDefinition">
