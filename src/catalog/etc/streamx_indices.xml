@@ -10,7 +10,7 @@
                 <data_provider name="category_data">StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\CategoryData</data_provider>
                 <data_provider name="price_data">StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\PriceData</data_provider>
                 <data_provider name="media_gallery">StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\MediaGalleryData</data_provider>
-                <data_provider name="inventory_data">StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\Inventory</data_provider>
+                <data_provider name="quantity_data">StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\Quantity</data_provider>
                 <data_provider name="configurable_data">StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\ConfigurableData</data_provider>
                 <data_provider name="custom_options">StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\CustomOptions</data_provider>
             </data_providers>

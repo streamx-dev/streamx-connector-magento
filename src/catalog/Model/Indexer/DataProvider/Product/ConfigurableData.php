@@ -6,7 +6,7 @@ use Exception;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 use StreamX\ConnectorCore\Indexer\DataFilter;
 
-use StreamX\ConnectorCatalog\Api\LoadInventoryInterface;
+use StreamX\ConnectorCatalog\Api\LoadQuantityInterface;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\Configurable\LoadChildrenRawAttributes;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\Configurable\LoadConfigurableOptions;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\Configurable\PrepareConfigurableProduct;
@@ -26,7 +26,7 @@ class ConfigurableData implements DataProviderInterface
 
     private DataFilter $dataFilter;
     private ConfigurableResource $configurableResource;
-    private LoadInventoryInterface $loadInventory;
+    private LoadQuantityInterface $loadQuantity;
     private LoadChildrenRawAttributes $childrenAttributeProcessor;
     private LoadConfigurableOptions $configurableProcessor;
     private PrepareConfigurableProduct $prepareConfigurableProduct;
@@ -34,14 +34,14 @@ class ConfigurableData implements DataProviderInterface
     public function __construct(
         DataFilter $dataFilter,
         ConfigurableResource $configurableResource,
-        LoadInventoryInterface $loadInventory,
+        LoadQuantityInterface $loadQuantity,
         LoadConfigurableOptions $configurableProcessor,
         PrepareConfigurableProduct $prepareConfigurableProduct,
         LoadChildrenRawAttributes $childrenAttributeProcessor,
     ) {
         $this->dataFilter = $dataFilter;
         $this->configurableResource = $configurableResource;
-        $this->loadInventory = $loadInventory;
+        $this->loadQuantity = $loadQuantity;
         $this->childrenAttributeProcessor = $childrenAttributeProcessor;
         $this->prepareConfigurableProduct = $prepareConfigurableProduct;
         $this->configurableProcessor = $configurableProcessor;
@@ -94,7 +94,7 @@ class ConfigurableData implements DataProviderInterface
             return $indexData;
         }
 
-        $stockRowData = $this->loadInventory->execute($allChildren, $storeId);
+        $stockRowData = $this->loadQuantity->execute($allChildren, $storeId);
         $configurableAttributeCodes = $this->configurableResource->getConfigurableAttributeCodes($storeId);
 
         $allChildren = $this->childrenAttributeProcessor
@@ -111,9 +111,7 @@ class ConfigurableData implements DataProviderInterface
 
             if (isset($stockRowData[$childId])) {
                 $productStockData = $stockRowData[$childId];
-
-                unset($productStockData['product_id']);
-                $child['stock'] = $productStockData;
+                $child['qty'] = $productStockData['qty'];
             }
 
             foreach ($parentIds as $parentId) {
