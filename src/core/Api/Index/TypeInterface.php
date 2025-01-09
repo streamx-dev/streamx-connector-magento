@@ -3,13 +3,10 @@
 namespace StreamX\ConnectorCore\Api\Index;
 
 use StreamX\ConnectorCore\Api\DataProviderInterface;
-use StreamX\ConnectorCore\Api\MappingInterface;
 
 interface TypeInterface
 {
     public function getName(): string;
-
-    public function getMapping(): MappingInterface;
 
     /**
      * @return DataProviderInterface[]

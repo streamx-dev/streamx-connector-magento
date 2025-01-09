@@ -4,9 +4,7 @@ namespace StreamX\ConnectorCatalog\Model\ResourceModel\Category;
 
 use Magento\Catalog\Api\Data\CategoryInterface;
 use Magento\Framework\Exception\LocalizedException;
-use StreamX\ConnectorCatalog\Index\Mapping\NoOpMapping;
 use StreamX\ConnectorCatalog\Model\ResourceModel\AbstractEavAttributes;
-use StreamX\ConnectorCore\Api\ConvertValueInterface;
 use Magento\Catalog\Model\ResourceModel\Eav\Attribute;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\EntityManager\MetadataPool;
@@ -20,15 +18,13 @@ class AttributeDataProvider extends AbstractEavAttributes
 
     public function __construct(
         LoadAttributes $loadAttributes,
-        NoOpMapping $noOpMapping,
         ResourceConnection $resourceConnection,
-        ConvertValueInterface $castValue,
         MetadataPool $metadataPool,
         $entityType = CategoryInterface::class
     ) {
         $this->loadAttributes = $loadAttributes;
 
-        parent::__construct($resourceConnection, $metadataPool, $castValue, $noOpMapping, $entityType);
+        parent::__construct($resourceConnection, $metadataPool, $entityType);
     }
 
     /**

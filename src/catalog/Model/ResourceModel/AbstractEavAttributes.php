@@ -5,8 +5,6 @@ namespace StreamX\ConnectorCatalog\Model\ResourceModel;
 use Exception;
 use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\DB\Select;
-use StreamX\ConnectorCore\Api\ConvertValueInterface;
-use StreamX\ConnectorCore\Api\MappingInterface;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\EntityManager\MetadataPool;
 use Magento\Framework\EntityManager\EntityMetadataInterface;
@@ -23,21 +21,15 @@ abstract class AbstractEavAttributes implements EavAttributesInterface
     private string $entityType;
     private ?array $valuesByEntityId = null;
     private MetadataPool $metadataPool;
-    private MappingInterface $mapping;
-    private ConvertValueInterface $convertValue;
 
     public function __construct(
         ResourceConnection $resourceConnection,
         MetadataPool $metadataPool,
-        ConvertValueInterface $convertValue,
-        MappingInterface $mapping,
         string $entityType
     ) {
         $this->resourceConnection = $resourceConnection;
         $this->metadataPool = $metadataPool;
         $this->entityType = $entityType;
-        $this->convertValue = $convertValue;
-        $this->mapping = $mapping;
     }
 
     /**
@@ -122,28 +114,12 @@ abstract class AbstractEavAttributes implements EavAttributesInterface
                 }
 
                 $value['value'] = $options;
-            } else {
-                $value['value'] = $this->prepareValue(
-                    $attributeCode,
-                    $value['value']
-                );
             }
 
             $this->valuesByEntityId[$entityId][$attributeCode] = $value['value'];
         }
 
         return $this->valuesByEntityId;
-    }
-
-    /**
-     * @param array|string $value
-     *
-     * @return array|string|int|float
-     * @throws Exception
-     */
-    private function prepareValue(string $attributeCode, $value)
-    {
-        return $this->convertValue->execute($this->mapping, $attributeCode, $value);
     }
 
     /**
