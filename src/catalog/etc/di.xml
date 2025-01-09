@@ -4,7 +4,6 @@
     <preference for="StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface" type="StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig"/>
     <preference for="StreamX\ConnectorCatalog\Api\ApplyCategorySlugInterface" type="StreamX\ConnectorCatalog\Model\Category\ApplyCategorySlug"/>
     <preference for="StreamX\ConnectorCatalog\Api\LoadInventoryInterface" type="StreamX\ConnectorCatalog\Model\LoadInventory"/>
-    <preference for="StreamX\ConnectorCatalog\Api\ArrayConverter\Product\InventoryConverterInterface" type="StreamX\ConnectorCatalog\ArrayConverter\Product\InventoryConverter" />
     <preference for="StreamX\ConnectorCatalog\Api\ArrayConverter\Product\CustomOptionConverterInterface" type="StreamX\ConnectorCatalog\ArrayConverter\Product\CustomOptionConverter"/>
     <preference for="StreamX\ConnectorCatalog\Api\LoadMediaGalleryInterface" type="StreamX\ConnectorCatalog\Model\Product\LoadMediaGallery"/>
     <preference for="StreamX\ConnectorCatalog\Api\LoadTierPricesInterface" type="StreamX\ConnectorCatalog\Model\Product\LoadTierPrices" />
