@@ -8,18 +8,6 @@ use Magento\Eav\Model\Entity\Attribute;
 
 abstract class AbstractMapping
 {
-    private array $staticFieldMapping;
-
-    public function __construct(array $staticFieldMapping)
-    {
-        $this->staticFieldMapping = $staticFieldMapping;
-    }
-
-    private array $staticTextMapping = [
-        'available_sort_by',
-        'default_sort_by',
-    ];
-
     public function getAttributeMapping(Attribute $attribute): array
     {
         $mapping = [];
@@ -50,13 +38,7 @@ abstract class AbstractMapping
 
     private function addKeywordFieldToTextAttribute(Attribute $attribute, string $esType): bool
     {
-        $attributeCode = $attribute->getAttributeCode();
-
         if (FieldInterface::TYPE_TEXT === $esType) {
-            if (isset($this->staticTextMapping[$attributeCode])) {
-                return false;
-            }
-
             return (!$attribute->getBackendModel() && $attribute->getFrontendInput() != 'media_image');
         }
 
@@ -68,16 +50,6 @@ abstract class AbstractMapping
      */
     public function getAttributeType(Attribute $attribute): string
     {
-        $attributeCode = $attribute->getAttributeCode();
-
-        if (isset($this->staticFieldMapping[$attributeCode])) {
-            return $this->staticFieldMapping[$attributeCode];
-        }
-
-        if (in_array($attributeCode, $this->staticTextMapping)) {
-            return FieldInterface::TYPE_TEXT;
-        }
-
         if ($this->isBooleanType($attribute)) {
             return FieldInterface::TYPE_BOOLEAN;
         }

@@ -158,21 +158,6 @@
         <plugin name="update_product_in_es" type="StreamX\ConnectorCatalog\Plugin\Controller\Catalog\Adminhtml\Product\Action\AttributeSavePlugin"/>
     </type>
 
-    <type name="StreamX\ConnectorCatalog\Index\Mapping\AbstractMapping">
-        <arguments>
-            <argument name="staticFieldMapping" xsi:type="array">
-                <item name="status" xsi:type="const">StreamX\ConnectorCore\Api\Mapping\FieldInterface::TYPE_INTEGER</item>
-                <item name="visibility" xsi:type="const">StreamX\ConnectorCore\Api\Mapping\FieldInterface::TYPE_INTEGER</item>
-                <item name="position" xsi:type="const">StreamX\ConnectorCore\Api\Mapping\FieldInterface::TYPE_LONG</item>
-                <item name="level" xsi:type="const">StreamX\ConnectorCore\Api\Mapping\FieldInterface::TYPE_INTEGER</item>
-                <item name="category_ids" xsi:type="const">StreamX\ConnectorCore\Api\Mapping\FieldInterface::TYPE_LONG</item>
-                <item name="sku" xsi:type="const">StreamX\ConnectorCore\Api\Mapping\FieldInterface::TYPE_KEYWORD</item>
-                <item name="url_path" xsi:type="const">StreamX\ConnectorCore\Api\Mapping\FieldInterface::TYPE_KEYWORD</item>
-                <item name="url_key" xsi:type="const">StreamX\ConnectorCore\Api\Mapping\FieldInterface::TYPE_KEYWORD</item>
-            </argument>
-        </arguments>
-    </type>
-
     <type name="StreamX\ConnectorCatalog\Model\Product\ParentResolver">
         <arguments>
             <argument name="handlers" xsi:type="array">

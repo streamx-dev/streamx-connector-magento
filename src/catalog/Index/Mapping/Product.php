@@ -15,13 +15,10 @@ class Product extends AbstractMapping implements MappingInterface // TODO Abstra
 
     public function __construct(
         GeneralMapping $generalMapping,
-        LoadAttributes $resourceModel,
-        array $staticFieldMapping
+        LoadAttributes $resourceModel
     ) {
         $this->generalMapping = $generalMapping;
         $this->resourceModel = $resourceModel;
-
-        parent::__construct($staticFieldMapping);
     }
 
     public function getMappingProperties(): array
