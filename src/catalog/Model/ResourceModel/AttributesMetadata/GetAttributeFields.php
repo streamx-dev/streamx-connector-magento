@@ -4,9 +4,6 @@ declare(strict_types = 1);
 
 namespace StreamX\ConnectorCatalog\Model\ResourceModel\AttributesMetadata;
 
-use StreamX\ConnectorCore\Api\ConvertValueInterface;
-use StreamX\ConnectorCatalog\Index\Mapping\Attribute as AttributeMapping;
-
 class GetAttributeFields
 {
     private array $requiredColumns = [
@@ -23,24 +20,13 @@ class GetAttributeFields
         'attribute_code',
     ];
 
-    private ConvertValueInterface $convertValue;
-    private AttributeMapping $attributeMapping;
-
-    public function __construct(
-        AttributeMapping $attributeMapping,
-        ConvertValueInterface $convertValue
-    ) {
-        $this->attributeMapping = $attributeMapping;
-        $this->convertValue = $convertValue;
-    }
-
     public function execute(array $row): array
     {
         $attribute['id'] = (int)$row['attribute_id'];
         $attribute['default_frontend_label'] = $row['frontend_label'];
 
         foreach ($this->requiredColumns as $column) {
-            $attribute[$column] = $this->convertValue->execute($this->attributeMapping, $column, $row[$column]);
+            $attribute[$column] = $row[$column];
         }
 
         return $attribute;

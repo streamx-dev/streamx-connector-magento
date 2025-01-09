@@ -22,7 +22,7 @@
                 <data_provider name="category_data">StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Category\AttributeData</data_provider>
             </data_providers>
         </type>
-        <type name="attribute" mapping="StreamX\ConnectorCatalog\Index\Mapping\Attribute">
+        <type name="attribute" mapping="StreamX\ConnectorCatalog\Index\Mapping\NoOpMapping">
             <data_providers>
                 <data_provider name="options">StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Attribute\Options</data_provider>
             </data_providers>
