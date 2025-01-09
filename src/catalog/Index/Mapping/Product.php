@@ -4,20 +4,14 @@ namespace StreamX\ConnectorCatalog\Index\Mapping;
 
 use StreamX\ConnectorCore\Api\Mapping\FieldInterface;
 use StreamX\ConnectorCore\Api\MappingInterface;
-use StreamX\ConnectorCore\Index\Mapping\GeneralMapping;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\LoadAttributes;
 
 class Product extends AbstractMapping implements MappingInterface // TODO AbstractMapping is used only by this class. Inline it here
 {
-    private GeneralMapping $generalMapping;
     private LoadAttributes $resourceModel;
     private ?array $properties = null;
 
-    public function __construct(
-        GeneralMapping $generalMapping,
-        LoadAttributes $resourceModel
-    ) {
-        $this->generalMapping = $generalMapping;
+    public function __construct(LoadAttributes $resourceModel) {
         $this->resourceModel = $resourceModel;
     }
 
@@ -31,7 +25,6 @@ class Product extends AbstractMapping implements MappingInterface // TODO Abstra
             $properties = $this->getCustomProperties();
             $properties['configurable_children'] = ['properties' => $attributesMapping];
             $properties = array_merge($properties, $attributesMapping);
-            $properties = array_merge($properties, $this->generalMapping->getCommonProperties());
 
             $this->properties = ['properties' => $properties];
         }
