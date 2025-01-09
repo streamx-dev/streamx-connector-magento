@@ -36,11 +36,6 @@ interface CatalogConfigurationInterface
      */
     const CONFIGURABLE_CHILDREN_BATCH_SIZE = 'configurable_children_batch_size';
 
-    /**
-     * @const string
-     */
-    const ADD_PARENT_SKU = 'add_parent_sku';
-
     public function useMagentoUrlKeys(): bool;
 
     public function useUrlKeyToGenerateSlug(): bool;
@@ -48,8 +43,6 @@ interface CatalogConfigurationInterface
     public function useCatalogRules(): bool;
 
     public function syncTierPrices(): bool;
-
-    public function addParentSku(): bool;
 
     public function addSwatchesToConfigurableOptions();
 
