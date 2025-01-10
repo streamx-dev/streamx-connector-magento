@@ -3,19 +3,18 @@
 namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Attribute;
 
 use StreamX\ConnectorCore\Api\DataProviderInterface;
-use StreamX\ConnectorCatalog\Model\Attribute\LoadOptions;
 use Magento\Eav\Model\ResourceModel\Entity\Attribute as EntityResource;
 
+// TODO: currently this class provides definitions of attributes (that were added / modified / deleted)
+//  The definitions are published to StreamX.
+//  TODO: refactor to collect all products that use such an attribute, and publish the products instead of publishing attributes.
+//  TODO: do this only when label (frontend_value) or name (attribute_code) has changed, skip changes of other fields of Attribute Definition
 class Options implements DataProviderInterface
 {
-    private LoadOptions $loadOptions;
     private EntityResource $entityAttributeResource;
 
-    public function __construct(
-        LoadOptions $loadOptions,
-        EntityResource $entityResource
-    ) {
-        $this->loadOptions = $loadOptions;
+    public function __construct(EntityResource $entityResource)
+    {
         $this->entityAttributeResource = $entityResource;
     }
 
@@ -31,25 +30,10 @@ class Options implements DataProviderInterface
                 $attributeData['store_frontend_label'] = $storeLabels[$storeId];
             }
 
-            if ($this->useSource($attributeData)) {
-                $attributeData['options'] = $this->getAttributeOptions($attributeData, $storeId);
-            }
-
             $indexData[$attributeId] = $attributeData;
         }
 
         return $indexData;
-    }
-
-    public function getAttributeOptions(array $attributeData, int $storeId): array
-    {
-        return $this->loadOptions->execute($attributeData['attribute_code'], $storeId);
-    }
-
-    private function useSource(array $attributeData): bool
-    {
-        return $attributeData['frontend_input'] === 'select' || $attributeData['frontend_input'] === 'multiselect'
-               || $attributeData['source_model'] != '';
     }
 
     private function getStoreLabelsByAttributeId(int $attributeId): array
