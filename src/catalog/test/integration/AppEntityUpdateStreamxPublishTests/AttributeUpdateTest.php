@@ -15,12 +15,20 @@ class AttributeUpdateTest extends BaseAppEntityUpdateTest {
     }
 
     /** @test */
-    public function shouldPublishAttributeEditedUsingMagentoApplicationToStreamx() {
+    public function shouldPublishSimpleAttributeEditedUsingMagentoApplicationToStreamx() {
+        $this->shouldPublishAttributeEditedUsingMagentoApplicationToStreamx('description');
+    }
+
+    /** @test */
+    public function shouldPublishAttributeWithOptionsEditedUsingMagentoApplicationToStreamx() {
+        $this->shouldPublishAttributeEditedUsingMagentoApplicationToStreamx('size');
+    }
+
+    private function shouldPublishAttributeEditedUsingMagentoApplicationToStreamx(string $attributeCode): void {
         // given
-        $attributeCode = 'description';
         $attributeId = $this->db->getProductAttributeId($attributeCode);
 
-        $newDisplayName = 'Description attribute name modified for testing';
+        $newDisplayName = "$attributeCode attribute name modified for testing";
         $oldDisplayName = $this->db->getAttributeDisplayName($attributeId);
 
         // and
@@ -32,10 +40,10 @@ class AttributeUpdateTest extends BaseAppEntityUpdateTest {
 
         // then
         try {
-            $this->assertExactDataIsPublished($expectedKey, 'edited-description-attribute.json');
+            $this->assertExactDataIsPublished($expectedKey, "edited-$attributeCode-attribute.json");
         } finally {
             self::renameAttribute($attributeCode, $oldDisplayName);
-            $this->assertExactDataIsPublished($expectedKey, 'original-description-attribute.json');
+            $this->assertExactDataIsPublished($expectedKey, "original-$attributeCode-attribute.json");
         }
     }
 

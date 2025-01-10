@@ -14,12 +14,20 @@ class AttributeUpdateTest extends BaseDirectDbEntityUpdateTest {
     }
 
     /** @test */
-    public function shouldPublishAttributeEditedDirectlyInDatabaseToStreamx() {
+    public function shouldPublishSimpleAttributeEditedDirectlyInDatabaseToStreamx() {
+        $this->shouldPublishAttributeEditedDirectlyInDatabaseToStreamx('description');
+    }
+
+    /** @test */
+    public function shouldPublishAttributeWithOptionsEditedDirectlyInDatabaseToStreamx() {
+        $this->shouldPublishAttributeEditedDirectlyInDatabaseToStreamx('size');
+    }
+
+    private function shouldPublishAttributeEditedDirectlyInDatabaseToStreamx(string $attributeCode): void {
         // given
-        $attributeCode = 'description';
         $attributeId = $this->db->getProductAttributeId($attributeCode);
 
-        $newDisplayName = 'Description attribute name modified for testing';
+        $newDisplayName = "$attributeCode attribute name modified for testing";
         $oldDisplayName = $this->db->getAttributeDisplayName($attributeId);
 
         // and
@@ -34,7 +42,7 @@ class AttributeUpdateTest extends BaseDirectDbEntityUpdateTest {
             $this->reindexMview();
 
             // then
-            $this->assertExactDataIsPublished($expectedKey, 'edited-description-attribute.json');
+            $this->assertExactDataIsPublished($expectedKey, "edited-$attributeCode-attribute.json");
         } finally {
             $this->renameAttributeInDb($attributeId, $oldDisplayName);
         }
