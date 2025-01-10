@@ -24,6 +24,16 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
     protected abstract function desiredIndexerMode(): string;
 
     public function setUp(): void {
+        $this->setUpIndexerTool();
+        $this->setUpDbTool();
+    }
+
+    public function tearDown(): void {
+        $this->tearDownIndexerTool();
+        $this->tearDownDbTool();
+    }
+
+    protected function setUpIndexerTool(): void {
         $this->indexerOperations = new MagentoIndexerOperationsExecutor($this->indexerName());
         $this->originalIndexerMode = $this->indexerOperations->getIndexerMode();
 
@@ -33,16 +43,20 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
         } else {
             $this->indexModeNeedsRestoring = false;
         }
+    }
 
+    protected function tearDownIndexerTool(): void {
+        if ($this->indexModeNeedsRestoring) {
+            $this->indexerOperations->setIndexerMode($this->originalIndexerMode);
+        }
+    }
+
+    protected function setUpDbTool(): void {
         $this->db = new MagentoMySqlQueryExecutor();
         $this->db->connect();
     }
 
-    public function tearDown(): void {
-        if ($this->indexModeNeedsRestoring) {
-            $this->indexerOperations->setIndexerMode($this->originalIndexerMode);
-        }
-
+    protected function tearDownDbTool(): void {
         $this->db->disconnect();
     }
 
