@@ -40,9 +40,23 @@ class AttributeData implements DataProviderInterface
         $requiredAttributes = $this->productAttributes->getAttributes($storeId);
         $attributes = $this->resourceModel->loadAttributesData($storeId, array_keys($indexData), $requiredAttributes);
 
+        foreach ($indexData as $entityId => $productData) {
+            $indexData[$entityId]['attributes'] = [];
+        }
+
         foreach ($attributes as $entityId => $attributesData) {
-            $productData = array_merge($indexData[$entityId], $attributesData);
-            $productData = $this->applySlug($productData);
+            $productData = $indexData[$entityId];
+            $productData['attributes'] = array_merge($productData['attributes'], $attributesData);
+
+            // TODO: those attributes should not be outputted as name + value pairs, but should be objects matching Unified Data Model structure
+            $this->moveFieldsFromAttributesArrayToProductRoot($productData, $attributesData,
+                'name',
+                'description',
+                'price',
+                'image'
+            );
+
+            $this->applySlug($productData);
             $indexData[$entityId] = $productData;
         }
 
@@ -50,7 +64,19 @@ class AttributeData implements DataProviderInterface
         return $this->productUrlPathGenerator->addUrlPath($indexData, $storeId);
     }
 
-    private function applySlug(array $productData): array
+    private function moveFieldsFromAttributesArrayToProductRoot(array &$productData, array $attributesData, string... $attributeCodes): void
+    {
+        foreach ($attributeCodes as $attributeCode) {
+            if (isset($attributesData[$attributeCode])) {
+                $productData[$attributeCode] = $attributesData[$attributeCode];
+                unset($productData['attributes'][$attributeCode]);
+            } else {
+                $productData[$attributeCode] = null;
+            }
+        }
+    }
+
+    private function applySlug(array &$productData): void
     {
         $entityId = $productData['id'];
 
@@ -67,7 +93,5 @@ class AttributeData implements DataProviderInterface
             $productData['slug'] = $slug;
             $productData['url_key'] = $slug;
         }
-
-        return $productData;
     }
 }
