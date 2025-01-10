@@ -1,21 +1,6 @@
 {
-  "attribute_id": "144",
-  "entity_type_id": "4",
   "attribute_code": "size",
-  "attribute_model": null,
-  "backend_model": null,
-  "backend_type": "int",
-  "backend_table": null,
-  "frontend_model": null,
-  "frontend_input": "select",
   "frontend_label": "Size",
-  "frontend_class": null,
-  "source_model": null,
-  "is_required": "0",
-  "is_user_defined": "1",
-  "default_value": "91",
-  "is_unique": "0",
-  "note": null,
   "id": "144",
   "store_frontend_label": "Size"
 }

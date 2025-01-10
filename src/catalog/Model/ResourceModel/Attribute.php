@@ -17,7 +17,9 @@ class Attribute
     {
         $connection = $this->resource->getConnection();
         $tableName = $this->resource->getTableName('eav_attribute');
-        $select = $connection->select()->from($tableName);
+        $select = $connection->select()
+            ->from($tableName, ['attribute_code', 'frontend_label'])
+            ->columns(['id' => 'attribute_id']);
 
         $sourceModelCondition = [$connection->quoteInto('source_model != ?', 'core/design_source_design')];
         $sourceModelCondition[] = 'source_model IS NULL';
@@ -28,7 +30,6 @@ class Attribute
         }
 
         $select->where('attribute_id > ?', $fromId)
-            ->columns(['attribute_id', 'attribute_code', 'frontend_label'])
             ->limit($limit)
             ->order('attribute_id');
 
