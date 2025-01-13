@@ -48,6 +48,7 @@ interface CatalogConfigurationInterface
 
     public function getAllowedProductTypes(int $storeId): array;
 
+    // TODO: make sure attributes required by Unified Data Model are not configurable, and will be indexed always
     public function getAllowedAttributesToIndex(int $storeId): array;
 
     public function getAllowedChildAttributesToIndex(int $storeId): array;
