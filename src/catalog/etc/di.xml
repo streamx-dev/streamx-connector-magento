@@ -8,7 +8,6 @@
     <preference for="StreamX\ConnectorCatalog\Api\ArrayConverter\Product\CustomOptionConverterInterface" type="StreamX\ConnectorCatalog\ArrayConverter\Product\CustomOptionConverter"/>
     <preference for="StreamX\ConnectorCatalog\Api\LoadMediaGalleryInterface" type="StreamX\ConnectorCatalog\Model\Product\LoadMediaGallery"/>
     <preference for="StreamX\ConnectorCatalog\Api\LoadTierPricesInterface" type="StreamX\ConnectorCatalog\Model\Product\LoadTierPrices" />
-    <preference for="StreamX\ConnectorCatalog\Model\SystemConfig\CategoryConfigInterface" type="StreamX\ConnectorCatalog\Model\SystemConfig\CategoryConfig"/>
 
     <type name="StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\ConfigurableData">
         <arguments>
