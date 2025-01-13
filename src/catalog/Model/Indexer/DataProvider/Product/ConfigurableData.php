@@ -11,7 +11,6 @@ use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\Configurable\Loa
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\Configurable\LoadConfigurableOptions;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\Configurable\PrepareConfigurableProduct;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Configurable as ConfigurableResource;
-use StreamX\ConnectorCatalog\Api\ArrayConverter\Product\InventoryConverterInterface;
 
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable as ConfigurableType;
 
@@ -28,7 +27,6 @@ class ConfigurableData implements DataProviderInterface
     private DataFilter $dataFilter;
     private ConfigurableResource $configurableResource;
     private LoadInventoryInterface $loadInventory;
-    private InventoryConverterInterface $inventoryProcessor;
     private LoadChildrenRawAttributes $childrenAttributeProcessor;
     private LoadConfigurableOptions $configurableProcessor;
     private PrepareConfigurableProduct $prepareConfigurableProduct;
@@ -40,12 +38,10 @@ class ConfigurableData implements DataProviderInterface
         LoadConfigurableOptions $configurableProcessor,
         PrepareConfigurableProduct $prepareConfigurableProduct,
         LoadChildrenRawAttributes $childrenAttributeProcessor,
-        InventoryConverterInterface $inventoryProcessor
     ) {
         $this->dataFilter = $dataFilter;
         $this->configurableResource = $configurableResource;
         $this->loadInventory = $loadInventory;
-        $this->inventoryProcessor = $inventoryProcessor;
         $this->childrenAttributeProcessor = $childrenAttributeProcessor;
         $this->prepareConfigurableProduct = $prepareConfigurableProduct;
         $this->configurableProcessor = $configurableProcessor;
@@ -117,7 +113,6 @@ class ConfigurableData implements DataProviderInterface
                 $productStockData = $stockRowData[$childId];
 
                 unset($productStockData['product_id']);
-                $productStockData = $this->inventoryProcessor->prepareInventoryData($storeId, $productStockData);
                 $child['stock'] = $productStockData;
             }
 

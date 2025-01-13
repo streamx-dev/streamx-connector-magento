@@ -3,20 +3,15 @@
 namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
 use StreamX\ConnectorCatalog\Api\LoadInventoryInterface;
-use StreamX\ConnectorCatalog\Api\ArrayConverter\Product\InventoryConverterInterface;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 
 class Inventory implements DataProviderInterface
 {
     private LoadInventoryInterface $getInventory;
-    private InventoryConverterInterface $inventoryProcessor;
 
-    public function __construct(
-        LoadInventoryInterface $getInventory,
-        InventoryConverterInterface $inventoryProcessor
-    ) {
+    public function __construct(LoadInventoryInterface $getInventory)
+    {
         $this->getInventory = $getInventory;
-        $this->inventoryProcessor = $inventoryProcessor;
     }
 
     public function addData(array $indexData, int $storeId): array
@@ -25,8 +20,7 @@ class Inventory implements DataProviderInterface
 
         foreach ($inventoryData as $inventoryDataRow) {
             $productId = (int) $inventoryDataRow['product_id'];
-            $indexData[$productId]['stock'] =
-                $this->inventoryProcessor->prepareInventoryData($storeId, $inventoryDataRow);
+            $indexData[$productId]['stock'] = $inventoryDataRow;
         }
 
         $inventoryData = null;
