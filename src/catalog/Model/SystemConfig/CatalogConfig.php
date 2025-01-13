@@ -45,11 +45,6 @@ class CatalogConfig implements CatalogConfigurationInterface
         return (bool) $this->getConfigParam(CatalogConfigurationInterface::ADD_SWATCHES_OPTIONS);
     }
 
-    public function canExportAttributesMetadata(): bool
-    {
-        return (bool) $this->getConfigParam(CatalogConfigurationInterface::EXPORT_ATTRIBUTES_METADATA);
-    }
-
     public function getAllowedProductTypes(int $storeId): array
     {
         $types = $this->getConfigParam(CatalogConfigurationInterface::ALLOWED_PRODUCT_TYPES, $storeId);

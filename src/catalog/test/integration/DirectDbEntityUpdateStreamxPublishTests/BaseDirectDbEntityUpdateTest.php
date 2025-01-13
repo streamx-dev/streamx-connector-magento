@@ -17,6 +17,10 @@ abstract class BaseDirectDbEntityUpdateTest extends BaseStreamxConnectorPublishT
         return $this->indexerName(); // note: assuming that every indexer in the indexer.xml file has the same value of id and view_id fields
     }
 
+    private function indexerChangelogTableName(): string {
+        return $this->indexerName() . '_cl';
+    }
+
     protected function desiredIndexerMode(): string {
         // Magento creates triggers to save db-level changes only when the scheduler is in the below mode:
         return MagentoIndexerOperationsExecutor::UPDATE_BY_SCHEDULE_DISPLAY_NAME;
@@ -30,5 +34,11 @@ abstract class BaseDirectDbEntityUpdateTest extends BaseStreamxConnectorPublishT
         if (getenv('GENERATE_CODE_COVERAGE_REPORT') === 'true') {
             CodeCoverageReportGenerator::generateCodeCoverageReport($coverage, $this);
         }
+    }
+
+    public function tearDown(): void {
+        parent::tearDownIndexerTool();
+        $this->db->execute('DELETE FROM ' . $this->indexerChangelogTableName());
+        parent::tearDownDbTool();
     }
 }
