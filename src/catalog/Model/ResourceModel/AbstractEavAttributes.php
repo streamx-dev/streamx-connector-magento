@@ -9,9 +9,9 @@ use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\EntityManager\MetadataPool;
 use Magento\Framework\EntityManager\EntityMetadataInterface;
 
-abstract class AbstractEavAttributes implements EavAttributesInterface
+abstract class AbstractEavAttributes
 {
-    private array $restrictedAttribute = [
+    private array $restrictedAttributes = [
         'quantity_and_stock_status',
         'options_container',
     ];
@@ -41,7 +41,7 @@ abstract class AbstractEavAttributes implements EavAttributesInterface
     /**
      * @throws Exception
      */
-    public function loadAttributesData(int $storeId, array $entityIds, array $requiredAttributes = null): array
+    public function loadAttributesData(int $storeId, array $entityIds, array $requiredAttributeCodes = null): array
     {
         $this->attributesById = $this->initAttributes();
         $tableAttributes = [];
@@ -49,7 +49,7 @@ abstract class AbstractEavAttributes implements EavAttributesInterface
         $selects = [];
 
         foreach ($this->attributesById as $attributeId => $attribute) {
-            if ($this->canIndexAttribute($attribute, $requiredAttributes)) {
+            if ($this->canIndexAttribute($attribute, $requiredAttributeCodes)) {
                 $tableAttributes[$attribute->getBackendTable()][] = $attributeId;
 
                 if (!isset($attributeTypes[$attribute->getBackendTable()])) {
@@ -78,21 +78,21 @@ abstract class AbstractEavAttributes implements EavAttributesInterface
     /**
      * @throws Exception
      */
-    public function canIndexAttribute(\Magento\Eav\Model\Entity\Attribute $attribute, array $allowedAttributes = null): bool
+    private function canIndexAttribute(\Magento\Eav\Model\Entity\Attribute $attribute, array $allowedAttributeCodes = null): bool
     {
         if ($attribute->isStatic()) {
             return false;
         }
 
-        if (in_array($attribute->getAttributeCode(), $this->restrictedAttribute)) {
+        if (in_array($attribute->getAttributeCode(), $this->restrictedAttributes)) {
             return false;
         }
 
-        if (null === $allowedAttributes || empty($allowedAttributes)) {
+        if (null === $allowedAttributeCodes || empty($allowedAttributeCodes)) {
             return true;
         }
 
-        return in_array($attribute->getAttributeCode(), $allowedAttributes);
+        return in_array($attribute->getAttributeCode(), $allowedAttributeCodes);
     }
 
     /**

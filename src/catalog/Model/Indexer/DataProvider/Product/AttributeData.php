@@ -3,6 +3,7 @@
 namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
 use Exception;
+use StreamX\ConnectorCatalog\Model\Attributes\AttributeDefinitionDto;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\AttributeDataProvider;
 use StreamX\ConnectorCatalog\Model\SlugGenerator;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
@@ -34,43 +35,39 @@ class AttributeData implements DataProviderInterface
      */
     public function addData(array $indexData, int $storeId): array
     {
-        $requiredAttributes = $this->productAttributes->getAttributes($storeId);
-        $attributes = $this->resourceModel->loadAttributesData($storeId, array_keys($indexData), $requiredAttributes);
+        $requiredAttributes = $this->productAttributes->getAttributesToIndex($storeId);
+
+        $requiredAttributesMap = [];
+        foreach ($requiredAttributes as $requiredAttribute) {
+            $requiredAttributesMap[$requiredAttribute->getName()] = $requiredAttribute;
+        }
+
+        $attributes = $this->resourceModel->loadAttributesData($storeId, array_keys($indexData), array_keys($requiredAttributesMap));
 
         foreach ($indexData as $entityId => $productData) {
             $indexData[$entityId]['attributes'] = [];
         }
 
-        foreach ($attributes as $entityId => $attributesData) {
-            $productData = $indexData[$entityId];
-            $productData['attributes'] = array_merge($productData['attributes'], $attributesData);
+        foreach ($attributes as $entityId => $attributesNamesAndValues) {
+            foreach ($attributesNamesAndValues as $attributeName => $attributeValue) {
+                if (in_array($attributeName, [ 'name', 'description', 'price', 'image'])) {
+                    $indexData[$entityId][$attributeName] = $attributeValue;
+                } else {
+                    $productAttribute['name'] = $attributeName;
+                    $productAttribute['label'] = $requiredAttributesMap[$attributeName]->getLabel();
+                    // TODO: when attribute options are implemented - put them to $productAttribute
+                    // TODO: when attribute isFacet is implemented - put it to $productAttribute
+                    $productAttribute['value'] = $attributeValue;
+                    $productAttribute['valueLabel'] = $attributeValue;
+                    $indexData[$entityId]['attributes'][] = $productAttribute;
+                }
+            }
 
-            // TODO: those attributes should not be outputted as name + value pairs, but should be objects matching Unified Data Model structure
-            $this->moveFieldsFromAttributesArrayToProductRoot($productData, $attributesData,
-                'name',
-                'description',
-                'price',
-                'image'
-            );
-
-            $this->applySlug($productData);
-            $indexData[$entityId] = $productData;
+            $this->applySlug($indexData[$entityId]);
         }
 
         $attributes = null;
         return $this->productUrlPathGenerator->addUrlPath($indexData, $storeId);
-    }
-
-    private function moveFieldsFromAttributesArrayToProductRoot(array &$productData, array $attributesData, string... $attributeCodes): void
-    {
-        foreach ($attributeCodes as $attributeCode) {
-            if (isset($attributesData[$attributeCode])) {
-                $productData[$attributeCode] = $attributesData[$attributeCode];
-                unset($productData['attributes'][$attributeCode]);
-            } else {
-                $productData[$attributeCode] = null;
-            }
-        }
     }
 
     private function applySlug(array &$productData): void
