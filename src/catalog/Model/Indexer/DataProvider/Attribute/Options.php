@@ -25,11 +25,10 @@ class Options implements DataProviderInterface
     public function addData(array $indexData, int $storeId): array
     {
         foreach ($indexData as $attributeId => $attributeData) {
-            $attributeData['default_frontend_label'] = $attributeData['frontend_label'];
             $storeLabels = $this->getStoreLabelsByAttributeId($attributeId);
 
             if (isset($storeLabels[$storeId])) {
-                $attributeData['frontend_label'] = $storeLabels[$storeId];
+                $attributeData['store_frontend_label'] = $storeLabels[$storeId];
             }
 
             if ($this->useSource($attributeData)) {

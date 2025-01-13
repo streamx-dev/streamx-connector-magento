@@ -19,8 +19,7 @@ class Attribute
         // 1. Publish edited and added attributes
         $publishedAttributeIds = [];
         do {
-            $attributes = $this->resourceModel->getAttributes($attributeIds, $lastAttributeId);
-
+            $attributes = $this->resourceModel->getAttributes($attributeIds, $lastAttributeId, 100);
             foreach ($attributes as $attributeData) {
                 $lastAttributeId = $attributeData['attribute_id'];
                 $attributeData['id'] = $attributeData['attribute_id'];
