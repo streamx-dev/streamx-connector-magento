@@ -28,7 +28,7 @@ class Attribute
         }
 
         $select->where('attribute_id > ?', $fromId)
-            ->columns(['attribute_id', 'attribute_code', 'frontend_label', 'source_model'])
+            ->columns(['attribute_id', 'attribute_code', 'frontend_label'])
             ->limit($limit)
             ->order('attribute_id');
 
