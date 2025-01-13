@@ -43,10 +43,6 @@
   ],
   "final_price": 34,
   "regular_price": 34,
-  "stock": {
-    "product_id": "1",
-    "qty": "100.0000",
-    "stock_status": "1"
-  },
+  "qty": 100.0,
   "configurable_children": []
 }
