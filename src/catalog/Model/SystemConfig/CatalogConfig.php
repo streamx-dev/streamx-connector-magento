@@ -35,11 +35,6 @@ class CatalogConfig implements CatalogConfigurationInterface
         return (bool) $this->getConfigParam(CatalogConfigurationInterface::SYNC_TIER_PRICES);
     }
 
-    public function addParentSku(): bool
-    {
-        return (bool) $this->getConfigParam(CatalogConfigurationInterface::ADD_PARENT_SKU);
-    }
-
     public function addSwatchesToConfigurableOptions(): bool
     {
         return (bool) $this->getConfigParam(CatalogConfigurationInterface::ADD_SWATCHES_OPTIONS);
