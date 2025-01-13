@@ -2,5 +2,6 @@
   "attribute_code": "size",
   "frontend_label": "Size",
   "id": "144",
+  "is_filterable_in_search": "0",
   "store_frontend_label": "Size"
 }

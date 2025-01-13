@@ -60,6 +60,7 @@ bin/composer config repositories.streamx-collector-test-tools \
   path app/code/StreamX/ConnectorTestTools
 
 # Add the connector to Magento's composer.json file (along with a module that turns off Two Factor Auth for development purposes and extension for gathering code coverage)
+# Note: if the command asks you for a github access token - just press ENTER
 bin/composer require \
   "streamx/magento-connector" \
   "streamx/magento-connector-test-tools" \
