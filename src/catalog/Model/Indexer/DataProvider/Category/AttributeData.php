@@ -4,16 +4,27 @@ namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Category;
 
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category\Children as CategoryChildrenResource;
 use StreamX\ConnectorCore\Indexer\DataFilter;
-use StreamX\ConnectorCatalog\Api\ApplyCategorySlugInterface;
+use StreamX\ConnectorCatalog\Api\ComputeCategorySlugInterface;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category\AttributeDataProvider;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category\ProductCount as ProductCountResourceModel;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 
 class AttributeData implements DataProviderInterface
 {
-    /**
-     * List of fields from category
-     */
+    // TODO convert to DTO class
+    private const ID = 'id';
+    private const SLUG = 'slug';
+    private const SUBCATEGORIES = 'subcategories';
+    private const SUBCATEGORIES_COUNT = 'subcategoriesCount';
+    private const PRODUCT_COUNT = 'productCount';
+    private const PARENT_CATEGORY_ID = 'parentCategoryId';
+
+    private array $requiredAttributes = [
+        'name',
+        'url_key',
+        'url_path'
+    ];
+
     private array $fieldsToRemove = [
         'parent_id',
         'position',
@@ -37,16 +48,16 @@ class AttributeData implements DataProviderInterface
     private DataFilter $dataFilter;
     private array $childrenRowAttributes = [];
     private array $childrenProductCount = [];
-    private ApplyCategorySlugInterface $applyCategorySlug;
+    private ComputeCategorySlugInterface $computeCategorySlug;
 
     public function __construct(
         AttributeDataProvider $attributeResource,
         CategoryChildrenResource $childrenResource,
         ProductCountResourceModel $productCountResource,
-        ApplyCategorySlugInterface $applyCategorySlug,
+        ComputeCategorySlugInterface $computeCategorySlug,
         DataFilter $dataFilter
     ) {
-        $this->applyCategorySlug = $applyCategorySlug;
+        $this->computeCategorySlug = $computeCategorySlug;
         $this->productCountResource = $productCountResource;
         $this->attributeResourceModel = $attributeResource;
         $this->childrenResourceModel = $childrenResource;
@@ -55,19 +66,18 @@ class AttributeData implements DataProviderInterface
 
     public function addData(array $indexData, int $storeId): array
     {
-        // There is no option yet to load only specific categories
         $categoryIds = array_keys($indexData);
         $attributes = $this->attributeResourceModel->loadAttributesData(
             $storeId,
             $categoryIds,
-            ['name', 'url_key', 'url_path']
+            $this->requiredAttributes
         );
         $productCount = $this->productCountResource->loadProductCount($categoryIds);
 
         foreach ($attributes as $entityId => $attributesData) {
             $categoryData = array_merge($indexData[$entityId], $attributesData);
-            $categoryData = $this->prepareCategory($categoryData, $storeId);
-            $categoryData['productCount'] = $productCount[$entityId];
+            $categoryData = $this->prepareCategory($categoryData);
+            $categoryData[self::PRODUCT_COUNT] = $productCount[$entityId];
 
             $indexData[$entityId] = $categoryData;
         }
@@ -81,7 +91,7 @@ class AttributeData implements DataProviderInterface
                 $this->attributeResourceModel->loadAttributesData(
                     $storeId,
                     array_keys($groupedChildrenById),
-                    ['name', 'url_key', 'url_path']
+                    $this->requiredAttributes
                 );
 
             $this->childrenProductCount = $this->productCountResource->loadProductCount(
@@ -90,28 +100,29 @@ class AttributeData implements DataProviderInterface
             $indexData[$categoryId] = $this->addChildrenData($categoryData, $groupedChildrenById, $storeId);
         }
 
-        $this->removeTemporaryFields($indexData);
+        $this->removeUnnecessaryFields($indexData);
 
         return $indexData;
     }
 
-    private function removeTemporaryFields(array &$categories): void {
+    private function removeUnnecessaryFields(array &$categories): void
+    {
         foreach ($categories as &$category) {
             unset($category['url_path'], $category['url_key'], $category['path']);
 
-            if (!empty($category['subcategories'])) {
-                $this->removeTemporaryFields($category['subcategories']);
+            if (!empty($category[self::SUBCATEGORIES])) {
+                $this->removeUnnecessaryFields($category[self::SUBCATEGORIES]);
             }
         }
     }
 
     private function addChildrenData(array $category, array $groupedChildren, int $storeId): array
     {
-        $categoryId = $category['id'];
+        $categoryId = $category[self::ID];
         $childrenData = $this->plotTree($groupedChildren, $categoryId, $storeId);
 
-        $category['subcategories'] = $childrenData;
-        $category['subcategoriesCount'] = count($childrenData);
+        $category[self::SUBCATEGORIES] = $childrenData;
+        $category[self::SUBCATEGORIES_COUNT] = count($childrenData);
 
         return $category;
     }
@@ -122,7 +133,7 @@ class AttributeData implements DataProviderInterface
 
         foreach ($children as $cat) {
             $sortChildrenById[$cat['entity_id']] = $cat;
-            $sortChildrenById[$cat['entity_id']]['subcategories'] = [];
+            $sortChildrenById[$cat['entity_id']][self::SUBCATEGORIES] = [];
         }
 
         return $sortChildrenById;
@@ -144,10 +155,10 @@ class AttributeData implements DataProviderInterface
                     $categoryData = array_merge($categoryData, $this->childrenRowAttributes[$categoryId]);
                 }
 
-                $categoryData['productCount'] = $this->childrenProductCount[$categoryId];
-                $categoryData = $this->prepareCategory($categoryData, $storeId);
-                $categoryData['subcategories'] = $this->plotTree($categories, $categoryId, $storeId);
-                $categoryData['subcategoriesCount'] = count($categoryData['subcategories']);
+                $categoryData[self::PRODUCT_COUNT] = $this->childrenProductCount[$categoryId];
+                $categoryData = $this->prepareCategory($categoryData);
+                $categoryData[self::SUBCATEGORIES] = $this->plotTree($categories, $categoryId, $storeId);
+                $categoryData[self::SUBCATEGORIES_COUNT] = count($categoryData[self::SUBCATEGORIES]);
                 $categoryTree[] = $categoryData;
             }
         }
@@ -155,31 +166,25 @@ class AttributeData implements DataProviderInterface
         return empty($categoryTree) ? [] : $categoryTree;
     }
 
-    private function prepareCategory(array $categoryDTO, int $storeId): array
+    private function prepareCategory(array $categoryData): array
     {
-        $categoryDTO['id'] = (int)$categoryDTO['entity_id'];
-        $categoryDTO['parentCategoryId'] = (int)$categoryDTO['parent_id'];
+        $categoryData[self::ID] = (int)$categoryData['entity_id'];
+        $categoryData[self::PARENT_CATEGORY_ID] = (int)$categoryData['parent_id'];
+        $categoryData[self::SLUG] = $this->computeSlug($categoryData);
 
-        $categoryDTO = $this->addSlug($categoryDTO);
+        $categoryData = array_diff_key($categoryData, array_flip($this->fieldsToRemove));
+        $categoryData = $this->filterData($categoryData);
 
-        $categoryDTO = array_diff_key($categoryDTO, array_flip($this->fieldsToRemove));
-        $categoryDTO = $this->filterData($categoryDTO);
-
-        return $categoryDTO;
+        return $categoryData;
     }
 
-    private function addSlug(array $categoryDTO): array
+    private function computeSlug(array $categoryDTO): string
     {
-        return $this->applyCategorySlug->execute($categoryDTO);
+        return $this->computeCategorySlug->compute($categoryDTO);
     }
 
     private function filterData(array $categoryData): array
     {
-        return $this->getDataFilter()->execute($categoryData);
-    }
-
-    private function getDataFilter(): DataFilter
-    {
-        return $this->dataFilter;
+        return $this->dataFilter->execute($categoryData);
     }
 }

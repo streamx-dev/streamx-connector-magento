@@ -1,9 +1,10 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <preference for="StreamX\ConnectorCatalog\Api\SlugGeneratorInterface" type="StreamX\ConnectorCatalog\Model\SlugGenerator"/>
+
     <preference for="StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface" type="StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig"/>
     <preference for="StreamX\ConnectorCatalog\Api\ApplyCategorySlugInterface" type="StreamX\ConnectorCatalog\Model\Category\ApplyCategorySlug"/>
     <preference for="StreamX\ConnectorCatalog\Api\LoadQuantityInterface" type="StreamX\ConnectorCatalog\Model\LoadQuantity"/>
+    <preference for="StreamX\ConnectorCatalog\Api\ComputeCategorySlugInterface" type="StreamX\ConnectorCatalog\Model\Category\ComputeCategorySlug"/>
     <preference for="StreamX\ConnectorCatalog\Api\ArrayConverter\Product\CustomOptionConverterInterface" type="StreamX\ConnectorCatalog\ArrayConverter\Product\CustomOptionConverter"/>
     <preference for="StreamX\ConnectorCatalog\Api\LoadMediaGalleryInterface" type="StreamX\ConnectorCatalog\Model\Product\LoadMediaGallery"/>
     <preference for="StreamX\ConnectorCatalog\Api\LoadTierPricesInterface" type="StreamX\ConnectorCatalog\Model\Product\LoadTierPrices" />
