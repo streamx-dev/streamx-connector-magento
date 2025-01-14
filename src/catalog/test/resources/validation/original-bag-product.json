@@ -39,7 +39,7 @@
       "name": "status",
       "label": "Enable Product",
       "value": "1",
-      "valueLabel": "1",
+      "valueLabel": "Enabled",
       "options": [
         {
           "value": "1",
@@ -56,13 +56,30 @@
       "label": "Visibility",
       "value": "4",
       "valueLabel": "Catalog, Search",
-      "options": []
+      "options": [
+        {
+          "value": "1",
+          "label": "Not Visible Individually"
+        },
+        {
+          "value": "2",
+          "label": "Catalog"
+        },
+        {
+          "value": "3",
+          "label": "Search"
+        },
+        {
+          "value": "4",
+          "label": "Catalog, Search"
+        }
+      ]
     },
     {
       "name": "tax_class_id",
       "label": "Tax Class",
       "value": "2",
-      "valueLabel": "2",
+      "valueLabel": "Taxable Goods",
       "options": [
         {
           "value": "0",

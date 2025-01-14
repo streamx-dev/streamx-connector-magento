@@ -36,4 +36,13 @@ class AttributeDefinition
     public function getOptions(): array {
         return $this->options;
     }
+
+    public function getValueLabel(string $attributeValue): string {
+        foreach ($this->options as $option) {
+            if ($option->getValue() === $attributeValue) {
+                return $option->getLabel();
+            }
+        }
+        return $attributeValue;
+    }
 }

@@ -68,7 +68,7 @@ class AttributeData implements DataProviderInterface
         $productAttribute['name'] = $attributeCode;
         $productAttribute['label'] = $attributeDefinition->getLabel();
         $productAttribute['value'] = $attributeValue;
-        $productAttribute['valueLabel'] = $this->getValueLabel($attributeCode, $attributeValue);
+        $productAttribute['valueLabel'] = $this->getValueLabel($attributeCode, $attributeValue, $attributeDefinition);
         // TODO: when isFacet property is implemented - put it to $productAttribute map
 
         $productAttribute['options'] = [];
@@ -82,12 +82,12 @@ class AttributeData implements DataProviderInterface
         return $productAttribute;
     }
 
-    private function getValueLabel(string $attributeCode, string $attributeValue): string
+    private function getValueLabel(string $attributeCode, string $attributeValue, AttributeDefinition $attributeDefinition): string
     {
-        if ($attributeCode === 'visibility') {
-            return Visibility::getOptionText(intval($attributeValue)) ?? $attributeValue;
+        if (SpecialAttributes::isSpecialAttribute($attributeCode)) {
+            return SpecialAttributes::getAttributeValueLabel($attributeCode, $attributeValue);
         }
-        return $attributeValue;
+        return $attributeDefinition->getValueLabel($attributeValue);
     }
 
     private function applySlug(array &$productData): void

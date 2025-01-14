@@ -5,6 +5,7 @@ namespace StreamX\ConnectorCatalog\Model\Attributes;
 use Magento\Framework\App\ResourceConnection;
 use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
 use StreamX\ConnectorCatalog\Model\Attribute\LoadOptions;
+use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\SpecialAttributes;
 
 class ProductAttributes
 {
@@ -50,10 +51,7 @@ class ProductAttributes
 
         foreach ($attributeRows as &$attributeRow) {
             $attributeCode = $attributeRow['attribute_code'];
-
-            $attributeRow['options'] = $this->useSource($attributeRow)
-                ? $this->loadOptions->execute($attributeCode, $storeId)
-                : [];
+            $attributeRow['options'] = $this->getOptionsArray($attributeRow, $attributeCode, $storeId);
         }
 
         return $this->mapAttributeRowsToDtos($attributeRows);
@@ -69,6 +67,19 @@ class ProductAttributes
             ->where('attribute_code IN (?)', $attributeCodes);
 
         return $connection->fetchAll($select);
+    }
+
+    private function getOptionsArray(array $attributeRow, string $attributeCode, int $storeId): array
+    {
+        if ($this->useSource($attributeRow)) {
+            if (SpecialAttributes::isSpecialAttribute($attributeCode)) {
+                return SpecialAttributes::getOptionsArray($attributeCode);
+            } else {
+                return $this->loadOptions->execute($attributeCode, $storeId);
+            }
+        } else {
+            return [];
+        }
     }
 
     private function useSource(array $attributeRow): bool
