@@ -3,13 +3,11 @@
 namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
 use Exception;
-use Magento\Catalog\Model\Product\Visibility;
 use StreamX\ConnectorCatalog\Model\Attributes\AttributeDefinition;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\AttributeDataProvider;
 use StreamX\ConnectorCatalog\Model\SlugGenerator;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
-use StreamX\ConnectorCatalog\Model\ProductUrlPathGenerator;
 use StreamX\ConnectorCatalog\Model\Attributes\ProductAttributes;
 
 class AttributeData implements DataProviderInterface
@@ -24,18 +22,15 @@ class AttributeData implements DataProviderInterface
     private AttributeDataProvider $resourceModel;
     private CatalogConfigurationInterface $settings;
     private ProductAttributes $productAttributes;
-    private ProductUrlPathGenerator $productUrlPathGenerator;
 
     public function __construct(
         ProductAttributes $productAttributes,
         CatalogConfigurationInterface $configSettings,
-        ProductUrlPathGenerator $productUrlPathGenerator,
         AttributeDataProvider $resourceModel
     ) {
         $this->settings = $configSettings;
         $this->resourceModel = $resourceModel;
         $this->productAttributes = $productAttributes;
-        $this->productUrlPathGenerator = $productUrlPathGenerator;
     }
 
     /**
@@ -66,8 +61,7 @@ class AttributeData implements DataProviderInterface
 
         $attributesData = null;
 
-        // TODO addUrlPath probably should be removed:
-        return $this->productUrlPathGenerator->addUrlPath($indexData, $storeId);
+        return $indexData;
     }
 
     private function createProductAttributeArray(string $attributeCode, AttributeDefinition $attributeDefinition, $attributeValue): array
