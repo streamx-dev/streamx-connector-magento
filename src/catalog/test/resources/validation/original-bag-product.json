@@ -18,37 +18,61 @@
       "name": "small_image",
       "label": "Small",
       "value": "\/m\/b\/mb01-blue-0.jpg",
-      "valueLabel": "\/m\/b\/mb01-blue-0.jpg"
+      "valueLabel": "\/m\/b\/mb01-blue-0.jpg",
+      "options": []
     },
     {
       "name": "thumbnail",
       "label": "Thumbnail",
       "value": "\/m\/b\/mb01-blue-0.jpg",
-      "valueLabel": "\/m\/b\/mb01-blue-0.jpg"
+      "valueLabel": "\/m\/b\/mb01-blue-0.jpg",
+      "options": []
     },
     {
       "name": "url_key",
       "label": "URL Key",
       "value": "joust-duffle-bag",
-      "valueLabel": "joust-duffle-bag"
+      "valueLabel": "joust-duffle-bag",
+      "options": []
     },
     {
       "name": "status",
       "label": "Enable Product",
       "value": "1",
-      "valueLabel": "1"
+      "valueLabel": "1",
+      "options": [
+        {
+          "value": "1",
+          "label": "Enabled"
+        },
+        {
+          "value": "2",
+          "label": "Disabled"
+        }
+      ]
     },
     {
       "name": "visibility",
       "label": "Visibility",
       "value": "4",
-      "valueLabel": "4"
+      "valueLabel": "4",
+      "options": []
     },
     {
       "name": "tax_class_id",
       "label": "Tax Class",
       "value": "2",
-      "valueLabel": "2"
+      "valueLabel": "2",
+      "options": [
+        {
+          "value": "0",
+          "label": "None"
+        },
+        {
+          "value": "2",
+          "label": "Taxable Goods"
+        }
+      ]
     }
   ],
   "name": "Joust Duffle Bag",
