@@ -9,7 +9,6 @@ use StreamX\ConnectorCore\Indexer\DataFilter;
 use StreamX\ConnectorCatalog\Api\LoadQuantityInterface;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\Configurable\LoadChildrenRawAttributes;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\Configurable\LoadConfigurableOptions;
-use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\Configurable\PrepareConfigurableProduct;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Configurable as ConfigurableResource;
 
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable as ConfigurableType;
@@ -29,21 +28,18 @@ class ConfigurableData implements DataProviderInterface
     private LoadQuantityInterface $loadQuantity;
     private LoadChildrenRawAttributes $childrenAttributeProcessor;
     private LoadConfigurableOptions $configurableProcessor;
-    private PrepareConfigurableProduct $prepareConfigurableProduct;
 
     public function __construct(
         DataFilter $dataFilter,
         ConfigurableResource $configurableResource,
         LoadQuantityInterface $loadQuantity,
         LoadConfigurableOptions $configurableProcessor,
-        PrepareConfigurableProduct $prepareConfigurableProduct,
         LoadChildrenRawAttributes $childrenAttributeProcessor,
     ) {
         $this->dataFilter = $dataFilter;
         $this->configurableResource = $configurableResource;
         $this->loadQuantity = $loadQuantity;
         $this->childrenAttributeProcessor = $childrenAttributeProcessor;
-        $this->prepareConfigurableProduct = $prepareConfigurableProduct;
         $this->configurableProcessor = $configurableProcessor;
     }
 
@@ -181,7 +177,26 @@ class ConfigurableData implements DataProviderInterface
 
     private function prepareConfigurableProduct(array $productDTO): array
     {
-        return $this->prepareConfigurableProduct->execute($productDTO);
+        $configurableChildren = $productDTO['configurable_children'];
+        $specialPrice = $finalPrice = $childPrice = [];
+
+        foreach ($configurableChildren as $child) {
+            if (isset($child['special_price'])) {
+                $specialPrice[] = $child['special_price'];
+            }
+
+            if (isset($child['price'])) {
+                $childPrice[] = $child['price'];
+                $finalPrice[] = $child['final_price'] ?? $child['price'];
+            }
+        }
+
+        $productDTO['final_price'] = !empty($finalPrice) ? min($finalPrice): null;
+        $productDTO['special_price'] = !empty($specialPrice) ? min($specialPrice) : null;
+        $productDTO['price'] = !empty($childPrice) ? min($childPrice): null;
+        $productDTO['regular_price'] = $productDTO['price'];
+
+        return $productDTO;
     }
 
     private function filterData(array $productData): array
