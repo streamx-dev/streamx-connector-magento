@@ -3,6 +3,7 @@
 namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
 use Exception;
+use Magento\Catalog\Model\Product\Visibility;
 use StreamX\ConnectorCatalog\Model\Attributes\AttributeDefinition;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\AttributeDataProvider;
 use StreamX\ConnectorCatalog\Model\SlugGenerator;
@@ -67,7 +68,7 @@ class AttributeData implements DataProviderInterface
         $productAttribute['name'] = $attributeCode;
         $productAttribute['label'] = $attributeDefinition->getLabel();
         $productAttribute['value'] = $attributeValue;
-        $productAttribute['valueLabel'] = $attributeValue;
+        $productAttribute['valueLabel'] = $this->getValueLabel($attributeCode, $attributeValue);
         // TODO: when isFacet property is implemented - put it to $productAttribute map
 
         $productAttribute['options'] = [];
@@ -79,6 +80,14 @@ class AttributeData implements DataProviderInterface
         }
 
         return $productAttribute;
+    }
+
+    private function getValueLabel(string $attributeCode, string $attributeValue): string
+    {
+        if ($attributeCode === 'visibility') {
+            return Visibility::getOptionText(intval($attributeValue)) ?? $attributeValue;
+        }
+        return $attributeValue;
     }
 
     private function applySlug(array &$productData): void
