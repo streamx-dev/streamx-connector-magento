@@ -13,18 +13,48 @@
       "pos": 1
     }
   ],
-  "attributes": {
-    "small_image": "\/m\/b\/mb01-blue-0.jpg",
-    "thumbnail": "\/m\/b\/mb01-blue-0.jpg",
-    "url_key": "joust-duffle-bag",
-    "status": "1",
-    "visibility": "4",
-    "tax_class_id": "2"
+  "attributes": [
+    {
+      "name": "small_image",
+      "label": "Small",
+      "value": "\/m\/b\/mb01-blue-0.jpg",
+      "valueLabel": "\/m\/b\/mb01-blue-0.jpg"
+    },
+    {
+      "name": "thumbnail",
+      "label": "Thumbnail",
+      "value": "\/m\/b\/mb01-blue-0.jpg",
+      "valueLabel": "\/m\/b\/mb01-blue-0.jpg"
+    },
+    {
+      "name": "url_key",
+      "label": "URL Key",
+      "value": "joust-duffle-bag",
+      "valueLabel": "joust-duffle-bag"
+    },
+    {
+      "name": "status",
+      "label": "Enable Product",
+      "value": "1",
+      "valueLabel": "1"
   },
+    {
+      "name": "visibility",
+      "label": "Visibility",
+      "value": "4",
+      "valueLabel": "4"
+    },
+    {
+      "name": "tax_class_id",
+      "label": "Tax Class",
+      "value": "2",
+      "valueLabel": "2"
+    }
+  ],
   "name": "Name modified for testing",
+  "image": "\/m\/b\/mb01-blue-0.jpg",
   "description": "<p>The sporty Joust Duffle Bag can't be beat - not in the gym, not on the luggage carousel, not anywhere. Big enough to haul a basketball or soccer ball and some sneakers with plenty of room to spare, it's ideal for athletes with places to go.<p>\n<ul>\n<li>Dual top handles.<\/li>\n<li>Adjustable shoulder strap.<\/li>\n<li>Full-length zipper.<\/li>\n<li>L 29\" x W 13\" x H 11\".<\/li>\n<\/ul>",
   "price": "34.000000",
-  "image": "\/m\/b\/mb01-blue-0.jpg",
   "slug": "name-modified-for-testing-1",
   "url_key": "name-modified-for-testing-1",
   "url_path": "joust-duffle-bag.html",
