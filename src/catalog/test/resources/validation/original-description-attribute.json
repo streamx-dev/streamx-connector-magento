@@ -1,20 +1,6 @@
 {
-  "attribute_id": "75",
-  "entity_type_id": "4",
   "attribute_code": "description",
-  "attribute_model": "Magento\\Catalog\\Model\\ResourceModel\\Eav\\Attribute",
-  "backend_model": null,
-  "backend_type": "text",
-  "backend_table": null,
-  "frontend_model": null,
-  "frontend_input": "textarea",
   "frontend_label": "Description",
-  "frontend_class": null,
-  "source_model": null,
-  "is_required": "0",
-  "is_user_defined": "0",
-  "default_value": null,
-  "is_unique": "0",
-  "note": null,
-  "id": "75"
+  "id": "75",
+  "is_filterable_in_search": "0"
 }

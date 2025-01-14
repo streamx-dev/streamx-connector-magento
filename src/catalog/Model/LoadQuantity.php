@@ -20,10 +20,10 @@ class LoadQuantity implements LoadQuantityInterface
     {
         $productIds = array_keys($indexData);
         $connection = $this->resource->getConnection();
+        $tableName = $this->resource->getTableName('cataloginventory_stock_item');
 
         $select = $connection->select()
-            ->from($this->resource->getTableName('cataloginventory_stock_item'))
-            ->columns(['product_id', 'qty'])
+            ->from($tableName, ['product_id', 'qty'])
             ->where('product_id IN (?)', $productIds);
 
         return $connection->fetchAssoc($select);

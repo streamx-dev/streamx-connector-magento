@@ -21,9 +21,7 @@ class Attribute
         do {
             $attributes = $this->resourceModel->getAttributes($attributeIds, $lastAttributeId, 100);
             foreach ($attributes as $attributeData) {
-                $lastAttributeId = $attributeData['attribute_id'];
-                $attributeData['id'] = $attributeData['attribute_id'];
-
+                $lastAttributeId = $attributeData['id'];
                 yield $lastAttributeId => $attributeData;
                 $publishedAttributeIds[] = $lastAttributeId;
             }
