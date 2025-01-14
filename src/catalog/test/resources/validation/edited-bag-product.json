@@ -1,18 +1,7 @@
 {
-  "attribute_set_id": 15,
-  "created_at": "2025-01-08 11:01:02",
-  "updated_at": "2025-01-08 11:12:08",
   "type_id": "simple",
   "sku": "24-MB01",
   "id": 1,
-  "media_gallery": [
-    {
-      "typ": "image",
-      "image": "\/m\/b\/mb01-blue-0.jpg",
-      "lab": "Image",
-      "pos": 1
-    }
-  ],
   "attributes": [
     {
       "name": "small_image",
@@ -116,6 +105,14 @@
   ],
   "final_price": 34,
   "regular_price": 34,
+  "media_gallery": [
+    {
+      "typ": "image",
+      "image": "\/m\/b\/mb01-blue-0.jpg",
+      "lab": "Image",
+      "pos": 1
+    }
+  ],
   "qty": 100.0,
   "configurable_children": []
 }

@@ -43,6 +43,10 @@ class LoadMediaGallery implements LoadMediaGalleryInterface
         $valueIds = $this->getValueIds($gallerySet);
         $videoSet = $this->resourceModel->loadVideos($valueIds, $storeId);
 
+        foreach ($indexData as &$productData) {
+            $productData['media_gallery'] = [];
+        }
+
         foreach ($gallerySet as $mediaImage) {
             $linkFieldId  = $mediaImage['row_id'];
             $entityId = $this->rowIdToEntityId[$linkFieldId] ?? $linkFieldId;

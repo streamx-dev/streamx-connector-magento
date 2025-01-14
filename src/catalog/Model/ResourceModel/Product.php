@@ -83,9 +83,6 @@ class Product
         $productMetaData = $this->productMetaData->get();
         $columns = [
             'entity_id',
-            'attribute_set_id',
-            'created_at',
-            'updated_at',
             'type_id',
             'sku',
         ];
@@ -109,7 +106,6 @@ class Product
         $entityId = $this->productMetaData->get()->getIdentifierField();
         $columns = [
             'sku',
-            'type_id',
             $entityId,
         ];
 

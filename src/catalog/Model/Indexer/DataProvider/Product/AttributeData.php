@@ -42,8 +42,8 @@ class AttributeData implements DataProviderInterface
 
         $attributesData = $this->resourceModel->loadAttributesData($storeId, array_keys($indexData), array_keys($requiredAttributesMap));
 
-        foreach ($indexData as $entityId => $productData) {
-            $indexData[$entityId]['attributes'] = [];
+        foreach ($indexData as &$productData) {
+            $productData['attributes'] = [];
         }
 
         foreach ($attributesData as $entityId => $attributeCodesAndValues) {
