@@ -14,6 +14,13 @@ use StreamX\ConnectorCatalog\Model\Attributes\ProductAttributes;
 
 class AttributeData implements DataProviderInterface
 {
+    private const TOP_LEVEL_ATTRIBUTES = [
+        'name',
+        'description',
+        'price',
+        'image'
+    ];
+
     private AttributeDataProvider $resourceModel;
     private CatalogConfigurationInterface $settings;
     private ProductAttributes $productAttributes;
@@ -46,7 +53,7 @@ class AttributeData implements DataProviderInterface
 
         foreach ($attributesData as $entityId => $attributeCodesAndValues) {
             foreach ($attributeCodesAndValues as $attributeCode => $attributeValue) {
-                if (in_array($attributeCode, [ 'name', 'description', 'price', 'image'])) {
+                if (in_array($attributeCode, self::TOP_LEVEL_ATTRIBUTES)) {
                     $indexData[$entityId][$attributeCode] = $attributeValue;
                 } else {
                     $productAttribute = $this->createProductAttributeArray($attributeCode, $requiredAttributesMap[$attributeCode], $attributeValue);
@@ -109,11 +116,7 @@ class AttributeData implements DataProviderInterface
         }
     }
 
-    /**
-     * @param int $storeId
-     * @return array
-     */
-    public function getRequiredAttributesMap(int $storeId): array
+    private function getRequiredAttributesMap(int $storeId): array
     {
         $requiredAttributes = $this->productAttributes->getAttributesToIndex($storeId);
 
