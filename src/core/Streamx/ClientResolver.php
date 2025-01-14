@@ -7,7 +7,6 @@ use StreamX\ConnectorCore\Api\Client\ClientInterface;
 use StreamX\ConnectorCore\Api\Client\ClientInterfaceFactory;
 use StreamX\ConnectorCore\Api\Client\ConfigurationInterface;
 use StreamX\ConnectorCore\Api\Client\ConfigurationInterfaceFactory;
-use StreamX\ConnectorCore\Exception\ConnectionDisabledException;
 use StreamX\ConnectorCore\System\GeneralConfigInterface;
 
 class ClientResolver {
@@ -33,10 +32,6 @@ class ClientResolver {
      * @throws StreamxClientException
      */
     public function getClient(int $storeId): ClientInterface {
-        if (!$this->config->isEnabled()) {
-            throw new ConnectionDisabledException('StreamX Connector is disabled.');
-        }
-
         if (!isset($this->clients[$storeId])) {
             /** @var ConfigurationInterface $configuration */
             $configuration = $this->clientConfigurationFactory->create(['storeId' => $storeId]);

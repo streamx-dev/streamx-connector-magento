@@ -6,8 +6,8 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category as ResourceModel;
 use Traversable;
 
-class Category
-{
+class Category implements BaseAction {
+
     private ResourceModel $resourceModel;
 
     public function __construct(ResourceModel $resourceModel) {
@@ -17,7 +17,7 @@ class Category
     /**
      * @throws NoSuchEntityException
      */
-    public function rebuild(int $storeId = 1, array $categoryIds = []): Traversable {
+    public function loadData(int $storeId = 1, array $categoryIds = []): Traversable {
         $lastCategoryId = 0;
 
         // Ensure to reindex also the parents category ids

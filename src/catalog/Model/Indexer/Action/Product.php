@@ -7,7 +7,8 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product as ResourceModel;
 use Traversable;
 
-class Product {
+class Product implements BaseAction {
+
     private ResourceModel $resourceModel;
 
     public function __construct(ResourceModel $resourceModel) {
@@ -18,7 +19,7 @@ class Product {
      * @throws LocalizedException
      * @throws NoSuchEntityException
      */
-    public function rebuild(int $storeId = 1, array $productIds = []): Traversable {
+    public function loadData(int $storeId = 1, array $productIds = []): Traversable {
         $lastProductId = 0;
 
         // Ensure to reindex also the parents product ids
