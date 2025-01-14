@@ -13,7 +13,6 @@
                 <data_provider name="quantity_data">StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\Quantity</data_provider>
                 <data_provider name="configurable_data">StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\ConfigurableData</data_provider>
                 <data_provider name="custom_options">StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\CustomOptions</data_provider>
-                <!-- TODO add data provider for product's category/ies -->
             </data_providers>
         </type>
         <type name="category">
