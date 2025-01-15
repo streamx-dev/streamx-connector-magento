@@ -12,14 +12,6 @@ use StreamX\ConnectorCatalog\Model\Attributes\ProductAttributes;
 
 class AttributeData implements DataProviderInterface
 {
-    private const TOP_LEVEL_SIMPLE_ATTRIBUTES = [
-        'name',
-        'description',
-        'price'
-    ];
-
-    private const IMAGE_ATTRIBUTE = 'image';
-
     private AttributeDataProvider $resourceModel;
     private CatalogConfig $settings;
     private ProductAttributes $productAttributes;
@@ -51,16 +43,7 @@ class AttributeData implements DataProviderInterface
 
         foreach ($attributesData as $entityId => $attributeCodesAndValues) {
             foreach ($attributeCodesAndValues as $attributeCode => $attributeValue) {
-                if (in_array($attributeCode, self::TOP_LEVEL_SIMPLE_ATTRIBUTES)) {
-                    $indexData[$entityId][$attributeCode] = $attributeValue;
-                } else if ($attributeCode === self::IMAGE_ATTRIBUTE) {
-                    $indexData[$entityId]['primaryImage'] = [
-                        'url' => $attributeValue // TODO full url?
-                    ];
-                } else {
-                    $productAttribute = $this->createProductAttributeArray($attributeCode, $requiredAttributesMap[$attributeCode], $attributeValue);
-                    $indexData[$entityId]['attributes'][] = $productAttribute;
-                }
+                $this->addAttributeToProduct($indexData[$entityId], $attributeCode, $attributeValue, $requiredAttributesMap[$attributeCode]);
             }
 
             $this->applySlug($indexData[$entityId]);
@@ -71,6 +54,22 @@ class AttributeData implements DataProviderInterface
         return $indexData;
     }
 
+    private function addAttributeToProduct(array &$productData, string $attributeCode, $attributeValue, AttributeDefinition $attributeDefinition): void
+    {
+        if ($attributeCode == 'name' || $attributeCode == 'description') {
+            $productData[$attributeCode] = $attributeValue;
+        } elseif ($attributeCode == 'image') {
+            $productData['primaryImage'] = [
+                'url' => $attributeValue // TODO full url?
+            ];
+        } elseif ($attributeCode == 'price') {
+            $productData['price'] = ((float)$attributeValue);
+        } else {
+            $productAttribute = $this->createProductAttributeArray($attributeCode, $attributeDefinition, $attributeValue);
+            $productData['attributes'][] = $productAttribute;
+        }
+    }
+
     private function createProductAttributeArray(string $attributeCode, AttributeDefinition $attributeDefinition, $attributeValue): array
     {
         $productAttribute['name'] = $attributeCode;
@@ -79,13 +78,12 @@ class AttributeData implements DataProviderInterface
         $productAttribute['valueLabel'] = $this->getValueLabel($attributeCode, $attributeValue, $attributeDefinition);
         $productAttribute['isFacet'] = $attributeDefinition->isFacet();
 
-        $productAttribute['options'] = [];
-        foreach ($attributeDefinition->getOptions() as $option) {
-            $productAttribute['options'][] = [
+        $productAttribute['options'] = array_map(function ($option) {
+            return [
                 'value' => $option->getValue(),
                 'label' => $option->getLabel()
             ];
-        }
+        }, $attributeDefinition->getOptions());
 
         return $productAttribute;
     }

@@ -45,7 +45,6 @@ class GenericIndexerHandler {
      * @throws StreamxClientException
      */
     public function saveIndex(Traversable $documents, StoreInterface $store): void {
-        // TODO: don't try to do anything if the indexer is not enabled
         try {
             $storeId = (int)$store->getId();
             $batchSize = $this->indexOperations->getBatchIndexingSize();

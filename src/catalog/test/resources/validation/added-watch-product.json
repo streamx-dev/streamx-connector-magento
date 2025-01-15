@@ -145,7 +145,7 @@
     }
   ],
   "name": "The new great watch",
-  "price": "35.000000",
+  "price": 35,
   "slug": "the-new-great-watch-2659",
   "url_key": "the-new-great-watch-2659",
   "category": [
