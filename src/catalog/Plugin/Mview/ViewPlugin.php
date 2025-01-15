@@ -3,14 +3,14 @@
 namespace StreamX\ConnectorCatalog\Plugin\Mview;
 
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
-use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
+use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 use Magento\Framework\Mview\ViewInterface;
 
 class ViewPlugin
 {
-    private CatalogConfigurationInterface $catalogSettings;
+    private CatalogConfig $catalogSettings;
 
-    public function __construct(CatalogConfigurationInterface $catalogSettings)
+    public function __construct(CatalogConfig $catalogSettings)
     {
         $this->catalogSettings = $catalogSettings;
     }

@@ -2,12 +2,40 @@
 
 namespace StreamX\ConnectorCatalog\Model\SystemConfig;
 
-use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
 
-class CatalogConfig implements CatalogConfigurationInterface
+class CatalogConfig
 {
+    private const CATALOG_SETTINGS_XML_PREFIX = 'streamx_connector_settings/catalog_settings';
+
+    /**
+     * Slug/url key config
+     */
+    private const USE_MAGENTO_URL_KEYS = 'use_magento_url_keys';
+    private const USE_URL_KEY_TO_GENERATE_SLUG = 'use_url_key_to_generate_slug';
+
+    /**
+     * Prices
+     */
+    private const USE_CATALOG_RULES = 'use_catalog_rules';
+    private const SYNC_TIER_PRICES = 'sync_tier_prices';
+
+    private const ADD_SWATCHES_OPTIONS = 'add_swatches_to_configurable_options';
+
+    /**
+     * Allow product types to reindex
+     */
+    private const ALLOWED_PRODUCT_TYPES = 'allowed_product_types';
+
+    /**
+     * Product attributes to reindex
+     */
+    private const PRODUCT_ATTRIBUTES = 'product_attributes';
+    private const CHILD_ATTRIBUTES = 'child_attributes';
+
+    private const CONFIGURABLE_CHILDREN_BATCH_SIZE = 'configurable_children_batch_size';
+
     private array $settings = [];
     private ScopeConfigInterface $scopeConfig;
 
@@ -17,32 +45,32 @@ class CatalogConfig implements CatalogConfigurationInterface
 
     public function useMagentoUrlKeys(): bool
     {
-        return (bool) $this->getConfigParam(CatalogConfigurationInterface::USE_MAGENTO_URL_KEYS);
+        return (bool) $this->getConfigParam(self::USE_MAGENTO_URL_KEYS);
     }
 
     public function useUrlKeyToGenerateSlug(): bool
     {
-        return (bool) $this->getConfigParam(CatalogConfigurationInterface::USE_URL_KEY_TO_GENERATE_SLUG);
+        return (bool) $this->getConfigParam(self::USE_URL_KEY_TO_GENERATE_SLUG);
     }
 
     public function useCatalogRules(): bool
     {
-        return (bool) $this->getConfigParam(CatalogConfigurationInterface::USE_CATALOG_RULES);
+        return (bool) $this->getConfigParam(self::USE_CATALOG_RULES);
     }
 
     public function syncTierPrices(): bool
     {
-        return (bool) $this->getConfigParam(CatalogConfigurationInterface::SYNC_TIER_PRICES);
+        return (bool) $this->getConfigParam(self::SYNC_TIER_PRICES);
     }
 
     public function addSwatchesToConfigurableOptions(): bool
     {
-        return (bool) $this->getConfigParam(CatalogConfigurationInterface::ADD_SWATCHES_OPTIONS);
+        return (bool) $this->getConfigParam(self::ADD_SWATCHES_OPTIONS);
     }
 
     public function getAllowedProductTypes(int $storeId): array
     {
-        $types = $this->getConfigParam(CatalogConfigurationInterface::ALLOWED_PRODUCT_TYPES, $storeId);
+        $types = $this->getConfigParam(self::ALLOWED_PRODUCT_TYPES, $storeId);
 
         if (null === $types || '' === $types) {
             $types = [];
@@ -53,11 +81,12 @@ class CatalogConfig implements CatalogConfigurationInterface
         return $types;
     }
 
+    // TODO: make sure attributes required by Unified Data Model are not configurable, and will be indexed always
     public function getAllowedAttributesToIndex(int $storeId): array
     {
         return explode(
             ',',
-            $this->getConfigParam(CatalogConfigurationInterface::PRODUCT_ATTRIBUTES, $storeId)
+            $this->getConfigParam(self::PRODUCT_ATTRIBUTES, $storeId)
         );
     }
 
@@ -65,14 +94,14 @@ class CatalogConfig implements CatalogConfigurationInterface
     {
         return explode(
             ',',
-            $this->getConfigParam(CatalogConfigurationInterface::CHILD_ATTRIBUTES, $storeId)
+            $this->getConfigParam(self::CHILD_ATTRIBUTES, $storeId)
         );
     }
 
     public function getConfigurableChildrenBatchSize(int $storeId): int
     {
         return (int) $this->getConfigParam(
-            CatalogConfigurationInterface::CONFIGURABLE_CHILDREN_BATCH_SIZE,
+            self::CONFIGURABLE_CHILDREN_BATCH_SIZE,
             $storeId
         );
     }
@@ -85,7 +114,7 @@ class CatalogConfig implements CatalogConfigurationInterface
         $key = $configField . (string) $storeId;
 
         if (!isset($this->settings[$key])) {
-            $path = CatalogConfigurationInterface::CATALOG_SETTINGS_XML_PREFIX . '/' . $configField;
+            $path = self::CATALOG_SETTINGS_XML_PREFIX . '/' . $configField;
             $scopeType = ($storeId) ? ScopeInterface::SCOPE_STORES : ScopeConfigInterface::SCOPE_TYPE_DEFAULT;
 
             $configValue = $this->scopeConfig->getValue($path, $scopeType, $storeId);

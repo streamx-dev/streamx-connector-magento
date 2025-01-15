@@ -4,19 +4,19 @@ namespace StreamX\ConnectorCatalog\Test\Model\Attributes;
 
 use PHPUnit\Framework\TestCase;
 use StreamX\ConnectorCatalog\Model\Attributes\ConfigurableAttributes;
-use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
+use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 
 class ConfigurableAttributesTest extends TestCase
 {
     private ObjectManager $objectManager;
-    private CatalogConfigurationInterface $catalogConfigMock;
+    private CatalogConfig $catalogConfigMock;
     private ConfigurableAttributes $configurableAttributes;
 
     protected function setUp(): void
     {
         $this->objectManager = new ObjectManager($this);
-        $this->catalogConfigMock = $this->createMock(CatalogConfigurationInterface::class);
+        $this->catalogConfigMock = $this->createMock(CatalogConfig::class);
         $this->configurableAttributes = $this->objectManager->getObject(
             ConfigurableAttributes::class,
             ['catalogConfiguration' => $this->catalogConfigMock]

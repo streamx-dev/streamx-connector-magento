@@ -4,18 +4,18 @@ namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\Configurab
 
 use StreamX\ConnectorCatalog\Model\Attribute\LoadOptionById;
 use StreamX\ConnectorCatalog\Model\Attribute\SortValues;
-use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
+use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 
 class LoadConfigurableOptions
 {
-    private CatalogConfigurationInterface $catalogSettings;
+    private CatalogConfig $catalogSettings;
     private LoadOptionById $loadOptionById;
     private SortValues $sortValues;
 
     public function __construct(
         LoadOptionById $loadOptionById,
         SortValues $sortValues,
-        CatalogConfigurationInterface $catalogSettings
+        CatalogConfig $catalogSettings
     ) {
         $this->loadOptionById = $loadOptionById;
         $this->catalogSettings = $catalogSettings;

@@ -7,7 +7,7 @@ use StreamX\ConnectorCatalog\Model\Attributes\AttributeDefinition;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\AttributeDataProvider;
 use StreamX\ConnectorCatalog\Model\SlugGenerator;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
-use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
+use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 use StreamX\ConnectorCatalog\Model\Attributes\ProductAttributes;
 
 class AttributeData implements DataProviderInterface
@@ -20,12 +20,12 @@ class AttributeData implements DataProviderInterface
     ];
 
     private AttributeDataProvider $resourceModel;
-    private CatalogConfigurationInterface $settings;
+    private CatalogConfig $settings;
     private ProductAttributes $productAttributes;
 
     public function __construct(
         ProductAttributes $productAttributes,
-        CatalogConfigurationInterface $configSettings,
+        CatalogConfig $configSettings,
         AttributeDataProvider $resourceModel
     ) {
         $this->settings = $configSettings;
