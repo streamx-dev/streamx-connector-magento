@@ -111,24 +111,18 @@
   ],
   "final_price": 52,
   "regular_price": "52.000000",
-  "media_gallery": [
+  "gallery": [
     {
-      "typ": "image",
-      "image": "\/m\/h\/mh01-gray_main_1.jpg",
-      "lab": "",
-      "pos": 1
+      "url": "\/m\/h\/mh01-gray_main_1.jpg",
+      "alt": ""
     },
     {
-      "typ": "image",
-      "image": "\/m\/h\/mh01-gray_alt1_1.jpg",
-      "lab": "",
-      "pos": 2
+      "url": "\/m\/h\/mh01-gray_alt1_1.jpg",
+      "alt": ""
     },
     {
-      "typ": "image",
-      "image": "\/m\/h\/mh01-gray_back_1.jpg",
-      "lab": "",
-      "pos": 3
+      "url": "\/m\/h\/mh01-gray_back_1.jpg",
+      "alt": ""
     }
   ],
   "qty": 0,
@@ -194,12 +188,10 @@
       "status": "1",
       "visibility": "1",
       "size": "166",
-      "media_gallery": [
+      "gallery": [
         {
-          "typ": "image",
-          "image": "\/m\/h\/mh01-black_main_1.jpg",
-          "lab": "",
-          "pos": 1
+          "url": "\/m\/h\/mh01-black_main_1.jpg",
+          "alt": ""
         }
       ],
       "id": 47,
@@ -218,24 +210,18 @@
       "status": "1",
       "visibility": "1",
       "size": "166",
-      "media_gallery": [
+      "gallery": [
         {
-          "typ": "image",
-          "image": "\/m\/h\/mh01-gray_main_1.jpg",
-          "lab": "",
-          "pos": 1
+          "url": "\/m\/h\/mh01-gray_main_1.jpg",
+          "alt": ""
         },
         {
-          "typ": "image",
-          "image": "\/m\/h\/mh01-gray_alt1_1.jpg",
-          "lab": "",
-          "pos": 2
+          "url": "\/m\/h\/mh01-gray_alt1_1.jpg",
+          "alt": ""
         },
         {
-          "typ": "image",
-          "image": "\/m\/h\/mh01-gray_back_1.jpg",
-          "lab": "",
-          "pos": 3
+          "url": "\/m\/h\/mh01-gray_back_1.jpg",
+          "alt": ""
         }
       ],
       "id": 48,
@@ -254,12 +240,10 @@
       "status": "1",
       "visibility": "1",
       "size": "166",
-      "media_gallery": [
+      "gallery": [
         {
-          "typ": "image",
-          "image": "\/m\/h\/mh01-orange_main_1.jpg",
-          "lab": "",
-          "pos": 1
+          "url": "\/m\/h\/mh01-orange_main_1.jpg",
+          "alt": ""
         }
       ],
       "id": 49,
@@ -278,12 +262,10 @@
       "status": "1",
       "visibility": "1",
       "size": "167",
-      "media_gallery": [
+      "gallery": [
         {
-          "typ": "image",
-          "image": "\/m\/h\/mh01-black_main_1.jpg",
-          "lab": "",
-          "pos": 1
+          "url": "\/m\/h\/mh01-black_main_1.jpg",
+          "alt": ""
         }
       ],
       "id": 50,
@@ -302,24 +284,18 @@
       "status": "1",
       "visibility": "1",
       "size": "167",
-      "media_gallery": [
+      "gallery": [
         {
-          "typ": "image",
-          "image": "\/m\/h\/mh01-gray_main_1.jpg",
-          "lab": "",
-          "pos": 1
+          "url": "\/m\/h\/mh01-gray_main_1.jpg",
+          "alt": ""
         },
         {
-          "typ": "image",
-          "image": "\/m\/h\/mh01-gray_alt1_1.jpg",
-          "lab": "",
-          "pos": 2
+          "url": "\/m\/h\/mh01-gray_alt1_1.jpg",
+          "alt": ""
         },
         {
-          "typ": "image",
-          "image": "\/m\/h\/mh01-gray_back_1.jpg",
-          "lab": "",
-          "pos": 3
+          "url": "\/m\/h\/mh01-gray_back_1.jpg",
+          "alt": ""
         }
       ],
       "id": 51,
@@ -338,12 +314,10 @@
       "status": "1",
       "visibility": "1",
       "size": "167",
-      "media_gallery": [
+      "gallery": [
         {
-          "typ": "image",
-          "image": "\/m\/h\/mh01-orange_main_1.jpg",
-          "lab": "",
-          "pos": 1
+          "url": "\/m\/h\/mh01-orange_main_1.jpg",
+          "alt": ""
         }
       ],
       "id": 52,
@@ -362,12 +336,10 @@
       "status": "1",
       "visibility": "1",
       "size": "168",
-      "media_gallery": [
+      "gallery": [
         {
-          "typ": "image",
-          "image": "\/m\/h\/mh01-black_main_1.jpg",
-          "lab": "",
-          "pos": 1
+          "url": "\/m\/h\/mh01-black_main_1.jpg",
+          "alt": ""
         }
       ],
       "id": 53,
@@ -386,24 +358,18 @@
       "status": "1",
       "visibility": "1",
       "size": "168",
-      "media_gallery": [
+      "gallery": [
         {
-          "typ": "image",
-          "image": "\/m\/h\/mh01-gray_main_1.jpg",
-          "lab": "",
-          "pos": 1
+          "url": "\/m\/h\/mh01-gray_main_1.jpg",
+          "alt": ""
         },
         {
-          "typ": "image",
-          "image": "\/m\/h\/mh01-gray_alt1_1.jpg",
-          "lab": "",
-          "pos": 2
+          "url": "\/m\/h\/mh01-gray_alt1_1.jpg",
+          "alt": ""
         },
         {
-          "typ": "image",
-          "image": "\/m\/h\/mh01-gray_back_1.jpg",
-          "lab": "",
-          "pos": 3
+          "url": "\/m\/h\/mh01-gray_back_1.jpg",
+          "alt": ""
         }
       ],
       "id": 54,
@@ -422,12 +388,10 @@
       "status": "1",
       "visibility": "1",
       "size": "168",
-      "media_gallery": [
+      "gallery": [
         {
-          "typ": "image",
-          "image": "\/m\/h\/mh01-orange_main_1.jpg",
-          "lab": "",
-          "pos": 1
+          "url": "\/m\/h\/mh01-orange_main_1.jpg",
+          "alt": ""
         }
       ],
       "id": 55,
@@ -446,12 +410,10 @@
       "status": "1",
       "visibility": "1",
       "size": "169",
-      "media_gallery": [
+      "gallery": [
         {
-          "typ": "image",
-          "image": "\/m\/h\/mh01-black_main_1.jpg",
-          "lab": "",
-          "pos": 1
+          "url": "\/m\/h\/mh01-black_main_1.jpg",
+          "alt": ""
         }
       ],
       "id": 56,
@@ -470,24 +432,18 @@
       "status": "1",
       "visibility": "1",
       "size": "169",
-      "media_gallery": [
+      "gallery": [
         {
-          "typ": "image",
-          "image": "\/m\/h\/mh01-gray_main_1.jpg",
-          "lab": "",
-          "pos": 1
+          "url": "\/m\/h\/mh01-gray_main_1.jpg",
+          "alt": ""
         },
         {
-          "typ": "image",
-          "image": "\/m\/h\/mh01-gray_alt1_1.jpg",
-          "lab": "",
-          "pos": 2
+          "url": "\/m\/h\/mh01-gray_alt1_1.jpg",
+          "alt": ""
         },
         {
-          "typ": "image",
-          "image": "\/m\/h\/mh01-gray_back_1.jpg",
-          "lab": "",
-          "pos": 3
+          "url": "\/m\/h\/mh01-gray_back_1.jpg",
+          "alt": ""
         }
       ],
       "id": 57,
@@ -506,12 +462,10 @@
       "status": "1",
       "visibility": "1",
       "size": "169",
-      "media_gallery": [
+      "gallery": [
         {
-          "typ": "image",
-          "image": "\/m\/h\/mh01-orange_main_1.jpg",
-          "lab": "",
-          "pos": 1
+          "url": "\/m\/h\/mh01-orange_main_1.jpg",
+          "alt": ""
         }
       ],
       "id": 58,
@@ -530,12 +484,10 @@
       "status": "1",
       "visibility": "1",
       "size": "170",
-      "media_gallery": [
+      "gallery": [
         {
-          "typ": "image",
-          "image": "\/m\/h\/mh01-black_main_1.jpg",
-          "lab": "",
-          "pos": 1
+          "url": "\/m\/h\/mh01-black_main_1.jpg",
+          "alt": ""
         }
       ],
       "id": 59,
@@ -554,24 +506,18 @@
       "status": "1",
       "visibility": "1",
       "size": "170",
-      "media_gallery": [
+      "gallery": [
         {
-          "typ": "image",
-          "image": "\/m\/h\/mh01-gray_main_1.jpg",
-          "lab": "",
-          "pos": 1
+          "url": "\/m\/h\/mh01-gray_main_1.jpg",
+          "alt": ""
         },
         {
-          "typ": "image",
-          "image": "\/m\/h\/mh01-gray_alt1_1.jpg",
-          "lab": "",
-          "pos": 2
+          "url": "\/m\/h\/mh01-gray_alt1_1.jpg",
+          "alt": ""
         },
         {
-          "typ": "image",
-          "image": "\/m\/h\/mh01-gray_back_1.jpg",
-          "lab": "",
-          "pos": 3
+          "url": "\/m\/h\/mh01-gray_back_1.jpg",
+          "alt": ""
         }
       ],
       "id": 60,
@@ -590,12 +536,10 @@
       "status": "1",
       "visibility": "1",
       "size": "170",
-      "media_gallery": [
+      "gallery": [
         {
-          "typ": "image",
-          "image": "\/m\/h\/mh01-orange_main_1.jpg",
-          "lab": "",
-          "pos": 1
+          "url": "\/m\/h\/mh01-orange_main_1.jpg",
+          "alt": ""
         }
       ],
       "id": 61,

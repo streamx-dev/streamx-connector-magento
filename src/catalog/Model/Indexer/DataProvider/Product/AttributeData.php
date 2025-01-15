@@ -12,12 +12,13 @@ use StreamX\ConnectorCatalog\Model\Attributes\ProductAttributes;
 
 class AttributeData implements DataProviderInterface
 {
-    private const TOP_LEVEL_ATTRIBUTES = [
+    private const TOP_LEVEL_SIMPLE_ATTRIBUTES = [
         'name',
         'description',
-        'price',
-        'image'
+        'price'
     ];
+
+    private const IMAGE_ATTRIBUTE = 'image';
 
     private AttributeDataProvider $resourceModel;
     private CatalogConfig $settings;
@@ -48,9 +49,14 @@ class AttributeData implements DataProviderInterface
 
         foreach ($attributesData as $entityId => $attributeCodesAndValues) {
             foreach ($attributeCodesAndValues as $attributeCode => $attributeValue) {
-                if (in_array($attributeCode, self::TOP_LEVEL_ATTRIBUTES)) {
+                if (in_array($attributeCode, self::TOP_LEVEL_SIMPLE_ATTRIBUTES)) {
+                    // output as top level key-value pair
+                    $indexData[$entityId][$attributeCode] = $attributeValue;
+                } else if ($attributeCode === self::IMAGE_ATTRIBUTE) {
+                    // TODO: output as top level Image object
                     $indexData[$entityId][$attributeCode] = $attributeValue;
                 } else {
+                    // output into 'attributes' collection
                     $productAttribute = $this->createProductAttributeArray($attributeCode, $requiredAttributesMap[$attributeCode], $attributeValue);
                     $indexData[$entityId]['attributes'][] = $productAttribute;
                 }
