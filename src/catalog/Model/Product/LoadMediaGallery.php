@@ -38,12 +38,20 @@ class LoadMediaGallery
             $linkFieldId  = $mediaImage['row_id'];
             $entityId = $this->rowIdToEntityId[$linkFieldId] ?? $linkFieldId;
 
+            $imageUrl = $mediaImage['file']; // TODO full url?
+            $imageAlt = $this->getValue('label', $mediaImage);
             $image = [
-                'url' => $mediaImage['file'], // TODO full url?
-                'alt' => $this->getValue('label', $mediaImage)
+                'url' => $imageUrl,
+                'alt' => $imageAlt
             ];
 
             $indexData[$entityId]['gallery'][] = $image;
+
+            if (isset($indexData[$entityId]['primaryImage'])) {
+                if ($indexData[$entityId]['primaryImage']['url'] === $imageUrl) {
+                    $indexData[$entityId]['primaryImage']['alt'] = $imageAlt;
+                }
+            }
         }
 
         $this->rowIdToEntityId = [];
