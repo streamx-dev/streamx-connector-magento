@@ -2,14 +2,14 @@
 
 namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
-use StreamX\ConnectorCatalog\Api\LoadQuantityInterface;
+use StreamX\ConnectorCatalog\Model\LoadQuantity;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 
 class Quantity implements DataProviderInterface
 {
-    private LoadQuantityInterface $loadQuantity;
+    private LoadQuantity $loadQuantity;
 
-    public function __construct(LoadQuantityInterface $loadQuantity)
+    public function __construct(LoadQuantity $loadQuantity)
     {
         $this->loadQuantity = $loadQuantity;
     }

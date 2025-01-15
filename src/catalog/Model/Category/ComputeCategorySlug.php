@@ -2,11 +2,10 @@
 
 namespace StreamX\ConnectorCatalog\Model\Category;
 
-use StreamX\ConnectorCatalog\Api\ComputeCategorySlugInterface;
 use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
 use StreamX\ConnectorCatalog\Model\SlugGenerator;
 
-class ComputeCategorySlug implements ComputeCategorySlugInterface
+class ComputeCategorySlug
 {
     private CatalogConfigurationInterface $settings;
 

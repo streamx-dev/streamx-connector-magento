@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace StreamX\ConnectorCatalog\Model;
 
 use Magento\Framework\App\ResourceConnection;
-use StreamX\ConnectorCatalog\Api\LoadQuantityInterface;
 
-class LoadQuantity implements LoadQuantityInterface
+class LoadQuantity
 {
     private ResourceConnection $resource;
 

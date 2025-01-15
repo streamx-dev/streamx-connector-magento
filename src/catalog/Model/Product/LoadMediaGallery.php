@@ -2,11 +2,10 @@
 
 namespace StreamX\ConnectorCatalog\Model\Product;
 
-use StreamX\ConnectorCatalog\Api\LoadMediaGalleryInterface;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Gallery as Resource;
 
-class LoadMediaGallery implements LoadMediaGalleryInterface
+class LoadMediaGallery
 {
     const VIDEO_TYPE = 'external-video';
 

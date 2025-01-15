@@ -6,7 +6,7 @@ declare(strict_types = 1);
 namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
 use StreamX\ConnectorCore\Api\DataProviderInterface;
-use StreamX\ConnectorCatalog\Api\ArrayConverter\Product\CustomOptionConverterInterface;
+use StreamX\ConnectorCatalog\ArrayConverter\Product\CustomOptionConverter;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\CustomOptions as Resource;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\CustomOptionValues as OptionValuesResource;
@@ -16,12 +16,12 @@ class CustomOptions implements DataProviderInterface
     private Resource $optionsResourceModel;
     private OptionValuesResource $optionValuesResourceModel;
     private ProductMetaData $productMetaData;
-    private CustomOptionConverterInterface $productOptionProcessor;
+    private CustomOptionConverter $productOptionProcessor;
 
     public function __construct(
         Resource $resource,
         OptionValuesResource $customOptionValues,
-        CustomOptionConverterInterface $processor,
+        CustomOptionConverter $processor,
         ProductMetaData $productMetaData
     ) {
         $this->optionsResourceModel = $resource;

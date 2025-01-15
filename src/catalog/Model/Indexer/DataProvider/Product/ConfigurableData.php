@@ -6,9 +6,9 @@ use Exception;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 use StreamX\ConnectorCore\Indexer\DataFilter;
 
-use StreamX\ConnectorCatalog\Api\LoadQuantityInterface;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\Configurable\LoadChildrenRawAttributes;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\Configurable\LoadConfigurableOptions;
+use StreamX\ConnectorCatalog\Model\LoadQuantity;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Configurable as ConfigurableResource;
 
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable as ConfigurableType;
@@ -25,14 +25,14 @@ class ConfigurableData implements DataProviderInterface
 
     private DataFilter $dataFilter;
     private ConfigurableResource $configurableResource;
-    private LoadQuantityInterface $loadQuantity;
+    private LoadQuantity $loadQuantity;
     private LoadChildrenRawAttributes $childrenAttributeProcessor;
     private LoadConfigurableOptions $configurableProcessor;
 
     public function __construct(
         DataFilter $dataFilter,
         ConfigurableResource $configurableResource,
-        LoadQuantityInterface $loadQuantity,
+        LoadQuantity $loadQuantity,
         LoadConfigurableOptions $configurableProcessor,
         LoadChildrenRawAttributes $childrenAttributeProcessor,
     ) {

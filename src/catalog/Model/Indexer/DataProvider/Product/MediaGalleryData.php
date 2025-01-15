@@ -3,21 +3,21 @@
 namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
 use StreamX\ConnectorCore\Api\DataProviderInterface;
-use StreamX\ConnectorCatalog\Api\LoadMediaGalleryInterface;
+use StreamX\ConnectorCatalog\Model\Product\LoadMediaGallery;
 use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
 
 class MediaGalleryData implements DataProviderInterface
 {
     private CatalogConfigurationInterface $catalogConfig;
-    private LoadMediaGalleryInterface $loadMediaGallery;
+    private LoadMediaGallery $loadMediaGallery;
     private ?bool $canIndexMediaGallery = null;
 
     public function __construct(
         CatalogConfigurationInterface $catalogConfig,
-        LoadMediaGalleryInterface $galleryProcessor
+        LoadMediaGallery $loadMediaGallery
     ) {
         $this->catalogConfig = $catalogConfig;
-        $this->loadMediaGallery = $galleryProcessor;
+        $this->loadMediaGallery = $loadMediaGallery;
     }
 
     /**
