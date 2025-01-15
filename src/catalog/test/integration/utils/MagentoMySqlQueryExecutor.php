@@ -150,4 +150,15 @@ class MagentoMySqlQueryExecutor {
               AND attribute_set_name = 'Default'
         ");
     }
+
+    public function getAttributeOptionId(string $attributeCode, string $attributeValueLabel): int {
+        return $this->selectFirstField("
+            SELECT v.option_id
+              FROM eav_attribute_option_value v
+              JOIN eav_attribute_option o ON o.option_id = v.option_id
+              JOIN eav_attribute a ON a.attribute_id = o.attribute_id
+             WHERE a.attribute_code = '$attributeCode'
+               AND v.value = '$attributeValueLabel'
+        ");
+    }
 }

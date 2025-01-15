@@ -16,7 +16,7 @@ class ProductAddAndDeleteTest extends BaseAppEntityUpdateTest {
     /** @test */
     public function shouldPublishProductAddedUsingMagentoApplicationToStreamx_AndUnpublishDeletedProduct() {
         // given
-        $productName = 'The new great watch!';
+        $productName = 'The new great watch';
         $categoryId = $this->db->getCategoryId('Watches');
 
         // when

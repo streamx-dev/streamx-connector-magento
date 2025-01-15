@@ -8,6 +8,7 @@
       "label": "Small",
       "value": "\/m\/b\/mb01-blue-0.jpg",
       "valueLabel": "\/m\/b\/mb01-blue-0.jpg",
+      "isFacet": false,
       "options": []
     },
     {
@@ -15,6 +16,7 @@
       "label": "Thumbnail",
       "value": "\/m\/b\/mb01-blue-0.jpg",
       "valueLabel": "\/m\/b\/mb01-blue-0.jpg",
+      "isFacet": false,
       "options": []
     },
     {
@@ -22,6 +24,7 @@
       "label": "URL Key",
       "value": "joust-duffle-bag",
       "valueLabel": "joust-duffle-bag",
+      "isFacet": false,
       "options": []
     },
     {
@@ -29,6 +32,7 @@
       "label": "Enable Product",
       "value": "1",
       "valueLabel": "Enabled",
+      "isFacet": false,
       "options": [
         {
           "value": "1",
@@ -45,6 +49,7 @@
       "label": "Visibility",
       "value": "4",
       "valueLabel": "Catalog, Search",
+      "isFacet": false,
       "options": [
         {
           "value": "1",
@@ -69,6 +74,7 @@
       "label": "Tax Class",
       "value": "2",
       "valueLabel": "Taxable Goods",
+      "isFacet": false,
       "options": [
         {
           "value": "0",

@@ -14,11 +14,34 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         return ProductProcessor::INDEXER_ID;
     }
 
+    public function setUp(): void {
+        parent::setUp();
+
+        // allow indexing color attribute:
+        $this->indexerOperations->replaceTextInMagentoFile(
+            'src/app/code/StreamX/Connector/src/catalog/Model/Attributes/ProductAttributes.php',
+            '$attributeCodes = $this->catalogConfig->getAllowedAttributesToIndex($storeId);',
+            '$attributeCodes = $this->catalogConfig->getAllowedAttributesToIndex($storeId); $attributeCodes[] = "color";'
+        );
+    }
+
+    public function tearDown(): void
+    {
+        parent::tearDown();
+
+        // restore not allowing to index color attribute:
+        $this->indexerOperations->replaceTextInMagentoFile(
+            'src/app/code/StreamX/Connector/src/catalog/Model/Attributes/ProductAttributes.php',
+            '$attributeCodes = $this->catalogConfig->getAllowedAttributesToIndex($storeId); $attributeCodes[] = "color";',
+            '$attributeCodes = $this->catalogConfig->getAllowedAttributesToIndex($storeId);'
+        );
+    }
+
     /** @test */
     public function shouldPublishProductAddedDirectlyInDatabaseToStreamx_AndUnpublishDeletedProduct() {
         // given
         $watchesCategoryId = $this->db->getCategoryId('Watches');
-        $productName = 'The new great watch!';
+        $productName = 'The new great watch';
 
         // when
         $productId = $this->insertNewProduct($productName, $watchesCategoryId);
@@ -29,7 +52,11 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
             $this->reindexMview();
 
             // then
-            $this->assertDataIsPublished($expectedKey, $productName);
+            $this->assertExactDataIsPublished($expectedKey, 'added-watch-product.json', [
+                '"id": [0-9]+' => '"id": 0',
+                '"sku": "[^"]+"' => '"sku": "[MASKED]"',
+                '"the-new-great-watch-[0-9]+"' => '"the-new-great-watch-0"'
+            ]);
         } finally {
             // and when
             $this->deleteProduct($productId);
@@ -82,13 +109,14 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
      */
     private function insertNewProduct(string $productName, string $categoryId): int {
         $sku = (string) (new DateTime())->getTimestamp();
-        $productInternalName = strtolower(str_replace(' ', '_', $productName));
+        $productInternalName = strtolower(str_replace(' ', '-', $productName));
 
         $defaultStoreId = 0;
         $stockId = 1;
         $quantity = 100;
         $price = 35;
         $websiteId = 1;
+        $brownColor = $this->db->getAttributeOptionId('color', 'Brown');
 
         $attributeSetId = $this->db->getDefaultCategoryAttributeSetId();
 
@@ -119,7 +147,8 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
             INSERT INTO catalog_product_entity_int (entity_id, attribute_id, store_id, value) VALUES
                 ($productId, " . self::attrId('visibility') . ", $defaultStoreId, 4), -- visibility in Catalog and Search
                 ($productId, " . self::attrId('status') . ", $defaultStoreId, 1), -- enabled
-                ($productId, " . self::attrId('tax_class_id') . ", $defaultStoreId, 2) -- standard tax rate                
+                ($productId, " . self::attrId('tax_class_id') . ", $defaultStoreId, 2), -- standard tax rate
+                ($productId, " . self::attrId('color') . ", $defaultStoreId, '$brownColor')
         ");
 
         $this->db->execute("

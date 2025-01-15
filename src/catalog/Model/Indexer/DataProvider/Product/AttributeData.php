@@ -77,7 +77,7 @@ class AttributeData implements DataProviderInterface
         $productAttribute['label'] = $attributeDefinition->getLabel();
         $productAttribute['value'] = $attributeValue;
         $productAttribute['valueLabel'] = $this->getValueLabel($attributeCode, $attributeValue, $attributeDefinition);
-        // TODO: when isFacet property is implemented - put it to $productAttribute map
+        $productAttribute['isFacet'] = $attributeDefinition->isFacet();
 
         $productAttribute['options'] = [];
         foreach ($attributeDefinition->getOptions() as $option) {

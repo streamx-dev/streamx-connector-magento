@@ -1,0 +1,164 @@
+{
+  "type_id": "simple",
+  "sku": "1736952738",
+  "id": 2659,
+  "attributes": [
+    {
+      "name": "meta_title",
+      "label": "Meta Title",
+      "value": "The new great watch",
+      "valueLabel": "The new great watch",
+      "isFacet": false,
+      "options": []
+    },
+    {
+      "name": "meta_description",
+      "label": "Meta Description",
+      "value": "The new great watch",
+      "valueLabel": "The new great watch",
+      "isFacet": false,
+      "options": []
+    },
+    {
+      "name": "url_key",
+      "label": "URL Key",
+      "value": "the-new-great-watch",
+      "valueLabel": "the-new-great-watch",
+      "isFacet": false,
+      "options": []
+    },
+    {
+      "name": "color",
+      "label": "Color",
+      "value": "51",
+      "valueLabel": "Brown",
+      "isFacet": true,
+      "options": [
+        {
+          "value": "49",
+          "label": "Black"
+        },
+        {
+          "value": "50",
+          "label": "Blue"
+        },
+        {
+          "value": "51",
+          "label": "Brown"
+        },
+        {
+          "value": "52",
+          "label": "Gray"
+        },
+        {
+          "value": "53",
+          "label": "Green"
+        },
+        {
+          "value": "54",
+          "label": "Lavender"
+        },
+        {
+          "value": "55",
+          "label": "Multi"
+        },
+        {
+          "value": "56",
+          "label": "Orange"
+        },
+        {
+          "value": "57",
+          "label": "Purple"
+        },
+        {
+          "value": "58",
+          "label": "Red"
+        },
+        {
+          "value": "59",
+          "label": "White"
+        },
+        {
+          "value": "60",
+          "label": "Yellow"
+        }
+      ]
+    },
+    {
+      "name": "status",
+      "label": "Enable Product",
+      "value": "1",
+      "valueLabel": "Enabled",
+      "isFacet": false,
+      "options": [
+        {
+          "value": "1",
+          "label": "Enabled"
+        },
+        {
+          "value": "2",
+          "label": "Disabled"
+        }
+      ]
+    },
+    {
+      "name": "visibility",
+      "label": "Visibility",
+      "value": "4",
+      "valueLabel": "Catalog, Search",
+      "isFacet": false,
+      "options": [
+        {
+          "value": "1",
+          "label": "Not Visible Individually"
+        },
+        {
+          "value": "2",
+          "label": "Catalog"
+        },
+        {
+          "value": "3",
+          "label": "Search"
+        },
+        {
+          "value": "4",
+          "label": "Catalog, Search"
+        }
+      ]
+    },
+    {
+      "name": "tax_class_id",
+      "label": "Tax Class",
+      "value": "2",
+      "valueLabel": "Taxable Goods",
+      "isFacet": false,
+      "options": [
+        {
+          "value": "0",
+          "label": "None"
+        },
+        {
+          "value": "2",
+          "label": "Taxable Goods"
+        }
+      ]
+    }
+  ],
+  "name": "The new great watch",
+  "price": "35.000000",
+  "slug": "the-new-great-watch-2659",
+  "url_key": "the-new-great-watch-2659",
+  "category": [
+    {
+      "category_id": 6,
+      "name": "Watches",
+      "position": 0
+    }
+  ],
+  "category_ids": [
+    6
+  ],
+  "gallery": [],
+  "qty": 100,
+  "configurable_children": []
+}

@@ -2,5 +2,5 @@
   "attribute_code": "description",
   "frontend_label": "Description",
   "id": "75",
-  "is_filterable_in_search": "0"
+  "is_filterable": "0"
 }

@@ -3,6 +3,7 @@
 namespace StreamX\ConnectorCatalog\Model\ResourceModel;
 
 use Magento\Framework\App\ResourceConnection;
+use Zend_Db_Expr;
 
 class Attribute
 {
@@ -31,7 +32,7 @@ class Attribute
         $select->joinLeft(
             ['c' => $this->resource->getTableName('catalog_eav_attribute')],
             'c.attribute_id = a.attribute_id',
-            ['is_filterable_in_search']
+            ['is_filterable' => new Zend_Db_Expr('CASE WHEN is_filterable = 1 THEN true ELSE false END')]
         );
 
         if (!empty($attributeIds)) {
