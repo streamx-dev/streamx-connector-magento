@@ -12,6 +12,8 @@ class AttributeData implements DataProviderInterface
 {
     // TODO convert to DTO class
     private const ID = 'id';
+    private const NAME = 'name';
+    private const LABEL = 'label';
     private const SLUG = 'slug';
     private const SUBCATEGORIES = 'subcategories';
     private const PARENT_CATEGORY_ID = 'parentCategoryId';
@@ -154,6 +156,7 @@ class AttributeData implements DataProviderInterface
         $categoryData[self::ID] = (int)$categoryData['entity_id'];
         $categoryData[self::PARENT_CATEGORY_ID] = (int)$categoryData['parent_id'];
         $categoryData[self::SLUG] = $this->computeSlug($categoryData);
+        $categoryData[self::LABEL] = $categoryData[self::NAME];
 
         $categoryData = array_diff_key($categoryData, array_flip($this->fieldsToRemove));
         $categoryData = $this->filterData($categoryData);
