@@ -20,25 +20,7 @@ class AttributeData implements DataProviderInterface
 
     private array $requiredAttributes = [
         'name',
-        'url_key',
-        'url_path'
-    ];
-
-    private array $fieldsToRemove = [
-        'parent_id',
-        'position',
-        'level',
-        'children_count',
-        'row_id',
-        'created_in',
-        'updated_in',
-        'entity_id',
-        'entity_type_id',
-        'attribute_set_id',
-        'all_children',
-        'created_at',
-        'updated_at',
-        'request_path',
+        'url_key'
     ];
 
     private AttributeDataProvider $attributeResourceModel;
@@ -96,11 +78,8 @@ class AttributeData implements DataProviderInterface
     private function removeUnnecessaryFields(array &$categories): void
     {
         foreach ($categories as &$category) {
-            unset($category['url_path'], $category['url_key'], $category['path']);
-
-            if (!empty($category[self::SUBCATEGORIES])) {
-                $this->removeUnnecessaryFields($category[self::SUBCATEGORIES]);
-            }
+            unset($category['url_key'], $category['path'], $category['parent_id']);
+            $this->removeUnnecessaryFields($category[self::SUBCATEGORIES]);
         }
     }
 
@@ -119,8 +98,8 @@ class AttributeData implements DataProviderInterface
         $sortChildrenById = [];
 
         foreach ($children as $cat) {
-            $sortChildrenById[$cat['entity_id']] = $cat;
-            $sortChildrenById[$cat['entity_id']][self::SUBCATEGORIES] = [];
+            $sortChildrenById[$cat['id']] = $cat;
+            $sortChildrenById[$cat['id']][self::SUBCATEGORIES] = [];
         }
 
         return $sortChildrenById;
@@ -153,12 +132,10 @@ class AttributeData implements DataProviderInterface
 
     private function prepareCategory(array $categoryData): array
     {
-        $categoryData[self::ID] = (int)$categoryData['entity_id'];
-        $categoryData[self::PARENT_CATEGORY_ID] = (int)$categoryData['parent_id'];
+        $categoryData[self::PARENT_CATEGORY_ID] = (int) $categoryData['parent_id'];
         $categoryData[self::SLUG] = $this->computeSlug($categoryData);
         $categoryData[self::LABEL] = $categoryData[self::NAME];
 
-        $categoryData = array_diff_key($categoryData, array_flip($this->fieldsToRemove));
         $categoryData = $this->filterData($categoryData);
 
         return $categoryData;

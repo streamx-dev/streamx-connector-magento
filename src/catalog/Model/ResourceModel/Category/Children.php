@@ -36,8 +36,9 @@ class Children
         $childIds = $this->getChildrenIds($category, $storeId);
 
         $select = $this->getConnection()->select()->from(
-            [self::MAIN_TABLE_ALIAS => $this->getEntityTable()]
-        );
+            [self::MAIN_TABLE_ALIAS => $this->getEntityTable()],
+            ['parent_id']
+        )->columns(['id' => 'entity_id']);
 
         $select = $this->baseSelectModifier->execute($select, $storeId);
 
@@ -54,13 +55,12 @@ class Children
     private function getChildrenIds(array $category, int $storeId): array
     {
         $connection = $this->getConnection();
-        $checkSql = $connection->getCheckSql('c.value_id > 0', 'c.value', 'd.value');
 
         $bind = ['c_path' => $category['path'] . '/%'];
 
         $select = $this->getConnection()->select()->from(
             [self::MAIN_TABLE_ALIAS => $this->getEntityTable()],
-            'entity_id'
+            ['id' => 'entity_id']
         )->where(
             $connection->quoteIdentifier('path') . ' LIKE :c_path'
         );

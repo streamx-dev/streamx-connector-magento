@@ -31,11 +31,8 @@ class Category implements BaseAction {
             $categories = $this->resourceModel->getCategories($storeId, $categoryIds, $lastCategoryId);
 
             foreach ($categories as $category) {
-                $lastCategoryId = $category['entity_id'];
-                $categoryData['id'] = (int)$category['entity_id'];
-                $categoryData = $category;
-
-                yield $lastCategoryId => $categoryData;
+                $lastCategoryId = $category['id'];
+                yield $lastCategoryId => $category;
                 $publishedCategoryIds[] = $lastCategoryId;
             }
         } while (!empty($categories));
