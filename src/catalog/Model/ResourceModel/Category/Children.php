@@ -6,14 +6,10 @@ use Exception;
 use Magento\Framework\DB\Adapter\AdapterInterface;
 use StreamX\ConnectorCatalog\Model\CategoryMetaData;
 use Magento\Framework\App\ResourceConnection;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Category;
 
 class Children
 {
-    /**
-     * Alias form category entity table
-     */
-    private const MAIN_TABLE_ALIAS = 'entity';
-
     private ResourceConnection $resource;
     private BaseSelectModifierInterface $baseSelectModifier;
     private CategoryMetaData $categoryMetaData;
@@ -34,15 +30,10 @@ class Children
     public function loadChildren(array $category, int $storeId): array
     {
         $childIds = $this->getChildrenIds($category, $storeId);
-
-        $select = $this->getConnection()->select()->from(
-            [self::MAIN_TABLE_ALIAS => $this->getEntityTable()],
-            ['parent_id']
-        )->columns(['id' => 'entity_id']);
-
+        $select = Category::getCategoriesBaseSelect($this->resource, $this->categoryMetaData);
         $select = $this->baseSelectModifier->execute($select, $storeId);
 
-        $select->where(sprintf("%s.entity_id IN (?)", self::MAIN_TABLE_ALIAS), $childIds);
+        $select->where("entity.entity_id IN (?)", $childIds);
         $select->order('path asc');
         $select->order('position asc');
 
@@ -59,7 +50,7 @@ class Children
         $bind = ['c_path' => $category['path'] . '/%'];
 
         $select = $this->getConnection()->select()->from(
-            [self::MAIN_TABLE_ALIAS => $this->getEntityTable()],
+            ['entity' => $this->getEntityTable()],
             ['id' => 'entity_id']
         )->where(
             $connection->quoteIdentifier('path') . ' LIKE :c_path'
