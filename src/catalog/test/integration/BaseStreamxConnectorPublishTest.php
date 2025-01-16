@@ -23,17 +23,22 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
     protected abstract function indexerName(): string;
     protected abstract function desiredIndexerMode(): string;
 
+    protected function viewId(): string {
+        return $this->indexerName(); // note: assuming that every indexer in the indexer.xml file has the same value of id and view_id fields
+    }
+
     public function setUp(): void {
         $this->setUpIndexerTool();
         $this->setUpDbTool();
     }
 
     public function tearDown(): void {
+        $this->resetIndexer();
         $this->tearDownIndexerTool();
         $this->tearDownDbTool();
     }
 
-    protected function setUpIndexerTool(): void {
+    private function setUpIndexerTool(): void {
         $this->indexerOperations = new MagentoIndexerOperationsExecutor($this->indexerName());
         $this->originalIndexerMode = $this->indexerOperations->getIndexerMode();
 
@@ -45,19 +50,29 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
         }
     }
 
-    protected function tearDownIndexerTool(): void {
+    private function tearDownIndexerTool(): void {
         if ($this->indexModeNeedsRestoring) {
             $this->indexerOperations->setIndexerMode($this->originalIndexerMode);
         }
     }
 
-    protected function setUpDbTool(): void {
+    private function setUpDbTool(): void {
         $this->db = new MagentoMySqlQueryExecutor();
         $this->db->connect();
     }
 
-    protected function tearDownDbTool(): void {
+    private function tearDownDbTool(): void {
         $this->db->disconnect();
+    }
+
+    private function resetIndexer(): void {
+        $this->db->execute("
+            UPDATE mview_state
+               SET mode = 'disabled',
+                   status = 'idle',
+                   version_id = 0
+             WHERE view_id='{$this->viewId()}'
+        ");
     }
 
     protected function callMagentoPutEndpoint(string $relativeUrl, array $params): string {

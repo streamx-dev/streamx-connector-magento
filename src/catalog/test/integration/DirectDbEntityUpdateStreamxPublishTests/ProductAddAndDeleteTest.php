@@ -32,8 +32,8 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         // restore not allowing to index color attribute:
         $this->indexerOperations->replaceTextInMagentoFile(
             'src/app/code/StreamX/Connector/src/catalog/Model/Attributes/ProductAttributes.php',
-            '$attributeCodes = $this->catalogConfig->getAllowedAttributesToIndex($storeId); $attributeCodes[] = "color";',
-            '$attributeCodes = $this->catalogConfig->getAllowedAttributesToIndex($storeId);'
+            '$attributeCodes = $this->catalogConfig->getAllowedAttributesToIndex($storeId);',
+            '$attributeCodes = $this->catalogConfig->getAllowedAttributesToIndex($storeId); //'
         );
     }
 

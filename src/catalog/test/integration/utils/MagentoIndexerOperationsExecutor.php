@@ -47,5 +47,6 @@ class MagentoIndexerOperationsExecutor {
         $content = file_get_contents($filePath);
         $newContent = str_replace($from, $to, $content);
         file_put_contents($filePath, $newContent);
+        usleep(250_000); // wait for quarter of a second to make sure Magento grabs the new version of the file
     }
 }
