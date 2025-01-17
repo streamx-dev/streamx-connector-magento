@@ -13,11 +13,6 @@ use Magento\Framework\DB\Select;
 
 class Category
 {
-    /**
-     * Alias form category entity table
-     */
-    private const MAIN_TABLE_ALIAS = 'entity';
-
     private ResourceConnection $resource;
     private BaseSelectModifierInterface $baseSelectModifier;
     private CategoryMetaData $categoryMetaData;
@@ -37,26 +32,16 @@ class Category
      */
     public function getCategories(int $storeId = 1, array $categoryIds = [], int $fromId = 0, int $limit = 1000): array
     {
-        $metaData = $this->categoryMetaData->get();
-        $select = $this->getConnection()
-            ->select()
-            ->from(
-                [self::MAIN_TABLE_ALIAS => $metaData->getEntityTable()],
-                ['parent_id', 'path']
-            )->columns(
-                ['id' => 'entity_id']
-            );
-
+        $select = self::getCategoriesBaseSelect($this->resource, $this->categoryMetaData);
         $select = $this->filterByStore($select, $storeId);
-        $tableName = self::MAIN_TABLE_ALIAS;
 
         if (!empty($categoryIds)) {
-            $select->where(sprintf("%s.entity_id IN (?)", $tableName), $categoryIds);
+            $select->where("entity.entity_id IN (?)", $categoryIds);
         }
 
-        $select->where(sprintf("%s.entity_id > ?", $tableName), $fromId);
+        $select->where("entity.entity_id > ?", $fromId);
         $select->limit($limit);
-        $select->order(sprintf("%s.entity_id ASC", $tableName));
+        $select->order("entity.entity_id ASC");
 
         return $this->getConnection()->fetchAll($select);
     }
@@ -68,7 +53,7 @@ class Category
     {
         $metaData = $this->categoryMetaData->get();
         $select = $this->getConnection()->select()->from(
-            [self::MAIN_TABLE_ALIAS => $metaData->getEntityTable()]
+            ['entity' => $metaData->getEntityTable()]
         );
 
         $select = $this->filterByStore($select, $storeId);
@@ -77,7 +62,7 @@ class Category
         $select->reset(Select::COLUMNS);
         $select->joinInner(
             ['cpi' => $table],
-            self::MAIN_TABLE_ALIAS . ".$entityIdField = cpi.category_id",
+            "entity.$entityIdField = cpi.category_id",
             [
                 'category_id',
                 'product_id',
@@ -97,7 +82,7 @@ class Category
         $entityField = $metaData->getIdentifierField();
 
         $select = $this->getConnection()->select()->from(
-            [self::MAIN_TABLE_ALIAS => $metaData->getEntityTable()],
+            ['entity' => $metaData->getEntityTable()],
             ['path']
         );
 
@@ -134,7 +119,7 @@ class Category
         $entityField = $metaData->getIdentifierField();
         $connection = $this->getConnection();
         $select = $connection->select()->from(
-            [self::MAIN_TABLE_ALIAS => $metaData->getEntityTable()],
+            ['entity' => $metaData->getEntityTable()],
             [$entityField]
         );
 
@@ -156,5 +141,38 @@ class Category
     private function getConnection(): AdapterInterface
     {
         return $this->resource->getConnection();
+    }
+
+    public static function getCategoriesBaseSelect(ResourceConnection $resource, CategoryMetaData $categoryMetaData): Select
+    {
+        $metaData = $categoryMetaData->get();
+        return $resource->getConnection()
+            ->select()
+            ->from(
+                ['entity' => $metaData->getEntityTable()], // alias for the catalog_category_entity table, to use in joins
+                ['parent_id', 'path'] // columns to select
+            )->columns( // select also entity_id column, but alias it to id
+                ['id' => 'entity_id']
+            )->joinLeft( // join eav_entity_type table to read entity_type_id
+                ['e' => $resource->getTableName('eav_entity_type')],
+                "e.entity_table = '{$metaData->getEntityTable()}'",
+                [] // don't include any columns in the query results
+            )->joinLeft( // join eav_attribute table to read category name attribute definition
+                ['name_attr' => $resource->getTableName('eav_attribute')],
+                "name_attr.attribute_code = 'name' AND name_attr.entity_type_id = e.entity_type_id",
+                [] // don't include any columns in the query results
+            )->joinLeft( // join eav_attribute table to read category's url_key definition
+                ['url_key_attr' => $resource->getTableName('eav_attribute')],
+                "url_key_attr.attribute_code = 'url_key' AND url_key_attr.entity_type_id = e.entity_type_id",
+                [] // don't include any columns in the query results
+            )->joinLeft( // join catalog_category_entity_varchar table to read actual category name
+                ['category_name_attr' => $resource->getTableName('catalog_category_entity_varchar')],
+                "category_name_attr.entity_id = entity.entity_id AND category_name_attr.attribute_id = name_attr.attribute_id",
+                ['name' => 'value'] // include attr value as "name" in the query results
+            )->joinLeft( // join catalog_category_entity_varchar table to read actual category url_key
+                ['category_url_key_attr' => $resource->getTableName('catalog_category_entity_varchar')],
+                "category_url_key_attr.entity_id = entity.entity_id AND category_url_key_attr.attribute_id = url_key_attr.attribute_id",
+                ['url_key' => 'value'] // include attr value as "url_key" in the query results
+            );
     }
 }

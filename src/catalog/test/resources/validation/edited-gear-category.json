@@ -7,24 +7,24 @@
   "subcategories": [
     {
       "id": 4,
-      "subcategories": [],
       "name": "Bags",
+      "subcategories": [],
       "parentCategoryId": 3,
       "slug": "bags-4",
       "label": "Bags"
     },
     {
       "id": 5,
-      "subcategories": [],
       "name": "Fitness Equipment",
+      "subcategories": [],
       "parentCategoryId": 3,
       "slug": "fitness-equipment-5",
       "label": "Fitness Equipment"
     },
     {
       "id": 6,
-      "subcategories": [],
       "name": "Watches",
+      "subcategories": [],
       "parentCategoryId": 3,
       "slug": "watches-6",
       "label": "Watches"

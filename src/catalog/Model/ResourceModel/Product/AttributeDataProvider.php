@@ -12,6 +12,7 @@ use Magento\Eav\Model\Entity\Attribute;
 /**
  * Products Attribute provider
  */
+// TODO merge with base class - this is the only extending class
 class AttributeDataProvider extends AbstractEavAttributes
 {
     private LoadAttributes $loadAttributes;

@@ -3,9 +3,7 @@
 namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Category;
 
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category\Children as CategoryChildrenResource;
-use StreamX\ConnectorCore\Indexer\DataFilter;
 use StreamX\ConnectorCatalog\Model\Category\ComputeCategorySlug;
-use StreamX\ConnectorCatalog\Model\ResourceModel\Category\AttributeDataProvider;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 
 class AttributeData implements DataProviderInterface
@@ -16,58 +14,32 @@ class AttributeData implements DataProviderInterface
     private const LABEL = 'label';
     private const SLUG = 'slug';
     private const SUBCATEGORIES = 'subcategories';
+
+    // TODO: transform parentCategoryId to parent category (full, with own parents, without children)
     private const PARENT_CATEGORY_ID = 'parentCategoryId';
 
-    private array $requiredAttributes = [
-        'name',
-        'url_key'
-    ];
-
-    private AttributeDataProvider $attributeResourceModel;
     private CategoryChildrenResource $childrenResourceModel;
-    private DataFilter $dataFilter;
     private ComputeCategorySlug $computeCategorySlug;
 
     public function __construct(
-        AttributeDataProvider $attributeResource,
         CategoryChildrenResource $childrenResource,
-        ComputeCategorySlug $computeCategorySlug,
-        DataFilter $dataFilter
+        ComputeCategorySlug $computeCategorySlug
     ) {
         $this->computeCategorySlug = $computeCategorySlug;
-        $this->attributeResourceModel = $attributeResource;
         $this->childrenResourceModel = $childrenResource;
-        $this->dataFilter = $dataFilter;
     }
 
     public function addData(array $indexData, int $storeId): array
     {
-        $categoryIds = array_keys($indexData);
-        $attributes = $this->attributeResourceModel->loadAttributesData(
-            $storeId,
-            $categoryIds,
-            $this->requiredAttributes
-        );
-
-        foreach ($attributes as $entityId => $attributesData) {
-            $categoryData = array_merge($indexData[$entityId], $attributesData);
-            $categoryData = $this->prepareCategory($categoryData);
-
-            $indexData[$entityId] = $categoryData;
-        }
+        // TODO: load all categories first, to then be able to set parent category for each of the published categories
 
         foreach ($indexData as $categoryId => $categoryData) {
+            $categoryData = $this->prepareCategory($categoryData);
             $children = $this->childrenResourceModel->loadChildren($categoryData, $storeId);
             $groupedChildrenById = $this->groupChildrenById($children);
             unset($children);
 
-            $childrenRowAttributes =
-                $this->attributeResourceModel->loadAttributesData(
-                    $storeId,
-                    array_keys($groupedChildrenById),
-                    $this->requiredAttributes
-                );
-            $indexData[$categoryId] = $this->addChildrenData($categoryData, $groupedChildrenById, $childrenRowAttributes, $storeId);
+            $indexData[$categoryId] = $this->addChildrenData($categoryData, $groupedChildrenById, $storeId);
         }
 
         $this->removeUnnecessaryFields($indexData);
@@ -83,10 +55,10 @@ class AttributeData implements DataProviderInterface
         }
     }
 
-    private function addChildrenData(array $category, array $groupedChildren, array $childrenRowAttributes, int $storeId): array
+    private function addChildrenData(array $category, array $groupedChildren, int $storeId): array
     {
         $categoryId = $category[self::ID];
-        $childrenData = $this->plotTree($groupedChildren, $childrenRowAttributes, $categoryId, $storeId);
+        $childrenData = $this->plotTree($groupedChildren, $categoryId, $storeId);
 
         $category[self::SUBCATEGORIES] = $childrenData;
 
@@ -105,7 +77,7 @@ class AttributeData implements DataProviderInterface
         return $sortChildrenById;
     }
 
-    private function plotTree(array $categories, array $childrenRowAttributes, int $rootId, int $storeId): array
+    private function plotTree(array $categories, int $rootId, int $storeId): array
     {
         $categoryTree = [];
 
@@ -117,12 +89,8 @@ class AttributeData implements DataProviderInterface
                 # Remove item from tree (we don't need to traverse this again)
                 unset($categories[$categoryId]);
 
-                if (isset($childrenRowAttributes[$categoryId])) {
-                    $categoryData = array_merge($categoryData, $childrenRowAttributes[$categoryId]);
-                }
-
                 $categoryData = $this->prepareCategory($categoryData);
-                $categoryData[self::SUBCATEGORIES] = $this->plotTree($categories, $childrenRowAttributes, $categoryId, $storeId);
+                $categoryData[self::SUBCATEGORIES] = $this->plotTree($categories, $categoryId, $storeId);
                 $categoryTree[] = $categoryData;
             }
         }
@@ -132,11 +100,10 @@ class AttributeData implements DataProviderInterface
 
     private function prepareCategory(array $categoryData): array
     {
+        $categoryData[self::ID] = (int) $categoryData['id'];
         $categoryData[self::PARENT_CATEGORY_ID] = (int) $categoryData['parent_id'];
         $categoryData[self::SLUG] = $this->computeSlug($categoryData);
         $categoryData[self::LABEL] = $categoryData[self::NAME];
-
-        $categoryData = $this->filterData($categoryData);
 
         return $categoryData;
     }
@@ -144,10 +111,5 @@ class AttributeData implements DataProviderInterface
     private function computeSlug(array $categoryDTO): string
     {
         return $this->computeCategorySlug->compute($categoryDTO);
-    }
-
-    private function filterData(array $categoryData): array
-    {
-        return $this->dataFilter->execute($categoryData);
     }
 }

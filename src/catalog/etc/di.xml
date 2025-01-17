@@ -40,24 +40,7 @@
         </arguments>
     </type>
 
-    <virtualType name="StreamX\ConnectorCatalog\Indexer\CategoryDataFilterVirtual"
-                 type="StreamX\ConnectorCore\Indexer\DataFilter">
-        <arguments>
-            <argument name="integerProperties" xsi:type="array">
-                <item name="0" xsi:type="string">level</item>
-                <item name="1" xsi:type="string">id</item>
-                <item name="2" xsi:type="string">parent_id</item>
-                <item name="3" xsi:type="string">position</item>
-                <item name="4" xsi:type="string">children_count</item>
-            </argument>
-        </arguments>
-    </virtualType>
-    <type name="StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Category\AttributeData">
-        <arguments>
-            <argument name="dataFilter" xsi:type="object">StreamX\ConnectorCatalog\Indexer\CategoryDataFilterVirtual</argument>
-        </arguments>
-    </type>
-
+    <!-- TODO DataFilter probably has only one usage now, and code can be simplified -->
     <virtualType name="StreamX\ConnectorCatalog\Indexer\CustomOptionsDataFilterVirtual"
                  type="StreamX\ConnectorCore\Indexer\DataFilter">
         <arguments>
