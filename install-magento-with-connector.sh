@@ -38,8 +38,8 @@ sed -i '' 's|--max_allowed_packet|--innodb-buffer-pool-size=512M --max_allowed_p
 sed -i '' 's/80:8000/81:8000/g' compose.yaml
 sed -i '' 's/443:8443/444:8443/g' compose.yaml
 
-sed -i '' 's^base-url=https://"$DOMAIN"/^base-url="https://magento.test:81/"^g' bin/setup-install
-sed -i '' 's^base-url-secure=https://"$DOMAIN"/^base-url-secure="https://magento.test:444/"^g' bin/setup-install
+sed -i '' 's|base-url=https://"$DOMAIN"/|base-url="https://magento.test:444/"|g' bin/setup-install
+sed -i '' 's|base-url-secure=https://"$DOMAIN"/|base-url-secure="https://magento.test:444/"|g' bin/setup-install
 
 # - 8080: ingestion port in StreamX and phpmyadmin port in Magento
 sed -i '' 's/8080:80/8090:80/g' compose.dev.yaml
@@ -52,6 +52,10 @@ bin/download community 2.4.7-p3
 
 ### Install the magento docker machinery
 bin/setup magento.test
+
+### Apply base urls into magento config database (by default both base urls are https://magento.test/)
+bin/magento setup:store-config:set --base-url=https://magento.test:444/
+bin/magento setup:store-config:set --base-url-secure=https://magento.test:444/
 
 ### Install sample data
 bin/magento sampledata:deploy
