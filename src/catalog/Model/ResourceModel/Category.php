@@ -37,7 +37,17 @@ class Category
      */
     public function getCategories(int $storeId = 1, array $categoryIds = [], int $fromId = 0, int $limit = 1000): array
     {
-        $select = $this->filterByStore($storeId);
+        $metaData = $this->categoryMetaData->get();
+        $select = $this->getConnection()
+            ->select()
+            ->from(
+                [self::MAIN_TABLE_ALIAS => $metaData->getEntityTable()],
+                ['parent_id', 'path']
+            )->columns(
+                ['id' => 'entity_id']
+            );
+
+        $select = $this->filterByStore($select, $storeId);
         $tableName = self::MAIN_TABLE_ALIAS;
 
         if (!empty($categoryIds)) {
@@ -56,7 +66,12 @@ class Category
      */
     public function getCategoryProductSelect(int $storeId, array $productIds): array
     {
-        $select = $this->filterByStore($storeId);
+        $metaData = $this->categoryMetaData->get();
+        $select = $this->getConnection()->select()->from(
+            [self::MAIN_TABLE_ALIAS => $metaData->getEntityTable()]
+        );
+
+        $select = $this->filterByStore($select, $storeId);
         $table = $this->resource->getTableName('catalog_category_product');
         $entityIdField = $this->categoryMetaData->get()->getIdentifierField();
         $select->reset(Select::COLUMNS);
@@ -133,13 +148,8 @@ class Category
      * @throws Exception
      * @throws NoSuchEntityException
      */
-    private function filterByStore(int $storeId): Select
+    private function filterByStore(Select $select, int $storeId): Select
     {
-        $metaData = $this->categoryMetaData->get();
-        $select = $this->getConnection()->select()->from(
-            [self::MAIN_TABLE_ALIAS => $metaData->getEntityTable()]
-        );
-
         return $this->baseSelectModifier->execute($select, (int) $storeId);
     }
 

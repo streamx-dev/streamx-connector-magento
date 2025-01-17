@@ -19,7 +19,7 @@ class ComputeCategorySlug
         if ($this->settings->useMagentoUrlKeys()) {
             return $category['url_key'] ?? SlugGenerator::generate(
                 $category['name'],
-                $category['entity_id']
+                $category['id']
             );
         }
 
@@ -27,6 +27,6 @@ class ComputeCategorySlug
             ? $category['url_key']
             : $category['name'];
 
-        return SlugGenerator::generate($text, $category['entity_id']);
+        return SlugGenerator::generate($text, $category['id']);
     }
 }
