@@ -9,21 +9,25 @@ use StreamX\ConnectorCatalog\Model\SlugGenerator;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 use StreamX\ConnectorCatalog\Model\Attributes\ProductAttributes;
+use StreamX\ConnectorCore\Indexer\ImageUrlManager;
 
 class AttributeData implements DataProviderInterface
 {
     private AttributeDataProvider $resourceModel;
     private CatalogConfig $settings;
     private ProductAttributes $productAttributes;
+    private ImageUrlManager $imageUrlManager;
 
     public function __construct(
         ProductAttributes $productAttributes,
         CatalogConfig $configSettings,
-        AttributeDataProvider $resourceModel
+        AttributeDataProvider $resourceModel,
+        ImageUrlManager $imageUrlManager
     ) {
         $this->settings = $configSettings;
         $this->resourceModel = $resourceModel;
         $this->productAttributes = $productAttributes;
+        $this->imageUrlManager = $imageUrlManager;
     }
 
     /**
@@ -60,7 +64,7 @@ class AttributeData implements DataProviderInterface
             $productData[$attributeCode] = $attributeValue;
         } elseif ($attributeCode == 'image') {
             $productData['primaryImage'] = [
-                'url' => $attributeValue // TODO full url?
+                'url' => $this->imageUrlManager->getProductImageUrl($attributeValue)
             ];
         } elseif ($attributeCode == 'price') {
             $productData['price'] = ((float)$attributeValue);

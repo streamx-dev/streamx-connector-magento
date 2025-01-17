@@ -3,7 +3,6 @@
 namespace StreamX\ConnectorCore\Streamx;
 
 use Exception;
-use Magento\Store\Model\StoreManagerInterface;
 use Psr\Log\LoggerInterface;
 use Streamx\Clients\Ingestion\Exceptions\StreamxClientException;
 use Streamx\Clients\Ingestion\Publisher\Message;
@@ -16,18 +15,11 @@ class Client implements ClientInterface {
     private LoggerInterface $logger;
     private Publisher $publisher;
 
-    // TODO use baseUrl to prepend to image paths, which are retuned as relative paths, like:
-    //  $baseImageUrl = $this->baseUrl . "media/catalog/product";
-    //  $fullImageUrl = $baseImageUrl . $data['image']
-    private string $baseUrl;
-
-    public function __construct(LoggerInterface $logger, Publisher $publisher, StoreManagerInterface $storeManager) {
+    public function __construct(LoggerInterface $logger, Publisher $publisher) {
         $this->logger = $logger;
         $this->publisher = $publisher;
-        $this->baseUrl = $storeManager->getStore()->getBaseUrl();
     }
 
-    // TODO: adjust code that produced the $bulkOperations array, to make it in StreamX format (originally it is in ElasticSearch format)
     public function ingest(array $bulkOperations): void {
         $operationsCount = count($bulkOperations);
         $this->logger->info("Start ingesting $operationsCount operations");

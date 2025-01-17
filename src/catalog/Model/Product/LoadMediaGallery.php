@@ -4,19 +4,23 @@ namespace StreamX\ConnectorCatalog\Model\Product;
 
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Gallery as Resource;
+use StreamX\ConnectorCore\Indexer\ImageUrlManager;
 
 class LoadMediaGallery
 {
     private Resource $resourceModel;
     private ProductMetaData $productMetaData;
+    private ImageUrlManager $imageUrlManager;
     private array $rowIdToEntityId = [];
 
     public function __construct(
         Resource $resource,
-        ProductMetaData $productMetaData
+        ProductMetaData $productMetaData,
+        ImageUrlManager $imageUrlManager
     ) {
         $this->resourceModel = $resource;
         $this->productMetaData = $productMetaData;
+        $this->imageUrlManager = $imageUrlManager;
     }
 
     /**
@@ -38,7 +42,7 @@ class LoadMediaGallery
             $linkFieldId  = $mediaImage['row_id'];
             $entityId = $this->rowIdToEntityId[$linkFieldId] ?? $linkFieldId;
 
-            $imageUrl = $mediaImage['file']; // TODO full url?
+            $imageUrl = $this->imageUrlManager->getProductImageUrl($mediaImage['file']);
             $imageAlt = $this->getValue('label', $mediaImage);
             $image = [
                 'url' => $imageUrl,
