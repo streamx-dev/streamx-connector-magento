@@ -6,6 +6,7 @@ use Magento\Framework\App\ResourceConnection;
 use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 use StreamX\ConnectorCatalog\Model\Attribute\LoadOptions;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\SpecialAttributes;
+use Zend_Db_Expr;
 
 class ProductAttributes
 {
@@ -62,9 +63,14 @@ class ProductAttributes
         $connection = $this->resource->getConnection();
         $tableName = $this->resource->getTableName('eav_attribute');
         $select = $connection->select()
-            ->from($tableName, ['attribute_code', 'frontend_input', 'source_model'])
+            ->from(['ea' => $tableName], ['attribute_code', 'frontend_input', 'source_model'])
             ->columns(['frontend_label' => $connection->getIfNullSql('frontend_label', "''")]) // TODO should frontend label from getStoreLabelsByAttributeId take precedence over frontend_label?
-            ->where('attribute_code IN (?)', $attributeCodes);
+            ->joinLeft(
+                ['cea' => $this->resource->getTableName('catalog_eav_attribute')],
+                'cea.attribute_id = ea.attribute_id',
+                ['is_filterable' => new Zend_Db_Expr('CASE WHEN is_filterable = 1 THEN true ELSE false END')]
+            )
+            ->where('ea.attribute_code IN (?)', $attributeCodes);
 
         return $connection->fetchAll($select);
     }
@@ -99,6 +105,7 @@ class ProductAttributes
                 return new AttributeDefinition(
                     $attributeRow['attribute_code'],
                     $attributeRow['frontend_label'],
+                    $attributeRow['is_filterable'],
                     $this->mapAttributeOptionRowsToDtos($attributeRow['options'])
                 );
             },

@@ -41,4 +41,11 @@ class MagentoIndexerOperationsExecutor {
         $magentoCommand = 'bin/magento indexer:' . $indexerCommand . ' ' . $this->indexerName;
         return shell_exec("$cdCommand && $magentoCommand");
     }
+
+    public function replaceTextInMagentoFile(string $pathRelativeToMagentoFolder, string $from, string $to): void {
+        $filePath = "$this->magentoFolder/$pathRelativeToMagentoFolder";
+        $content = file_get_contents($filePath);
+        $newContent = str_replace($from, $to, $content);
+        file_put_contents($filePath, $newContent);
+    }
 }

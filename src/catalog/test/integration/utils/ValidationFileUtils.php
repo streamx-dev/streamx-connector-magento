@@ -2,7 +2,6 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\utils;
 
-use Exception;
 use PHPUnit\Framework\ExpectationFailedException;
 
 trait ValidationFileUtils  {
@@ -12,21 +11,20 @@ trait ValidationFileUtils  {
         return file_get_contents("$validationFilesDir/$validationFileName");
     }
 
-    public function verifySameJsonsOrThrow(string $expectedFormattedJson, string $actualJson): void {
-        $this->verifySameJsons($expectedFormattedJson, $actualJson, true);
+    public function verifySameJsonsOrThrow(string $expectedFormattedJson, string $actualJson, array $regexReplacements = []): void {
+        $this->verifySameJsons($expectedFormattedJson, $actualJson, true, $regexReplacements);
     }
 
-    public function verifySameJsonsSilently(string $expectedFormattedJson, string $actualJson): bool {
-        return $this->verifySameJsons($expectedFormattedJson, $actualJson, false);
+    public function verifySameJsonsSilently(string $expectedFormattedJson, string $actualJson, array $regexReplacements = []): bool {
+        return $this->verifySameJsons($expectedFormattedJson, $actualJson, false, $regexReplacements);
     }
 
-    private function verifySameJsons(string $expectedFormattedJson, string $actualJson, bool $throwOnAssertionError): bool {
+    private function verifySameJsons(string $expectedFormattedJson, string $actualJson, bool $throwOnAssertionError, array $regexReplacements = []): bool {
         $actualFormattedJson = JsonFormatter::formatJson($actualJson);
         try {
-            $this->assertEquals(
-                self::maskVariableParts($expectedFormattedJson),
-                self::maskVariableParts($actualFormattedJson)
-            );
+            $expected = self::standardizeNewlines(self::replaceRegexes($expectedFormattedJson, $regexReplacements));
+            $actual = self::standardizeNewlines(self::replaceRegexes($actualFormattedJson, $regexReplacements));
+            $this->assertEquals($expected, $actual);
             return true;
         } catch (ExpectationFailedException $e) {
             if ($throwOnAssertionError) {
@@ -36,17 +34,14 @@ trait ValidationFileUtils  {
         }
     }
 
-    private static function maskVariableParts(string $json): string {
-        return self::standardizeNewlines(
-            self::maskTimestamps($json)
-        );
-    }
-
-    private static function maskTimestamps(string $json): string {
-        return preg_replace('/"(created_at|updated_at)": "[^"]+"/', '"$1": "[MASKED]"', $json);
-    }
-
-    private static function standardizeNewlines(string $json): string {
+    private function standardizeNewlines(string $json): string {
         return str_replace('\r\n', '\n', $json);
+    }
+
+    private function replaceRegexes(string $json, array $regexReplacements): string {
+        foreach ($regexReplacements as $regex => $replacement) {
+            $json = preg_replace('/' . $regex . '/', $replacement, $json);
+        }
+        return $json;
     }
 }

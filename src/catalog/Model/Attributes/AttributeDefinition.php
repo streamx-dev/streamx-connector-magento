@@ -6,7 +6,7 @@ class AttributeDefinition
 {
     private string $name;
     private string $label;
-    // TODO: add field: private boolean $isFacet;
+    private bool $isFacet;
 
     /**
      * @var AttributeOptionDefinition[]
@@ -16,9 +16,10 @@ class AttributeDefinition
     /**
      * @param AttributeOptionDefinition[] $options
      */
-    public function __construct(string $name, string $label, array $options) {
+    public function __construct(string $name, string $label, bool $isFacet, array $options) {
         $this->name = $name;
         $this->label = $label;
+        $this->isFacet = $isFacet;
         $this->options = $options;
     }
 
@@ -28,6 +29,10 @@ class AttributeDefinition
 
     public function getLabel(): string {
         return $this->label;
+    }
+
+    public function isFacet(): bool {
+        return $this->isFacet;
     }
 
     /**
