@@ -107,7 +107,7 @@ class Bundle
             $parentId = $selection['parent_product_id'];
             $entityId = $this->products[$parentId]['entity_id'];
             $productId = $selection['product_id'];
-            $bundlePriceType = $this->products[$parentId]['price_type'];
+            $bundlePriceType = $this->products[$parentId]['price_type'] ?? null; // TODO: price_type should probably never be null
 
             $selectionPriceType = $bundlePriceType ? $selection['selection_price_type'] : null;
             $selectionPrice = $bundlePriceType ? $selection['selection_price_value'] : null;

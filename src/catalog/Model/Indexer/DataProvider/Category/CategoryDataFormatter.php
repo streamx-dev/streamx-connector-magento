@@ -33,20 +33,24 @@ class CategoryDataFormatter implements DataProviderInterface
 
     public function addData(array $indexData, int $storeId): array
     {
-        foreach ($indexData as $categoryId => $categoryData) {
-            $categoryData = $this->prepareCategory($categoryData);
+        return $this->formatCategoriesAsTree($indexData, $storeId);
+    }
+
+    public function formatCategoriesAsTree(array $categoriesData, int $storeId): array {
+        foreach ($categoriesData as &$categoryData) {
+            $this->prepareCategory($categoryData);
             $children = $this->childrenResourceModel->loadChildren($categoryData, $storeId);
             $groupedChildrenById = $this->groupChildrenById($children);
             unset($children);
 
-            $indexData[$categoryId] = $this->addChildrenData($categoryData, $groupedChildrenById, $storeId);
+            $this->addChildrenData($categoryData, $groupedChildrenById, $storeId);
         }
 
         $allCategoriesMap = $this->getAllCategoriesMap($storeId);
-        $this->setParentCategory($indexData, $allCategoriesMap);
-        $this->removeUnnecessaryFieldsRecursively($indexData);
+        $this->setParentCategory($categoriesData, $allCategoriesMap);
+        $this->removeUnnecessaryFieldsRecursively($categoriesData);
 
-        return $indexData;
+        return $categoriesData;
     }
 
     private function removeUnnecessaryFieldsRecursively(array &$categories): void
@@ -71,20 +75,19 @@ class CategoryDataFormatter implements DataProviderInterface
             $parentCategoryId = $category['parent_id'];
             if (isset($allCategoriesMap[$parentCategoryId])) { // root category may not be present in the results, so leave parent as null
                 $parentCategory = $allCategoriesMap[$parentCategoryId];
-                $category[self::PARENT] = $this->prepareCategory($parentCategory);
+                $this->prepareCategory($parentCategory);
+                $category[self::PARENT] = $parentCategory;
             }
             $this->setParentCategory($category[self::SUBCATEGORIES], $allCategoriesMap);
         }
     }
 
-    private function addChildrenData(array $category, array $groupedChildren, int $storeId): array
+    private function addChildrenData(array &$category, array $groupedChildren, int $storeId): void
     {
         $categoryId = $category[self::ID];
         $childrenData = $this->plotTree($groupedChildren, $categoryId, $storeId);
 
         $category[self::SUBCATEGORIES] = $childrenData;
-
-        return $category;
     }
 
     private function groupChildrenById(array $children): array
@@ -111,7 +114,7 @@ class CategoryDataFormatter implements DataProviderInterface
                 # Remove item from tree (we don't need to traverse this again)
                 unset($categories[$categoryId]);
 
-                $categoryData = $this->prepareCategory($categoryData);
+                $this->prepareCategory($categoryData);
                 $categoryData[self::SUBCATEGORIES] = $this->plotTree($categories, $categoryId, $storeId);
                 $categoryTree[] = $categoryData;
             }
@@ -120,13 +123,11 @@ class CategoryDataFormatter implements DataProviderInterface
         return empty($categoryTree) ? [] : $categoryTree;
     }
 
-    private function prepareCategory(array $categoryData): array
+    private function prepareCategory(array &$categoryData): void
     {
         $categoryData[self::ID] = (int) $categoryData['id'];
         $categoryData[self::SLUG] = $this->computeSlug($categoryData);
         $categoryData[self::LABEL] = $categoryData[self::NAME];
-
-        return $categoryData;
     }
 
     private function computeSlug(array $categoryDTO): string
