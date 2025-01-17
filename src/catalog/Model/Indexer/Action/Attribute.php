@@ -5,15 +5,15 @@ namespace StreamX\ConnectorCatalog\Model\Indexer\Action;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Attribute as ResourceModel;
 use Traversable;
 
-class Attribute
-{
+class Attribute implements BaseAction {
+
     private ResourceModel $resourceModel;
 
     public function __construct(ResourceModel $resourceModel) {
         $this->resourceModel = $resourceModel;
     }
 
-    public function rebuild(array $attributeIds = []): Traversable {
+    public function loadData(int $storeId = 1, array $attributeIds = []): Traversable {
         $lastAttributeId = 0;
 
         // 1. Publish edited and added attributes

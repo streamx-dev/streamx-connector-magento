@@ -3,6 +3,7 @@
 namespace StreamX\ConnectorCore\Index;
 
 use LogicException;
+use Streamx\Clients\Ingestion\Exceptions\StreamxClientException;
 use StreamX\ConnectorCore\Api\IndexOperationInterface;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
 use StreamX\ConnectorCore\Streamx\ClientResolver;
@@ -18,6 +19,10 @@ class IndexOperations implements IndexOperationInterface
         $this->optimizationSettings = $optimizationSettings;
     }
 
+    /**
+     * @throws ConnectionUnhealthyException
+     * @throws StreamxClientException
+     */
     public function executeBulk(int $storeId, BulkRequest $bulk): void
     {
         if ($bulk->isEmpty()) {

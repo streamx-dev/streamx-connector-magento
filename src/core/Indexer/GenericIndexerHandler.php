@@ -5,9 +5,9 @@ namespace StreamX\ConnectorCore\Indexer;
 use InvalidArgumentException;
 use LogicException;
 use Psr\Log\LoggerInterface;
+use Streamx\Clients\Ingestion\Exceptions\StreamxClientException;
 use StreamX\ConnectorCore\Api\Index\TypeInterface;
 use StreamX\ConnectorCore\Api\IndexOperationInterface;
-use StreamX\ConnectorCore\Exception\ConnectionDisabledException;
 use StreamX\ConnectorCore\Exception\ConnectionUnhealthyException;
 use StreamX\ConnectorCore\Index\BulkRequest;
 use StreamX\ConnectorCore\Index\Indicies\Config;
@@ -42,6 +42,7 @@ class GenericIndexerHandler {
 
     /**
      * @throws ConnectionUnhealthyException
+     * @throws StreamxClientException
      */
     public function saveIndex(Traversable $documents, StoreInterface $store): void {
         // TODO: don't try to do anything if the indexer is not enabled
@@ -52,14 +53,16 @@ class GenericIndexerHandler {
             foreach ($this->batch->getItems($documents, $batchSize) as $docs) {
                 $this->processDocsBatch($docs, $storeId);
             }
-        } catch (ConnectionDisabledException $exception) {
-            // do nothing, StreamX indexer disabled in configuration
         } catch (ConnectionUnhealthyException $exception) {
             $this->logger->error($exception->getMessage());
             throw $exception;
         }
     }
 
+    /**
+     * @throws ConnectionUnhealthyException
+     * @throws StreamxClientException
+     */
     private function processDocsBatch(array $docs, int $storeId): void {
         $entitiesToPublish = [];
         $idsToUnpublish = [];
@@ -91,6 +94,10 @@ class GenericIndexerHandler {
         return $docsToPublish;
     }
 
+    /**
+     * @throws ConnectionUnhealthyException
+     * @throws StreamxClientException
+     */
     private function publishEntities(array $entities, int $storeId): void {
         $bulkRequest = BulkRequest::buildPublishRequest(
             $this->typeName,
@@ -100,6 +107,10 @@ class GenericIndexerHandler {
         $this->indexOperations->executeBulk($storeId, $bulkRequest);
     }
 
+    /**
+     * @throws ConnectionUnhealthyException
+     * @throws StreamxClientException
+     */
     private function unpublishEntities(array $ids, int $storeId): void {
         $bulkRequest = BulkRequest::buildUnpublishRequest(
             $this->typeName,
