@@ -4,16 +4,16 @@ namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 use StreamX\ConnectorCatalog\Model\Product\LoadMediaGallery;
-use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
+use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 
 class MediaGalleryData implements DataProviderInterface
 {
-    private CatalogConfigurationInterface $catalogConfig;
+    private CatalogConfig $catalogConfig;
     private LoadMediaGallery $loadMediaGallery;
     private ?bool $canIndexMediaGallery = null;
 
     public function __construct(
-        CatalogConfigurationInterface $catalogConfig,
+        CatalogConfig $catalogConfig,
         LoadMediaGallery $loadMediaGallery
     ) {
         $this->catalogConfig = $catalogConfig;

@@ -2,7 +2,7 @@
 
 namespace StreamX\ConnectorCatalog\Model\Attributes;
 
-use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
+use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 
 class ConfigurableAttributes
 {
@@ -18,11 +18,11 @@ class ConfigurableAttributes
         'price',
     ];
 
-    private CatalogConfigurationInterface $catalogConfig;
+    private CatalogConfig $catalogConfig;
     private ?array $requiredAttributes = null;
     private ?bool $canIndexMediaGallery = null;
 
-    public function __construct(CatalogConfigurationInterface $catalogConfiguration)
+    public function __construct(CatalogConfig $catalogConfiguration)
     {
         $this->catalogConfig = $catalogConfiguration;
     }

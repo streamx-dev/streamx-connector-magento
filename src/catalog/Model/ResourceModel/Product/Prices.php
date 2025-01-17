@@ -9,14 +9,14 @@ use Magento\Store\Api\Data\StoreInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\CatalogRule\Model\ResourceModel\Rule\Product\Price as CatalogRulePrice;
 
-use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
+use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use StreamX\ConnectorCatalog\Model\Product\PriceTableResolverProxy;
 
 class Prices
 {
     private ResourceConnection $resource;
-    private CatalogConfigurationInterface $settings;
+    private CatalogConfig $settings;
     private StoreManagerInterface $storeManager;
     private ProductMetaData $productMetaData;
     private PriceTableResolverProxy $priceTableResolver;
@@ -26,7 +26,7 @@ class Prices
         ResourceConnection $resourceModel,
         StoreManagerInterface $storeManager,
         ProductMetaData $productMetaData,
-        CatalogConfigurationInterface $catalogSettings,
+        CatalogConfig $catalogSettings,
         CatalogRulePrice $catalogPriceResourceModel,
         PriceTableResolverProxy $priceTableResolver
     ) {

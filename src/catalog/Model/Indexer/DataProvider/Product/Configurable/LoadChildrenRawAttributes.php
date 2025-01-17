@@ -8,7 +8,7 @@ use StreamX\ConnectorCatalog\Model\Attributes\ConfigurableAttributes;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\AttributeDataProvider;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Prices as PriceResourceModel;
 use StreamX\ConnectorCatalog\Model\Product\LoadTierPrices;
-use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
+use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 use StreamX\ConnectorCatalog\Model\Product\LoadMediaGallery;
 use Traversable;
 
@@ -19,10 +19,10 @@ class LoadChildrenRawAttributes
     private AttributeDataProvider $resourceAttributeModel;
     private ConfigurableAttributes $configurableAttributes;
     private LoadMediaGallery $loadMediaGallery;
-    private CatalogConfigurationInterface $settings;
+    private CatalogConfig $settings;
 
     public function __construct(
-        CatalogConfigurationInterface $catalogConfiguration,
+        CatalogConfig $catalogConfiguration,
         AttributeDataProvider $attributeDataProvider,
         ConfigurableAttributes $configurableAttributes,
         LoadTierPrices $loadTierPrices,

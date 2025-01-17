@@ -3,7 +3,7 @@
 namespace StreamX\ConnectorCatalog\Model\Attributes;
 
 use Magento\Framework\App\ResourceConnection;
-use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
+use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 use StreamX\ConnectorCatalog\Model\Attribute\LoadOptions;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\SpecialAttributes;
 
@@ -20,12 +20,12 @@ class ProductAttributes
         'price_type',
     ];
 
-    private CatalogConfigurationInterface $catalogConfig;
+    private CatalogConfig $catalogConfig;
     private ResourceConnection $resource;
     private LoadOptions $loadOptions;
 
     public function __construct(
-        CatalogConfigurationInterface $catalogConfiguration,
+        CatalogConfig $catalogConfiguration,
         ResourceConnection $resource,
         LoadOptions $loadOptions
     ) {

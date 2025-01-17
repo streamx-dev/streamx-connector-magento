@@ -6,7 +6,7 @@ use Exception;
 use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
-use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
+use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\BaseSelectModifierInterface;
 use Magento\Framework\App\ResourceConnection;
@@ -22,13 +22,13 @@ class Product
 
     private ResourceConnection $resourceConnection;
     private DbHelper $dbHelper;
-    private CatalogConfigurationInterface $productSettings;
+    private CatalogConfig $productSettings;
     private ?array $configurableAttributeIds = null;
     private ProductMetaData $productMetaData;
     private BaseSelectModifierInterface $baseSelectModifier;
 
     public function __construct(
-        CatalogConfigurationInterface $configSettings,
+        CatalogConfig $configSettings,
         BaseSelectModifierInterface $baseSelectModifier,
         ResourceConnection $resourceConnection,
         ProductMetaData $productMetaData,

@@ -2,14 +2,14 @@
 
 namespace StreamX\ConnectorCatalog\Model\Category;
 
-use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
+use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 use StreamX\ConnectorCatalog\Model\SlugGenerator;
 
 class ComputeCategorySlug
 {
-    private CatalogConfigurationInterface $settings;
+    private CatalogConfig $settings;
 
-    public function __construct(CatalogConfigurationInterface $configSettings)
+    public function __construct(CatalogConfig $configSettings)
     {
         $this->settings = $configSettings;
     }
