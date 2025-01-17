@@ -148,15 +148,20 @@
   "price": 35,
   "slug": "the-new-great-watch-2659",
   "url_key": "the-new-great-watch-2659",
-  "category": [
+  "categories": [
     {
-      "category_id": 6,
+      "id": 6,
       "name": "Watches",
-      "position": 0
+      "slug": "watches-6",
+      "label": "Watches",
+      "subcategories": [],
+      "parent": {
+        "id": 3,
+        "name": "Gear",
+        "slug": "gear-3",
+        "label": "Gear"
+      }
     }
-  ],
-  "category_ids": [
-    6
   ],
   "gallery": [],
   "qty": 100,

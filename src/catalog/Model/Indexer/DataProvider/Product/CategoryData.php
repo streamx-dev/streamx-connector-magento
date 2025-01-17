@@ -2,16 +2,21 @@
 
 namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
+use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Category\CategoryDataFormatter;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
-use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Category as Resource;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Category as CategoryResource;
 
 class CategoryData implements DataProviderInterface
 {
-    private Resource $resourceModel;
+    private CategoryResource $categoryResource;
+    private CategoryDataFormatter $categoryDataFormatter;
 
-    public function __construct(Resource $resource)
-    {
-        $this->resourceModel = $resource;
+    public function __construct(
+        CategoryResource $categoryResource,
+        CategoryDataFormatter $categoryDataFormatter
+    ) {
+        $this->categoryResource = $categoryResource;
+        $this->categoryDataFormatter = $categoryDataFormatter;
     }
 
     /**
@@ -19,33 +24,36 @@ class CategoryData implements DataProviderInterface
      */
     public function addData(array $indexData, int $storeId): array
     {
-        $categoryData = $this->resourceModel->loadCategoryData($storeId, array_keys($indexData));
+        // 1. load map of: productId -> its categoryIds
+        $productIds = array_keys($indexData);
+        $productCategoriesMap = $this->categoryResource->getProductCategoriesMap($storeId, $productIds);
 
-        foreach ($categoryData as $categoryDataRow) {
-            $productId = (int)$categoryDataRow['product_id'];
-            $categoryId = (int)$categoryDataRow['category_id'];
-            $position = (int)$categoryDataRow['position'];
+        // 2. load category data of all categories
+        $categoryIds = $this->extractCategoryIds($productCategoriesMap);
+        $categoryData = $this->categoryResource->getCategories($storeId, $categoryIds);
 
-            $productCategoryData = [
-                'category_id' => $categoryId,
-                'name' => (string)$categoryDataRow['name'],
-                'position' => $position,
-            ];
+        // 3. format each category as tree with subcategories and parents
+        $formattedCategories = $this->categoryDataFormatter->formatCategoriesAsTree($categoryData, $storeId);
 
-            if (!isset($indexData[$productId]['category'])) {
-                $indexData[$productId]['category'] = [];
+        // 4. add formatted categories data to products
+        foreach ($indexData as $productId => &$productData) {
+            $productCategoryIds = $productCategoriesMap[$productId];
+            foreach ($formattedCategories as $formattedCategory) {
+                if (in_array($formattedCategory['id'], $productCategoryIds)) {
+                    $productData['categories'][] = $formattedCategory;
+                }
             }
-
-            if (!isset($indexData[$productId]['category_ids'])) {
-                $indexData[$productId]['category_ids'] = [];
-            }
-
-            $indexData[$productId]['category'][] = $productCategoryData;
-            $indexData[$productId]['category_ids'][] = $categoryId;
         }
 
-        $categoryData = null;
-
         return $indexData;
+    }
+
+    private function extractCategoryIds(array $productCategoriesMap): array
+    {
+        $categoryIds = [];
+        foreach ($productCategoriesMap as $productCategoryIds) {
+            $categoryIds = array_unique(array_merge($categoryIds, $productCategoryIds));
+        }
+        return $categoryIds;
     }
 }

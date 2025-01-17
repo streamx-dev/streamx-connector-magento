@@ -47,9 +47,10 @@ class Category
     }
 
     /**
+     * @return array: key = product id, value = array of the product's category ids
      * @throws Exception
      */
-    public function getCategoryProductSelect(int $storeId, array $productIds): array
+    public function getProductCategoriesMap(int $storeId, array $productIds): array
     {
         $metaData = $this->categoryMetaData->get();
         $select = $this->getConnection()->select()->from(
@@ -65,12 +66,23 @@ class Category
             "entity.$entityIdField = cpi.category_id",
             [
                 'category_id',
-                'product_id',
-                'position',
+                'product_id'
             ]
         )->where('cpi.product_id IN (?)', $productIds);
 
-        return $this->getConnection()->fetchAll($select);
+        $rows = $this->getConnection()->fetchAll($select);
+        return $this->toProductCategoriesMap($rows);
+    }
+
+    private function toProductCategoriesMap(array $rows): array
+    {
+        $result = [];
+        foreach ($rows as $row) {
+            $categoryId = $row['category_id'];
+            $productId = $row['product_id'];
+            $result[$productId][] = $categoryId;
+        }
+        return $result;
     }
 
     /**

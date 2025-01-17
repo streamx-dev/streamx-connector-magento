@@ -96,21 +96,73 @@
   "price": 34,
   "slug": "name-modified-for-testing-was-joust-duffle-bag-1",
   "url_key": "name-modified-for-testing-was-joust-duffle-bag-1",
-  "category": [
+  "categories": [
     {
-      "category_id": 4,
-      "name": "Bags",
-      "position": 0
+      "id": 3,
+      "name": "Gear",
+      "slug": "gear-3",
+      "label": "Gear",
+      "subcategories": [
+        {
+          "id": 4,
+          "name": "Bags",
+          "subcategories": [],
+          "slug": "bags-4",
+          "label": "Bags",
+          "parent": {
+            "id": 3,
+            "name": "Gear",
+            "slug": "gear-3",
+            "label": "Gear"
+          }
+        },
+        {
+          "id": 5,
+          "name": "Fitness Equipment",
+          "subcategories": [],
+          "slug": "fitness-equipment-5",
+          "label": "Fitness Equipment",
+          "parent": {
+            "id": 3,
+            "name": "Gear",
+            "slug": "gear-3",
+            "label": "Gear"
+          }
+        },
+        {
+          "id": 6,
+          "name": "Watches",
+          "subcategories": [],
+          "slug": "watches-6",
+          "label": "Watches",
+          "parent": {
+            "id": 3,
+            "name": "Gear",
+            "slug": "gear-3",
+            "label": "Gear"
+          }
+        }
+      ],
+      "parent": {
+        "id": 2,
+        "name": "Default Category",
+        "slug": "default-category-2",
+        "label": "Default Category"
+      }
     },
     {
-      "category_id": 3,
-      "name": "Gear",
-      "position": 0
+      "id": 4,
+      "name": "Bags",
+      "slug": "bags-4",
+      "label": "Bags",
+      "subcategories": [],
+      "parent": {
+        "id": 3,
+        "name": "Gear",
+        "slug": "gear-3",
+        "label": "Gear"
+      }
     }
-  ],
-  "category_ids": [
-    4,
-    3
   ],
   "gallery": [
     {
