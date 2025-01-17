@@ -3,27 +3,31 @@
   "id": 3,
   "parentCategoryId": 2,
   "slug": "gear-articles-3",
+  "label": "Gear Articles",
   "subcategories": [
     {
       "subcategories": [],
       "name": "Bags",
       "id": 4,
       "parentCategoryId": 3,
-      "slug": "bags-4"
+      "slug": "bags-4",
+      "label": "Bags"
     },
     {
       "subcategories": [],
       "name": "Fitness Equipment",
       "id": 5,
       "parentCategoryId": 3,
-      "slug": "fitness-equipment-5"
+      "slug": "fitness-equipment-5",
+      "label": "Fitness Equipment"
     },
     {
       "subcategories": [],
       "name": "Watches",
       "id": 6,
       "parentCategoryId": 3,
-      "slug": "watches-6"
+      "slug": "watches-6",
+      "label": "Watches"
     }
   ]
 }
