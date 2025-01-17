@@ -13,10 +13,6 @@ abstract class BaseDirectDbEntityUpdateTest extends BaseStreamxConnectorPublishT
 
     protected abstract function indexerName(): string;
 
-    private function viewId(): string {
-        return $this->indexerName(); // note: assuming that every indexer in the indexer.xml file has the same value of id and view_id fields
-    }
-
     private function indexerChangelogTableName(): string {
         return $this->indexerName() . '_cl';
     }
@@ -37,8 +33,12 @@ abstract class BaseDirectDbEntityUpdateTest extends BaseStreamxConnectorPublishT
     }
 
     public function tearDown(): void {
-        parent::tearDownIndexerTool();
-        $this->db->execute('DELETE FROM ' . $this->indexerChangelogTableName());
-        parent::tearDownDbTool();
+        $tableName = $this->indexerChangelogTableName();
+        $this->db->executeAll([
+            "TRUNCATE TABLE $tableName;",
+            "ALTER TABLE $tableName AUTO_INCREMENT = 1;"
+        ]);
+
+        parent::tearDown();
     }
 }
