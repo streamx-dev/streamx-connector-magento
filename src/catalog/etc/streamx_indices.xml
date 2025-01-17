@@ -17,7 +17,7 @@
         </type>
         <type name="category">
             <data_providers>
-                <data_provider name="category_data">StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Category\AttributeData</data_provider>
+                <data_provider name="category_data">StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Category\CategoryDataFormatter</data_provider>
             </data_providers>
         </type>
         <type name="attribute">

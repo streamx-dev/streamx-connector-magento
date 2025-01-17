@@ -2,11 +2,12 @@
 
 namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Category;
 
+use StreamX\ConnectorCatalog\Model\ResourceModel\Category as CategoryResource;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category\Children as CategoryChildrenResource;
 use StreamX\ConnectorCatalog\Model\Category\ComputeCategorySlug;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 
-class AttributeData implements DataProviderInterface
+class CategoryDataFormatter implements DataProviderInterface
 {
     // TODO convert to DTO class
     private const ID = 'id';
@@ -14,25 +15,24 @@ class AttributeData implements DataProviderInterface
     private const LABEL = 'label';
     private const SLUG = 'slug';
     private const SUBCATEGORIES = 'subcategories';
+    private const PARENT = 'parent';
 
-    // TODO: transform parentCategoryId to parent category (full, with own parents, without children)
-    private const PARENT_CATEGORY_ID = 'parentCategoryId';
-
+    private CategoryResource $resourceModel;
     private CategoryChildrenResource $childrenResourceModel;
     private ComputeCategorySlug $computeCategorySlug;
 
     public function __construct(
+        CategoryResource $resource,
         CategoryChildrenResource $childrenResource,
         ComputeCategorySlug $computeCategorySlug
     ) {
-        $this->computeCategorySlug = $computeCategorySlug;
+        $this->resourceModel = $resource;
         $this->childrenResourceModel = $childrenResource;
+        $this->computeCategorySlug = $computeCategorySlug;
     }
 
     public function addData(array $indexData, int $storeId): array
     {
-        // TODO: load all categories first, to then be able to set parent category for each of the published categories
-
         foreach ($indexData as $categoryId => $categoryData) {
             $categoryData = $this->prepareCategory($categoryData);
             $children = $this->childrenResourceModel->loadChildren($categoryData, $storeId);
@@ -42,16 +42,38 @@ class AttributeData implements DataProviderInterface
             $indexData[$categoryId] = $this->addChildrenData($categoryData, $groupedChildrenById, $storeId);
         }
 
-        $this->removeUnnecessaryFields($indexData);
+        $allCategoriesMap = $this->getAllCategoriesMap($storeId);
+        $this->setParentCategory($indexData, $allCategoriesMap);
+        $this->removeUnnecessaryFieldsRecursively($indexData);
 
         return $indexData;
     }
 
-    private function removeUnnecessaryFields(array &$categories): void
+    private function removeUnnecessaryFieldsRecursively(array &$categories): void
     {
         foreach ($categories as &$category) {
-            unset($category['url_key'], $category['path'], $category['parent_id']);
-            $this->removeUnnecessaryFields($category[self::SUBCATEGORIES]);
+            $this->removeUnnecessaryFields($category);
+            if (isset($category[self::PARENT])) {
+                $this->removeUnnecessaryFields($category[self::PARENT]);
+            }
+            $this->removeUnnecessaryFieldsRecursively($category[self::SUBCATEGORIES]);
+        }
+    }
+
+    private function removeUnnecessaryFields(array &$category): void
+    {
+        unset($category['url_key'], $category['path'], $category['parent_id']);
+    }
+
+    private function setParentCategory(array &$categories, array $allCategoriesMap): void
+    {
+        foreach ($categories as &$category) {
+            $parentCategoryId = $category['parent_id'];
+            if (isset($allCategoriesMap[$parentCategoryId])) { // root category may not be present in the results, so leave parent as null
+                $parentCategory = $allCategoriesMap[$parentCategoryId];
+                $category[self::PARENT] = $this->prepareCategory($parentCategory);
+            }
+            $this->setParentCategory($category[self::SUBCATEGORIES], $allCategoriesMap);
         }
     }
 
@@ -101,7 +123,6 @@ class AttributeData implements DataProviderInterface
     private function prepareCategory(array $categoryData): array
     {
         $categoryData[self::ID] = (int) $categoryData['id'];
-        $categoryData[self::PARENT_CATEGORY_ID] = (int) $categoryData['parent_id'];
         $categoryData[self::SLUG] = $this->computeSlug($categoryData);
         $categoryData[self::LABEL] = $categoryData[self::NAME];
 
@@ -111,5 +132,16 @@ class AttributeData implements DataProviderInterface
     private function computeSlug(array $categoryDTO): string
     {
         return $this->computeCategorySlug->compute($categoryDTO);
+    }
+
+    private function getAllCategoriesMap(int $storeId): array
+    {
+        $allCategories = $this->resourceModel->getCategories($storeId);
+
+        $allCategoriesMap = [];
+        foreach ($allCategories as $category) {
+            $allCategoriesMap[$category['id']] = $category;
+        }
+        return $allCategoriesMap;
     }
 }
