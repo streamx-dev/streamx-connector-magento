@@ -1,0 +1,618 @@
+{
+  "type_id": "configurable",
+  "sku": "MH01",
+  "id": 62,
+  "attributes": [
+    {
+      "name": "small_image",
+      "label": "Small",
+      "value": "\/m\/h\/mh01-gray_main_1.jpg",
+      "valueLabel": "\/m\/h\/mh01-gray_main_1.jpg",
+      "options": []
+    },
+    {
+      "name": "thumbnail",
+      "label": "Thumbnail",
+      "value": "\/m\/h\/mh01-gray_main_1.jpg",
+      "valueLabel": "\/m\/h\/mh01-gray_main_1.jpg",
+      "options": []
+    },
+    {
+      "name": "url_key",
+      "label": "URL Key",
+      "value": "chaz-kangeroo-hoodie",
+      "valueLabel": "chaz-kangeroo-hoodie",
+      "options": []
+    },
+    {
+      "name": "status",
+      "label": "Enable Product",
+      "value": "1",
+      "valueLabel": "Enabled",
+      "options": [
+        {
+          "value": "1",
+          "label": "Enabled"
+        },
+        {
+          "value": "2",
+          "label": "Disabled"
+        }
+      ]
+    },
+    {
+      "name": "visibility",
+      "label": "Visibility",
+      "value": "4",
+      "valueLabel": "Catalog, Search",
+      "options": [
+        {
+          "value": "1",
+          "label": "Not Visible Individually"
+        },
+        {
+          "value": "2",
+          "label": "Catalog"
+        },
+        {
+          "value": "3",
+          "label": "Search"
+        },
+        {
+          "value": "4",
+          "label": "Catalog, Search"
+        }
+      ]
+    },
+    {
+      "name": "tax_class_id",
+      "label": "Tax Class",
+      "value": "2",
+      "valueLabel": "Taxable Goods",
+      "options": [
+        {
+          "value": "0",
+          "label": "None"
+        },
+        {
+          "value": "2",
+          "label": "Taxable Goods"
+        }
+      ]
+    }
+  ],
+  "name": "Chaz Kangeroo Hoodie",
+  "image": "\/m\/h\/mh01-gray_main_1.jpg",
+  "description": "<p>Ideal for cold-weather training or work outdoors, the Chaz Hoodie promises superior warmth with every wear. Thick material blocks out the wind as ribbed cuffs and bottom band seal in body heat.<\/p>\n<p>&bull; Two-tone gray heather hoodie.<br \/>&bull; Drawstring-adjustable hood. <br \/>&bull; Machine wash\/dry.<\/p>",
+  "price": "52.000000",
+  "slug": "chaz-kangeroo-hoodie-62",
+  "url_key": "chaz-kangeroo-hoodie-62",
+  "category": [
+    {
+      "category_id": 15,
+      "name": "Hoodies & Sweatshirts",
+      "position": -16
+    },
+    {
+      "category_id": 36,
+      "name": "Eco Friendly",
+      "position": -16
+    },
+    {
+      "category_id": 2,
+      "name": "Default Category",
+      "position": -16
+    }
+  ],
+  "category_ids": [
+    15,
+    36,
+    2
+  ],
+  "final_price": 52,
+  "regular_price": "52.000000",
+  "media_gallery": [
+    {
+      "typ": "image",
+      "image": "\/m\/h\/mh01-gray_main_1.jpg",
+      "lab": "",
+      "pos": 1
+    },
+    {
+      "typ": "image",
+      "image": "\/m\/h\/mh01-gray_alt1_1.jpg",
+      "lab": "",
+      "pos": 2
+    },
+    {
+      "typ": "image",
+      "image": "\/m\/h\/mh01-gray_back_1.jpg",
+      "lab": "",
+      "pos": 3
+    }
+  ],
+  "qty": 0,
+  "configurable_options": [
+    {
+      "attribute_id": 93,
+      "attribute_code": "color",
+      "label": "Color",
+      "values": [
+        {
+          "value_index": "49",
+          "label": "Black"
+        },
+        {
+          "value_index": "52",
+          "label": "Gray"
+        },
+        {
+          "value_index": "56",
+          "label": "Orange"
+        }
+      ]
+    },
+    {
+      "attribute_id": 144,
+      "attribute_code": "size",
+      "label": "Size",
+      "values": [
+        {
+          "value_index": "166",
+          "label": "XS"
+        },
+        {
+          "value_index": "167",
+          "label": "S"
+        },
+        {
+          "value_index": "168",
+          "label": "M"
+        },
+        {
+          "value_index": "169",
+          "label": "L"
+        },
+        {
+          "value_index": "170",
+          "label": "XL"
+        }
+      ]
+    }
+  ],
+  "configurable_children": [
+    {
+      "sku": "MH01-XS-Black",
+      "final_price": 52,
+      "regular_price": 52,
+      "name": "Chaz Kangeroo Hoodie-XS-Black",
+      "image": "\/m\/h\/mh01-black_main_1.jpg",
+      "small_image": "\/m\/h\/mh01-black_main_1.jpg",
+      "thumbnail": "\/m\/h\/mh01-black_main_1.jpg",
+      "price": "52.000000",
+      "color": "49",
+      "status": "1",
+      "visibility": "1",
+      "size": "166",
+      "media_gallery": [
+        {
+          "typ": "image",
+          "image": "\/m\/h\/mh01-black_main_1.jpg",
+          "lab": "",
+          "pos": 1
+        }
+      ],
+      "id": 47,
+      "qty": "100.0000"
+    },
+    {
+      "sku": "MH01-XS-Gray",
+      "final_price": 52,
+      "regular_price": 52,
+      "name": "Chaz Kangeroo Hoodie-XS-Gray",
+      "image": "\/m\/h\/mh01-gray_main_1.jpg",
+      "small_image": "\/m\/h\/mh01-gray_main_1.jpg",
+      "thumbnail": "\/m\/h\/mh01-gray_main_1.jpg",
+      "price": "52.000000",
+      "color": "52",
+      "status": "1",
+      "visibility": "1",
+      "size": "166",
+      "media_gallery": [
+        {
+          "typ": "image",
+          "image": "\/m\/h\/mh01-gray_main_1.jpg",
+          "lab": "",
+          "pos": 1
+        },
+        {
+          "typ": "image",
+          "image": "\/m\/h\/mh01-gray_alt1_1.jpg",
+          "lab": "",
+          "pos": 2
+        },
+        {
+          "typ": "image",
+          "image": "\/m\/h\/mh01-gray_back_1.jpg",
+          "lab": "",
+          "pos": 3
+        }
+      ],
+      "id": 48,
+      "qty": "100.0000"
+    },
+    {
+      "sku": "MH01-XS-Orange",
+      "final_price": 52,
+      "regular_price": 52,
+      "name": "Chaz Kangeroo Hoodie-XS-Orange",
+      "image": "\/m\/h\/mh01-orange_main_1.jpg",
+      "small_image": "\/m\/h\/mh01-orange_main_1.jpg",
+      "thumbnail": "\/m\/h\/mh01-orange_main_1.jpg",
+      "price": "52.000000",
+      "color": "56",
+      "status": "1",
+      "visibility": "1",
+      "size": "166",
+      "media_gallery": [
+        {
+          "typ": "image",
+          "image": "\/m\/h\/mh01-orange_main_1.jpg",
+          "lab": "",
+          "pos": 1
+        }
+      ],
+      "id": 49,
+      "qty": "100.0000"
+    },
+    {
+      "sku": "MH01-S-Black",
+      "final_price": 52,
+      "regular_price": 52,
+      "name": "Chaz Kangeroo Hoodie-S-Black",
+      "image": "\/m\/h\/mh01-black_main_1.jpg",
+      "small_image": "\/m\/h\/mh01-black_main_1.jpg",
+      "thumbnail": "\/m\/h\/mh01-black_main_1.jpg",
+      "price": "52.000000",
+      "color": "49",
+      "status": "1",
+      "visibility": "1",
+      "size": "167",
+      "media_gallery": [
+        {
+          "typ": "image",
+          "image": "\/m\/h\/mh01-black_main_1.jpg",
+          "lab": "",
+          "pos": 1
+        }
+      ],
+      "id": 50,
+      "qty": "100.0000"
+    },
+    {
+      "sku": "MH01-S-Gray",
+      "final_price": 52,
+      "regular_price": 52,
+      "name": "Chaz Kangeroo Hoodie-S-Gray",
+      "image": "\/m\/h\/mh01-gray_main_1.jpg",
+      "small_image": "\/m\/h\/mh01-gray_main_1.jpg",
+      "thumbnail": "\/m\/h\/mh01-gray_main_1.jpg",
+      "price": "52.000000",
+      "color": "52",
+      "status": "1",
+      "visibility": "1",
+      "size": "167",
+      "media_gallery": [
+        {
+          "typ": "image",
+          "image": "\/m\/h\/mh01-gray_main_1.jpg",
+          "lab": "",
+          "pos": 1
+        },
+        {
+          "typ": "image",
+          "image": "\/m\/h\/mh01-gray_alt1_1.jpg",
+          "lab": "",
+          "pos": 2
+        },
+        {
+          "typ": "image",
+          "image": "\/m\/h\/mh01-gray_back_1.jpg",
+          "lab": "",
+          "pos": 3
+        }
+      ],
+      "id": 51,
+      "qty": "100.0000"
+    },
+    {
+      "sku": "MH01-S-Orange",
+      "final_price": 52,
+      "regular_price": 52,
+      "name": "Chaz Kangeroo Hoodie-S-Orange",
+      "image": "\/m\/h\/mh01-orange_main_1.jpg",
+      "small_image": "\/m\/h\/mh01-orange_main_1.jpg",
+      "thumbnail": "\/m\/h\/mh01-orange_main_1.jpg",
+      "price": "52.000000",
+      "color": "56",
+      "status": "1",
+      "visibility": "1",
+      "size": "167",
+      "media_gallery": [
+        {
+          "typ": "image",
+          "image": "\/m\/h\/mh01-orange_main_1.jpg",
+          "lab": "",
+          "pos": 1
+        }
+      ],
+      "id": 52,
+      "qty": "100.0000"
+    },
+    {
+      "sku": "MH01-M-Black",
+      "final_price": 52,
+      "regular_price": 52,
+      "name": "Chaz Kangeroo Hoodie-M-Black",
+      "image": "\/m\/h\/mh01-black_main_1.jpg",
+      "small_image": "\/m\/h\/mh01-black_main_1.jpg",
+      "thumbnail": "\/m\/h\/mh01-black_main_1.jpg",
+      "price": "52.000000",
+      "color": "49",
+      "status": "1",
+      "visibility": "1",
+      "size": "168",
+      "media_gallery": [
+        {
+          "typ": "image",
+          "image": "\/m\/h\/mh01-black_main_1.jpg",
+          "lab": "",
+          "pos": 1
+        }
+      ],
+      "id": 53,
+      "qty": "100.0000"
+    },
+    {
+      "sku": "MH01-M-Gray",
+      "final_price": 52,
+      "regular_price": 52,
+      "name": "Chaz Kangeroo Hoodie-M-Gray",
+      "image": "\/m\/h\/mh01-gray_main_1.jpg",
+      "small_image": "\/m\/h\/mh01-gray_main_1.jpg",
+      "thumbnail": "\/m\/h\/mh01-gray_main_1.jpg",
+      "price": "52.000000",
+      "color": "52",
+      "status": "1",
+      "visibility": "1",
+      "size": "168",
+      "media_gallery": [
+        {
+          "typ": "image",
+          "image": "\/m\/h\/mh01-gray_main_1.jpg",
+          "lab": "",
+          "pos": 1
+        },
+        {
+          "typ": "image",
+          "image": "\/m\/h\/mh01-gray_alt1_1.jpg",
+          "lab": "",
+          "pos": 2
+        },
+        {
+          "typ": "image",
+          "image": "\/m\/h\/mh01-gray_back_1.jpg",
+          "lab": "",
+          "pos": 3
+        }
+      ],
+      "id": 54,
+      "qty": "100.0000"
+    },
+    {
+      "sku": "MH01-M-Orange",
+      "final_price": 52,
+      "regular_price": 52,
+      "name": "Chaz Kangeroo Hoodie-M-Orange",
+      "image": "\/m\/h\/mh01-orange_main_1.jpg",
+      "small_image": "\/m\/h\/mh01-orange_main_1.jpg",
+      "thumbnail": "\/m\/h\/mh01-orange_main_1.jpg",
+      "price": "52.000000",
+      "color": "56",
+      "status": "1",
+      "visibility": "1",
+      "size": "168",
+      "media_gallery": [
+        {
+          "typ": "image",
+          "image": "\/m\/h\/mh01-orange_main_1.jpg",
+          "lab": "",
+          "pos": 1
+        }
+      ],
+      "id": 55,
+      "qty": "100.0000"
+    },
+    {
+      "sku": "MH01-L-Black",
+      "final_price": 52,
+      "regular_price": 52,
+      "name": "Chaz Kangeroo Hoodie-L-Black",
+      "image": "\/m\/h\/mh01-black_main_1.jpg",
+      "small_image": "\/m\/h\/mh01-black_main_1.jpg",
+      "thumbnail": "\/m\/h\/mh01-black_main_1.jpg",
+      "price": "52.000000",
+      "color": "49",
+      "status": "1",
+      "visibility": "1",
+      "size": "169",
+      "media_gallery": [
+        {
+          "typ": "image",
+          "image": "\/m\/h\/mh01-black_main_1.jpg",
+          "lab": "",
+          "pos": 1
+        }
+      ],
+      "id": 56,
+      "qty": "100.0000"
+    },
+    {
+      "sku": "MH01-L-Gray",
+      "final_price": 52,
+      "regular_price": 52,
+      "name": "Chaz Kangeroo Hoodie-L-Gray",
+      "image": "\/m\/h\/mh01-gray_main_1.jpg",
+      "small_image": "\/m\/h\/mh01-gray_main_1.jpg",
+      "thumbnail": "\/m\/h\/mh01-gray_main_1.jpg",
+      "price": "52.000000",
+      "color": "52",
+      "status": "1",
+      "visibility": "1",
+      "size": "169",
+      "media_gallery": [
+        {
+          "typ": "image",
+          "image": "\/m\/h\/mh01-gray_main_1.jpg",
+          "lab": "",
+          "pos": 1
+        },
+        {
+          "typ": "image",
+          "image": "\/m\/h\/mh01-gray_alt1_1.jpg",
+          "lab": "",
+          "pos": 2
+        },
+        {
+          "typ": "image",
+          "image": "\/m\/h\/mh01-gray_back_1.jpg",
+          "lab": "",
+          "pos": 3
+        }
+      ],
+      "id": 57,
+      "qty": "100.0000"
+    },
+    {
+      "sku": "MH01-L-Orange",
+      "final_price": 52,
+      "regular_price": 52,
+      "name": "Chaz Kangeroo Hoodie-L-Orange",
+      "image": "\/m\/h\/mh01-orange_main_1.jpg",
+      "small_image": "\/m\/h\/mh01-orange_main_1.jpg",
+      "thumbnail": "\/m\/h\/mh01-orange_main_1.jpg",
+      "price": "52.000000",
+      "color": "56",
+      "status": "1",
+      "visibility": "1",
+      "size": "169",
+      "media_gallery": [
+        {
+          "typ": "image",
+          "image": "\/m\/h\/mh01-orange_main_1.jpg",
+          "lab": "",
+          "pos": 1
+        }
+      ],
+      "id": 58,
+      "qty": "100.0000"
+    },
+    {
+      "sku": "MH01-XL-Black",
+      "final_price": 52,
+      "regular_price": 52,
+      "name": "Chaz Kangeroo Hoodie-XL-Black",
+      "image": "\/m\/h\/mh01-black_main_1.jpg",
+      "small_image": "\/m\/h\/mh01-black_main_1.jpg",
+      "thumbnail": "\/m\/h\/mh01-black_main_1.jpg",
+      "price": "52.000000",
+      "color": "49",
+      "status": "1",
+      "visibility": "1",
+      "size": "170",
+      "media_gallery": [
+        {
+          "typ": "image",
+          "image": "\/m\/h\/mh01-black_main_1.jpg",
+          "lab": "",
+          "pos": 1
+        }
+      ],
+      "id": 59,
+      "qty": "100.0000"
+    },
+    {
+      "sku": "MH01-XL-Gray",
+      "final_price": 52,
+      "regular_price": 52,
+      "name": "Chaz Kangeroo Hoodie-XL-Gray",
+      "image": "\/m\/h\/mh01-gray_main_1.jpg",
+      "small_image": "\/m\/h\/mh01-gray_main_1.jpg",
+      "thumbnail": "\/m\/h\/mh01-gray_main_1.jpg",
+      "price": "52.000000",
+      "color": "52",
+      "status": "1",
+      "visibility": "1",
+      "size": "170",
+      "media_gallery": [
+        {
+          "typ": "image",
+          "image": "\/m\/h\/mh01-gray_main_1.jpg",
+          "lab": "",
+          "pos": 1
+        },
+        {
+          "typ": "image",
+          "image": "\/m\/h\/mh01-gray_alt1_1.jpg",
+          "lab": "",
+          "pos": 2
+        },
+        {
+          "typ": "image",
+          "image": "\/m\/h\/mh01-gray_back_1.jpg",
+          "lab": "",
+          "pos": 3
+        }
+      ],
+      "id": 60,
+      "qty": "100.0000"
+    },
+    {
+      "sku": "MH01-XL-Orange",
+      "final_price": 52,
+      "regular_price": 52,
+      "name": "Chaz Kangeroo Hoodie-XL-Orange",
+      "image": "\/m\/h\/mh01-orange_main_1.jpg",
+      "small_image": "\/m\/h\/mh01-orange_main_1.jpg",
+      "thumbnail": "\/m\/h\/mh01-orange_main_1.jpg",
+      "price": "52.000000",
+      "color": "56",
+      "status": "1",
+      "visibility": "1",
+      "size": "170",
+      "media_gallery": [
+        {
+          "typ": "image",
+          "image": "\/m\/h\/mh01-orange_main_1.jpg",
+          "lab": "",
+          "pos": 1
+        }
+      ],
+      "id": 61,
+      "qty": "100.0000"
+    }
+  ],
+  "color_options": [
+    49,
+    52,
+    56
+  ],
+  "size_options": [
+    166,
+    167,
+    168,
+    169,
+    170
+  ],
+  "special_price": null
+}

@@ -15,11 +15,19 @@ class ProductUpdateTest extends BaseAppEntityUpdateTest {
     }
 
     /** @test */
-    public function shouldPublishProductEditedUsingMagentoApplicationToStreamx() {
+    public function shouldPublishSimpleProductEditedUsingMagentoApplicationToStreamx() {
+        $this->shouldPublishProductEditedUsingMagentoApplicationToStreamx('Joust Duffle Bag', 'bag');
+    }
+
+    /** @test */
+    public function shouldPublishConfigurableProductEditedUsingMagentoApplicationToStreamx() {
+        $this->shouldPublishProductEditedUsingMagentoApplicationToStreamx('Chaz Kangeroo Hoodie', 'hoodie');
+    }
+
+    private function shouldPublishProductEditedUsingMagentoApplicationToStreamx(string $productName, string $productType): void {
         // given
-        $productOldName = 'Joust Duffle Bag';
-        $productNewName = 'Name modified for testing';
-        $productId = $this->db->getProductId($productOldName);
+        $productNewName = "Name modified for testing, was $productName";
+        $productId = $this->db->getProductId($productName);
 
         // and
         $expectedKey = "product_$productId";
@@ -30,10 +38,10 @@ class ProductUpdateTest extends BaseAppEntityUpdateTest {
 
         // then
         try {
-            $this->assertExactDataIsPublished($expectedKey, 'edited-bag-product.json');
+            $this->assertExactDataIsPublished($expectedKey, "edited-$productType-product.json");
         } finally {
-            self::renameProduct($productId, $productOldName);
-            $this->assertExactDataIsPublished($expectedKey, 'original-bag-product.json');
+            self::renameProduct($productId, $productName);
+            $this->assertExactDataIsPublished($expectedKey, "original-$productType-product.json");
         }
     }
 
