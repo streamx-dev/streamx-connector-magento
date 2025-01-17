@@ -38,6 +38,9 @@ sed -i '' 's|--max_allowed_packet|--innodb-buffer-pool-size=512M --max_allowed_p
 sed -i '' 's/80:8000/81:8000/g' compose.yaml
 sed -i '' 's/443:8443/444:8443/g' compose.yaml
 
+sed -i '' 's^base-url=https://"$DOMAIN"/^base-url=https://magento.test:81/^g' bin/setup-install
+sed -i '' 's^base-url-secure=https://"$DOMAIN"/^base-url-secure=https://magento.test:444/^g' bin/setup-install
+
 # - 8080: ingestion port in StreamX and phpmyadmin port in Magento
 sed -i '' 's/8080:80/8090:80/g' compose.dev.yaml
 
