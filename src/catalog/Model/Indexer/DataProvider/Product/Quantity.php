@@ -22,7 +22,7 @@ class Quantity implements DataProviderInterface
             $productId = (int) $quantityDataRow['product_id'];
             $quantity = $quantityDataRow['qty'];
             settype($quantity, 'float');
-            $indexData[$productId]['qty'] = $quantity;
+            $indexData[$productId]['quantity'] = $quantity;
         }
 
         $quantityData = null;

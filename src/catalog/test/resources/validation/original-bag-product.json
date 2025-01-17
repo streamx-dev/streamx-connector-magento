@@ -170,6 +170,6 @@
       "alt": "Image"
     }
   ],
-  "qty": 100.0,
+  "quantity": 100.0,
   "configurable_children": []
 }
