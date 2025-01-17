@@ -41,7 +41,9 @@ class AttributeData implements DataProviderInterface
     {
         $requiredAttributesMap = $this->getRequiredAttributesMap($storeId);
 
-        $attributesData = $this->resourceModel->loadAttributesData($storeId, array_keys($indexData), array_keys($requiredAttributesMap));
+        $productIds = array_keys($indexData);
+        $requiredAttributeCodes = array_keys($requiredAttributesMap);
+        $attributesData = $this->resourceModel->loadAttributesData($storeId, $productIds, $requiredAttributeCodes);
 
         foreach ($indexData as &$productData) {
             $productData['attributes'] = [];
@@ -50,13 +52,12 @@ class AttributeData implements DataProviderInterface
         foreach ($attributesData as $entityId => $attributeCodesAndValues) {
             foreach ($attributeCodesAndValues as $attributeCode => $attributeValue) {
                 if (in_array($attributeCode, self::TOP_LEVEL_SIMPLE_ATTRIBUTES)) {
-                    // output as top level key-value pair
                     $indexData[$entityId][$attributeCode] = $attributeValue;
                 } else if ($attributeCode === self::IMAGE_ATTRIBUTE) {
-                    // TODO: output as top level Image object
-                    $indexData[$entityId][$attributeCode] = $attributeValue;
+                    $indexData[$entityId]['primaryImage'] = [
+                        'url' => $attributeValue // TODO full url?
+                    ];
                 } else {
-                    // output into 'attributes' collection
                     $productAttribute = $this->createProductAttributeArray($attributeCode, $requiredAttributesMap[$attributeCode], $attributeValue);
                     $indexData[$entityId]['attributes'][] = $productAttribute;
                 }
