@@ -51,7 +51,7 @@ class Client implements ClientInterface {
         $entityType = $publishItem['type'];
         $entity = $publishItem['entity'];
         $entityId = $entity['id'];
-        $key = $entityType . '_' . $entityId;
+        $key = self::createStreamxKey($entityType, $entityId);
         $payload = new Data(json_encode($entity));
         return Message::newPublishMessage($key, $payload)->build();
     }
@@ -59,8 +59,21 @@ class Client implements ClientInterface {
     private static function createUnpublishMessage(array $unpublishItem): Message {
         $entityType = $unpublishItem['type'];
         $entityId = $unpublishItem['id'];
-        $key = $entityType . '_' . $entityId;
+        $key = self::createStreamxKey($entityType, $entityId);
         return Message::newUnpublishMessage($key)->build();
+    }
+
+    private static function createStreamxKey($entityType, $entityId): string {
+        switch ($entityType) {
+            case 'product':
+                return "pim:$entityId"; // TODO make prefixes configurable
+            case 'category':
+                return "cat:$entityId";
+            case 'attribute':
+                return "attr:$entityId";
+            default:
+                throw new Exception("Unexpected entity type: $entityType");
+        }
     }
 
     /**

@@ -23,7 +23,7 @@ class ProductAddAndDeleteTest extends BaseAppEntityUpdateTest {
         $productId = self::addProduct($productName, $categoryId);
 
         // then
-        $expectedKey = "product_$productId";
+        $expectedKey = "pim:$productId";
         try {
             $this->assertDataIsPublished($expectedKey, $productName);
         } finally {

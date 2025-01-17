@@ -45,7 +45,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
         // when
         $productId = $this->insertNewProduct($productName, $watchesCategoryId);
-        $expectedKey = "product_$productId";
+        $expectedKey = "pim:$productId";
 
         try {
             // and

@@ -22,7 +22,7 @@ class AttributeAddAndDeleteTest extends BaseAppEntityUpdateTest {
         $attributeId = self::addAttribute($attributeCode);
 
         // then
-        $expectedKey = "attribute_$attributeId";
+        $expectedKey = "attr:$attributeId";
         try {
             $this->assertDataIsPublished($expectedKey, $attributeCode);
         } finally {

@@ -22,7 +22,7 @@ class CategoryAddAndDeleteTest extends BaseAppEntityUpdateTest {
         $categoryId = self::addCategory($categoryName);
 
         // then
-        $expectedKey = "category_$categoryId";
+        $expectedKey = "cat:$categoryId";
         try {
             $this->assertDataIsPublished($expectedKey, $categoryName);
         } finally {

@@ -34,7 +34,7 @@ class ProductCategoryUpdateTest extends BaseDirectDbEntityUpdateTest {
         $this->assertNotEquals($newCategoryId, $oldCategoryId);
 
         // and
-        $expectedKey = "product_$productId";
+        $expectedKey = "pim:$productId";
         self::removeFromStreamX($expectedKey);
 
         // when

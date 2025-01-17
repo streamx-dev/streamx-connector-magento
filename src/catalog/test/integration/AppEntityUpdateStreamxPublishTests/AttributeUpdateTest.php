@@ -32,7 +32,7 @@ class AttributeUpdateTest extends BaseAppEntityUpdateTest {
         $oldDisplayName = $this->db->getAttributeDisplayName($attributeId);
 
         // and
-        $expectedKey = "attribute_$attributeId";
+        $expectedKey = "attr:$attributeId";
         self::removeFromStreamX($expectedKey);
 
         // when
