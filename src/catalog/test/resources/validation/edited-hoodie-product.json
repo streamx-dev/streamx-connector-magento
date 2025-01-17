@@ -93,7 +93,7 @@
     "alt": ""
   },
   "description": "<p>Ideal for cold-weather training or work outdoors, the Chaz Hoodie promises superior warmth with every wear. Thick material blocks out the wind as ribbed cuffs and bottom band seal in body heat.<\/p>\n<p>&bull; Two-tone gray heather hoodie.<br \/>&bull; Drawstring-adjustable hood. <br \/>&bull; Machine wash\/dry.<\/p>",
-  "price": "52.000000",
+  "price": 52,
   "slug": "name-modified-for-testing-was-chaz-kangeroo-hoodie-62",
   "url_key": "name-modified-for-testing-was-chaz-kangeroo-hoodie-62",
   "category": [
@@ -118,8 +118,6 @@
     36,
     2
   ],
-  "final_price": 52,
-  "regular_price": "52.000000",
   "gallery": [
     {
       "url": "\/m\/h\/mh01-gray_main_1.jpg",
@@ -566,6 +564,5 @@
     168,
     169,
     170
-  ],
-  "special_price": null
+  ]
 }

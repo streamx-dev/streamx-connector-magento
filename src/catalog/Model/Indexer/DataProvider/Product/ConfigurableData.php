@@ -191,10 +191,16 @@ class ConfigurableData implements DataProviderInterface
             }
         }
 
-        $productDTO['final_price'] = !empty($finalPrice) ? min($finalPrice): null;
-        $productDTO['special_price'] = !empty($specialPrice) ? min($specialPrice) : null;
-        $productDTO['price'] = !empty($childPrice) ? min($childPrice): null;
-        $productDTO['regular_price'] = $productDTO['price'];
+        // TODO currently not required but may come back:
+        // $productDTO['final_price'] = !empty($finalPrice) ? (float)min($finalPrice) : null;
+
+        // TODO currently not required but may come back:
+        // $productDTO['special_price'] = !empty($specialPrice) ? (float)min($specialPrice) : null;
+
+        $productDTO['price'] = !empty($childPrice) ? (float)min($childPrice) : null;
+
+        // TODO currently not required but may come back:
+        // $productDTO['regular_price'] = $productDTO['price'];
 
         return $productDTO;
     }
