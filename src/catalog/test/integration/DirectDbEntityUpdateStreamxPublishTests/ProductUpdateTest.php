@@ -29,7 +29,7 @@ class ProductUpdateTest extends BaseDirectDbEntityUpdateTest {
         $productId = $this->db->getProductId($productName);
 
         // and
-        $expectedKey = "product_$productId";
+        $expectedKey = "pim:$productId";
         self::removeFromStreamX($expectedKey);
 
         // when

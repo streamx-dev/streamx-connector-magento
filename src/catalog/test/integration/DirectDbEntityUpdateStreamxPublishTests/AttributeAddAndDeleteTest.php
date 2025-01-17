@@ -20,7 +20,7 @@ class AttributeAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
         // when
         $attributeId = $this->insertNewAttribute($attributeCode);
-        $expectedKey = "attribute_$attributeId";
+        $expectedKey = "attr:$attributeId";
 
         try {
             // and

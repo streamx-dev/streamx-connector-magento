@@ -20,7 +20,7 @@ class CategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
         // when
         $categoryId = $this->insertNewCategory($categoryName);
-        $expectedKey = "category_$categoryId";
+        $expectedKey = "cat:$categoryId";
 
         try {
             // and

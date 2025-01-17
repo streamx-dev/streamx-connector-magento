@@ -21,7 +21,7 @@ class CategoryUpdateTest extends BaseDirectDbEntityUpdateTest {
         $categoryId = $this->db->getCategoryId($categoryOldName);
 
         // and
-        $expectedKey = "category_$categoryId";
+        $expectedKey = "cat:$categoryId";
         self::removeFromStreamX($expectedKey);
 
         // when

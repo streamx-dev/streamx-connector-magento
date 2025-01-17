@@ -22,7 +22,7 @@ class CategoryUpdateTest extends BaseAppEntityUpdateTest {
         $categoryId = $this->db->getCategoryId($categoryOldName);
 
         // and
-        $expectedKey = "category_$categoryId";
+        $expectedKey = "cat:$categoryId";
         self::removeFromStreamX($expectedKey);
 
         // when
