@@ -15,13 +15,6 @@ use Magento\Store\Model\Store;
 
 class Gallery
 {
-    private array $videoProperties = [
-        'url' => 'url',
-        'title' => 'title',
-        'desc' => 'description',
-        'meta' => 'metadata',
-    ];
-
     private ResourceConnection $resource;
     private EntityAttribute $entityAttribute;
     private ProductMetaData $metadataPool;
@@ -54,77 +47,6 @@ class Gallery
         $attribute = $this->entityAttribute->loadByCode(Product::ENTITY, 'media_gallery');
 
         return $attribute->getId();
-    }
-
-    public function loadVideos(array $valueIds, int $storeId): array
-    {
-        if (empty($valueIds)) {
-            return [];
-        }
-
-        $result = $this->getVideoRawData($valueIds, $storeId);
-        $groupByValueId = [];
-
-        foreach ($result as $item) {
-            $valueId = $item['value_id'];
-            $item = $this->substituteNullsWithDefaultValues($item);
-            unset($item['value_id']);
-            $groupByValueId[$valueId] = $item;
-        }
-
-        return $groupByValueId;
-    }
-
-    private function getVideoRawData(array $valueIds, int $storeId): array
-    {
-        $connection = $this->getConnection();
-        $mainTableAlias = 'main';
-        $videoTable = $this->resource->getTableName('catalog_product_entity_media_gallery_value_video');
-
-        // Select gallery images for product
-        $select = $connection->select()
-            ->from(
-                [$mainTableAlias => $videoTable],
-                [
-                    'value_id' => 'value_id',
-                    'url_default' => 'url',
-                    'title_default' => 'title',
-                    'desc_default' => 'description',
-                    'meta_default' => 'metadata'
-                ]
-            );
-
-        $select->where($mainTableAlias . '.store_id = ?', Store::DEFAULT_STORE_ID);
-        $select->where($mainTableAlias . '.value_id IN (?)', $valueIds);
-
-        $select->joinLeft(
-            ['value' => $videoTable],
-            implode(
-                ' AND ',
-                [
-                    $mainTableAlias . '.value_id = value.value_id',
-                    $this->getConnection()->quoteInto('value.store_id = ?', (int)$storeId),
-                ]
-            ),
-            $this->videoProperties
-        );
-
-        return $connection->fetchAll($select);
-    }
-
-    private function substituteNullsWithDefaultValues(array $rowData): array
-    {
-        $columns = array_keys($this->videoProperties);
-
-        foreach ($columns as $key) {
-            if (empty($rowData[$key]) && !empty($rowData[$key . '_default'])) {
-                $rowData[$key] = $rowData[$key . '_default'];
-            }
-
-            unset($rowData[$key . '_default']);
-        }
-
-        return $rowData;
     }
 
     /**

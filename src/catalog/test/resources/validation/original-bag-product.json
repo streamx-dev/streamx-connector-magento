@@ -105,12 +105,10 @@
   ],
   "final_price": 34,
   "regular_price": 34,
-  "media_gallery": [
+  "gallery": [
     {
-      "typ": "image",
-      "image": "\/m\/b\/mb01-blue-0.jpg",
-      "lab": "Image",
-      "pos": 1
+      "url": "\/m\/b\/mb01-blue-0.jpg",
+      "alt": "Image"
     }
   ],
   "qty": 100.0,
