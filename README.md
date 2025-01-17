@@ -40,10 +40,10 @@ bin/magento module:status
 ```
 
 ## Magento web page
-https://magento.test:81
+https://magento.test:444
 
 Verify sample data is available by searching for the term "Bag":
-https://magento.test:81/catalogsearch/result/?q=bag
+https://magento.test:444/catalogsearch/result/?q=bag
 
 In case of errors searching, refresh search index:
 ```bash
@@ -53,7 +53,7 @@ bin/magento indexer:reindex catalogsearch_fulltext
 ```
 
 ## Magento admin page
-https://magento.test:81/admin
+https://magento.test:444/admin
 
 Login using credentials from magento/env/magento.env file.
 
@@ -188,9 +188,9 @@ SET GLOBAL general_log = 'OFF';
 
 ## Troubleshooting REST endpoints
  - make sure your endpoint relative path always starts with /V1/...
- - endpoints are mounted at base url https://magento.test:81/rest/all/V1/...
- - example endpoint that should be available out of the box: https://magento.test:81/rest/all/V1/directory/currency
- - review https://magento.test:81/rest/all/schema for any errors or additional information
+ - endpoints are mounted at base url https://magento.test:444/rest/all/V1/...
+ - example endpoint that should be available out of the box: https://magento.test:444/rest/all/V1/directory/currency
+ - review https://magento.test:444/rest/all/schema for any errors or additional information
 
 ## Measuring the Connector's code coverage on a running Magento PHP server
  - in PHP, coverage can be measured for a Http Request (all code executed by the code that handles the request is measured)
