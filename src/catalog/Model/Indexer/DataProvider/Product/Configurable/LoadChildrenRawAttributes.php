@@ -7,31 +7,31 @@ use Magento\Framework\Exception\LocalizedException;
 use StreamX\ConnectorCatalog\Model\Attributes\ConfigurableAttributes;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\AttributeDataProvider;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Prices as PriceResourceModel;
-use StreamX\ConnectorCatalog\Api\LoadTierPricesInterface;
+use StreamX\ConnectorCatalog\Model\Product\LoadTierPrices;
 use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
-use StreamX\ConnectorCatalog\Api\LoadMediaGalleryInterface;
+use StreamX\ConnectorCatalog\Model\Product\LoadMediaGallery;
 use Traversable;
 
 class LoadChildrenRawAttributes
 {
-    private LoadTierPricesInterface $loadTierPrices;
+    private LoadTierPrices $loadTierPrices;
     private PriceResourceModel $priceResourceModel;
     private AttributeDataProvider $resourceAttributeModel;
     private ConfigurableAttributes $configurableAttributes;
-    private LoadMediaGalleryInterface $mediaGalleryLoader;
+    private LoadMediaGallery $loadMediaGallery;
     private CatalogConfigurationInterface $settings;
 
     public function __construct(
         CatalogConfigurationInterface $catalogConfiguration,
         AttributeDataProvider $attributeDataProvider,
         ConfigurableAttributes $configurableAttributes,
-        LoadTierPricesInterface $loadTierPrices,
-        LoadMediaGalleryInterface $loadMediaGallery,
+        LoadTierPrices $loadTierPrices,
+        LoadMediaGallery $loadMediaGallery,
         PriceResourceModel $priceResourceModel
     ) {
         $this->settings = $catalogConfiguration;
         $this->loadTierPrices = $loadTierPrices;
-        $this->mediaGalleryLoader = $loadMediaGallery;
+        $this->loadMediaGallery = $loadMediaGallery;
         $this->priceResourceModel = $priceResourceModel;
         $this->resourceAttributeModel = $attributeDataProvider;
         $this->configurableAttributes = $configurableAttributes;
@@ -97,7 +97,7 @@ class LoadChildrenRawAttributes
             }
 
             if ($this->configurableAttributes->canIndexMediaGallery($storeId)) {
-                $batch = $this->mediaGalleryLoader->execute($batch, $storeId);
+                $batch = $this->loadMediaGallery->execute($batch, $storeId);
                 $replace = true;
             }
 

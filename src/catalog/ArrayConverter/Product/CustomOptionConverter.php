@@ -3,9 +3,8 @@
 namespace StreamX\ConnectorCatalog\ArrayConverter\Product;
 
 use StreamX\ConnectorCore\Indexer\DataFilter;
-use StreamX\ConnectorCatalog\Api\ArrayConverter\Product\CustomOptionConverterInterface;
 
-class CustomOptionConverter implements CustomOptionConverterInterface
+class CustomOptionConverter
 {
     private array $fieldsToDelete = [
         'default_title',

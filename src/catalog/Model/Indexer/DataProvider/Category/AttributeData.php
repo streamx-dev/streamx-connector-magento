@@ -4,7 +4,7 @@ namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Category;
 
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category\Children as CategoryChildrenResource;
 use StreamX\ConnectorCore\Indexer\DataFilter;
-use StreamX\ConnectorCatalog\Api\ComputeCategorySlugInterface;
+use StreamX\ConnectorCatalog\Model\Category\ComputeCategorySlug;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category\AttributeDataProvider;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 
@@ -42,12 +42,12 @@ class AttributeData implements DataProviderInterface
     private AttributeDataProvider $attributeResourceModel;
     private CategoryChildrenResource $childrenResourceModel;
     private DataFilter $dataFilter;
-    private ComputeCategorySlugInterface $computeCategorySlug;
+    private ComputeCategorySlug $computeCategorySlug;
 
     public function __construct(
         AttributeDataProvider $attributeResource,
         CategoryChildrenResource $childrenResource,
-        ComputeCategorySlugInterface $computeCategorySlug,
+        ComputeCategorySlug $computeCategorySlug,
         DataFilter $dataFilter
     ) {
         $this->computeCategorySlug = $computeCategorySlug;

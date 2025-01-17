@@ -5,7 +5,6 @@ namespace StreamX\ConnectorCatalog\Model\Product;
 use Exception;
 use Magento\Framework\Exception\LocalizedException;
 use StreamX\ConnectorCatalog\Api\CatalogConfigurationInterface;
-use StreamX\ConnectorCatalog\Api\LoadTierPricesInterface;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\TierPrices as TierPricesResource;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\AttributeDataProvider;
@@ -13,7 +12,7 @@ use StreamX\ConnectorCatalog\Model\ResourceModel\Product\AttributeDataProvider;
 use Magento\Customer\Model\Group;
 use Magento\Store\Model\StoreManagerInterface;
 
-class LoadTierPrices implements LoadTierPricesInterface
+class LoadTierPrices
 {
     private TierPricesResource $tierPriceResource;
     private AttributeDataProvider $attributeDataProvider;

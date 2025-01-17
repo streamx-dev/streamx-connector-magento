@@ -6,20 +6,20 @@ use Exception;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
-use StreamX\ConnectorCatalog\Api\LoadTierPricesInterface;
+use StreamX\ConnectorCatalog\Model\Product\LoadTierPrices;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Prices as Resource;
 
 class PriceData implements DataProviderInterface
 {
     private Resource $resourcePriceModel;
-    private LoadTierPricesInterface $tierPriceLoader;
+    private LoadTierPrices $loadTierPrices;
 
     public function __construct(
         Resource $resource,
-        LoadTierPricesInterface $loadTierPrices
+        LoadTierPrices $loadTierPrices
     ) {
         $this->resourcePriceModel = $resource;
-        $this->tierPriceLoader = $loadTierPrices;
+        $this->loadTierPrices = $loadTierPrices;
     }
 
     /**
@@ -40,7 +40,7 @@ class PriceData implements DataProviderInterface
             }
         }
 
-        return $this->tierPriceLoader->execute($indexData, $storeId);
+        return $this->loadTierPrices->execute($indexData, $storeId);
     }
 
     private function preparePrice(?string $value): float
