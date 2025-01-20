@@ -16,7 +16,7 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
                 <field id="use_url_key_to_generate_slug" translate="label comment" type="select" sortOrder="45" showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Use Magento Url Key and ID to generate slug for VSF</label>
+                    <label>Use Magento Url Key and ID to generate slug for StreamX</label>
                     <comment>By default slug (and url_key) is generated base on product/category NAME and ID.</comment>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <depends>

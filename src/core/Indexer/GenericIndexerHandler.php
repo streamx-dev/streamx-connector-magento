@@ -2,41 +2,34 @@
 
 namespace StreamX\ConnectorCore\Indexer;
 
-use InvalidArgumentException;
-use LogicException;
 use Psr\Log\LoggerInterface;
 use Streamx\Clients\Ingestion\Exceptions\StreamxClientException;
 use StreamX\ConnectorCore\Api\Index\TypeInterface;
+use StreamX\ConnectorCore\Api\IndexersConfigInterface;
 use StreamX\ConnectorCore\Api\IndexOperationInterface;
 use StreamX\ConnectorCore\Exception\ConnectionUnhealthyException;
 use StreamX\ConnectorCore\Index\BulkRequest;
-use StreamX\ConnectorCore\Index\Indicies\Config;
 use Magento\Framework\Indexer\SaveHandler\Batch;
 use Magento\Store\Api\Data\StoreInterface;
 use Traversable;
 
 class GenericIndexerHandler {
-    public const INDEX_IDENTIFIER = 'streamx_storefront_catalog';
 
     private Batch $batch;
-    private Config $indicesConfig;
     private IndexOperationInterface $indexOperations;
-    private string $typeName;
-    private TypeInterface $type;
+    private TypeInterface $indexType;
     private LoggerInterface $logger;
 
     public function __construct(
         IndexOperationInterface $indexOperationProvider,
         LoggerInterface $logger,
         Batch $batch,
-        Config $indicesConfig,
+        IndexersConfigInterface $indexersConfig,
         string $typeName
     ) {
         $this->batch = $batch;
-        $this->indicesConfig = $indicesConfig;
         $this->indexOperations = $indexOperationProvider;
-        $this->typeName = $typeName;
-        $this->type = $this->loadType($typeName);
+        $this->indexType = $indexersConfig->getByName($typeName);
         $this->logger = $logger;
     }
 
@@ -73,9 +66,8 @@ class GenericIndexerHandler {
             }
         }
 
-        $entitiesToPublish = $this->enrichDocs($entitiesToPublish, $storeId);
-
         if (!empty($entitiesToPublish)) {
+            $this->enrichDocs($entitiesToPublish, $storeId);
             $this->publishEntities(array_values($entitiesToPublish), $storeId);
         }
 
@@ -84,13 +76,10 @@ class GenericIndexerHandler {
         }
     }
 
-    private function enrichDocs(array $docsToPublish, int $storeId): array {
-        foreach ($this->type->getDataProviders() as $dataProvider) {
-            if (!empty($docsToPublish)) {
-                $docsToPublish = $dataProvider->addData($docsToPublish, $storeId);
-            }
+    private function enrichDocs(array &$docsToPublish, int $storeId): void {
+        foreach ($this->indexType->getDataProviders() as $dataProvider) {
+            $docsToPublish = $dataProvider->addData($docsToPublish, $storeId);
         }
-        return $docsToPublish;
     }
 
     /**
@@ -99,7 +88,7 @@ class GenericIndexerHandler {
      */
     private function publishEntities(array $entities, int $storeId): void {
         $bulkRequest = BulkRequest::buildPublishRequest(
-            $this->typeName,
+            $this->indexType->getName(),
             $entities
         );
 
@@ -112,23 +101,10 @@ class GenericIndexerHandler {
      */
     private function unpublishEntities(array $ids, int $storeId): void {
         $bulkRequest = BulkRequest::buildUnpublishRequest(
-            $this->typeName,
+            $this->indexType->getName(),
             $ids
         );
 
         $this->indexOperations->executeBulk($storeId, $bulkRequest);
-    }
-
-    private function loadType(string $typeName): TypeInterface {
-        $indicesConfiguration = $this->indicesConfig->get();
-        if (isset($indicesConfiguration[self::INDEX_IDENTIFIER])) {
-            $config = $indicesConfiguration[self::INDEX_IDENTIFIER];
-            $types = $config['types'];
-            if (isset($types[$typeName])) {
-                return $types[$typeName];
-            }
-            throw new InvalidArgumentException("Type $typeName is not available");
-        }
-        throw new LogicException('No configuration found');
     }
 }

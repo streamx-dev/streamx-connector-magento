@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
 
+    <preference for="StreamX\ConnectorCore\Api\IndexersConfigInterface" type="StreamX\ConnectorCatalog\Model\Indexer\IndexersConfig"/>
+
     <virtualType name="StreamX\ConnectorCatalog\Indexer\ProductIndexerHandlerVirtual"
                  type="StreamX\ConnectorCore\Indexer\GenericIndexerHandler">
         <arguments>
