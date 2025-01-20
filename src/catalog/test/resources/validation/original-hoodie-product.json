@@ -6,7 +6,7 @@
     {
       "name": "small_image",
       "label": "Small",
-      "value": "\/m\/h\/mh01-gray_main_1.jpg",
+      "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
       "valueLabel": "\/m\/h\/mh01-gray_main_1.jpg",
       "isFacet": false,
       "options": []
@@ -14,7 +14,7 @@
     {
       "name": "thumbnail",
       "label": "Thumbnail",
-      "value": "\/m\/h\/mh01-gray_main_1.jpg",
+      "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
       "valueLabel": "\/m\/h\/mh01-gray_main_1.jpg",
       "isFacet": false,
       "options": []

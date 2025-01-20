@@ -13,6 +13,12 @@ use StreamX\ConnectorCore\Indexer\ImageUrlManager;
 
 class AttributeData implements DataProviderInterface
 {
+    private const IMAGE_ATTRIBUTES = [
+        'image',
+        'small_image',
+        'thumbnail'
+    ];
+
     private ProductAttributesProvider $resourceModel;
     private CatalogConfig $settings;
     private ProductAttributes $productAttributes;
@@ -78,7 +84,9 @@ class AttributeData implements DataProviderInterface
     {
         $productAttribute['name'] = $attributeCode;
         $productAttribute['label'] = $attributeDefinition->getLabel();
-        $productAttribute['value'] = $attributeValue;
+        $productAttribute['value'] = in_array($attributeCode, self::IMAGE_ATTRIBUTES)
+            ? $this->imageUrlManager->getProductImageUrl($attributeValue)
+            : $attributeValue;
         $productAttribute['valueLabel'] = $this->getValueLabel($attributeCode, $attributeValue, $attributeDefinition);
         $productAttribute['isFacet'] = $attributeDefinition->isFacet();
 

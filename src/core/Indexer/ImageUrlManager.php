@@ -13,7 +13,6 @@ class ImageUrlManager {
         $this->productImagesBaseUrl = self::joinUrlParts($storeBaseUrl, '/media/catalog/product/');
     }
 
-    // TODO call also for values of thumbnail, small_image and other image attributes
     public function getProductImageUrl(string $imageRelativePath): string {
         return self::joinUrlParts($this->productImagesBaseUrl, $imageRelativePath);
     }
