@@ -33,7 +33,9 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
             $this->assertExactDataIsPublished($expectedKey, 'added-watch-product.json', [
                 '"id": [0-9]+' => '"id": 0',
                 '"sku": "[^"]+"' => '"sku": "[MASKED]"',
-                '"the-new-great-watch-[0-9]+"' => '"the-new-great-watch-0"'
+                '"the-new-great-watch-[0-9]+"' => '"the-new-great-watch-0"',
+                '"option_id": [0-9]+' => '"option_id": 0',
+                '"option_type_id": [0-9]+' => '"option_type_id": 0',
             ]);
         } finally {
             try {
@@ -110,10 +112,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
                 ($attributeSetId, 'simple', '$sku', FALSE, FALSE)
         ");
 
-        $productId = $this->db->selectFirstField("
-            SELECT MAX(entity_id)
-              FROM catalog_product_entity
-        ");
+        $productId = $this->db->selectMaxId('catalog_product_entity', 'entity_id');
 
         $this->db->execute("
             INSERT INTO catalog_product_entity_varchar (entity_id, attribute_id, store_id, value) VALUES
@@ -160,7 +159,23 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
                 ($productId, $websiteId, $stockId, $quantity, 1)
         ");
 
+        $this->addProductOption($productId, $defaultStoreId);
+
         return $productId;
+    }
+
+    private function addProductOption(int $productId, int $defaultStoreId): void {
+        $this->db->execute("INSERT INTO catalog_product_option (product_id, type, is_require, sort_order) VALUES ($productId, 'drop_down', 1, 0)");
+        $optionId = $this->db->selectMaxId('catalog_product_option', 'option_id');
+
+        $this->db->execute("INSERT INTO catalog_product_option_type_value (option_id, sort_order) VALUES($optionId, 0)");
+        $optionTypeId = $this->db->selectMaxId('catalog_product_option_type_value', 'option_type_id');
+
+        $this->db->execute("INSERT INTO catalog_product_option_title (option_id, store_id, title) VALUES ($optionId, $defaultStoreId, 'Size')");
+        $this->db->execute("INSERT INTO catalog_product_option_type_title (option_type_id, store_id, title) VALUES ($optionTypeId, $defaultStoreId, 'The size')");
+
+        $this->db->execute("INSERT INTO catalog_product_option_price (option_id, store_id, price, price_type) VALUES ($optionId, $defaultStoreId, 1.23, 'fixed')");
+        $this->db->execute("INSERT INTO catalog_product_option_type_price (option_type_id, store_id, price, price_type) VALUES ($optionTypeId, $defaultStoreId, 9.87, 'fixed')");
     }
 
     private function deleteProduct(int $productId): void {
@@ -174,6 +189,16 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
             "DELETE FROM catalog_product_entity_varchar WHERE entity_id = $productId",
             "DELETE FROM catalog_product_entity WHERE entity_id = $productId"
         ]);
+        $this->deleteProductOption();
+    }
+
+    private function deleteProductOption(): void {
+        $this->db->deleteLastRow('catalog_product_option_type_price', 'option_type_price_id');
+        $this->db->deleteLastRow('catalog_product_option_price', 'option_price_id');
+        $this->db->deleteLastRow('catalog_product_option_type_title', 'option_type_title_id');
+        $this->db->deleteLastRow('catalog_product_option_title', 'option_title_id');
+        $this->db->deleteLastRow('catalog_product_option_type_value', 'option_type_id');
+        $this->db->deleteLastRow('catalog_product_option', 'option_id');
     }
 
     private function attrId($attrCode): string {

@@ -54,10 +54,7 @@ class CategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
                 ($attributeSetId, $parentCategoryId, '', 1, 2, 0)
         ");
 
-        $categoryId = $this->db->selectFirstField("
-            SELECT MAX(entity_id)
-              FROM catalog_category_entity
-        ");
+        $categoryId = $this->db->selectMaxId('catalog_category_entity', 'entity_id');
 
         $this->db->execute("
             UPDATE catalog_category_entity
