@@ -9,7 +9,9 @@ interface ConfigurationInterface {
 
     public function getChannelSchemaName(int $storeId): string;
 
-    public function getAuthToken(int $storeId): ?string;
+    public function getProductKeyPrefix(int $storeId): string;
 
-    public function getOptions(int $storeId): array;
+    public function getCategoryKeyPrefix(int $storeId): string;
+
+    public function getAuthToken(int $storeId): ?string;
 }
