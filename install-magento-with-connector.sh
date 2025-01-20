@@ -24,22 +24,10 @@ rm -rf .git
 sed -i '' 's|--max_allowed_packet|--innodb-buffer-pool-size=512M --max_allowed_packet|g' compose.yaml
 
 ### To avoid conflicts with StreamX, replace known ports that are used by both StreamX and Magento by default:
-
-# - 9200 and 9300: used by opensearch in both places
-#     TODO the below sed replacements seem not enough - receiving error:
-#       Installing search configuration...
-#         In SearchConfig.php line 81:
-#           Could not validate a connection to the OpenSearch. No alive nodes found in your cluster
-# sed -i '' 's/9200:9200/9209:9200/g' compose.yaml
-# sed -i '' 's/9300:9300/9309:9300/g' compose.yaml
-# sed -i '' 's/9200/9209/g' env/opensearch.env
-
 # - 80 and 443: port in both nginxs of StreamX and Magento
 sed -i '' 's/80:8000/81:8000/g' compose.yaml
 sed -i '' 's/443:8443/444:8443/g' compose.yaml
-
-sed -i '' 's|base-url=https://"$DOMAIN"/|base-url="https://magento.test:444/"|g' bin/setup-install
-sed -i '' 's|base-url-secure=https://"$DOMAIN"/|base-url-secure="https://magento.test:444/"|g' bin/setup-install
+sed -i '' 's/$DOMAIN/$DOMAIN:444/g' bin/setup-install
 
 # - 8080: ingestion port in StreamX and phpmyadmin port in Magento
 sed -i '' 's/8080:80/8090:80/g' compose.dev.yaml
