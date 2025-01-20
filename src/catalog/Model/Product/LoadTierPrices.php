@@ -7,7 +7,7 @@ use Magento\Framework\Exception\LocalizedException;
 use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\TierPrices as TierPricesResource;
-use StreamX\ConnectorCatalog\Model\ResourceModel\Product\AttributeDataProvider;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\ProductAttributesProvider;
 
 use Magento\Customer\Model\Group;
 use Magento\Store\Model\StoreManagerInterface;
@@ -15,7 +15,7 @@ use Magento\Store\Model\StoreManagerInterface;
 class LoadTierPrices
 {
     private TierPricesResource $tierPriceResource;
-    private AttributeDataProvider $attributeDataProvider;
+    private ProductAttributesProvider $attributeDataProvider;
     private StoreManagerInterface $storeManager;
     private ProductMetaData $productMetaData;
     private CatalogConfig $configSettings;
@@ -25,7 +25,7 @@ class LoadTierPrices
         TierPricesResource $tierPricesResource,
         StoreManagerInterface $storeManager,
         ProductMetaData $productMetaData,
-        AttributeDataProvider $config
+        ProductAttributesProvider $config
     ) {
         $this->tierPriceResource = $tierPricesResource;
         $this->storeManager = $storeManager;

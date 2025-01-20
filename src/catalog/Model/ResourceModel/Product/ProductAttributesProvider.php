@@ -1,49 +1,61 @@
 <?php
 
-namespace StreamX\ConnectorCatalog\Model\ResourceModel;
+namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
 use Exception;
+use Magento\Eav\Model\Entity\Attribute;
+use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\DB\Select;
-use Magento\Framework\App\ResourceConnection;
-use Magento\Framework\EntityManager\MetadataPool;
 use Magento\Framework\EntityManager\EntityMetadataInterface;
+use Magento\Framework\Exception\LocalizedException;
+use StreamX\ConnectorCatalog\Model\ProductMetaData;
 
-abstract class AbstractEavAttributes
+class ProductAttributesProvider
 {
     private array $restrictedAttributes = [
         'quantity_and_stock_status',
         'options_container',
     ];
 
+    private LoadAttributes $loadAttributes;
     private ResourceConnection $resourceConnection;
     private ?array $attributesById = null;
-    private string $entityType;
     private ?array $valuesByEntityId = null;
-    private MetadataPool $metadataPool;
+    private ProductMetaData $productMetaData;
 
     public function __construct(
+        LoadAttributes $loadAttributes,
         ResourceConnection $resourceConnection,
-        MetadataPool $metadataPool,
-        string $entityType
+        ProductMetaData $productMetaData
     ) {
+        $this->loadAttributes = $loadAttributes;
         $this->resourceConnection = $resourceConnection;
-        $this->metadataPool = $metadataPool;
-        $this->entityType = $entityType;
+        $this->productMetaData = $productMetaData;
     }
 
     /**
-     * Load attributes
-     * @return mixed
+     * @throws LocalizedException
      */
-    abstract public function initAttributes();
+    public function getAttributeById(int $attributeId): Attribute
+    {
+        return $this->loadAttributes->getAttributeById($attributeId);
+    }
+
+    /**
+     * @throws LocalizedException
+     */
+    public function getAttributeByCode(string $attributeCode): Attribute
+    {
+        return $this->loadAttributes->getAttributeByCode($attributeCode);
+    }
 
     /**
      * @throws Exception
      */
     public function loadAttributesData(int $storeId, array $entityIds, array $requiredAttributeCodes = null): array
     {
-        $this->attributesById = $this->initAttributes();
+        $this->attributesById = $this->loadAttributes->execute();
         $tableAttributes = [];
         $attributeTypes = [];
         $selects = [];
@@ -184,14 +196,9 @@ abstract class AbstractEavAttributes
             );
     }
 
-    /**
-     * Retrieve Metadata for an entity (product or category)
-     *
-     * @throws Exception
-     */
     private function getEntityMetaData(): EntityMetadataInterface
     {
-        return $this->metadataPool->getMetadata($this->entityType);
+        return $this->productMetaData->get();
     }
 
     private function getConnection(): AdapterInterface
