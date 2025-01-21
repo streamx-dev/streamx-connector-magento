@@ -105,7 +105,8 @@ class Client implements ClientInterface {
 
     public function isStreamxAvailable(): bool {
         try {
-            return $this->publisher->isIngestionServiceAvailable();
+            $schema = $this->publisher->fetchSchema();
+            return str_contains($schema, 'IngestionMessage');
         } catch (Exception $e) {
             $this->logger->error('Exception checking if StreamX is available: ' . $e->getMessage(), ['exception' => $e]);
             return false;
