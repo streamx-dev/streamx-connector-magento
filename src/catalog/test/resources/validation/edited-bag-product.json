@@ -1,6 +1,7 @@
 {
   "sku": "24-MB01",
   "id": 1,
+  "lang": "en",
   "attributes": [
     {
       "name": "small_image",

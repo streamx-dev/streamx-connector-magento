@@ -1,6 +1,7 @@
 {
   "sku": "MH01",
   "id": 62,
+  "lang": "en",
   "attributes": [
     {
       "name": "small_image",
