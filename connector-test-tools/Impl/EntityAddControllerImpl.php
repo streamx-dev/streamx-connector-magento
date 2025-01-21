@@ -16,11 +16,13 @@ use Magento\Catalog\Model\Product\Visibility;
 use Magento\Catalog\Model\ProductFactory;
 use Magento\Catalog\Model\ResourceModel\Eav\AttributeFactory;
 use Magento\Eav\Setup\EavSetupFactory;
+use Magento\Framework\DB\Transaction;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use StreamX\ConnectorTestTools\Api\EntityAddControllerInterface;
 
 class EntityAddControllerImpl implements EntityAddControllerInterface {
 
+    private Transaction $transaction;
     private ProductFactory $productFactory;
     private CategoryFactory $categoryFactory;
     private EavSetupFactory $eavSetupFactory;
@@ -32,6 +34,7 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
     private CategoryProductLinkInterfaceFactory $categoryProductLinkFactory;
 
     public function __construct(
+        Transaction $transaction,
         ProductFactory $productFactory,
         CategoryFactory $categoryFactory,
         EavSetupFactory $eavSetupFactory,
@@ -42,6 +45,7 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
         CategoryLinkRepositoryInterface $categoryLinkRepository,
         CategoryProductLinkInterfaceFactory $categoryProductLinkFactory
     ) {
+        $this->transaction = $transaction;
         $this->productFactory = $productFactory;
         $this->categoryFactory = $categoryFactory;
         $this->eavSetupFactory = $eavSetupFactory;
@@ -81,11 +85,13 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
                     'manage_stock' => 1
                 ]);
 
-            $savedProduct = $this->productRepository->save($product);
-            $productId = $savedProduct->getId();
-            $this->addProductToCategory($sku, $categoryId);
+            $this->transaction->addObject($product);
+            $this->transaction->addCommitCallback(function () use ($sku, $categoryId) {
+               $this->addProductToCategory($sku, $categoryId);
+            });
+            $this->transaction->save();
 
-            return $productId;
+            return $this->productRepository->get($sku)->getId();
         } catch (Exception $e) {
             throw new Exception("Error adding product $productName: " . $e->getMessage(), -1, $e);
         }
