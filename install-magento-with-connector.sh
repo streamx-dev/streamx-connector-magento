@@ -16,25 +16,34 @@ fi
 mkdir magento
 cd magento
 
-### Download magento docker images - see https://github.com/markshust/docker-magento
+### Download magento docker repository - see https://github.com/markshust/docker-magento
 curl -s https://raw.githubusercontent.com/markshust/docker-magento/master/lib/template | bash
-bin/download community 2.4.7-p3
-
-### Remove unnecessary docker-magento's .git repo folder
 rm -rf .git
 
 ### Increase innodb-buffer-pool-size to avoid warnings in logs
 sed -i '' 's|--max_allowed_packet|--innodb-buffer-pool-size=512M --max_allowed_packet|g' compose.yaml
 
 ### To avoid conflicts with StreamX, replace known ports that are used by both StreamX and Magento by default:
-# 8080: ingestion port in StreamX and phpmyadmin port in Magento
+# - 80 and 443: port in both nginxs of StreamX and Magento
+sed -i '' 's/80:8000/81:8000/g' compose.yaml
+sed -i '' 's/443:8443/444:8443/g' compose.yaml
+sed -i '' 's/$DOMAIN/$DOMAIN:444/g' bin/setup-install
+
+# - 8080: ingestion port in StreamX and phpmyadmin port in Magento
 sed -i '' 's/8080:80/8090:80/g' compose.dev.yaml
 
 ### Enable gathering code coverage
 echo -e "\nXDEBUG_MODE=coverage" >> env/phpfpm.env
 
+### Download source code and perform pre-installation
+bin/download community 2.4.7-p3
+
 ### Install the magento docker machinery
 bin/setup magento.test
+
+### Apply base urls into magento config database (by default both base urls are https://magento.test/)
+bin/magento setup:store-config:set --base-url=https://magento.test:444/
+bin/magento setup:store-config:set --base-url-secure=https://magento.test:444/
 
 ### Install sample data
 bin/magento sampledata:deploy

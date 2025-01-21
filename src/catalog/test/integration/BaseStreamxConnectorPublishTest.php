@@ -12,7 +12,7 @@ use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
  */
 abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
 
-    private const MAGENTO_REST_API_BASE_URL = 'https://magento.test/rest/all/V1';
+    private const MAGENTO_REST_API_BASE_URL = 'https://magento.test:444/rest/all/V1';
 
     protected MagentoIndexerOperationsExecutor $indexerOperations;
     private string $originalIndexerMode;

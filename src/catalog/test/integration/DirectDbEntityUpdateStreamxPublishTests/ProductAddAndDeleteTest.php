@@ -87,7 +87,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
             // then
             for ($i = 0; $i < $productsCount; $i++) {
-                $this->assertDataIsPublished('product_' . $productIds[$i], $productNames[$i]);
+                $this->assertDataIsPublished('pim:' . $productIds[$i], $productNames[$i]);
             }
         } finally {
             // and when
@@ -98,7 +98,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
             // then
             for ($i = 0; $i < $productsCount; $i++) {
-                $this->assertDataIsUnpublished('product_' . $productIds[$i]);
+                $this->assertDataIsUnpublished('pim:' . $productIds[$i]);
             }
         }
     }
