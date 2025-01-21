@@ -127,7 +127,7 @@ class ConfigurableData implements DataProviderInterface
     }
 
     /**
-     * Apply attributes to product variants + extra options for products necessary for vsf
+     * Apply attributes to product variants + extra options for products necessary for StreamX
      *
      * @throws Exception
      */
