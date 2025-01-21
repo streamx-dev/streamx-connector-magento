@@ -18,9 +18,12 @@ class CustomOptionConverter
 
     private DataFilter $dataFilter;
 
-    public function __construct(DataFilter $dataFilter)
+    public function __construct()
     {
-        $this->dataFilter = $dataFilter;
+        $this->dataFilter = new DataFilter(
+            ['sort_order', 'option_id', 'option_type_id'],
+            ['price']
+        );
     }
 
     public function process(array $options, array $optionValues): array
