@@ -1,5 +1,4 @@
 {
-  "type_id": "simple",
   "sku": "1736952738",
   "id": 2659,
   "attributes": [
@@ -147,7 +146,6 @@
   "name": "The new great watch",
   "price": 35,
   "slug": "the-new-great-watch-2659",
-  "url_key": "the-new-great-watch-2659",
   "categories": [
     {
       "id": 6,

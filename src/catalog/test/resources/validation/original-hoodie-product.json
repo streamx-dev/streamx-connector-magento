@@ -1,5 +1,4 @@
 {
-  "type_id": "configurable",
   "sku": "MH01",
   "id": 62,
   "attributes": [
@@ -95,7 +94,6 @@
   "description": "<p>Ideal for cold-weather training or work outdoors, the Chaz Hoodie promises superior warmth with every wear. Thick material blocks out the wind as ribbed cuffs and bottom band seal in body heat.<\/p>\n<p>&bull; Two-tone gray heather hoodie.<br \/>&bull; Drawstring-adjustable hood. <br \/>&bull; Machine wash\/dry.<\/p>",
   "price": 52,
   "slug": "chaz-kangeroo-hoodie-62",
-  "url_key": "chaz-kangeroo-hoodie-62",
   "categories": [
     {
       "id": 2,
