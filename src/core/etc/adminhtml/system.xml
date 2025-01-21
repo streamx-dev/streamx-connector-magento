@@ -42,7 +42,15 @@
                 <field id="channel_schema_name" translate="label comment" type="text" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Channel schema name</label>
                 </field>
-                <field id="auth_token" translate="label comment" type="text" sortOrder="41" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="product_key_prefix" translate="label comment" type="text" sortOrder="41" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Product key prefix</label>
+                    <comment>The specified prefix will be used as publish/unpublish key, joined with product id</comment>
+                </field>
+                <field id="category_key_prefix" translate="label comment" type="text" sortOrder="51" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Category key prefix</label>
+                    <comment>The specified prefix will be used as publish/unpublish key, joined with category id</comment>
+                </field>
+                <field id="auth_token" translate="label comment" type="text" sortOrder="61" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Auth token</label>
                 </field>
             </group>

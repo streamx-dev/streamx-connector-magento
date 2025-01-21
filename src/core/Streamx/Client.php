@@ -14,10 +14,19 @@ class Client implements ClientInterface {
 
     private LoggerInterface $logger;
     private Publisher $publisher;
+    private string $productKeyPrefix;
+    private string $categoryKeyPrefix;
 
-    public function __construct(LoggerInterface $logger, Publisher $publisher) {
+    public function __construct(
+        LoggerInterface $logger,
+        Publisher $publisher,
+        string $productKeyPrefix,
+        string $categoryKeyPrefix
+    ) {
         $this->logger = $logger;
         $this->publisher = $publisher;
+        $this->productKeyPrefix = $productKeyPrefix;
+        $this->categoryKeyPrefix = $categoryKeyPrefix;
     }
 
     public function ingest(array $bulkOperations): void {
@@ -26,7 +35,7 @@ class Client implements ClientInterface {
 
         $ingestionMessages = array_map(
             function (array $item) {
-                return self::mapToIngestionMessage($item);
+                return $this->mapToIngestionMessage($item);
             },
             $bulkOperations
         );
@@ -37,17 +46,17 @@ class Client implements ClientInterface {
         $this->logger->info("Finished ingesting $operationsCount operations");
     }
 
-    private static function mapToIngestionMessage(array $item): Message {
+    private function mapToIngestionMessage(array $item): Message {
         if (isset($item['publish'])) {
-            return self::createPublishMessage($item['publish']);
+            return $this->createPublishMessage($item['publish']);
         }
         if (isset($item['unpublish'])) {
-            return self::createUnpublishMessage($item['unpublish']);
+            return $this->createUnpublishMessage($item['unpublish']);
         }
         throw new Exception('Unexpected bulk item type: ' . json_encode($item, JSON_PRETTY_PRINT));
     }
 
-    private static function createPublishMessage(array $publishItem): Message {
+    private function createPublishMessage(array $publishItem): Message {
         $entityType = $publishItem['type'];
         $entity = $publishItem['entity'];
         $entityId = $entity['id'];
@@ -56,20 +65,20 @@ class Client implements ClientInterface {
         return Message::newPublishMessage($key, $payload)->build();
     }
 
-    private static function createUnpublishMessage(array $unpublishItem): Message {
+    private function createUnpublishMessage(array $unpublishItem): Message {
         $entityType = $unpublishItem['type'];
         $entityId = $unpublishItem['id'];
         $key = self::createStreamxKey($entityType, $entityId);
         return Message::newUnpublishMessage($key)->build();
     }
 
-    private static function createStreamxKey($entityType, $entityId): string {
+    private function createStreamxKey($entityType, $entityId): string {
         switch ($entityType) {
             case 'product':
-                return "pim:$entityId"; // TODO make prefixes configurable
+                return $this->productKeyPrefix . $entityId;
             case 'category':
-                return "cat:$entityId";
-            case 'attribute':
+                return $this->categoryKeyPrefix . $entityId;
+            case 'attribute': // TODO: in future remove this. Attribute definition change will trigger republishing products that use the attribute
                 return "attr:$entityId";
             default:
                 throw new Exception("Unexpected entity type: $entityType");
