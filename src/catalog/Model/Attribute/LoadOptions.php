@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace StreamX\ConnectorCatalog\Model\Attribute;
 
-use StreamX\ConnectorCatalog\Model\ResourceModel\Product\AttributeDataProvider;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\ProductAttributesProvider;
 
 use Magento\Eav\Model\ResourceModel\Entity\Attribute\Option\Collection as OptionCollection;
 use Magento\Eav\Model\ResourceModel\Entity\Attribute\Option\CollectionFactory;
@@ -15,7 +15,7 @@ use Magento\Swatches\Model\Swatch;
 
 class LoadOptions
 {
-    private AttributeDataProvider $attributeDataProvider;
+    private ProductAttributesProvider $attributeDataProvider;
     private CollectionFactory $collectionFactory;
     private OptionCollectionToArray $optionCollectionToArray;
     private array $optionsByAttribute = [];
@@ -23,7 +23,7 @@ class LoadOptions
     public function __construct(
         CollectionFactory $collectionFactory,
         OptionCollectionToArray $optionCollectionToArray,
-        AttributeDataProvider $attributeDataProvider
+        ProductAttributesProvider $attributeDataProvider
     ) {
         $this->collectionFactory = $collectionFactory;
         $this->attributeDataProvider = $attributeDataProvider;

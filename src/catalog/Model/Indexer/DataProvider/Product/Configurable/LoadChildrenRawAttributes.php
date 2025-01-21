@@ -5,7 +5,7 @@ namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\Configurab
 use Exception;
 use Magento\Framework\Exception\LocalizedException;
 use StreamX\ConnectorCatalog\Model\Attributes\ConfigurableAttributes;
-use StreamX\ConnectorCatalog\Model\ResourceModel\Product\AttributeDataProvider;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\ProductAttributesProvider;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Prices as PriceResourceModel;
 use StreamX\ConnectorCatalog\Model\Product\LoadTierPrices;
 use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
@@ -16,14 +16,14 @@ class LoadChildrenRawAttributes
 {
     private LoadTierPrices $loadTierPrices;
     private PriceResourceModel $priceResourceModel;
-    private AttributeDataProvider $resourceAttributeModel;
+    private ProductAttributesProvider $resourceAttributeModel;
     private ConfigurableAttributes $configurableAttributes;
     private LoadMediaGallery $loadMediaGallery;
     private CatalogConfig $settings;
 
     public function __construct(
         CatalogConfig $catalogConfiguration,
-        AttributeDataProvider $attributeDataProvider,
+        ProductAttributesProvider $attributeDataProvider,
         ConfigurableAttributes $configurableAttributes,
         LoadTierPrices $loadTierPrices,
         LoadMediaGallery $loadMediaGallery,

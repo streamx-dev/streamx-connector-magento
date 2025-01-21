@@ -4,7 +4,7 @@ namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
 use Exception;
 use StreamX\ConnectorCatalog\Model\Attributes\AttributeDefinition;
-use StreamX\ConnectorCatalog\Model\ResourceModel\Product\AttributeDataProvider;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\ProductAttributesProvider;
 use StreamX\ConnectorCatalog\Model\SlugGenerator;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
@@ -13,7 +13,7 @@ use StreamX\ConnectorCore\Indexer\ImageUrlManager;
 
 class AttributeData implements DataProviderInterface
 {
-    private AttributeDataProvider $resourceModel;
+    private ProductAttributesProvider $resourceModel;
     private CatalogConfig $settings;
     private ProductAttributes $productAttributes;
     private ImageUrlManager $imageUrlManager;
@@ -21,7 +21,7 @@ class AttributeData implements DataProviderInterface
     public function __construct(
         ProductAttributes $productAttributes,
         CatalogConfig $configSettings,
-        AttributeDataProvider $resourceModel,
+        ProductAttributesProvider $resourceModel,
         ImageUrlManager $imageUrlManager
     ) {
         $this->settings = $configSettings;

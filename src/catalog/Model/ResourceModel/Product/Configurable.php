@@ -17,7 +17,7 @@ use Psr\Log\LoggerInterface;
 class Configurable
 {
     private DbHelper $dbHelper;
-    private AttributeDataProvider $attributeDataProvider;
+    private ProductAttributesProvider $attributeDataProvider;
     private ResourceConnection $resource;
     private Product $productResource;
     private ProductMetaData $productMetaData;
@@ -44,7 +44,7 @@ class Configurable
 
     public function __construct(
         LoggerInterface $logger,
-        AttributeDataProvider $attributeDataProvider,
+        ProductAttributesProvider $attributeDataProvider,
         Product $productResource,
         ProductMetaData $productMetaData,
         ResourceConnection $resourceConnection,

@@ -16,11 +16,11 @@ use Magento\Framework\Exception\LocalizedException;
 class StatusSelectModifier implements BaseSelectModifierInterface
 {
     private ResourceConnection $resourceConnection;
-    private AttributeDataProvider $attributeDataProvider;
+    private ProductAttributesProvider $attributeDataProvider;
     private ProductMetaData $productMetaData;
 
     public function __construct(
-        AttributeDataProvider $attributeDataProvider,
+        ProductAttributesProvider $attributeDataProvider,
         ResourceConnection $resourceConnection,
         ProductMetaData $productMetaData
     ) {
