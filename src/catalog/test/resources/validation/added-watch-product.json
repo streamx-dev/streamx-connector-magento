@@ -125,23 +125,6 @@
           "label": "Catalog, Search"
         }
       ]
-    },
-    {
-      "name": "tax_class_id",
-      "label": "Tax Class",
-      "value": "2",
-      "valueLabel": "Taxable Goods",
-      "isFacet": false,
-      "options": [
-        {
-          "value": "0",
-          "label": "None"
-        },
-        {
-          "value": "2",
-          "label": "Taxable Goods"
-        }
-      ]
     }
   ],
   "name": "The new great watch",

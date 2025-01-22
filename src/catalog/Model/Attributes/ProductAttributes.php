@@ -41,13 +41,20 @@ class ProductAttributes
      */
     public function getAttributesToIndex(int $storeId): array
     {
-        $attributeCodes = $this->catalogConfig->getAllowedAttributesToIndex($storeId);
+        $attributeCodes = $this->catalogConfig->getAttributesToIndex($storeId);
 
-        if (empty($attributeCodes)) {
-            return [];
-        }
+        return empty($attributeCodes)
+            ? []
+            : array_merge($attributeCodes, self::REQUIRED_ATTRIBUTES);
+    }
 
-        $attributeCodes = array_merge($attributeCodes, self::REQUIRED_ATTRIBUTES);
+    /**
+     * @param string[] $attributeCodes
+     * @param int $storeId
+     * @return AttributeDefinition[]
+     */
+    public function loadAttributeDefinitions(array $attributeCodes, int $storeId): array
+    {
         $attributeRows = $this->selectAttributesFromDb($attributeCodes);
 
         foreach ($attributeRows as &$attributeRow) {

@@ -44,22 +44,28 @@ class AttributeData implements DataProviderInterface
      */
     public function addData(array $indexData, int $storeId): array
     {
-        $requiredAttributesMap = $this->getRequiredAttributesMap($storeId);
+        // note: the call returns empty array if the Connector is configured to export all attributes:
+        $attributesToIndex = $this->productAttributes->getAttributesToIndex($storeId);
 
         $productIds = array_keys($indexData);
-        $requiredAttributeCodes = array_keys($requiredAttributesMap);
-        $attributesData = $this->resourceModel->loadAttributesData($storeId, $productIds, $requiredAttributeCodes);
+
+        // load attribute codes and values for each product. The call loads all available attributes if $attributesToIndex is empty
+        $attributesData = $this->resourceModel->loadAttributesData($storeId, $productIds, $attributesToIndex);
+
+        // load definitions of all attributes contained in loadAttributesData() result
+        $attributeCodes = $this->collectAttributeCodes($attributesData);
+        $attributeDefinitionsMap = $this->loadRequiredAttributesMap($attributeCodes, $storeId);
 
         foreach ($indexData as &$productData) {
             $productData['attributes'] = [];
         }
 
-        foreach ($attributesData as $entityId => $attributeCodesAndValues) {
+        foreach ($attributesData as $productId => $attributeCodesAndValues) {
             foreach ($attributeCodesAndValues as $attributeCode => $attributeValue) {
-                $this->addAttributeToProduct($indexData[$entityId], $attributeCode, $attributeValue, $requiredAttributesMap[$attributeCode]);
+                $this->addAttributeToProduct($indexData[$productId], $attributeCode, $attributeValue, $attributeDefinitionsMap);
             }
 
-            $this->applySlug($indexData[$entityId]);
+            $this->applySlug($indexData[$productId]);
         }
 
         $attributesData = null;
@@ -67,7 +73,7 @@ class AttributeData implements DataProviderInterface
         return $indexData;
     }
 
-    private function addAttributeToProduct(array &$productData, string $attributeCode, $attributeValue, AttributeDefinition $attributeDefinition): void
+    private function addAttributeToProduct(array &$productData, string $attributeCode, $attributeValue, array $attributeDefinitionsMap): void
     {
         if ($attributeCode == 'name' || $attributeCode == 'description') {
             $productData[$attributeCode] = $attributeValue;
@@ -78,6 +84,7 @@ class AttributeData implements DataProviderInterface
         } elseif ($attributeCode == 'price') {
             $productData['price'] = ((float)$attributeValue);
         } else {
+            $attributeDefinition = $attributeDefinitionsMap[$attributeCode];
             $productAttribute = $this->createProductAttributeArray($attributeCode, $attributeDefinition, $attributeValue);
             $productData['attributes'][] = $productAttribute;
         }
@@ -102,6 +109,7 @@ class AttributeData implements DataProviderInterface
         $productAttribute['value'] = in_array($attributeCode, self::IMAGE_ATTRIBUTES)
             ? $this->imageUrlManager->getProductImageUrl($attributeValue)
             : $attributeValue;
+
         $productAttribute['valueLabel'] = $this->getValueLabel($attributeCode, $attributeValue, $attributeDefinition);
         $productAttribute['isFacet'] = $attributeDefinition->isFacet();
 
@@ -130,14 +138,23 @@ class AttributeData implements DataProviderInterface
         $productData['url_key'] = $slug;
     }
 
-    private function getRequiredAttributesMap(int $storeId): array
+    private function collectAttributeCodes(array $attributesData): array
     {
-        $requiredAttributes = $this->productAttributes->getAttributesToIndex($storeId);
-
-        $requiredAttributesMap = [];
-        foreach ($requiredAttributes as $requiredAttribute) {
-            $requiredAttributesMap[$requiredAttribute->getName()] = $requiredAttribute;
+        $attributeCodes = [];
+        foreach ($attributesData as $attributeCodesAndValues) {
+            $attributeCodes = array_merge($attributeCodes, array_keys($attributeCodesAndValues));
         }
-        return $requiredAttributesMap;
+        return array_unique($attributeCodes);
+    }
+
+    private function loadRequiredAttributesMap(array $attributeCodes, int $storeId): array
+    {
+        $attributeDefinitions = $this->productAttributes->loadAttributeDefinitions($attributeCodes, $storeId); // TODO consider merging loadAttributesData() with loadAttributeDefinitions() to load both attribute data and definitions in a single call
+
+        $attributeDefinitionsMap = [];
+        foreach ($attributeDefinitions as $attributeDefinition) {
+            $attributeDefinitionsMap[$attributeDefinition->getName()] = $attributeDefinition;
+        }
+        return $attributeDefinitionsMap;
     }
 }

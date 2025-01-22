@@ -82,20 +82,19 @@ class CatalogConfig
     }
 
     // TODO: make sure attributes required by Unified Data Model are not configurable, and will be indexed always
-    public function getAllowedAttributesToIndex(int $storeId): array
+    public function getAttributesToIndex(int $storeId): array
     {
-        return explode(
-            ',',
-            $this->getConfigParam(self::PRODUCT_ATTRIBUTES, $storeId)
-        );
+        return $this->explodeAttributeCodes(self::PRODUCT_ATTRIBUTES, $storeId);
     }
 
-    public function getAllowedChildAttributesToIndex(int $storeId): array
+    public function getChildAttributesToIndex(int $storeId): array
     {
-        return explode(
-            ',',
-            $this->getConfigParam(self::CHILD_ATTRIBUTES, $storeId)
-        );
+        return $this->explodeAttributeCodes(self::CHILD_ATTRIBUTES, $storeId);
+    }
+
+    private function explodeAttributeCodes(string $configParamName, int $storeId): array
+    {
+        return explode(',', $this->getConfigParam($configParamName, $storeId));
     }
 
     public function getConfigurableChildrenBatchSize(int $storeId): int

@@ -34,10 +34,7 @@ abstract class BaseDirectDbEntityUpdateTest extends BaseStreamxConnectorPublishT
 
     public function tearDown(): void {
         $tableName = $this->indexerChangelogTableName();
-        $this->db->executeAll([
-            "TRUNCATE TABLE $tableName;",
-            "ALTER TABLE $tableName AUTO_INCREMENT = 1;"
-        ]);
+        $this->db->execute("DELETE FROM $tableName;");
 
         parent::tearDown();
     }

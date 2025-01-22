@@ -53,9 +53,9 @@ class ProductAttributesProvider
     /**
      * @throws Exception
      */
-    public function loadAttributesData(int $storeId, array $entityIds, array $requiredAttributeCodes = null): array
+    public function loadAttributesData(int $storeId, array $entityIds, array $requiredAttributeCodes): array
     {
-        $this->attributesById = $this->loadAttributes->execute();
+        $this->attributesById = $this->loadAttributes->getAttributes();
         $tableAttributes = [];
         $attributeTypes = [];
         $selects = [];
@@ -90,7 +90,7 @@ class ProductAttributesProvider
     /**
      * @throws Exception
      */
-    private function canIndexAttribute(\Magento\Eav\Model\Entity\Attribute $attribute, array $allowedAttributeCodes = null): bool
+    private function canIndexAttribute(Attribute $attribute, array $allowedAttributeCodes): bool
     {
         if ($attribute->isStatic()) {
             return false;
@@ -100,7 +100,7 @@ class ProductAttributesProvider
             return false;
         }
 
-        if (null === $allowedAttributeCodes || empty($allowedAttributeCodes)) {
+        if (empty($allowedAttributeCodes)) {
             return true;
         }
 

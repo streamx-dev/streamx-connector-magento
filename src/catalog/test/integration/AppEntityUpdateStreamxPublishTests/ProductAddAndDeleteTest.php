@@ -20,18 +20,27 @@ class ProductAddAndDeleteTest extends BaseAppEntityUpdateTest {
         $categoryId = $this->db->getCategoryId('Watches');
 
         // when
+        $this->allowIndexingAllAttributes();
         $productId = self::addProduct($productName, $categoryId);
 
         // then
         $expectedKey = "pim:$productId";
         try {
-            $this->assertDataIsPublished($expectedKey, $productName);
+            $this->assertExactDataIsPublished($expectedKey, 'added-watch-product.json', [
+                '"id": [0-9]+' => '"id": 0',
+                '"sku": "[^"]+"' => '"sku": "[MASKED]"',
+                '"the-new-great-watch-[0-9]+"' => '"the-new-great-watch-0"'
+            ]);
         } finally {
-            // and when
-            self::deleteProduct($productId);
+            try {
+                // and when
+                self::deleteProduct($productId);
 
-            // then
-            $this->assertDataIsUnpublished($expectedKey);
+                // then
+                $this->assertDataIsUnpublished($expectedKey);
+            } finally {
+                $this->restoreDefaultIndexingAttributes();
+            }
         }
     }
 

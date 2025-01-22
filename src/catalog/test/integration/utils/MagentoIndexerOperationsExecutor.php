@@ -2,6 +2,7 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\utils;
 
+use InvalidArgumentException;
 use function shell_exec;
 
 class MagentoIndexerOperationsExecutor {
@@ -42,11 +43,14 @@ class MagentoIndexerOperationsExecutor {
         return shell_exec("$cdCommand && $magentoCommand");
     }
 
-    public function replaceTextInMagentoFile(string $pathRelativeToMagentoFolder, string $from, string $to): void {
-        $filePath = "$this->magentoFolder/$pathRelativeToMagentoFolder";
+    public function replaceTextInMagentoFile(string $pathInsideMagentoConnectorFolder, string $from, string $to): void {
+        $filePath = "$this->magentoFolder/src/app/code/StreamX/Connector/$pathInsideMagentoConnectorFolder";
         $content = file_get_contents($filePath);
+        if (!str_contains($content, $from)) {
+            throw new InvalidArgumentException("The file '$filePath' doesn't contain '$from'");
+        }
         $newContent = str_replace($from, $to, $content);
         file_put_contents($filePath, $newContent);
-        usleep(250_000); // wait for quarter of a second to make sure Magento grabs the new version of the file
+        sleep(1); // wait for a second to make sure Magento grabs the new version of the file
     }
 }

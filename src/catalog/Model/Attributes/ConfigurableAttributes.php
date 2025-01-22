@@ -30,7 +30,7 @@ class ConfigurableAttributes
     public function getChildrenRequiredAttributes(int $storeId): array
     {
         if (null === $this->requiredAttributes) {
-            $attributes = $this->catalogConfig->getAllowedChildAttributesToIndex($storeId);
+            $attributes = $this->catalogConfig->getChildAttributesToIndex($storeId);
 
             if (empty($attributes)) {
                 $this->requiredAttributes = [];

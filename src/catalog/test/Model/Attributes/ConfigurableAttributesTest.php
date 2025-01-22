@@ -31,7 +31,7 @@ class ConfigurableAttributesTest extends TestCase
         $attributes = ConfigurableAttributes::MINIMAL_ATTRIBUTE_SET;
 
         $this->catalogConfigMock->expects($this->once())
-            ->method('getAllowedChildAttributesToIndex')
+            ->method('getChildAttributesToIndex')
             ->with($storeId)
             ->willReturn($selectedAttributes);
 
@@ -47,7 +47,7 @@ class ConfigurableAttributesTest extends TestCase
         $storeId = 1;
 
         $this->catalogConfigMock->expects($this->once())
-            ->method('getAllowedChildAttributesToIndex')
+            ->method('getChildAttributesToIndex')
             ->willReturn([]);
 
         $productAttributes = $this->configurableAttributes->getChildrenRequiredAttributes($storeId);

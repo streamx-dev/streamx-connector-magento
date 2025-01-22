@@ -4,9 +4,11 @@ namespace StreamX\ConnectorTestTools\Impl;
 
 use DateTime;
 use Exception;
+use InvalidArgumentException;
 use Magento\Catalog\Api\CategoryLinkRepositoryInterface;
 use Magento\Catalog\Api\CategoryRepositoryInterface;
 use Magento\Catalog\Api\Data\CategoryProductLinkInterfaceFactory;
+use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\CategoryFactory;
 use Magento\Catalog\Model\Product;
@@ -15,6 +17,7 @@ use Magento\Catalog\Model\Product\Type;
 use Magento\Catalog\Model\Product\Visibility;
 use Magento\Catalog\Model\ProductFactory;
 use Magento\Catalog\Model\ResourceModel\Eav\AttributeFactory;
+use Magento\Eav\Model\Config;
 use Magento\Eav\Setup\EavSetupFactory;
 use Magento\Framework\DB\Transaction;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
@@ -22,6 +25,7 @@ use StreamX\ConnectorTestTools\Api\EntityAddControllerInterface;
 
 class EntityAddControllerImpl implements EntityAddControllerInterface {
 
+    private Config $eavConfig;
     private Transaction $transaction;
     private ProductFactory $productFactory;
     private CategoryFactory $categoryFactory;
@@ -34,6 +38,7 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
     private CategoryProductLinkInterfaceFactory $categoryProductLinkFactory;
 
     public function __construct(
+        Config $eavConfig,
         Transaction $transaction,
         ProductFactory $productFactory,
         CategoryFactory $categoryFactory,
@@ -45,6 +50,7 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
         CategoryLinkRepositoryInterface $categoryLinkRepository,
         CategoryProductLinkInterfaceFactory $categoryProductLinkFactory
     ) {
+        $this->eavConfig = $eavConfig;
         $this->transaction = $transaction;
         $this->productFactory = $productFactory;
         $this->categoryFactory = $categoryFactory;
@@ -86,8 +92,9 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
                 ]);
 
             $this->transaction->addObject($product);
-            $this->transaction->addCommitCallback(function () use ($sku, $categoryId) {
-               $this->addProductToCategory($sku, $categoryId);
+            $this->transaction->addCommitCallback(function () use ($sku, $categoryId, $product) {
+                $this->addProductToCategory($sku, $categoryId);
+                $this->addColorToProduct($product, 'Brown');
             });
             $this->transaction->save();
 
@@ -95,6 +102,24 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
         } catch (Exception $e) {
             throw new Exception("Error adding product $productName: " . $e->getMessage(), -1, $e);
         }
+    }
+
+    private function addColorToProduct(ProductInterface $product, string $colorDisplayLabel): void {
+        $brownColor = $this->getAttributeOptionValue('color', $colorDisplayLabel);
+        $product->setData('color', $brownColor);
+        $product->getResource()->saveAttribute($product, 'color');
+    }
+
+    private function getAttributeOptionValue(string $attributeCode, string $displayLabel) {
+        $attribute = $this->eavConfig->getAttribute('catalog_product', $attributeCode);
+        $options = $attribute->getSource()->getAllOptions();
+
+        foreach ($options as $option) {
+            if ($option['label'] === $displayLabel) {
+                return $option['value'];
+            }
+        }
+        throw new InvalidArgumentException("No option for attribute $attributeCode with value $displayLabel");
     }
 
     /**
