@@ -9,7 +9,19 @@ Steps to Obtain and Configure Magento Authentication Keys
    - click on Create a New Access Key
    - enter a name for the keys (e.g. "Magento Project") and click OK
    - note down the generated Public Key (used as the username) and Private Key (used as the password)
-2. Configure auth.json
+2. Verify Composer Installation
+
+Ensure that Composer is installed on your system. If not, you can install it using one of the following methods:
+
+- **Using Homebrew (macOS):**  
+  Run the following command in your terminal:  
+  ```bash
+  brew install composer
+  ```
+
+  Otherwise, visit the official Composer installation guide for detailed instructions: https://getcomposer.org/
+
+3. Configure auth.json
  - locate Composer home directory. You can find this by running:
    ```bash
    composer config --list --global | grep 'home'
