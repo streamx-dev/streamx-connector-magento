@@ -3,6 +3,7 @@
   "description": "Magento connector for StreamX - a Digital Experience Data Mesh.",
   "version": "1.0.0",
   "type": "magento2-component",
+  "license": "Apache-2.0",
   "keywords": [
     "magento",
     "magento2",
