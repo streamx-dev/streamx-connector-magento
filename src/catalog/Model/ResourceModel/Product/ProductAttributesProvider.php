@@ -9,6 +9,7 @@ use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\DB\Select;
 use Magento\Framework\EntityManager\EntityMetadataInterface;
 use Magento\Framework\Exception\LocalizedException;
+use Magento\Store\Model\Store;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 
 class ProductAttributesProvider
@@ -20,8 +21,11 @@ class ProductAttributesProvider
 
     private LoadAttributes $loadAttributes;
     private ResourceConnection $resourceConnection;
-    private ?array $attributesById = null;
-    private ?array $valuesByEntityId = null;
+    /**
+     * @var Attribute[]
+     */
+    private array $attributesById = [];
+    private array $valuesByProductId = [];
     private ProductMetaData $productMetaData;
 
     public function __construct(
@@ -51,9 +55,10 @@ class ProductAttributesProvider
     }
 
     /**
+     * @return array of: key = product id, value = array of: key = attribute code, value = one or more values of the attribute for that product
      * @throws Exception
      */
-    public function loadAttributesData(int $storeId, array $entityIds, array $requiredAttributeCodes): array
+    public function loadAttributesData(int $storeId, array $productIds, array $requiredAttributeCodes): array
     {
         $this->attributesById = $this->loadAttributes->getAttributes();
         $tableAttributes = [];
@@ -71,11 +76,11 @@ class ProductAttributesProvider
         }
 
         foreach ($tableAttributes as $table => $attributeIds) {
-            $select = $this->getLoadAttributesSelect($storeId, $table, $attributeIds, $entityIds);
+            $select = $this->getLoadAttributesSelect($storeId, $table, $attributeIds, $productIds);
             $selects[$table] = $select;
         }
 
-        $this->valuesByEntityId = [];
+        $this->valuesByProductId = [];
 
         if (!empty($selects)) {
             foreach ($selects as $select) {
@@ -84,7 +89,7 @@ class ProductAttributesProvider
             }
         }
 
-        return $this->valuesByEntityId;
+        return $this->valuesByProductId;
     }
 
     /**
@@ -113,25 +118,29 @@ class ProductAttributesProvider
     private function processValues(array $values): array
     {
         foreach ($values as $value) {
-            $entityIdField = $this->getEntityMetaData()->getIdentifierField();
-            $entityId = $value[$entityIdField];
+            $productIdField = $this->getProductMetaData()->getIdentifierField();
+            $productId = $value[$productIdField];
             $attribute = $this->attributesById[$value['attribute_id']];
             $attributeCode = $attribute->getAttributeCode();
 
-            if ($attribute->getFrontendInput() === 'multiselect') {
-                $options = explode(',', $value['value']);
+            $attributeValue = $value['value'];
+            $attributeValues = $this->convertAttributeValueToArray($attribute, $attributeValue);
 
-                if (!empty($options)) {
-                    $options = array_map([$this, 'parseValue'], $options);
-                }
-
-                $value['value'] = $options;
-            }
-
-            $this->valuesByEntityId[$entityId][$attributeCode] = $value['value'];
+            $this->valuesByProductId[$productId][$attributeCode] = $attributeValues;
         }
 
-        return $this->valuesByEntityId;
+        return $this->valuesByProductId;
+    }
+
+    private function convertAttributeValueToArray(Attribute $attribute, $attributeValue): array {
+        if ($attribute->getFrontendInput() === 'multiselect') {
+            $options = explode(',', $attributeValue);
+            if (!empty($options)) {
+                $options = array_map([$this, 'parseValue'], $options);
+            }
+            return $options;
+        }
+        return [$attributeValue];
     }
 
     /**
@@ -153,11 +162,11 @@ class ProductAttributesProvider
      *
      * @throws Exception
      */
-    private function getLoadAttributesSelect(int $storeId, string $table, array $attributeIds, array $entityIds): Select
+    private function getLoadAttributesSelect(int $storeId, string $table, array $attributeIds, array $productIds): Select
     {
         //  Either row_id (enterpise/commerce version) or entity_id.
-        $linkField = $this->getEntityMetaData()->getLinkField();
-        $entityIdField = $this->getEntityMetaData()->getIdentifierField();
+        $linkField = $this->getProductMetaData()->getLinkField();
+        $productIdField = $this->getProductMetaData()->getIdentifierField();
 
         $joinStoreCondition = [
             "t_default.$linkField=t_store.$linkField",
@@ -177,7 +186,7 @@ class ProductAttributesProvider
         );
 
         return $this->getConnection()->select()
-            ->from(['entity' => $this->getEntityMetaData()->getEntityTable()], [$entityIdField])
+            ->from(['entity' => $this->getProductMetaData()->getEntityTable()], [$productIdField])
             ->joinInner(
                 ['t_default' => $table],
                 new \Zend_Db_Expr("entity.{$linkField} = t_default.{$linkField}"),
@@ -188,15 +197,15 @@ class ProductAttributesProvider
                 $joinCondition,
                 ['value' => $valueExpr]
             )
-            ->where("entity.$entityIdField IN (?)", $entityIds)
+            ->where("entity.$productIdField IN (?)", $productIds)
             ->where('t_default.attribute_id IN (?)', $attributeIds)
             ->where(
                 't_default.store_id = ?',
-                $this->getConnection()->getIfNullSql('t_store.store_id', \Magento\Store\Model\Store::DEFAULT_STORE_ID)
+                $this->getConnection()->getIfNullSql('t_store.store_id', Store::DEFAULT_STORE_ID)
             );
     }
 
-    private function getEntityMetaData(): EntityMetadataInterface
+    private function getProductMetaData(): EntityMetadataInterface
     {
         return $this->productMetaData->get();
     }

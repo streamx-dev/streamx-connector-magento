@@ -98,7 +98,10 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $quantity = 100;
         $price = 35;
         $websiteId = 1;
-        $brownColor = $this->db->getAttributeOptionId('color', 'Brown');
+        $brownColorId = $this->db->getAttributeOptionId('color', 'Brown');
+        $metalMaterialId = $this->db->getAttributeOptionId('material', 'Metal');
+        $plasticMaterialId = $this->db->getAttributeOptionId('material', 'Plastic');
+        $leatherMaterialId = $this->db->getAttributeOptionId('material', 'Leather');
 
         $attributeSetId = $this->db->getDefaultCategoryAttributeSetId();
 
@@ -121,6 +124,11 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         ");
 
         $this->db->execute("
+            INSERT INTO catalog_product_entity_text (entity_id, attribute_id, store_id, value) VALUES
+                ($productId, " . self::attrId('material') . ", $defaultStoreId, '$metalMaterialId,$plasticMaterialId,$leatherMaterialId')
+        ");
+
+        $this->db->execute("
             INSERT INTO catalog_product_entity_decimal (entity_id, attribute_id, store_id, value) VALUES
                 ($productId, " . self::attrId('price') . ", $defaultStoreId, $price)
         ");
@@ -129,7 +137,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
             INSERT INTO catalog_product_entity_int (entity_id, attribute_id, store_id, value) VALUES
                 ($productId, " . self::attrId('visibility') . ", $defaultStoreId, 4), -- visibility in Catalog and Search
                 ($productId, " . self::attrId('status') . ", $defaultStoreId, 1), -- enabled
-                ($productId, " . self::attrId('color') . ", $defaultStoreId, '$brownColor')
+                ($productId, " . self::attrId('color') . ", $defaultStoreId, $brownColorId)
         ");
 
         $this->db->execute("

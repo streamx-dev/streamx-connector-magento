@@ -186,7 +186,7 @@ class ConfigurableData implements DataProviderInterface
             }
 
             if (isset($child['price'])) {
-                $childPrice[] = $child['price'];
+                $childPrice[] = $child['price'][0]; // TODO: child products don't yet have 'price' as top level field
                 $finalPrice[] = $child['final_price'] ?? $child['price'];
             }
         }
