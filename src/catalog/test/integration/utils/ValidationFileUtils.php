@@ -7,7 +7,7 @@ use PHPUnit\Framework\ExpectationFailedException;
 trait ValidationFileUtils  {
 
     public static function readValidationFileContent(string $validationFileName): string {
-        $validationFilesDir = DirectoryUtils::findFolder('resources/validation');
+        $validationFilesDir = FileUtils::findFolder('resources/validation');
         return file_get_contents("$validationFilesDir/$validationFileName");
     }
 

@@ -4,7 +4,7 @@ namespace StreamX\ConnectorCatalog\test\integration\utils;
 
 use Exception;
 
-final class DirectoryUtils {
+final class FileUtils {
 
     /**
      * Goes up from the current dir, until finding folder with the given name, and returns its absolute path
@@ -27,5 +27,11 @@ final class DirectoryUtils {
         }
 
         throw new Exception("$folder folder not found");
+    }
+
+    public static function readSourceFileContent(string $sourceFilePathRelativeToProjectRootDir): string {
+        $projectRootDir = self::findFolder('streamx-connector-magento');
+        $sourceFileAbsolutePath = "$projectRootDir/$sourceFilePathRelativeToProjectRootDir";
+        return file_get_contents($sourceFileAbsolutePath);
     }
 }

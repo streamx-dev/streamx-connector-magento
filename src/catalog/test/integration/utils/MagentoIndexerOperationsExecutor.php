@@ -2,10 +2,7 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\utils;
 
-use InvalidArgumentException;
-use function shell_exec;
-
-class MagentoIndexerOperationsExecutor {
+class MagentoIndexerOperationsExecutor extends MagentoOperationsExecutor {
 
     public const UPDATE_ON_SAVE_DISPLAY_NAME = 'Update on Save';
     public const UPDATE_BY_SCHEDULE_DISPLAY_NAME = 'Update by Schedule';
@@ -15,11 +12,10 @@ class MagentoIndexerOperationsExecutor {
         self::UPDATE_BY_SCHEDULE_DISPLAY_NAME => 'schedule'
     ];
 
-    private string $magentoFolder;
     private string $indexerName;
 
     public function __construct(string $indexerName) {
-        $this->magentoFolder = DirectoryUtils::findFolder('magento');
+        parent::__construct();
         $this->indexerName = $indexerName;
     }
 
@@ -27,30 +23,17 @@ class MagentoIndexerOperationsExecutor {
      * @return string display name of the indexer mode
      */
     public function getIndexerMode(): string {
-        $modeString = $this->executeCommand('show-mode'); // return value is in form: "Indexer Name:    Mode Display Name"
+        $modeString = $this->executeIndexerCommand('show-mode'); // return value is in form: "Indexer Name:    Mode Display Name"
         $parts = explode(':', $modeString);
         return trim($parts[1]);
     }
 
     public function setIndexerMode(string $modeDisplayName): void {
         $modeInternalName = self::INDEXER_MODE_NAME_MAPPINGS[$modeDisplayName];
-        $this->executeCommand("set-mode $modeInternalName");
+        $this->executeIndexerCommand("set-mode $modeInternalName");
     }
 
-    private function executeCommand(string $indexerCommand): ?string {
-        $cdCommand = 'cd ' . $this->magentoFolder;
-        $magentoCommand = 'bin/magento indexer:' . $indexerCommand . ' ' . $this->indexerName;
-        return shell_exec("$cdCommand && $magentoCommand");
-    }
-
-    public function replaceTextInMagentoFile(string $pathInsideMagentoConnectorFolder, string $from, string $to): void {
-        $filePath = "$this->magentoFolder/src/app/code/StreamX/Connector/$pathInsideMagentoConnectorFolder";
-        $content = file_get_contents($filePath);
-        if (!str_contains($content, $from)) {
-            throw new InvalidArgumentException("The file '$filePath' doesn't contain '$from'");
-        }
-        $newContent = str_replace($from, $to, $content);
-        file_put_contents($filePath, $newContent);
-        sleep(1); // wait for a second to make sure Magento grabs the new version of the file
+    private function executeIndexerCommand(string $indexerCommand): ?string {
+        return parent::executeCommand("indexer:$indexerCommand $this->indexerName");
     }
 }

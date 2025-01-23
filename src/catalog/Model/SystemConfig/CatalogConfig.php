@@ -94,7 +94,8 @@ class CatalogConfig
 
     private function explodeAttributeCodes(string $configParamName, int $storeId): array
     {
-        return explode(',', $this->getConfigParam($configParamName, $storeId));
+        $configParam = $this->getConfigParam($configParamName, $storeId);
+        return preg_split('/,/', $configParam, -1, PREG_SPLIT_NO_EMPTY); // split removing empty entries
     }
 
     public function getConfigurableChildrenBatchSize(int $storeId): int
