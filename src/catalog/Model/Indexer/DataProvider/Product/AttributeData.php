@@ -3,6 +3,7 @@
 namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
 use Exception;
+use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCatalog\Model\Attributes\AttributeDefinition;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\ProductAttributesProvider;
 use StreamX\ConnectorCatalog\Model\SlugGenerator;
@@ -18,17 +19,20 @@ class AttributeData implements DataProviderInterface
         'thumbnail'
     ];
 
+    private LoggerInterface $logger;
     private ProductAttributesProvider $resourceModel;
     private ProductAttributes $productAttributes;
     private ImageUrlManager $imageUrlManager;
     private SlugGenerator $slugGenerator;
 
     public function __construct(
+        LoggerInterface $logger,
         ProductAttributes $productAttributes,
         ProductAttributesProvider $resourceModel,
         ImageUrlManager $imageUrlManager,
         SlugGenerator $slugGenerator
     ) {
+        $this->logger = $logger;
         $this->resourceModel = $resourceModel;
         $this->productAttributes = $productAttributes;
         $this->imageUrlManager = $imageUrlManager;
@@ -83,6 +87,18 @@ class AttributeData implements DataProviderInterface
     {
         $productAttribute['name'] = $attributeCode;
         $productAttribute['label'] = $attributeDefinition->getLabel();
+
+        if (is_array($attributeValue)) {
+            // TODO: to be analysed. Observed for attributes such as: material, pattern, climate, style_bottom
+            $this->logger->warning("Value of attribute $attributeCode is an array: " . json_encode($attributeValue));
+
+            if (count($attributeValue) > 1) {
+                $this->logger->error("Attribute $attributeCode has more than one value: " . json_encode($attributeValue) . '. Taking only the first value');
+            }
+
+            $attributeValue = $attributeValue[0];
+        }
+
         $productAttribute['value'] = in_array($attributeCode, self::IMAGE_ATTRIBUTES)
             ? $this->imageUrlManager->getProductImageUrl($attributeValue)
             : $attributeValue;
