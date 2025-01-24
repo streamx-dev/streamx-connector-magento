@@ -4,7 +4,7 @@ namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Category;
 
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category as CategoryResource;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category\Children as CategoryChildrenResource;
-use StreamX\ConnectorCatalog\Model\Category\ComputeCategorySlug;
+use StreamX\ConnectorCatalog\Model\SlugGenerator;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 
 class CategoryDataFormatter implements DataProviderInterface
@@ -19,16 +19,16 @@ class CategoryDataFormatter implements DataProviderInterface
 
     private CategoryResource $resourceModel;
     private CategoryChildrenResource $childrenResourceModel;
-    private ComputeCategorySlug $computeCategorySlug;
+    private SlugGenerator $slugGenerator;
 
     public function __construct(
         CategoryResource $resource,
         CategoryChildrenResource $childrenResource,
-        ComputeCategorySlug $computeCategorySlug
+        SlugGenerator $slugGenerator
     ) {
         $this->resourceModel = $resource;
         $this->childrenResourceModel = $childrenResource;
-        $this->computeCategorySlug = $computeCategorySlug;
+        $this->slugGenerator = $slugGenerator;
     }
 
     public function addData(array $indexData, int $storeId): array
@@ -130,9 +130,9 @@ class CategoryDataFormatter implements DataProviderInterface
         $categoryData[self::LABEL] = $categoryData[self::NAME];
     }
 
-    private function computeSlug(array $categoryDTO): string
+    function computeSlug(array $categoryDTO): string
     {
-        return $this->computeCategorySlug->compute($categoryDTO);
+        return $this->slugGenerator->compute($categoryDTO);
     }
 
     private function getAllCategoriesMap(int $storeId): array

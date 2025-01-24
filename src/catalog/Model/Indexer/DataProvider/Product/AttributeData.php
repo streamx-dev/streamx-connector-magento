@@ -7,27 +7,26 @@ use StreamX\ConnectorCatalog\Model\Attributes\AttributeDefinition;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\ProductAttributesProvider;
 use StreamX\ConnectorCatalog\Model\SlugGenerator;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
-use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 use StreamX\ConnectorCatalog\Model\Attributes\ProductAttributes;
 use StreamX\ConnectorCore\Indexer\ImageUrlManager;
 
 class AttributeData implements DataProviderInterface
 {
     private ProductAttributesProvider $resourceModel;
-    private CatalogConfig $settings;
     private ProductAttributes $productAttributes;
     private ImageUrlManager $imageUrlManager;
+    private SlugGenerator $slugGenerator;
 
     public function __construct(
         ProductAttributes $productAttributes,
-        CatalogConfig $configSettings,
         ProductAttributesProvider $resourceModel,
-        ImageUrlManager $imageUrlManager
+        ImageUrlManager $imageUrlManager,
+        SlugGenerator $slugGenerator
     ) {
-        $this->settings = $configSettings;
         $this->resourceModel = $resourceModel;
         $this->productAttributes = $productAttributes;
         $this->imageUrlManager = $imageUrlManager;
+        $this->slugGenerator = $slugGenerator;
     }
 
     /**
@@ -100,23 +99,11 @@ class AttributeData implements DataProviderInterface
         return $attributeDefinition->getValueLabel($attributeValue);
     }
 
-    private function applySlug(array &$productData): void
+    function applySlug(array &$productData): void
     {
-        $entityId = $productData['id'];
-
-        if ($this->settings->useMagentoUrlKeys() && isset($productData['url_key'])) {
-            $productData['slug'] = $productData['url_key'];
-        } else {
-            $text = $productData['name'];
-
-            if ($this->settings->useUrlKeyToGenerateSlug() && isset($productData['url_key'])) {
-                $text = $productData['url_key'];
-            }
-
-            $slug = SlugGenerator::generate($text, $entityId);
-            $productData['slug'] = $slug;
-            $productData['url_key'] = $slug;
-        }
+        $slug = $this->slugGenerator->compute($productData);
+        $productData['slug'] = $slug;
+        $productData['url_key'] = $slug;
     }
 
     private function getRequiredAttributesMap(int $storeId): array
