@@ -11,17 +11,17 @@ use StreamX\ConnectorCatalog\Model\ResourceModel\Category;
 class Children
 {
     private ResourceConnection $resource;
-    private BaseSelectModifierInterface $baseSelectModifier;
+    private CompositeWithStoreChildrenModifier $selectModifier;
     private CategoryMetaData $categoryMetaData;
 
     public function __construct(
-        BaseSelectModifierInterface $baseSelectModifier,
+        CompositeWithStoreChildrenModifier $selectModifier,
         ResourceConnection $resourceModel,
         CategoryMetaData $categoryMetaData
     ) {
         $this->resource = $resourceModel;
         $this->categoryMetaData = $categoryMetaData;
-        $this->baseSelectModifier = $baseSelectModifier;
+        $this->selectModifier = $selectModifier;
     }
 
     /**
@@ -31,7 +31,7 @@ class Children
     {
         $childIds = $this->getChildrenIds($category, $storeId);
         $select = Category::getCategoriesBaseSelect($this->resource, $this->categoryMetaData);
-        $select = $this->baseSelectModifier->execute($select, $storeId);
+        $this->selectModifier->modify($select, $storeId);
 
         $select->where("entity.entity_id IN (?)", $childIds);
         $select->order('path asc');
@@ -56,7 +56,7 @@ class Children
             $connection->quoteIdentifier('path') . ' LIKE :c_path'
         );
 
-        $select = $this->baseSelectModifier->execute($select, $storeId);
+        $this->selectModifier->modify($select, $storeId);
 
         return $this->getConnection()->fetchCol($select, $bind);
     }

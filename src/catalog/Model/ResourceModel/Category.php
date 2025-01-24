@@ -6,7 +6,7 @@ use Exception;
 use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use StreamX\ConnectorCatalog\Model\CategoryMetaData;
-use StreamX\ConnectorCatalog\Model\ResourceModel\Category\BaseSelectModifierInterface;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Category\CompositeWithStoreModifier;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Catalog\Model\Category as CoreCategoryModel;
 use Magento\Framework\DB\Select;
@@ -14,17 +14,17 @@ use Magento\Framework\DB\Select;
 class Category
 {
     private ResourceConnection $resource;
-    private BaseSelectModifierInterface $baseSelectModifier;
+    private CompositeWithStoreModifier $selectModifier;
     private CategoryMetaData $categoryMetaData;
 
     public function __construct(
-        BaseSelectModifierInterface $baseSelectModifier,
+        CompositeWithStoreModifier $selectModifier,
         ResourceConnection $resourceConnection,
         CategoryMetaData $categoryMetaData
     ) {
         $this->resource = $resourceConnection;
         $this->categoryMetaData = $categoryMetaData;
-        $this->baseSelectModifier = $baseSelectModifier;
+        $this->selectModifier = $selectModifier;
     }
 
     /**
@@ -33,7 +33,7 @@ class Category
     public function getCategories(int $storeId = 1, array $categoryIds = [], int $fromId = 0, int $limit = 1000): array
     {
         $select = self::getCategoriesBaseSelect($this->resource, $this->categoryMetaData);
-        $select = $this->filterByStore($select, $storeId);
+        $this->filterByStore($select, $storeId);
 
         if (!empty($categoryIds)) {
             $select->where("entity.entity_id IN (?)", $categoryIds);
@@ -57,7 +57,7 @@ class Category
             ['entity' => $metaData->getEntityTable()]
         );
 
-        $select = $this->filterByStore($select, $storeId);
+        $this->filterByStore($select, $storeId);
         $table = $this->resource->getTableName('catalog_category_product');
         $entityIdField = $this->categoryMetaData->get()->getIdentifierField();
         $select->reset(Select::COLUMNS);
@@ -145,9 +145,9 @@ class Category
      * @throws Exception
      * @throws NoSuchEntityException
      */
-    private function filterByStore(Select $select, int $storeId): Select
+    private function filterByStore(Select $select, int $storeId): void
     {
-        return $this->baseSelectModifier->execute($select, (int) $storeId);
+        $this->selectModifier->modify($select, (int) $storeId);
     }
 
     private function getConnection(): AdapterInterface

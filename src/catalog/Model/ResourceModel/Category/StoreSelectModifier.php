@@ -10,7 +10,7 @@ use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Select;
 use Magento\Store\Model\StoreManagerInterface;
 
-class StoreSelectModifier implements BaseSelectModifierInterface
+class StoreSelectModifier implements SelectModifierInterface
 {
     private StoreManagerInterface $storeManager;
 
@@ -22,7 +22,7 @@ class StoreSelectModifier implements BaseSelectModifierInterface
     /**
      * Modify the select statement
      */
-    public function execute(Select $select, int $storeId): Select
+    public function modify(Select $select, int $storeId): void
     {
         $store = $this->storeManager->getStore($storeId);
         $connection = $select->getConnection();
@@ -33,7 +33,5 @@ class StoreSelectModifier implements BaseSelectModifierInterface
         $whereCondition = sprintf("path = %s OR path like %s", $rootCatIdExpr, $catIdExpr);
 
         $select->where($whereCondition);
-
-        return $select;
     }
 }

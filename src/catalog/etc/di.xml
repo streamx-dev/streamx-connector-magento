@@ -20,33 +20,6 @@
         </arguments>
     </virtualType>
 
-    <preference for="StreamX\ConnectorCatalog\Model\ResourceModel\Category\BaseSelectModifierInterface"
-                type="StreamX\ConnectorCatalog\Model\ResourceModel\Category\CompositeWithStoreModifier" />
-
-    <virtualType name="StreamX\ConnectorCatalog\Model\ResourceModel\Category\CompositeWithStoreModifier"
-                 type="StreamX\ConnectorCatalog\Model\ResourceModel\Category\CompositeBaseSelectModifier">
-        <arguments>
-            <argument name="baseSelectModifiers" xsi:type="array">
-                <item name="store" xsi:type="object">StreamX\ConnectorCatalog\Model\ResourceModel\Category\StoreSelectModifier</item>
-            </argument>
-        </arguments>
-    </virtualType>
-
-    <virtualType name="StreamX\ConnectorCatalog\Model\ResourceModel\Category\CompositeWithStoreChildrenModifier"
-                 type="StreamX\ConnectorCatalog\Model\ResourceModel\Category\CompositeBaseSelectModifier">
-        <arguments>
-            <argument name="baseSelectModifiers" xsi:type="array">
-                <item name="is_active" xsi:type="object">StreamX\ConnectorCatalog\Model\ResourceModel\Category\ActiveSelectModifier</item>
-            </argument>
-        </arguments>
-    </virtualType>
-
-    <type name="StreamX\ConnectorCatalog\Model\ResourceModel\Category\Children">
-        <arguments>
-            <argument name="baseSelectModifier" xsi:type="object">StreamX\ConnectorCatalog\Model\ResourceModel\Category\CompositeWithStoreChildrenModifier</argument>
-        </arguments>
-    </type>
-
     <type name="Magento\Catalog\Model\Product">
         <plugin name="update_product_in_es" type="StreamX\ConnectorCatalog\Plugin\Indexer\Product\Save\UpdateProductDataPlugin"/>
     </type>
