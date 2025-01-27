@@ -33,7 +33,7 @@ bin/magento indexer:reindex streamx_category_indexer
 
 StreamX Connector comes with additional commands to publish entities to StreamX.
 
-The following command triggers publishing all StreamX Indexers for data coming from Store with ID 1:
+The following command triggers all StreamX Indexers to publish data coming from Store with ID 1:
 ```bash
 bin/magento streamx:reindex --store=1
 ```
