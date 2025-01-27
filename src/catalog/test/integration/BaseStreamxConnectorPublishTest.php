@@ -69,8 +69,7 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
         $this->db->execute("
             UPDATE mview_state
                SET mode = 'disabled',
-                   status = 'idle',
-                   version_id = 0
+                   status = 'idle'
              WHERE view_id='{$this->viewId()}'
         ");
     }
@@ -87,5 +86,21 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
         $this->assertEquals(200, $response->getStatusCode(), $responseBody);
 
         return $responseBody;
+    }
+
+    protected function allowIndexingAllAttributes(): void {
+        $this->indexerOperations->replaceTextInMagentoFile(
+            'src/catalog/Model/SystemConfig/CatalogConfig.php',
+            'return explode(',
+            'return []; // explode('
+        );
+    }
+
+    protected function restoreDefaultIndexingAttributes(): void {
+        $this->indexerOperations->replaceTextInMagentoFile(
+            'src/catalog/Model/SystemConfig/CatalogConfig.php',
+            'return []; // explode(',
+            'return explode(',
+        );
     }
 }

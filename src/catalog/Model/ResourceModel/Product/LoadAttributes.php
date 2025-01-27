@@ -16,7 +16,7 @@ class LoadAttributes
     /**
      * Product attributes by id
      */
-    private ?array $attributesById = null;
+    private array $attributesById = [];
     private array $attributeCodeToId = [];
 
     public function __construct(
@@ -30,26 +30,24 @@ class LoadAttributes
     /**
      * @return Attribute[]
      */
-    public function execute(): array
+    public function getAttributes(): array
     {
-        return $this->initAttributes();
-    }
-
-    /**
-     * @return Attribute[]
-     */
-    private function initAttributes(): array
-    {
-        if (null === $this->attributesById) {
-            $this->attributesById = [];
-            $attributeCollection = $this->getAttributeCollection();
-
-            foreach ($attributeCollection as $attribute) {
-                $this->addAttribute($attribute);
-            }
+        if (empty($this->attributesById)) {
+            $this->initAttributes();
         }
 
         return $this->attributesById;
+    }
+
+    private function initAttributes(): void
+    {
+        $attributeCollection = $this->getAttributeCollection();
+
+        foreach ($attributeCollection as $attribute) {
+            $this->setSwatchInputType($attribute);
+            $this->attributesById[$attribute->getId()] = $attribute;
+            $this->attributeCodeToId[$attribute->getAttributeCode()] = $attribute->getId();
+        }
     }
 
     /**
@@ -57,7 +55,7 @@ class LoadAttributes
      */
     public function getAttributeById(int $attributeId): Attribute
     {
-        $this->initAttributes();
+        $this->getAttributes();
 
         if (isset($this->attributesById[$attributeId])) {
             return $this->attributesById[$attributeId];
@@ -71,7 +69,7 @@ class LoadAttributes
      */
     public function getAttributeByCode(string $attributeCode): Attribute
     {
-        $this->initAttributes();
+        $this->getAttributes();
         $this->loadAttributeByCode($attributeCode);
 
         if (isset($this->attributeCodeToId[$attributeCode])) {
@@ -83,7 +81,7 @@ class LoadAttributes
         throw new LocalizedException(__('Attribute not found.'));
     }
 
-    private function loadAttributeByCode(string $attributeCode)
+    private function loadAttributeByCode(string $attributeCode): void
     {
         if (!isset($this->attributeCodeToId[$attributeCode])) {
             $attributeCollection = $this->getAttributeCollection();
@@ -93,19 +91,14 @@ class LoadAttributes
             $attribute = $attributeCollection->getFirstItem();
 
             if ($attribute->getId()) {
-                $this->addAttribute($attribute);
+                $this->setSwatchInputType($attribute);
+                $this->attributesById[$attribute->getId()] = $attribute;
+                $this->attributeCodeToId[$attribute->getAttributeCode()] = $attribute->getId();
             }
         }
     }
 
-    private function addAttribute(Attribute $attribute)
-    {
-        $this->prepareAttribute($attribute);
-        $this->attributesById[$attribute->getId()] = $attribute;
-        $this->attributeCodeToId[$attribute->getAttributeCode()] = $attribute->getId();
-    }
-
-    private function prepareAttribute(Attribute $attribute): Attribute
+    private function setSwatchInputType(Attribute $attribute): Attribute
     {
         $additionalData = (string)$attribute->getData('additional_data');
 
