@@ -13,7 +13,7 @@ class CatalogConfig
      * Slug/url key config
      */
     private const USE_MAGENTO_URL_KEYS = 'use_magento_url_keys';
-    private const USE_URL_KEY_TO_GENERATE_SLUG = 'use_url_key_to_generate_slug';
+    private const USE_URL_KEY_AND_ID_TO_GENERATE_SLUG = 'use_url_key_and_id_to_generate_slug';
 
     /**
      * Prices
@@ -48,9 +48,9 @@ class CatalogConfig
         return (bool) $this->getConfigParam(self::USE_MAGENTO_URL_KEYS);
     }
 
-    public function useUrlKeyToGenerateSlug(): bool
+    public function useUrlKeyAndIdToGenerateSlug(): bool
     {
-        return (bool) $this->getConfigParam(self::USE_URL_KEY_TO_GENERATE_SLUG);
+        return (bool) $this->getConfigParam(self::USE_URL_KEY_AND_ID_TO_GENERATE_SLUG);
     }
 
     public function useCatalogRules(): bool
