@@ -17,7 +17,7 @@ You can change current mode of an index by selecting its row in the Index Manage
 Description of how StreamX Indexers work when they are configured to operate in the two modes:
  - Update On Save: changes to products / categories / attributes detected while normal work of Magento application are intercepted
    and the entities data is immediately published (or unpublished, depending on the operation) to StreamX.
-   Example: when an Admin edits a product either via Admin Page
+   Example: when an Admin edits a product via Admin Page
  - Update By Schedule: all changes to products / categories / attributes detected while normal work of Magento application - but also resulting from direct SQL DB changes -
    are collected in changelog tables for each indexer (example table: `streamx_product_indexer_cl`). Internally, the MView mechanism is used.
    The collected changes can then be published to StreamX by manually updating (materializing) the associated MViews - see `StreamxIndexerMviewProcessor` class.
