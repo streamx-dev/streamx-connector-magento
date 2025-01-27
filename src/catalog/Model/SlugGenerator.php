@@ -2,11 +2,36 @@
 
 namespace StreamX\ConnectorCatalog\Model;
 
+use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
+
 class SlugGenerator
 {
-    public static function generate(string $text, int $id): string
+    private CatalogConfig $settings;
+
+    public function __construct(CatalogConfig $configSettings)
     {
-        return self::slugify("$text-$id");
+        $this->settings = $configSettings;
+    }
+
+    /**
+     * @param array $entity Product or Category. Must contain 'id' and 'name' fields, may contain 'url_key' field
+     * @return string
+     */
+    public function compute(array $entity): string
+    {
+        $id = $entity['id'];
+        $name = $entity['name'];
+        $urlKey = $entity['url_key'] ?? '';
+
+        if ($this->settings->useMagentoUrlKeys() && !empty($urlKey)) {
+            return $urlKey;
+        }
+
+        if ($this->settings->useUrlKeyToGenerateSlug() && !empty($urlKey)) {
+            return self::slugify("$urlKey-$id");
+        }
+
+        return self::slugify("$name-$id");
     }
 
     private static function slugify(string $text): string
