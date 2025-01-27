@@ -10,7 +10,10 @@ use Magento\Framework\Option\ArrayInterface;
 class ProductType implements ArrayInterface
 {
     private ConfigInterface $config;
-    private ?array $types = null;
+    private array $types = [];
+    private const UNSUPPORTED_TYPES = [
+        'downloadable'
+    ];
 
     public function __construct(ConfigInterface $config)
     {
@@ -36,16 +39,25 @@ class ProductType implements ArrayInterface
 
     private function getProductTypes(): array
     {
-        if ($this->types === null) {
-            $productTypes = $this->config->getAll();
-
-            foreach ($productTypes as $productTypeKey => $productTypeConfig) {
-                $productTypes[$productTypeKey]['label'] = __($productTypeConfig['label']);
-            }
-
-            $this->types = $productTypes;
+        if (empty($this->types)) {
+            $this->types = $this->initProductTypes();
         }
 
         return $this->types;
+    }
+
+    private function initProductTypes(): array
+    {
+        $productTypes = $this->config->getAll();
+
+        foreach ($productTypes as $productTypeKey => $productTypeConfig) {
+            if (in_array($productTypeConfig['name'], self::UNSUPPORTED_TYPES)) {
+                unset($productTypes[$productTypeKey]);
+            } else {
+                $productTypes[$productTypeKey]['label'] = __($productTypeConfig['label']);
+            }
+        }
+
+        return $productTypes;
     }
 }

@@ -49,7 +49,7 @@ class Product
     public function getProducts(int $storeId = 1, array $productIds = [], int $fromId = 0, int $limit = 1000): array
     {
         $select = $this->prepareBaseProductSelect($this->getRequiredColumns(), $storeId);
-        $select = $this->addProductTypeFilter($select, $storeId);
+        $this->addProductTypeFilter($select, $storeId);
         $tableName = self::MAIN_TABLE_ALIAS;
 
         if (!empty($productIds)) {
@@ -129,15 +129,10 @@ class Product
         return $this->getConnection()->fetchAll($select);
     }
 
-    private function addProductTypeFilter(Select $select, int $storeId): Select
+    private function addProductTypeFilter(Select $select, int $storeId): void
     {
         $types = $this->productSettings->getAllowedProductTypes($storeId);
-
-        if (!empty($types)) {
-            $select->where(sprintf('%s.type_id IN (?)', self::MAIN_TABLE_ALIAS), $types);
-        }
-
-        return $select;
+        $select->where(sprintf('%s.type_id IN (?)', self::MAIN_TABLE_ALIAS), $types);
     }
 
     /**
