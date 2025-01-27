@@ -37,8 +37,8 @@ class CustomOptionValues
 
         $select->where($mainTableAlias.  '.option_id IN (?)', $optionIds);
 
-        $select = $this->addTitleToResult($select, $storeId);
-        $select = $this->addPriceToResult($select, $storeId);
+        $this->addTitleToResult($select, $storeId);
+        $this->addPriceToResult($select, $storeId);
 
         $select->order('sort_order ASC');
         $select->order('title ASC');
@@ -46,7 +46,7 @@ class CustomOptionValues
         return $select;
     }
 
-    private function addTitleToResult(Select $select, int $storeId): Select
+    private function addTitleToResult(Select $select, int $storeId): void
     {
         $optionTitleTable = $this->resource->getTableName('catalog_product_option_type_title');
         $titleExpr = $this->getConnection()->getCheckSql(
@@ -69,11 +69,9 @@ class CustomOptionValues
             'default_value_title.store_id = ?',
             Store::DEFAULT_STORE_ID
         );
-
-        return $select;
     }
 
-    private function addPriceToResult(Select $select, int $storeId): Select
+    private function addPriceToResult(Select $select, int $storeId): void
     {
         $optionTypeTable = $this->resource->getTableName('catalog_product_option_type_price');
         $priceExpr = $this->getConnection()->getCheckSql(
@@ -108,8 +106,6 @@ class CustomOptionValues
                 'price_type' => $priceTypeExpr
             ]
         );
-
-        return $select;
     }
 
     private function getConnection(): AdapterInterface

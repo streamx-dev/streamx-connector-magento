@@ -8,7 +8,7 @@ use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
-use StreamX\ConnectorCatalog\Model\ResourceModel\Product\BaseSelectModifierInterface;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\CompositeWithWebsiteModifier;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Helper as DbHelper;
 use Magento\Framework\DB\Select;
@@ -25,11 +25,11 @@ class Product
     private CatalogConfig $productSettings;
     private ?array $configurableAttributeIds = null;
     private ProductMetaData $productMetaData;
-    private BaseSelectModifierInterface $baseSelectModifier;
+    private CompositeWithWebsiteModifier $selectModifier;
 
     public function __construct(
         CatalogConfig $configSettings,
-        BaseSelectModifierInterface $baseSelectModifier,
+        CompositeWithWebsiteModifier $selectModifier,
         ResourceConnection $resourceConnection,
         ProductMetaData $productMetaData,
         DbHelper $dbHelper
@@ -37,7 +37,7 @@ class Product
         $this->resourceConnection = $resourceConnection;
         $this->dbHelper = $dbHelper;
         $this->productSettings = $configSettings;
-        $this->baseSelectModifier = $baseSelectModifier;
+        $this->selectModifier = $selectModifier;
         $this->productMetaData = $productMetaData;
     }
 
@@ -75,7 +75,9 @@ class Product
                 $requiredColumns
             );
 
-        return $this->baseSelectModifier->execute($select, $storeId);
+        $this->selectModifier->modify($select, $storeId);
+
+        return $select;
     }
 
     private function getRequiredColumns(): array

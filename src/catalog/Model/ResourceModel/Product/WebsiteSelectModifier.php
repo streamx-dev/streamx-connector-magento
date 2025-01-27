@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product;
+use StreamX\ConnectorCatalog\Model\ResourceModel\SelectModifierInterface;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Select;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Store\Model\StoreManagerInterface;
 
-class WebsiteSelectModifier implements BaseSelectModifierInterface
+class WebsiteSelectModifier implements SelectModifierInterface
 {
     private ResourceConnection $resourceConnection;
     private StoreManagerInterface $storeManager;
@@ -26,7 +27,7 @@ class WebsiteSelectModifier implements BaseSelectModifierInterface
     /**
      * {@inheritdoc}
      */
-    public function execute(Select $select, int $storeId): Select
+    public function modify(Select $select, int $storeId): void
     {
         $connection = $select->getConnection();
         $websiteId = $this->getWebsiteId($storeId);
@@ -36,8 +37,6 @@ class WebsiteSelectModifier implements BaseSelectModifierInterface
         $conditions[] = $connection->quoteInto('websites.website_id = ?', $websiteId);
 
         $select->join(['websites' => $indexTable], join(' AND ', $conditions), []);
-
-        return $select;
     }
 
     /**

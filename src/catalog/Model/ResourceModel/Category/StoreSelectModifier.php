@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace StreamX\ConnectorCatalog\Model\ResourceModel\Category;
 
-use StreamX\ConnectorCatalog\Model\CategoryMetaData;
 use Magento\Catalog\Model\Category;
-use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Select;
 use Magento\Store\Model\StoreManagerInterface;
+use StreamX\ConnectorCatalog\Model\ResourceModel\SelectModifierInterface;
 
 class StoreSelectModifier implements SelectModifierInterface
 {

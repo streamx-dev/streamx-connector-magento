@@ -7,19 +7,6 @@
         <plugin name="updateMviewSubscriptions" type="StreamX\ConnectorCatalog\Plugin\Mview\ViewPlugin"/>
     </type>
 
-    <preference for="StreamX\ConnectorCatalog\Model\ResourceModel\Product\BaseSelectModifierInterface"
-                type="StreamX\ConnectorCatalog\Model\ResourceModel\Product\CompositeWithWebsiteModifier" />
-
-    <virtualType name="StreamX\ConnectorCatalog\Model\ResourceModel\Product\CompositeWithWebsiteModifier"
-                 type="StreamX\ConnectorCatalog\Model\ResourceModel\Product\CompositeBaseSelectModifier">
-        <arguments>
-            <argument name="baseSelectModifiers" xsi:type="array">
-                <item name="website" xsi:type="object">StreamX\ConnectorCatalog\Model\ResourceModel\Product\WebsiteSelectModifier</item>
-                <item name="status" xsi:type="object">StreamX\ConnectorCatalog\Model\ResourceModel\Product\StatusSelectModifier</item>
-            </argument>
-        </arguments>
-    </virtualType>
-
     <type name="Magento\Catalog\Model\Product">
         <plugin name="update_product_in_es" type="StreamX\ConnectorCatalog\Plugin\Indexer\Product\Save\UpdateProductDataPlugin"/>
     </type>

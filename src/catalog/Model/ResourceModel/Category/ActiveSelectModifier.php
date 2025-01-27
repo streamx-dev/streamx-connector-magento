@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace StreamX\ConnectorCatalog\Model\ResourceModel\Category;
 
 use StreamX\ConnectorCatalog\Model\CategoryMetaData;
+use StreamX\ConnectorCatalog\Model\ResourceModel\SelectModifierInterface;
 use Magento\Eav\Model\Entity\Attribute as Attribute;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Adapter\AdapterInterface;
