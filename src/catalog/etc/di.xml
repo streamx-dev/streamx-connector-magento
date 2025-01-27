@@ -3,43 +3,8 @@
 
     <preference for="StreamX\ConnectorCore\Api\IndexersConfigInterface" type="StreamX\ConnectorCatalog\Model\Indexer\IndexersConfig"/>
 
-    <virtualType name="StreamX\ConnectorCatalog\Indexer\ProductIndexerHandlerVirtual"
-                 type="StreamX\ConnectorCore\Indexer\GenericIndexerHandler">
-        <arguments>
-            <argument name="typeName" xsi:type="string">product</argument>
-        </arguments>
-    </virtualType>
-    <virtualType name="StreamX\ConnectorCatalog\Indexer\CategoryIndexerHandlerVirtual"
-                 type="StreamX\ConnectorCore\Indexer\GenericIndexerHandler">
-        <arguments>
-            <argument name="typeName" xsi:type="string">category</argument>
-        </arguments>
-    </virtualType>
-    <virtualType name="StreamX\ConnectorCatalog\Indexer\AttributeIndexerHandlerVirtual"
-                 type="StreamX\ConnectorCore\Indexer\GenericIndexerHandler">
-        <arguments>
-            <argument name="typeName" xsi:type="string">attribute</argument>
-        </arguments>
-    </virtualType>
-
     <type name="Magento\Framework\Mview\ViewInterface">
         <plugin name="updateMviewSubscriptions" type="StreamX\ConnectorCatalog\Plugin\Mview\ViewPlugin"/>
-    </type>
-
-    <type name="StreamX\ConnectorCatalog\Model\Indexer\Product">
-        <arguments>
-            <argument name="indexerHandler" xsi:type="object">StreamX\ConnectorCatalog\Indexer\ProductIndexerHandlerVirtual</argument>
-        </arguments>
-    </type>
-    <type name="StreamX\ConnectorCatalog\Model\Indexer\Category">
-        <arguments>
-            <argument name="indexerHandler" xsi:type="object">StreamX\ConnectorCatalog\Indexer\CategoryIndexerHandlerVirtual</argument>
-        </arguments>
-    </type>
-    <type name="StreamX\ConnectorCatalog\Model\Indexer\Attribute">
-        <arguments>
-            <argument name="indexerHandler" xsi:type="object">StreamX\ConnectorCatalog\Indexer\AttributeIndexerHandlerVirtual</argument>
-        </arguments>
     </type>
 
     <preference for="StreamX\ConnectorCatalog\Model\ResourceModel\Product\BaseSelectModifierInterface"
