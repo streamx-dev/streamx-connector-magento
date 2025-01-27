@@ -23,7 +23,7 @@ class SlugGenerator
         $name = $entity['name'];
         $urlKey = $entity['url_key'] ?? '';
 
-        if ($this->settings->useMagentoUrlKeys() && !empty($urlKey)) {
+        if ($this->settings->useUrlKeyToGenerateSlug() && !empty($urlKey)) {
             return $urlKey;
         }
 

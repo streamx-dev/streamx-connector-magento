@@ -4,7 +4,7 @@
     <default>
         <streamx_connector_settings>
             <catalog_settings>
-                <use_magento_url_keys>0</use_magento_url_keys>
+                <use_url_key_to_generate_slug>0</use_url_key_to_generate_slug>
                 <use_url_key_and_id_to_generate_slug>0</use_url_key_and_id_to_generate_slug>
                 <product_attributes>description,image,small_image,thumbnail,media_gallery,meta_title,meta_description,special_price,special_from_date,special_to_date,tax_class_id</product_attributes>
                 <child_attributes>image,small_image,thumbnail,media_gallery,special_price,special_from_date,special_to_date</child_attributes>

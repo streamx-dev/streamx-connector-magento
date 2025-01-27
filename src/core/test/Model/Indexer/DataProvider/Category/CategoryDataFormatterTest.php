@@ -24,11 +24,11 @@ class CategoryDataFormatterTest extends TestCase
         $this->assertComputeSlug(true, true, 'abc', 'abc');
     }
 
-    private function assertComputeSlug(bool $useMagentoUrlKeys, bool $useUrlKeyAndId, ?string $urlKey, string $expectedSlug): void
+    private function assertComputeSlug(bool $useUrlKey, bool $useUrlKeyAndId, ?string $urlKey, string $expectedSlug): void
     {
         // given
         $catalogConfigMock = $this->createMock(CatalogConfig::class);
-        $catalogConfigMock->method('useMagentoUrlKeys')->willReturn($useMagentoUrlKeys);
+        $catalogConfigMock->method('useUrlKeyToGenerateSlug')->willReturn($useUrlKey);
         $catalogConfigMock->method('useUrlKeyAndIdToGenerateSlug')->willReturn($useUrlKeyAndId);
 
         $slugGenerator = new SlugGenerator($catalogConfigMock);

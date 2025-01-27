@@ -12,7 +12,7 @@ class CatalogConfig
     /**
      * Slug/url key config
      */
-    private const USE_MAGENTO_URL_KEYS = 'use_magento_url_keys';
+    private const USE_URL_KEY_TO_GENERATE_SLUG = 'use_url_key_to_generate_slug';
     private const USE_URL_KEY_AND_ID_TO_GENERATE_SLUG = 'use_url_key_and_id_to_generate_slug';
 
     /**
@@ -43,9 +43,9 @@ class CatalogConfig
         $this->scopeConfig = $scopeConfig;
     }
 
-    public function useMagentoUrlKeys(): bool
+    public function useUrlKeyToGenerateSlug(): bool
     {
-        return (bool) $this->getConfigParam(self::USE_MAGENTO_URL_KEYS);
+        return (bool) $this->getConfigParam(self::USE_URL_KEY_TO_GENERATE_SLUG);
     }
 
     public function useUrlKeyAndIdToGenerateSlug(): bool
