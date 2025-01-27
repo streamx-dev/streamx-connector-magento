@@ -3,8 +3,8 @@
 namespace StreamX\ConnectorCatalog\Model\Indexer;
 
 use Psr\Log\LoggerInterface;
+use StreamX\ConnectorCatalog\Indexer\CategoryIndexerHandler;
 use StreamX\ConnectorCatalog\Model\Indexer\Action\Category as CategoryAction;
-use StreamX\ConnectorCore\Indexer\GenericIndexerHandler;
 use StreamX\ConnectorCore\Indexer\StoreManager;
 use StreamX\ConnectorCore\System\GeneralConfigInterface;
 
@@ -12,7 +12,7 @@ class Category extends BaseStreamxIndexer {
 
     public function __construct(
         GeneralConfigInterface $connectorConfig,
-        GenericIndexerHandler $indexerHandler,
+        CategoryIndexerHandler $indexerHandler,
         StoreManager $storeManager,
         CategoryAction $action,
         LoggerInterface $logger

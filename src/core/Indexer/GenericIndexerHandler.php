@@ -5,7 +5,6 @@ namespace StreamX\ConnectorCore\Indexer;
 use Psr\Log\LoggerInterface;
 use Streamx\Clients\Ingestion\Exceptions\StreamxClientException;
 use StreamX\ConnectorCore\Api\Index\TypeInterface;
-use StreamX\ConnectorCore\Api\IndexersConfigInterface;
 use StreamX\ConnectorCore\Api\IndexOperationInterface;
 use StreamX\ConnectorCore\Exception\ConnectionUnhealthyException;
 use StreamX\ConnectorCore\Index\BulkRequest;
@@ -24,12 +23,11 @@ class GenericIndexerHandler {
         IndexOperationInterface $indexOperationProvider,
         LoggerInterface $logger,
         Batch $batch,
-        IndexersConfigInterface $indexersConfig,
-        string $typeName
+        TypeInterface $indexType
     ) {
         $this->batch = $batch;
         $this->indexOperations = $indexOperationProvider;
-        $this->indexType = $indexersConfig->getByName($typeName);
+        $this->indexType = $indexType;
         $this->logger = $logger;
     }
 
