@@ -6,32 +6,48 @@
     {
       "name": "small_image",
       "label": "Small",
-      "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/b\/mb01-blue-0.jpg",
-      "valueLabel": "\/m\/b\/mb01-blue-0.jpg",
+      "values": [
+        {
+          "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/b\/mb01-blue-0.jpg",
+          "valueLabel": "\/m\/b\/mb01-blue-0.jpg"
+        }
+      ],
       "isFacet": false,
       "options": []
     },
     {
       "name": "thumbnail",
       "label": "Thumbnail",
-      "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/b\/mb01-blue-0.jpg",
-      "valueLabel": "\/m\/b\/mb01-blue-0.jpg",
+      "values": [
+        {
+          "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/b\/mb01-blue-0.jpg",
+          "valueLabel": "\/m\/b\/mb01-blue-0.jpg"
+        }
+      ],
       "isFacet": false,
       "options": []
     },
     {
       "name": "url_key",
       "label": "URL Key",
-      "value": "joust-duffle-bag",
-      "valueLabel": "joust-duffle-bag",
+      "values": [
+        {
+          "value": "joust-duffle-bag",
+          "valueLabel": "joust-duffle-bag"
+        }
+      ],
       "isFacet": false,
       "options": []
     },
     {
       "name": "status",
       "label": "Enable Product",
-      "value": "1",
-      "valueLabel": "Enabled",
+      "values": [
+        {
+          "value": "1",
+          "valueLabel": "Enabled"
+        }
+      ],
       "isFacet": false,
       "options": [
         {
@@ -47,8 +63,12 @@
     {
       "name": "visibility",
       "label": "Visibility",
-      "value": "4",
-      "valueLabel": "Catalog, Search",
+      "values": [
+        {
+          "value": "4",
+          "valueLabel": "Catalog, Search"
+        }
+      ],
       "isFacet": false,
       "options": [
         {
@@ -72,8 +92,12 @@
     {
       "name": "tax_class_id",
       "label": "Tax Class",
-      "value": "2",
-      "valueLabel": "Taxable Goods",
+      "values": [
+        {
+          "value": "2",
+          "valueLabel": "Taxable Goods"
+        }
+      ],
       "isFacet": false,
       "options": [
         {

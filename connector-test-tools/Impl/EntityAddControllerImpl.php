@@ -94,7 +94,8 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
             $this->transaction->addObject($product);
             $this->transaction->addCommitCallback(function () use ($sku, $categoryId, $product) {
                 $this->addProductToCategory($sku, $categoryId);
-                $this->addColorToProduct($product, 'Brown');
+                $this->addAttributeOptionsToProduct($product, 'color', ['Brown']);
+                $this->addAttributeOptionsToProduct($product, 'material', ['Metal', 'Plastic', 'Leather']);
             });
             $this->transaction->save();
 
@@ -104,10 +105,13 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
         }
     }
 
-    private function addColorToProduct(ProductInterface $product, string $colorDisplayLabel): void {
-        $brownColor = $this->getAttributeOptionValue('color', $colorDisplayLabel);
-        $product->setData('color', $brownColor);
-        $product->getResource()->saveAttribute($product, 'color');
+    private function addAttributeOptionsToProduct(ProductInterface $product, string $attributeCode, array $displayLabels): void {
+        $optionIds = [];
+        foreach ($displayLabels as $displayLabel) {
+            $optionIds[] = $this->getAttributeOptionValue($attributeCode, $displayLabel);
+        }
+        $product->setData($attributeCode, implode(',', $optionIds));
+        $product->getResource()->saveAttribute($product, $attributeCode);
     }
 
     private function getAttributeOptionValue(string $attributeCode, string $displayLabel) {

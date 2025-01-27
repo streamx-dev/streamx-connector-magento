@@ -61,8 +61,8 @@ class AttributeData implements DataProviderInterface
         }
 
         foreach ($attributesData as $productId => $attributeCodesAndValues) {
-            foreach ($attributeCodesAndValues as $attributeCode => $attributeValue) {
-                $this->addAttributeToProduct($indexData[$productId], $attributeCode, $attributeValue, $attributeDefinitionsMap);
+            foreach ($attributeCodesAndValues as $attributeCode => $attributeValues) {
+                $this->addAttributeToProduct($indexData[$productId], $productId, $attributeCode, $attributeValues, $attributeDefinitionsMap);
             }
 
             $this->applySlug($indexData[$productId]);
@@ -73,44 +73,47 @@ class AttributeData implements DataProviderInterface
         return $indexData;
     }
 
-    private function addAttributeToProduct(array &$productData, string $attributeCode, $attributeValue, array $attributeDefinitionsMap): void
+    private function addAttributeToProduct(array &$productData, int $productId, string $attributeCode, array $attributeValues, array $attributeDefinitionsMap): void
     {
         if ($attributeCode == 'name' || $attributeCode == 'description') {
-            $productData[$attributeCode] = $attributeValue;
+            $productData[$attributeCode] = $this->getSingleAttributeValue($attributeCode, $attributeValues, $productId);
         } elseif ($attributeCode == 'image') {
             $productData['primaryImage'] = [
-                'url' => $this->imageUrlManager->getProductImageUrl($attributeValue)
+                'url' => $this->imageUrlManager->getProductImageUrl($this->getSingleAttributeValue($attributeCode, $attributeValues, $productId))
             ];
         } elseif ($attributeCode == 'price') {
-            $productData['price'] = ((float)$attributeValue);
+            $productData['price'] = (float) $this->getSingleAttributeValue($attributeCode, $attributeValues, $productId);
         } else {
             $attributeDefinition = $attributeDefinitionsMap[$attributeCode];
-            $productAttribute = $this->createProductAttributeArray($attributeCode, $attributeDefinition, $attributeValue);
+            $productAttribute = $this->createProductAttributeArray($attributeCode, $attributeDefinition, $attributeValues);
             $productData['attributes'][] = $productAttribute;
         }
     }
 
-    private function createProductAttributeArray(string $attributeCode, AttributeDefinition $attributeDefinition, $attributeValue): array
+    private function getSingleAttributeValue(string $attributeCode, array $attributeValues, int $productId) {
+        if (empty($attributeValues)) {
+            $this->logger->warning("$attributeCode has no value for $productId");
+            return null;
+        }
+        if (count($attributeValues) > 1) {
+            $this->logger->error("$attributeCode has more than one value for $productId: " . json_encode($attributeValues));
+        }
+        return $attributeValues[0];
+    }
+
+    private function createProductAttributeArray(string $attributeCode, AttributeDefinition $attributeDefinition, array $attributeValues): array
     {
         $productAttribute['name'] = $attributeCode;
         $productAttribute['label'] = $attributeDefinition->getLabel();
 
-        if (is_array($attributeValue)) {
-            // TODO: to be analysed. Observed for attributes such as: material, pattern, climate, style_bottom
-            $this->logger->warning("Value of attribute $attributeCode is an array: " . json_encode($attributeValue));
-
-            if (count($attributeValue) > 1) {
-                $this->logger->error("Attribute $attributeCode has more than one value: " . json_encode($attributeValue) . '. Taking only the first value');
-            }
-
-            $attributeValue = $attributeValue[0];
+        foreach ($attributeValues as $attributeValue) {
+            $productAttribute['values'][] = [
+                'value' => in_array($attributeCode, self::IMAGE_ATTRIBUTES)
+                    ? $this->imageUrlManager->getProductImageUrl($attributeValue)
+                    : $attributeValue,
+                'valueLabel' => $this->getValueLabel($attributeCode, $attributeValue, $attributeDefinition)
+            ];
         }
-
-        $productAttribute['value'] = in_array($attributeCode, self::IMAGE_ATTRIBUTES)
-            ? $this->imageUrlManager->getProductImageUrl($attributeValue)
-            : $attributeValue;
-
-        $productAttribute['valueLabel'] = $this->getValueLabel($attributeCode, $attributeValue, $attributeDefinition);
         $productAttribute['isFacet'] = $attributeDefinition->isFacet();
 
         $productAttribute['options'] = array_map(function ($option) {
