@@ -12,7 +12,7 @@ use Magento\Framework\DB\Select;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 
-class ActiveSelectModifier implements BaseSelectModifierInterface
+class ActiveSelectModifier implements SelectModifierInterface
 {
     private LoadAttributes $loadAttributes;
     private CategoryMetaData $categoryMetadata;
@@ -34,7 +34,7 @@ class ActiveSelectModifier implements BaseSelectModifierInterface
      * @throws LocalizedException
      * @throws NoSuchEntityException
      */
-    public function execute(Select $select, int $storeId): Select
+    public function modify(Select $select, int $storeId): void
     {
         $linkField = $this->categoryMetadata->get()->getLinkField();
 
@@ -69,8 +69,6 @@ class ActiveSelectModifier implements BaseSelectModifierInterface
             implode(' AND ', $storeJoinCond),
             []
         )->where(sprintf("%s = 1", $checkSql));
-
-        return $select;
     }
 
     /**

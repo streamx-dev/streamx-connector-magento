@@ -5,44 +5,26 @@ declare(strict_types=1);
 namespace StreamX\ConnectorCatalog\Model\ResourceModel\Category;
 
 use Magento\Framework\DB\Select;
-use Magento\Framework\Exception\InputException;
 
-class CompositeBaseSelectModifier implements BaseSelectModifierInterface
+abstract class CompositeBaseSelectModifier
 {
     /**
-     * @var BaseSelectModifierInterface[]
+     * @var SelectModifierInterface[]
      */
-    private array $baseSelectModifiers;
+    private array $selectModifiers;
 
-    /**
-     * @param BaseSelectModifierInterface[] $baseSelectModifiers
-     * @throws InputException
-     */
-    public function __construct(array $baseSelectModifiers)
+    public function __construct(SelectModifierInterface... $selectModifier)
     {
-        foreach ($baseSelectModifiers as $baseSelectModifier) {
-            if (!$baseSelectModifier instanceof BaseSelectModifierInterface) {
-                throw new InputException(
-                    __(
-                        'Modifier %1 doesn\'t implement BaseSelectModifierInterface',
-                        get_class($baseSelectModifier)
-                    )
-                );
-            }
-        }
-
-        $this->baseSelectModifiers = $baseSelectModifiers;
+        $this->selectModifiers = $selectModifier;
     }
 
     /**
-     * {@inheritdoc}
+     * Modify the select statement
      */
-    public function execute(Select $select, int $storeId): Select
+    public function modify(Select $select, int $storeId): void
     {
-        foreach ($this->baseSelectModifiers as $baseSelectModifier) {
-            $select = $baseSelectModifier->execute($select, $storeId);
+        foreach ($this->selectModifiers as $selectModifier) {
+            $selectModifier->modify($select, $storeId);
         }
-
-        return $select;
     }
 }

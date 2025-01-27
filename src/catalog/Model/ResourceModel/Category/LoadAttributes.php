@@ -14,7 +14,7 @@ class LoadAttributes
     /**
      * Product attributes by id
      */
-    private ?array $attributesById = null;
+    private array $attributesById = [];
 
     /**
      * Mapping attribute code to id
@@ -26,21 +26,9 @@ class LoadAttributes
         $this->attributeCollectionFactory = $attributeCollectionFactory;
     }
 
-    /**
-     * @return Attribute[]
-     */
-    public function execute(): array
+    private function initAttributes(): void
     {
-        return $this->initAttributes();
-    }
-
-    /**
-     * @return Attribute[]
-     */
-    private function initAttributes(): array
-    {
-        if (null === $this->attributesById) {
-            $this->attributesById = [];
+        if (empty($this->attributesById)) {
             $attributeCollection = $this->getAttributeCollection();
 
             foreach ($attributeCollection as $attribute) {
@@ -48,22 +36,6 @@ class LoadAttributes
                 $this->attributeCodeToId[$attribute->getAttributeCode()] = $attribute->getId();
             }
         }
-
-        return $this->attributesById;
-    }
-
-    /**
-     * @throws LocalizedException
-     */
-    public function getAttributeById(int $attributeId): Attribute
-    {
-        $this->initAttributes();
-
-        if (isset($this->attributesById[$attributeId])) {
-            return $this->attributesById[$attributeId];
-        }
-
-        throw new LocalizedException(__('Attribute not found.'));
     }
 
     /**
