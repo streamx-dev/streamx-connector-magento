@@ -187,12 +187,12 @@ class Bundle
         $select->order('main_table.position asc')
             ->order('main_table.option_id asc');
 
-        $select = $this->joinOptionValues($select, $storeId);
+        $this->joinOptionValues($select, $storeId);
 
         return $this->getConnection()->fetchAll($select);
     }
 
-    private function joinOptionValues(Select $select, int $storeId): Select
+    private function joinOptionValues(Select $select, int $storeId): void
     {
         $select
             ->joinLeft(
@@ -217,8 +217,6 @@ class Bundle
                 ),
                 []
             );
-
-        return $select;
     }
 
     /**

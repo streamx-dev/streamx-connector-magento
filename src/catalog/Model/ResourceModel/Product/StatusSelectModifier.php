@@ -6,6 +6,7 @@ namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product;
+use StreamX\ConnectorCatalog\Model\ResourceModel\SelectModifierInterface;
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
 use Magento\Eav\Model\Entity\Attribute;
 use Magento\Framework\App\ResourceConnection;
@@ -13,7 +14,7 @@ use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\DB\Select;
 use Magento\Framework\Exception\LocalizedException;
 
-class StatusSelectModifier implements BaseSelectModifierInterface
+class StatusSelectModifier implements SelectModifierInterface
 {
     private ResourceConnection $resourceConnection;
     private ProductAttributesProvider $attributeDataProvider;
@@ -32,7 +33,7 @@ class StatusSelectModifier implements BaseSelectModifierInterface
     /**
      * @throws LocalizedException
      */
-    public function execute(Select $select, int $storeId): Select
+    public function modify(Select $select, int $storeId): void
     {
         $attribute = $this->getStatusAttribute();
         $backendTable = $this->resourceConnection->getTableName($attribute->getBackendTable());
@@ -50,8 +51,6 @@ class StatusSelectModifier implements BaseSelectModifierInterface
             $storeJoinCond,
             []
         )->where($checkSql . ' = ?', Status::STATUS_ENABLED);
-
-        return $select;
     }
 
     /**

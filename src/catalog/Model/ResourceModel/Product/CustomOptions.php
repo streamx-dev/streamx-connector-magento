@@ -37,13 +37,13 @@ class CustomOptions
 
         $select->where($mainTableAlias.  '.product_id IN (?)', $linkFieldIds);
 
-        $select = $this->addTitleToResult($select, $storeId);
-        $select = $this->addPriceToResult($select, $storeId);
+        $this->addTitleToResult($select, $storeId);
+        $this->addPriceToResult($select, $storeId);
 
         return $select;
     }
 
-    private function addTitleToResult(Select $select, int $storeId): Select
+    private function addTitleToResult(Select $select, int $storeId): void
     {
         $productOptionTitleTable = $this->resource->getTableName('catalog_product_option_title');
         $connection = $this->getConnection();
@@ -71,11 +71,9 @@ class CustomOptions
             'default_option_title.store_id = ?',
             Store::DEFAULT_STORE_ID
         );
-
-        return $select;
     }
 
-    private function addPriceToResult(Select $select, int $storeId): Select
+    private function addPriceToResult(Select $select, int $storeId): void
     {
         $productOptionPriceTable = $this->resource->getTableName('catalog_product_option_price');
         $connection = $this->getConnection();
@@ -113,8 +111,6 @@ class CustomOptions
                 'price_type' => $priceTypeExpr
             ]
         );
-
-        return $select;
     }
 
     private function getConnection(): AdapterInterface
