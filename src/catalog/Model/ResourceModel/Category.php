@@ -158,6 +158,8 @@ class Category
     public static function getCategoriesBaseSelect(ResourceConnection $resource, CategoryMetaData $categoryMetaData): Select
     {
         $metaData = $categoryMetaData->get();
+        $linkField = $metaData->getLinkField();
+
         return $resource->getConnection()
             ->select()
             ->from(
@@ -179,11 +181,11 @@ class Category
                 [] // don't include any columns in the query results
             )->joinLeft( // join catalog_category_entity_varchar table to read actual category name
                 ['category_name_attr' => $resource->getTableName('catalog_category_entity_varchar')],
-                "category_name_attr.entity_id = entity.entity_id AND category_name_attr.attribute_id = name_attr.attribute_id",
+                "category_name_attr.$linkField = entity.$linkField AND category_name_attr.attribute_id = name_attr.attribute_id",
                 ['name' => 'value'] // include attr value as "name" in the query results
             )->joinLeft( // join catalog_category_entity_varchar table to read actual category url_key
                 ['category_url_key_attr' => $resource->getTableName('catalog_category_entity_varchar')],
-                "category_url_key_attr.entity_id = entity.entity_id AND category_url_key_attr.attribute_id = url_key_attr.attribute_id",
+                "category_url_key_attr.$linkField = entity.$linkField AND category_url_key_attr.attribute_id = url_key_attr.attribute_id",
                 ['url_key' => 'value'] // include attr value as "url_key" in the query results
             );
     }
