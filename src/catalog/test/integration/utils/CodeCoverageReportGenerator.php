@@ -13,7 +13,7 @@ final class CodeCoverageReportGenerator {
     private const STREAMX_CONNECTOR_ROOT_DIR_IN_MAGENTO_SERVER = '/var/www/html/app/code/StreamX/Connector';
 
     public static function generateCodeCoverageReport(string $coverage, TestCase $caller): void {
-        $localConnectorRootDir = DirectoryUtils::findFolder('streamx-connector-magento');
+        $localConnectorRootDir = FileUtils::findFolder('streamx-connector-magento');
 
         $parsedCoverage = self::parseCoverage($coverage, $localConnectorRootDir);
         $codeCoverage = new CodeCoverage(new CodeCoverageDriverMock(), new Filter());

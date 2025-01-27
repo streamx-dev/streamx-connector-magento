@@ -71,4 +71,11 @@
     </resources>
   </route>
 
+  <route url="/V1/configuration/edit" method="PUT">
+    <service class="StreamX\ConnectorTestTools\Api\ConfigurationEditControllerInterface" method="setConfigurationValue"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+
 </routes>

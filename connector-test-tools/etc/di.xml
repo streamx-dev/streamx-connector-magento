@@ -18,4 +18,8 @@
       for="StreamX\ConnectorTestTools\Api\MviewReindexerInterface"
       type="StreamX\ConnectorTestTools\Impl\MviewReindexerImpl"/>
 
+    <preference
+      for="StreamX\ConnectorTestTools\Api\ConfigurationEditControllerInterface"
+      type="StreamX\ConnectorTestTools\Impl\ConfigurationEditControllerImpl"/>
+
 </config>

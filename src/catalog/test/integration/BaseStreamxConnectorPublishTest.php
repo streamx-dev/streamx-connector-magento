@@ -4,6 +4,7 @@ namespace StreamX\ConnectorCatalog\test\integration;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
+use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditTraits;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoIndexerOperationsExecutor;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
 
@@ -11,6 +12,8 @@ use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
  * @inheritDoc
  */
 abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
+
+    use ConfigurationEditTraits;
 
     private const MAGENTO_REST_API_BASE_URL = 'https://magento.test:444/rest/all/V1';
 
@@ -86,21 +89,5 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
         $this->assertEquals(200, $response->getStatusCode(), $responseBody);
 
         return $responseBody;
-    }
-
-    protected function allowIndexingAllAttributes(): void {
-        $this->indexerOperations->replaceTextInMagentoFile(
-            'src/catalog/Model/SystemConfig/CatalogConfig.php',
-            'return explode(',
-            'return []; // explode('
-        );
-    }
-
-    protected function restoreDefaultIndexingAttributes(): void {
-        $this->indexerOperations->replaceTextInMagentoFile(
-            'src/catalog/Model/SystemConfig/CatalogConfig.php',
-            'return []; // explode(',
-            'return explode(',
-        );
     }
 }
