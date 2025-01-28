@@ -6,16 +6,12 @@ use Exception;
 use Magento\Framework\Exception\LocalizedException;
 use StreamX\ConnectorCatalog\Model\Attributes\ConfigurableAttributes;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\ProductAttributesProvider;
-use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Prices as PriceResourceModel;
-use StreamX\ConnectorCatalog\Model\Product\LoadTierPrices;
 use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 use StreamX\ConnectorCatalog\Model\Product\LoadMediaGallery;
 use Traversable;
 
 class LoadChildrenRawAttributes
 {
-    private LoadTierPrices $loadTierPrices;
-    private PriceResourceModel $priceResourceModel;
     private ProductAttributesProvider $resourceAttributeModel;
     private ConfigurableAttributes $configurableAttributes;
     private LoadMediaGallery $loadMediaGallery;
@@ -25,14 +21,10 @@ class LoadChildrenRawAttributes
         CatalogConfig $catalogConfiguration,
         ProductAttributesProvider $attributeDataProvider,
         ConfigurableAttributes $configurableAttributes,
-        LoadTierPrices $loadTierPrices,
-        LoadMediaGallery $loadMediaGallery,
-        PriceResourceModel $priceResourceModel
+        LoadMediaGallery $loadMediaGallery
     ) {
         $this->settings = $catalogConfiguration;
-        $this->loadTierPrices = $loadTierPrices;
         $this->loadMediaGallery = $loadMediaGallery;
-        $this->priceResourceModel = $priceResourceModel;
         $this->resourceAttributeModel = $attributeDataProvider;
         $this->configurableAttributes = $configurableAttributes;
     }
@@ -56,7 +48,6 @@ class LoadChildrenRawAttributes
 
         foreach ($this->getChildrenInBatches($allChildren, $storeId) as $batch) {
             $childIds = array_keys($batch);
-            $priceData = $this->priceResourceModel->loadPriceData($storeId, $childIds);
 
             $allAttributesData = $this->resourceAttributeModel->loadAttributesData(
                 $storeId,
@@ -64,44 +55,21 @@ class LoadChildrenRawAttributes
                 $requiredAttribute
             );
 
-            foreach ($priceData as $childId => $priceDataRow) {
-                $allChildren[$childId]['final_price'] = (float)$priceDataRow['final_price'];
-
-                if (isset($priceDataRow['price'])) {
-                    $allChildren[$childId]['regular_price'] = (float)$priceDataRow['price'];
-                }
-            }
-
             foreach ($allAttributesData as $productId => $attributes) {
                 $newProductData = array_merge(
                     $allChildren[$productId],
                     $attributes
                 );
 
-                if (
-                    $this->settings->syncTierPrices() ||
-                    $this->configurableAttributes->canIndexMediaGallery($storeId)
-                ) {
-                    /*we need some extra attributes to apply tier prices*/
+                if ($this->configurableAttributes->canIndexMediaGallery($storeId)) {
                     $batch[$productId] = $newProductData;
                 } else {
                     $allChildren[$productId] = $newProductData;
                 }
             }
 
-            $replace = false;
-
-            if ($this->settings->syncTierPrices()) {
-                $batch = $this->loadTierPrices->execute($batch, $storeId);
-                $replace = true;
-            }
-
             if ($this->configurableAttributes->canIndexMediaGallery($storeId)) {
                 $batch = $this->loadMediaGallery->execute($batch, $storeId);
-                $replace = true;
-            }
-
-            if ($replace) {
                 $allChildren = array_replace_recursive($allChildren, $batch);
             }
         }

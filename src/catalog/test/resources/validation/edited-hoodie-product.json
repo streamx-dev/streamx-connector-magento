@@ -7,11 +7,11 @@
       "name": "small_image",
       "label": "Small",
       "values": [
-      {
-        "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
-        "valueLabel": "\/m\/h\/mh01-gray_main_1.jpg"
-      }
-    ],
+        {
+          "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
+          "valueLabel": "\/m\/h\/mh01-gray_main_1.jpg"
+        }
+      ],
       "isFacet": false,
       "options": []
     },
@@ -532,8 +532,6 @@
   "configurable_children": [
     {
       "sku": "MH01-XS-Black",
-      "final_price": 52,
-      "regular_price": 52,
       "name": [
         "Chaz Kangeroo Hoodie-XS-Black"
       ],
@@ -566,8 +564,6 @@
     },
     {
       "sku": "MH01-XS-Gray",
-      "final_price": 52,
-      "regular_price": 52,
       "name": [
         "Chaz Kangeroo Hoodie-XS-Gray"
       ],
@@ -608,8 +604,6 @@
     },
     {
       "sku": "MH01-XS-Orange",
-      "final_price": 52,
-      "regular_price": 52,
       "name": [
         "Chaz Kangeroo Hoodie-XS-Orange"
       ],
@@ -642,8 +636,6 @@
     },
     {
       "sku": "MH01-S-Black",
-      "final_price": 52,
-      "regular_price": 52,
       "name": [
         "Chaz Kangeroo Hoodie-S-Black"
       ],
@@ -676,8 +668,6 @@
     },
     {
       "sku": "MH01-S-Gray",
-      "final_price": 52,
-      "regular_price": 52,
       "name": [
         "Chaz Kangeroo Hoodie-S-Gray"
       ],
@@ -718,8 +708,6 @@
     },
     {
       "sku": "MH01-S-Orange",
-      "final_price": 52,
-      "regular_price": 52,
       "name": [
         "Chaz Kangeroo Hoodie-S-Orange"
       ],
@@ -752,8 +740,6 @@
     },
     {
       "sku": "MH01-M-Black",
-      "final_price": 52,
-      "regular_price": 52,
       "name": [
         "Chaz Kangeroo Hoodie-M-Black"
       ],
@@ -786,8 +772,6 @@
     },
     {
       "sku": "MH01-M-Gray",
-      "final_price": 52,
-      "regular_price": 52,
       "name": [
         "Chaz Kangeroo Hoodie-M-Gray"
       ],
@@ -828,8 +812,6 @@
     },
     {
       "sku": "MH01-M-Orange",
-      "final_price": 52,
-      "regular_price": 52,
       "name": [
         "Chaz Kangeroo Hoodie-M-Orange"
       ],
@@ -862,8 +844,6 @@
     },
     {
       "sku": "MH01-L-Black",
-      "final_price": 52,
-      "regular_price": 52,
       "name": [
         "Chaz Kangeroo Hoodie-L-Black"
       ],
@@ -896,8 +876,6 @@
     },
     {
       "sku": "MH01-L-Gray",
-      "final_price": 52,
-      "regular_price": 52,
       "name": [
         "Chaz Kangeroo Hoodie-L-Gray"
       ],
@@ -938,8 +916,6 @@
     },
     {
       "sku": "MH01-L-Orange",
-      "final_price": 52,
-      "regular_price": 52,
       "name": [
         "Chaz Kangeroo Hoodie-L-Orange"
       ],
@@ -972,8 +948,6 @@
     },
     {
       "sku": "MH01-XL-Black",
-      "final_price": 52,
-      "regular_price": 52,
       "name": [
         "Chaz Kangeroo Hoodie-XL-Black"
       ],
@@ -1006,8 +980,6 @@
     },
     {
       "sku": "MH01-XL-Gray",
-      "final_price": 52,
-      "regular_price": 52,
       "name": [
         "Chaz Kangeroo Hoodie-XL-Gray"
       ],
@@ -1048,8 +1020,6 @@
     },
     {
       "sku": "MH01-XL-Orange",
-      "final_price": 52,
-      "regular_price": 52,
       "name": [
         "Chaz Kangeroo Hoodie-XL-Orange"
       ],

@@ -137,10 +137,6 @@ class Configurable
         return $this->configurableProductAttributes;
     }
 
-    /**
-     * This method actually would belong into a resource model, but for easier
-     * reference I dropped it into the helper here.
-     */
     private function getConfigurableAttributesForProductsFromResource(array $productIds): array
     {
         $select = $this->getConnection()->select()
