@@ -12,14 +12,9 @@ class LoadAttributes
     private CollectionFactory $attributeCollectionFactory;
 
     /**
-     * Product attributes by id
+     * Mapping attributes by code
      */
-    private array $attributesById = [];
-
-    /**
-     * Mapping attribute code to id
-     */
-    private array $attributeCodeToId = [];
+    private array $attributesByCode = [];
 
     public function __construct(CollectionFactory $attributeCollectionFactory)
     {
@@ -28,12 +23,11 @@ class LoadAttributes
 
     private function initAttributes(): void
     {
-        if (empty($this->attributesById)) {
+        if (empty($this->attributesByCode)) {
             $attributeCollection = $this->getAttributeCollection();
 
             foreach ($attributeCollection as $attribute) {
-                $this->attributesById[$attribute->getId()] = $attribute;
-                $this->attributeCodeToId[$attribute->getAttributeCode()] = $attribute->getId();
+                $this->attributesByCode[$attribute->getAttributeCode()] = $attribute;
             }
         }
     }
@@ -45,13 +39,11 @@ class LoadAttributes
     {
         $this->initAttributes();
 
-        if (isset($this->attributeCodeToId[$attributeCode])) {
-            $attributeId = $this->attributeCodeToId[$attributeCode];
-
-            return $this->attributesById[$attributeId];
+        if (isset($this->attributesByCode[$attributeCode])) {
+            return $this->attributesByCode[$attributeCode];
         }
 
-        throw new LocalizedException(__('Attribute not found.'));
+        throw new LocalizedException(__("Attribute $attributeCode not found."));
     }
 
     private function getAttributeCollection(): Collection

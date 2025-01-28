@@ -9,7 +9,7 @@ use StreamX\ConnectorCatalog\Model\ResourceModel\Product as Resource;
 
 class ConfigurableChildAttributes extends AbstractAttributeSource
 {
-    private ?array $restrictedAttributes = null;
+    private array $restrictedAttributes;
     private Resource $productResource;
 
     public function __construct(CollectionFactory $collectionFactory, Resource $productResource)
@@ -17,6 +17,11 @@ class ConfigurableChildAttributes extends AbstractAttributeSource
         $this->productResource = $productResource;
 
         parent::__construct($collectionFactory);
+
+        $this->restrictedAttributes = array_merge(
+            Attributes::GENERAL_RESTRICTED_ATTRIBUTES,
+            ConfigurableAttributes::MINIMAL_ATTRIBUTE_SET
+        );
     }
 
     /**
@@ -24,7 +29,7 @@ class ConfigurableChildAttributes extends AbstractAttributeSource
      */
     public function canAddAttribute(ProductAttributeInterface $attribute): bool
     {
-        if (in_array($attribute->getAttributeCode(), $this->getRestrictedAttributes())) {
+        if (in_array($attribute->getAttributeCode(), $this->restrictedAttributes)) {
             return false;
         }
 
@@ -33,20 +38,5 @@ class ConfigurableChildAttributes extends AbstractAttributeSource
         }
 
         return true;
-    }
-
-    /**
-     * Retrieve restricted attributes list
-     */
-    private function getRestrictedAttributes(): array
-    {
-        if (null === $this->restrictedAttributes) {
-            $this->restrictedAttributes = array_merge(
-                Attributes::GENERAL_RESTRICTED_ATTRIBUTES,
-                ConfigurableAttributes::MINIMAL_ATTRIBUTE_SET
-            );
-        }
-
-        return $this->restrictedAttributes;
     }
 }
