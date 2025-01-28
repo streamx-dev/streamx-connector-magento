@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace StreamX\ConnectorCatalog\ArrayConverter\Product;
+namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
 use StreamX\ConnectorCore\Indexer\DataFilter;
 

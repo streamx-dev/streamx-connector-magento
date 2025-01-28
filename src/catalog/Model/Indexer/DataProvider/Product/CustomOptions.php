@@ -5,11 +5,10 @@ declare(strict_types = 1);
 
 namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
-use StreamX\ConnectorCore\Api\DataProviderInterface;
-use StreamX\ConnectorCatalog\ArrayConverter\Product\CustomOptionConverter;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\CustomOptions as Resource;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\CustomOptionValues as OptionValuesResource;
+use StreamX\ConnectorCore\Api\DataProviderInterface;
 
 class CustomOptions implements DataProviderInterface
 {

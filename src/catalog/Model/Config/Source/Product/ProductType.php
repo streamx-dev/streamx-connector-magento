@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace StreamX\ConnectorCatalog\Model\Config\Source\Product;
 
 use Magento\Catalog\Model\ProductTypes\ConfigInterface;
-use Magento\Framework\Option\ArrayInterface;
+use Magento\Framework\Data\OptionSourceInterface;
 
-class ProductType implements ArrayInterface
+class ProductType implements OptionSourceInterface
 {
     private ConfigInterface $config;
     private array $types = [];

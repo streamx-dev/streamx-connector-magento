@@ -7,9 +7,9 @@ namespace StreamX\ConnectorCatalog\Model\Config\Source\Product;
 use Magento\Catalog\Api\Data\ProductAttributeInterface;
 use Magento\Catalog\Model\ResourceModel\Product\Attribute\Collection;
 use Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory;
-use Magento\Framework\Option\ArrayInterface;
+use Magento\Framework\Data\OptionSourceInterface;
 
-abstract class AbstractAttributeSource implements ArrayInterface
+abstract class AbstractAttributeSource implements OptionSourceInterface
 {
     private ?array $options = null;
     private CollectionFactory $collectionFactory;
