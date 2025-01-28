@@ -9,7 +9,7 @@ use Magento\Eav\Model\ResourceModel\Entity\Attribute as EntityResource;
 //  The definitions are published to StreamX.
 //  TODO: refactor to collect all products that use such an attribute, and publish the products instead of publishing attributes.
 //  TODO: do this only when label (frontend_value) or name (attribute_code) has changed, skip changes of other fields of Attribute Definition
-class Options implements DataProviderInterface
+class Options extends DataProviderInterface
 {
     private EntityResource $entityAttributeResource;
 

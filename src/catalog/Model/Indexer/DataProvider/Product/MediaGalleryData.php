@@ -6,7 +6,7 @@ use StreamX\ConnectorCore\Api\DataProviderInterface;
 use StreamX\ConnectorCatalog\Model\Product\LoadMediaGallery;
 use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 
-class MediaGalleryData implements DataProviderInterface
+class MediaGalleryData extends DataProviderInterface
 {
     private CatalogConfig $catalogConfig;
     private LoadMediaGallery $loadMediaGallery;

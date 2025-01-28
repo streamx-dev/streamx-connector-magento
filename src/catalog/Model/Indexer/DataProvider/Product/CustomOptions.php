@@ -10,7 +10,7 @@ use StreamX\ConnectorCatalog\Model\ResourceModel\Product\CustomOptions as Resour
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\CustomOptionValues as OptionValuesResource;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 
-class CustomOptions implements DataProviderInterface
+class CustomOptions extends DataProviderInterface
 {
     private Resource $optionsResourceModel;
     private OptionValuesResource $optionValuesResourceModel;

@@ -7,7 +7,7 @@ namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 use Magento\Framework\Locale\Resolver;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 
-class LangData implements DataProviderInterface
+class LangData extends DataProviderInterface
 {
     private Resolver $localeResolver;
 

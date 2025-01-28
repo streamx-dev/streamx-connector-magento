@@ -6,7 +6,7 @@ use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Category\CategoryDataFor
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category as CategoryResource;
 
-class CategoryData implements DataProviderInterface
+class CategoryData extends DataProviderInterface
 {
     private CategoryResource $categoryResource;
     private CategoryDataFormatter $categoryDataFormatter;

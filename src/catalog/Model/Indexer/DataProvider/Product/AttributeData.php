@@ -11,7 +11,7 @@ use StreamX\ConnectorCore\Api\DataProviderInterface;
 use StreamX\ConnectorCatalog\Model\Attributes\ProductAttributes;
 use StreamX\ConnectorCore\Indexer\ImageUrlManager;
 
-class AttributeData implements DataProviderInterface
+class AttributeData extends DataProviderInterface
 {
     private const IMAGE_ATTRIBUTES = [
         'image',

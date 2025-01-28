@@ -10,7 +10,7 @@ use StreamX\ConnectorCore\Api\DataProviderInterface;
  * Use this Data Provider to remove any data added or required by previous providers
  * that is not necessary in the final product to be published.
  */
-class DataCleaner implements DataProviderInterface
+class DataCleaner extends DataProviderInterface
 {
 
     /**
