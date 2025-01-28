@@ -1,5 +1,8 @@
 MView processing is implemented in Magento in multi-layered way and that causes exceptions logs being not available.
 
+During tests execution, you may receive a generic error such as:
+`Error when updating an mview, trace: \var\www\html\vendor\magento\framework\Interception\Interceptor.php (...)`
+
 To troubleshoot, temporarily edit (and upload to Magento) the `StreamxIndexerMviewProcessor` class.
 The below instructions are for troubleshooting the products indexer.
 

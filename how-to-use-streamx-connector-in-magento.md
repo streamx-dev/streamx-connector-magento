@@ -43,5 +43,6 @@ bin/magento indexer:reindex streamx_category_indexer
 6. Once the command completes:
  - open your StreamX instance's Web Delivery Service endpoint in a web browser
  - verify the JSON output at a category URL
- - assuming you are using a local StreamX instance configured to run Web Delivery Service on port 8081, the URL is:
-   - http://localhost:8081/cat:6 (where 6 is the Category ID)
+ - sample URL for Category with ID 6:
+   - http[s]://[streamx-host]:[web-delivery-service-port]/cat:6
+ - you can find the web delivery service port in your `mesh.yaml` file
