@@ -26,7 +26,7 @@ class ProductAddAndDeleteTest extends BaseAppEntityUpdateTest {
         // then
         $expectedKey = "pim:$productId";
         try {
-            $this->assertExactDataIsPublished($expectedKey, 'added-watch-product.json', [
+            $this->assertExactDataIsPublished($expectedKey, 'added-watch-product-without-custom-options.json', [
                 '"id": [0-9]+' => '"id": 0',
                 '"sku": "[^"]+"' => '"sku": "[MASKED]"',
                 '"the-new-great-watch-[0-9]+"' => '"the-new-great-watch-0"'

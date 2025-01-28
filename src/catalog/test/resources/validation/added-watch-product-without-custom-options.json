@@ -1,0 +1,340 @@
+{
+  "sku": "1736952738",
+  "id": 2659,
+  "lang": "en",
+  "attributes": [
+    {
+      "name": "meta_title",
+      "label": "Meta Title",
+      "values": [
+        {
+          "value": "The new great watch",
+          "valueLabel": "The new great watch"
+        }
+      ],
+      "isFacet": false,
+      "options": []
+    },
+    {
+      "name": "meta_description",
+      "label": "Meta Description",
+      "values": [
+        {
+          "value": "The new great watch",
+          "valueLabel": "The new great watch"
+        }
+      ],
+      "isFacet": false,
+      "options": []
+    },
+    {
+      "name": "url_key",
+      "label": "URL Key",
+      "values": [
+        {
+          "value": "the-new-great-watch",
+          "valueLabel": "the-new-great-watch"
+        }
+      ],
+      "isFacet": false,
+      "options": []
+    },
+    {
+      "name": "material",
+      "label": "Material",
+      "values": [
+        {
+          "value": 43,
+          "valueLabel": "Metal"
+        },
+        {
+          "value": 44,
+          "valueLabel": "Plastic"
+        },
+        {
+          "value": 35,
+          "valueLabel": "Leather"
+        }
+      ],
+      "isFacet": true,
+      "options": [
+        {
+          "value": "31",
+          "label": "Burlap"
+        },
+        {
+          "value": "142",
+          "label": "Cocona&reg; performance fabric"
+        },
+        {
+          "value": "32",
+          "label": "Canvas"
+        },
+        {
+          "value": "143",
+          "label": "Wool"
+        },
+        {
+          "value": "33",
+          "label": "Cotton"
+        },
+        {
+          "value": "144",
+          "label": "Fleece"
+        },
+        {
+          "value": "34",
+          "label": "Faux Leather"
+        },
+        {
+          "value": "145",
+          "label": "Hemp"
+        },
+        {
+          "value": "146",
+          "label": "Jersey"
+        },
+        {
+          "value": "35",
+          "label": "Leather"
+        },
+        {
+          "value": "147",
+          "label": "LumaTech&trade;"
+        },
+        {
+          "value": "36",
+          "label": "Mesh"
+        },
+        {
+          "value": "148",
+          "label": "Lycra&reg;"
+        },
+        {
+          "value": "37",
+          "label": "Nylon"
+        },
+        {
+          "value": "149",
+          "label": "Microfiber"
+        },
+        {
+          "value": "38",
+          "label": "Polyester"
+        },
+        {
+          "value": "39",
+          "label": "Rayon"
+        },
+        {
+          "value": "150",
+          "label": "Spandex"
+        },
+        {
+          "value": "151",
+          "label": "HeatTec&reg;"
+        },
+        {
+          "value": "40",
+          "label": "Ripstop"
+        },
+        {
+          "value": "152",
+          "label": "EverCool&trade;"
+        },
+        {
+          "value": "41",
+          "label": "Suede"
+        },
+        {
+          "value": "42",
+          "label": "Foam"
+        },
+        {
+          "value": "153",
+          "label": "Organic Cotton"
+        },
+        {
+          "value": "43",
+          "label": "Metal"
+        },
+        {
+          "value": "154",
+          "label": "TENCEL"
+        },
+        {
+          "value": "155",
+          "label": "CoolTech&trade;"
+        },
+        {
+          "value": "44",
+          "label": "Plastic"
+        },
+        {
+          "value": "156",
+          "label": "Khaki"
+        },
+        {
+          "value": "45",
+          "label": "Rubber"
+        },
+        {
+          "value": "157",
+          "label": "Linen"
+        },
+        {
+          "value": "46",
+          "label": "Synthetic"
+        },
+        {
+          "value": "47",
+          "label": "Stainless Steel"
+        },
+        {
+          "value": "158",
+          "label": "Wool"
+        },
+        {
+          "value": "48",
+          "label": "Silicone"
+        },
+        {
+          "value": "159",
+          "label": "Terry"
+        }
+      ]
+    },
+    {
+      "name": "color",
+      "label": "Color",
+      "values": [
+        {
+          "value": "51",
+          "valueLabel": "Brown"
+        }
+      ],
+      "isFacet": true,
+      "options": [
+        {
+          "value": "49",
+          "label": "Black"
+        },
+        {
+          "value": "50",
+          "label": "Blue"
+        },
+        {
+          "value": "51",
+          "label": "Brown"
+        },
+        {
+          "value": "52",
+          "label": "Gray"
+        },
+        {
+          "value": "53",
+          "label": "Green"
+        },
+        {
+          "value": "54",
+          "label": "Lavender"
+        },
+        {
+          "value": "55",
+          "label": "Multi"
+        },
+        {
+          "value": "56",
+          "label": "Orange"
+        },
+        {
+          "value": "57",
+          "label": "Purple"
+        },
+        {
+          "value": "58",
+          "label": "Red"
+        },
+        {
+          "value": "59",
+          "label": "White"
+        },
+        {
+          "value": "60",
+          "label": "Yellow"
+        }
+      ]
+    },
+    {
+      "name": "status",
+      "label": "Enable Product",
+      "values": [
+        {
+          "value": "1",
+          "valueLabel": "Enabled"
+        }
+      ],
+      "isFacet": false,
+      "options": [
+        {
+          "value": "1",
+          "label": "Enabled"
+        },
+        {
+          "value": "2",
+          "label": "Disabled"
+        }
+      ]
+    },
+    {
+      "name": "visibility",
+      "label": "Visibility",
+      "values": [
+        {
+          "value": "4",
+          "valueLabel": "Catalog, Search"
+        }
+      ],
+      "isFacet": false,
+      "options": [
+        {
+          "value": "1",
+          "label": "Not Visible Individually"
+        },
+        {
+          "value": "2",
+          "label": "Catalog"
+        },
+        {
+          "value": "3",
+          "label": "Search"
+        },
+        {
+          "value": "4",
+          "label": "Catalog, Search"
+        }
+      ]
+    }
+  ],
+  "name": "The new great watch",
+  "price": 35,
+  "slug": "the-new-great-watch-2659",
+  "categories": [
+    {
+      "id": 6,
+      "name": "Watches",
+      "slug": "watches-6",
+      "label": "Watches",
+      "subcategories": [],
+      "parent": {
+        "id": 3,
+        "name": "Gear",
+        "slug": "gear-3",
+        "label": "Gear"
+      }
+    }
+  ],
+  "gallery": [],
+  "quantity": 100,
+  "configurable_children": []
+}
