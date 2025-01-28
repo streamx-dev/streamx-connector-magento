@@ -97,10 +97,6 @@ class ConfigurableData implements DataProviderInterface
             $child['id'] = (int) $childId;
             $parentIds = $child['parent_ids'];
 
-            if (!isset($child['regular_price']) && isset($child['price'])) {
-                $child['regular_price'] = $child['price'];
-            }
-
             if (isset($stockRowData[$childId])) {
                 $productStockData = $stockRowData[$childId];
                 $child['qty'] = $productStockData['qty'];
