@@ -5,7 +5,7 @@ namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 use StreamX\ConnectorCatalog\Model\LoadQuantity;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 
-class Quantity implements DataProviderInterface
+class QuantityData implements DataProviderInterface
 {
     private LoadQuantity $loadQuantity;
 

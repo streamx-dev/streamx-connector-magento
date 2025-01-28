@@ -66,7 +66,7 @@ class ConfigurableData implements DataProviderInterface
              * Skip exporting configurable products without options
              */
             if (!empty($productDTO['configurable_options'])) {
-                $productsList[$productId] = $this->prepareConfigurableProduct($productDTO);
+                $productsList[$productId] = $productDTO;
             }
         }
 
@@ -167,36 +167,6 @@ class ConfigurableData implements DataProviderInterface
             $productDTO['configurable_options'][] = $productAttribute;
             $productDTO[$productAttribute['attribute_code'] . '_options'] = $values;
         }
-
-        return $productDTO;
-    }
-
-    private function prepareConfigurableProduct(array $productDTO): array
-    {
-        $configurableChildren = $productDTO['configurable_children'];
-        $specialPrice = $finalPrice = $childPrice = [];
-
-        foreach ($configurableChildren as $child) {
-            if (isset($child['special_price'])) {
-                $specialPrice[] = $child['special_price'];
-            }
-
-            if (isset($child['price'])) {
-                $childPrice[] = $child['price'][0]; // TODO: child products don't yet have 'price' as top level field
-                $finalPrice[] = $child['final_price'] ?? $child['price'];
-            }
-        }
-
-        // TODO currently not required but may come back:
-        // $productDTO['final_price'] = !empty($finalPrice) ? (float)min($finalPrice) : null;
-
-        // TODO currently not required but may come back:
-        // $productDTO['special_price'] = !empty($specialPrice) ? (float)min($specialPrice) : null;
-
-        $productDTO['price'] = !empty($childPrice) ? (float)min($childPrice) : null;
-
-        // TODO currently not required but may come back:
-        // $productDTO['regular_price'] = $productDTO['price'];
 
         return $productDTO;
     }
