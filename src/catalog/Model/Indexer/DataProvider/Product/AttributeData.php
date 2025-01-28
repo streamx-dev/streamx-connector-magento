@@ -75,8 +75,12 @@ class AttributeData implements DataProviderInterface
 
     private function addAttributeToProduct(array &$productData, int $productId, string $attributeCode, array $attributeValues, array $attributeDefinitionsMap): void
     {
-        if ($attributeCode == 'name' || $attributeCode == 'description') {
-            $productData[$attributeCode] = $this->getSingleAttributeValue($attributeCode, $attributeValues, $productId);
+        if ($attributeCode == 'name') {
+            $name = $this->getSingleAttributeValue($attributeCode, $attributeValues, $productId);
+            $productData['name'] = $name;
+            $productData['label'] = $name;
+        } elseif($attributeCode == 'description') {
+            $productData['description'] = $this->getSingleAttributeValue($attributeCode, $attributeValues, $productId);
         } elseif ($attributeCode == 'image') {
             $productData['primaryImage'] = [
                 'url' => $this->imageUrlManager->getProductImageUrl($this->getSingleAttributeValue($attributeCode, $attributeValues, $productId))
