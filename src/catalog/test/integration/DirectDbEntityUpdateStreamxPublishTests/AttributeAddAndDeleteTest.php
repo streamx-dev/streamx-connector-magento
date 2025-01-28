@@ -51,10 +51,7 @@ class AttributeAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
                 ($entityTypeId, '$attributeCode', '$attributeName', 'text', 'textarea', TRUE)
         ");
 
-        $attributeId = $this->db->selectFirstField("
-            SELECT MAX(attribute_id)
-              FROM eav_attribute
-        ");
+        $attributeId = $this->db->selectMaxId('eav_attribute', 'attribute_id');
 
         $this->db->execute("
             INSERT INTO catalog_eav_attribute (attribute_id, is_visible, is_visible_on_front, used_in_product_listing, is_visible_in_advanced_search) VALUES
