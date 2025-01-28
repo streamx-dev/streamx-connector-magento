@@ -4,7 +4,6 @@ namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
 use Exception;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
-use StreamX\ConnectorCore\Indexer\DataFilter;
 
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\Configurable\LoadChildrenRawAttributes;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\Configurable\LoadConfigurableOptions;
@@ -23,20 +22,17 @@ class ConfigurableData implements DataProviderInterface
         'parent_ids',
     ];
 
-    private DataFilter $dataFilter;
     private ConfigurableResource $configurableResource;
     private LoadQuantity $loadQuantity;
     private LoadChildrenRawAttributes $childrenAttributeProcessor;
     private LoadConfigurableOptions $configurableProcessor;
 
     public function __construct(
-        DataFilter $dataFilter,
         ConfigurableResource $configurableResource,
         LoadQuantity $loadQuantity,
         LoadConfigurableOptions $configurableProcessor,
-        LoadChildrenRawAttributes $childrenAttributeProcessor,
+        LoadChildrenRawAttributes $childrenAttributeProcessor
     ) {
-        $this->dataFilter = $dataFilter;
         $this->configurableResource = $configurableResource;
         $this->loadQuantity = $loadQuantity;
         $this->childrenAttributeProcessor = $childrenAttributeProcessor;
@@ -111,7 +107,7 @@ class ConfigurableData implements DataProviderInterface
             }
 
             foreach ($parentIds as $parentId) {
-                $child = $this->filterData($child);
+                $this->removeFields($child);
 
                 if (!isset($indexData[$parentId]['configurable_options'])) {
                     $indexData[$parentId]['configurable_options'] = [];
@@ -205,8 +201,10 @@ class ConfigurableData implements DataProviderInterface
         return $productDTO;
     }
 
-    private function filterData(array $productData): array
+    private function removeFields(array &$childData): void
     {
-        return $this->dataFilter->execute($productData, $this->childBlackListConfig);
+        foreach ($this->childBlackListConfig as $key) {
+            unset($childData[$key]);
+        }
     }
 }

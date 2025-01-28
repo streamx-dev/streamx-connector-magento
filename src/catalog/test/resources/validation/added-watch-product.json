@@ -340,22 +340,22 @@
   "configurable_children": [],
   "custom_options": [
     {
-      "option_id": 9,
+      "option_id": "9",
       "type": "select",
-      "is_require": true,
+      "is_require": "1",
       "max_characters": null,
       "image_size_x": null,
       "image_size_y": null,
-      "sort_order": 0,
+      "sort_order": "0",
       "title": "Size",
-      "price": 1.23,
+      "price": "1.230000",
       "price_type": "fixed",
       "values": [
         {
-          "option_type_id": 7,
-          "sort_order": 0,
+          "option_type_id": "7",
+          "sort_order": "0",
           "title": "The size",
-          "price": 9.87,
+          "price": "9.870000",
           "price_type": "fixed"
         }
       ]
