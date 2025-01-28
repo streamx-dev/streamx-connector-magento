@@ -26,7 +26,6 @@ use StreamX\ConnectorTestTools\Api\EntityAddControllerInterface;
 class EntityAddControllerImpl implements EntityAddControllerInterface {
 
     private Config $eavConfig;
-    private Transaction $transaction;
     private ProductFactory $productFactory;
     private CategoryFactory $categoryFactory;
     private EavSetupFactory $eavSetupFactory;
@@ -39,7 +38,6 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
 
     public function __construct(
         Config $eavConfig,
-        Transaction $transaction,
         ProductFactory $productFactory,
         CategoryFactory $categoryFactory,
         EavSetupFactory $eavSetupFactory,
@@ -51,7 +49,6 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
         CategoryProductLinkInterfaceFactory $categoryProductLinkFactory
     ) {
         $this->eavConfig = $eavConfig;
-        $this->transaction = $transaction;
         $this->productFactory = $productFactory;
         $this->categoryFactory = $categoryFactory;
         $this->eavSetupFactory = $eavSetupFactory;
@@ -91,13 +88,14 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
                     'manage_stock' => 1
                 ]);
 
-            $this->transaction->addObject($product);
-            $this->transaction->addCommitCallback(function () use ($sku, $categoryId, $product) {
+            $transaction = new Transaction();
+            $transaction->addObject($product);
+            $transaction->addCommitCallback(function () use ($sku, $categoryId, $product) {
                 $this->addProductToCategory($sku, $categoryId);
                 $this->addAttributeOptionsToProduct($product, 'color', ['Brown']);
                 $this->addAttributeOptionsToProduct($product, 'material', ['Metal', 'Plastic', 'Leather']);
             });
-            $this->transaction->save();
+            $transaction->save();
 
             return $this->productRepository->get($sku)->getId();
         } catch (Exception $e) {
