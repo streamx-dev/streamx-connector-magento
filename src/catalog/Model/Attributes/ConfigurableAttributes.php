@@ -12,8 +12,6 @@ class ConfigurableAttributes
      */
     const MINIMAL_ATTRIBUTE_SET = [
         'sku',
-        'status',
-        'visibility',
         'name',
         'price',
     ];
