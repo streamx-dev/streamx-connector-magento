@@ -20,7 +20,13 @@ class ProductUpdateTest extends BaseDirectDbEntityUpdateTest {
 
     /** @test */
     public function shouldPublishConfigurableProductEditedDirectlyInDatabaseToStreamx() {
-        $this->shouldPublishProductEditedDirectlyInDatabaseToStreamx('Chaz Kangeroo Hoodie', 'hoodie');
+        $this->setConfigurationValue($this->ADD_SWATCHES_PATH, '1');
+        try {
+            // TODO: currently swatches info is not added to the published product json even when the above setting is turned on
+            $this->shouldPublishProductEditedDirectlyInDatabaseToStreamx('Chaz Kangeroo Hoodie', 'hoodie');
+        } finally {
+            $this->restoreConfigurationValue($this->ADD_SWATCHES_PATH);
+        }
     }
 
     private function shouldPublishProductEditedDirectlyInDatabaseToStreamx(string $productName, string $productType): void {

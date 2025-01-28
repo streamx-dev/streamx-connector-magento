@@ -21,7 +21,13 @@ class ProductUpdateTest extends BaseAppEntityUpdateTest {
 
     /** @test */
     public function shouldPublishConfigurableProductEditedUsingMagentoApplicationToStreamx() {
-        $this->shouldPublishProductEditedUsingMagentoApplicationToStreamx('Chaz Kangeroo Hoodie', 'hoodie');
+        $this->setConfigurationValue($this->ADD_SWATCHES_PATH, '1');
+        try {
+            // TODO: currently swatches info is not added to the published product json even when the above setting is turned on
+            $this->shouldPublishProductEditedUsingMagentoApplicationToStreamx('Chaz Kangeroo Hoodie', 'hoodie');
+        } finally {
+            $this->restoreConfigurationValue($this->ADD_SWATCHES_PATH);
+        }
     }
 
     private function shouldPublishProductEditedUsingMagentoApplicationToStreamx(string $productName, string $productType): void {
