@@ -2,8 +2,6 @@
 
 namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
-use StreamX\ConnectorCore\Indexer\DataFilter;
-
 class CustomOptionConverter
 {
     private array $fieldsToDelete = [
@@ -14,17 +12,9 @@ class CustomOptionConverter
         'store_price',
         'store_price_type',
         'product_id',
+        'sku',
+        'file_extension'
     ];
-
-    private DataFilter $dataFilter;
-
-    public function __construct()
-    {
-        $this->dataFilter = new DataFilter(
-            ['sort_order', 'option_id', 'option_type_id'],
-            ['price']
-        );
-    }
 
     public function process(array $options, array $optionValues): array
     {
@@ -32,52 +22,29 @@ class CustomOptionConverter
 
         foreach ($optionValues as $optionValue) {
             $optionId = $optionValue['option_id'];
-            $optionValue = $this->prepareValue($optionValue);
+            $this->removeFields($optionValue);
+            unset($optionValue['option_id']);
             $options[$optionId]['values'][] = $optionValue;
         }
 
         foreach ($options as $option) {
             $productId = $option['product_id'];
-            $option = $this->prepareOption($option);
+            $this->removeFields($option);
+
+            if ('drop_down' === $option['type']) {
+                $option['type'] = 'select';
+            }
             $groupOption[$productId][] = $option;
         }
 
         return $groupOption;
     }
 
-    private function prepareValue(array $option): array
+    private function removeFields(array &$array): void
     {
-        $option = $this->unsetFields($option);
-        unset($option['option_id']);
-
-        return $option;
+        foreach ($this->fieldsToDelete as $key) {
+            unset($array[$key]);
+        }
     }
 
-    private function unsetFields(array $option): array
-    {
-        $option = $this->dataFilter->execute($option, $this->fieldsToDelete);
-
-        if (isset($option['sku']) !== true) {
-            unset($option['sku']);
-        }
-
-        if (isset($option['file_extension']) !== true) {
-            unset($option['file_extension']);
-        }
-
-        return $option;
-    }
-
-    private function prepareOption(array $option): array
-    {
-        $option = $this->unsetFields($option);
-
-        $option = $this->dataFilter->execute($option, $this->fieldsToDelete);
-
-        if ('drop_down' === $option['type']) {
-            $option['type'] = 'select';
-        }
-
-        return $option;
-    }
 }

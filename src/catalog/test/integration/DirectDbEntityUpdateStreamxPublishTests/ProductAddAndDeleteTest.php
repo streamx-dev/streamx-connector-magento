@@ -34,8 +34,8 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
                 '"id": [0-9]+' => '"id": 0',
                 '"sku": "[^"]+"' => '"sku": "[MASKED]"',
                 '"the-new-great-watch-[0-9]+"' => '"the-new-great-watch-0"',
-                '"option_id": [0-9]+' => '"option_id": 0',
-                '"option_type_id": [0-9]+' => '"option_type_id": 0',
+                '"option_id": "[0-9]+"' => '"option_id": "0"',
+                '"option_type_id": "[0-9]+"' => '"option_type_id": "0"',
             ]);
         } finally {
             try {
