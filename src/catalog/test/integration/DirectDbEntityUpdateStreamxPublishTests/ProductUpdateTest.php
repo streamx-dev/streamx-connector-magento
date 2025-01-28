@@ -23,7 +23,12 @@ class ProductUpdateTest extends BaseDirectDbEntityUpdateTest {
         $this->shouldPublishProductEditedDirectlyInDatabaseToStreamx('Chaz Kangeroo Hoodie', 'hoodie');
     }
 
-    private function shouldPublishProductEditedDirectlyInDatabaseToStreamx(string $productName, string $productType): void {
+    /** @test */
+    public function shouldPublishBundleProductEditedDirectlyInDatabaseToStreamx() {
+        $this->shouldPublishProductEditedDirectlyInDatabaseToStreamx('Sprite Yoga Companion Kit', 'bundle');
+    }
+
+    private function shouldPublishProductEditedDirectlyInDatabaseToStreamx(string $productName, string $productNameInValidationFileName): void {
         // given
         $productNewName = "Name modified for testing, was $productName";
         $productId = $this->db->getProductId($productName);
@@ -40,7 +45,7 @@ class ProductUpdateTest extends BaseDirectDbEntityUpdateTest {
             $this->reindexMview();
 
             // then
-            $this->assertExactDataIsPublished($expectedKey, "edited-$productType-product.json");
+            $this->assertExactDataIsPublished($expectedKey, "edited-$productNameInValidationFileName-product.json");
         } finally {
             $this->renameProductInDb($productId, $productName);
         }

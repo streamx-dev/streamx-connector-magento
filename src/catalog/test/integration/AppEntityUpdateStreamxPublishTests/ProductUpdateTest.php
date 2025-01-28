@@ -24,7 +24,12 @@ class ProductUpdateTest extends BaseAppEntityUpdateTest {
         $this->shouldPublishProductEditedUsingMagentoApplicationToStreamx('Chaz Kangeroo Hoodie', 'hoodie');
     }
 
-    private function shouldPublishProductEditedUsingMagentoApplicationToStreamx(string $productName, string $productType): void {
+    /** @test */
+    public function shouldPublishBundleProductEditedUsingMagentoApplicationToStreamx() {
+        $this->shouldPublishProductEditedUsingMagentoApplicationToStreamx('Sprite Yoga Companion Kit', 'bundle');
+    }
+
+    private function shouldPublishProductEditedUsingMagentoApplicationToStreamx(string $productName, string $productNameInValidationFileName): void {
         // given
         $productNewName = "Name modified for testing, was $productName";
         $productId = $this->db->getProductId($productName);
@@ -38,10 +43,10 @@ class ProductUpdateTest extends BaseAppEntityUpdateTest {
 
         // then
         try {
-            $this->assertExactDataIsPublished($expectedKey, "edited-$productType-product.json");
+            $this->assertExactDataIsPublished($expectedKey, "edited-$productNameInValidationFileName-product.json");
         } finally {
             self::renameProduct($productId, $productName);
-            $this->assertExactDataIsPublished($expectedKey, "original-$productType-product.json");
+            $this->assertExactDataIsPublished($expectedKey, "original-$productNameInValidationFileName-product.json");
         }
     }
 
