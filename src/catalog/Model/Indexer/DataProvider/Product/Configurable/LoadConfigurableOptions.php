@@ -28,11 +28,7 @@ class LoadConfigurableOptions
 
         foreach ($configurableChildren as $child) {
             if (isset($child[$attributeCode])) {
-                $value = $child[$attributeCode];
-
-                if (isset($value)) {
-                    $values[] = (int) $value;
-                }
+                $values[] = (int)$child[$attributeCode];
             }
         }
 
