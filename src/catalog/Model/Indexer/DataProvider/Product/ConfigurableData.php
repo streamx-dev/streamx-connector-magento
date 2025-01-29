@@ -22,20 +22,26 @@ class ConfigurableData extends DataProviderInterface
     ];
 
     private ConfigurableResource $configurableResource;
-    private QuantityData $quantityDataProvider;
     private LoadChildrenRawAttributes $childrenAttributeProcessor;
     private LoadConfigurableOptions $configurableProcessor;
 
+    /** @var DataProviderInterface[] */
+    private array $dataProviders;
+
     public function __construct(
         ConfigurableResource $configurableResource,
+        ChildProductMediaGalleryData $mediaGalleryDataProvider,
         QuantityData $quantityDataProvider,
         LoadConfigurableOptions $configurableProcessor,
         LoadChildrenRawAttributes $childrenAttributeProcessor
     ) {
         $this->configurableResource = $configurableResource;
-        $this->quantityDataProvider = $quantityDataProvider;
         $this->childrenAttributeProcessor = $childrenAttributeProcessor;
         $this->configurableProcessor = $configurableProcessor;
+        $this->dataProviders = [
+            $mediaGalleryDataProvider,
+            $quantityDataProvider
+        ];
     }
 
     /**
@@ -69,7 +75,10 @@ class ConfigurableData extends DataProviderInterface
             }
 
             $childProducts = $productsList[$productId]['configurable_children'];
-            $childProducts = $this->quantityDataProvider->addDataToEntities($childProducts, $storeId);
+            $childProducts = DataProviderInterface::addDataToEntities($childProducts, $storeId, $this->dataProviders);
+            foreach ($childProducts as &$childProduct) {
+                $this->removeFields($childProduct);
+            }
             $productsList[$productId]['configurable_children'] = $childProducts;
         }
 
@@ -100,8 +109,6 @@ class ConfigurableData extends DataProviderInterface
             $parentIds = $child['parent_ids'];
 
             foreach ($parentIds as $parentId) {
-                $this->removeFields($child);
-
                 if (!isset($indexData[$parentId]['configurable_options'])) {
                     $indexData[$parentId]['configurable_options'] = [];
                 }

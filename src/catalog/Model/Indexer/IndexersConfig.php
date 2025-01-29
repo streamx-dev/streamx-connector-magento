@@ -12,8 +12,8 @@ use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\ConfigurableData
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\CustomOptions;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\DataCleaner;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\LangData;
-use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\MediaGalleryData;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\PriceData;
+use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\ProductMediaGalleryData;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\QuantityData;
 use StreamX\ConnectorCore\Api\Index\TypeInterface;
 use StreamX\ConnectorCore\Api\IndexersConfigInterface;
@@ -36,7 +36,7 @@ class IndexersConfig implements IndexersConfigInterface
                 $dataProviderFactory->get(CategoryData::class),
                 // TODO decide which of the prices added by this provider do we need
                 $dataProviderFactory->get(PriceData::class),
-                $dataProviderFactory->get(MediaGalleryData::class),
+                $dataProviderFactory->get(ProductMediaGalleryData::class),
                 $dataProviderFactory->get(QuantityData::class),
                 // TODO review the provider; trim data produced by it only what we need
                 $dataProviderFactory->get(ConfigurableData::class),

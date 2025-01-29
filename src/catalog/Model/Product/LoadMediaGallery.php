@@ -43,7 +43,7 @@ class LoadMediaGallery
             $entityId = $this->rowIdToEntityId[$linkFieldId] ?? $linkFieldId;
 
             $imageUrl = $this->imageUrlManager->getProductImageUrl($mediaImage['file']);
-            $imageAlt = $this->getValue('label', $mediaImage);
+            $imageAlt = $this->getLabel($mediaImage);
             $image = [
                 'url' => $imageUrl,
                 'alt' => $imageAlt
@@ -75,14 +75,14 @@ class LoadMediaGallery
         }
     }
 
-    private function getValue(string $fieldKey, array $image): string
+    private function getLabel(array $image): string
     {
-        if (isset($image[$fieldKey]) && (null !== $image[$fieldKey])) {
-            return $image[$fieldKey];
+        if (isset($image['label']) && (null !== $image['label'])) {
+            return $image['label'];
         }
 
-        if (isset($image[$fieldKey . '_default'])) {
-            return $image[$fieldKey . '_default'];
+        if (isset($image['label_default'])) {
+            return $image['label_default'];
         }
 
         return '';
