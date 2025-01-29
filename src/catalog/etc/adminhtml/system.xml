@@ -37,7 +37,7 @@
                     <source_model>StreamX\ConnectorCatalog\Model\Config\Source\Product\ConfigurableChildAttributes</source_model>
                     <backend_model>StreamX\ConnectorCatalog\Model\Config\Backend\Attributes</backend_model>
                     <can_be_empty>1</can_be_empty>
-                    <comment>Select which product attributes should be exported for 'configurable_children'. Some attributes will be always exported: name, sku, price, status, url_key, visibility and attributes used for creating configurable children (like color, size, etc)</comment>
+                    <comment>Select which product attributes should be exported for 'variants'. Some attributes will be always exported: name, sku, price, status, url_key, visibility and attributes used for creating configurable children (like color, size, etc)</comment>
                 </field>
                 <field id="sync_tier_prices" translate="label comment" type="select" sortOrder="60" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Sync Tier Prices</label>

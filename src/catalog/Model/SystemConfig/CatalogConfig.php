@@ -98,6 +98,7 @@ class CatalogConfig
         return preg_split('/,/', $configParam, -1, PREG_SPLIT_NO_EMPTY); // split removing empty entries
     }
 
+    // TODO remove, unused now
     public function getConfigurableChildrenBatchSize(int $storeId): int
     {
         return (int) $this->getConfigParam(

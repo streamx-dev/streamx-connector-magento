@@ -529,7 +529,7 @@
       "label": "Size"
     }
   ],
-  "configurable_children": [
+  "variants": [
     {
       "sku": "MH01-XS-Black",
       "id": 47,
