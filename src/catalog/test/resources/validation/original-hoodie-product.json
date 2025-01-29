@@ -517,18 +517,6 @@
     }
   ],
   "quantity": 0,
-  "configurable_options": [
-    {
-      "attribute_id": 93,
-      "attribute_code": "color",
-      "label": "Color"
-    },
-    {
-      "attribute_id": 144,
-      "attribute_code": "size",
-      "label": "Size"
-    }
-  ],
   "variants": [
     {
       "sku": "MH01-XS-Black",
@@ -3555,7 +3543,5 @@
       ],
       "quantity": 100
     }
-  ],
-  "color_options": [],
-  "size_options": []
+  ]
 }

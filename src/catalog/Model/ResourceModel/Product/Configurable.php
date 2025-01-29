@@ -12,7 +12,6 @@ use StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable as ConfigurableType;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Helper as DbHelper;
-use Psr\Log\LoggerInterface;
 
 class Configurable
 {
@@ -40,10 +39,7 @@ class Configurable
     private ?array $configurableAttributesInfo = null;
     private ?array $productsData = null;
 
-    private LoggerInterface $logger;
-
     public function __construct(
-        LoggerInterface $logger,
         ProductAttributesProvider $attributeDataProvider,
         Product $productResource,
         ProductMetaData $productMetaData,
@@ -54,7 +50,6 @@ class Configurable
         $this->resource = $resourceConnection;
         $this->productMetaData = $productMetaData;
         $this->productResource = $productResource;
-        $this->logger = $logger;
         $this->dbHelper = $dbHelper;
     }
 
@@ -70,57 +65,6 @@ class Configurable
     public function setProducts(array $products): void
     {
         $this->productsData = $products;
-    }
-
-    /**
-     * Return the attribute values of the associated simple products
-     *
-     * @param array $product Configurable product.
-     *
-     * @throws Exception
-     */
-    public function getProductConfigurableAttributes(array $product, int $storeId): array
-    {
-        if ($product['type_id'] != ConfigurableType::TYPE_CODE) {
-            return [];
-        }
-
-        $attributeIds = $this->getProductConfigurableAttributeIds($product);
-
-        if (empty($attributeIds)) {
-            return [];
-        }
-
-        $attributes = $this->getConfigurableAttributeFullInfo($storeId);
-        $productConfigAttributes = [];
-
-        foreach ($attributeIds as $attributeId) {
-            $code = $attributes[$attributeId]['attribute_code'];
-            $productConfigAttributes[$code] = $attributes[$attributeId];
-        }
-
-        return $productConfigAttributes;
-    }
-
-    /**
-     * Return array of configurable attribute ids of the given configurable product.
-     */
-    private function getProductConfigurableAttributeIds(array $product): array
-    {
-        $attributes = $this->getConfigurableProductAttributes();
-        $linkField = $this->productMetaData->get()->getLinkField();
-        $linkFieldValue = $product[$linkField];
-
-        if (!isset($attributes[$linkFieldValue])) {
-            $entityField = $this->productMetaData->get()->getIdentifierField();
-            $this->logger->error(
-                sprintf('Cannot find super attribute for Product %d [%s]', $linkFieldValue, $entityField)
-            );
-
-            return [];
-        }
-
-        return explode(',', $attributes[$linkFieldValue]['attribute_ids']);
     }
 
     /**

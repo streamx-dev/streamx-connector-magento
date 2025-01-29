@@ -8,7 +8,7 @@ use Magento\Eav\Model\ResourceModel\Entity\Attribute\Option\Collection as Option
 
 class OptionCollectionToArray
 {
-    public function execute(OptionCollection $collection, array $additional = []): array
+    public static function execute(OptionCollection $collection, array $additional = []): array
     {
         $res = [];
         $additional['value'] = 'option_id';

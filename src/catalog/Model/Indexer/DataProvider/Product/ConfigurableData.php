@@ -4,10 +4,7 @@ namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
 use Exception;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
-
-use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\Configurable\LoadConfigurableOptions;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Configurable as ConfigurableResource;
-
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable as ConfigurableType;
 
 class ConfigurableData extends DataProviderInterface
@@ -21,7 +18,6 @@ class ConfigurableData extends DataProviderInterface
     ];
 
     private ConfigurableResource $configurableResource;
-    private LoadConfigurableOptions $configurableProcessor;
     private ChildProductAttributeData $childProductAttributeDataProvider;
 
     /** @var DataProviderInterface[] */
@@ -32,12 +28,10 @@ class ConfigurableData extends DataProviderInterface
         ChildProductAttributeData $childProductAttributeDataProvider,
         ChildProductMediaGalleryData $mediaGalleryDataProvider,
         QuantityData $quantityDataProvider,
-        DataCleaner $dataCleaner,
-        LoadConfigurableOptions $configurableProcessor
+        DataCleaner $dataCleaner
     ) {
         $this->configurableResource = $configurableResource;
         $this->childProductAttributeDataProvider = $childProductAttributeDataProvider;
-        $this->configurableProcessor = $configurableProcessor;
         $this->dataProviders = [
             $childProductAttributeDataProvider,
             $mediaGalleryDataProvider,
@@ -70,14 +64,7 @@ class ConfigurableData extends DataProviderInterface
                 continue;
             }
 
-            $productDTO = $this->applyConfigurableOptions($productDTO, $storeId);
-
-            /**
-             * Skip exporting configurable products without options
-             */
-            if (!empty($productDTO['configurable_options'])) {
-                $productsList[$productId] = $productDTO;
-            }
+            $productsList[$productId] = $productDTO;
 
             $childProducts = $productsList[$productId]['variants'];
             $childProducts = DataProviderInterface::addDataToEntities($childProducts, $storeId, $this->dataProviders);
@@ -108,66 +95,11 @@ class ConfigurableData extends DataProviderInterface
             $parentIds = $child['parent_ids'];
 
             foreach ($parentIds as $parentId) {
-                // TODO remove configurable_options from final JSON
-                if (!isset($indexData[$parentId]['configurable_options'])) {
-                    $indexData[$parentId]['configurable_options'] = [];
-                }
-
                 $indexData[$parentId]['variants'][] = $child;
             }
         }
 
         $allChildren = null;
-    }
-
-    /**
-     * Apply attributes to product variants + extra options for products necessary for StreamX
-     *
-     * @throws Exception
-     */
-    private function applyConfigurableOptions(array $productDTO, int $storeId): array
-    {
-        $configurableChildren = $productDTO['variants'];
-        $productAttributeOptions =
-            $this->configurableResource->getProductConfigurableAttributes($productDTO, $storeId);
-
-        $productDTO['variants'] = $configurableChildren;
-
-        foreach ($productAttributeOptions as $productAttribute) {
-            $attributeCode = $productAttribute['attribute_code'];
-
-            // TODO remove setting the _options fields
-            if (!isset($productDTO[$attributeCode . '_options'])) {
-                $productDTO[$attributeCode . '_options'] = [];
-            }
-
-            $options = $this->configurableProcessor->execute(
-                $attributeCode,
-                $storeId,
-                $configurableChildren
-            );
-
-            $values = [];
-
-            foreach ($options as $option) {
-                $values[] = (int) $option['value'];
-                $optionValue = [
-                    'value_index' => $option['value'],
-                    'label' => $option['label'],
-                ];
-
-                if (isset($option['swatch'])) {
-                    $optionValue['swatch'] = $option['swatch'];
-                }
-
-                $productAttribute['values'][] = $optionValue;
-            }
-
-            $productDTO['configurable_options'][] = $productAttribute;
-            $productDTO[$productAttribute['attribute_code'] . '_options'] = $values;
-        }
-
-        return $productDTO;
     }
 
     private function removeFields(array &$childData): void

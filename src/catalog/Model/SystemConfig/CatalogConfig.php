@@ -63,6 +63,7 @@ class CatalogConfig
         return (bool) $this->getConfigParam(self::SYNC_TIER_PRICES);
     }
 
+    // TODO remove, unused now
     public function addSwatchesToConfigurableOptions(): bool
     {
         return (bool) $this->getConfigParam(self::ADD_SWATCHES_OPTIONS);
