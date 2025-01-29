@@ -5,13 +5,13 @@ namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 use Exception;
 use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCatalog\Model\Attributes\AttributeDefinition;
+use StreamX\ConnectorCatalog\Model\Attributes\BaseProductAttributes;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\ProductAttributesProvider;
 use StreamX\ConnectorCatalog\Model\SlugGenerator;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
-use StreamX\ConnectorCatalog\Model\Attributes\ProductAttributes;
 use StreamX\ConnectorCore\Indexer\ImageUrlManager;
 
-class AttributeData extends DataProviderInterface
+abstract class BaseAttributeData extends DataProviderInterface
 {
     private const IMAGE_ATTRIBUTES = [
         'image',
@@ -21,13 +21,14 @@ class AttributeData extends DataProviderInterface
 
     private LoggerInterface $logger;
     private ProductAttributesProvider $resourceModel;
-    private ProductAttributes $productAttributes;
+    private BaseProductAttributes $productAttributes;
     private ImageUrlManager $imageUrlManager;
     private SlugGenerator $slugGenerator;
+    private array $additionalAttributesToIndex = [];
 
     public function __construct(
         LoggerInterface $logger,
-        ProductAttributes $productAttributes,
+        BaseProductAttributes $productAttributes,
         ProductAttributesProvider $resourceModel,
         ImageUrlManager $imageUrlManager,
         SlugGenerator $slugGenerator
@@ -39,6 +40,11 @@ class AttributeData extends DataProviderInterface
         $this->slugGenerator = $slugGenerator;
     }
 
+    public function setAdditionalAttributesToIndex(array $additionalAttributesToIndex): void
+    {
+        $this->additionalAttributesToIndex = $additionalAttributesToIndex;
+    }
+
     /**
      * @throws Exception
      */
@@ -46,6 +52,13 @@ class AttributeData extends DataProviderInterface
     {
         // note: the call returns empty array if the Connector is configured to export all attributes:
         $attributesToIndex = $this->productAttributes->getAttributesToIndex($storeId);
+
+        if (!empty($attributesToIndex)) {
+            $attributesToIndex = array_unique(array_merge(
+                $attributesToIndex,
+                $this->additionalAttributesToIndex
+            ));
+        }
 
         $productIds = array_keys($indexData);
 

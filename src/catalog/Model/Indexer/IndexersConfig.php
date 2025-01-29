@@ -5,7 +5,6 @@ namespace StreamX\ConnectorCatalog\Model\Indexer;
 use Exception;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Attribute\Options;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Category\CategoryDataFormatter;
-use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\AttributeData;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\BundleOptionsData;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\CategoryData;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\ConfigurableData;
@@ -13,6 +12,7 @@ use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\CustomOptions;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\DataCleaner;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\LangData;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\PriceData;
+use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\ProductAttributeData;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\ProductMediaGalleryData;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\QuantityData;
 use StreamX\ConnectorCore\Api\Index\TypeInterface;
@@ -30,7 +30,7 @@ class IndexersConfig implements IndexersConfigInterface
         $this->types = [
             new Type('product', [
                 $dataProviderFactory->get(LangData::class),
-                $dataProviderFactory->get(AttributeData::class),
+                $dataProviderFactory->get(ProductAttributeData::class),
                 // TODO review the provider; trim data produced by it only what we need
                 $dataProviderFactory->get(BundleOptionsData::class),
                 $dataProviderFactory->get(CategoryData::class),

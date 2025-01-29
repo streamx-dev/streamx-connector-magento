@@ -4,7 +4,7 @@ namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\Configurab
 
 use Exception;
 use Magento\Framework\Exception\LocalizedException;
-use StreamX\ConnectorCatalog\Model\Attributes\ConfigurableAttributes;
+use StreamX\ConnectorCatalog\Model\Attributes\ChildProductAttributes;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\ProductAttributesProvider;
 use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 use Traversable;
@@ -12,13 +12,13 @@ use Traversable;
 class LoadChildrenRawAttributes
 {
     private ProductAttributesProvider $resourceAttributeModel;
-    private ConfigurableAttributes $configurableAttributes;
+    private ChildProductAttributes $configurableAttributes;
     private CatalogConfig $settings;
 
     public function __construct(
         CatalogConfig $catalogConfiguration,
         ProductAttributesProvider $attributeDataProvider,
-        ConfigurableAttributes $configurableAttributes
+        ChildProductAttributes $configurableAttributes
     ) {
         $this->settings = $catalogConfiguration;
         $this->resourceAttributeModel = $attributeDataProvider;

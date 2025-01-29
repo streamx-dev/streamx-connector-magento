@@ -3,15 +3,15 @@
 namespace Model\Indexer\DataProvider\Product;
 
 use Psr\Log\LoggerInterface;
-use StreamX\ConnectorCatalog\Model\Attributes\ProductAttributes;
-use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\AttributeData;
 use PHPUnit\Framework\TestCase;
+use StreamX\ConnectorCatalog\Model\Attributes\ProductAttributes;
+use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\ProductAttributeData;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\ProductAttributesProvider;
 use StreamX\ConnectorCatalog\Model\SlugGenerator;
 use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 use StreamX\ConnectorCore\Indexer\ImageUrlManager;
 
-class AttributeDataTest extends TestCase
+class ProductAttributeDataTest extends TestCase
 {
 
     public function testApplySlug() {
@@ -43,7 +43,7 @@ class AttributeDataTest extends TestCase
         ];
 
         // when
-        $service = new AttributeData(
+        $service = new ProductAttributeData(
             $this->createMock(LoggerInterface::class),
             $this->createMock(ProductAttributes::class),
             $this->createMock(ProductAttributesProvider::class),

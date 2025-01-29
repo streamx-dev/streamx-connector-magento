@@ -532,28 +532,195 @@
   "configurable_children": [
     {
       "sku": "MH01-XS-Black",
-      "name": [
-        "Chaz Kangeroo Hoodie-XS-Black"
-      ],
-      "image": [
-        "\/m\/h\/mh01-black_main_1.jpg"
-      ],
-      "small_image": [
-        "\/m\/h\/mh01-black_main_1.jpg"
-      ],
-      "thumbnail": [
-        "\/m\/h\/mh01-black_main_1.jpg"
-      ],
-      "price": [
-        "52.000000"
-      ],
-      "color": [
-        "49"
-      ],
-      "size": [
-        "166"
-      ],
       "id": 47,
+      "attributes": [
+        {
+          "name": "small_image",
+          "label": "Small",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg",
+              "valueLabel": "\/m\/h\/mh01-black_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "thumbnail",
+          "label": "Thumbnail",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg",
+              "valueLabel": "\/m\/h\/mh01-black_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "color",
+          "label": "Color",
+          "values": [
+            {
+              "value": "49",
+              "valueLabel": "Black"
+            }
+          ],
+          "isFacet": true,
+          "options": [
+            {
+              "value": "49",
+              "label": "Black"
+            },
+            {
+              "value": "50",
+              "label": "Blue"
+            },
+            {
+              "value": "51",
+              "label": "Brown"
+            },
+            {
+              "value": "52",
+              "label": "Gray"
+            },
+            {
+              "value": "53",
+              "label": "Green"
+            },
+            {
+              "value": "54",
+              "label": "Lavender"
+            },
+            {
+              "value": "55",
+              "label": "Multi"
+            },
+            {
+              "value": "56",
+              "label": "Orange"
+            },
+            {
+              "value": "57",
+              "label": "Purple"
+            },
+            {
+              "value": "58",
+              "label": "Red"
+            },
+            {
+              "value": "59",
+              "label": "White"
+            },
+            {
+              "value": "60",
+              "label": "Yellow"
+            }
+          ]
+        },
+        {
+          "name": "size",
+          "label": "Size",
+          "values": [
+            {
+              "value": "166",
+              "valueLabel": "XS"
+            }
+          ],
+          "isFacet": true,
+          "options": [
+            {
+              "value": "91",
+              "label": "55 cm"
+            },
+            {
+              "value": "166",
+              "label": "XS"
+            },
+            {
+              "value": "92",
+              "label": "65 cm"
+            },
+            {
+              "value": "167",
+              "label": "S"
+            },
+            {
+              "value": "93",
+              "label": "75 cm"
+            },
+            {
+              "value": "168",
+              "label": "M"
+            },
+            {
+              "value": "94",
+              "label": "6 foot"
+            },
+            {
+              "value": "169",
+              "label": "L"
+            },
+            {
+              "value": "95",
+              "label": "8 foot"
+            },
+            {
+              "value": "170",
+              "label": "XL"
+            },
+            {
+              "value": "96",
+              "label": "10 foot"
+            },
+            {
+              "value": "171",
+              "label": "28"
+            },
+            {
+              "value": "172",
+              "label": "29"
+            },
+            {
+              "value": "173",
+              "label": "30"
+            },
+            {
+              "value": "174",
+              "label": "31"
+            },
+            {
+              "value": "175",
+              "label": "32"
+            },
+            {
+              "value": "176",
+              "label": "33"
+            },
+            {
+              "value": "177",
+              "label": "34"
+            },
+            {
+              "value": "178",
+              "label": "36"
+            },
+            {
+              "value": "179",
+              "label": "38"
+            }
+          ]
+        }
+      ],
+      "name": "Chaz Kangeroo Hoodie-XS-Black",
+      "label": "Chaz Kangeroo Hoodie-XS-Black",
+      "primaryImage": {
+        "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg",
+        "alt": ""
+      },
+      "price": 52,
+      "slug": "chaz-kangeroo-hoodie-xs-black-47",
       "gallery": [
         {
           "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg",
@@ -564,28 +731,195 @@
     },
     {
       "sku": "MH01-XS-Gray",
-      "name": [
-        "Chaz Kangeroo Hoodie-XS-Gray"
-      ],
-      "image": [
-        "\/m\/h\/mh01-gray_main_1.jpg"
-      ],
-      "small_image": [
-        "\/m\/h\/mh01-gray_main_1.jpg"
-      ],
-      "thumbnail": [
-        "\/m\/h\/mh01-gray_main_1.jpg"
-      ],
-      "price": [
-        "52.000000"
-      ],
-      "color": [
-        "52"
-      ],
-      "size": [
-        "166"
-      ],
       "id": 48,
+      "attributes": [
+        {
+          "name": "small_image",
+          "label": "Small",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
+              "valueLabel": "\/m\/h\/mh01-gray_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "thumbnail",
+          "label": "Thumbnail",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
+              "valueLabel": "\/m\/h\/mh01-gray_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "color",
+          "label": "Color",
+          "values": [
+            {
+              "value": "52",
+              "valueLabel": "Gray"
+            }
+          ],
+          "isFacet": true,
+          "options": [
+            {
+              "value": "49",
+              "label": "Black"
+            },
+            {
+              "value": "50",
+              "label": "Blue"
+            },
+            {
+              "value": "51",
+              "label": "Brown"
+            },
+            {
+              "value": "52",
+              "label": "Gray"
+            },
+            {
+              "value": "53",
+              "label": "Green"
+            },
+            {
+              "value": "54",
+              "label": "Lavender"
+            },
+            {
+              "value": "55",
+              "label": "Multi"
+            },
+            {
+              "value": "56",
+              "label": "Orange"
+            },
+            {
+              "value": "57",
+              "label": "Purple"
+            },
+            {
+              "value": "58",
+              "label": "Red"
+            },
+            {
+              "value": "59",
+              "label": "White"
+            },
+            {
+              "value": "60",
+              "label": "Yellow"
+            }
+          ]
+        },
+        {
+          "name": "size",
+          "label": "Size",
+          "values": [
+            {
+              "value": "166",
+              "valueLabel": "XS"
+            }
+          ],
+          "isFacet": true,
+          "options": [
+            {
+              "value": "91",
+              "label": "55 cm"
+            },
+            {
+              "value": "166",
+              "label": "XS"
+            },
+            {
+              "value": "92",
+              "label": "65 cm"
+            },
+            {
+              "value": "167",
+              "label": "S"
+            },
+            {
+              "value": "93",
+              "label": "75 cm"
+            },
+            {
+              "value": "168",
+              "label": "M"
+            },
+            {
+              "value": "94",
+              "label": "6 foot"
+            },
+            {
+              "value": "169",
+              "label": "L"
+            },
+            {
+              "value": "95",
+              "label": "8 foot"
+            },
+            {
+              "value": "170",
+              "label": "XL"
+            },
+            {
+              "value": "96",
+              "label": "10 foot"
+            },
+            {
+              "value": "171",
+              "label": "28"
+            },
+            {
+              "value": "172",
+              "label": "29"
+            },
+            {
+              "value": "173",
+              "label": "30"
+            },
+            {
+              "value": "174",
+              "label": "31"
+            },
+            {
+              "value": "175",
+              "label": "32"
+            },
+            {
+              "value": "176",
+              "label": "33"
+            },
+            {
+              "value": "177",
+              "label": "34"
+            },
+            {
+              "value": "178",
+              "label": "36"
+            },
+            {
+              "value": "179",
+              "label": "38"
+            }
+          ]
+        }
+      ],
+      "name": "Chaz Kangeroo Hoodie-XS-Gray",
+      "label": "Chaz Kangeroo Hoodie-XS-Gray",
+      "primaryImage": {
+        "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
+        "alt": ""
+      },
+      "price": 52,
+      "slug": "chaz-kangeroo-hoodie-xs-gray-48",
       "gallery": [
         {
           "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
@@ -604,28 +938,195 @@
     },
     {
       "sku": "MH01-XS-Orange",
-      "name": [
-        "Chaz Kangeroo Hoodie-XS-Orange"
-      ],
-      "image": [
-        "\/m\/h\/mh01-orange_main_1.jpg"
-      ],
-      "small_image": [
-        "\/m\/h\/mh01-orange_main_1.jpg"
-      ],
-      "thumbnail": [
-        "\/m\/h\/mh01-orange_main_1.jpg"
-      ],
-      "price": [
-        "52.000000"
-      ],
-      "color": [
-        "56"
-      ],
-      "size": [
-        "166"
-      ],
       "id": 49,
+      "attributes": [
+        {
+          "name": "small_image",
+          "label": "Small",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
+              "valueLabel": "\/m\/h\/mh01-orange_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "thumbnail",
+          "label": "Thumbnail",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
+              "valueLabel": "\/m\/h\/mh01-orange_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "color",
+          "label": "Color",
+          "values": [
+            {
+              "value": "56",
+              "valueLabel": "Orange"
+            }
+          ],
+          "isFacet": true,
+          "options": [
+            {
+              "value": "49",
+              "label": "Black"
+            },
+            {
+              "value": "50",
+              "label": "Blue"
+            },
+            {
+              "value": "51",
+              "label": "Brown"
+            },
+            {
+              "value": "52",
+              "label": "Gray"
+            },
+            {
+              "value": "53",
+              "label": "Green"
+            },
+            {
+              "value": "54",
+              "label": "Lavender"
+            },
+            {
+              "value": "55",
+              "label": "Multi"
+            },
+            {
+              "value": "56",
+              "label": "Orange"
+            },
+            {
+              "value": "57",
+              "label": "Purple"
+            },
+            {
+              "value": "58",
+              "label": "Red"
+            },
+            {
+              "value": "59",
+              "label": "White"
+            },
+            {
+              "value": "60",
+              "label": "Yellow"
+            }
+          ]
+        },
+        {
+          "name": "size",
+          "label": "Size",
+          "values": [
+            {
+              "value": "166",
+              "valueLabel": "XS"
+            }
+          ],
+          "isFacet": true,
+          "options": [
+            {
+              "value": "91",
+              "label": "55 cm"
+            },
+            {
+              "value": "166",
+              "label": "XS"
+            },
+            {
+              "value": "92",
+              "label": "65 cm"
+            },
+            {
+              "value": "167",
+              "label": "S"
+            },
+            {
+              "value": "93",
+              "label": "75 cm"
+            },
+            {
+              "value": "168",
+              "label": "M"
+            },
+            {
+              "value": "94",
+              "label": "6 foot"
+            },
+            {
+              "value": "169",
+              "label": "L"
+            },
+            {
+              "value": "95",
+              "label": "8 foot"
+            },
+            {
+              "value": "170",
+              "label": "XL"
+            },
+            {
+              "value": "96",
+              "label": "10 foot"
+            },
+            {
+              "value": "171",
+              "label": "28"
+            },
+            {
+              "value": "172",
+              "label": "29"
+            },
+            {
+              "value": "173",
+              "label": "30"
+            },
+            {
+              "value": "174",
+              "label": "31"
+            },
+            {
+              "value": "175",
+              "label": "32"
+            },
+            {
+              "value": "176",
+              "label": "33"
+            },
+            {
+              "value": "177",
+              "label": "34"
+            },
+            {
+              "value": "178",
+              "label": "36"
+            },
+            {
+              "value": "179",
+              "label": "38"
+            }
+          ]
+        }
+      ],
+      "name": "Chaz Kangeroo Hoodie-XS-Orange",
+      "label": "Chaz Kangeroo Hoodie-XS-Orange",
+      "primaryImage": {
+        "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
+        "alt": ""
+      },
+      "price": 52,
+      "slug": "chaz-kangeroo-hoodie-xs-orange-49",
       "gallery": [
         {
           "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
@@ -636,28 +1137,195 @@
     },
     {
       "sku": "MH01-S-Black",
-      "name": [
-        "Chaz Kangeroo Hoodie-S-Black"
-      ],
-      "image": [
-        "\/m\/h\/mh01-black_main_1.jpg"
-      ],
-      "small_image": [
-        "\/m\/h\/mh01-black_main_1.jpg"
-      ],
-      "thumbnail": [
-        "\/m\/h\/mh01-black_main_1.jpg"
-      ],
-      "price": [
-        "52.000000"
-      ],
-      "color": [
-        "49"
-      ],
-      "size": [
-        "167"
-      ],
       "id": 50,
+      "attributes": [
+        {
+          "name": "small_image",
+          "label": "Small",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg",
+              "valueLabel": "\/m\/h\/mh01-black_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "thumbnail",
+          "label": "Thumbnail",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg",
+              "valueLabel": "\/m\/h\/mh01-black_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "color",
+          "label": "Color",
+          "values": [
+            {
+              "value": "49",
+              "valueLabel": "Black"
+            }
+          ],
+          "isFacet": true,
+          "options": [
+            {
+              "value": "49",
+              "label": "Black"
+            },
+            {
+              "value": "50",
+              "label": "Blue"
+            },
+            {
+              "value": "51",
+              "label": "Brown"
+            },
+            {
+              "value": "52",
+              "label": "Gray"
+            },
+            {
+              "value": "53",
+              "label": "Green"
+            },
+            {
+              "value": "54",
+              "label": "Lavender"
+            },
+            {
+              "value": "55",
+              "label": "Multi"
+            },
+            {
+              "value": "56",
+              "label": "Orange"
+            },
+            {
+              "value": "57",
+              "label": "Purple"
+            },
+            {
+              "value": "58",
+              "label": "Red"
+            },
+            {
+              "value": "59",
+              "label": "White"
+            },
+            {
+              "value": "60",
+              "label": "Yellow"
+            }
+          ]
+        },
+        {
+          "name": "size",
+          "label": "Size",
+          "values": [
+            {
+              "value": "167",
+              "valueLabel": "S"
+            }
+          ],
+          "isFacet": true,
+          "options": [
+            {
+              "value": "91",
+              "label": "55 cm"
+            },
+            {
+              "value": "166",
+              "label": "XS"
+            },
+            {
+              "value": "92",
+              "label": "65 cm"
+            },
+            {
+              "value": "167",
+              "label": "S"
+            },
+            {
+              "value": "93",
+              "label": "75 cm"
+            },
+            {
+              "value": "168",
+              "label": "M"
+            },
+            {
+              "value": "94",
+              "label": "6 foot"
+            },
+            {
+              "value": "169",
+              "label": "L"
+            },
+            {
+              "value": "95",
+              "label": "8 foot"
+            },
+            {
+              "value": "170",
+              "label": "XL"
+            },
+            {
+              "value": "96",
+              "label": "10 foot"
+            },
+            {
+              "value": "171",
+              "label": "28"
+            },
+            {
+              "value": "172",
+              "label": "29"
+            },
+            {
+              "value": "173",
+              "label": "30"
+            },
+            {
+              "value": "174",
+              "label": "31"
+            },
+            {
+              "value": "175",
+              "label": "32"
+            },
+            {
+              "value": "176",
+              "label": "33"
+            },
+            {
+              "value": "177",
+              "label": "34"
+            },
+            {
+              "value": "178",
+              "label": "36"
+            },
+            {
+              "value": "179",
+              "label": "38"
+            }
+          ]
+        }
+      ],
+      "name": "Chaz Kangeroo Hoodie-S-Black",
+      "label": "Chaz Kangeroo Hoodie-S-Black",
+      "primaryImage": {
+        "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg",
+        "alt": ""
+      },
+      "price": 52,
+      "slug": "chaz-kangeroo-hoodie-s-black-50",
       "gallery": [
         {
           "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg",
@@ -668,28 +1336,195 @@
     },
     {
       "sku": "MH01-S-Gray",
-      "name": [
-        "Chaz Kangeroo Hoodie-S-Gray"
-      ],
-      "image": [
-        "\/m\/h\/mh01-gray_main_1.jpg"
-      ],
-      "small_image": [
-        "\/m\/h\/mh01-gray_main_1.jpg"
-      ],
-      "thumbnail": [
-        "\/m\/h\/mh01-gray_main_1.jpg"
-      ],
-      "price": [
-        "52.000000"
-      ],
-      "color": [
-        "52"
-      ],
-      "size": [
-        "167"
-      ],
       "id": 51,
+      "attributes": [
+        {
+          "name": "small_image",
+          "label": "Small",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
+              "valueLabel": "\/m\/h\/mh01-gray_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "thumbnail",
+          "label": "Thumbnail",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
+              "valueLabel": "\/m\/h\/mh01-gray_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "color",
+          "label": "Color",
+          "values": [
+            {
+              "value": "52",
+              "valueLabel": "Gray"
+            }
+          ],
+          "isFacet": true,
+          "options": [
+            {
+              "value": "49",
+              "label": "Black"
+            },
+            {
+              "value": "50",
+              "label": "Blue"
+            },
+            {
+              "value": "51",
+              "label": "Brown"
+            },
+            {
+              "value": "52",
+              "label": "Gray"
+            },
+            {
+              "value": "53",
+              "label": "Green"
+            },
+            {
+              "value": "54",
+              "label": "Lavender"
+            },
+            {
+              "value": "55",
+              "label": "Multi"
+            },
+            {
+              "value": "56",
+              "label": "Orange"
+            },
+            {
+              "value": "57",
+              "label": "Purple"
+            },
+            {
+              "value": "58",
+              "label": "Red"
+            },
+            {
+              "value": "59",
+              "label": "White"
+            },
+            {
+              "value": "60",
+              "label": "Yellow"
+            }
+          ]
+        },
+        {
+          "name": "size",
+          "label": "Size",
+          "values": [
+            {
+              "value": "167",
+              "valueLabel": "S"
+            }
+          ],
+          "isFacet": true,
+          "options": [
+            {
+              "value": "91",
+              "label": "55 cm"
+            },
+            {
+              "value": "166",
+              "label": "XS"
+            },
+            {
+              "value": "92",
+              "label": "65 cm"
+            },
+            {
+              "value": "167",
+              "label": "S"
+            },
+            {
+              "value": "93",
+              "label": "75 cm"
+            },
+            {
+              "value": "168",
+              "label": "M"
+            },
+            {
+              "value": "94",
+              "label": "6 foot"
+            },
+            {
+              "value": "169",
+              "label": "L"
+            },
+            {
+              "value": "95",
+              "label": "8 foot"
+            },
+            {
+              "value": "170",
+              "label": "XL"
+            },
+            {
+              "value": "96",
+              "label": "10 foot"
+            },
+            {
+              "value": "171",
+              "label": "28"
+            },
+            {
+              "value": "172",
+              "label": "29"
+            },
+            {
+              "value": "173",
+              "label": "30"
+            },
+            {
+              "value": "174",
+              "label": "31"
+            },
+            {
+              "value": "175",
+              "label": "32"
+            },
+            {
+              "value": "176",
+              "label": "33"
+            },
+            {
+              "value": "177",
+              "label": "34"
+            },
+            {
+              "value": "178",
+              "label": "36"
+            },
+            {
+              "value": "179",
+              "label": "38"
+            }
+          ]
+        }
+      ],
+      "name": "Chaz Kangeroo Hoodie-S-Gray",
+      "label": "Chaz Kangeroo Hoodie-S-Gray",
+      "primaryImage": {
+        "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
+        "alt": ""
+      },
+      "price": 52,
+      "slug": "chaz-kangeroo-hoodie-s-gray-51",
       "gallery": [
         {
           "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
@@ -708,28 +1543,195 @@
     },
     {
       "sku": "MH01-S-Orange",
-      "name": [
-        "Chaz Kangeroo Hoodie-S-Orange"
-      ],
-      "image": [
-        "\/m\/h\/mh01-orange_main_1.jpg"
-      ],
-      "small_image": [
-        "\/m\/h\/mh01-orange_main_1.jpg"
-      ],
-      "thumbnail": [
-        "\/m\/h\/mh01-orange_main_1.jpg"
-      ],
-      "price": [
-        "52.000000"
-      ],
-      "color": [
-        "56"
-      ],
-      "size": [
-        "167"
-      ],
       "id": 52,
+      "attributes": [
+        {
+          "name": "small_image",
+          "label": "Small",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
+              "valueLabel": "\/m\/h\/mh01-orange_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "thumbnail",
+          "label": "Thumbnail",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
+              "valueLabel": "\/m\/h\/mh01-orange_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "color",
+          "label": "Color",
+          "values": [
+            {
+              "value": "56",
+              "valueLabel": "Orange"
+            }
+          ],
+          "isFacet": true,
+          "options": [
+            {
+              "value": "49",
+              "label": "Black"
+            },
+            {
+              "value": "50",
+              "label": "Blue"
+            },
+            {
+              "value": "51",
+              "label": "Brown"
+            },
+            {
+              "value": "52",
+              "label": "Gray"
+            },
+            {
+              "value": "53",
+              "label": "Green"
+            },
+            {
+              "value": "54",
+              "label": "Lavender"
+            },
+            {
+              "value": "55",
+              "label": "Multi"
+            },
+            {
+              "value": "56",
+              "label": "Orange"
+            },
+            {
+              "value": "57",
+              "label": "Purple"
+            },
+            {
+              "value": "58",
+              "label": "Red"
+            },
+            {
+              "value": "59",
+              "label": "White"
+            },
+            {
+              "value": "60",
+              "label": "Yellow"
+            }
+          ]
+        },
+        {
+          "name": "size",
+          "label": "Size",
+          "values": [
+            {
+              "value": "167",
+              "valueLabel": "S"
+            }
+          ],
+          "isFacet": true,
+          "options": [
+            {
+              "value": "91",
+              "label": "55 cm"
+            },
+            {
+              "value": "166",
+              "label": "XS"
+            },
+            {
+              "value": "92",
+              "label": "65 cm"
+            },
+            {
+              "value": "167",
+              "label": "S"
+            },
+            {
+              "value": "93",
+              "label": "75 cm"
+            },
+            {
+              "value": "168",
+              "label": "M"
+            },
+            {
+              "value": "94",
+              "label": "6 foot"
+            },
+            {
+              "value": "169",
+              "label": "L"
+            },
+            {
+              "value": "95",
+              "label": "8 foot"
+            },
+            {
+              "value": "170",
+              "label": "XL"
+            },
+            {
+              "value": "96",
+              "label": "10 foot"
+            },
+            {
+              "value": "171",
+              "label": "28"
+            },
+            {
+              "value": "172",
+              "label": "29"
+            },
+            {
+              "value": "173",
+              "label": "30"
+            },
+            {
+              "value": "174",
+              "label": "31"
+            },
+            {
+              "value": "175",
+              "label": "32"
+            },
+            {
+              "value": "176",
+              "label": "33"
+            },
+            {
+              "value": "177",
+              "label": "34"
+            },
+            {
+              "value": "178",
+              "label": "36"
+            },
+            {
+              "value": "179",
+              "label": "38"
+            }
+          ]
+        }
+      ],
+      "name": "Chaz Kangeroo Hoodie-S-Orange",
+      "label": "Chaz Kangeroo Hoodie-S-Orange",
+      "primaryImage": {
+        "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
+        "alt": ""
+      },
+      "price": 52,
+      "slug": "chaz-kangeroo-hoodie-s-orange-52",
       "gallery": [
         {
           "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
@@ -740,28 +1742,195 @@
     },
     {
       "sku": "MH01-M-Black",
-      "name": [
-        "Chaz Kangeroo Hoodie-M-Black"
-      ],
-      "image": [
-        "\/m\/h\/mh01-black_main_1.jpg"
-      ],
-      "small_image": [
-        "\/m\/h\/mh01-black_main_1.jpg"
-      ],
-      "thumbnail": [
-        "\/m\/h\/mh01-black_main_1.jpg"
-      ],
-      "price": [
-        "52.000000"
-      ],
-      "color": [
-        "49"
-      ],
-      "size": [
-        "168"
-      ],
       "id": 53,
+      "attributes": [
+        {
+          "name": "small_image",
+          "label": "Small",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg",
+              "valueLabel": "\/m\/h\/mh01-black_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "thumbnail",
+          "label": "Thumbnail",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg",
+              "valueLabel": "\/m\/h\/mh01-black_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "color",
+          "label": "Color",
+          "values": [
+            {
+              "value": "49",
+              "valueLabel": "Black"
+            }
+          ],
+          "isFacet": true,
+          "options": [
+            {
+              "value": "49",
+              "label": "Black"
+            },
+            {
+              "value": "50",
+              "label": "Blue"
+            },
+            {
+              "value": "51",
+              "label": "Brown"
+            },
+            {
+              "value": "52",
+              "label": "Gray"
+            },
+            {
+              "value": "53",
+              "label": "Green"
+            },
+            {
+              "value": "54",
+              "label": "Lavender"
+            },
+            {
+              "value": "55",
+              "label": "Multi"
+            },
+            {
+              "value": "56",
+              "label": "Orange"
+            },
+            {
+              "value": "57",
+              "label": "Purple"
+            },
+            {
+              "value": "58",
+              "label": "Red"
+            },
+            {
+              "value": "59",
+              "label": "White"
+            },
+            {
+              "value": "60",
+              "label": "Yellow"
+            }
+          ]
+        },
+        {
+          "name": "size",
+          "label": "Size",
+          "values": [
+            {
+              "value": "168",
+              "valueLabel": "M"
+            }
+          ],
+          "isFacet": true,
+          "options": [
+            {
+              "value": "91",
+              "label": "55 cm"
+            },
+            {
+              "value": "166",
+              "label": "XS"
+            },
+            {
+              "value": "92",
+              "label": "65 cm"
+            },
+            {
+              "value": "167",
+              "label": "S"
+            },
+            {
+              "value": "93",
+              "label": "75 cm"
+            },
+            {
+              "value": "168",
+              "label": "M"
+            },
+            {
+              "value": "94",
+              "label": "6 foot"
+            },
+            {
+              "value": "169",
+              "label": "L"
+            },
+            {
+              "value": "95",
+              "label": "8 foot"
+            },
+            {
+              "value": "170",
+              "label": "XL"
+            },
+            {
+              "value": "96",
+              "label": "10 foot"
+            },
+            {
+              "value": "171",
+              "label": "28"
+            },
+            {
+              "value": "172",
+              "label": "29"
+            },
+            {
+              "value": "173",
+              "label": "30"
+            },
+            {
+              "value": "174",
+              "label": "31"
+            },
+            {
+              "value": "175",
+              "label": "32"
+            },
+            {
+              "value": "176",
+              "label": "33"
+            },
+            {
+              "value": "177",
+              "label": "34"
+            },
+            {
+              "value": "178",
+              "label": "36"
+            },
+            {
+              "value": "179",
+              "label": "38"
+            }
+          ]
+        }
+      ],
+      "name": "Chaz Kangeroo Hoodie-M-Black",
+      "label": "Chaz Kangeroo Hoodie-M-Black",
+      "primaryImage": {
+        "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg",
+        "alt": ""
+      },
+      "price": 52,
+      "slug": "chaz-kangeroo-hoodie-m-black-53",
       "gallery": [
         {
           "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg",
@@ -772,28 +1941,195 @@
     },
     {
       "sku": "MH01-M-Gray",
-      "name": [
-        "Chaz Kangeroo Hoodie-M-Gray"
-      ],
-      "image": [
-        "\/m\/h\/mh01-gray_main_1.jpg"
-      ],
-      "small_image": [
-        "\/m\/h\/mh01-gray_main_1.jpg"
-      ],
-      "thumbnail": [
-        "\/m\/h\/mh01-gray_main_1.jpg"
-      ],
-      "price": [
-        "52.000000"
-      ],
-      "color": [
-        "52"
-      ],
-      "size": [
-        "168"
-      ],
       "id": 54,
+      "attributes": [
+        {
+          "name": "small_image",
+          "label": "Small",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
+              "valueLabel": "\/m\/h\/mh01-gray_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "thumbnail",
+          "label": "Thumbnail",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
+              "valueLabel": "\/m\/h\/mh01-gray_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "color",
+          "label": "Color",
+          "values": [
+            {
+              "value": "52",
+              "valueLabel": "Gray"
+            }
+          ],
+          "isFacet": true,
+          "options": [
+            {
+              "value": "49",
+              "label": "Black"
+            },
+            {
+              "value": "50",
+              "label": "Blue"
+            },
+            {
+              "value": "51",
+              "label": "Brown"
+            },
+            {
+              "value": "52",
+              "label": "Gray"
+            },
+            {
+              "value": "53",
+              "label": "Green"
+            },
+            {
+              "value": "54",
+              "label": "Lavender"
+            },
+            {
+              "value": "55",
+              "label": "Multi"
+            },
+            {
+              "value": "56",
+              "label": "Orange"
+            },
+            {
+              "value": "57",
+              "label": "Purple"
+            },
+            {
+              "value": "58",
+              "label": "Red"
+            },
+            {
+              "value": "59",
+              "label": "White"
+            },
+            {
+              "value": "60",
+              "label": "Yellow"
+            }
+          ]
+        },
+        {
+          "name": "size",
+          "label": "Size",
+          "values": [
+            {
+              "value": "168",
+              "valueLabel": "M"
+            }
+          ],
+          "isFacet": true,
+          "options": [
+            {
+              "value": "91",
+              "label": "55 cm"
+            },
+            {
+              "value": "166",
+              "label": "XS"
+            },
+            {
+              "value": "92",
+              "label": "65 cm"
+            },
+            {
+              "value": "167",
+              "label": "S"
+            },
+            {
+              "value": "93",
+              "label": "75 cm"
+            },
+            {
+              "value": "168",
+              "label": "M"
+            },
+            {
+              "value": "94",
+              "label": "6 foot"
+            },
+            {
+              "value": "169",
+              "label": "L"
+            },
+            {
+              "value": "95",
+              "label": "8 foot"
+            },
+            {
+              "value": "170",
+              "label": "XL"
+            },
+            {
+              "value": "96",
+              "label": "10 foot"
+            },
+            {
+              "value": "171",
+              "label": "28"
+            },
+            {
+              "value": "172",
+              "label": "29"
+            },
+            {
+              "value": "173",
+              "label": "30"
+            },
+            {
+              "value": "174",
+              "label": "31"
+            },
+            {
+              "value": "175",
+              "label": "32"
+            },
+            {
+              "value": "176",
+              "label": "33"
+            },
+            {
+              "value": "177",
+              "label": "34"
+            },
+            {
+              "value": "178",
+              "label": "36"
+            },
+            {
+              "value": "179",
+              "label": "38"
+            }
+          ]
+        }
+      ],
+      "name": "Chaz Kangeroo Hoodie-M-Gray",
+      "label": "Chaz Kangeroo Hoodie-M-Gray",
+      "primaryImage": {
+        "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
+        "alt": ""
+      },
+      "price": 52,
+      "slug": "chaz-kangeroo-hoodie-m-gray-54",
       "gallery": [
         {
           "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
@@ -812,28 +2148,195 @@
     },
     {
       "sku": "MH01-M-Orange",
-      "name": [
-        "Chaz Kangeroo Hoodie-M-Orange"
-      ],
-      "image": [
-        "\/m\/h\/mh01-orange_main_1.jpg"
-      ],
-      "small_image": [
-        "\/m\/h\/mh01-orange_main_1.jpg"
-      ],
-      "thumbnail": [
-        "\/m\/h\/mh01-orange_main_1.jpg"
-      ],
-      "price": [
-        "52.000000"
-      ],
-      "color": [
-        "56"
-      ],
-      "size": [
-        "168"
-      ],
       "id": 55,
+      "attributes": [
+        {
+          "name": "small_image",
+          "label": "Small",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
+              "valueLabel": "\/m\/h\/mh01-orange_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "thumbnail",
+          "label": "Thumbnail",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
+              "valueLabel": "\/m\/h\/mh01-orange_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "color",
+          "label": "Color",
+          "values": [
+            {
+              "value": "56",
+              "valueLabel": "Orange"
+            }
+          ],
+          "isFacet": true,
+          "options": [
+            {
+              "value": "49",
+              "label": "Black"
+            },
+            {
+              "value": "50",
+              "label": "Blue"
+            },
+            {
+              "value": "51",
+              "label": "Brown"
+            },
+            {
+              "value": "52",
+              "label": "Gray"
+            },
+            {
+              "value": "53",
+              "label": "Green"
+            },
+            {
+              "value": "54",
+              "label": "Lavender"
+            },
+            {
+              "value": "55",
+              "label": "Multi"
+            },
+            {
+              "value": "56",
+              "label": "Orange"
+            },
+            {
+              "value": "57",
+              "label": "Purple"
+            },
+            {
+              "value": "58",
+              "label": "Red"
+            },
+            {
+              "value": "59",
+              "label": "White"
+            },
+            {
+              "value": "60",
+              "label": "Yellow"
+            }
+          ]
+        },
+        {
+          "name": "size",
+          "label": "Size",
+          "values": [
+            {
+              "value": "168",
+              "valueLabel": "M"
+            }
+          ],
+          "isFacet": true,
+          "options": [
+            {
+              "value": "91",
+              "label": "55 cm"
+            },
+            {
+              "value": "166",
+              "label": "XS"
+            },
+            {
+              "value": "92",
+              "label": "65 cm"
+            },
+            {
+              "value": "167",
+              "label": "S"
+            },
+            {
+              "value": "93",
+              "label": "75 cm"
+            },
+            {
+              "value": "168",
+              "label": "M"
+            },
+            {
+              "value": "94",
+              "label": "6 foot"
+            },
+            {
+              "value": "169",
+              "label": "L"
+            },
+            {
+              "value": "95",
+              "label": "8 foot"
+            },
+            {
+              "value": "170",
+              "label": "XL"
+            },
+            {
+              "value": "96",
+              "label": "10 foot"
+            },
+            {
+              "value": "171",
+              "label": "28"
+            },
+            {
+              "value": "172",
+              "label": "29"
+            },
+            {
+              "value": "173",
+              "label": "30"
+            },
+            {
+              "value": "174",
+              "label": "31"
+            },
+            {
+              "value": "175",
+              "label": "32"
+            },
+            {
+              "value": "176",
+              "label": "33"
+            },
+            {
+              "value": "177",
+              "label": "34"
+            },
+            {
+              "value": "178",
+              "label": "36"
+            },
+            {
+              "value": "179",
+              "label": "38"
+            }
+          ]
+        }
+      ],
+      "name": "Chaz Kangeroo Hoodie-M-Orange",
+      "label": "Chaz Kangeroo Hoodie-M-Orange",
+      "primaryImage": {
+        "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
+        "alt": ""
+      },
+      "price": 52,
+      "slug": "chaz-kangeroo-hoodie-m-orange-55",
       "gallery": [
         {
           "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
@@ -844,28 +2347,195 @@
     },
     {
       "sku": "MH01-L-Black",
-      "name": [
-        "Chaz Kangeroo Hoodie-L-Black"
-      ],
-      "image": [
-        "\/m\/h\/mh01-black_main_1.jpg"
-      ],
-      "small_image": [
-        "\/m\/h\/mh01-black_main_1.jpg"
-      ],
-      "thumbnail": [
-        "\/m\/h\/mh01-black_main_1.jpg"
-      ],
-      "price": [
-        "52.000000"
-      ],
-      "color": [
-        "49"
-      ],
-      "size": [
-        "169"
-      ],
       "id": 56,
+      "attributes": [
+        {
+          "name": "small_image",
+          "label": "Small",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg",
+              "valueLabel": "\/m\/h\/mh01-black_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "thumbnail",
+          "label": "Thumbnail",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg",
+              "valueLabel": "\/m\/h\/mh01-black_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "color",
+          "label": "Color",
+          "values": [
+            {
+              "value": "49",
+              "valueLabel": "Black"
+            }
+          ],
+          "isFacet": true,
+          "options": [
+            {
+              "value": "49",
+              "label": "Black"
+            },
+            {
+              "value": "50",
+              "label": "Blue"
+            },
+            {
+              "value": "51",
+              "label": "Brown"
+            },
+            {
+              "value": "52",
+              "label": "Gray"
+            },
+            {
+              "value": "53",
+              "label": "Green"
+            },
+            {
+              "value": "54",
+              "label": "Lavender"
+            },
+            {
+              "value": "55",
+              "label": "Multi"
+            },
+            {
+              "value": "56",
+              "label": "Orange"
+            },
+            {
+              "value": "57",
+              "label": "Purple"
+            },
+            {
+              "value": "58",
+              "label": "Red"
+            },
+            {
+              "value": "59",
+              "label": "White"
+            },
+            {
+              "value": "60",
+              "label": "Yellow"
+            }
+          ]
+        },
+        {
+          "name": "size",
+          "label": "Size",
+          "values": [
+            {
+              "value": "169",
+              "valueLabel": "L"
+            }
+          ],
+          "isFacet": true,
+          "options": [
+            {
+              "value": "91",
+              "label": "55 cm"
+            },
+            {
+              "value": "166",
+              "label": "XS"
+            },
+            {
+              "value": "92",
+              "label": "65 cm"
+            },
+            {
+              "value": "167",
+              "label": "S"
+            },
+            {
+              "value": "93",
+              "label": "75 cm"
+            },
+            {
+              "value": "168",
+              "label": "M"
+            },
+            {
+              "value": "94",
+              "label": "6 foot"
+            },
+            {
+              "value": "169",
+              "label": "L"
+            },
+            {
+              "value": "95",
+              "label": "8 foot"
+            },
+            {
+              "value": "170",
+              "label": "XL"
+            },
+            {
+              "value": "96",
+              "label": "10 foot"
+            },
+            {
+              "value": "171",
+              "label": "28"
+            },
+            {
+              "value": "172",
+              "label": "29"
+            },
+            {
+              "value": "173",
+              "label": "30"
+            },
+            {
+              "value": "174",
+              "label": "31"
+            },
+            {
+              "value": "175",
+              "label": "32"
+            },
+            {
+              "value": "176",
+              "label": "33"
+            },
+            {
+              "value": "177",
+              "label": "34"
+            },
+            {
+              "value": "178",
+              "label": "36"
+            },
+            {
+              "value": "179",
+              "label": "38"
+            }
+          ]
+        }
+      ],
+      "name": "Chaz Kangeroo Hoodie-L-Black",
+      "label": "Chaz Kangeroo Hoodie-L-Black",
+      "primaryImage": {
+        "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg",
+        "alt": ""
+      },
+      "price": 52,
+      "slug": "chaz-kangeroo-hoodie-l-black-56",
       "gallery": [
         {
           "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg",
@@ -876,28 +2546,195 @@
     },
     {
       "sku": "MH01-L-Gray",
-      "name": [
-        "Chaz Kangeroo Hoodie-L-Gray"
-      ],
-      "image": [
-        "\/m\/h\/mh01-gray_main_1.jpg"
-      ],
-      "small_image": [
-        "\/m\/h\/mh01-gray_main_1.jpg"
-      ],
-      "thumbnail": [
-        "\/m\/h\/mh01-gray_main_1.jpg"
-      ],
-      "price": [
-        "52.000000"
-      ],
-      "color": [
-        "52"
-      ],
-      "size": [
-        "169"
-      ],
       "id": 57,
+      "attributes": [
+        {
+          "name": "small_image",
+          "label": "Small",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
+              "valueLabel": "\/m\/h\/mh01-gray_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "thumbnail",
+          "label": "Thumbnail",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
+              "valueLabel": "\/m\/h\/mh01-gray_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "color",
+          "label": "Color",
+          "values": [
+            {
+              "value": "52",
+              "valueLabel": "Gray"
+            }
+          ],
+          "isFacet": true,
+          "options": [
+            {
+              "value": "49",
+              "label": "Black"
+            },
+            {
+              "value": "50",
+              "label": "Blue"
+            },
+            {
+              "value": "51",
+              "label": "Brown"
+            },
+            {
+              "value": "52",
+              "label": "Gray"
+            },
+            {
+              "value": "53",
+              "label": "Green"
+            },
+            {
+              "value": "54",
+              "label": "Lavender"
+            },
+            {
+              "value": "55",
+              "label": "Multi"
+            },
+            {
+              "value": "56",
+              "label": "Orange"
+            },
+            {
+              "value": "57",
+              "label": "Purple"
+            },
+            {
+              "value": "58",
+              "label": "Red"
+            },
+            {
+              "value": "59",
+              "label": "White"
+            },
+            {
+              "value": "60",
+              "label": "Yellow"
+            }
+          ]
+        },
+        {
+          "name": "size",
+          "label": "Size",
+          "values": [
+            {
+              "value": "169",
+              "valueLabel": "L"
+            }
+          ],
+          "isFacet": true,
+          "options": [
+            {
+              "value": "91",
+              "label": "55 cm"
+            },
+            {
+              "value": "166",
+              "label": "XS"
+            },
+            {
+              "value": "92",
+              "label": "65 cm"
+            },
+            {
+              "value": "167",
+              "label": "S"
+            },
+            {
+              "value": "93",
+              "label": "75 cm"
+            },
+            {
+              "value": "168",
+              "label": "M"
+            },
+            {
+              "value": "94",
+              "label": "6 foot"
+            },
+            {
+              "value": "169",
+              "label": "L"
+            },
+            {
+              "value": "95",
+              "label": "8 foot"
+            },
+            {
+              "value": "170",
+              "label": "XL"
+            },
+            {
+              "value": "96",
+              "label": "10 foot"
+            },
+            {
+              "value": "171",
+              "label": "28"
+            },
+            {
+              "value": "172",
+              "label": "29"
+            },
+            {
+              "value": "173",
+              "label": "30"
+            },
+            {
+              "value": "174",
+              "label": "31"
+            },
+            {
+              "value": "175",
+              "label": "32"
+            },
+            {
+              "value": "176",
+              "label": "33"
+            },
+            {
+              "value": "177",
+              "label": "34"
+            },
+            {
+              "value": "178",
+              "label": "36"
+            },
+            {
+              "value": "179",
+              "label": "38"
+            }
+          ]
+        }
+      ],
+      "name": "Chaz Kangeroo Hoodie-L-Gray",
+      "label": "Chaz Kangeroo Hoodie-L-Gray",
+      "primaryImage": {
+        "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
+        "alt": ""
+      },
+      "price": 52,
+      "slug": "chaz-kangeroo-hoodie-l-gray-57",
       "gallery": [
         {
           "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
@@ -916,28 +2753,195 @@
     },
     {
       "sku": "MH01-L-Orange",
-      "name": [
-        "Chaz Kangeroo Hoodie-L-Orange"
-      ],
-      "image": [
-        "\/m\/h\/mh01-orange_main_1.jpg"
-      ],
-      "small_image": [
-        "\/m\/h\/mh01-orange_main_1.jpg"
-      ],
-      "thumbnail": [
-        "\/m\/h\/mh01-orange_main_1.jpg"
-      ],
-      "price": [
-        "52.000000"
-      ],
-      "color": [
-        "56"
-      ],
-      "size": [
-        "169"
-      ],
       "id": 58,
+      "attributes": [
+        {
+          "name": "small_image",
+          "label": "Small",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
+              "valueLabel": "\/m\/h\/mh01-orange_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "thumbnail",
+          "label": "Thumbnail",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
+              "valueLabel": "\/m\/h\/mh01-orange_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "color",
+          "label": "Color",
+          "values": [
+            {
+              "value": "56",
+              "valueLabel": "Orange"
+            }
+          ],
+          "isFacet": true,
+          "options": [
+            {
+              "value": "49",
+              "label": "Black"
+            },
+            {
+              "value": "50",
+              "label": "Blue"
+            },
+            {
+              "value": "51",
+              "label": "Brown"
+            },
+            {
+              "value": "52",
+              "label": "Gray"
+            },
+            {
+              "value": "53",
+              "label": "Green"
+            },
+            {
+              "value": "54",
+              "label": "Lavender"
+            },
+            {
+              "value": "55",
+              "label": "Multi"
+            },
+            {
+              "value": "56",
+              "label": "Orange"
+            },
+            {
+              "value": "57",
+              "label": "Purple"
+            },
+            {
+              "value": "58",
+              "label": "Red"
+            },
+            {
+              "value": "59",
+              "label": "White"
+            },
+            {
+              "value": "60",
+              "label": "Yellow"
+            }
+          ]
+        },
+        {
+          "name": "size",
+          "label": "Size",
+          "values": [
+            {
+              "value": "169",
+              "valueLabel": "L"
+            }
+          ],
+          "isFacet": true,
+          "options": [
+            {
+              "value": "91",
+              "label": "55 cm"
+            },
+            {
+              "value": "166",
+              "label": "XS"
+            },
+            {
+              "value": "92",
+              "label": "65 cm"
+            },
+            {
+              "value": "167",
+              "label": "S"
+            },
+            {
+              "value": "93",
+              "label": "75 cm"
+            },
+            {
+              "value": "168",
+              "label": "M"
+            },
+            {
+              "value": "94",
+              "label": "6 foot"
+            },
+            {
+              "value": "169",
+              "label": "L"
+            },
+            {
+              "value": "95",
+              "label": "8 foot"
+            },
+            {
+              "value": "170",
+              "label": "XL"
+            },
+            {
+              "value": "96",
+              "label": "10 foot"
+            },
+            {
+              "value": "171",
+              "label": "28"
+            },
+            {
+              "value": "172",
+              "label": "29"
+            },
+            {
+              "value": "173",
+              "label": "30"
+            },
+            {
+              "value": "174",
+              "label": "31"
+            },
+            {
+              "value": "175",
+              "label": "32"
+            },
+            {
+              "value": "176",
+              "label": "33"
+            },
+            {
+              "value": "177",
+              "label": "34"
+            },
+            {
+              "value": "178",
+              "label": "36"
+            },
+            {
+              "value": "179",
+              "label": "38"
+            }
+          ]
+        }
+      ],
+      "name": "Chaz Kangeroo Hoodie-L-Orange",
+      "label": "Chaz Kangeroo Hoodie-L-Orange",
+      "primaryImage": {
+        "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
+        "alt": ""
+      },
+      "price": 52,
+      "slug": "chaz-kangeroo-hoodie-l-orange-58",
       "gallery": [
         {
           "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
@@ -948,28 +2952,195 @@
     },
     {
       "sku": "MH01-XL-Black",
-      "name": [
-        "Chaz Kangeroo Hoodie-XL-Black"
-      ],
-      "image": [
-        "\/m\/h\/mh01-black_main_1.jpg"
-      ],
-      "small_image": [
-        "\/m\/h\/mh01-black_main_1.jpg"
-      ],
-      "thumbnail": [
-        "\/m\/h\/mh01-black_main_1.jpg"
-      ],
-      "price": [
-        "52.000000"
-      ],
-      "color": [
-        "49"
-      ],
-      "size": [
-        "170"
-      ],
       "id": 59,
+      "attributes": [
+        {
+          "name": "small_image",
+          "label": "Small",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg",
+              "valueLabel": "\/m\/h\/mh01-black_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "thumbnail",
+          "label": "Thumbnail",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg",
+              "valueLabel": "\/m\/h\/mh01-black_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "color",
+          "label": "Color",
+          "values": [
+            {
+              "value": "49",
+              "valueLabel": "Black"
+            }
+          ],
+          "isFacet": true,
+          "options": [
+            {
+              "value": "49",
+              "label": "Black"
+            },
+            {
+              "value": "50",
+              "label": "Blue"
+            },
+            {
+              "value": "51",
+              "label": "Brown"
+            },
+            {
+              "value": "52",
+              "label": "Gray"
+            },
+            {
+              "value": "53",
+              "label": "Green"
+            },
+            {
+              "value": "54",
+              "label": "Lavender"
+            },
+            {
+              "value": "55",
+              "label": "Multi"
+            },
+            {
+              "value": "56",
+              "label": "Orange"
+            },
+            {
+              "value": "57",
+              "label": "Purple"
+            },
+            {
+              "value": "58",
+              "label": "Red"
+            },
+            {
+              "value": "59",
+              "label": "White"
+            },
+            {
+              "value": "60",
+              "label": "Yellow"
+            }
+          ]
+        },
+        {
+          "name": "size",
+          "label": "Size",
+          "values": [
+            {
+              "value": "170",
+              "valueLabel": "XL"
+            }
+          ],
+          "isFacet": true,
+          "options": [
+            {
+              "value": "91",
+              "label": "55 cm"
+            },
+            {
+              "value": "166",
+              "label": "XS"
+            },
+            {
+              "value": "92",
+              "label": "65 cm"
+            },
+            {
+              "value": "167",
+              "label": "S"
+            },
+            {
+              "value": "93",
+              "label": "75 cm"
+            },
+            {
+              "value": "168",
+              "label": "M"
+            },
+            {
+              "value": "94",
+              "label": "6 foot"
+            },
+            {
+              "value": "169",
+              "label": "L"
+            },
+            {
+              "value": "95",
+              "label": "8 foot"
+            },
+            {
+              "value": "170",
+              "label": "XL"
+            },
+            {
+              "value": "96",
+              "label": "10 foot"
+            },
+            {
+              "value": "171",
+              "label": "28"
+            },
+            {
+              "value": "172",
+              "label": "29"
+            },
+            {
+              "value": "173",
+              "label": "30"
+            },
+            {
+              "value": "174",
+              "label": "31"
+            },
+            {
+              "value": "175",
+              "label": "32"
+            },
+            {
+              "value": "176",
+              "label": "33"
+            },
+            {
+              "value": "177",
+              "label": "34"
+            },
+            {
+              "value": "178",
+              "label": "36"
+            },
+            {
+              "value": "179",
+              "label": "38"
+            }
+          ]
+        }
+      ],
+      "name": "Chaz Kangeroo Hoodie-XL-Black",
+      "label": "Chaz Kangeroo Hoodie-XL-Black",
+      "primaryImage": {
+        "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg",
+        "alt": ""
+      },
+      "price": 52,
+      "slug": "chaz-kangeroo-hoodie-xl-black-59",
       "gallery": [
         {
           "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg",
@@ -980,28 +3151,195 @@
     },
     {
       "sku": "MH01-XL-Gray",
-      "name": [
-        "Chaz Kangeroo Hoodie-XL-Gray"
-      ],
-      "image": [
-        "\/m\/h\/mh01-gray_main_1.jpg"
-      ],
-      "small_image": [
-        "\/m\/h\/mh01-gray_main_1.jpg"
-      ],
-      "thumbnail": [
-        "\/m\/h\/mh01-gray_main_1.jpg"
-      ],
-      "price": [
-        "52.000000"
-      ],
-      "color": [
-        "52"
-      ],
-      "size": [
-        "170"
-      ],
       "id": 60,
+      "attributes": [
+        {
+          "name": "small_image",
+          "label": "Small",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
+              "valueLabel": "\/m\/h\/mh01-gray_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "thumbnail",
+          "label": "Thumbnail",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
+              "valueLabel": "\/m\/h\/mh01-gray_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "color",
+          "label": "Color",
+          "values": [
+            {
+              "value": "52",
+              "valueLabel": "Gray"
+            }
+          ],
+          "isFacet": true,
+          "options": [
+            {
+              "value": "49",
+              "label": "Black"
+            },
+            {
+              "value": "50",
+              "label": "Blue"
+            },
+            {
+              "value": "51",
+              "label": "Brown"
+            },
+            {
+              "value": "52",
+              "label": "Gray"
+            },
+            {
+              "value": "53",
+              "label": "Green"
+            },
+            {
+              "value": "54",
+              "label": "Lavender"
+            },
+            {
+              "value": "55",
+              "label": "Multi"
+            },
+            {
+              "value": "56",
+              "label": "Orange"
+            },
+            {
+              "value": "57",
+              "label": "Purple"
+            },
+            {
+              "value": "58",
+              "label": "Red"
+            },
+            {
+              "value": "59",
+              "label": "White"
+            },
+            {
+              "value": "60",
+              "label": "Yellow"
+            }
+          ]
+        },
+        {
+          "name": "size",
+          "label": "Size",
+          "values": [
+            {
+              "value": "170",
+              "valueLabel": "XL"
+            }
+          ],
+          "isFacet": true,
+          "options": [
+            {
+              "value": "91",
+              "label": "55 cm"
+            },
+            {
+              "value": "166",
+              "label": "XS"
+            },
+            {
+              "value": "92",
+              "label": "65 cm"
+            },
+            {
+              "value": "167",
+              "label": "S"
+            },
+            {
+              "value": "93",
+              "label": "75 cm"
+            },
+            {
+              "value": "168",
+              "label": "M"
+            },
+            {
+              "value": "94",
+              "label": "6 foot"
+            },
+            {
+              "value": "169",
+              "label": "L"
+            },
+            {
+              "value": "95",
+              "label": "8 foot"
+            },
+            {
+              "value": "170",
+              "label": "XL"
+            },
+            {
+              "value": "96",
+              "label": "10 foot"
+            },
+            {
+              "value": "171",
+              "label": "28"
+            },
+            {
+              "value": "172",
+              "label": "29"
+            },
+            {
+              "value": "173",
+              "label": "30"
+            },
+            {
+              "value": "174",
+              "label": "31"
+            },
+            {
+              "value": "175",
+              "label": "32"
+            },
+            {
+              "value": "176",
+              "label": "33"
+            },
+            {
+              "value": "177",
+              "label": "34"
+            },
+            {
+              "value": "178",
+              "label": "36"
+            },
+            {
+              "value": "179",
+              "label": "38"
+            }
+          ]
+        }
+      ],
+      "name": "Chaz Kangeroo Hoodie-XL-Gray",
+      "label": "Chaz Kangeroo Hoodie-XL-Gray",
+      "primaryImage": {
+        "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
+        "alt": ""
+      },
+      "price": 52,
+      "slug": "chaz-kangeroo-hoodie-xl-gray-60",
       "gallery": [
         {
           "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
@@ -1020,28 +3358,195 @@
     },
     {
       "sku": "MH01-XL-Orange",
-      "name": [
-        "Chaz Kangeroo Hoodie-XL-Orange"
-      ],
-      "image": [
-        "\/m\/h\/mh01-orange_main_1.jpg"
-      ],
-      "small_image": [
-        "\/m\/h\/mh01-orange_main_1.jpg"
-      ],
-      "thumbnail": [
-        "\/m\/h\/mh01-orange_main_1.jpg"
-      ],
-      "price": [
-        "52.000000"
-      ],
-      "color": [
-        "56"
-      ],
-      "size": [
-        "170"
-      ],
       "id": 61,
+      "attributes": [
+        {
+          "name": "small_image",
+          "label": "Small",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
+              "valueLabel": "\/m\/h\/mh01-orange_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "thumbnail",
+          "label": "Thumbnail",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
+              "valueLabel": "\/m\/h\/mh01-orange_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "color",
+          "label": "Color",
+          "values": [
+            {
+              "value": "56",
+              "valueLabel": "Orange"
+            }
+          ],
+          "isFacet": true,
+          "options": [
+            {
+              "value": "49",
+              "label": "Black"
+            },
+            {
+              "value": "50",
+              "label": "Blue"
+            },
+            {
+              "value": "51",
+              "label": "Brown"
+            },
+            {
+              "value": "52",
+              "label": "Gray"
+            },
+            {
+              "value": "53",
+              "label": "Green"
+            },
+            {
+              "value": "54",
+              "label": "Lavender"
+            },
+            {
+              "value": "55",
+              "label": "Multi"
+            },
+            {
+              "value": "56",
+              "label": "Orange"
+            },
+            {
+              "value": "57",
+              "label": "Purple"
+            },
+            {
+              "value": "58",
+              "label": "Red"
+            },
+            {
+              "value": "59",
+              "label": "White"
+            },
+            {
+              "value": "60",
+              "label": "Yellow"
+            }
+          ]
+        },
+        {
+          "name": "size",
+          "label": "Size",
+          "values": [
+            {
+              "value": "170",
+              "valueLabel": "XL"
+            }
+          ],
+          "isFacet": true,
+          "options": [
+            {
+              "value": "91",
+              "label": "55 cm"
+            },
+            {
+              "value": "166",
+              "label": "XS"
+            },
+            {
+              "value": "92",
+              "label": "65 cm"
+            },
+            {
+              "value": "167",
+              "label": "S"
+            },
+            {
+              "value": "93",
+              "label": "75 cm"
+            },
+            {
+              "value": "168",
+              "label": "M"
+            },
+            {
+              "value": "94",
+              "label": "6 foot"
+            },
+            {
+              "value": "169",
+              "label": "L"
+            },
+            {
+              "value": "95",
+              "label": "8 foot"
+            },
+            {
+              "value": "170",
+              "label": "XL"
+            },
+            {
+              "value": "96",
+              "label": "10 foot"
+            },
+            {
+              "value": "171",
+              "label": "28"
+            },
+            {
+              "value": "172",
+              "label": "29"
+            },
+            {
+              "value": "173",
+              "label": "30"
+            },
+            {
+              "value": "174",
+              "label": "31"
+            },
+            {
+              "value": "175",
+              "label": "32"
+            },
+            {
+              "value": "176",
+              "label": "33"
+            },
+            {
+              "value": "177",
+              "label": "34"
+            },
+            {
+              "value": "178",
+              "label": "36"
+            },
+            {
+              "value": "179",
+              "label": "38"
+            }
+          ]
+        }
+      ],
+      "name": "Chaz Kangeroo Hoodie-XL-Orange",
+      "label": "Chaz Kangeroo Hoodie-XL-Orange",
+      "primaryImage": {
+        "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
+        "alt": ""
+      },
+      "price": 52,
+      "slug": "chaz-kangeroo-hoodie-xl-orange-61",
       "gallery": [
         {
           "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
