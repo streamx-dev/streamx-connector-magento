@@ -8,7 +8,7 @@ use StreamX\ConnectorCatalog\Model\Attribute\LoadOptions;
 
 class ProductAttributes extends BaseProductAttributes
 {
-    private const REQUIRED_ATTRIBUTES = [
+    const REQUIRED_ATTRIBUTES = [
         'sku',
         'url_path',
         'url_key',
