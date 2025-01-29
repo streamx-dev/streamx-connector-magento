@@ -38,7 +38,6 @@ class IndexersConfig implements IndexersConfigInterface
                 $dataProviderFactory->get(PriceData::class),
                 $dataProviderFactory->get(ProductMediaGalleryData::class),
                 $dataProviderFactory->get(QuantityData::class),
-                // TODO review the provider; trim data produced by it only what we need
                 $dataProviderFactory->get(ConfigurableData::class),
                 // TODO review the provider; trim data produced by it only what we need
                 $dataProviderFactory->get(CustomOptions::class),
