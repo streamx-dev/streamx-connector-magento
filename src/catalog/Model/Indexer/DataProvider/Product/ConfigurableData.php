@@ -24,23 +24,29 @@ class ConfigurableData extends DataProviderInterface
     private ConfigurableResource $configurableResource;
     private LoadChildrenRawAttributes $childrenAttributeProcessor;
     private LoadConfigurableOptions $configurableProcessor;
+    private ChildProductAttributeData $childProductAttributeDataProvider;
 
     /** @var DataProviderInterface[] */
     private array $dataProviders;
 
     public function __construct(
         ConfigurableResource $configurableResource,
+        ChildProductAttributeData $childProductAttributeDataProvider,
         ChildProductMediaGalleryData $mediaGalleryDataProvider,
         QuantityData $quantityDataProvider,
+        DataCleaner $dataCleaner,
         LoadConfigurableOptions $configurableProcessor,
         LoadChildrenRawAttributes $childrenAttributeProcessor
     ) {
         $this->configurableResource = $configurableResource;
+        $this->childProductAttributeDataProvider = $childProductAttributeDataProvider;
         $this->childrenAttributeProcessor = $childrenAttributeProcessor;
         $this->configurableProcessor = $configurableProcessor;
         $this->dataProviders = [
+            $childProductAttributeDataProvider,
             $mediaGalleryDataProvider,
-            $quantityDataProvider
+            $quantityDataProvider,
+            $dataCleaner
         ];
     }
 
@@ -51,7 +57,8 @@ class ConfigurableData extends DataProviderInterface
     {
         $this->configurableResource->clear();
         $this->configurableResource->setProducts($indexData);
-        $indexData = $this->prepareConfigurableChildrenAttributes($indexData, $storeId);
+        $configurableChildrenAttributes = $this->prepareConfigurableChildrenAttributes($indexData, $storeId);
+        $this->childProductAttributeDataProvider->setAdditionalAttributesToIndex($configurableChildrenAttributes);
 
         $productsList = [];
 
@@ -90,7 +97,7 @@ class ConfigurableData extends DataProviderInterface
     /**
      * @throws Exception
      */
-    private function prepareConfigurableChildrenAttributes(array $indexData, int $storeId): array
+    private function prepareConfigurableChildrenAttributes(array &$indexData, int $storeId): array
     {
         $allChildren = $this->configurableResource->getSimpleProducts($storeId);
 
@@ -100,8 +107,9 @@ class ConfigurableData extends DataProviderInterface
 
         $configurableAttributeCodes = $this->configurableResource->getConfigurableAttributeCodes($storeId);
 
-        $allChildren = $this->childrenAttributeProcessor
-            ->execute($storeId, $allChildren, $configurableAttributeCodes);
+        // TODO remove those two lines - now attributes for child products are loaded using ChildProductAttributeData provider
+        // $allChildren = $this->childrenAttributeProcessor
+        //    ->execute($storeId, $allChildren, $configurableAttributeCodes);
 
         foreach ($allChildren as $child) {
             $childId = $child['entity_id'];
@@ -119,7 +127,7 @@ class ConfigurableData extends DataProviderInterface
 
         $allChildren = null;
 
-        return $indexData;
+        return $configurableAttributeCodes;
     }
 
     /**
