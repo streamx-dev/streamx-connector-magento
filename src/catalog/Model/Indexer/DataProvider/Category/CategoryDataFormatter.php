@@ -7,7 +7,7 @@ use StreamX\ConnectorCatalog\Model\ResourceModel\Category\Children as CategoryCh
 use StreamX\ConnectorCatalog\Model\SlugGenerator;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 
-class CategoryDataFormatter implements DataProviderInterface
+class CategoryDataFormatter extends DataProviderInterface
 {
     // TODO convert to DTO class
     private const ID = 'id';

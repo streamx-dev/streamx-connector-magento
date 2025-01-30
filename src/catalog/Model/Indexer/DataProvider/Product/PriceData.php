@@ -9,7 +9,7 @@ use StreamX\ConnectorCore\Api\DataProviderInterface;
 use StreamX\ConnectorCatalog\Model\Product\LoadTierPrices;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Prices as Resource;
 
-class PriceData implements DataProviderInterface
+class PriceData extends DataProviderInterface
 {
     private Resource $resourcePriceModel;
     private LoadTierPrices $loadTierPrices;

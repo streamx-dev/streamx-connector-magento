@@ -7,12 +7,11 @@ use StreamX\ConnectorCore\Api\DataProviderInterface;
 
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\Configurable\LoadChildrenRawAttributes;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\Configurable\LoadConfigurableOptions;
-use StreamX\ConnectorCatalog\Model\LoadQuantity;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Configurable as ConfigurableResource;
 
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable as ConfigurableType;
 
-class ConfigurableData implements DataProviderInterface
+class ConfigurableData extends DataProviderInterface
 {
     private array $childBlackListConfig = [
         'entity_id',
@@ -23,18 +22,18 @@ class ConfigurableData implements DataProviderInterface
     ];
 
     private ConfigurableResource $configurableResource;
-    private LoadQuantity $loadQuantity;
+    private QuantityData $quantityDataProvider;
     private LoadChildrenRawAttributes $childrenAttributeProcessor;
     private LoadConfigurableOptions $configurableProcessor;
 
     public function __construct(
         ConfigurableResource $configurableResource,
-        LoadQuantity $loadQuantity,
+        QuantityData $quantityDataProvider,
         LoadConfigurableOptions $configurableProcessor,
         LoadChildrenRawAttributes $childrenAttributeProcessor
     ) {
         $this->configurableResource = $configurableResource;
-        $this->loadQuantity = $loadQuantity;
+        $this->quantityDataProvider = $quantityDataProvider;
         $this->childrenAttributeProcessor = $childrenAttributeProcessor;
         $this->configurableProcessor = $configurableProcessor;
     }
@@ -68,6 +67,10 @@ class ConfigurableData implements DataProviderInterface
             if (!empty($productDTO['configurable_options'])) {
                 $productsList[$productId] = $productDTO;
             }
+
+            $childProducts = $productsList[$productId]['configurable_children'];
+            $childProducts = $this->quantityDataProvider->addDataToEntities($childProducts, $storeId);
+            $productsList[$productId]['configurable_children'] = $childProducts;
         }
 
         $this->configurableResource->clear();
@@ -86,7 +89,6 @@ class ConfigurableData implements DataProviderInterface
             return $indexData;
         }
 
-        $stockRowData = $this->loadQuantity->execute($allChildren, $storeId);
         $configurableAttributeCodes = $this->configurableResource->getConfigurableAttributeCodes($storeId);
 
         $allChildren = $this->childrenAttributeProcessor
@@ -96,11 +98,6 @@ class ConfigurableData implements DataProviderInterface
             $childId = $child['entity_id'];
             $child['id'] = (int) $childId;
             $parentIds = $child['parent_ids'];
-
-            if (isset($stockRowData[$childId])) {
-                $productStockData = $stockRowData[$childId];
-                $child['qty'] = $productStockData['qty'];
-            }
 
             foreach ($parentIds as $parentId) {
                 $this->removeFields($child);

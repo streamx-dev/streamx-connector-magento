@@ -5,7 +5,7 @@ namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Bundle as Resource;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 
-class BundleOptionsData implements DataProviderInterface
+class BundleOptionsData extends DataProviderInterface
 {
     private Resource $resourceModel;
 
