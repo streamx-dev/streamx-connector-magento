@@ -17,17 +17,14 @@ class LoadOptions
 {
     private ProductAttributesProvider $attributeDataProvider;
     private CollectionFactory $collectionFactory;
-    private OptionCollectionToArray $optionCollectionToArray;
     private array $optionsByAttribute = [];
 
     public function __construct(
         CollectionFactory $collectionFactory,
-        OptionCollectionToArray $optionCollectionToArray,
         ProductAttributesProvider $attributeDataProvider
     ) {
         $this->collectionFactory = $collectionFactory;
         $this->attributeDataProvider = $attributeDataProvider;
-        $this->optionCollectionToArray = $optionCollectionToArray;
     }
 
     public function execute(string $attributeCode, int $storeId): array
@@ -109,6 +106,6 @@ class LoadOptions
 
     private function toOptionArray(OptionCollection $collection, array $additional): array
     {
-        return $this->optionCollectionToArray->execute($collection, $additional);
+        return OptionCollectionToArray::execute($collection, $additional);
     }
 }
