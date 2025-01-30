@@ -28,6 +28,7 @@ class ProductUpdateTest extends BaseDirectDbEntityUpdateTest {
         $this->shouldPublishProductEditedDirectlyInDatabaseToStreamx('Sprite Yoga Companion Kit', 'bundle');
     }
 
+    /** @test */
     public function shouldPublishGroupedProductEditedDirectlyInDatabaseToStreamx() {
         // TODO: the produced json doesn't contain information about the components that make up the grouped product
         $this->shouldPublishProductEditedDirectlyInDatabaseToStreamx('Set of Sprite Yoga Straps', 'grouped');

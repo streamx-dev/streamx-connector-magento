@@ -78,7 +78,7 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
     }
 
     protected function callMagentoPutEndpoint(string $relativeUrl, array $params): string {
-        $endpointUrl = self::MAGENTO_REST_API_BASE_URL . '/' . $relativeUrl;
+        $endpointUrl = self::MAGENTO_REST_API_BASE_URL . "/$relativeUrl?XDEBUG_SESSION_START=PHPSTORM";
         $jsonBody = json_encode($params);
         $headers = ['Content-Type' => 'application/json; charset=UTF-8'];
 
