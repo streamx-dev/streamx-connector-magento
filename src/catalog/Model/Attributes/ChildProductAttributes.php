@@ -10,7 +10,7 @@ class ChildProductAttributes extends BaseProductAttributes
 {
 
     /**
-     * This product attributes always be exported for configurable_children
+     * This product attributes always be exported for variants
      */
     const MINIMAL_ATTRIBUTE_SET = [
         'sku',

@@ -5,7 +5,6 @@ namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 use Exception;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 
-use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\Configurable\LoadChildrenRawAttributes;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\Configurable\LoadConfigurableOptions;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Configurable as ConfigurableResource;
 
@@ -22,7 +21,6 @@ class ConfigurableData extends DataProviderInterface
     ];
 
     private ConfigurableResource $configurableResource;
-    private LoadChildrenRawAttributes $childrenAttributeProcessor;
     private LoadConfigurableOptions $configurableProcessor;
     private ChildProductAttributeData $childProductAttributeDataProvider;
 
@@ -35,12 +33,10 @@ class ConfigurableData extends DataProviderInterface
         ChildProductMediaGalleryData $mediaGalleryDataProvider,
         QuantityData $quantityDataProvider,
         DataCleaner $dataCleaner,
-        LoadConfigurableOptions $configurableProcessor,
-        LoadChildrenRawAttributes $childrenAttributeProcessor
+        LoadConfigurableOptions $configurableProcessor
     ) {
         $this->configurableResource = $configurableResource;
         $this->childProductAttributeDataProvider = $childProductAttributeDataProvider;
-        $this->childrenAttributeProcessor = $childrenAttributeProcessor;
         $this->configurableProcessor = $configurableProcessor;
         $this->dataProviders = [
             $childProductAttributeDataProvider,
@@ -57,14 +53,16 @@ class ConfigurableData extends DataProviderInterface
     {
         $this->configurableResource->clear();
         $this->configurableResource->setProducts($indexData);
-        $configurableChildrenAttributes = $this->prepareConfigurableChildrenAttributes($indexData, $storeId);
+        $this->addBasicChildVariantsInfo($indexData, $storeId);
+
+        $configurableChildrenAttributes = $this->configurableResource->getConfigurableAttributeCodes($storeId);
         $this->childProductAttributeDataProvider->setAdditionalAttributesToIndex($configurableChildrenAttributes);
 
         $productsList = [];
 
         foreach ($indexData as $productId => $productDTO) {
-            if (!isset($productDTO['configurable_children'])) {
-                $productDTO['configurable_children'] = [];
+            if (!isset($productDTO['variants'])) {
+                $productDTO['variants'] = [];
 
                 if (ConfigurableType::TYPE_CODE !== $productDTO['type_id']) {
                     $productsList[$productId] = $productDTO;
@@ -81,12 +79,12 @@ class ConfigurableData extends DataProviderInterface
                 $productsList[$productId] = $productDTO;
             }
 
-            $childProducts = $productsList[$productId]['configurable_children'];
+            $childProducts = $productsList[$productId]['variants'];
             $childProducts = DataProviderInterface::addDataToEntities($childProducts, $storeId, $this->dataProviders);
             foreach ($childProducts as &$childProduct) {
                 $this->removeFields($childProduct);
             }
-            $productsList[$productId]['configurable_children'] = $childProducts;
+            $productsList[$productId]['variants'] = $childProducts;
         }
 
         $this->configurableResource->clear();
@@ -97,37 +95,29 @@ class ConfigurableData extends DataProviderInterface
     /**
      * @throws Exception
      */
-    private function prepareConfigurableChildrenAttributes(array &$indexData, int $storeId): array
+    private function addBasicChildVariantsInfo(array &$indexData, int $storeId): void
     {
         $allChildren = $this->configurableResource->getSimpleProducts($storeId);
 
         if (null === $allChildren) {
-            return $indexData;
+            return;
         }
 
-        $configurableAttributeCodes = $this->configurableResource->getConfigurableAttributeCodes($storeId);
-
-        // TODO remove those two lines - now attributes for child products are loaded using ChildProductAttributeData provider
-        // $allChildren = $this->childrenAttributeProcessor
-        //    ->execute($storeId, $allChildren, $configurableAttributeCodes);
-
         foreach ($allChildren as $child) {
-            $childId = $child['entity_id'];
-            $child['id'] = (int) $childId;
+            $child['id'] = (int)$child['entity_id'];
             $parentIds = $child['parent_ids'];
 
             foreach ($parentIds as $parentId) {
+                // TODO remove configurable_options from final JSON
                 if (!isset($indexData[$parentId]['configurable_options'])) {
                     $indexData[$parentId]['configurable_options'] = [];
                 }
 
-                $indexData[$parentId]['configurable_children'][] = $child;
+                $indexData[$parentId]['variants'][] = $child;
             }
         }
 
         $allChildren = null;
-
-        return $configurableAttributeCodes;
     }
 
     /**
@@ -137,15 +127,16 @@ class ConfigurableData extends DataProviderInterface
      */
     private function applyConfigurableOptions(array $productDTO, int $storeId): array
     {
-        $configurableChildren = $productDTO['configurable_children'];
+        $configurableChildren = $productDTO['variants'];
         $productAttributeOptions =
             $this->configurableResource->getProductConfigurableAttributes($productDTO, $storeId);
 
-        $productDTO['configurable_children'] = $configurableChildren;
+        $productDTO['variants'] = $configurableChildren;
 
         foreach ($productAttributeOptions as $productAttribute) {
             $attributeCode = $productAttribute['attribute_code'];
 
+            // TODO remove setting the _options fields
             if (!isset($productDTO[$attributeCode . '_options'])) {
                 $productDTO[$attributeCode . '_options'] = [];
             }
