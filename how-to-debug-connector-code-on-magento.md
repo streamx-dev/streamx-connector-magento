@@ -31,3 +31,6 @@ It's designed to work with PHP Storm IDE.
    - put breakpoints in Connector code that handles gathering or preparing products / publishing them to StreamX
    - edit a product (for example its price) as admin in the browser
    - observe code stopping at your breakpoints
+
+5. If you call Magento REST endpoints to trigger actions in your tests
+   (using the `BaseStreamxConnectorPublishTest`#`callMagentoPutEndpoint()` method) - breakpoints will be triggered automatically without the need to use a Web Browser.

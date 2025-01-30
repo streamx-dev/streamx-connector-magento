@@ -29,6 +29,7 @@ class ProductUpdateTest extends BaseAppEntityUpdateTest {
         $this->shouldPublishProductEditedUsingMagentoApplicationToStreamx('Sprite Yoga Companion Kit', 'bundle');
     }
 
+    /** @test */
     public function shouldPublishGroupedProductEditedUsingMagentoApplicationToStreamx() {
         // TODO: the produced json doesn't contain information about the components that make up the grouped product
         $this->shouldPublishProductEditedUsingMagentoApplicationToStreamx('Set of Sprite Yoga Straps', 'grouped');
