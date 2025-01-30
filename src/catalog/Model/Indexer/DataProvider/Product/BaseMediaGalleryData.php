@@ -6,9 +6,9 @@ use StreamX\ConnectorCore\Api\DataProviderInterface;
 use StreamX\ConnectorCatalog\Model\Product\LoadMediaGallery;
 use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 
-class MediaGalleryData extends DataProviderInterface
+abstract class BaseMediaGalleryData extends DataProviderInterface
 {
-    private CatalogConfig $catalogConfig;
+    protected CatalogConfig $catalogConfig;
     private LoadMediaGallery $loadMediaGallery;
     private ?bool $canIndexMediaGallery = null;
 
@@ -35,10 +35,12 @@ class MediaGalleryData extends DataProviderInterface
     private function canIndexMediaGallery(int $storeId): bool
     {
         if (null === $this->canIndexMediaGallery) {
-            $attributes = $this->catalogConfig->getAttributesToIndex($storeId);
+            $attributes = $this->getAttributesToIndex($storeId);
             $this->canIndexMediaGallery = empty($attributes) || in_array('media_gallery', $attributes);
         }
 
         return $this->canIndexMediaGallery;
     }
+
+    protected abstract function getAttributesToIndex(int $storeId): array;
 }

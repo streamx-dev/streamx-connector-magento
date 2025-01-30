@@ -17,8 +17,7 @@ class ConfigurableAttributes
     ];
 
     private CatalogConfig $catalogConfig;
-    private ?array $requiredAttributes = null;
-    private ?bool $canIndexMediaGallery = null;
+    private array $requiredAttributes = [];
 
     public function __construct(CatalogConfig $catalogConfiguration)
     {
@@ -27,7 +26,7 @@ class ConfigurableAttributes
 
     public function getChildrenRequiredAttributes(int $storeId): array
     {
-        if (null === $this->requiredAttributes) {
+        if (empty($this->requiredAttributes)) {
             $attributes = $this->catalogConfig->getChildAttributesToIndex($storeId);
 
             if (empty($attributes)) {
@@ -38,15 +37,5 @@ class ConfigurableAttributes
         }
 
         return $this->requiredAttributes;
-    }
-
-    public function canIndexMediaGallery(int $storeId): bool
-    {
-        if (null === $this->canIndexMediaGallery) {
-            $attributes = $this->getChildrenRequiredAttributes($storeId);
-            $this->canIndexMediaGallery = in_array('media_gallery', $attributes) || empty($attributes);
-        }
-
-        return $this->canIndexMediaGallery;
     }
 }

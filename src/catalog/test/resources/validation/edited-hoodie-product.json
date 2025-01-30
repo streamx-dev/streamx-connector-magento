@@ -553,13 +553,13 @@
       "size": [
         "166"
       ],
+      "id": 47,
       "gallery": [
         {
           "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg",
           "alt": ""
         }
       ],
-      "id": 47,
       "quantity": 100
     },
     {
@@ -585,6 +585,7 @@
       "size": [
         "166"
       ],
+      "id": 48,
       "gallery": [
         {
           "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
@@ -599,7 +600,6 @@
           "alt": ""
         }
       ],
-      "id": 48,
       "quantity": 100
     },
     {
@@ -625,13 +625,13 @@
       "size": [
         "166"
       ],
+      "id": 49,
       "gallery": [
         {
           "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
           "alt": ""
         }
       ],
-      "id": 49,
       "quantity": 100
     },
     {
@@ -657,13 +657,13 @@
       "size": [
         "167"
       ],
+      "id": 50,
       "gallery": [
         {
           "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg",
           "alt": ""
         }
       ],
-      "id": 50,
       "quantity": 100
     },
     {
@@ -689,6 +689,7 @@
       "size": [
         "167"
       ],
+      "id": 51,
       "gallery": [
         {
           "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
@@ -703,7 +704,6 @@
           "alt": ""
         }
       ],
-      "id": 51,
       "quantity": 100
     },
     {
@@ -729,13 +729,13 @@
       "size": [
         "167"
       ],
+      "id": 52,
       "gallery": [
         {
           "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
           "alt": ""
         }
       ],
-      "id": 52,
       "quantity": 100
     },
     {
@@ -761,13 +761,13 @@
       "size": [
         "168"
       ],
+      "id": 53,
       "gallery": [
         {
           "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg",
           "alt": ""
         }
       ],
-      "id": 53,
       "quantity": 100
     },
     {
@@ -793,6 +793,7 @@
       "size": [
         "168"
       ],
+      "id": 54,
       "gallery": [
         {
           "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
@@ -807,7 +808,6 @@
           "alt": ""
         }
       ],
-      "id": 54,
       "quantity": 100
     },
     {
@@ -833,13 +833,13 @@
       "size": [
         "168"
       ],
+      "id": 55,
       "gallery": [
         {
           "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
           "alt": ""
         }
       ],
-      "id": 55,
       "quantity": 100
     },
     {
@@ -865,13 +865,13 @@
       "size": [
         "169"
       ],
+      "id": 56,
       "gallery": [
         {
           "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg",
           "alt": ""
         }
       ],
-      "id": 56,
       "quantity": 100
     },
     {
@@ -897,6 +897,7 @@
       "size": [
         "169"
       ],
+      "id": 57,
       "gallery": [
         {
           "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
@@ -911,7 +912,6 @@
           "alt": ""
         }
       ],
-      "id": 57,
       "quantity": 100
     },
     {
@@ -937,13 +937,13 @@
       "size": [
         "169"
       ],
+      "id": 58,
       "gallery": [
         {
           "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
           "alt": ""
         }
       ],
-      "id": 58,
       "quantity": 100
     },
     {
@@ -969,13 +969,13 @@
       "size": [
         "170"
       ],
+      "id": 59,
       "gallery": [
         {
           "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg",
           "alt": ""
         }
       ],
-      "id": 59,
       "quantity": 100
     },
     {
@@ -1001,6 +1001,7 @@
       "size": [
         "170"
       ],
+      "id": 60,
       "gallery": [
         {
           "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
@@ -1015,7 +1016,6 @@
           "alt": ""
         }
       ],
-      "id": 60,
       "quantity": 100
     },
     {
@@ -1041,13 +1041,13 @@
       "size": [
         "170"
       ],
+      "id": 61,
       "gallery": [
         {
           "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
           "alt": ""
         }
       ],
-      "id": 61,
       "quantity": 100
     }
   ],

@@ -7,24 +7,20 @@ use Magento\Framework\Exception\LocalizedException;
 use StreamX\ConnectorCatalog\Model\Attributes\ConfigurableAttributes;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\ProductAttributesProvider;
 use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
-use StreamX\ConnectorCatalog\Model\Product\LoadMediaGallery;
 use Traversable;
 
 class LoadChildrenRawAttributes
 {
     private ProductAttributesProvider $resourceAttributeModel;
     private ConfigurableAttributes $configurableAttributes;
-    private LoadMediaGallery $loadMediaGallery;
     private CatalogConfig $settings;
 
     public function __construct(
         CatalogConfig $catalogConfiguration,
         ProductAttributesProvider $attributeDataProvider,
-        ConfigurableAttributes $configurableAttributes,
-        LoadMediaGallery $loadMediaGallery
+        ConfigurableAttributes $configurableAttributes
     ) {
         $this->settings = $catalogConfiguration;
-        $this->loadMediaGallery = $loadMediaGallery;
         $this->resourceAttributeModel = $attributeDataProvider;
         $this->configurableAttributes = $configurableAttributes;
     }
@@ -61,16 +57,7 @@ class LoadChildrenRawAttributes
                     $attributes
                 );
 
-                if ($this->configurableAttributes->canIndexMediaGallery($storeId)) {
-                    $batch[$productId] = $newProductData;
-                } else {
-                    $allChildren[$productId] = $newProductData;
-                }
-            }
-
-            if ($this->configurableAttributes->canIndexMediaGallery($storeId)) {
-                $batch = $this->loadMediaGallery->execute($batch, $storeId);
-                $allChildren = array_replace_recursive($allChildren, $batch);
+                $allChildren[$productId] = $newProductData;
             }
         }
 
