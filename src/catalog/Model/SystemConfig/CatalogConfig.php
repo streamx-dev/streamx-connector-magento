@@ -64,12 +64,10 @@ class CatalogConfig
         $types = $this->getConfigParam(self::ALLOWED_PRODUCT_TYPES, $storeId);
 
         if (null === $types || '' === $types) {
-            $types = [];
+            return [];
         } else {
-            $types = explode(',', $types);
+            return explode(',', $types);
         }
-
-        return $types;
     }
 
     // TODO: make sure attributes required by Unified Data Model are not configurable, and will be indexed always
