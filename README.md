@@ -1,4 +1,6 @@
-# Setup Composer authentication for downloading Magento docker images:
+# Set up local Magento instance for integration testing of the Streamx Connector
+
+## Setup Composer authentication for downloading Magento docker images:
 
 Steps to Obtain and Configure Magento Authentication Keys
 1. Generate Authentication Keys
@@ -75,7 +77,7 @@ If the Magento admin page displays warning about invalidated cache - perform the
  - Go to Magento Admin page
  - Click on `STORES` on the left panel
  - Click `Configuration` in the `Settings` area
- - Expand `STREAMX` section, click on `Indexer` item, then expand `General Settings` section on the right
+ - Expand `STREAMX` section, click on `Connector` item, then expand `General Settings` section on the right
  - Select `Yes` for the `Enable StreamX Connector` setting
  - Click the `Save Config` button
 
@@ -83,7 +85,7 @@ If the Magento admin page displays warning about invalidated cache - perform the
  - Go to Magento Admin page
  - Click on `STORES` on the left panel
  - Click `Configuration` in the `Settings` area
- - Expand `STREAMX` section, click on `Indexer` item, then expand `StreamX Connector Settings` section on the right
+ - Expand `STREAMX` section, click on `Connector` item, then expand `StreamX Connector Settings` section on the right
  - Edit the settings you need, or leave the default values
  - Click the `Save Config` button
 
