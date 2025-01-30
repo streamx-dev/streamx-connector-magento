@@ -117,25 +117,23 @@ class ProductAttributesProvider
      */
     private function processValues(array $values): array
     {
+        $productIdField = $this->getProductMetaData()->getIdentifierField();
+
         foreach ($values as $value) {
-            $productIdField = $this->getProductMetaData()->getIdentifierField();
-            $productId = $value[$productIdField];
             $attribute = $this->attributesById[$value['attribute_id']];
-            $attributeCode = $attribute->getAttributeCode();
-
             $attributeValue = $value['value'];
-            $attributeValues = $this->convertAttributeValueToArray($attribute, $attributeValue);
-
-            $this->valuesByProductId[$productId][$attributeCode] = $attributeValues;
+            if ($attributeValue !== null) {
+                $productId = $value[$productIdField];
+                $attributeCode = $attribute->getAttributeCode();
+                $attributeValues = $this->convertAttributeValueToArray($attribute, $attributeValue);
+                $this->valuesByProductId[$productId][$attributeCode] = $attributeValues;
+            }
         }
 
         return $this->valuesByProductId;
     }
 
     private function convertAttributeValueToArray(Attribute $attribute, $attributeValue): array {
-        if ($attributeValue === null) {
-            return [];
-        }
         if ($attribute->getFrontendInput() === 'multiselect') {
             $options = explode(',', $attributeValue);
             if (!empty($options)) {
