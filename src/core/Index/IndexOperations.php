@@ -4,12 +4,11 @@ namespace StreamX\ConnectorCore\Index;
 
 use LogicException;
 use Streamx\Clients\Ingestion\Exceptions\StreamxClientException;
-use StreamX\ConnectorCore\Api\IndexOperationInterface;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
 use StreamX\ConnectorCore\Streamx\ClientResolver;
 use StreamX\ConnectorCore\Exception\ConnectionUnhealthyException;
 
-class IndexOperations implements IndexOperationInterface
+class IndexOperations
 {
     private ClientResolver $clientResolver;
     private OptimizationSettings $optimizationSettings;

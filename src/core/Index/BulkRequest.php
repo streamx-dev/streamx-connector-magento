@@ -10,12 +10,12 @@ class BulkRequest {
         // use builders instead
     }
 
-    public static function buildUnpublishRequest(string $entityType, array $entityIds): BulkRequest {
+    public static function buildUnpublishRequest(string $indexerName, array $entityIds): BulkRequest {
         $bulkRequest = new BulkRequest();
         foreach ($entityIds as $id) {
             $bulkRequest->bulkData[] = [
                 'unpublish' => [
-                    'type' => $entityType,
+                    'indexer_name' => $indexerName,
                     'id' => $id,
                 ]
             ];
@@ -24,7 +24,7 @@ class BulkRequest {
         return $bulkRequest;
     }
 
-    public static function buildPublishRequest(string $entityType, array $entities): BulkRequest {
+    public static function buildPublishRequest(string $indexerName, array $entities): BulkRequest {
         $bulkRequest = new BulkRequest();
         foreach ($entities as $entityData) {
             unset($entityData['entity_id']);
@@ -32,7 +32,7 @@ class BulkRequest {
 
             $bulkRequest->bulkData[] = [
                 'publish' => [
-                    'type' => $entityType,
+                    'indexer_name' => $indexerName,
                     'entity' => $entityData,
                 ]
             ];

@@ -3,21 +3,22 @@
 namespace StreamX\ConnectorCatalog\Indexer;
 
 use Psr\Log\LoggerInterface;
+use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCore\Api\IndexersConfigInterface;
-use StreamX\ConnectorCore\Api\IndexOperationInterface;
+use StreamX\ConnectorCore\Index\IndexOperations;
 use StreamX\ConnectorCore\Indexer\GenericIndexerHandler;
 
 class ProductIndexerHandler extends GenericIndexerHandler
 {
     public function __construct(
-        IndexOperationInterface $indexOperationProvider,
+        IndexOperations $indexOperations,
         LoggerInterface $logger,
         IndexersConfigInterface $indexersConfig
     ) {
         parent::__construct(
-            $indexOperationProvider,
+            $indexOperations,
             $logger,
-            $indexersConfig->getByName('product')
+            $indexersConfig->getByName(ProductProcessor::INDEXER_ID)
         );
     }
 

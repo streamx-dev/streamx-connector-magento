@@ -2,6 +2,8 @@
 
 namespace StreamX\ConnectorCatalog\Model\Indexer\Action;
 
+use RuntimeException;
+use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Attribute\LoadAttributes;
 use Traversable;
 
@@ -14,6 +16,10 @@ class Attribute implements BaseAction {
     }
 
     public function loadData(int $storeId = 1, array $attributeIds = []): Traversable {
+        if (empty($attributeIds)) {
+            throw new RuntimeException(AttributeProcessor::INDEXER_ID . ' cannot be executed to process all attributes, please use other options.');
+        }
+
         $lastAttributeId = 0;
 
         // 1. Publish edited and added attributes

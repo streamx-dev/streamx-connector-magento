@@ -6,5 +6,5 @@ use StreamX\ConnectorCore\Api\Index\TypeInterface;
 
 interface IndexersConfigInterface
 {
-    public function getByName(string $typeName): TypeInterface;
+    public function getByName(string $indexerName): TypeInterface;
 }

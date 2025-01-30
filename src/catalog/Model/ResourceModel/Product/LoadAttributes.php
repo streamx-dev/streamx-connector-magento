@@ -61,7 +61,7 @@ class LoadAttributes
             return $this->attributesById[$attributeId];
         }
 
-        throw new LocalizedException(__('Attribute not found.'));
+        throw new LocalizedException(__("Attribute $attributeId not found."));
     }
 
     /**
@@ -78,7 +78,7 @@ class LoadAttributes
             return $this->attributesById[$attributeId];
         }
 
-        throw new LocalizedException(__('Attribute not found.'));
+        throw new LocalizedException(__("Attribute $attributeCode not found."));
     }
 
     private function loadAttributeByCode(string $attributeCode): void
