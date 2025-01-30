@@ -21,8 +21,6 @@ class CatalogConfig
     private const USE_CATALOG_RULES = 'use_catalog_rules';
     private const SYNC_TIER_PRICES = 'sync_tier_prices';
 
-    private const ADD_SWATCHES_OPTIONS = 'add_swatches_to_configurable_options';
-
     /**
      * Allow product types to reindex
      */
@@ -33,8 +31,6 @@ class CatalogConfig
      */
     private const PRODUCT_ATTRIBUTES = 'product_attributes';
     private const CHILD_ATTRIBUTES = 'child_attributes';
-
-    private const CONFIGURABLE_CHILDREN_BATCH_SIZE = 'configurable_children_batch_size';
 
     private array $settings = [];
     private ScopeConfigInterface $scopeConfig;
@@ -63,12 +59,6 @@ class CatalogConfig
         return (bool) $this->getConfigParam(self::SYNC_TIER_PRICES);
     }
 
-    // TODO remove, unused now
-    public function addSwatchesToConfigurableOptions(): bool
-    {
-        return (bool) $this->getConfigParam(self::ADD_SWATCHES_OPTIONS);
-    }
-
     public function getAllowedProductTypes(int $storeId): array
     {
         $types = $this->getConfigParam(self::ALLOWED_PRODUCT_TYPES, $storeId);
@@ -88,6 +78,7 @@ class CatalogConfig
         return $this->explodeAttributeCodes(self::PRODUCT_ATTRIBUTES, $storeId);
     }
 
+    // TODO: make sure attributes required by Unified Data Model are not configurable, and will be indexed always
     public function getChildAttributesToIndex(int $storeId): array
     {
         return $this->explodeAttributeCodes(self::CHILD_ATTRIBUTES, $storeId);
@@ -97,15 +88,6 @@ class CatalogConfig
     {
         $configParam = $this->getConfigParam($configParamName, $storeId);
         return preg_split('/,/', $configParam, -1, PREG_SPLIT_NO_EMPTY); // split removing empty entries
-    }
-
-    // TODO remove, unused now
-    public function getConfigurableChildrenBatchSize(int $storeId): int
-    {
-        return (int) $this->getConfigParam(
-            self::CONFIGURABLE_CHILDREN_BATCH_SIZE,
-            $storeId
-        );
     }
 
     /**

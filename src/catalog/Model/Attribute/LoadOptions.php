@@ -98,6 +98,7 @@ class LoadOptions
         return $options;
     }
 
+    // TODO add test for exporting product attributes that use swatches
     private function isVisualSwatch(Attribute $attribute): bool
     {
         return $attribute->getData('swatch_input_type') === Swatch::SWATCH_INPUT_TYPE_VISUAL
