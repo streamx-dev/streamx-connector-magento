@@ -6,6 +6,7 @@ use Exception;
 use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCatalog\Model\Attributes\AttributeDefinition;
 use StreamX\ConnectorCatalog\Model\Attributes\BaseProductAttributes;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Attribute\LoadAttributes;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\ProductAttributesProvider;
 use StreamX\ConnectorCatalog\Model\SlugGenerator;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
@@ -22,6 +23,7 @@ abstract class BaseAttributeData extends DataProviderInterface
     private LoggerInterface $logger;
     private ProductAttributesProvider $resourceModel;
     private BaseProductAttributes $productAttributes;
+    private LoadAttributes $loadAttributes;
     private ImageUrlManager $imageUrlManager;
     private SlugGenerator $slugGenerator;
     private array $additionalAttributesToIndex = [];
@@ -29,6 +31,7 @@ abstract class BaseAttributeData extends DataProviderInterface
     public function __construct(
         LoggerInterface $logger,
         BaseProductAttributes $productAttributes,
+        LoadAttributes $loadAttributes,
         ProductAttributesProvider $resourceModel,
         ImageUrlManager $imageUrlManager,
         SlugGenerator $slugGenerator
@@ -36,6 +39,7 @@ abstract class BaseAttributeData extends DataProviderInterface
         $this->logger = $logger;
         $this->resourceModel = $resourceModel;
         $this->productAttributes = $productAttributes;
+        $this->loadAttributes = $loadAttributes;
         $this->imageUrlManager = $imageUrlManager;
         $this->slugGenerator = $slugGenerator;
     }
@@ -169,7 +173,7 @@ abstract class BaseAttributeData extends DataProviderInterface
 
     private function loadRequiredAttributesMap(array $attributeCodes, int $storeId): array
     {
-        $attributeDefinitions = $this->productAttributes->loadAttributeDefinitions($attributeCodes, $storeId); // TODO consider merging loadAttributesData() with loadAttributeDefinitions() to load both attribute data and definitions in a single call
+        $attributeDefinitions = $this->loadAttributes->loadAttributeDefinitionsByCodes($attributeCodes, $storeId); // TODO consider merging loadAttributesData() with loadAttributeDefinitionsByCodes() to load both attribute data and definitions in a single call
 
         $attributeDefinitionsMap = [];
         foreach ($attributeDefinitions as $attributeDefinition) {

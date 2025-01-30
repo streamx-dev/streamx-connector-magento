@@ -3,7 +3,7 @@
 namespace StreamX\ConnectorCatalog\Model\Indexer;
 
 use Exception;
-use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Attribute\Options;
+use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Attribute\ProductsWithChangedAttributesProvider;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Category\CategoryDataFormatter;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\BundleOptionsData;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\CategoryData;
@@ -47,7 +47,9 @@ class IndexersConfig implements IndexersConfigInterface
                 $dataProviderFactory->get(CategoryDataFormatter::class),
             ]),
             new Type('attribute', [
-                $dataProviderFactory->get(Options::class),
+                // TODO: consider making the streamx_attribute_indexer not visible in Magento UI nor in command line indexer tools
+                //  - because in full reindex mode it would publish a lot of products for every attribute present in DB
+                $dataProviderFactory->get(ProductsWithChangedAttributesProvider::class),
             ])
         ];
     }

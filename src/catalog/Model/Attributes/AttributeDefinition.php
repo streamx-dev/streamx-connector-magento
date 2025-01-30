@@ -4,6 +4,7 @@ namespace StreamX\ConnectorCatalog\Model\Attributes;
 
 class AttributeDefinition
 {
+    private int $id;
     private string $name;
     private string $label;
     private bool $isFacet;
@@ -16,11 +17,16 @@ class AttributeDefinition
     /**
      * @param AttributeOptionDefinition[] $options
      */
-    public function __construct(string $name, string $label, bool $isFacet, array $options) {
+    public function __construct(int $id, string $name, string $label, bool $isFacet, array $options) {
+        $this->id = $id;
         $this->name = $name;
         $this->label = $label;
         $this->isFacet = $isFacet;
         $this->options = $options;
+    }
+
+    public function getId(): int {
+        return $this->id;
     }
 
     public function getName(): string {

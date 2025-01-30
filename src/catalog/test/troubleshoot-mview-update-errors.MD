@@ -9,29 +9,46 @@ The below instructions are for troubleshooting the products indexer.
 1. Add uses:
 ```php
 use Magento\Framework\App\ResourceConnection;
+use StreamX\ConnectorCatalog\Model\Indexer\Attribute;
+use StreamX\ConnectorCatalog\Model\Indexer\BaseStreamxIndexer;
+use StreamX\ConnectorCatalog\Model\Indexer\Category;
 use StreamX\ConnectorCatalog\Model\Indexer\Product;
 ```
 
-2. Add declare the below fields and inject them via constructor:
+2. Declare the below fields:
 ```php
-    private Product $productMviewAction;
     private ResourceConnection $resource;
+    private array $indexers;
 ```
 
-3. In the function `reindexMview` replace `$mView->update();` with:
+3. Add constructor parameters:
 ```php
-        if ($indexerViewId === ProductProcessor::INDEXER_ID) {
-            $this->updateViewManually($mView);
-        } else {
-            $mView->update();
-        }
+    ResourceConnection $resource,
+    Attribute $attrMviewAction,
+    Category $catMviewAction,
+    Product $prodMviewAction
 ```
 
-4. Add the functions to the class:
+4. Init fields inside constructor:
 ```php
-    private function updateViewManually(ViewInterface $mView): void {
+        $this->resource = $resource;
+        $this->indexers = [
+            AttributeProcessor::INDEXER_ID => $attrMviewAction,
+            CategoryProcessor::INDEXER_ID => $catMviewAction,
+            ProductProcessor::INDEXER_ID => $prodMviewAction
+        ];
+```
+
+5. In the function `reindexMview` replace `$mView->update();` with:
+```php
+    $this->updateViewManually($mView, $this->indexers[$indexerViewId]);
+```
+
+6. Add the functions to the class:
+```php
+    private function updateViewManually(ViewInterface $mView, BaseStreamxIndexer $indexer): void {
         $ids = $this->selectIdsToReindex($mView);
-        $this->productMviewAction->execute($ids);
+        $indexer->execute($ids);
         $mView->getState()->loadByView($mView->getId());
     }
 

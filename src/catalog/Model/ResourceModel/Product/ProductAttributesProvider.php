@@ -133,6 +133,9 @@ class ProductAttributesProvider
     }
 
     private function convertAttributeValueToArray(Attribute $attribute, $attributeValue): array {
+        if ($attributeValue === null) {
+            return [];
+        }
         if ($attribute->getFrontendInput() === 'multiselect') {
             $options = explode(',', $attributeValue);
             if (!empty($options)) {

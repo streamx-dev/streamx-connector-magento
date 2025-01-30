@@ -1,7 +1,6 @@
 {
   "attribute_code": "size",
   "frontend_label": "size attribute name modified for testing",
-  "id": "144",
-  "is_filterable": "1",
-  "store_frontend_label": "Size"
+  "id": 144,
+  "is_facet": true
 }
