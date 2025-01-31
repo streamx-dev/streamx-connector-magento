@@ -49,7 +49,7 @@ class ConfigurableData extends DataProviderInterface
         $this->configurableResource->setProducts($indexData);
         $this->addBasicChildVariantsInfo($indexData, $storeId);
 
-        $configurableChildrenAttributes = $this->configurableResource->getConfigurableAttributeCodes($storeId);
+        $configurableChildrenAttributes = $this->configurableResource->getConfigurableAttributeCodes();
         $this->childProductAttributeDataProvider->setAdditionalAttributesToIndex($configurableChildrenAttributes);
 
         $productsList = [];
