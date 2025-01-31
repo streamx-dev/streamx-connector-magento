@@ -23,7 +23,7 @@ class EntityEditControllerImpl  implements EntityEditControllerInterface {
         ProductRepositoryInterface $productRepository,
         CategoryRepositoryInterface $categoryRepository,
         AttributeRepositoryInterface $attributeRepository,
-        CategoryLinkManagementInterface $categoryLinkManagement,
+        CategoryLinkManagementInterface $categoryLinkManagement
     ) {
         $this->productRepository = $productRepository;
         $this->categoryRepository = $categoryRepository;

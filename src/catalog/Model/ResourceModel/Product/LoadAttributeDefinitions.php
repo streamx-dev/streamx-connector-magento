@@ -1,6 +1,6 @@
 <?php
 
-namespace StreamX\ConnectorCatalog\Model\ResourceModel\Attribute;
+namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Adapter\AdapterInterface;
@@ -9,19 +9,23 @@ use StreamX\ConnectorCatalog\Model\Attributes\AttributeDefinition;
 use StreamX\ConnectorCatalog\Model\Attributes\AttributeOptionDefinition;
 use StreamX\ConnectorCatalog\Model\Attribute\LoadOptions;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\SpecialAttributes;
+use StreamX\ConnectorCatalog\Model\ResourceModel\ProductConfig;
 use Zend_Db_Expr;
 
-class LoadAttributes
+class LoadAttributeDefinitions
 {
     private ResourceConnection $resource;
     private LoadOptions $loadOptions;
+    private ProductConfig $productConfig;
 
     public function __construct(
         ResourceConnection $resource,
-        LoadOptions $loadOptions
+        LoadOptions $loadOptions,
+        ProductConfig $productConfig
     ) {
         $this->resource = $resource;
         $this->loadOptions = $loadOptions;
+        $this->productConfig = $productConfig;
     }
 
     /**
@@ -79,9 +83,10 @@ class LoadAttributes
             ->joinLeft(
                 ['cea' => $this->resource->getTableName('catalog_eav_attribute')],
                 'cea.attribute_id = ea.attribute_id',
-                ['is_facet' => new Zend_Db_Expr('is_filterable = 1')]
+                ['is_facet' => new Zend_Db_Expr('CASE WHEN is_filterable = 1 THEN true ELSE false END')]
             )
             ->where("ea.attribute_id > $fromId")
+            ->where('ea.entity_type_id = ?', $this->productConfig->getEntityTypeId())
             ->limit($limit)
             ->order('ea.attribute_id');
     }
@@ -117,7 +122,7 @@ class LoadAttributes
                     $attributeRow['id'],
                     $attributeRow['attribute_code'],
                     $attributeRow['frontend_label'],
-                    $attributeRow['is_facet'] ?? false,
+                    $attributeRow['is_facet'],
                     $this->mapAttributeOptionRowsToDtos($attributeRow['options'])
                 );
             },
