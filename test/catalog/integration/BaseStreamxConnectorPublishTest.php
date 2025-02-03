@@ -4,7 +4,6 @@ namespace StreamX\ConnectorCatalog\test\integration;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
-use StreamX\ConnectorCatalog\test\integration\BaseStreamxTest;
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditTraits;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoIndexerOperationsExecutor;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;

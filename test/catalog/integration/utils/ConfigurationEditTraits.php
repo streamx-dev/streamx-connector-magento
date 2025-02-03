@@ -5,7 +5,6 @@ namespace StreamX\ConnectorCatalog\test\integration\utils;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use SimpleXMLElement;
-use StreamX\ConnectorCatalog\test\integration\BaseStreamxTest;
 use StreamX\ConnectorCatalog\test\integration\utils\FileUtils;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoIndexerOperationsExecutor;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
