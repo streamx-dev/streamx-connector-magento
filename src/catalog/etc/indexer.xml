@@ -17,6 +17,6 @@
     <indexer id="streamx_attribute_indexer" view_id="streamx_attribute_indexer"
              class="StreamX\ConnectorCatalog\Model\Indexer\Attribute">
         <title translate="true">StreamX Attributes Indexer</title>
-        <description translate="true">Update Product Attributes Meta Data in StreamX</description>
+        <description translate="true">Update Products with changed Attributes in StreamX</description>
     </indexer>
 </config>
