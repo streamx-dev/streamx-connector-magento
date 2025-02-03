@@ -2,7 +2,6 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\utils;
 
-use StreamX\ConnectorCatalog\test\integration\utils\FileUtils;
 use function shell_exec;
 
 class MagentoOperationsExecutor {

@@ -2,8 +2,6 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\utils;
 
-use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageDriverMock;
-use StreamX\ConnectorCatalog\test\integration\utils\FileUtils;
 use PHPUnit\Framework\TestCase;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
 use SebastianBergmann\CodeCoverage\Filter;

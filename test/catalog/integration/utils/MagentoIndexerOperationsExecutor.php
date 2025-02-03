@@ -2,8 +2,6 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\utils;
 
-use StreamX\ConnectorCatalog\test\integration\utils\MagentoOperationsExecutor;
-
 class MagentoIndexerOperationsExecutor extends MagentoOperationsExecutor {
 
     public const UPDATE_ON_SAVE_DISPLAY_NAME = 'Update on Save';

@@ -2,8 +2,6 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\utils;
 
-use StreamX\ConnectorCatalog\test\integration\utils\FileUtils;
-use StreamX\ConnectorCatalog\test\integration\utils\JsonFormatter;
 use PHPUnit\Framework\ExpectationFailedException;
 
 trait ValidationFileUtils  {
