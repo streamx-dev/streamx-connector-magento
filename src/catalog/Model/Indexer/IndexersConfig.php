@@ -3,7 +3,7 @@
 namespace StreamX\ConnectorCatalog\Model\Indexer;
 
 use Exception;
-use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Attribute\ProductsWithChangedAttributesProvider;
+use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Attribute\ProductsWithChangedAttributesIndexer;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Category\CategoryDataFormatter;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\BundleOptionsData;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\CategoryData;
@@ -45,9 +45,7 @@ class IndexersConfig implements IndexersConfigInterface
             new Type(CategoryProcessor::INDEXER_ID, [
                 $dataProviderFactory->get(CategoryDataFormatter::class),
             ]),
-            new Type(AttributeProcessor::INDEXER_ID, [
-                $dataProviderFactory->get(ProductsWithChangedAttributesProvider::class),
-            ])
+            new Type(AttributeProcessor::INDEXER_ID, [])
         ];
     }
 

@@ -3,7 +3,7 @@
     <indexer id="streamx_product_indexer" view_id="streamx_product_indexer"
              class="StreamX\ConnectorCatalog\Model\Indexer\Product">
         <title translate="true">StreamX Product Indexer</title>
-        <description translate="true">Update Products data in StreamX</description>
+        <description translate="true">Updates products in StreamX</description>
         <dependencies>
             <indexer id="catalog_product_price" />
             <indexer id="cataloginventory_stock" />
@@ -12,11 +12,11 @@
     <indexer id="streamx_category_indexer" view_id="streamx_category_indexer"
              class="StreamX\ConnectorCatalog\Model\Indexer\Category">
         <title translate="true">StreamX Category Indexer</title>
-        <description translate="true">Update Category data in StreamX</description>
+        <description translate="true">Updates categories in StreamX</description>
     </indexer>
     <indexer id="streamx_attribute_indexer" view_id="streamx_attribute_indexer"
              class="StreamX\ConnectorCatalog\Model\Indexer\Attribute">
-        <title translate="true">StreamX Attributes Indexer</title>
-        <description translate="true">Update Products with changed Attributes in StreamX</description>
+        <title translate="true">StreamX Attribute Indexer</title>
+        <description translate="true">Updates products with added or modified attributes in StreamX</description>
     </indexer>
 </config>

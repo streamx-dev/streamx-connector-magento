@@ -1,0 +1,657 @@
+{
+  "sku": "24-WG081-gray",
+  "id": 24,
+  "lang": "en",
+  "attributes": [
+    {
+      "name": "small_image",
+      "label": "Small",
+      "values": [
+        {
+          "value": "https:\/\/magento.test:444\/media\/catalog\/product\/l\/u\/luma-stability-ball-gray.jpg",
+          "valueLabel": "\/l\/u\/luma-stability-ball-gray.jpg"
+        }
+      ],
+      "isFacet": false,
+      "options": []
+    },
+    {
+      "name": "thumbnail",
+      "label": "Thumbnail",
+      "values": [
+        {
+          "value": "https:\/\/magento.test:444\/media\/catalog\/product\/l\/u\/luma-stability-ball-gray.jpg",
+          "valueLabel": "\/l\/u\/luma-stability-ball-gray.jpg"
+        }
+      ],
+      "isFacet": false,
+      "options": []
+    },
+    {
+      "name": "url_key",
+      "label": "URL Key",
+      "values": [
+        {
+          "value": "sprite-stasis-ball-55-cm-gray",
+          "valueLabel": "sprite-stasis-ball-55-cm-gray"
+        }
+      ],
+      "isFacet": false,
+      "options": []
+    },
+    {
+      "name": "material",
+      "label": "Material",
+      "values": [
+        {
+          "value": 44,
+          "valueLabel": "Plastic"
+        }
+      ],
+      "isFacet": true,
+      "options": [
+        {
+          "value": "31",
+          "label": "Burlap"
+        },
+        {
+          "value": "142",
+          "label": "Cocona&reg; performance fabric"
+        },
+        {
+          "value": "32",
+          "label": "Canvas"
+        },
+        {
+          "value": "143",
+          "label": "Wool"
+        },
+        {
+          "value": "33",
+          "label": "Cotton"
+        },
+        {
+          "value": "144",
+          "label": "Fleece"
+        },
+        {
+          "value": "34",
+          "label": "Faux Leather"
+        },
+        {
+          "value": "145",
+          "label": "Hemp"
+        },
+        {
+          "value": "146",
+          "label": "Jersey"
+        },
+        {
+          "value": "35",
+          "label": "Leather"
+        },
+        {
+          "value": "147",
+          "label": "LumaTech&trade;"
+        },
+        {
+          "value": "36",
+          "label": "Mesh"
+        },
+        {
+          "value": "148",
+          "label": "Lycra&reg;"
+        },
+        {
+          "value": "37",
+          "label": "Nylon"
+        },
+        {
+          "value": "149",
+          "label": "Microfiber"
+        },
+        {
+          "value": "38",
+          "label": "Polyester"
+        },
+        {
+          "value": "39",
+          "label": "Rayon"
+        },
+        {
+          "value": "150",
+          "label": "Spandex"
+        },
+        {
+          "value": "151",
+          "label": "HeatTec&reg;"
+        },
+        {
+          "value": "40",
+          "label": "Ripstop"
+        },
+        {
+          "value": "152",
+          "label": "EverCool&trade;"
+        },
+        {
+          "value": "41",
+          "label": "Suede"
+        },
+        {
+          "value": "42",
+          "label": "Foam"
+        },
+        {
+          "value": "153",
+          "label": "Organic Cotton"
+        },
+        {
+          "value": "43",
+          "label": "Metal"
+        },
+        {
+          "value": "154",
+          "label": "TENCEL"
+        },
+        {
+          "value": "155",
+          "label": "CoolTech&trade;"
+        },
+        {
+          "value": "44",
+          "label": "Plastic"
+        },
+        {
+          "value": "156",
+          "label": "Khaki"
+        },
+        {
+          "value": "45",
+          "label": "Rubber"
+        },
+        {
+          "value": "157",
+          "label": "Linen"
+        },
+        {
+          "value": "46",
+          "label": "Synthetic"
+        },
+        {
+          "value": "47",
+          "label": "Stainless Steel"
+        },
+        {
+          "value": "158",
+          "label": "Wool"
+        },
+        {
+          "value": "48",
+          "label": "Silicone"
+        },
+        {
+          "value": "159",
+          "label": "Terry"
+        }
+      ]
+    },
+    {
+      "name": "category_gear",
+      "label": "Category Gear",
+      "values": [
+        {
+          "value": 87,
+          "valueLabel": "Exercise"
+        }
+      ],
+      "isFacet": true,
+      "options": [
+        {
+          "value": "85",
+          "label": "Cardio"
+        },
+        {
+          "value": "86",
+          "label": "Electronic"
+        },
+        {
+          "value": "87",
+          "label": "Exercise"
+        },
+        {
+          "value": "88",
+          "label": "Fashion"
+        },
+        {
+          "value": "89",
+          "label": "Hydration"
+        },
+        {
+          "value": "90",
+          "label": "Timepiece"
+        }
+      ]
+    },
+    {
+      "name": "color",
+      "label": "Color",
+      "values": [
+        {
+          "value": "52",
+          "valueLabel": "Gray"
+        }
+      ],
+      "isFacet": true,
+      "options": [
+        {
+          "value": "49",
+          "label": "Black",
+          "swatch": {
+            "type": "color",
+            "value": "#000000"
+          }
+        },
+        {
+          "value": "50",
+          "label": "Blue",
+          "swatch": {
+            "type": "color",
+            "value": "#1857f7"
+          }
+        },
+        {
+          "value": "51",
+          "label": "Brown",
+          "swatch": {
+            "type": "color",
+            "value": "#945454"
+          }
+        },
+        {
+          "value": "52",
+          "label": "Gray",
+          "swatch": {
+            "type": "color",
+            "value": "#8f8f8f"
+          }
+        },
+        {
+          "value": "53",
+          "label": "Green",
+          "swatch": {
+            "type": "color",
+            "value": "#53a828"
+          }
+        },
+        {
+          "value": "54",
+          "label": "Lavender",
+          "swatch": {
+            "type": "color",
+            "value": "#ce64d4"
+          }
+        },
+        {
+          "value": "55",
+          "label": "Multi",
+          "swatch": {
+            "type": "color",
+            "value": "#ffffff"
+          }
+        },
+        {
+          "value": "56",
+          "label": "Orange",
+          "swatch": {
+            "type": "color",
+            "value": "#eb6703"
+          }
+        },
+        {
+          "value": "57",
+          "label": "Purple",
+          "swatch": {
+            "type": "color",
+            "value": "#ef3dff"
+          }
+        },
+        {
+          "value": "58",
+          "label": "Red",
+          "swatch": {
+            "type": "color",
+            "value": "#ff0000"
+          }
+        },
+        {
+          "value": "59",
+          "label": "White",
+          "swatch": {
+            "type": "color",
+            "value": "#ffffff"
+          }
+        },
+        {
+          "value": "60",
+          "label": "Yellow",
+          "swatch": {
+            "type": "color",
+            "value": "#ffd500"
+          }
+        }
+      ]
+    },
+    {
+      "name": "status",
+      "label": "Enable Product",
+      "values": [
+        {
+          "value": "1",
+          "valueLabel": "Enabled"
+        }
+      ],
+      "isFacet": false,
+      "options": [
+        {
+          "value": "1",
+          "label": "Enabled"
+        },
+        {
+          "value": "2",
+          "label": "Disabled"
+        }
+      ]
+    },
+    {
+      "name": "visibility",
+      "label": "Visibility",
+      "values": [
+        {
+          "value": "1",
+          "valueLabel": "Not Visible Individually"
+        }
+      ],
+      "isFacet": false,
+      "options": [
+        {
+          "value": "1",
+          "label": "Not Visible Individually"
+        },
+        {
+          "value": "2",
+          "label": "Catalog"
+        },
+        {
+          "value": "3",
+          "label": "Search"
+        },
+        {
+          "value": "4",
+          "label": "Catalog, Search"
+        }
+      ]
+    },
+    {
+      "name": "size",
+      "label": "Size",
+      "values": [
+        {
+          "value": "91",
+          "valueLabel": "55 cm"
+        }
+      ],
+      "isFacet": true,
+      "options": [
+        {
+          "value": "91",
+          "label": "55 cm",
+          "swatch": {
+            "type": "textual",
+            "value": "55 cm"
+          }
+        },
+        {
+          "value": "166",
+          "label": "XS",
+          "swatch": {
+            "type": "textual",
+            "value": "XS"
+          }
+        },
+        {
+          "value": "92",
+          "label": "65 cm",
+          "swatch": {
+            "type": "textual",
+            "value": "65 cm"
+          }
+        },
+        {
+          "value": "167",
+          "label": "S",
+          "swatch": {
+            "type": "textual",
+            "value": "S"
+          }
+        },
+        {
+          "value": "93",
+          "label": "75 cm",
+          "swatch": {
+            "type": "textual",
+            "value": "75 cm"
+          }
+        },
+        {
+          "value": "168",
+          "label": "M",
+          "swatch": {
+            "type": "textual",
+            "value": "M"
+          }
+        },
+        {
+          "value": "94",
+          "label": "6 foot",
+          "swatch": {
+            "type": "textual",
+            "value": "6 foot"
+          }
+        },
+        {
+          "value": "169",
+          "label": "L",
+          "swatch": {
+            "type": "textual",
+            "value": "L"
+          }
+        },
+        {
+          "value": "95",
+          "label": "8 foot",
+          "swatch": {
+            "type": "textual",
+            "value": "8 foot"
+          }
+        },
+        {
+          "value": "170",
+          "label": "XL",
+          "swatch": {
+            "type": "textual",
+            "value": "XL"
+          }
+        },
+        {
+          "value": "96",
+          "label": "10 foot",
+          "swatch": {
+            "type": "textual",
+            "value": "10 foot"
+          }
+        },
+        {
+          "value": "171",
+          "label": "28",
+          "swatch": {
+            "type": "textual",
+            "value": "28"
+          }
+        },
+        {
+          "value": "172",
+          "label": "29",
+          "swatch": {
+            "type": "textual",
+            "value": "29"
+          }
+        },
+        {
+          "value": "173",
+          "label": "30",
+          "swatch": {
+            "type": "textual",
+            "value": "30"
+          }
+        },
+        {
+          "value": "174",
+          "label": "31",
+          "swatch": {
+            "type": "textual",
+            "value": "31"
+          }
+        },
+        {
+          "value": "175",
+          "label": "32",
+          "swatch": {
+            "type": "textual",
+            "value": "32"
+          }
+        },
+        {
+          "value": "176",
+          "label": "33",
+          "swatch": {
+            "type": "textual",
+            "value": "33"
+          }
+        },
+        {
+          "value": "177",
+          "label": "34",
+          "swatch": {
+            "type": "textual",
+            "value": "34"
+          }
+        },
+        {
+          "value": "178",
+          "label": "36",
+          "swatch": {
+            "type": "textual",
+            "value": "36"
+          }
+        },
+        {
+          "value": "179",
+          "label": "38",
+          "swatch": {
+            "type": "textual",
+            "value": "38"
+          }
+        }
+      ]
+    }
+  ],
+  "name": "Sprite Stasis Ball 55 cm",
+  "label": "Sprite Stasis Ball 55 cm",
+  "primaryImage": {
+    "url": "https:\/\/magento.test:444\/media\/catalog\/product\/l\/u\/luma-stability-ball-gray.jpg",
+    "alt": "Image"
+  },
+  "description": "<p>The Sprite Stasis Ball gives you the toned abs, sides, and back you want by amping up your core workout. With bright colors and a burst-resistant design, it's a must-have for every hard-core exercise addict. Use for abdominal conditioning, balance training, yoga, or even physical therapy.<\/p>\n<ul>\n<li>Durable, burst-resistant design.<\/li>\n<li>Hand pump included.<\/li>\n<\/ul>",
+  "price": {
+    "value": 23,
+    "discountedValue": 23
+  },
+  "slug": "sprite-stasis-ball-55-cm-24",
+  "categories": [
+    {
+      "id": 3,
+      "name": "Gear",
+      "slug": "gear-3",
+      "label": "Gear",
+      "subcategories": [
+        {
+          "id": 4,
+          "name": "Bags",
+          "subcategories": [],
+          "slug": "bags-4",
+          "label": "Bags",
+          "parent": {
+            "id": 3,
+            "name": "Gear",
+            "slug": "gear-3",
+            "label": "Gear"
+          }
+        },
+        {
+          "id": 5,
+          "name": "Fitness Equipment",
+          "subcategories": [],
+          "slug": "fitness-equipment-5",
+          "label": "Fitness Equipment",
+          "parent": {
+            "id": 3,
+            "name": "Gear",
+            "slug": "gear-3",
+            "label": "Gear"
+          }
+        },
+        {
+          "id": 6,
+          "name": "Watches",
+          "subcategories": [],
+          "slug": "watches-6",
+          "label": "Watches",
+          "parent": {
+            "id": 3,
+            "name": "Gear",
+            "slug": "gear-3",
+            "label": "Gear"
+          }
+        }
+      ],
+      "parent": {
+        "id": 2,
+        "name": "Default Category",
+        "slug": "default-category-2",
+        "label": "Default Category"
+      }
+    },
+    {
+      "id": 5,
+      "name": "Fitness Equipment",
+      "slug": "fitness-equipment-5",
+      "label": "Fitness Equipment",
+      "subcategories": [],
+      "parent": {
+        "id": 3,
+        "name": "Gear",
+        "slug": "gear-3",
+        "label": "Gear"
+      }
+    }
+  ],
+  "gallery": [
+    {
+      "url": "https:\/\/magento.test:444\/media\/catalog\/product\/l\/u\/luma-stability-ball-gray.jpg",
+      "alt": "Image"
+    }
+  ],
+  "quantity": 100,
+  "variants": []
+}

@@ -26,8 +26,9 @@ interface EntityAddControllerInterface {
     /**
      * Adds a product attribute
      * @param string $attributeCode Internal code of the new attribute
+     * @param int $productId ID of the product to add the attribute to
      * @return int ID of the inserted attribute
      * @throws Exception
      */
-    public function addAttribute(string $attributeCode): int;
+    public function addAttribute(string $attributeCode, int $productId): int;
 }

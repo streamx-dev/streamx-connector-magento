@@ -13,8 +13,8 @@ use Traversable;
 
 class GenericIndexerHandler {
 
-    private Batch $batch;
-    private IndexOperations $indexOperations;
+    protected Batch $batch;
+    protected IndexOperations $indexOperations;
     private TypeInterface $indexType;
     private LoggerInterface $logger;
 
