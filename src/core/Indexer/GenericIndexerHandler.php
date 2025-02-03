@@ -9,7 +9,6 @@ use StreamX\ConnectorCore\Api\IndexOperationInterface;
 use StreamX\ConnectorCore\Exception\ConnectionUnhealthyException;
 use StreamX\ConnectorCore\Index\BulkRequest;
 use Magento\Framework\Indexer\SaveHandler\Batch;
-use Magento\Store\Api\Data\StoreInterface;
 use Traversable;
 
 class GenericIndexerHandler {
@@ -22,10 +21,9 @@ class GenericIndexerHandler {
     public function __construct(
         IndexOperationInterface $indexOperationProvider,
         LoggerInterface $logger,
-        Batch $batch,
         TypeInterface $indexType
     ) {
-        $this->batch = $batch;
+        $this->batch = new Batch();
         $this->indexOperations = $indexOperationProvider;
         $this->indexType = $indexType;
         $this->logger = $logger;
@@ -35,9 +33,8 @@ class GenericIndexerHandler {
      * @throws ConnectionUnhealthyException
      * @throws StreamxClientException
      */
-    public function saveIndex(Traversable $documents, StoreInterface $store): void {
+    public function saveIndex(Traversable $documents, int $storeId): void {
         try {
-            $storeId = (int)$store->getId();
             $batchSize = $this->indexOperations->getBatchIndexingSize();
 
             foreach ($this->batch->getItems($documents, $batchSize) as $docs) {

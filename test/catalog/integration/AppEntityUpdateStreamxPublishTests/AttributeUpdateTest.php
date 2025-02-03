@@ -28,8 +28,8 @@ class AttributeUpdateTest extends BaseAppEntityUpdateTest {
         // given
         $attributeId = $this->db->getProductAttributeId($attributeCode);
 
-        $newDisplayName = "$attributeCode attribute name modified for testing";
         $oldDisplayName = $this->db->getAttributeDisplayName($attributeId);
+        $newDisplayName = "Name modified for testing, was $oldDisplayName";
 
         // and
         $expectedKey = "attr:$attributeId";

@@ -27,8 +27,8 @@ class AttributeUpdateTest extends BaseDirectDbEntityUpdateTest {
         // given
         $attributeId = $this->db->getProductAttributeId($attributeCode);
 
-        $newDisplayName = "$attributeCode attribute name modified for testing";
         $oldDisplayName = $this->db->getAttributeDisplayName($attributeId);
+        $newDisplayName = "Name modified for testing, was $oldDisplayName";
 
         // and
         $expectedKey = "attr:$attributeId";
