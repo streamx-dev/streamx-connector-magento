@@ -1,10 +1,9 @@
 <?php
 
-namespace integration;
+namespace StreamX\ConnectorCatalog\test\integration;
 
 use Psr\Log\LoggerInterface;
 use Streamx\Clients\Ingestion\Builders\StreamxClientBuilders;
-use StreamX\ConnectorCatalog\test\integration\BaseStreamxTest;
 use StreamX\ConnectorCore\Streamx\Client;
 
 class StreamxConnectorClientAvailabilityTest extends BaseStreamxTest {

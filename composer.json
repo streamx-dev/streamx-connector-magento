@@ -1,7 +1,7 @@
 {
   "name": "streamx/magento-connector",
   "description": "Magento connector for StreamX - a Digital Experience Data Mesh.",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "type": "magento2-component",
   "license": "Apache-2.0",
   "keywords": [
@@ -38,10 +38,17 @@
     "psr-4": {
       "StreamX\\ConnectorCore\\": "src/core",
       "StreamX\\ConnectorCatalog\\": "src/catalog"
-    },
-    "exclude-from-classmap": [
-      "src/core/test",
-      "src/catalog/test"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "StreamX\\ConnectorCore\\test\\": "test/core",
+      "StreamX\\ConnectorCatalog\\test\\": "test/catalog"
+    }
+  },
+  "extra": {
+    "exclude-from-package": [
+      "test/"
     ]
   },
   "config": {

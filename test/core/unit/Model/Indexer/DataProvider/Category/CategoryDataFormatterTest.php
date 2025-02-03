@@ -2,8 +2,8 @@
 
 namespace Model\Indexer\DataProvider\Category;
 
-use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Category\CategoryDataFormatter;
 use PHPUnit\Framework\TestCase;
+use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Category\CategoryDataFormatter;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category\Children;
 use StreamX\ConnectorCatalog\Model\SlugGenerator;
