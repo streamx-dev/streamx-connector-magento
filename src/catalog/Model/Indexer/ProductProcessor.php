@@ -3,13 +3,14 @@
 namespace StreamX\ConnectorCatalog\Model\Indexer;
 
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Indexer\AbstractProcessor;
 use Magento\Framework\Indexer\Config\DependencyInfoProviderInterface;
 use Magento\Framework\Indexer\IndexerRegistry;
 
-class ProductProcessor extends \Magento\Framework\Indexer\AbstractProcessor
+class ProductProcessor extends AbstractProcessor
 {
     /**
-     * Indexer ID
+     * @override field from base class
      */
     public const INDEXER_ID = 'streamx_product_indexer';
 

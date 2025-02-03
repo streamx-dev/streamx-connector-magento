@@ -28,7 +28,7 @@ class IndexersConfig implements IndexersConfigInterface
     public function __construct(DataProviderProcessorFactory $dataProviderFactory)
     {
         $this->types = [
-            new Type('product', [
+            new Type(ProductProcessor::INDEXER_ID, [
                 $dataProviderFactory->get(LangData::class),
                 $dataProviderFactory->get(ProductAttributeData::class),
                 // TODO review the provider; trim data produced by it only what we need
@@ -43,24 +43,22 @@ class IndexersConfig implements IndexersConfigInterface
                 $dataProviderFactory->get(CustomOptions::class),
                 $dataProviderFactory->get(DataCleaner::class),
             ]),
-            new Type('category', [
+            new Type(CategoryProcessor::INDEXER_ID, [
                 $dataProviderFactory->get(CategoryDataFormatter::class),
             ]),
-            new Type('attribute', [
-                // TODO: consider making the streamx_attribute_indexer not visible in Magento UI nor in command line indexer tools
-                //  - because in full reindex mode it would publish a lot of products for every attribute present in DB
+            new Type(AttributeProcessor::INDEXER_ID, [
                 $dataProviderFactory->get(ProductsWithChangedAttributesProvider::class),
             ])
         ];
     }
 
-    public function getByName(string $typeName): TypeInterface
+    public function getByName(string $indexerName): TypeInterface
     {
         foreach ($this->types as $type) {
-            if ($type->getName() === $typeName) {
+            if ($type->getName() === $indexerName) {
                 return $type;
             }
         }
-        throw new Exception("Indexer configuration for $typeName not found");
+        throw new Exception("Indexer configuration for $indexerName not found");
     }
 }

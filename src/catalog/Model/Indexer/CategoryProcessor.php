@@ -7,7 +7,7 @@ use Magento\Framework\Indexer\AbstractProcessor;
 class CategoryProcessor extends AbstractProcessor
 {
     /**
-     * Indexer ID
+     * @override field from base class
      */
     public const INDEXER_ID = 'streamx_category_indexer';
 }
