@@ -9,6 +9,7 @@ It's designed to work with PHP Storm IDE.
    - add new server: host = `magento.test`, port = `444`, debugger = `Xdebug`
    - check `Use path mappings checkbox`
    - add mapping from `[your full local path to streamx-connector-magento]/src` to `/var/www/html/app/code/StreamX/Connector/src`
+   - add mapping from `[your full local path to streamx-connector-magento]/connector-test-tools` to `/var/www/html/app/code/StreamX/ConnectorTestTools`
    - click OK
    - then, for the `IDE key (session id)` enter: `PHPSTORM`
    - then open the server settings again, to map also `[your full local path to streamx-connector-magento]/magento/src` to `/var/www/html`.
