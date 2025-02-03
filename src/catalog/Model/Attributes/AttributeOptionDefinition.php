@@ -2,7 +2,9 @@
 
 namespace StreamX\ConnectorCatalog\Model\Attributes;
 
-class AttributeOptionDefinition
+use JsonSerializable;
+
+final class AttributeOptionDefinition implements JsonSerializable
 {
     private string $value;
     private string $label;
@@ -18,5 +20,18 @@ class AttributeOptionDefinition
 
     public function getLabel(): string {
         return $this->label;
+    }
+
+    public function isSameAs(AttributeOptionDefinition $other): bool {
+        if ($this === $other) {
+            return true;
+        }
+
+        return $this->getValue() === $other->getValue()
+            && $this->getLabel() === $other->getLabel();
+    }
+
+    public function jsonSerialize(): array {
+        return get_object_vars($this);
     }
 }

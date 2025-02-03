@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCatalog\Model\Attributes\ProductAttributes;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\ProductAttributeData;
-use StreamX\ConnectorCatalog\Model\ResourceModel\Attribute\LoadAttributes;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\LoadAttributeDefinitions;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\ProductAttributesProvider;
 use StreamX\ConnectorCatalog\Model\SlugGenerator;
 use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
@@ -47,7 +47,7 @@ class ProductAttributeDataTest extends TestCase
         $service = new ProductAttributeData(
             $this->createMock(LoggerInterface::class),
             $this->createMock(ProductAttributes::class),
-            $this->createMock(LoadAttributes::class),
+            $this->createMock(LoadAttributeDefinitions::class),
             $this->createMock(ProductAttributesProvider::class),
             $this->createMock(ImageUrlManager::class),
             $slugGenerator
