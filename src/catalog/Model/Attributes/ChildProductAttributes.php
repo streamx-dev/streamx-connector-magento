@@ -2,33 +2,19 @@
 
 namespace StreamX\ConnectorCatalog\Model\Attributes;
 
-use Magento\Framework\App\ResourceConnection;
-use StreamX\ConnectorCatalog\Model\Attribute\LoadOptions;
 use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 
 class ChildProductAttributes extends BaseProductAttributes
 {
-
-    /**
-     * This product attributes always be exported for variants
-     */
     const MINIMAL_ATTRIBUTE_SET = [
         'sku',
         'name',
         'price',
     ];
 
-    public function __construct(
-        CatalogConfig $catalogConfiguration,
-        ResourceConnection $resource,
-        LoadOptions $loadOptions
-    ) {
-        parent::__construct($catalogConfiguration, $resource,  $loadOptions);
-    }
-
-    protected function getRequiredAttributes(): array
+    public function __construct(CatalogConfig $catalogConfiguration)
     {
-        return self::MINIMAL_ATTRIBUTE_SET;
+        parent::__construct($catalogConfiguration, self::MINIMAL_ATTRIBUTE_SET);
     }
 
     protected function getConfiguredAttributes(int $storeId): array

@@ -2,32 +2,25 @@
 
 namespace StreamX\ConnectorCatalog\Model\Attributes;
 
-use Magento\Framework\App\ResourceConnection;
 use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
-use StreamX\ConnectorCatalog\Model\Attribute\LoadOptions;
-use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\SpecialAttributes;
-use Zend_Db_Expr;
 
 abstract class BaseProductAttributes
 {
     protected CatalogConfig $catalogConfig;
-    private ResourceConnection $resource;
-    private LoadOptions $loadOptions;
+    private array $requiredAttributes;
 
-    public function __construct(
-        CatalogConfig $catalogConfiguration,
-        ResourceConnection $resource,
-        LoadOptions $loadOptions
-    ) {
+    public function __construct(CatalogConfig $catalogConfiguration, array $requiredAttributes) {
         $this->catalogConfig = $catalogConfiguration;
-        $this->resource = $resource;
-        $this->loadOptions = $loadOptions;
+        $this->requiredAttributes = $requiredAttributes;
     }
 
     /**
      * @return string[] of attribute codes that should always be exported
      */
-    protected abstract function getRequiredAttributes(): array;
+    public function getRequiredAttributes(): array
+    {
+        return $this->requiredAttributes;
+    }
 
     /**
      * @return string[] of attribute codes that are configured to be exported in the Connector settings
@@ -45,93 +38,5 @@ abstract class BaseProductAttributes
         return empty($attributeCodes)
             ? []
             : array_merge($attributeCodes, $this->getRequiredAttributes());
-    }
-
-    /**
-     * @param string[] $attributeCodes
-     * @param int $storeId
-     * @return AttributeDefinition[]
-     */
-    public function loadAttributeDefinitions(array $attributeCodes, int $storeId): array
-    {
-        $attributeRows = $this->selectAttributesFromDb($attributeCodes);
-
-        foreach ($attributeRows as &$attributeRow) {
-            $attributeCode = $attributeRow['attribute_code'];
-            $attributeRow['options'] = $this->getOptionsArray($attributeRow, $attributeCode, $storeId);
-        }
-
-        return $this->mapAttributeRowsToDtos($attributeRows);
-    }
-
-    private function selectAttributesFromDb(array $attributeCodes): array
-    {
-        $connection = $this->resource->getConnection();
-        $tableName = $this->resource->getTableName('eav_attribute');
-        $select = $connection->select()
-            ->from(['ea' => $tableName], ['attribute_code', 'frontend_input', 'source_model'])
-            ->columns(['frontend_label' => $connection->getIfNullSql('frontend_label', "''")]) // TODO should frontend label from getStoreLabelsByAttributeId take precedence over frontend_label?
-            ->joinLeft(
-                ['cea' => $this->resource->getTableName('catalog_eav_attribute')],
-                'cea.attribute_id = ea.attribute_id',
-                ['is_filterable' => new Zend_Db_Expr('CASE WHEN is_filterable = 1 THEN true ELSE false END')]
-            )
-            ->where('ea.attribute_code IN (?)', $attributeCodes);
-
-        return $connection->fetchAll($select);
-    }
-
-    private function getOptionsArray(array $attributeRow, string $attributeCode, int $storeId): array
-    {
-        if ($this->useSource($attributeRow)) {
-            if (SpecialAttributes::isSpecialAttribute($attributeCode)) {
-                return SpecialAttributes::getOptionsArray($attributeCode);
-            } else {
-                return $this->loadOptions->execute($attributeCode, $storeId);
-            }
-        } else {
-            return [];
-        }
-    }
-
-    private function useSource(array $attributeRow): bool
-    {
-        return $attributeRow['frontend_input'] === 'select'
-            || $attributeRow['frontend_input'] === 'multiselect'
-            || $attributeRow['source_model'] != '';
-    }
-
-    /**
-     * @return AttributeDefinition[]
-     */
-    private function mapAttributeRowsToDtos(array $attributeRows): array
-    {
-        return array_map(
-            function (array $attributeRow) {
-                return new AttributeDefinition(
-                    $attributeRow['attribute_code'],
-                    $attributeRow['frontend_label'],
-                    $attributeRow['is_filterable'],
-                    $this->mapAttributeOptionRowsToDtos($attributeRow['options'])
-                );
-            },
-            $attributeRows
-        );
-    }
-
-    /**
-     * @return AttributeOptionDefinition[]
-     */
-    private function mapAttributeOptionRowsToDtos(array $optionRows): array
-    {
-        return array_map(
-            function ($option) {
-                return new AttributeOptionDefinition(
-                    $option['value'],
-                    $option['label'],
-                );
-            },
-            $optionRows
-        );
     }
 }

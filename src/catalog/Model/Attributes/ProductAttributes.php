@@ -2,9 +2,7 @@
 
 namespace StreamX\ConnectorCatalog\Model\Attributes;
 
-use Magento\Framework\App\ResourceConnection;
 use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
-use StreamX\ConnectorCatalog\Model\Attribute\LoadOptions;
 
 class ProductAttributes extends BaseProductAttributes
 {
@@ -19,17 +17,9 @@ class ProductAttributes extends BaseProductAttributes
         'price_type',
     ];
 
-    public function __construct(
-        CatalogConfig $catalogConfiguration,
-        ResourceConnection $resource,
-        LoadOptions $loadOptions
-    ) {
-        parent::__construct($catalogConfiguration, $resource,  $loadOptions);
-    }
-
-    protected function getRequiredAttributes(): array
+    public function __construct(CatalogConfig $catalogConfiguration)
     {
-        return self::REQUIRED_ATTRIBUTES;
+        parent::__construct($catalogConfiguration, self::REQUIRED_ATTRIBUTES);
     }
 
     protected function getConfiguredAttributes(int $storeId): array
