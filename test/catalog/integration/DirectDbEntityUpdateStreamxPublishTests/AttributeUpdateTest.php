@@ -14,16 +14,22 @@ class AttributeUpdateTest extends BaseDirectDbEntityUpdateTest {
     }
 
     /** @test */
-    public function shouldPublishSimpleAttributeEditedDirectlyInDatabaseToStreamx() {
-        $this->shouldPublishAttributeEditedDirectlyInDatabaseToStreamx('description');
+    public function shouldPublishProductThatUsesSimpleAttributeEditedDirectlyInDatabaseToStreamx() {
+        $this->shouldPublishProductThatUsesAttributeEditedDirectlyInDatabaseToStreamx(
+            'color',
+            ['"label": "Color"' => '"label": "Name modified for testing, was Color"']
+        );
     }
 
     /** @test */
-    public function shouldPublishAttributeWithOptionsEditedDirectlyInDatabaseToStreamx() {
-        $this->shouldPublishAttributeEditedDirectlyInDatabaseToStreamx('size');
+    public function shouldPublishProductThatUsesAttributeWithOptionsEditedDirectlyInDatabaseToStreamx() {
+        $this->shouldPublishProductThatUsesAttributeEditedDirectlyInDatabaseToStreamx(
+            'material',
+            ['"label": "Material"' => '"label": "Name modified for testing, was Material"']
+        );
     }
 
-    private function shouldPublishAttributeEditedDirectlyInDatabaseToStreamx(string $attributeCode): void {
+    private function shouldPublishProductThatUsesAttributeEditedDirectlyInDatabaseToStreamx(string $attributeCode, array $regexReplacementsForEditedValidationFile): void {
         // given
         $attributeId = $this->db->getProductAttributeId($attributeCode);
 
@@ -31,10 +37,12 @@ class AttributeUpdateTest extends BaseDirectDbEntityUpdateTest {
         $newDisplayName = "Name modified for testing, was $oldDisplayName";
 
         // and
-        $expectedKey = "attr:$attributeId";
+        $productId = $this->db->getProductId('Sprite Stasis Ball 55 cm'); // this product is known to have both "color" and "material" attributes
+        $expectedKey = "pim:$productId";
         self::removeFromStreamX($expectedKey);
 
         // when
+        $this->allowIndexingAllAttributes();
         $this->renameAttributeInDb($attributeId, $newDisplayName);
 
         try {
@@ -42,9 +50,13 @@ class AttributeUpdateTest extends BaseDirectDbEntityUpdateTest {
             $this->reindexMview();
 
             // then
-            $this->assertExactDataIsPublished($expectedKey, "edited-$attributeCode-attribute.json");
+            $this->assertExactDataIsPublished($expectedKey, "edited-ball-product.json", $regexReplacementsForEditedValidationFile);
         } finally {
-            $this->renameAttributeInDb($attributeId, $oldDisplayName);
+            try {
+                $this->renameAttributeInDb($attributeId, $oldDisplayName);
+            } finally {
+                self::restoreDefaultIndexingAttributes();
+            }
         }
     }
 

@@ -7,7 +7,6 @@ use Psr\Log\LoggerInterface;
 use Streamx\Clients\Ingestion\Exceptions\StreamxClientException;
 use Streamx\Clients\Ingestion\Publisher\Message;
 use Streamx\Clients\Ingestion\Publisher\Publisher;
-use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
 use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCore\Api\Client\ClientInterface;
@@ -76,16 +75,13 @@ class Client implements ClientInterface {
     }
 
     private function createStreamxKey(string $indexerName, int $entityId): string {
-        switch ($indexerName) {
-            case ProductProcessor::INDEXER_ID:
-                return $this->productKeyPrefix . $entityId;
-            case CategoryProcessor::INDEXER_ID:
-                return $this->categoryKeyPrefix . $entityId;
-            case AttributeProcessor::INDEXER_ID: // TODO: in future remove this. Attribute definition change will trigger republishing products that use the attribute
-                return "attr:$entityId";
-            default:
-                throw new Exception("Unexpected entity type: $indexerName");
+        if ($indexerName == ProductProcessor::INDEXER_ID) {
+            return "{$this->productKeyPrefix}$entityId";
         }
+        if ($indexerName == CategoryProcessor::INDEXER_ID) {
+            return "{$this->categoryKeyPrefix}$entityId";
+        }
+        throw new Exception("Received data from unexpected indexer: $indexerName");
     }
 
     /**

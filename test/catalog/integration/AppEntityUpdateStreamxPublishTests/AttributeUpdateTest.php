@@ -15,16 +15,22 @@ class AttributeUpdateTest extends BaseAppEntityUpdateTest {
     }
 
     /** @test */
-    public function shouldPublishSimpleAttributeEditedUsingMagentoApplicationToStreamx() {
-        $this->shouldPublishAttributeEditedUsingMagentoApplicationToStreamx('description');
+    public function shouldPublishProductThatUsesSimpleAttributeEditedUsingMagentoApplicationToStreamx() {
+        $this->shouldPublishProductThatUsesAttributeEditedUsingMagentoApplicationToStreamx(
+            'color', // TODO this test takes long, since a lot of products use color attribute. Investigate main code to make it faster
+            ['"label": "Color"' => '"label": "Name modified for testing, was Color"']
+        );
     }
 
     /** @test */
-    public function shouldPublishAttributeWithOptionsEditedUsingMagentoApplicationToStreamx() {
-        $this->shouldPublishAttributeEditedUsingMagentoApplicationToStreamx('size');
+    public function shouldPublishProductThatUsesAttributeWithOptionsEditedUsingMagentoApplicationToStreamx() {
+        $this->shouldPublishProductThatUsesAttributeEditedUsingMagentoApplicationToStreamx(
+            'material',
+            ['"label": "Material"' => '"label": "Name modified for testing, was Material"']
+        );
     }
 
-    private function shouldPublishAttributeEditedUsingMagentoApplicationToStreamx(string $attributeCode): void {
+    private function shouldPublishProductThatUsesAttributeEditedUsingMagentoApplicationToStreamx(string $attributeCode, array $regexReplacementsForEditedValidationFile): void {
         // given
         $attributeId = $this->db->getProductAttributeId($attributeCode);
 
@@ -32,18 +38,24 @@ class AttributeUpdateTest extends BaseAppEntityUpdateTest {
         $newDisplayName = "Name modified for testing, was $oldDisplayName";
 
         // and
-        $expectedKey = "attr:$attributeId";
+        $productId = $this->db->getProductId('Sprite Stasis Ball 55 cm'); // this product is known to have both "color" and "material" attributes
+        $expectedKey = "pim:$productId";
         self::removeFromStreamX($expectedKey);
 
         // when
+        $this->allowIndexingAllAttributes();
         self::renameAttribute($attributeCode, $newDisplayName);
 
         // then
         try {
-            $this->assertExactDataIsPublished($expectedKey, "edited-$attributeCode-attribute.json");
+            $this->assertExactDataIsPublished($expectedKey, "edited-ball-product.json", $regexReplacementsForEditedValidationFile);
         } finally {
-            self::renameAttribute($attributeCode, $oldDisplayName);
-            $this->assertExactDataIsPublished($expectedKey, "original-$attributeCode-attribute.json");
+            try {
+                self::renameAttribute($attributeCode, $oldDisplayName);
+                $this->assertExactDataIsPublished($expectedKey, "original-ball-product.json");
+            } finally {
+                self::restoreDefaultIndexingAttributes();
+            }
         }
     }
 
