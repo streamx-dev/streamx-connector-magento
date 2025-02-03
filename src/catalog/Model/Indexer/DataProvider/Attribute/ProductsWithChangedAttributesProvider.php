@@ -3,16 +3,16 @@
 namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Attribute;
 
 use StreamX\ConnectorCatalog\Model\Attributes\AttributeDefinition;
-use StreamX\ConnectorCatalog\Model\ResourceModel\Attribute\LoadAttributes;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\LoadAttributeDefinitions;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 
 class ProductsWithChangedAttributesProvider extends DataProviderInterface
 {
-    private LoadAttributes $loadAttributes;
+    private LoadAttributeDefinitions $loadAttributeDefinitions;
 
-    public function __construct(LoadAttributes $loadAttributes)
+    public function __construct(LoadAttributeDefinitions $loadAttributeDefinitions)
     {
-        $this->loadAttributes = $loadAttributes;
+        $this->loadAttributeDefinitions = $loadAttributeDefinitions;
     }
 
     /**

@@ -2,6 +2,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Mview/etc/mview.xsd">
     <view id="streamx_product_indexer" class="StreamX\ConnectorCatalog\Model\Indexer\Product" group="indexer">
         <subscriptions>
+            <!-- TODO verify on all magento versions. Some of them may not have the entity_id column in the attributes tables -->
             <table name="catalog_product_entity_datetime" entity_column="entity_id" />
             <table name="catalog_product_entity_decimal" entity_column="entity_id" />
             <table name="catalog_product_entity_gallery" entity_column="entity_id" />
