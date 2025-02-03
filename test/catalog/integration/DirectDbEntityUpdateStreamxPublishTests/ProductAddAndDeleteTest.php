@@ -3,7 +3,6 @@
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
 use DateTime;
-use StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests\BaseDirectDbEntityUpdateTest;
 use Magento\Msrp\Model\Product\Attribute\Source\Type\Price;
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 

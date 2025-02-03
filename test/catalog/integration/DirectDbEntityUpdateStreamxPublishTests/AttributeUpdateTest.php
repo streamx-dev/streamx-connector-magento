@@ -2,7 +2,6 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
-use StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests\BaseDirectDbEntityUpdateTest;
 use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
 
 /**
