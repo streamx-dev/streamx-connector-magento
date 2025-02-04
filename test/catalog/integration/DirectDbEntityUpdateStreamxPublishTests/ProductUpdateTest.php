@@ -19,11 +19,6 @@ class ProductUpdateTest extends BaseDirectDbEntityUpdateTest {
     }
 
     /** @test */
-    public function shouldPublishConfigurableProductEditedDirectlyInDatabaseToStreamx() {
-        $this->shouldPublishProductEditedDirectlyInDatabaseToStreamx('Chaz Kangeroo Hoodie', 'hoodie');
-    }
-
-    /** @test */
     public function shouldPublishBundleProductEditedDirectlyInDatabaseToStreamx() {
         $this->shouldPublishProductEditedDirectlyInDatabaseToStreamx('Sprite Yoga Companion Kit', 'bundle');
     }
@@ -44,7 +39,7 @@ class ProductUpdateTest extends BaseDirectDbEntityUpdateTest {
         self::removeFromStreamX($expectedKey);
 
         // when
-        $this->renameProductInDb($productId, $productNewName);
+        $this->db->renameProduct($productId, $productNewName);
 
         try {
             // and
@@ -53,17 +48,7 @@ class ProductUpdateTest extends BaseDirectDbEntityUpdateTest {
             // then
             $this->assertExactDataIsPublished($expectedKey, "edited-$productNameInValidationFileName-product.json");
         } finally {
-            $this->renameProductInDb($productId, $productName);
+            $this->db->renameProduct($productId, $productName);
         }
-    }
-
-    private function renameProductInDb(int $productId, string $newName): void {
-        $productNameAttributeId = $this->db->getProductNameAttributeId();
-        $this->db->execute("
-            UPDATE catalog_product_entity_varchar
-               SET value = '$newName'
-             WHERE attribute_id = $productNameAttributeId
-               AND entity_id = $productId
-        ");
     }
 }

@@ -20,11 +20,6 @@ class ProductUpdateTest extends BaseAppEntityUpdateTest {
     }
 
     /** @test */
-    public function shouldPublishConfigurableProductEditedUsingMagentoApplicationToStreamx() {
-        $this->shouldPublishProductEditedUsingMagentoApplicationToStreamx('Chaz Kangeroo Hoodie', 'hoodie');
-    }
-
-    /** @test */
     public function shouldPublishBundleProductEditedUsingMagentoApplicationToStreamx() {
         $this->shouldPublishProductEditedUsingMagentoApplicationToStreamx('Sprite Yoga Companion Kit', 'bundle');
     }

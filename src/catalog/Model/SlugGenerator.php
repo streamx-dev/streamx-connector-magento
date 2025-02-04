@@ -34,7 +34,7 @@ class SlugGenerator
         return self::slugify("$name-$id");
     }
 
-    private static function slugify(string $text): string
+    public static function slugify(string $text): string
     {
         $text = mb_strtolower($text);
         $text = preg_replace("/\s+/", '-', $text);// Replace spaces with -

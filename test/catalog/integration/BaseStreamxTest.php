@@ -73,7 +73,7 @@ abstract class BaseStreamxTest extends TestCase {
         }
 
         if ($response !== false) {
-            $this->verifySameJsonsOrThrow($expectedFormattedJson, $response);
+            $this->verifySameJsonsOrThrow($expectedFormattedJson, $response, $regexReplacements);
         } else {
             $this->fail("$url: not found");
         }
@@ -95,10 +95,16 @@ abstract class BaseStreamxTest extends TestCase {
         $this->fail("$url: exists");
     }
 
-    protected function removeFromStreamX(string $key): void {
-        StreamxClientBuilders::create(self::STREAMX_REST_INGESTION_URL)
+    protected function assertDataIsNotPublished(string $key): void {
+        $this->assertDataIsUnpublished($key); // alias
+    }
+
+    protected function removeFromStreamX(string ...$keys): void {
+        $publisher = StreamxClientBuilders::create(self::STREAMX_REST_INGESTION_URL)
             ->build()
-            ->newPublisher(self::CHANNEL_NAME, self::CHANNEL_SCHEMA_NAME)
-            ->unpublish($key);
+            ->newPublisher(self::CHANNEL_NAME, self::CHANNEL_SCHEMA_NAME);
+        foreach ($keys as $key) {
+            $publisher->unpublish($key);
+        }
     }
 }

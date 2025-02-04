@@ -173,4 +173,14 @@ class MagentoMySqlQueryExecutor {
              LIMIT 1
         ");
     }
+
+    public function renameProduct(int $productId, string $newName): void {
+        $productNameAttributeId = $this->getProductNameAttributeId();
+        $this->execute("
+            UPDATE catalog_product_entity_varchar
+               SET value = '$newName'
+             WHERE attribute_id = $productNameAttributeId
+               AND entity_id = $productId
+        ");
+    }
 }
