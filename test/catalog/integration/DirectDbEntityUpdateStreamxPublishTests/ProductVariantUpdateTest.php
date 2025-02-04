@@ -68,8 +68,7 @@ class ProductVariantUpdateTest extends BaseDirectDbEntityUpdateTest {
                 '"' . $nameOfProductToEdit => '"' . $newNameOfProductToEdit,
                 '"' . SlugGenerator::slugify($nameOfProductToEdit) => '"' . SlugGenerator::slugify($newNameOfProductToEdit)
             ]);
-            // TODO: the variant product should not be published separately
-            $this->assertDataIsPublished($unexpectedPublishedKey, $newNameOfProductToEdit);
+            $this->assertDataIsNotPublished($unexpectedPublishedKey);
         } finally {
             $this->db->renameProduct($idOfProductToEdit, $nameOfProductToEdit);
         }
