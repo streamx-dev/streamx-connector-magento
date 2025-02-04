@@ -65,13 +65,11 @@ class ProductVariantUpdateTest extends BaseAppEntityUpdateTest {
                 '"' . $nameOfProductToEdit => '"' . $newNameOfProductToEdit,
                 '"' . SlugGenerator::slugify($nameOfProductToEdit) => '"' . SlugGenerator::slugify($newNameOfProductToEdit)
             ]);
-            // TODO: the variant product should not be published separately
-            $this->assertDataIsPublished($unexpectedPublishedKey, $newNameOfProductToEdit);
+            $this->assertDataIsNotPublished($unexpectedPublishedKey);
         } finally {
             self::renameProduct($idOfProductToEdit, $nameOfProductToEdit);
             $this->assertExactDataIsPublished($expectedPublishedKey, 'original-hoodie-product.json');
-            // TODO: the variant product should not be published separately
-            $this->assertDataIsPublished($unexpectedPublishedKey, $nameOfProductToEdit);
+            $this->assertDataIsNotPublished($unexpectedPublishedKey);
         }
     }
 
