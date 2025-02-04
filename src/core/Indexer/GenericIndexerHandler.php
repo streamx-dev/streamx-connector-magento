@@ -5,21 +5,21 @@ namespace StreamX\ConnectorCore\Indexer;
 use Psr\Log\LoggerInterface;
 use Streamx\Clients\Ingestion\Exceptions\StreamxClientException;
 use StreamX\ConnectorCore\Api\Index\TypeInterface;
-use StreamX\ConnectorCore\Api\IndexOperationInterface;
 use StreamX\ConnectorCore\Exception\ConnectionUnhealthyException;
 use StreamX\ConnectorCore\Index\BulkRequest;
+use StreamX\ConnectorCore\Index\IndexOperations;
 use Magento\Framework\Indexer\SaveHandler\Batch;
 use Traversable;
 
 class GenericIndexerHandler {
 
     private Batch $batch;
-    private IndexOperationInterface $indexOperations;
+    private IndexOperations $indexOperations;
     private TypeInterface $indexType;
     private LoggerInterface $logger;
 
     public function __construct(
-        IndexOperationInterface $indexOperationProvider,
+        IndexOperations $indexOperationProvider,
         LoggerInterface $logger,
         TypeInterface $indexType
     ) {
