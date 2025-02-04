@@ -3,7 +3,6 @@
 namespace StreamX\ConnectorCatalog\Model\Indexer\Action;
 
 use RuntimeException;
-use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\LoadAttributeDefinitions;
 use Traversable;
 
