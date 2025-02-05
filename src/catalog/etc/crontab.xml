@@ -11,6 +11,5 @@
     <job name="streamx_attribute_indexer_cron" instance="StreamX\ConnectorCatalog\Cron\MView\StreamxIndexerMviewProcessor" method="reindexAttributeMview">
       <schedule>* * * * *</schedule> <!-- Every minute -->
     </job>
-    <!-- All the cron jobs can be executed using the command bin/magento cron:run. However, they will not run again until at least one minute has passed since the last execution -->
   </group>
 </config>
