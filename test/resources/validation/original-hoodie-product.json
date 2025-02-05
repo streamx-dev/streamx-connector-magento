@@ -559,51 +559,75 @@
           "options": [
             {
               "value": "49",
-              "label": "Black"
+              "label": "Black",
+              "swatchType": "color",
+              "swatchValue": "#000000"
             },
             {
               "value": "50",
-              "label": "Blue"
+              "label": "Blue",
+              "swatchType": "color",
+              "swatchValue": "#1857f7"
             },
             {
               "value": "51",
-              "label": "Brown"
+              "label": "Brown",
+              "swatchType": "color",
+              "swatchValue": "#945454"
             },
             {
               "value": "52",
-              "label": "Gray"
+              "label": "Gray",
+              "swatchType": "color",
+              "swatchValue": "#8f8f8f"
             },
             {
               "value": "53",
-              "label": "Green"
+              "label": "Green",
+              "swatchType": "color",
+              "swatchValue": "#53a828"
             },
             {
               "value": "54",
-              "label": "Lavender"
+              "label": "Lavender",
+              "swatchType": "color",
+              "swatchValue": "#ce64d4"
             },
             {
               "value": "55",
-              "label": "Multi"
+              "label": "Multi",
+              "swatchType": "color",
+              "swatchValue": "#ffffff"
             },
             {
               "value": "56",
-              "label": "Orange"
+              "label": "Orange",
+              "swatchType": "color",
+              "swatchValue": "#eb6703"
             },
             {
               "value": "57",
-              "label": "Purple"
+              "label": "Purple",
+              "swatchType": "color",
+              "swatchValue": "#ef3dff"
             },
             {
               "value": "58",
-              "label": "Red"
+              "label": "Red",
+              "swatchType": "color",
+              "swatchValue": "#ff0000"
             },
             {
               "value": "59",
-              "label": "White"
+              "label": "White",
+              "swatchType": "color",
+              "swatchValue": "#ffffff"
             },
             {
               "value": "60",
-              "label": "Yellow"
+              "label": "Yellow",
+              "swatchType": "color",
+              "swatchValue": "#ffd500"
             }
           ]
         },
@@ -620,83 +644,123 @@
           "options": [
             {
               "value": "91",
-              "label": "55 cm"
+              "label": "55 cm",
+              "swatchType": "textual",
+              "swatchValue": "55 cm"
             },
             {
               "value": "166",
-              "label": "XS"
+              "label": "XS",
+              "swatchType": "textual",
+              "swatchValue": "XS"
             },
             {
               "value": "92",
-              "label": "65 cm"
+              "label": "65 cm",
+              "swatchType": "textual",
+              "swatchValue": "65 cm"
             },
             {
               "value": "167",
-              "label": "S"
+              "label": "S",
+              "swatchType": "textual",
+              "swatchValue": "S"
             },
             {
               "value": "93",
-              "label": "75 cm"
+              "label": "75 cm",
+              "swatchType": "textual",
+              "swatchValue": "75 cm"
             },
             {
               "value": "168",
-              "label": "M"
+              "label": "M",
+              "swatchType": "textual",
+              "swatchValue": "M"
             },
             {
               "value": "94",
-              "label": "6 foot"
+              "label": "6 foot",
+              "swatchType": "textual",
+              "swatchValue": "6 foot"
             },
             {
               "value": "169",
-              "label": "L"
+              "label": "L",
+              "swatchType": "textual",
+              "swatchValue": "L"
             },
             {
               "value": "95",
-              "label": "8 foot"
+              "label": "8 foot",
+              "swatchType": "textual",
+              "swatchValue": "8 foot"
             },
             {
               "value": "170",
-              "label": "XL"
+              "label": "XL",
+              "swatchType": "textual",
+              "swatchValue": "XL"
             },
             {
               "value": "96",
-              "label": "10 foot"
+              "label": "10 foot",
+              "swatchType": "textual",
+              "swatchValue": "10 foot"
             },
             {
               "value": "171",
-              "label": "28"
+              "label": "28",
+              "swatchType": "textual",
+              "swatchValue": "28"
             },
             {
               "value": "172",
-              "label": "29"
+              "label": "29",
+              "swatchType": "textual",
+              "swatchValue": "29"
             },
             {
               "value": "173",
-              "label": "30"
+              "label": "30",
+              "swatchType": "textual",
+              "swatchValue": "30"
             },
             {
               "value": "174",
-              "label": "31"
+              "label": "31",
+              "swatchType": "textual",
+              "swatchValue": "31"
             },
             {
               "value": "175",
-              "label": "32"
+              "label": "32",
+              "swatchType": "textual",
+              "swatchValue": "32"
             },
             {
               "value": "176",
-              "label": "33"
+              "label": "33",
+              "swatchType": "textual",
+              "swatchValue": "33"
             },
             {
               "value": "177",
-              "label": "34"
+              "label": "34",
+              "swatchType": "textual",
+              "swatchValue": "34"
             },
             {
               "value": "178",
-              "label": "36"
+              "label": "36",
+              "swatchType": "textual",
+              "swatchValue": "36"
             },
             {
               "value": "179",
-              "label": "38"
+              "label": "38",
+              "swatchType": "textual",
+              "swatchValue": "38"
             }
           ]
         }
@@ -758,51 +822,75 @@
           "options": [
             {
               "value": "49",
-              "label": "Black"
+              "label": "Black",
+              "swatchType": "color",
+              "swatchValue": "#000000"
             },
             {
               "value": "50",
-              "label": "Blue"
+              "label": "Blue",
+              "swatchType": "color",
+              "swatchValue": "#1857f7"
             },
             {
               "value": "51",
-              "label": "Brown"
+              "label": "Brown",
+              "swatchType": "color",
+              "swatchValue": "#945454"
             },
             {
               "value": "52",
-              "label": "Gray"
+              "label": "Gray",
+              "swatchType": "color",
+              "swatchValue": "#8f8f8f"
             },
             {
               "value": "53",
-              "label": "Green"
+              "label": "Green",
+              "swatchType": "color",
+              "swatchValue": "#53a828"
             },
             {
               "value": "54",
-              "label": "Lavender"
+              "label": "Lavender",
+              "swatchType": "color",
+              "swatchValue": "#ce64d4"
             },
             {
               "value": "55",
-              "label": "Multi"
+              "label": "Multi",
+              "swatchType": "color",
+              "swatchValue": "#ffffff"
             },
             {
               "value": "56",
-              "label": "Orange"
+              "label": "Orange",
+              "swatchType": "color",
+              "swatchValue": "#eb6703"
             },
             {
               "value": "57",
-              "label": "Purple"
+              "label": "Purple",
+              "swatchType": "color",
+              "swatchValue": "#ef3dff"
             },
             {
               "value": "58",
-              "label": "Red"
+              "label": "Red",
+              "swatchType": "color",
+              "swatchValue": "#ff0000"
             },
             {
               "value": "59",
-              "label": "White"
+              "label": "White",
+              "swatchType": "color",
+              "swatchValue": "#ffffff"
             },
             {
               "value": "60",
-              "label": "Yellow"
+              "label": "Yellow",
+              "swatchType": "color",
+              "swatchValue": "#ffd500"
             }
           ]
         },
@@ -819,83 +907,123 @@
           "options": [
             {
               "value": "91",
-              "label": "55 cm"
+              "label": "55 cm",
+              "swatchType": "textual",
+              "swatchValue": "55 cm"
             },
             {
               "value": "166",
-              "label": "XS"
+              "label": "XS",
+              "swatchType": "textual",
+              "swatchValue": "XS"
             },
             {
               "value": "92",
-              "label": "65 cm"
+              "label": "65 cm",
+              "swatchType": "textual",
+              "swatchValue": "65 cm"
             },
             {
               "value": "167",
-              "label": "S"
+              "label": "S",
+              "swatchType": "textual",
+              "swatchValue": "S"
             },
             {
               "value": "93",
-              "label": "75 cm"
+              "label": "75 cm",
+              "swatchType": "textual",
+              "swatchValue": "75 cm"
             },
             {
               "value": "168",
-              "label": "M"
+              "label": "M",
+              "swatchType": "textual",
+              "swatchValue": "M"
             },
             {
               "value": "94",
-              "label": "6 foot"
+              "label": "6 foot",
+              "swatchType": "textual",
+              "swatchValue": "6 foot"
             },
             {
               "value": "169",
-              "label": "L"
+              "label": "L",
+              "swatchType": "textual",
+              "swatchValue": "L"
             },
             {
               "value": "95",
-              "label": "8 foot"
+              "label": "8 foot",
+              "swatchType": "textual",
+              "swatchValue": "8 foot"
             },
             {
               "value": "170",
-              "label": "XL"
+              "label": "XL",
+              "swatchType": "textual",
+              "swatchValue": "XL"
             },
             {
               "value": "96",
-              "label": "10 foot"
+              "label": "10 foot",
+              "swatchType": "textual",
+              "swatchValue": "10 foot"
             },
             {
               "value": "171",
-              "label": "28"
+              "label": "28",
+              "swatchType": "textual",
+              "swatchValue": "28"
             },
             {
               "value": "172",
-              "label": "29"
+              "label": "29",
+              "swatchType": "textual",
+              "swatchValue": "29"
             },
             {
               "value": "173",
-              "label": "30"
+              "label": "30",
+              "swatchType": "textual",
+              "swatchValue": "30"
             },
             {
               "value": "174",
-              "label": "31"
+              "label": "31",
+              "swatchType": "textual",
+              "swatchValue": "31"
             },
             {
               "value": "175",
-              "label": "32"
+              "label": "32",
+              "swatchType": "textual",
+              "swatchValue": "32"
             },
             {
               "value": "176",
-              "label": "33"
+              "label": "33",
+              "swatchType": "textual",
+              "swatchValue": "33"
             },
             {
               "value": "177",
-              "label": "34"
+              "label": "34",
+              "swatchType": "textual",
+              "swatchValue": "34"
             },
             {
               "value": "178",
-              "label": "36"
+              "label": "36",
+              "swatchType": "textual",
+              "swatchValue": "36"
             },
             {
               "value": "179",
-              "label": "38"
+              "label": "38",
+              "swatchType": "textual",
+              "swatchValue": "38"
             }
           ]
         }
@@ -965,51 +1093,75 @@
           "options": [
             {
               "value": "49",
-              "label": "Black"
+              "label": "Black",
+              "swatchType": "color",
+              "swatchValue": "#000000"
             },
             {
               "value": "50",
-              "label": "Blue"
+              "label": "Blue",
+              "swatchType": "color",
+              "swatchValue": "#1857f7"
             },
             {
               "value": "51",
-              "label": "Brown"
+              "label": "Brown",
+              "swatchType": "color",
+              "swatchValue": "#945454"
             },
             {
               "value": "52",
-              "label": "Gray"
+              "label": "Gray",
+              "swatchType": "color",
+              "swatchValue": "#8f8f8f"
             },
             {
               "value": "53",
-              "label": "Green"
+              "label": "Green",
+              "swatchType": "color",
+              "swatchValue": "#53a828"
             },
             {
               "value": "54",
-              "label": "Lavender"
+              "label": "Lavender",
+              "swatchType": "color",
+              "swatchValue": "#ce64d4"
             },
             {
               "value": "55",
-              "label": "Multi"
+              "label": "Multi",
+              "swatchType": "color",
+              "swatchValue": "#ffffff"
             },
             {
               "value": "56",
-              "label": "Orange"
+              "label": "Orange",
+              "swatchType": "color",
+              "swatchValue": "#eb6703"
             },
             {
               "value": "57",
-              "label": "Purple"
+              "label": "Purple",
+              "swatchType": "color",
+              "swatchValue": "#ef3dff"
             },
             {
               "value": "58",
-              "label": "Red"
+              "label": "Red",
+              "swatchType": "color",
+              "swatchValue": "#ff0000"
             },
             {
               "value": "59",
-              "label": "White"
+              "label": "White",
+              "swatchType": "color",
+              "swatchValue": "#ffffff"
             },
             {
               "value": "60",
-              "label": "Yellow"
+              "label": "Yellow",
+              "swatchType": "color",
+              "swatchValue": "#ffd500"
             }
           ]
         },
@@ -1026,83 +1178,123 @@
           "options": [
             {
               "value": "91",
-              "label": "55 cm"
+              "label": "55 cm",
+              "swatchType": "textual",
+              "swatchValue": "55 cm"
             },
             {
               "value": "166",
-              "label": "XS"
+              "label": "XS",
+              "swatchType": "textual",
+              "swatchValue": "XS"
             },
             {
               "value": "92",
-              "label": "65 cm"
+              "label": "65 cm",
+              "swatchType": "textual",
+              "swatchValue": "65 cm"
             },
             {
               "value": "167",
-              "label": "S"
+              "label": "S",
+              "swatchType": "textual",
+              "swatchValue": "S"
             },
             {
               "value": "93",
-              "label": "75 cm"
+              "label": "75 cm",
+              "swatchType": "textual",
+              "swatchValue": "75 cm"
             },
             {
               "value": "168",
-              "label": "M"
+              "label": "M",
+              "swatchType": "textual",
+              "swatchValue": "M"
             },
             {
               "value": "94",
-              "label": "6 foot"
+              "label": "6 foot",
+              "swatchType": "textual",
+              "swatchValue": "6 foot"
             },
             {
               "value": "169",
-              "label": "L"
+              "label": "L",
+              "swatchType": "textual",
+              "swatchValue": "L"
             },
             {
               "value": "95",
-              "label": "8 foot"
+              "label": "8 foot",
+              "swatchType": "textual",
+              "swatchValue": "8 foot"
             },
             {
               "value": "170",
-              "label": "XL"
+              "label": "XL",
+              "swatchType": "textual",
+              "swatchValue": "XL"
             },
             {
               "value": "96",
-              "label": "10 foot"
+              "label": "10 foot",
+              "swatchType": "textual",
+              "swatchValue": "10 foot"
             },
             {
               "value": "171",
-              "label": "28"
+              "label": "28",
+              "swatchType": "textual",
+              "swatchValue": "28"
             },
             {
               "value": "172",
-              "label": "29"
+              "label": "29",
+              "swatchType": "textual",
+              "swatchValue": "29"
             },
             {
               "value": "173",
-              "label": "30"
+              "label": "30",
+              "swatchType": "textual",
+              "swatchValue": "30"
             },
             {
               "value": "174",
-              "label": "31"
+              "label": "31",
+              "swatchType": "textual",
+              "swatchValue": "31"
             },
             {
               "value": "175",
-              "label": "32"
+              "label": "32",
+              "swatchType": "textual",
+              "swatchValue": "32"
             },
             {
               "value": "176",
-              "label": "33"
+              "label": "33",
+              "swatchType": "textual",
+              "swatchValue": "33"
             },
             {
               "value": "177",
-              "label": "34"
+              "label": "34",
+              "swatchType": "textual",
+              "swatchValue": "34"
             },
             {
               "value": "178",
-              "label": "36"
+              "label": "36",
+              "swatchType": "textual",
+              "swatchValue": "36"
             },
             {
               "value": "179",
-              "label": "38"
+              "label": "38",
+              "swatchType": "textual",
+              "swatchValue": "38"
             }
           ]
         }
@@ -1164,51 +1356,75 @@
           "options": [
             {
               "value": "49",
-              "label": "Black"
+              "label": "Black",
+              "swatchType": "color",
+              "swatchValue": "#000000"
             },
             {
               "value": "50",
-              "label": "Blue"
+              "label": "Blue",
+              "swatchType": "color",
+              "swatchValue": "#1857f7"
             },
             {
               "value": "51",
-              "label": "Brown"
+              "label": "Brown",
+              "swatchType": "color",
+              "swatchValue": "#945454"
             },
             {
               "value": "52",
-              "label": "Gray"
+              "label": "Gray",
+              "swatchType": "color",
+              "swatchValue": "#8f8f8f"
             },
             {
               "value": "53",
-              "label": "Green"
+              "label": "Green",
+              "swatchType": "color",
+              "swatchValue": "#53a828"
             },
             {
               "value": "54",
-              "label": "Lavender"
+              "label": "Lavender",
+              "swatchType": "color",
+              "swatchValue": "#ce64d4"
             },
             {
               "value": "55",
-              "label": "Multi"
+              "label": "Multi",
+              "swatchType": "color",
+              "swatchValue": "#ffffff"
             },
             {
               "value": "56",
-              "label": "Orange"
+              "label": "Orange",
+              "swatchType": "color",
+              "swatchValue": "#eb6703"
             },
             {
               "value": "57",
-              "label": "Purple"
+              "label": "Purple",
+              "swatchType": "color",
+              "swatchValue": "#ef3dff"
             },
             {
               "value": "58",
-              "label": "Red"
+              "label": "Red",
+              "swatchType": "color",
+              "swatchValue": "#ff0000"
             },
             {
               "value": "59",
-              "label": "White"
+              "label": "White",
+              "swatchType": "color",
+              "swatchValue": "#ffffff"
             },
             {
               "value": "60",
-              "label": "Yellow"
+              "label": "Yellow",
+              "swatchType": "color",
+              "swatchValue": "#ffd500"
             }
           ]
         },
@@ -1225,83 +1441,123 @@
           "options": [
             {
               "value": "91",
-              "label": "55 cm"
+              "label": "55 cm",
+              "swatchType": "textual",
+              "swatchValue": "55 cm"
             },
             {
               "value": "166",
-              "label": "XS"
+              "label": "XS",
+              "swatchType": "textual",
+              "swatchValue": "XS"
             },
             {
               "value": "92",
-              "label": "65 cm"
+              "label": "65 cm",
+              "swatchType": "textual",
+              "swatchValue": "65 cm"
             },
             {
               "value": "167",
-              "label": "S"
+              "label": "S",
+              "swatchType": "textual",
+              "swatchValue": "S"
             },
             {
               "value": "93",
-              "label": "75 cm"
+              "label": "75 cm",
+              "swatchType": "textual",
+              "swatchValue": "75 cm"
             },
             {
               "value": "168",
-              "label": "M"
+              "label": "M",
+              "swatchType": "textual",
+              "swatchValue": "M"
             },
             {
               "value": "94",
-              "label": "6 foot"
+              "label": "6 foot",
+              "swatchType": "textual",
+              "swatchValue": "6 foot"
             },
             {
               "value": "169",
-              "label": "L"
+              "label": "L",
+              "swatchType": "textual",
+              "swatchValue": "L"
             },
             {
               "value": "95",
-              "label": "8 foot"
+              "label": "8 foot",
+              "swatchType": "textual",
+              "swatchValue": "8 foot"
             },
             {
               "value": "170",
-              "label": "XL"
+              "label": "XL",
+              "swatchType": "textual",
+              "swatchValue": "XL"
             },
             {
               "value": "96",
-              "label": "10 foot"
+              "label": "10 foot",
+              "swatchType": "textual",
+              "swatchValue": "10 foot"
             },
             {
               "value": "171",
-              "label": "28"
+              "label": "28",
+              "swatchType": "textual",
+              "swatchValue": "28"
             },
             {
               "value": "172",
-              "label": "29"
+              "label": "29",
+              "swatchType": "textual",
+              "swatchValue": "29"
             },
             {
               "value": "173",
-              "label": "30"
+              "label": "30",
+              "swatchType": "textual",
+              "swatchValue": "30"
             },
             {
               "value": "174",
-              "label": "31"
+              "label": "31",
+              "swatchType": "textual",
+              "swatchValue": "31"
             },
             {
               "value": "175",
-              "label": "32"
+              "label": "32",
+              "swatchType": "textual",
+              "swatchValue": "32"
             },
             {
               "value": "176",
-              "label": "33"
+              "label": "33",
+              "swatchType": "textual",
+              "swatchValue": "33"
             },
             {
               "value": "177",
-              "label": "34"
+              "label": "34",
+              "swatchType": "textual",
+              "swatchValue": "34"
             },
             {
               "value": "178",
-              "label": "36"
+              "label": "36",
+              "swatchType": "textual",
+              "swatchValue": "36"
             },
             {
               "value": "179",
-              "label": "38"
+              "label": "38",
+              "swatchType": "textual",
+              "swatchValue": "38"
             }
           ]
         }
@@ -1363,51 +1619,75 @@
           "options": [
             {
               "value": "49",
-              "label": "Black"
+              "label": "Black",
+              "swatchType": "color",
+              "swatchValue": "#000000"
             },
             {
               "value": "50",
-              "label": "Blue"
+              "label": "Blue",
+              "swatchType": "color",
+              "swatchValue": "#1857f7"
             },
             {
               "value": "51",
-              "label": "Brown"
+              "label": "Brown",
+              "swatchType": "color",
+              "swatchValue": "#945454"
             },
             {
               "value": "52",
-              "label": "Gray"
+              "label": "Gray",
+              "swatchType": "color",
+              "swatchValue": "#8f8f8f"
             },
             {
               "value": "53",
-              "label": "Green"
+              "label": "Green",
+              "swatchType": "color",
+              "swatchValue": "#53a828"
             },
             {
               "value": "54",
-              "label": "Lavender"
+              "label": "Lavender",
+              "swatchType": "color",
+              "swatchValue": "#ce64d4"
             },
             {
               "value": "55",
-              "label": "Multi"
+              "label": "Multi",
+              "swatchType": "color",
+              "swatchValue": "#ffffff"
             },
             {
               "value": "56",
-              "label": "Orange"
+              "label": "Orange",
+              "swatchType": "color",
+              "swatchValue": "#eb6703"
             },
             {
               "value": "57",
-              "label": "Purple"
+              "label": "Purple",
+              "swatchType": "color",
+              "swatchValue": "#ef3dff"
             },
             {
               "value": "58",
-              "label": "Red"
+              "label": "Red",
+              "swatchType": "color",
+              "swatchValue": "#ff0000"
             },
             {
               "value": "59",
-              "label": "White"
+              "label": "White",
+              "swatchType": "color",
+              "swatchValue": "#ffffff"
             },
             {
               "value": "60",
-              "label": "Yellow"
+              "label": "Yellow",
+              "swatchType": "color",
+              "swatchValue": "#ffd500"
             }
           ]
         },
@@ -1424,83 +1704,123 @@
           "options": [
             {
               "value": "91",
-              "label": "55 cm"
+              "label": "55 cm",
+              "swatchType": "textual",
+              "swatchValue": "55 cm"
             },
             {
               "value": "166",
-              "label": "XS"
+              "label": "XS",
+              "swatchType": "textual",
+              "swatchValue": "XS"
             },
             {
               "value": "92",
-              "label": "65 cm"
+              "label": "65 cm",
+              "swatchType": "textual",
+              "swatchValue": "65 cm"
             },
             {
               "value": "167",
-              "label": "S"
+              "label": "S",
+              "swatchType": "textual",
+              "swatchValue": "S"
             },
             {
               "value": "93",
-              "label": "75 cm"
+              "label": "75 cm",
+              "swatchType": "textual",
+              "swatchValue": "75 cm"
             },
             {
               "value": "168",
-              "label": "M"
+              "label": "M",
+              "swatchType": "textual",
+              "swatchValue": "M"
             },
             {
               "value": "94",
-              "label": "6 foot"
+              "label": "6 foot",
+              "swatchType": "textual",
+              "swatchValue": "6 foot"
             },
             {
               "value": "169",
-              "label": "L"
+              "label": "L",
+              "swatchType": "textual",
+              "swatchValue": "L"
             },
             {
               "value": "95",
-              "label": "8 foot"
+              "label": "8 foot",
+              "swatchType": "textual",
+              "swatchValue": "8 foot"
             },
             {
               "value": "170",
-              "label": "XL"
+              "label": "XL",
+              "swatchType": "textual",
+              "swatchValue": "XL"
             },
             {
               "value": "96",
-              "label": "10 foot"
+              "label": "10 foot",
+              "swatchType": "textual",
+              "swatchValue": "10 foot"
             },
             {
               "value": "171",
-              "label": "28"
+              "label": "28",
+              "swatchType": "textual",
+              "swatchValue": "28"
             },
             {
               "value": "172",
-              "label": "29"
+              "label": "29",
+              "swatchType": "textual",
+              "swatchValue": "29"
             },
             {
               "value": "173",
-              "label": "30"
+              "label": "30",
+              "swatchType": "textual",
+              "swatchValue": "30"
             },
             {
               "value": "174",
-              "label": "31"
+              "label": "31",
+              "swatchType": "textual",
+              "swatchValue": "31"
             },
             {
               "value": "175",
-              "label": "32"
+              "label": "32",
+              "swatchType": "textual",
+              "swatchValue": "32"
             },
             {
               "value": "176",
-              "label": "33"
+              "label": "33",
+              "swatchType": "textual",
+              "swatchValue": "33"
             },
             {
               "value": "177",
-              "label": "34"
+              "label": "34",
+              "swatchType": "textual",
+              "swatchValue": "34"
             },
             {
               "value": "178",
-              "label": "36"
+              "label": "36",
+              "swatchType": "textual",
+              "swatchValue": "36"
             },
             {
               "value": "179",
-              "label": "38"
+              "label": "38",
+              "swatchType": "textual",
+              "swatchValue": "38"
             }
           ]
         }
@@ -1570,51 +1890,75 @@
           "options": [
             {
               "value": "49",
-              "label": "Black"
+              "label": "Black",
+              "swatchType": "color",
+              "swatchValue": "#000000"
             },
             {
               "value": "50",
-              "label": "Blue"
+              "label": "Blue",
+              "swatchType": "color",
+              "swatchValue": "#1857f7"
             },
             {
               "value": "51",
-              "label": "Brown"
+              "label": "Brown",
+              "swatchType": "color",
+              "swatchValue": "#945454"
             },
             {
               "value": "52",
-              "label": "Gray"
+              "label": "Gray",
+              "swatchType": "color",
+              "swatchValue": "#8f8f8f"
             },
             {
               "value": "53",
-              "label": "Green"
+              "label": "Green",
+              "swatchType": "color",
+              "swatchValue": "#53a828"
             },
             {
               "value": "54",
-              "label": "Lavender"
+              "label": "Lavender",
+              "swatchType": "color",
+              "swatchValue": "#ce64d4"
             },
             {
               "value": "55",
-              "label": "Multi"
+              "label": "Multi",
+              "swatchType": "color",
+              "swatchValue": "#ffffff"
             },
             {
               "value": "56",
-              "label": "Orange"
+              "label": "Orange",
+              "swatchType": "color",
+              "swatchValue": "#eb6703"
             },
             {
               "value": "57",
-              "label": "Purple"
+              "label": "Purple",
+              "swatchType": "color",
+              "swatchValue": "#ef3dff"
             },
             {
               "value": "58",
-              "label": "Red"
+              "label": "Red",
+              "swatchType": "color",
+              "swatchValue": "#ff0000"
             },
             {
               "value": "59",
-              "label": "White"
+              "label": "White",
+              "swatchType": "color",
+              "swatchValue": "#ffffff"
             },
             {
               "value": "60",
-              "label": "Yellow"
+              "label": "Yellow",
+              "swatchType": "color",
+              "swatchValue": "#ffd500"
             }
           ]
         },
@@ -1631,83 +1975,123 @@
           "options": [
             {
               "value": "91",
-              "label": "55 cm"
+              "label": "55 cm",
+              "swatchType": "textual",
+              "swatchValue": "55 cm"
             },
             {
               "value": "166",
-              "label": "XS"
+              "label": "XS",
+              "swatchType": "textual",
+              "swatchValue": "XS"
             },
             {
               "value": "92",
-              "label": "65 cm"
+              "label": "65 cm",
+              "swatchType": "textual",
+              "swatchValue": "65 cm"
             },
             {
               "value": "167",
-              "label": "S"
+              "label": "S",
+              "swatchType": "textual",
+              "swatchValue": "S"
             },
             {
               "value": "93",
-              "label": "75 cm"
+              "label": "75 cm",
+              "swatchType": "textual",
+              "swatchValue": "75 cm"
             },
             {
               "value": "168",
-              "label": "M"
+              "label": "M",
+              "swatchType": "textual",
+              "swatchValue": "M"
             },
             {
               "value": "94",
-              "label": "6 foot"
+              "label": "6 foot",
+              "swatchType": "textual",
+              "swatchValue": "6 foot"
             },
             {
               "value": "169",
-              "label": "L"
+              "label": "L",
+              "swatchType": "textual",
+              "swatchValue": "L"
             },
             {
               "value": "95",
-              "label": "8 foot"
+              "label": "8 foot",
+              "swatchType": "textual",
+              "swatchValue": "8 foot"
             },
             {
               "value": "170",
-              "label": "XL"
+              "label": "XL",
+              "swatchType": "textual",
+              "swatchValue": "XL"
             },
             {
               "value": "96",
-              "label": "10 foot"
+              "label": "10 foot",
+              "swatchType": "textual",
+              "swatchValue": "10 foot"
             },
             {
               "value": "171",
-              "label": "28"
+              "label": "28",
+              "swatchType": "textual",
+              "swatchValue": "28"
             },
             {
               "value": "172",
-              "label": "29"
+              "label": "29",
+              "swatchType": "textual",
+              "swatchValue": "29"
             },
             {
               "value": "173",
-              "label": "30"
+              "label": "30",
+              "swatchType": "textual",
+              "swatchValue": "30"
             },
             {
               "value": "174",
-              "label": "31"
+              "label": "31",
+              "swatchType": "textual",
+              "swatchValue": "31"
             },
             {
               "value": "175",
-              "label": "32"
+              "label": "32",
+              "swatchType": "textual",
+              "swatchValue": "32"
             },
             {
               "value": "176",
-              "label": "33"
+              "label": "33",
+              "swatchType": "textual",
+              "swatchValue": "33"
             },
             {
               "value": "177",
-              "label": "34"
+              "label": "34",
+              "swatchType": "textual",
+              "swatchValue": "34"
             },
             {
               "value": "178",
-              "label": "36"
+              "label": "36",
+              "swatchType": "textual",
+              "swatchValue": "36"
             },
             {
               "value": "179",
-              "label": "38"
+              "label": "38",
+              "swatchType": "textual",
+              "swatchValue": "38"
             }
           ]
         }
@@ -1769,51 +2153,75 @@
           "options": [
             {
               "value": "49",
-              "label": "Black"
+              "label": "Black",
+              "swatchType": "color",
+              "swatchValue": "#000000"
             },
             {
               "value": "50",
-              "label": "Blue"
+              "label": "Blue",
+              "swatchType": "color",
+              "swatchValue": "#1857f7"
             },
             {
               "value": "51",
-              "label": "Brown"
+              "label": "Brown",
+              "swatchType": "color",
+              "swatchValue": "#945454"
             },
             {
               "value": "52",
-              "label": "Gray"
+              "label": "Gray",
+              "swatchType": "color",
+              "swatchValue": "#8f8f8f"
             },
             {
               "value": "53",
-              "label": "Green"
+              "label": "Green",
+              "swatchType": "color",
+              "swatchValue": "#53a828"
             },
             {
               "value": "54",
-              "label": "Lavender"
+              "label": "Lavender",
+              "swatchType": "color",
+              "swatchValue": "#ce64d4"
             },
             {
               "value": "55",
-              "label": "Multi"
+              "label": "Multi",
+              "swatchType": "color",
+              "swatchValue": "#ffffff"
             },
             {
               "value": "56",
-              "label": "Orange"
+              "label": "Orange",
+              "swatchType": "color",
+              "swatchValue": "#eb6703"
             },
             {
               "value": "57",
-              "label": "Purple"
+              "label": "Purple",
+              "swatchType": "color",
+              "swatchValue": "#ef3dff"
             },
             {
               "value": "58",
-              "label": "Red"
+              "label": "Red",
+              "swatchType": "color",
+              "swatchValue": "#ff0000"
             },
             {
               "value": "59",
-              "label": "White"
+              "label": "White",
+              "swatchType": "color",
+              "swatchValue": "#ffffff"
             },
             {
               "value": "60",
-              "label": "Yellow"
+              "label": "Yellow",
+              "swatchType": "color",
+              "swatchValue": "#ffd500"
             }
           ]
         },
@@ -1830,83 +2238,123 @@
           "options": [
             {
               "value": "91",
-              "label": "55 cm"
+              "label": "55 cm",
+              "swatchType": "textual",
+              "swatchValue": "55 cm"
             },
             {
               "value": "166",
-              "label": "XS"
+              "label": "XS",
+              "swatchType": "textual",
+              "swatchValue": "XS"
             },
             {
               "value": "92",
-              "label": "65 cm"
+              "label": "65 cm",
+              "swatchType": "textual",
+              "swatchValue": "65 cm"
             },
             {
               "value": "167",
-              "label": "S"
+              "label": "S",
+              "swatchType": "textual",
+              "swatchValue": "S"
             },
             {
               "value": "93",
-              "label": "75 cm"
+              "label": "75 cm",
+              "swatchType": "textual",
+              "swatchValue": "75 cm"
             },
             {
               "value": "168",
-              "label": "M"
+              "label": "M",
+              "swatchType": "textual",
+              "swatchValue": "M"
             },
             {
               "value": "94",
-              "label": "6 foot"
+              "label": "6 foot",
+              "swatchType": "textual",
+              "swatchValue": "6 foot"
             },
             {
               "value": "169",
-              "label": "L"
+              "label": "L",
+              "swatchType": "textual",
+              "swatchValue": "L"
             },
             {
               "value": "95",
-              "label": "8 foot"
+              "label": "8 foot",
+              "swatchType": "textual",
+              "swatchValue": "8 foot"
             },
             {
               "value": "170",
-              "label": "XL"
+              "label": "XL",
+              "swatchType": "textual",
+              "swatchValue": "XL"
             },
             {
               "value": "96",
-              "label": "10 foot"
+              "label": "10 foot",
+              "swatchType": "textual",
+              "swatchValue": "10 foot"
             },
             {
               "value": "171",
-              "label": "28"
+              "label": "28",
+              "swatchType": "textual",
+              "swatchValue": "28"
             },
             {
               "value": "172",
-              "label": "29"
+              "label": "29",
+              "swatchType": "textual",
+              "swatchValue": "29"
             },
             {
               "value": "173",
-              "label": "30"
+              "label": "30",
+              "swatchType": "textual",
+              "swatchValue": "30"
             },
             {
               "value": "174",
-              "label": "31"
+              "label": "31",
+              "swatchType": "textual",
+              "swatchValue": "31"
             },
             {
               "value": "175",
-              "label": "32"
+              "label": "32",
+              "swatchType": "textual",
+              "swatchValue": "32"
             },
             {
               "value": "176",
-              "label": "33"
+              "label": "33",
+              "swatchType": "textual",
+              "swatchValue": "33"
             },
             {
               "value": "177",
-              "label": "34"
+              "label": "34",
+              "swatchType": "textual",
+              "swatchValue": "34"
             },
             {
               "value": "178",
-              "label": "36"
+              "label": "36",
+              "swatchType": "textual",
+              "swatchValue": "36"
             },
             {
               "value": "179",
-              "label": "38"
+              "label": "38",
+              "swatchType": "textual",
+              "swatchValue": "38"
             }
           ]
         }
@@ -1968,51 +2416,75 @@
           "options": [
             {
               "value": "49",
-              "label": "Black"
+              "label": "Black",
+              "swatchType": "color",
+              "swatchValue": "#000000"
             },
             {
               "value": "50",
-              "label": "Blue"
+              "label": "Blue",
+              "swatchType": "color",
+              "swatchValue": "#1857f7"
             },
             {
               "value": "51",
-              "label": "Brown"
+              "label": "Brown",
+              "swatchType": "color",
+              "swatchValue": "#945454"
             },
             {
               "value": "52",
-              "label": "Gray"
+              "label": "Gray",
+              "swatchType": "color",
+              "swatchValue": "#8f8f8f"
             },
             {
               "value": "53",
-              "label": "Green"
+              "label": "Green",
+              "swatchType": "color",
+              "swatchValue": "#53a828"
             },
             {
               "value": "54",
-              "label": "Lavender"
+              "label": "Lavender",
+              "swatchType": "color",
+              "swatchValue": "#ce64d4"
             },
             {
               "value": "55",
-              "label": "Multi"
+              "label": "Multi",
+              "swatchType": "color",
+              "swatchValue": "#ffffff"
             },
             {
               "value": "56",
-              "label": "Orange"
+              "label": "Orange",
+              "swatchType": "color",
+              "swatchValue": "#eb6703"
             },
             {
               "value": "57",
-              "label": "Purple"
+              "label": "Purple",
+              "swatchType": "color",
+              "swatchValue": "#ef3dff"
             },
             {
               "value": "58",
-              "label": "Red"
+              "label": "Red",
+              "swatchType": "color",
+              "swatchValue": "#ff0000"
             },
             {
               "value": "59",
-              "label": "White"
+              "label": "White",
+              "swatchType": "color",
+              "swatchValue": "#ffffff"
             },
             {
               "value": "60",
-              "label": "Yellow"
+              "label": "Yellow",
+              "swatchType": "color",
+              "swatchValue": "#ffd500"
             }
           ]
         },
@@ -2029,83 +2501,123 @@
           "options": [
             {
               "value": "91",
-              "label": "55 cm"
+              "label": "55 cm",
+              "swatchType": "textual",
+              "swatchValue": "55 cm"
             },
             {
               "value": "166",
-              "label": "XS"
+              "label": "XS",
+              "swatchType": "textual",
+              "swatchValue": "XS"
             },
             {
               "value": "92",
-              "label": "65 cm"
+              "label": "65 cm",
+              "swatchType": "textual",
+              "swatchValue": "65 cm"
             },
             {
               "value": "167",
-              "label": "S"
+              "label": "S",
+              "swatchType": "textual",
+              "swatchValue": "S"
             },
             {
               "value": "93",
-              "label": "75 cm"
+              "label": "75 cm",
+              "swatchType": "textual",
+              "swatchValue": "75 cm"
             },
             {
               "value": "168",
-              "label": "M"
+              "label": "M",
+              "swatchType": "textual",
+              "swatchValue": "M"
             },
             {
               "value": "94",
-              "label": "6 foot"
+              "label": "6 foot",
+              "swatchType": "textual",
+              "swatchValue": "6 foot"
             },
             {
               "value": "169",
-              "label": "L"
+              "label": "L",
+              "swatchType": "textual",
+              "swatchValue": "L"
             },
             {
               "value": "95",
-              "label": "8 foot"
+              "label": "8 foot",
+              "swatchType": "textual",
+              "swatchValue": "8 foot"
             },
             {
               "value": "170",
-              "label": "XL"
+              "label": "XL",
+              "swatchType": "textual",
+              "swatchValue": "XL"
             },
             {
               "value": "96",
-              "label": "10 foot"
+              "label": "10 foot",
+              "swatchType": "textual",
+              "swatchValue": "10 foot"
             },
             {
               "value": "171",
-              "label": "28"
+              "label": "28",
+              "swatchType": "textual",
+              "swatchValue": "28"
             },
             {
               "value": "172",
-              "label": "29"
+              "label": "29",
+              "swatchType": "textual",
+              "swatchValue": "29"
             },
             {
               "value": "173",
-              "label": "30"
+              "label": "30",
+              "swatchType": "textual",
+              "swatchValue": "30"
             },
             {
               "value": "174",
-              "label": "31"
+              "label": "31",
+              "swatchType": "textual",
+              "swatchValue": "31"
             },
             {
               "value": "175",
-              "label": "32"
+              "label": "32",
+              "swatchType": "textual",
+              "swatchValue": "32"
             },
             {
               "value": "176",
-              "label": "33"
+              "label": "33",
+              "swatchType": "textual",
+              "swatchValue": "33"
             },
             {
               "value": "177",
-              "label": "34"
+              "label": "34",
+              "swatchType": "textual",
+              "swatchValue": "34"
             },
             {
               "value": "178",
-              "label": "36"
+              "label": "36",
+              "swatchType": "textual",
+              "swatchValue": "36"
             },
             {
               "value": "179",
-              "label": "38"
+              "label": "38",
+              "swatchType": "textual",
+              "swatchValue": "38"
             }
           ]
         }
@@ -2175,51 +2687,75 @@
           "options": [
             {
               "value": "49",
-              "label": "Black"
+              "label": "Black",
+              "swatchType": "color",
+              "swatchValue": "#000000"
             },
             {
               "value": "50",
-              "label": "Blue"
+              "label": "Blue",
+              "swatchType": "color",
+              "swatchValue": "#1857f7"
             },
             {
               "value": "51",
-              "label": "Brown"
+              "label": "Brown",
+              "swatchType": "color",
+              "swatchValue": "#945454"
             },
             {
               "value": "52",
-              "label": "Gray"
+              "label": "Gray",
+              "swatchType": "color",
+              "swatchValue": "#8f8f8f"
             },
             {
               "value": "53",
-              "label": "Green"
+              "label": "Green",
+              "swatchType": "color",
+              "swatchValue": "#53a828"
             },
             {
               "value": "54",
-              "label": "Lavender"
+              "label": "Lavender",
+              "swatchType": "color",
+              "swatchValue": "#ce64d4"
             },
             {
               "value": "55",
-              "label": "Multi"
+              "label": "Multi",
+              "swatchType": "color",
+              "swatchValue": "#ffffff"
             },
             {
               "value": "56",
-              "label": "Orange"
+              "label": "Orange",
+              "swatchType": "color",
+              "swatchValue": "#eb6703"
             },
             {
               "value": "57",
-              "label": "Purple"
+              "label": "Purple",
+              "swatchType": "color",
+              "swatchValue": "#ef3dff"
             },
             {
               "value": "58",
-              "label": "Red"
+              "label": "Red",
+              "swatchType": "color",
+              "swatchValue": "#ff0000"
             },
             {
               "value": "59",
-              "label": "White"
+              "label": "White",
+              "swatchType": "color",
+              "swatchValue": "#ffffff"
             },
             {
               "value": "60",
-              "label": "Yellow"
+              "label": "Yellow",
+              "swatchType": "color",
+              "swatchValue": "#ffd500"
             }
           ]
         },
@@ -2236,83 +2772,123 @@
           "options": [
             {
               "value": "91",
-              "label": "55 cm"
+              "label": "55 cm",
+              "swatchType": "textual",
+              "swatchValue": "55 cm"
             },
             {
               "value": "166",
-              "label": "XS"
+              "label": "XS",
+              "swatchType": "textual",
+              "swatchValue": "XS"
             },
             {
               "value": "92",
-              "label": "65 cm"
+              "label": "65 cm",
+              "swatchType": "textual",
+              "swatchValue": "65 cm"
             },
             {
               "value": "167",
-              "label": "S"
+              "label": "S",
+              "swatchType": "textual",
+              "swatchValue": "S"
             },
             {
               "value": "93",
-              "label": "75 cm"
+              "label": "75 cm",
+              "swatchType": "textual",
+              "swatchValue": "75 cm"
             },
             {
               "value": "168",
-              "label": "M"
+              "label": "M",
+              "swatchType": "textual",
+              "swatchValue": "M"
             },
             {
               "value": "94",
-              "label": "6 foot"
+              "label": "6 foot",
+              "swatchType": "textual",
+              "swatchValue": "6 foot"
             },
             {
               "value": "169",
-              "label": "L"
+              "label": "L",
+              "swatchType": "textual",
+              "swatchValue": "L"
             },
             {
               "value": "95",
-              "label": "8 foot"
+              "label": "8 foot",
+              "swatchType": "textual",
+              "swatchValue": "8 foot"
             },
             {
               "value": "170",
-              "label": "XL"
+              "label": "XL",
+              "swatchType": "textual",
+              "swatchValue": "XL"
             },
             {
               "value": "96",
-              "label": "10 foot"
+              "label": "10 foot",
+              "swatchType": "textual",
+              "swatchValue": "10 foot"
             },
             {
               "value": "171",
-              "label": "28"
+              "label": "28",
+              "swatchType": "textual",
+              "swatchValue": "28"
             },
             {
               "value": "172",
-              "label": "29"
+              "label": "29",
+              "swatchType": "textual",
+              "swatchValue": "29"
             },
             {
               "value": "173",
-              "label": "30"
+              "label": "30",
+              "swatchType": "textual",
+              "swatchValue": "30"
             },
             {
               "value": "174",
-              "label": "31"
+              "label": "31",
+              "swatchType": "textual",
+              "swatchValue": "31"
             },
             {
               "value": "175",
-              "label": "32"
+              "label": "32",
+              "swatchType": "textual",
+              "swatchValue": "32"
             },
             {
               "value": "176",
-              "label": "33"
+              "label": "33",
+              "swatchType": "textual",
+              "swatchValue": "33"
             },
             {
               "value": "177",
-              "label": "34"
+              "label": "34",
+              "swatchType": "textual",
+              "swatchValue": "34"
             },
             {
               "value": "178",
-              "label": "36"
+              "label": "36",
+              "swatchType": "textual",
+              "swatchValue": "36"
             },
             {
               "value": "179",
-              "label": "38"
+              "label": "38",
+              "swatchType": "textual",
+              "swatchValue": "38"
             }
           ]
         }
@@ -2374,51 +2950,75 @@
           "options": [
             {
               "value": "49",
-              "label": "Black"
+              "label": "Black",
+              "swatchType": "color",
+              "swatchValue": "#000000"
             },
             {
               "value": "50",
-              "label": "Blue"
+              "label": "Blue",
+              "swatchType": "color",
+              "swatchValue": "#1857f7"
             },
             {
               "value": "51",
-              "label": "Brown"
+              "label": "Brown",
+              "swatchType": "color",
+              "swatchValue": "#945454"
             },
             {
               "value": "52",
-              "label": "Gray"
+              "label": "Gray",
+              "swatchType": "color",
+              "swatchValue": "#8f8f8f"
             },
             {
               "value": "53",
-              "label": "Green"
+              "label": "Green",
+              "swatchType": "color",
+              "swatchValue": "#53a828"
             },
             {
               "value": "54",
-              "label": "Lavender"
+              "label": "Lavender",
+              "swatchType": "color",
+              "swatchValue": "#ce64d4"
             },
             {
               "value": "55",
-              "label": "Multi"
+              "label": "Multi",
+              "swatchType": "color",
+              "swatchValue": "#ffffff"
             },
             {
               "value": "56",
-              "label": "Orange"
+              "label": "Orange",
+              "swatchType": "color",
+              "swatchValue": "#eb6703"
             },
             {
               "value": "57",
-              "label": "Purple"
+              "label": "Purple",
+              "swatchType": "color",
+              "swatchValue": "#ef3dff"
             },
             {
               "value": "58",
-              "label": "Red"
+              "label": "Red",
+              "swatchType": "color",
+              "swatchValue": "#ff0000"
             },
             {
               "value": "59",
-              "label": "White"
+              "label": "White",
+              "swatchType": "color",
+              "swatchValue": "#ffffff"
             },
             {
               "value": "60",
-              "label": "Yellow"
+              "label": "Yellow",
+              "swatchType": "color",
+              "swatchValue": "#ffd500"
             }
           ]
         },
@@ -2435,83 +3035,123 @@
           "options": [
             {
               "value": "91",
-              "label": "55 cm"
+              "label": "55 cm",
+              "swatchType": "textual",
+              "swatchValue": "55 cm"
             },
             {
               "value": "166",
-              "label": "XS"
+              "label": "XS",
+              "swatchType": "textual",
+              "swatchValue": "XS"
             },
             {
               "value": "92",
-              "label": "65 cm"
+              "label": "65 cm",
+              "swatchType": "textual",
+              "swatchValue": "65 cm"
             },
             {
               "value": "167",
-              "label": "S"
+              "label": "S",
+              "swatchType": "textual",
+              "swatchValue": "S"
             },
             {
               "value": "93",
-              "label": "75 cm"
+              "label": "75 cm",
+              "swatchType": "textual",
+              "swatchValue": "75 cm"
             },
             {
               "value": "168",
-              "label": "M"
+              "label": "M",
+              "swatchType": "textual",
+              "swatchValue": "M"
             },
             {
               "value": "94",
-              "label": "6 foot"
+              "label": "6 foot",
+              "swatchType": "textual",
+              "swatchValue": "6 foot"
             },
             {
               "value": "169",
-              "label": "L"
+              "label": "L",
+              "swatchType": "textual",
+              "swatchValue": "L"
             },
             {
               "value": "95",
-              "label": "8 foot"
+              "label": "8 foot",
+              "swatchType": "textual",
+              "swatchValue": "8 foot"
             },
             {
               "value": "170",
-              "label": "XL"
+              "label": "XL",
+              "swatchType": "textual",
+              "swatchValue": "XL"
             },
             {
               "value": "96",
-              "label": "10 foot"
+              "label": "10 foot",
+              "swatchType": "textual",
+              "swatchValue": "10 foot"
             },
             {
               "value": "171",
-              "label": "28"
+              "label": "28",
+              "swatchType": "textual",
+              "swatchValue": "28"
             },
             {
               "value": "172",
-              "label": "29"
+              "label": "29",
+              "swatchType": "textual",
+              "swatchValue": "29"
             },
             {
               "value": "173",
-              "label": "30"
+              "label": "30",
+              "swatchType": "textual",
+              "swatchValue": "30"
             },
             {
               "value": "174",
-              "label": "31"
+              "label": "31",
+              "swatchType": "textual",
+              "swatchValue": "31"
             },
             {
               "value": "175",
-              "label": "32"
+              "label": "32",
+              "swatchType": "textual",
+              "swatchValue": "32"
             },
             {
               "value": "176",
-              "label": "33"
+              "label": "33",
+              "swatchType": "textual",
+              "swatchValue": "33"
             },
             {
               "value": "177",
-              "label": "34"
+              "label": "34",
+              "swatchType": "textual",
+              "swatchValue": "34"
             },
             {
               "value": "178",
-              "label": "36"
+              "label": "36",
+              "swatchType": "textual",
+              "swatchValue": "36"
             },
             {
               "value": "179",
-              "label": "38"
+              "label": "38",
+              "swatchType": "textual",
+              "swatchValue": "38"
             }
           ]
         }
@@ -2573,51 +3213,75 @@
           "options": [
             {
               "value": "49",
-              "label": "Black"
+              "label": "Black",
+              "swatchType": "color",
+              "swatchValue": "#000000"
             },
             {
               "value": "50",
-              "label": "Blue"
+              "label": "Blue",
+              "swatchType": "color",
+              "swatchValue": "#1857f7"
             },
             {
               "value": "51",
-              "label": "Brown"
+              "label": "Brown",
+              "swatchType": "color",
+              "swatchValue": "#945454"
             },
             {
               "value": "52",
-              "label": "Gray"
+              "label": "Gray",
+              "swatchType": "color",
+              "swatchValue": "#8f8f8f"
             },
             {
               "value": "53",
-              "label": "Green"
+              "label": "Green",
+              "swatchType": "color",
+              "swatchValue": "#53a828"
             },
             {
               "value": "54",
-              "label": "Lavender"
+              "label": "Lavender",
+              "swatchType": "color",
+              "swatchValue": "#ce64d4"
             },
             {
               "value": "55",
-              "label": "Multi"
+              "label": "Multi",
+              "swatchType": "color",
+              "swatchValue": "#ffffff"
             },
             {
               "value": "56",
-              "label": "Orange"
+              "label": "Orange",
+              "swatchType": "color",
+              "swatchValue": "#eb6703"
             },
             {
               "value": "57",
-              "label": "Purple"
+              "label": "Purple",
+              "swatchType": "color",
+              "swatchValue": "#ef3dff"
             },
             {
               "value": "58",
-              "label": "Red"
+              "label": "Red",
+              "swatchType": "color",
+              "swatchValue": "#ff0000"
             },
             {
               "value": "59",
-              "label": "White"
+              "label": "White",
+              "swatchType": "color",
+              "swatchValue": "#ffffff"
             },
             {
               "value": "60",
-              "label": "Yellow"
+              "label": "Yellow",
+              "swatchType": "color",
+              "swatchValue": "#ffd500"
             }
           ]
         },
@@ -2634,83 +3298,123 @@
           "options": [
             {
               "value": "91",
-              "label": "55 cm"
+              "label": "55 cm",
+              "swatchType": "textual",
+              "swatchValue": "55 cm"
             },
             {
               "value": "166",
-              "label": "XS"
+              "label": "XS",
+              "swatchType": "textual",
+              "swatchValue": "XS"
             },
             {
               "value": "92",
-              "label": "65 cm"
+              "label": "65 cm",
+              "swatchType": "textual",
+              "swatchValue": "65 cm"
             },
             {
               "value": "167",
-              "label": "S"
+              "label": "S",
+              "swatchType": "textual",
+              "swatchValue": "S"
             },
             {
               "value": "93",
-              "label": "75 cm"
+              "label": "75 cm",
+              "swatchType": "textual",
+              "swatchValue": "75 cm"
             },
             {
               "value": "168",
-              "label": "M"
+              "label": "M",
+              "swatchType": "textual",
+              "swatchValue": "M"
             },
             {
               "value": "94",
-              "label": "6 foot"
+              "label": "6 foot",
+              "swatchType": "textual",
+              "swatchValue": "6 foot"
             },
             {
               "value": "169",
-              "label": "L"
+              "label": "L",
+              "swatchType": "textual",
+              "swatchValue": "L"
             },
             {
               "value": "95",
-              "label": "8 foot"
+              "label": "8 foot",
+              "swatchType": "textual",
+              "swatchValue": "8 foot"
             },
             {
               "value": "170",
-              "label": "XL"
+              "label": "XL",
+              "swatchType": "textual",
+              "swatchValue": "XL"
             },
             {
               "value": "96",
-              "label": "10 foot"
+              "label": "10 foot",
+              "swatchType": "textual",
+              "swatchValue": "10 foot"
             },
             {
               "value": "171",
-              "label": "28"
+              "label": "28",
+              "swatchType": "textual",
+              "swatchValue": "28"
             },
             {
               "value": "172",
-              "label": "29"
+              "label": "29",
+              "swatchType": "textual",
+              "swatchValue": "29"
             },
             {
               "value": "173",
-              "label": "30"
+              "label": "30",
+              "swatchType": "textual",
+              "swatchValue": "30"
             },
             {
               "value": "174",
-              "label": "31"
+              "label": "31",
+              "swatchType": "textual",
+              "swatchValue": "31"
             },
             {
               "value": "175",
-              "label": "32"
+              "label": "32",
+              "swatchType": "textual",
+              "swatchValue": "32"
             },
             {
               "value": "176",
-              "label": "33"
+              "label": "33",
+              "swatchType": "textual",
+              "swatchValue": "33"
             },
             {
               "value": "177",
-              "label": "34"
+              "label": "34",
+              "swatchType": "textual",
+              "swatchValue": "34"
             },
             {
               "value": "178",
-              "label": "36"
+              "label": "36",
+              "swatchType": "textual",
+              "swatchValue": "36"
             },
             {
               "value": "179",
-              "label": "38"
+              "label": "38",
+              "swatchType": "textual",
+              "swatchValue": "38"
             }
           ]
         }
@@ -2780,51 +3484,75 @@
           "options": [
             {
               "value": "49",
-              "label": "Black"
+              "label": "Black",
+              "swatchType": "color",
+              "swatchValue": "#000000"
             },
             {
               "value": "50",
-              "label": "Blue"
+              "label": "Blue",
+              "swatchType": "color",
+              "swatchValue": "#1857f7"
             },
             {
               "value": "51",
-              "label": "Brown"
+              "label": "Brown",
+              "swatchType": "color",
+              "swatchValue": "#945454"
             },
             {
               "value": "52",
-              "label": "Gray"
+              "label": "Gray",
+              "swatchType": "color",
+              "swatchValue": "#8f8f8f"
             },
             {
               "value": "53",
-              "label": "Green"
+              "label": "Green",
+              "swatchType": "color",
+              "swatchValue": "#53a828"
             },
             {
               "value": "54",
-              "label": "Lavender"
+              "label": "Lavender",
+              "swatchType": "color",
+              "swatchValue": "#ce64d4"
             },
             {
               "value": "55",
-              "label": "Multi"
+              "label": "Multi",
+              "swatchType": "color",
+              "swatchValue": "#ffffff"
             },
             {
               "value": "56",
-              "label": "Orange"
+              "label": "Orange",
+              "swatchType": "color",
+              "swatchValue": "#eb6703"
             },
             {
               "value": "57",
-              "label": "Purple"
+              "label": "Purple",
+              "swatchType": "color",
+              "swatchValue": "#ef3dff"
             },
             {
               "value": "58",
-              "label": "Red"
+              "label": "Red",
+              "swatchType": "color",
+              "swatchValue": "#ff0000"
             },
             {
               "value": "59",
-              "label": "White"
+              "label": "White",
+              "swatchType": "color",
+              "swatchValue": "#ffffff"
             },
             {
               "value": "60",
-              "label": "Yellow"
+              "label": "Yellow",
+              "swatchType": "color",
+              "swatchValue": "#ffd500"
             }
           ]
         },
@@ -2841,83 +3569,123 @@
           "options": [
             {
               "value": "91",
-              "label": "55 cm"
+              "label": "55 cm",
+              "swatchType": "textual",
+              "swatchValue": "55 cm"
             },
             {
               "value": "166",
-              "label": "XS"
+              "label": "XS",
+              "swatchType": "textual",
+              "swatchValue": "XS"
             },
             {
               "value": "92",
-              "label": "65 cm"
+              "label": "65 cm",
+              "swatchType": "textual",
+              "swatchValue": "65 cm"
             },
             {
               "value": "167",
-              "label": "S"
+              "label": "S",
+              "swatchType": "textual",
+              "swatchValue": "S"
             },
             {
               "value": "93",
-              "label": "75 cm"
+              "label": "75 cm",
+              "swatchType": "textual",
+              "swatchValue": "75 cm"
             },
             {
               "value": "168",
-              "label": "M"
+              "label": "M",
+              "swatchType": "textual",
+              "swatchValue": "M"
             },
             {
               "value": "94",
-              "label": "6 foot"
+              "label": "6 foot",
+              "swatchType": "textual",
+              "swatchValue": "6 foot"
             },
             {
               "value": "169",
-              "label": "L"
+              "label": "L",
+              "swatchType": "textual",
+              "swatchValue": "L"
             },
             {
               "value": "95",
-              "label": "8 foot"
+              "label": "8 foot",
+              "swatchType": "textual",
+              "swatchValue": "8 foot"
             },
             {
               "value": "170",
-              "label": "XL"
+              "label": "XL",
+              "swatchType": "textual",
+              "swatchValue": "XL"
             },
             {
               "value": "96",
-              "label": "10 foot"
+              "label": "10 foot",
+              "swatchType": "textual",
+              "swatchValue": "10 foot"
             },
             {
               "value": "171",
-              "label": "28"
+              "label": "28",
+              "swatchType": "textual",
+              "swatchValue": "28"
             },
             {
               "value": "172",
-              "label": "29"
+              "label": "29",
+              "swatchType": "textual",
+              "swatchValue": "29"
             },
             {
               "value": "173",
-              "label": "30"
+              "label": "30",
+              "swatchType": "textual",
+              "swatchValue": "30"
             },
             {
               "value": "174",
-              "label": "31"
+              "label": "31",
+              "swatchType": "textual",
+              "swatchValue": "31"
             },
             {
               "value": "175",
-              "label": "32"
+              "label": "32",
+              "swatchType": "textual",
+              "swatchValue": "32"
             },
             {
               "value": "176",
-              "label": "33"
+              "label": "33",
+              "swatchType": "textual",
+              "swatchValue": "33"
             },
             {
               "value": "177",
-              "label": "34"
+              "label": "34",
+              "swatchType": "textual",
+              "swatchValue": "34"
             },
             {
               "value": "178",
-              "label": "36"
+              "label": "36",
+              "swatchType": "textual",
+              "swatchValue": "36"
             },
             {
               "value": "179",
-              "label": "38"
+              "label": "38",
+              "swatchType": "textual",
+              "swatchValue": "38"
             }
           ]
         }
@@ -2979,51 +3747,75 @@
           "options": [
             {
               "value": "49",
-              "label": "Black"
+              "label": "Black",
+              "swatchType": "color",
+              "swatchValue": "#000000"
             },
             {
               "value": "50",
-              "label": "Blue"
+              "label": "Blue",
+              "swatchType": "color",
+              "swatchValue": "#1857f7"
             },
             {
               "value": "51",
-              "label": "Brown"
+              "label": "Brown",
+              "swatchType": "color",
+              "swatchValue": "#945454"
             },
             {
               "value": "52",
-              "label": "Gray"
+              "label": "Gray",
+              "swatchType": "color",
+              "swatchValue": "#8f8f8f"
             },
             {
               "value": "53",
-              "label": "Green"
+              "label": "Green",
+              "swatchType": "color",
+              "swatchValue": "#53a828"
             },
             {
               "value": "54",
-              "label": "Lavender"
+              "label": "Lavender",
+              "swatchType": "color",
+              "swatchValue": "#ce64d4"
             },
             {
               "value": "55",
-              "label": "Multi"
+              "label": "Multi",
+              "swatchType": "color",
+              "swatchValue": "#ffffff"
             },
             {
               "value": "56",
-              "label": "Orange"
+              "label": "Orange",
+              "swatchType": "color",
+              "swatchValue": "#eb6703"
             },
             {
               "value": "57",
-              "label": "Purple"
+              "label": "Purple",
+              "swatchType": "color",
+              "swatchValue": "#ef3dff"
             },
             {
               "value": "58",
-              "label": "Red"
+              "label": "Red",
+              "swatchType": "color",
+              "swatchValue": "#ff0000"
             },
             {
               "value": "59",
-              "label": "White"
+              "label": "White",
+              "swatchType": "color",
+              "swatchValue": "#ffffff"
             },
             {
               "value": "60",
-              "label": "Yellow"
+              "label": "Yellow",
+              "swatchType": "color",
+              "swatchValue": "#ffd500"
             }
           ]
         },
@@ -3040,83 +3832,123 @@
           "options": [
             {
               "value": "91",
-              "label": "55 cm"
+              "label": "55 cm",
+              "swatchType": "textual",
+              "swatchValue": "55 cm"
             },
             {
               "value": "166",
-              "label": "XS"
+              "label": "XS",
+              "swatchType": "textual",
+              "swatchValue": "XS"
             },
             {
               "value": "92",
-              "label": "65 cm"
+              "label": "65 cm",
+              "swatchType": "textual",
+              "swatchValue": "65 cm"
             },
             {
               "value": "167",
-              "label": "S"
+              "label": "S",
+              "swatchType": "textual",
+              "swatchValue": "S"
             },
             {
               "value": "93",
-              "label": "75 cm"
+              "label": "75 cm",
+              "swatchType": "textual",
+              "swatchValue": "75 cm"
             },
             {
               "value": "168",
-              "label": "M"
+              "label": "M",
+              "swatchType": "textual",
+              "swatchValue": "M"
             },
             {
               "value": "94",
-              "label": "6 foot"
+              "label": "6 foot",
+              "swatchType": "textual",
+              "swatchValue": "6 foot"
             },
             {
               "value": "169",
-              "label": "L"
+              "label": "L",
+              "swatchType": "textual",
+              "swatchValue": "L"
             },
             {
               "value": "95",
-              "label": "8 foot"
+              "label": "8 foot",
+              "swatchType": "textual",
+              "swatchValue": "8 foot"
             },
             {
               "value": "170",
-              "label": "XL"
+              "label": "XL",
+              "swatchType": "textual",
+              "swatchValue": "XL"
             },
             {
               "value": "96",
-              "label": "10 foot"
+              "label": "10 foot",
+              "swatchType": "textual",
+              "swatchValue": "10 foot"
             },
             {
               "value": "171",
-              "label": "28"
+              "label": "28",
+              "swatchType": "textual",
+              "swatchValue": "28"
             },
             {
               "value": "172",
-              "label": "29"
+              "label": "29",
+              "swatchType": "textual",
+              "swatchValue": "29"
             },
             {
               "value": "173",
-              "label": "30"
+              "label": "30",
+              "swatchType": "textual",
+              "swatchValue": "30"
             },
             {
               "value": "174",
-              "label": "31"
+              "label": "31",
+              "swatchType": "textual",
+              "swatchValue": "31"
             },
             {
               "value": "175",
-              "label": "32"
+              "label": "32",
+              "swatchType": "textual",
+              "swatchValue": "32"
             },
             {
               "value": "176",
-              "label": "33"
+              "label": "33",
+              "swatchType": "textual",
+              "swatchValue": "33"
             },
             {
               "value": "177",
-              "label": "34"
+              "label": "34",
+              "swatchType": "textual",
+              "swatchValue": "34"
             },
             {
               "value": "178",
-              "label": "36"
+              "label": "36",
+              "swatchType": "textual",
+              "swatchValue": "36"
             },
             {
               "value": "179",
-              "label": "38"
+              "label": "38",
+              "swatchType": "textual",
+              "swatchValue": "38"
             }
           ]
         }
@@ -3178,51 +4010,75 @@
           "options": [
             {
               "value": "49",
-              "label": "Black"
+              "label": "Black",
+              "swatchType": "color",
+              "swatchValue": "#000000"
             },
             {
               "value": "50",
-              "label": "Blue"
+              "label": "Blue",
+              "swatchType": "color",
+              "swatchValue": "#1857f7"
             },
             {
               "value": "51",
-              "label": "Brown"
+              "label": "Brown",
+              "swatchType": "color",
+              "swatchValue": "#945454"
             },
             {
               "value": "52",
-              "label": "Gray"
+              "label": "Gray",
+              "swatchType": "color",
+              "swatchValue": "#8f8f8f"
             },
             {
               "value": "53",
-              "label": "Green"
+              "label": "Green",
+              "swatchType": "color",
+              "swatchValue": "#53a828"
             },
             {
               "value": "54",
-              "label": "Lavender"
+              "label": "Lavender",
+              "swatchType": "color",
+              "swatchValue": "#ce64d4"
             },
             {
               "value": "55",
-              "label": "Multi"
+              "label": "Multi",
+              "swatchType": "color",
+              "swatchValue": "#ffffff"
             },
             {
               "value": "56",
-              "label": "Orange"
+              "label": "Orange",
+              "swatchType": "color",
+              "swatchValue": "#eb6703"
             },
             {
               "value": "57",
-              "label": "Purple"
+              "label": "Purple",
+              "swatchType": "color",
+              "swatchValue": "#ef3dff"
             },
             {
               "value": "58",
-              "label": "Red"
+              "label": "Red",
+              "swatchType": "color",
+              "swatchValue": "#ff0000"
             },
             {
               "value": "59",
-              "label": "White"
+              "label": "White",
+              "swatchType": "color",
+              "swatchValue": "#ffffff"
             },
             {
               "value": "60",
-              "label": "Yellow"
+              "label": "Yellow",
+              "swatchType": "color",
+              "swatchValue": "#ffd500"
             }
           ]
         },
@@ -3239,83 +4095,123 @@
           "options": [
             {
               "value": "91",
-              "label": "55 cm"
+              "label": "55 cm",
+              "swatchType": "textual",
+              "swatchValue": "55 cm"
             },
             {
               "value": "166",
-              "label": "XS"
+              "label": "XS",
+              "swatchType": "textual",
+              "swatchValue": "XS"
             },
             {
               "value": "92",
-              "label": "65 cm"
+              "label": "65 cm",
+              "swatchType": "textual",
+              "swatchValue": "65 cm"
             },
             {
               "value": "167",
-              "label": "S"
+              "label": "S",
+              "swatchType": "textual",
+              "swatchValue": "S"
             },
             {
               "value": "93",
-              "label": "75 cm"
+              "label": "75 cm",
+              "swatchType": "textual",
+              "swatchValue": "75 cm"
             },
             {
               "value": "168",
-              "label": "M"
+              "label": "M",
+              "swatchType": "textual",
+              "swatchValue": "M"
             },
             {
               "value": "94",
-              "label": "6 foot"
+              "label": "6 foot",
+              "swatchType": "textual",
+              "swatchValue": "6 foot"
             },
             {
               "value": "169",
-              "label": "L"
+              "label": "L",
+              "swatchType": "textual",
+              "swatchValue": "L"
             },
             {
               "value": "95",
-              "label": "8 foot"
+              "label": "8 foot",
+              "swatchType": "textual",
+              "swatchValue": "8 foot"
             },
             {
               "value": "170",
-              "label": "XL"
+              "label": "XL",
+              "swatchType": "textual",
+              "swatchValue": "XL"
             },
             {
               "value": "96",
-              "label": "10 foot"
+              "label": "10 foot",
+              "swatchType": "textual",
+              "swatchValue": "10 foot"
             },
             {
               "value": "171",
-              "label": "28"
+              "label": "28",
+              "swatchType": "textual",
+              "swatchValue": "28"
             },
             {
               "value": "172",
-              "label": "29"
+              "label": "29",
+              "swatchType": "textual",
+              "swatchValue": "29"
             },
             {
               "value": "173",
-              "label": "30"
+              "label": "30",
+              "swatchType": "textual",
+              "swatchValue": "30"
             },
             {
               "value": "174",
-              "label": "31"
+              "label": "31",
+              "swatchType": "textual",
+              "swatchValue": "31"
             },
             {
               "value": "175",
-              "label": "32"
+              "label": "32",
+              "swatchType": "textual",
+              "swatchValue": "32"
             },
             {
               "value": "176",
-              "label": "33"
+              "label": "33",
+              "swatchType": "textual",
+              "swatchValue": "33"
             },
             {
               "value": "177",
-              "label": "34"
+              "label": "34",
+              "swatchType": "textual",
+              "swatchValue": "34"
             },
             {
               "value": "178",
-              "label": "36"
+              "label": "36",
+              "swatchType": "textual",
+              "swatchValue": "36"
             },
             {
               "value": "179",
-              "label": "38"
+              "label": "38",
+              "swatchType": "textual",
+              "swatchValue": "38"
             }
           ]
         }
@@ -3385,51 +4281,75 @@
           "options": [
             {
               "value": "49",
-              "label": "Black"
+              "label": "Black",
+              "swatchType": "color",
+              "swatchValue": "#000000"
             },
             {
               "value": "50",
-              "label": "Blue"
+              "label": "Blue",
+              "swatchType": "color",
+              "swatchValue": "#1857f7"
             },
             {
               "value": "51",
-              "label": "Brown"
+              "label": "Brown",
+              "swatchType": "color",
+              "swatchValue": "#945454"
             },
             {
               "value": "52",
-              "label": "Gray"
+              "label": "Gray",
+              "swatchType": "color",
+              "swatchValue": "#8f8f8f"
             },
             {
               "value": "53",
-              "label": "Green"
+              "label": "Green",
+              "swatchType": "color",
+              "swatchValue": "#53a828"
             },
             {
               "value": "54",
-              "label": "Lavender"
+              "label": "Lavender",
+              "swatchType": "color",
+              "swatchValue": "#ce64d4"
             },
             {
               "value": "55",
-              "label": "Multi"
+              "label": "Multi",
+              "swatchType": "color",
+              "swatchValue": "#ffffff"
             },
             {
               "value": "56",
-              "label": "Orange"
+              "label": "Orange",
+              "swatchType": "color",
+              "swatchValue": "#eb6703"
             },
             {
               "value": "57",
-              "label": "Purple"
+              "label": "Purple",
+              "swatchType": "color",
+              "swatchValue": "#ef3dff"
             },
             {
               "value": "58",
-              "label": "Red"
+              "label": "Red",
+              "swatchType": "color",
+              "swatchValue": "#ff0000"
             },
             {
               "value": "59",
-              "label": "White"
+              "label": "White",
+              "swatchType": "color",
+              "swatchValue": "#ffffff"
             },
             {
               "value": "60",
-              "label": "Yellow"
+              "label": "Yellow",
+              "swatchType": "color",
+              "swatchValue": "#ffd500"
             }
           ]
         },
@@ -3446,83 +4366,123 @@
           "options": [
             {
               "value": "91",
-              "label": "55 cm"
+              "label": "55 cm",
+              "swatchType": "textual",
+              "swatchValue": "55 cm"
             },
             {
               "value": "166",
-              "label": "XS"
+              "label": "XS",
+              "swatchType": "textual",
+              "swatchValue": "XS"
             },
             {
               "value": "92",
-              "label": "65 cm"
+              "label": "65 cm",
+              "swatchType": "textual",
+              "swatchValue": "65 cm"
             },
             {
               "value": "167",
-              "label": "S"
+              "label": "S",
+              "swatchType": "textual",
+              "swatchValue": "S"
             },
             {
               "value": "93",
-              "label": "75 cm"
+              "label": "75 cm",
+              "swatchType": "textual",
+              "swatchValue": "75 cm"
             },
             {
               "value": "168",
-              "label": "M"
+              "label": "M",
+              "swatchType": "textual",
+              "swatchValue": "M"
             },
             {
               "value": "94",
-              "label": "6 foot"
+              "label": "6 foot",
+              "swatchType": "textual",
+              "swatchValue": "6 foot"
             },
             {
               "value": "169",
-              "label": "L"
+              "label": "L",
+              "swatchType": "textual",
+              "swatchValue": "L"
             },
             {
               "value": "95",
-              "label": "8 foot"
+              "label": "8 foot",
+              "swatchType": "textual",
+              "swatchValue": "8 foot"
             },
             {
               "value": "170",
-              "label": "XL"
+              "label": "XL",
+              "swatchType": "textual",
+              "swatchValue": "XL"
             },
             {
               "value": "96",
-              "label": "10 foot"
+              "label": "10 foot",
+              "swatchType": "textual",
+              "swatchValue": "10 foot"
             },
             {
               "value": "171",
-              "label": "28"
+              "label": "28",
+              "swatchType": "textual",
+              "swatchValue": "28"
             },
             {
               "value": "172",
-              "label": "29"
+              "label": "29",
+              "swatchType": "textual",
+              "swatchValue": "29"
             },
             {
               "value": "173",
-              "label": "30"
+              "label": "30",
+              "swatchType": "textual",
+              "swatchValue": "30"
             },
             {
               "value": "174",
-              "label": "31"
+              "label": "31",
+              "swatchType": "textual",
+              "swatchValue": "31"
             },
             {
               "value": "175",
-              "label": "32"
+              "label": "32",
+              "swatchType": "textual",
+              "swatchValue": "32"
             },
             {
               "value": "176",
-              "label": "33"
+              "label": "33",
+              "swatchType": "textual",
+              "swatchValue": "33"
             },
             {
               "value": "177",
-              "label": "34"
+              "label": "34",
+              "swatchType": "textual",
+              "swatchValue": "34"
             },
             {
               "value": "178",
-              "label": "36"
+              "label": "36",
+              "swatchType": "textual",
+              "swatchValue": "36"
             },
             {
               "value": "179",
-              "label": "38"
+              "label": "38",
+              "swatchType": "textual",
+              "swatchValue": "38"
             }
           ]
         }

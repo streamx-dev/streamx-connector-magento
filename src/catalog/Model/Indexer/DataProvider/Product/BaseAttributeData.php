@@ -138,10 +138,17 @@ abstract class BaseAttributeData extends DataProviderInterface
         $productAttribute['isFacet'] = $attributeDefinition->isFacet();
 
         $productAttribute['options'] = array_map(function ($option) {
-            return [
+            $mappedOption = [
                 'value' => $option->getValue(),
                 'label' => $option->getLabel()
             ];
+
+            $swatch = $option->getSwatch();
+            if ($swatch) {
+                $mappedOption['swatchType'] = $swatch->getType();
+                $mappedOption['swatchValue'] = $swatch->getValue();
+            }
+            return $mappedOption;
         }, $attributeDefinition->getOptions());
 
         return $productAttribute;

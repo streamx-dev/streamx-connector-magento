@@ -217,51 +217,75 @@
       "options": [
         {
           "value": "49",
-          "label": "Black"
+          "label": "Black",
+          "swatchType": "color",
+          "swatchValue": "#000000"
         },
         {
           "value": "50",
-          "label": "Blue"
+          "label": "Blue",
+          "swatchType": "color",
+          "swatchValue": "#1857f7"
         },
         {
           "value": "51",
-          "label": "Brown"
+          "label": "Brown",
+          "swatchType": "color",
+          "swatchValue": "#945454"
         },
         {
           "value": "52",
-          "label": "Gray"
+          "label": "Gray",
+          "swatchType": "color",
+          "swatchValue": "#8f8f8f"
         },
         {
           "value": "53",
-          "label": "Green"
+          "label": "Green",
+          "swatchType": "color",
+          "swatchValue": "#53a828"
         },
         {
           "value": "54",
-          "label": "Lavender"
+          "label": "Lavender",
+          "swatchType": "color",
+          "swatchValue": "#ce64d4"
         },
         {
           "value": "55",
-          "label": "Multi"
+          "label": "Multi",
+          "swatchType": "color",
+          "swatchValue": "#ffffff"
         },
         {
           "value": "56",
-          "label": "Orange"
+          "label": "Orange",
+          "swatchType": "color",
+          "swatchValue": "#eb6703"
         },
         {
           "value": "57",
-          "label": "Purple"
+          "label": "Purple",
+          "swatchType": "color",
+          "swatchValue": "#ef3dff"
         },
         {
           "value": "58",
-          "label": "Red"
+          "label": "Red",
+          "swatchType": "color",
+          "swatchValue": "#ff0000"
         },
         {
           "value": "59",
-          "label": "White"
+          "label": "White",
+          "swatchType": "color",
+          "swatchValue": "#ffffff"
         },
         {
           "value": "60",
-          "label": "Yellow"
+          "label": "Yellow",
+          "swatchType": "color",
+          "swatchValue": "#ffd500"
         }
       ]
     },

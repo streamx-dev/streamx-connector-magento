@@ -140,6 +140,7 @@ class LoadAttributeDefinitions
                 return new AttributeOptionDefinition(
                     $option['value'],
                     $option['label'],
+                    $option['swatch'] ?? null
                 );
             },
             $optionRows
