@@ -48,26 +48,48 @@ class Product
      */
     public function getProducts(int $storeId = 1, array $productIds = [], int $fromId = 0, int $limit = 1000): array
     {
-        $select = $this->prepareBaseProductSelect($this->getRequiredColumns(), $storeId);
-        $this->addProductTypeFilter($select, $storeId);
-        $tableName = self::MAIN_TABLE_ALIAS;
+        $entityIdColumn = self::MAIN_TABLE_ALIAS . ".entity_id";
+
+        $select = $this
+            ->prepareProductSelect($this->getRequiredColumns(), $storeId)
+            ->where("$entityIdColumn > ?", $fromId)
+            ->limit($limit);
 
         if (!empty($productIds)) {
-            $select->where(sprintf("%s.entity_id IN (?)", $tableName), $productIds);
+            $select->where("$entityIdColumn IN (?)", $productIds);
         }
-
-        $select->limit($limit);
-        $select->where(sprintf("%s.entity_id > ?", $tableName), $fromId);
-        $select->order(sprintf("%s.entity_id ASC", $tableName));
 
         return $this->getConnection()->fetchAll($select);
     }
 
     /**
+     * @return int[]
+     * @throws LocalizedException
+     */
+    public function getAllProductIds(int $storeId = 1): array
+    {
+        $select = $this->prepareProductSelect(['entity_id'], $storeId);
+        return $this->getConnection()->fetchCol($select);
+    }
+
+    /**
+     * Prepares product select for selecting main products
      * @throws LocalizedException
      * @throws NoSuchEntityException
      */
-    public function prepareBaseProductSelect(array $requiredColumns, int $storeId): Select
+    private function prepareProductSelect(array $columns, int $storeId): Select {
+        $select = $this->prepareBaseProductSelect($columns, $storeId);
+        $this->addProductTypeFilter($select, $storeId);
+        $select->order(sprintf("%s.entity_id ASC", self::MAIN_TABLE_ALIAS));
+        return $select;
+    }
+
+    /**
+     * Prepares base product select for selecting main or variant products
+     * @throws LocalizedException
+     * @throws NoSuchEntityException
+     */
+    private function prepareBaseProductSelect(array $requiredColumns, int $storeId): Select
     {
         $select = $this->getConnection()->select()
             ->from(
