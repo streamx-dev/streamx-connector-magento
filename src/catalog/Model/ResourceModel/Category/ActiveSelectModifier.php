@@ -4,29 +4,30 @@ declare(strict_types=1);
 
 namespace StreamX\ConnectorCatalog\Model\ResourceModel\Category;
 
+use Magento\Catalog\Model\ResourceModel\Category\Attribute\CollectionFactory;
 use StreamX\ConnectorCatalog\Model\CategoryMetaData;
 use StreamX\ConnectorCatalog\Model\ResourceModel\SelectModifierInterface;
 use Magento\Eav\Model\Entity\Attribute as Attribute;
 use Magento\Framework\App\ResourceConnection;
-use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\DB\Select;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 
 class ActiveSelectModifier implements SelectModifierInterface
 {
-    private LoadAttributes $loadAttributes;
     private CategoryMetaData $categoryMetadata;
     private ResourceConnection $resourceConnection;
+    private CollectionFactory $attributeCollectionFactory;
+    private ?Attribute $isActiveAttribute = null;
 
     public function __construct(
         CategoryMetaData $metadataPool,
-        LoadAttributes $loadAttributes,
-        ResourceConnection $resourceConnection
+        ResourceConnection $resourceConnection,
+        CollectionFactory $attributeCollectionFactory
     ) {
         $this->categoryMetadata = $metadataPool;
-        $this->loadAttributes = $loadAttributes;
         $this->resourceConnection = $resourceConnection;
+        $this->attributeCollectionFactory = $attributeCollectionFactory;
     }
 
     /**
@@ -38,55 +39,42 @@ class ActiveSelectModifier implements SelectModifierInterface
     public function modify(Select $select, int $storeId): void
     {
         $linkField = $this->categoryMetadata->get()->getLinkField();
+        $isActiveAttribute = $this->getIsActiveAttribute();
 
-        $attribute = $this->getIsActiveAttribute();
-        $checkSql = $this->getConnection()->getCheckSql('c.value_id > 0', 'c.value', 'd.value');
-        $attributeId = (int) $attribute->getId();
-        $backendTable = $this->resourceConnection->getTableName($attribute->getBackendTable());
-
-        $joinCondition = [
-            'd.attribute_id = ?',
-            'd.store_id = 0',
-            "d.$linkField = entity.$linkField",
-        ];
-
-        $defaultJoinCond = $this->getConnection()->quoteInto(
-            implode(' AND ', $joinCondition),
-            $attributeId
-        );
-
-        $storeJoinCond = [
-            $this->getConnection()->quoteInto("c.attribute_id = ?", $attributeId),
-            $this->getConnection()->quoteInto("c.store_id = ?", $storeId),
-            "c.$linkField = entity.$linkField",
-        ];
+        $connection = $this->resourceConnection->getConnection();
+        $isActiveAttributeId = (int) $isActiveAttribute->getId();
+        $backendTable = $this->resourceConnection->getTableName($isActiveAttribute->getBackendTable());
 
         $select->joinLeft(
             ['d' => $backendTable],
-            $defaultJoinCond,
+            $connection->quoteInto(
+                "d.attribute_id = ? AND d.store_id = 0 AND d.$linkField = entity.$linkField",
+                $isActiveAttributeId
+            ),
             []
         )->joinLeft(
             ['c' => $backendTable],
-            implode(' AND ', $storeJoinCond),
+            $connection->quoteInto(
+                "c.attribute_id = ? AND c.store_id = ? AND c.$linkField = entity.$linkField",
+                $isActiveAttributeId, $storeId
+            ),
             []
-        )->where(sprintf("%s = 1", $checkSql));
+        )->where("CASE WHEN c.value_id > 0 THEN c.value = 1 ELSE d.value = 1 END");
     }
 
-    /**
-     * Retrieve Vendor Attribute
-     *
-     * @throws LocalizedException
-     */
     private function getIsActiveAttribute(): Attribute
     {
-        return $this->loadAttributes->getAttributeByCode('is_active');
-    }
+        if (null === $this->isActiveAttribute) {
+            $attributeCollection = $this->attributeCollectionFactory
+                ->create()
+                ->addFieldToFilter('attribute_code', 'is_active');
 
-    /**
-     * Retrieve Connection
-     */
-    private function getConnection(): AdapterInterface
-    {
-        return $this->resourceConnection->getConnection();
+            foreach ($attributeCollection as $attribute) {
+                $this->isActiveAttribute = $attribute;
+                break;
+            }
+        }
+
+        return $this->isActiveAttribute;
     }
 }
