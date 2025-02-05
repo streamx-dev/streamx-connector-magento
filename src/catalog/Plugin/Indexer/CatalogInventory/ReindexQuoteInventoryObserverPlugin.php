@@ -21,6 +21,7 @@ class ReindexQuoteInventoryObserverPlugin
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
+    // TODO review this code, add tests
     public function afterExecute(ReindexQuoteInventoryObserver $subject): void
     {
         $products = $this->productsForReindex->getProducts();
