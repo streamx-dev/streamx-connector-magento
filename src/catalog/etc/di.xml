@@ -8,28 +8,28 @@
     </type>
 
     <type name="Magento\Catalog\Model\Product">
-        <plugin name="update_product_in_es" type="StreamX\ConnectorCatalog\Plugin\Indexer\Product\Save\UpdateProductDataPlugin"/>
+        <plugin name="product_update_plugin" type="StreamX\ConnectorCatalog\Plugin\Indexer\Product\Save\UpdateProductDataPlugin"/>
     </type>
 
     <type name="Magento\Catalog\Model\Category">
-        <plugin name="update_category_in_es" type="StreamX\ConnectorCatalog\Plugin\Indexer\Category\Save\UpdateCategoryDataPlugin"/>
+        <plugin name="category_update_plugin" type="StreamX\ConnectorCatalog\Plugin\Indexer\Category\Save\UpdateCategoryDataPlugin"/>
     </type>
 
     <type name="Magento\Catalog\Model\ResourceModel\Eav\Attribute">
-        <plugin name="update_attribute_in_es" type="StreamX\ConnectorCatalog\Plugin\Indexer\Attribute\Save\UpdateAttributeDataPlugin"/>
+        <plugin name="attribute_update_plugin" type="StreamX\ConnectorCatalog\Plugin\Indexer\Attribute\Save\UpdateAttributeDataPlugin"/>
+    </type>
+
+    <type name="Magento\Catalog\Controller\Adminhtml\Product\Action\Attribute\Save">
+        <plugin name="attribute_save_plugin" type="StreamX\ConnectorCatalog\Plugin\Controller\Catalog\Adminhtml\Product\Action\AttributeSavePlugin"/>
     </type>
 
     <type name="Magento\CatalogInventory\Model\ResourceModel\QtyCounterInterface">
         <plugin name="register_products" type="StreamX\ConnectorCatalog\Plugin\Indexer\CatalogInventory\QtyCorrectPlugin"/>
     </type>
-
     <type name="Magento\CatalogInventory\Observer\RevertQuoteInventoryObserver">
-        <plugin name="update_product_in_es" type="StreamX\ConnectorCatalog\Plugin\Indexer\CatalogInventory\RevertQuoteInventoryObserverPlugin"/>
+        <plugin name="revert_quote_plugin" type="StreamX\ConnectorCatalog\Plugin\Indexer\CatalogInventory\RevertQuoteInventoryObserverPlugin"/>
     </type>
     <type name="Magento\CatalogInventory\Observer\ReindexQuoteInventoryObserver">
-        <plugin name="update_product_in_es" type="StreamX\ConnectorCatalog\Plugin\Indexer\CatalogInventory\ReindexQuoteInventoryObserverPlugin"/>
-    </type>
-    <type name="Magento\Catalog\Controller\Adminhtml\Product\Action\Attribute\Save">
-        <plugin name="update_product_in_es" type="StreamX\ConnectorCatalog\Plugin\Controller\Catalog\Adminhtml\Product\Action\AttributeSavePlugin"/>
+        <plugin name="reindex_quote_plugin" type="StreamX\ConnectorCatalog\Plugin\Indexer\CatalogInventory\ReindexQuoteInventoryObserverPlugin"/>
     </type>
 </config>

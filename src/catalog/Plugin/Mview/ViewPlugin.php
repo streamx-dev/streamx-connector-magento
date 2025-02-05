@@ -15,6 +15,7 @@ class ViewPlugin
         $this->catalogSettings = $catalogSettings;
     }
 
+    // TODO review is this needed
     public function afterGetSubscriptions(ViewInterface $subject, array $result): array
     {
         if ($this->catalogSettings->useCatalogRules() && $this->isStreamxProductIndexer($subject)) {

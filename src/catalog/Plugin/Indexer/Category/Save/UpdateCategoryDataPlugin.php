@@ -25,7 +25,7 @@ class UpdateCategoryDataPlugin
     }
 
     /**
-     * Reindex data after product save/delete resource commit
+     * Reindex data after category save/delete resource commit
      */
     public function afterReindex(Category $category): void
     {

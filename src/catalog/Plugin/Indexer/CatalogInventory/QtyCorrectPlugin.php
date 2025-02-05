@@ -16,6 +16,7 @@ class QtyCorrectPlugin
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
+    // TODO review this code, add tests
     public function aroundCorrectItemsQty(
         QtyCounterInterface $subject,
         callable $proceed,
