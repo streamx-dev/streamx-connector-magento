@@ -144,9 +144,11 @@ abstract class BaseAttributeData extends DataProviderInterface
             ];
 
             $swatch = $option->getSwatch();
-            if ($swatch) {
-                $mappedOption['swatchType'] = $swatch->getType();
-                $mappedOption['swatchValue'] = $swatch->getValue();
+            if ($swatch !== null) {
+                $mappedOption['swatch'] = [
+                    'type' => $swatch->getType(),
+                    'value' => $swatch->getValue()
+                ];
             }
             return $mappedOption;
         }, $attributeDefinition->getOptions());

@@ -7,9 +7,9 @@ class AttributeOptionSwatchDefinition
     private string $type;
     private string $value;
 
-    public function __construct(array $swatch) {
-        $this->type = $swatch['type_string'];
-        $this->value = $swatch['value'];
+    public function __construct(string $type, string $value) {
+        $this->type = $type;
+        $this->value = $value;
     }
 
     public function getType(): string {

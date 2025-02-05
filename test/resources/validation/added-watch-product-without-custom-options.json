@@ -218,74 +218,98 @@
         {
           "value": "49",
           "label": "Black",
-          "swatchType": "color",
-          "swatchValue": "#000000"
+          "swatch": {
+            "type": "color",
+            "value": "#000000"
+          }
         },
         {
           "value": "50",
           "label": "Blue",
-          "swatchType": "color",
-          "swatchValue": "#1857f7"
+          "swatch": {
+            "type": "color",
+            "value": "#1857f7"
+          }
         },
         {
           "value": "51",
           "label": "Brown",
-          "swatchType": "color",
-          "swatchValue": "#945454"
+          "swatch": {
+            "type": "color",
+            "value": "#945454"
+          }
         },
         {
           "value": "52",
           "label": "Gray",
-          "swatchType": "color",
-          "swatchValue": "#8f8f8f"
+          "swatch": {
+            "type": "color",
+            "value": "#8f8f8f"
+          }
         },
         {
           "value": "53",
           "label": "Green",
-          "swatchType": "color",
-          "swatchValue": "#53a828"
+          "swatch": {
+            "type": "color",
+            "value": "#53a828"
+          }
         },
         {
           "value": "54",
           "label": "Lavender",
-          "swatchType": "color",
-          "swatchValue": "#ce64d4"
+          "swatch": {
+            "type": "color",
+            "value": "#ce64d4"
+          }
         },
         {
           "value": "55",
           "label": "Multi",
-          "swatchType": "color",
-          "swatchValue": "#ffffff"
+          "swatch": {
+            "type": "color",
+            "value": "#ffffff"
+          }
         },
         {
           "value": "56",
           "label": "Orange",
-          "swatchType": "color",
-          "swatchValue": "#eb6703"
+          "swatch": {
+            "type": "color",
+            "value": "#eb6703"
+          }
         },
         {
           "value": "57",
           "label": "Purple",
-          "swatchType": "color",
-          "swatchValue": "#ef3dff"
+          "swatch": {
+            "type": "color",
+            "value": "#ef3dff"
+          }
         },
         {
           "value": "58",
           "label": "Red",
-          "swatchType": "color",
-          "swatchValue": "#ff0000"
+          "swatch": {
+            "type": "color",
+            "value": "#ff0000"
+          }
         },
         {
           "value": "59",
           "label": "White",
-          "swatchType": "color",
-          "swatchValue": "#ffffff"
+          "swatch": {
+            "type": "color",
+            "value": "#ffffff"
+          }
         },
         {
           "value": "60",
           "label": "Yellow",
-          "swatchType": "color",
-          "swatchValue": "#ffd500"
+          "swatch": {
+            "type": "color",
+            "value": "#ffd500"
+          }
         }
       ]
     },

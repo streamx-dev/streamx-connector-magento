@@ -8,10 +8,10 @@ class AttributeOptionDefinition
     private string $label;
     private ?AttributeOptionSwatchDefinition $swatch;
 
-    public function __construct(string $value, string $label, ?array $swatch = null) {
+    public function __construct(string $value, string $label, ?AttributeOptionSwatchDefinition $swatch) {
         $this->value = $value;
         $this->label = $label;
-        $this->swatch = $swatch !== null ? new AttributeOptionSwatchDefinition($swatch) : null;
+        $this->swatch = $swatch;
     }
 
     public function getValue(): string {

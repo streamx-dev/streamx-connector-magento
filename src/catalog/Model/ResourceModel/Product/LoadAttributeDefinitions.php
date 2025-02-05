@@ -8,6 +8,7 @@ use Magento\Framework\DB\Select;
 use StreamX\ConnectorCatalog\Model\Attributes\AttributeDefinition;
 use StreamX\ConnectorCatalog\Model\Attributes\AttributeOptionDefinition;
 use StreamX\ConnectorCatalog\Model\Attribute\LoadOptions;
+use StreamX\ConnectorCatalog\Model\Attributes\AttributeOptionSwatchDefinition;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\SpecialAttributes;
 use StreamX\ConnectorCatalog\Model\ResourceModel\ProductConfig;
 use Zend_Db_Expr;
@@ -140,10 +141,25 @@ class LoadAttributeDefinitions
                 return new AttributeOptionDefinition(
                     $option['value'],
                     $option['label'],
-                    $option['swatch'] ?? null
+                    $this->mapAttributeOptionRowToSwatchDto($option)
                 );
             },
             $optionRows
         );
+    }
+
+    /**
+     * @return AttributeOptionSwatchDefinition
+     */
+    private function mapAttributeOptionRowToSwatchDto(array $optionRow): ?AttributeOptionSwatchDefinition
+    {
+        if (isset($optionRow['swatch'])) {
+            return new AttributeOptionSwatchDefinition(
+                $optionRow['swatch']['type_string'],
+                $optionRow['swatch']['value']
+            );
+        }
+
+        return null;
     }
 }
