@@ -14,4 +14,6 @@ interface ConfigurationInterface {
     public function getCategoryKeyPrefix(int $storeId): string;
 
     public function getAuthToken(int $storeId): ?string;
+
+    public function shouldDisableCertificateValidation(int $storeId): bool;
 }

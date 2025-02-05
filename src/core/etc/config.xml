@@ -9,6 +9,7 @@
                 <channel_schema_name>dev.streamx.blueprints.data.DataIngestionMessage</channel_schema_name>
                 <product_key_prefix>pim:</product_key_prefix>
                 <category_key_prefix>cat:</category_key_prefix>
+                <disable_certificate_validation>0</disable_certificate_validation>
             </streamx_client>
             <general_settings>
                 <allowed_stores>1</allowed_stores>
