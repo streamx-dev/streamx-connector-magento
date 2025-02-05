@@ -40,6 +40,10 @@ class ClientConfiguration implements ConfigurationInterface {
         return $this->getConfigParam('auth_token', $storeId);
     }
 
+    public function shouldDisableCertificateValidation(int $storeId): bool {
+        return (bool) $this->getConfigParam('disable_certificate_validation', $storeId);
+    }
+
     private function getConfigParam(string $configField, $storeId): ?string {
         $path = self::STREAMX_CLIENT_CONFIG_XML_PREFIX . '/' . $configField;
         return $this->scopeConfig->getValue($path, ScopeInterface::SCOPE_STORE, $storeId);

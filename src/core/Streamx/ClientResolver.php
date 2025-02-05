@@ -37,7 +37,8 @@ class ClientResolver {
                 $configuration->getIngestionBaseUrl($storeId),
                 $configuration->getChannelName($storeId),
                 $configuration->getChannelSchemaName($storeId),
-                $configuration->getAuthToken($storeId)
+                $configuration->getAuthToken($storeId),
+                $configuration->shouldDisableCertificateValidation($storeId)
             );
 
             $this->clients[$storeId] = new Client(
