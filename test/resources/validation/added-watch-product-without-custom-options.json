@@ -366,7 +366,10 @@
   ],
   "name": "The new great watch",
   "label": "The new great watch",
-  "price": 35,
+  "price": {
+    "value": 350,
+    "discountedValue": 350
+  },
   "slug": "the-new-great-watch-2659",
   "categories": [
     {

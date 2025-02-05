@@ -103,7 +103,11 @@ abstract class BaseAttributeData extends DataProviderInterface
                 'url' => $this->imageUrlManager->getProductImageUrl($this->getSingleAttributeValue($attributeCode, $attributeValues, $productId))
             ];
         } elseif ($attributeCode == 'price') {
-            $productData['price'] = (float) $this->getSingleAttributeValue($attributeCode, $attributeValues, $productId);
+            $price = (float) $this->getSingleAttributeValue($attributeCode, $attributeValues, $productId);
+            $productData['price'] = [
+                'value' => $price,
+                'discountedValue' => $price
+            ];
         } else {
             $attributeDefinition = $attributeDefinitionsMap[$attributeCode];
             $productAttribute = $this->createProductAttributeArray($attributeCode, $attributeDefinition, $attributeValues);

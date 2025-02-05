@@ -9,7 +9,7 @@ use Magento\ConfigurableProduct\Model\Product\Type\Configurable as ConfigurableT
 
 class ConfigurableData extends DataProviderInterface
 {
-    private array $childBlackListConfig = [
+    private array $fieldsToRemove = [
         'entity_id',
         'row_id',
         'type_id',
@@ -27,6 +27,7 @@ class ConfigurableData extends DataProviderInterface
         ConfigurableResource $configurableResource,
         ChildProductAttributeData $childProductAttributeDataProvider,
         ChildProductMediaGalleryData $mediaGalleryDataProvider,
+        PriceData $priceData,
         QuantityData $quantityDataProvider,
         DataCleaner $dataCleaner
     ) {
@@ -35,6 +36,7 @@ class ConfigurableData extends DataProviderInterface
         $this->dataProviders = [
             $childProductAttributeDataProvider,
             $mediaGalleryDataProvider,
+            $priceData,
             $quantityDataProvider,
             $dataCleaner
         ];
@@ -104,7 +106,7 @@ class ConfigurableData extends DataProviderInterface
 
     private function removeFields(array &$childData): void
     {
-        foreach ($this->childBlackListConfig as $key) {
+        foreach ($this->fieldsToRemove as $key) {
             unset($childData[$key]);
         }
     }

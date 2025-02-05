@@ -34,7 +34,6 @@ class IndexersConfig implements IndexersConfigInterface
                 // TODO review the provider; trim data produced by it only what we need
                 $dataProviderFactory->get(BundleOptionsData::class),
                 $dataProviderFactory->get(CategoryData::class),
-                // TODO decide which of the prices added by this provider do we need
                 $dataProviderFactory->get(PriceData::class),
                 $dataProviderFactory->get(ProductMediaGalleryData::class),
                 $dataProviderFactory->get(QuantityData::class),

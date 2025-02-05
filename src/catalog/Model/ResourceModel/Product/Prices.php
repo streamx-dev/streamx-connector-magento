@@ -43,7 +43,7 @@ class Prices
      *
      * @throws NoSuchEntityException
      */
-    public function loadPriceData(int $storeId, array $productIds): array
+    public function loadPriceDataFromPriceIndex(int $storeId, array $productIds): array
     {
         $entityIdField = $this->productMetaData->get()->getIdentifierField();
         $websiteId = (int)$this->getStore($storeId)->getWebsiteId();
@@ -71,8 +71,7 @@ class Prices
             $catalogPrices = $this->getCatalogRulePrices($websiteId, $productIds);
 
             foreach ($catalogPrices as $productId => $finalPrice) {
-                $priceIndexerPrice =
-                    $prices[$productId]['final_price'] ?? $prices[$productId]['final_price'] ?? $finalPrice;
+                $priceIndexerPrice = $prices[$productId]['final_price'] ?? $finalPrice;
                 $prices[$productId]['final_price'] = min($finalPrice, $priceIndexerPrice);
             }
         }
@@ -80,7 +79,7 @@ class Prices
         return $prices;
     }
 
-    private function getCatalogRulePrices(int $websiteId, array $productsIds)
+    private function getCatalogRulePrices(int $websiteId, array $productsIds): array
     {
         $connection = $this->getConnection();
         $select = $connection->select();

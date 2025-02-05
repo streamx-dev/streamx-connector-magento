@@ -25,15 +25,16 @@ class PriceData extends DataProviderInterface
     public function addData(array $indexData, int $storeId): array
     {
         $productIds = array_keys($indexData);
-        $priceData = $this->resourcePriceModel->loadPriceData($storeId, $productIds);
+        $priceData = $this->resourcePriceModel->loadPriceDataFromPriceIndex($storeId, $productIds);
 
         foreach ($priceData as $productId => $priceDataRow) {
-            // TODO currently not required but may come back:
-            // $indexData[$productId]['final_price'] = (float)$priceDataRow['final_price'];
-
             if (isset($priceDataRow['price'])) {
-                // TODO currently not required but may come back:
-                // $indexData[$productId]['regular_price'] = (float)$priceDataRow['price'];
+                // note: if price was already set from value of price attribute - it will be overwritten by indexed price here, which takes precedence
+                $indexData[$productId]['price']['value'] = (float)$priceDataRow['price'];
+            }
+
+            if (isset($priceDataRow['final_price'])) {
+                $indexData[$productId]['price']['discountedValue'] = (float)$priceDataRow['final_price'];
             }
         }
 

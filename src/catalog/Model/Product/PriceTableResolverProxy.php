@@ -6,7 +6,6 @@ declare(strict_types = 1);
 namespace StreamX\ConnectorCatalog\Model\Product;
 
 use Magento\Customer\Model\Indexer\CustomerGroupDimensionProvider;
-use Magento\Framework\Indexer\DimensionFactory;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Store\Model\Indexer\WebsiteDimensionProvider;
 
@@ -66,30 +65,18 @@ class PriceTableResolverProxy
         return self::DEFAULT_PRICE_INDEXER_TABLE;
     }
 
-    /**
-     * @return DimensionFactory
-     */
-    private function createDimensionFactory()
+    private function createDimensionFactory(): void
     {
         if (null === $this->dimensionFactory) {
             $this->dimensionFactory = $this->create(\Magento\Framework\Indexer\DimensionFactory::class);
         }
-
-        return $this->dimensionFactory;
     }
 
-    /**
-     * @return \Magento\Catalog\Model\Indexer\Product\Price\PriceTableResolver
-     */
-    private function createPriceTableResolver()
+    private function createPriceTableResolver(): void
     {
         if (null === $this->priceTableResolver) {
-            $this->priceTableResolver = $this->create(
-                \Magento\Catalog\Model\Indexer\Product\Price\PriceTableResolver::class
-            );
+            $this->priceTableResolver = $this->create(\Magento\Catalog\Model\Indexer\Product\Price\PriceTableResolver::class);
         }
-
-        return $this->priceTableResolver;
     }
 
     /**
