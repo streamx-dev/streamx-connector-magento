@@ -100,7 +100,8 @@ abstract class BaseAttributeData extends DataProviderInterface
             $productData['description'] = $this->getSingleAttributeValue($attributeCode, $attributeValues, $productId);
         } elseif ($attributeCode == 'image') {
             $productData['primaryImage'] = [
-                'url' => $this->imageUrlManager->getProductImageUrl($this->getSingleAttributeValue($attributeCode, $attributeValues, $productId))
+                'url' => $this->imageUrlManager->getProductImageUrl($this->getSingleAttributeValue($attributeCode, $attributeValues, $productId)),
+                'alt' => null // expecting MediaGalleryData (which is executed later) to fill this field
             ];
         } elseif ($attributeCode == 'price') {
             $price = (float) $this->getSingleAttributeValue($attributeCode, $attributeValues, $productId);

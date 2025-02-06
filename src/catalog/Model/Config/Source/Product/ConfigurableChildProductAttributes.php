@@ -4,32 +4,41 @@ namespace StreamX\ConnectorCatalog\Model\Config\Source\Product;
 
 use Magento\Catalog\Api\Data\ProductAttributeInterface;
 use Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory;
-use StreamX\ConnectorCatalog\Model\Attributes\ChildProductAttributes;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product as Resource;
 
 class ConfigurableChildProductAttributes extends AbstractAttributeSource
 {
-    private array $restrictedAttributes;
+    const ATTRIBUTES_NOT_ALLOWED_IN_SELECT_LIST = [
+        // always loaded child product attributes - don't allow the user to select them or not
+        'name',
+        'image',
+        'price',
+        'url_key',
+        'media_gallery',
+
+        // explicitly not allowed attributes
+        'tier_price',
+        'gallery',
+        'category_ids',
+        'swatch_image',
+        'quantity_and_stock_status',
+        'options_container',
+    ];
+
     private Resource $productResource;
 
     public function __construct(CollectionFactory $collectionFactory, Resource $productResource)
     {
-        $this->productResource = $productResource;
-
         parent::__construct($collectionFactory);
-
-        $this->restrictedAttributes = array_merge(
-            ConfigurableProductAttributes::GENERAL_RESTRICTED_ATTRIBUTES,
-            ChildProductAttributes::MINIMAL_ATTRIBUTE_SET
-        );
+        $this->productResource = $productResource;
     }
 
     /**
      * @inheritDoc
      */
-    public function canAddAttribute(ProductAttributeInterface $attribute): bool
+    public function isAllowedInSelectList(ProductAttributeInterface $attribute): bool
     {
-        if (in_array($attribute->getAttributeCode(), $this->restrictedAttributes)) {
+        if (in_array($attribute->getAttributeCode(), self::ATTRIBUTES_NOT_ALLOWED_IN_SELECT_LIST)) {
             return false;
         }
 

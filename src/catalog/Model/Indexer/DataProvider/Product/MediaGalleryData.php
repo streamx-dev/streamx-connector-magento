@@ -1,12 +1,13 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace StreamX\ConnectorCatalog\Model\Product;
+namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Gallery as Resource;
+use StreamX\ConnectorCore\Api\DataProviderInterface;
 use StreamX\ConnectorCore\Indexer\ImageUrlManager;
 
-class LoadMediaGallery
+class MediaGalleryData extends DataProviderInterface
 {
     private Resource $resourceModel;
     private ProductMetaData $productMetaData;
@@ -26,7 +27,7 @@ class LoadMediaGallery
     /**
      * @inheritdoc
      */
-    public function execute(array $indexData, int $storeId): array
+    public function addData(array $indexData, int $storeId): array
     {
         $this->mapRowIdToEntityId($indexData);
         $linkField = $this->productMetaData->get()->getLinkField();

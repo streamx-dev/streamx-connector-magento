@@ -26,7 +26,7 @@ class ConfigurableData extends DataProviderInterface
     public function __construct(
         ConfigurableResource $configurableResource,
         ChildProductAttributeData $childProductAttributeDataProvider,
-        ChildProductMediaGalleryData $mediaGalleryDataProvider,
+        MediaGalleryData $mediaGalleryDataProvider,
         PriceData $priceData,
         QuantityData $quantityDataProvider,
         DataCleaner $dataCleaner

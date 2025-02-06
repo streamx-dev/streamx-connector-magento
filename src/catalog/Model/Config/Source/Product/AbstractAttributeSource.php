@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace StreamX\ConnectorCatalog\Model\Config\Source\Product;
 
 use Magento\Catalog\Api\Data\ProductAttributeInterface;
-use Magento\Catalog\Model\ResourceModel\Product\Attribute\Collection;
 use Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory;
+use Magento\Framework\Data\Collection;
 use Magento\Framework\Data\OptionSourceInterface;
 
 abstract class AbstractAttributeSource implements OptionSourceInterface
@@ -32,14 +32,16 @@ abstract class AbstractAttributeSource implements OptionSourceInterface
                 'value' => '',
                 'label' => __('-- All Attributes --'),
             ];
-            /** @var Collection $collection */
-            $collection = $this->collectionFactory->create();
-            $collection->addVisibleFilter();
+
+            $collection = $this->collectionFactory
+                ->create()
+                ->addVisibleFilter()
+                ->addOrder('frontend_label', Collection::SORT_ORDER_ASC);
             $attributes = $collection->getItems();
 
             /** @var ProductAttributeInterface $attribute */
             foreach ($attributes as $attribute) {
-                if ($this->canAddAttribute($attribute)) {
+                if ($this->isAllowedInSelectList($attribute)) {
                     $label = sprintf(
                         '%s (%s)',
                         $attribute->getDefaultFrontendLabel(),
@@ -60,5 +62,5 @@ abstract class AbstractAttributeSource implements OptionSourceInterface
     /**
      * Validate if attribute can be shown
      */
-    abstract public function canAddAttribute(ProductAttributeInterface $attribute): bool;
+    abstract public function isAllowedInSelectList(ProductAttributeInterface $attribute): bool;
 }

@@ -16,7 +16,7 @@
                 <label>General Settings</label>
                 <field id="enable" translate="label comment" type="select" sortOrder="21" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Enable StreamX Connector</label>
-                    <comment>Enable to run indexes with StreamX.</comment>
+                    <comment>Enable indexing and ingesting data into StreamX</comment>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
                 <field id="allowed_stores" translate="label comment" type="multiselect" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="0">

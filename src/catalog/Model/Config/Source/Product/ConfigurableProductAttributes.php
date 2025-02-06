@@ -6,18 +6,18 @@ use Magento\Catalog\Api\Data\ProductAttributeInterface;
 
 class ConfigurableProductAttributes extends AbstractAttributeSource
 {
-    const GENERAL_RESTRICTED_ATTRIBUTES = [
-        'sku',
-        'url_path',
-        'url_key',
+    const ATTRIBUTES_NOT_ALLOWED_IN_SELECT_LIST = [
+        // always loaded product attributes - don't allow the user to select them or not
         'name',
-        'visibility',
-        'status',
-        'tier_price',
+        'image',
+        'description',
         'price',
-        'price_type',
+        'url_key',
+        'media_gallery',
+
+        // explicitly not allowed attributes
+        'tier_price',
         'gallery',
-        'status',
         'category_ids',
         'swatch_image',
         'quantity_and_stock_status',
@@ -27,8 +27,8 @@ class ConfigurableProductAttributes extends AbstractAttributeSource
     /**
      * @inheritDoc
      */
-    public function canAddAttribute(ProductAttributeInterface $attribute): bool
+    public function isAllowedInSelectList(ProductAttributeInterface $attribute): bool
     {
-        return !in_array($attribute->getAttributeCode(), self::GENERAL_RESTRICTED_ATTRIBUTES);
+        return !in_array($attribute->getAttributeCode(), self::ATTRIBUTES_NOT_ALLOWED_IN_SELECT_LIST);
     }
 }

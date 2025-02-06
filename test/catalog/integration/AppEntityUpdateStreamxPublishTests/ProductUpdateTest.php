@@ -20,6 +20,16 @@ class ProductUpdateTest extends BaseAppEntityUpdateTest {
     }
 
     /** @test */
+    public function shouldPublishSimpleProductEditedUsingMagentoApplicationToStreamxWithoutAttributes() {
+        $this->setConfigurationValue($this->PRODUCT_ATTRIBUTES_PATH, 'cost'); // index only an attr that bags don't have (so no attr expected in publish payload)
+        try {
+            $this->shouldPublishProductEditedUsingMagentoApplicationToStreamx('Joust Duffle Bag', 'bag-no-attributes');
+        } finally {
+            $this->restoreConfigurationValue($this->PRODUCT_ATTRIBUTES_PATH);
+        }
+    }
+
+    /** @test */
     public function shouldPublishBundleProductEditedUsingMagentoApplicationToStreamx() {
         $this->shouldPublishProductEditedUsingMagentoApplicationToStreamx('Sprite Yoga Companion Kit', 'bundle');
     }

@@ -550,6 +550,18 @@
           "options": []
         },
         {
+          "name": "url_key",
+          "label": "URL Key",
+          "values": [
+            {
+              "value": "chaz-kangeroo-hoodie-xs-black",
+              "valueLabel": "chaz-kangeroo-hoodie-xs-black"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
           "name": "color",
           "label": "Color",
           "values": [
@@ -874,6 +886,18 @@
             {
               "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
               "valueLabel": "\/m\/h\/mh01-gray_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "url_key",
+          "label": "URL Key",
+          "values": [
+            {
+              "value": "chaz-kangeroo-hoodie-xs-gray",
+              "valueLabel": "chaz-kangeroo-hoodie-xs-gray"
             }
           ],
           "isFacet": false,
@@ -1218,6 +1242,18 @@
           "options": []
         },
         {
+          "name": "url_key",
+          "label": "URL Key",
+          "values": [
+            {
+              "value": "chaz-kangeroo-hoodie-xs-orange",
+              "valueLabel": "chaz-kangeroo-hoodie-xs-orange"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
           "name": "color",
           "label": "Color",
           "values": [
@@ -1548,6 +1584,18 @@
           "options": []
         },
         {
+          "name": "url_key",
+          "label": "URL Key",
+          "values": [
+            {
+              "value": "chaz-kangeroo-hoodie-s-black",
+              "valueLabel": "chaz-kangeroo-hoodie-s-black"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
           "name": "color",
           "label": "Color",
           "values": [
@@ -1872,6 +1920,18 @@
             {
               "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
               "valueLabel": "\/m\/h\/mh01-gray_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "url_key",
+          "label": "URL Key",
+          "values": [
+            {
+              "value": "chaz-kangeroo-hoodie-s-gray",
+              "valueLabel": "chaz-kangeroo-hoodie-s-gray"
             }
           ],
           "isFacet": false,
@@ -2216,6 +2276,18 @@
           "options": []
         },
         {
+          "name": "url_key",
+          "label": "URL Key",
+          "values": [
+            {
+              "value": "chaz-kangeroo-hoodie-s-orange",
+              "valueLabel": "chaz-kangeroo-hoodie-s-orange"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
           "name": "color",
           "label": "Color",
           "values": [
@@ -2546,6 +2618,18 @@
           "options": []
         },
         {
+          "name": "url_key",
+          "label": "URL Key",
+          "values": [
+            {
+              "value": "chaz-kangeroo-hoodie-m-black",
+              "valueLabel": "chaz-kangeroo-hoodie-m-black"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
           "name": "color",
           "label": "Color",
           "values": [
@@ -2870,6 +2954,18 @@
             {
               "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
               "valueLabel": "\/m\/h\/mh01-gray_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "url_key",
+          "label": "URL Key",
+          "values": [
+            {
+              "value": "chaz-kangeroo-hoodie-m-gray",
+              "valueLabel": "chaz-kangeroo-hoodie-m-gray"
             }
           ],
           "isFacet": false,
@@ -3214,6 +3310,18 @@
           "options": []
         },
         {
+          "name": "url_key",
+          "label": "URL Key",
+          "values": [
+            {
+              "value": "chaz-kangeroo-hoodie-m-orange",
+              "valueLabel": "chaz-kangeroo-hoodie-m-orange"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
           "name": "color",
           "label": "Color",
           "values": [
@@ -3544,6 +3652,18 @@
           "options": []
         },
         {
+          "name": "url_key",
+          "label": "URL Key",
+          "values": [
+            {
+              "value": "chaz-kangeroo-hoodie-l-black",
+              "valueLabel": "chaz-kangeroo-hoodie-l-black"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
           "name": "color",
           "label": "Color",
           "values": [
@@ -3868,6 +3988,18 @@
             {
               "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
               "valueLabel": "\/m\/h\/mh01-gray_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "url_key",
+          "label": "URL Key",
+          "values": [
+            {
+              "value": "chaz-kangeroo-hoodie-l-gray",
+              "valueLabel": "chaz-kangeroo-hoodie-l-gray"
             }
           ],
           "isFacet": false,
@@ -4212,6 +4344,18 @@
           "options": []
         },
         {
+          "name": "url_key",
+          "label": "URL Key",
+          "values": [
+            {
+              "value": "chaz-kangeroo-hoodie-l-orange",
+              "valueLabel": "chaz-kangeroo-hoodie-l-orange"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
           "name": "color",
           "label": "Color",
           "values": [
@@ -4542,6 +4686,18 @@
           "options": []
         },
         {
+          "name": "url_key",
+          "label": "URL Key",
+          "values": [
+            {
+              "value": "chaz-kangeroo-hoodie-xl-black",
+              "valueLabel": "chaz-kangeroo-hoodie-xl-black"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
           "name": "color",
           "label": "Color",
           "values": [
@@ -4866,6 +5022,18 @@
             {
               "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
               "valueLabel": "\/m\/h\/mh01-gray_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "url_key",
+          "label": "URL Key",
+          "values": [
+            {
+              "value": "chaz-kangeroo-hoodie-xl-gray",
+              "valueLabel": "chaz-kangeroo-hoodie-xl-gray"
             }
           ],
           "isFacet": false,
@@ -5204,6 +5372,18 @@
             {
               "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
               "valueLabel": "\/m\/h\/mh01-orange_main_1.jpg"
+            }
+          ],
+          "isFacet": false,
+          "options": []
+        },
+        {
+          "name": "url_key",
+          "label": "URL Key",
+          "values": [
+            {
+              "value": "chaz-kangeroo-hoodie-xl-orange",
+              "valueLabel": "chaz-kangeroo-hoodie-xl-orange"
             }
           ],
           "isFacet": false,
