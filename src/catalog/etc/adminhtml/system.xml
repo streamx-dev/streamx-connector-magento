@@ -27,14 +27,14 @@
                 </field>
                 <field id="product_attributes" translate="label comment" type="multiselect" sortOrder="102" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Product attributes to export</label>
-                    <source_model>StreamX\ConnectorCatalog\Model\Config\Source\Product\Attributes</source_model>
+                    <source_model>StreamX\ConnectorCatalog\Model\Config\Source\Product\ConfigurableProductAttributes</source_model>
                     <backend_model>StreamX\ConnectorCatalog\Model\Config\Backend\Attributes</backend_model>
                     <can_be_empty>1</can_be_empty>
                     <comment>Select which product attributes should be exported. Some attributes will be always exported: name, sku, price, status, url_path, url_key, visibility.</comment>
                 </field>
-                <field id="child_attributes" translate="label comment" type="multiselect" sortOrder="103" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Configurable children attributes to export</label>
-                    <source_model>StreamX\ConnectorCatalog\Model\Config\Source\Product\ConfigurableChildAttributes</source_model>
+                <field id="child_product_attributes" translate="label comment" type="multiselect" sortOrder="103" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Configurable children product attributes to export</label>
+                    <source_model>StreamX\ConnectorCatalog\Model\Config\Source\Product\ConfigurableChildProductAttributes</source_model>
                     <backend_model>StreamX\ConnectorCatalog\Model\Config\Backend\Attributes</backend_model>
                     <can_be_empty>1</can_be_empty>
                     <comment>Select which product attributes should be exported for 'variants'. Some attributes will be always exported: name, sku, price, status, url_key, visibility and attributes used for creating configurable children (like color, size, etc)</comment>

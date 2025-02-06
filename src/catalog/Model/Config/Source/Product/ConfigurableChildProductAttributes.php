@@ -7,7 +7,7 @@ use Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory;
 use StreamX\ConnectorCatalog\Model\Attributes\ChildProductAttributes;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product as Resource;
 
-class ConfigurableChildAttributes extends AbstractAttributeSource
+class ConfigurableChildProductAttributes extends AbstractAttributeSource
 {
     private array $restrictedAttributes;
     private Resource $productResource;
@@ -19,7 +19,7 @@ class ConfigurableChildAttributes extends AbstractAttributeSource
         parent::__construct($collectionFactory);
 
         $this->restrictedAttributes = array_merge(
-            Attributes::GENERAL_RESTRICTED_ATTRIBUTES,
+            ConfigurableProductAttributes::GENERAL_RESTRICTED_ATTRIBUTES,
             ChildProductAttributes::MINIMAL_ATTRIBUTE_SET
         );
     }
