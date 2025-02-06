@@ -17,15 +17,15 @@ use Magento\Framework\Exception\LocalizedException;
 class StatusSelectModifier implements SelectModifierInterface
 {
     private ResourceConnection $resourceConnection;
-    private ProductAttributesProvider $attributeDataProvider;
+    private LoadAttributes $loadAttributes;
     private ProductMetaData $productMetaData;
 
     public function __construct(
-        ProductAttributesProvider $attributeDataProvider,
+        LoadAttributes $loadAttributes,
         ResourceConnection $resourceConnection,
         ProductMetaData $productMetaData
     ) {
-        $this->attributeDataProvider = $attributeDataProvider;
+        $this->loadAttributes = $loadAttributes;
         $this->resourceConnection = $resourceConnection;
         $this->productMetaData = $productMetaData;
     }
@@ -111,6 +111,6 @@ class StatusSelectModifier implements SelectModifierInterface
      */
     private function getStatusAttribute(): Attribute
     {
-        return $this->attributeDataProvider->getAttributeByCode('status');
+        return $this->loadAttributes->getAttributeByCode('status');
     }
 }

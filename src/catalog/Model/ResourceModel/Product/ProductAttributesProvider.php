@@ -39,22 +39,6 @@ class ProductAttributesProvider
     }
 
     /**
-     * @throws LocalizedException
-     */
-    public function getAttributeById(int $attributeId): Attribute
-    {
-        return $this->loadAttributes->getAttributeById($attributeId);
-    }
-
-    /**
-     * @throws LocalizedException
-     */
-    public function getAttributeByCode(string $attributeCode): Attribute
-    {
-        return $this->loadAttributes->getAttributeByCode($attributeCode);
-    }
-
-    /**
      * @return array of: key = product id, value = array of: key = attribute code, value = one or more values of the attribute for that product
      * @throws Exception
      */

@@ -98,7 +98,7 @@ class LoadAttributes
         }
     }
 
-    private function setSwatchInputType(Attribute $attribute): Attribute
+    private function setSwatchInputType(Attribute $attribute): void
     {
         $additionalData = (string)$attribute->getData('additional_data');
 
@@ -109,8 +109,6 @@ class LoadAttributes
                 $attribute->setData('swatch_input_type', $additionalData['swatch_input_type']);
             }
         }
-
-        return $attribute;
     }
 
     private function getAttributeCollection(): Collection
