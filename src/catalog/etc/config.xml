@@ -9,7 +9,6 @@
                 <allowed_product_types>simple,configurable,bundle,grouped,virtual</allowed_product_types>
                 <product_attributes>description,image,small_image,thumbnail,media_gallery,meta_title,meta_description,special_price,special_from_date,special_to_date,tax_class_id</product_attributes>
                 <child_attributes>image,small_image,thumbnail,media_gallery,special_price,special_from_date,special_to_date</child_attributes>
-                <sync_tier_prices>0</sync_tier_prices>
                 <use_catalog_rules>0</use_catalog_rules>
             </catalog_settings>
         </streamx_connector_settings>

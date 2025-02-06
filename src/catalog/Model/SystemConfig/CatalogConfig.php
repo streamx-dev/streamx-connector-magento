@@ -19,7 +19,6 @@ class CatalogConfig
      * Prices
      */
     private const USE_CATALOG_RULES = 'use_catalog_rules';
-    private const SYNC_TIER_PRICES = 'sync_tier_prices';
 
     /**
      * Allow product types to reindex
@@ -52,11 +51,6 @@ class CatalogConfig
     public function useCatalogRules(): bool
     {
         return (bool) $this->getConfigParam(self::USE_CATALOG_RULES);
-    }
-
-    public function syncTierPrices(): bool
-    {
-        return (bool) $this->getConfigParam(self::SYNC_TIER_PRICES);
     }
 
     public function getAllowedProductTypes(int $storeId): array

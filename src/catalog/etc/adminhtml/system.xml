@@ -39,10 +39,6 @@
                     <can_be_empty>1</can_be_empty>
                     <comment>Select which product attributes should be exported for 'variants'. Some attributes will be always exported: name, sku, price, status, url_key, visibility and attributes used for creating configurable children (like color, size, etc)</comment>
                 </field>
-                <field id="sync_tier_prices" translate="label comment" type="select" sortOrder="60" showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Sync Tier Prices</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
                 <field id="use_catalog_rules" type="select" translate="label comment" sortOrder="350" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Apply catalog price rules in `final_price`</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
