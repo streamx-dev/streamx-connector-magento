@@ -2,7 +2,9 @@
 
 namespace StreamX\ConnectorCatalog\Model\Attributes;
 
-class AttributeOptionDefinition
+use JsonSerializable;
+
+final class AttributeOptionDefinition implements JsonSerializable
 {
     private string $value;
     private string $label;
@@ -24,5 +26,28 @@ class AttributeOptionDefinition
 
     public function getSwatch(): ?AttributeOptionSwatchDefinition {
         return $this->swatch;
+    }
+
+    public function isSameAs(AttributeOptionDefinition $other): bool {
+        if ($this === $other) {
+            return true;
+        }
+
+        if (($this->swatch === null) != ($other->swatch === null)) { // one of them is null while other is not null
+            return false;
+        }
+
+        if ($this->swatch !== null && $other->swatch !== null) {
+            if (!$this->swatch->isSameAs($other->swatch)) {
+                return false;
+            }
+        }
+
+        return $this->value === $other->value
+            && $this->label === $other->label;
+    }
+
+    public function jsonSerialize(): array {
+        return get_object_vars($this);
     }
 }
