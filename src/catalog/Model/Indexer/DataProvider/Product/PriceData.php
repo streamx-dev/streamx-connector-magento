@@ -6,20 +6,15 @@ use Exception;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
-use StreamX\ConnectorCatalog\Model\Product\LoadTierPrices;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Prices as Resource;
 
 class PriceData extends DataProviderInterface
 {
     private Resource $resourcePriceModel;
-    private LoadTierPrices $loadTierPrices;
 
-    public function __construct(
-        Resource $resource,
-        LoadTierPrices $loadTierPrices
-    ) {
+    public function __construct(Resource $resource)
+    {
         $this->resourcePriceModel = $resource;
-        $this->loadTierPrices = $loadTierPrices;
     }
 
     /**
@@ -42,7 +37,7 @@ class PriceData extends DataProviderInterface
             }
         }
 
-        return $this->loadTierPrices->execute($indexData, $storeId);
+        return $indexData;
     }
 
 }
