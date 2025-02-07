@@ -28,7 +28,6 @@ abstract class BaseProductAttributes
     protected abstract function getConfiguredAttributes(int $storeId): array;
 
     /**
-     * @param int $storeId
      * @return string[]
      */
     public function getAttributesToIndex(int $storeId): array

@@ -39,7 +39,7 @@ class ProductAttributesProvider
     }
 
     /**
-     * @return array of: key = product id, value = array of: key = attribute code, value = one or more values of the attribute for that product
+     * @return array<int, array<string, array>> key = product id, value = array of: key = attribute code, value = one or more values of the attribute for that product
      * @throws Exception
      */
     public function loadAttributesData(int $storeId, array $productIds, array $requiredAttributeCodes): array

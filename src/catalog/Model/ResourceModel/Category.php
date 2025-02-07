@@ -47,7 +47,7 @@ class Category
     }
 
     /**
-     * @return array: key = product id, value = array of the product's category ids
+     * @return array<int, array<int>> key = product id, value = array of the product's category ids
      * @throws Exception
      */
     public function getProductCategoriesMap(int $storeId, array $productIds): array
