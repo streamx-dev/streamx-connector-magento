@@ -66,7 +66,7 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
     public function addProduct(string $productName, int $categoryId): int {
         $sku = (string) (new DateTime())->getTimestamp();
         $quantity = 100;
-        $price = 35;
+        $price = 350;
         $defaultAttributeSetId = 4;
         $websiteId = 1;
 

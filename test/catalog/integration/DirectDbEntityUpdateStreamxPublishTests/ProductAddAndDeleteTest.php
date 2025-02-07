@@ -10,6 +10,10 @@ use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
  */
 class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
+    private const PRODUCT_PRICE = 350;
+    private const INDEXED_PRICE = 370;
+    private const DISCOUNTED_PRICE = 330;
+
     protected function indexerName(): string {
         return ProductProcessor::INDEXER_ID;
     }
@@ -31,11 +35,15 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
             // then
             $this->assertExactDataIsPublished($expectedKey, 'added-watch-product.json', [
+                // mask variable parts (ids and generated sku)
                 '"id": [0-9]+' => '"id": 0',
                 '"sku": "[^"]+"' => '"sku": "[MASKED]"',
                 '"the-new-great-watch-[0-9]+"' => '"the-new-great-watch-0"',
                 '"option_id": "[0-9]+"' => '"option_id": "0"',
                 '"option_type_id": "[0-9]+"' => '"option_type_id": "0"',
+                // expect the indexed prices to be applied
+                '"value": ' . self::PRODUCT_PRICE => '"value": ' . self::INDEXED_PRICE,
+                '"discountedValue": ' . self::PRODUCT_PRICE => '"discountedValue": ' . self::DISCOUNTED_PRICE
             ]);
         } finally {
             try {
@@ -98,7 +106,6 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $defaultStoreId = 0;
         $stockId = 1;
         $quantity = 100;
-        $price = 35;
         $websiteId = 1;
         $brownColorId = $this->db->getAttributeOptionId('color', 'Brown');
         $metalMaterialId = $this->db->getAttributeOptionId('material', 'Metal');
@@ -129,7 +136,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
         $this->db->execute("
             INSERT INTO catalog_product_entity_decimal (entity_id, attribute_id, store_id, value) VALUES
-                ($productId, " . self::attrId('price') . ", $defaultStoreId, $price)
+                ($productId, " . self::attrId('price') . ", $defaultStoreId, " . self::PRODUCT_PRICE . ")
         ");
 
         $this->db->execute("
@@ -159,6 +166,11 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
                 ($productId, $websiteId, $stockId, $quantity, 1)
         ");
 
+        $this->db->execute("
+            INSERT INTO catalog_product_index_price (entity_id, customer_group_id, website_id, price, final_price) VALUES
+                ($productId, 0, $websiteId, " . self::INDEXED_PRICE . ", " . self::DISCOUNTED_PRICE . ")
+        ");
+
         $this->addProductOption($productId, $defaultStoreId);
 
         return $productId;
@@ -180,6 +192,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
     private function deleteProduct(int $productId): void {
         $this->db->executeAll([
+            "DELETE FROM catalog_product_index_price WHERE entity_id = $productId",
             "DELETE FROM cataloginventory_stock_status WHERE product_id = $productId",
             "DELETE FROM cataloginventory_stock_item WHERE product_id = $productId",
             "DELETE FROM catalog_category_product WHERE product_id = $productId",

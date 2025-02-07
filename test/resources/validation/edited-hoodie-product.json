@@ -118,7 +118,10 @@
     "alt": ""
   },
   "description": "<p>Ideal for cold-weather training or work outdoors, the Chaz Hoodie promises superior warmth with every wear. Thick material blocks out the wind as ribbed cuffs and bottom band seal in body heat.<\/p>\n<p>&bull; Two-tone gray heather hoodie.<br \/>&bull; Drawstring-adjustable hood. <br \/>&bull; Machine wash\/dry.<\/p>",
-  "price": 52,
+  "price": {
+    "value": 52,
+    "discountedValue": 52
+  },
   "slug": "name-modified-for-testing-was-chaz-kangeroo-hoodie-62",
   "categories": [
     {
@@ -835,7 +838,10 @@
         "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg",
         "alt": ""
       },
-      "price": 52,
+      "price": {
+        "value": 52,
+        "discountedValue": 52
+      },
       "slug": "chaz-kangeroo-hoodie-xs-black-47",
       "gallery": [
         {
@@ -1162,7 +1168,10 @@
         "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
         "alt": ""
       },
-      "price": 52,
+      "price": {
+        "value": 52,
+        "discountedValue": 52
+      },
       "slug": "chaz-kangeroo-hoodie-xs-gray-48",
       "gallery": [
         {
@@ -1497,7 +1506,10 @@
         "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
         "alt": ""
       },
-      "price": 52,
+      "price": {
+        "value": 52,
+        "discountedValue": 52
+      },
       "slug": "chaz-kangeroo-hoodie-xs-orange-49",
       "gallery": [
         {
@@ -1824,7 +1836,10 @@
         "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg",
         "alt": ""
       },
-      "price": 52,
+      "price": {
+        "value": 52,
+        "discountedValue": 52
+      },
       "slug": "chaz-kangeroo-hoodie-s-black-50",
       "gallery": [
         {
@@ -2151,7 +2166,10 @@
         "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
         "alt": ""
       },
-      "price": 52,
+      "price": {
+        "value": 52,
+        "discountedValue": 52
+      },
       "slug": "chaz-kangeroo-hoodie-s-gray-51",
       "gallery": [
         {
@@ -2486,7 +2504,10 @@
         "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
         "alt": ""
       },
-      "price": 52,
+      "price": {
+        "value": 52,
+        "discountedValue": 52
+      },
       "slug": "chaz-kangeroo-hoodie-s-orange-52",
       "gallery": [
         {
@@ -2813,7 +2834,10 @@
         "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg",
         "alt": ""
       },
-      "price": 52,
+      "price": {
+        "value": 52,
+        "discountedValue": 52
+      },
       "slug": "chaz-kangeroo-hoodie-m-black-53",
       "gallery": [
         {
@@ -3140,7 +3164,10 @@
         "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
         "alt": ""
       },
-      "price": 52,
+      "price": {
+        "value": 52,
+        "discountedValue": 52
+      },
       "slug": "chaz-kangeroo-hoodie-m-gray-54",
       "gallery": [
         {
@@ -3475,7 +3502,10 @@
         "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
         "alt": ""
       },
-      "price": 52,
+      "price": {
+        "value": 52,
+        "discountedValue": 52
+      },
       "slug": "chaz-kangeroo-hoodie-m-orange-55",
       "gallery": [
         {
@@ -3802,7 +3832,10 @@
         "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg",
         "alt": ""
       },
-      "price": 52,
+      "price": {
+        "value": 52,
+        "discountedValue": 52
+      },
       "slug": "chaz-kangeroo-hoodie-l-black-56",
       "gallery": [
         {
@@ -4129,7 +4162,10 @@
         "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
         "alt": ""
       },
-      "price": 52,
+      "price": {
+        "value": 52,
+        "discountedValue": 52
+      },
       "slug": "chaz-kangeroo-hoodie-l-gray-57",
       "gallery": [
         {
@@ -4464,7 +4500,10 @@
         "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
         "alt": ""
       },
-      "price": 52,
+      "price": {
+        "value": 52,
+        "discountedValue": 52
+      },
       "slug": "chaz-kangeroo-hoodie-l-orange-58",
       "gallery": [
         {
@@ -4791,7 +4830,10 @@
         "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg",
         "alt": ""
       },
-      "price": 52,
+      "price": {
+        "value": 52,
+        "discountedValue": 52
+      },
       "slug": "chaz-kangeroo-hoodie-xl-black-59",
       "gallery": [
         {
@@ -5118,7 +5160,10 @@
         "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
         "alt": ""
       },
-      "price": 52,
+      "price": {
+        "value": 52,
+        "discountedValue": 52
+      },
       "slug": "chaz-kangeroo-hoodie-xl-gray-60",
       "gallery": [
         {
@@ -5453,7 +5498,10 @@
         "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
         "alt": ""
       },
-      "price": 52,
+      "price": {
+        "value": 52,
+        "discountedValue": 52
+      },
       "slug": "chaz-kangeroo-hoodie-xl-orange-61",
       "gallery": [
         {
