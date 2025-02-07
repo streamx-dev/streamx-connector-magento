@@ -4,7 +4,6 @@ namespace StreamX\ConnectorCatalog\Model\ResourceModel;
 
 use Exception;
 use Magento\Framework\DB\Adapter\AdapterInterface;
-use Magento\Framework\Exception\NoSuchEntityException;
 use StreamX\ConnectorCatalog\Model\CategoryMetaData;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category\CompositeWithStoreModifier;
 use Magento\Framework\App\ResourceConnection;
@@ -143,7 +142,6 @@ class Category
 
     /**
      * @throws Exception
-     * @throws NoSuchEntityException
      */
     private function filterByStore(Select $select, int $storeId): void
     {

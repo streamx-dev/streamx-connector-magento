@@ -4,8 +4,6 @@ namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
 use Exception;
 use Magento\Framework\DB\Adapter\AdapterInterface;
-use Magento\Framework\Exception\LocalizedException;
-use Magento\Framework\Exception\NoSuchEntityException;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
@@ -156,9 +154,6 @@ class Configurable
     /**
      * Return all associated simple products for the configurable products in
      * the current product collection.
-     *
-     * @throws LocalizedException
-     * @throws NoSuchEntityException
      */
     public function getSimpleProducts(int $storeId): ?array
     {

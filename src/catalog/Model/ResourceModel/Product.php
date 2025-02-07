@@ -4,8 +4,6 @@ namespace StreamX\ConnectorCatalog\Model\ResourceModel;
 
 use Exception;
 use Magento\Framework\DB\Adapter\AdapterInterface;
-use Magento\Framework\Exception\LocalizedException;
-use Magento\Framework\Exception\NoSuchEntityException;
 use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\CompositeWithWebsiteModifier;
@@ -43,8 +41,6 @@ class Product
 
     /**
      * @throws Exception
-     * @throws NoSuchEntityException
-     * @throws LocalizedException
      */
     public function getProducts(int $storeId = 1, array $productIds = [], int $fromId = 0, int $limit = 1000): array
     {
@@ -64,7 +60,6 @@ class Product
 
     /**
      * @return int[]
-     * @throws LocalizedException
      */
     public function getAllProductIds(int $storeId = 1): array
     {
@@ -74,8 +69,6 @@ class Product
 
     /**
      * Prepares product select for selecting main products
-     * @throws LocalizedException
-     * @throws NoSuchEntityException
      */
     private function prepareProductSelect(array $columns, int $storeId): Select {
         $select = $this->prepareBaseProductSelect($columns, $storeId);
@@ -86,8 +79,6 @@ class Product
 
     /**
      * Prepares base product select for selecting main or variant products
-     * @throws LocalizedException
-     * @throws NoSuchEntityException
      */
     private function prepareBaseProductSelect(array $requiredColumns, int $storeId): Select
     {
@@ -121,8 +112,6 @@ class Product
     }
 
     /**
-     * @throws NoSuchEntityException
-     * @throws LocalizedException
      */
     public function loadChildrenProducts(array $parentIds, int $storeId): array
     {

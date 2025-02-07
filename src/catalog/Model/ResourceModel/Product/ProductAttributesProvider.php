@@ -8,7 +8,6 @@ use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\DB\Select;
 use Magento\Framework\EntityManager\EntityMetadataInterface;
-use Magento\Framework\Exception\LocalizedException;
 use Magento\Store\Model\Store;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 
