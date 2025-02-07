@@ -16,7 +16,7 @@ use Magento\Framework\DB\Helper as DbHelper;
 class Configurable
 {
     private DbHelper $dbHelper;
-    private ProductAttributesProvider $attributeDataProvider;
+    private LoadAttributes $loadAttributes;
     private ResourceConnection $resource;
     private Product $productResource;
     private ProductMetaData $productMetaData;
@@ -40,13 +40,13 @@ class Configurable
     private ?array $productsData = null;
 
     public function __construct(
-        ProductAttributesProvider $attributeDataProvider,
+        LoadAttributes $loadAttributes,
         Product $productResource,
         ProductMetaData $productMetaData,
         ResourceConnection $resourceConnection,
         DbHelper $dbHelper
     ) {
-        $this->attributeDataProvider = $attributeDataProvider;
+        $this->loadAttributes = $loadAttributes;
         $this->resource = $resourceConnection;
         $this->productMetaData = $productMetaData;
         $this->productResource = $productResource;
@@ -112,7 +112,7 @@ class Configurable
 
                 foreach ($attributeIds as $attributeId) {
                     if ($attributeId && !isset($this->configurableAttributeCodes[$attributeId])) {
-                        $attributeModel = $this->attributeDataProvider->getAttributeById($attributeId);
+                        $attributeModel = $this->loadAttributes->getAttributeById($attributeId);
                         $this->configurableAttributeCodes[$attributeId] = $attributeModel->getAttributeCode();
                     }
                 }
