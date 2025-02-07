@@ -6,12 +6,12 @@ use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCatalog\Indexer\AttributeIndexerHandler;
 use StreamX\ConnectorCatalog\Model\Indexer\Action\Attribute as AttributeAction;
 use StreamX\ConnectorCore\Indexer\StoreManager;
-use StreamX\ConnectorCore\System\GeneralConfigInterface;
+use StreamX\ConnectorCore\System\GeneralConfig;
 
 class Attribute extends BaseStreamxIndexer {
 
     public function __construct(
-        GeneralConfigInterface $connectorConfig,
+        GeneralConfig $connectorConfig,
         AttributeIndexerHandler $indexerHandler,
         StoreManager $storeManager,
         AttributeAction $action,
