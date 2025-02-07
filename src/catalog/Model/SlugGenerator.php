@@ -15,7 +15,6 @@ class SlugGenerator
 
     /**
      * @param array $entity Product or Category. Must contain 'id' and 'name' fields, may contain 'url_key' field
-     * @return string
      */
     public function compute(array $entity): string
     {
