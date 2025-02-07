@@ -4,10 +4,10 @@ namespace StreamX\ConnectorCore\Indexer;
 
 use Psr\Log\LoggerInterface;
 use Streamx\Clients\Ingestion\Exceptions\StreamxClientException;
-use StreamX\ConnectorCore\Api\Index\TypeInterface;
 use StreamX\ConnectorCore\Exception\ConnectionUnhealthyException;
 use StreamX\ConnectorCore\Index\BulkRequest;
 use StreamX\ConnectorCore\Index\IndexOperations;
+use StreamX\ConnectorCore\Index\IndexerDefinition;
 use Magento\Framework\Indexer\SaveHandler\Batch;
 use Traversable;
 
@@ -15,17 +15,17 @@ class GenericIndexerHandler {
 
     protected Batch $batch;
     protected IndexOperations $indexOperations;
-    private TypeInterface $indexType;
+    private IndexerDefinition $indexerDefinition;
     private LoggerInterface $logger;
 
     public function __construct(
         IndexOperations $indexOperationProvider,
         LoggerInterface $logger,
-        TypeInterface $indexType
+        IndexerDefinition $indexerDefinition
     ) {
         $this->batch = new Batch();
         $this->indexOperations = $indexOperationProvider;
-        $this->indexType = $indexType;
+        $this->indexerDefinition = $indexerDefinition;
         $this->logger = $logger;
     }
 
@@ -72,7 +72,7 @@ class GenericIndexerHandler {
     }
 
     private function enrichDocs(array &$docsToPublish, int $storeId): void {
-        foreach ($this->indexType->getDataProviders() as $dataProvider) {
+        foreach ($this->indexerDefinition->getDataProviders() as $dataProvider) {
             $docsToPublish = $dataProvider->addData($docsToPublish, $storeId);
         }
     }
@@ -83,7 +83,7 @@ class GenericIndexerHandler {
      */
     private function publishEntities(array $entities, int $storeId): void {
         $bulkRequest = BulkRequest::buildPublishRequest(
-            $this->indexType->getName(),
+            $this->indexerDefinition->getName(),
             $entities
         );
 
@@ -96,7 +96,7 @@ class GenericIndexerHandler {
      */
     private function unpublishEntities(array $ids, int $storeId): void {
         $bulkRequest = BulkRequest::buildUnpublishRequest(
-            $this->indexType->getName(),
+            $this->indexerDefinition->getName(),
             $ids
         );
 
