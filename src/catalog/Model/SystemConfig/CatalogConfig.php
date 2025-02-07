@@ -64,13 +64,11 @@ class CatalogConfig
         }
     }
 
-    // TODO: make sure attributes required by Unified Data Model are not configurable, and will be indexed always
     public function getProductAttributesToIndex(int $storeId): array
     {
         return $this->explodeAttributeCodes(self::PRODUCT_ATTRIBUTES, $storeId);
     }
 
-    // TODO: make sure attributes required by Unified Data Model are not configurable, and will be indexed always
     public function getChildProductAttributesToIndex(int $storeId): array
     {
         return $this->explodeAttributeCodes(self::CHILD_PRODUCT_ATTRIBUTES, $storeId);

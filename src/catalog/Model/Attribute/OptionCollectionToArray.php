@@ -18,7 +18,6 @@ class OptionCollectionToArray
 
             $data['value'] = (string)$item->getData('option_id');
             $data['label'] = $item->getData('value');
-            $data['sort_order'] = (int)$item->getData('sort_order'); // TODO: can be removed
 
             if ($loadSwatches) {
                 $data['swatch'] = [
