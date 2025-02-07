@@ -9,6 +9,7 @@ use StreamX\ConnectorCatalog\Model\ResourceModel\Category\CompositeWithStoreModi
 use Magento\Framework\App\ResourceConnection;
 use Magento\Catalog\Model\Category as CoreCategoryModel;
 use Magento\Framework\DB\Select;
+use Zend_Db_Select;
 
 class Category
 {
@@ -59,7 +60,7 @@ class Category
         $this->filterByStore($select, $storeId);
         $table = $this->resource->getTableName('catalog_category_product');
         $entityIdField = $this->categoryMetaData->get()->getIdentifierField();
-        $select->reset(Select::COLUMNS);
+        $select->reset(Zend_Db_Select::COLUMNS);
         $select->joinInner(
             ['cpi' => $table],
             "entity.$entityIdField = cpi.category_id",
@@ -134,8 +135,8 @@ class Category
             [$entityField]
         );
 
-        $catIdExpr = $connection->quote("%/{$categoryId}/%");
-        $select->where("path like {$catIdExpr}");
+        $catIdExpr = $connection->quote("%/$categoryId/%");
+        $select->where("path like $catIdExpr");
 
         return $connection->fetchCol($select);
     }

@@ -113,9 +113,6 @@ class PublishAllEntitiesCommand extends AbstractIndexerCommand
     }
 
     /**
-     * @param $storeId
-     * @param $allStores
-     *
      * @throws NoSuchEntityException
      */
     private function reindex(OutputInterface $output, $storeId, $allStores): int

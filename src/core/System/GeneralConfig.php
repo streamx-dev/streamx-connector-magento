@@ -48,6 +48,6 @@ class GeneralConfig implements GeneralConfigInterface
      */
     public function isEnabled(): bool
     {
-        return (bool)$this->scopeConfig->isSetFlag(self::XML_PATH_GENERAL_CONNECTOR_ENABLED);
+        return $this->scopeConfig->isSetFlag(self::XML_PATH_GENERAL_CONNECTOR_ENABLED);
     }
 }

@@ -22,7 +22,7 @@ abstract class AbstractAttributeSource implements OptionSourceInterface
      *
      * @return array
      */
-    public function toOptionArray()
+    public function toOptionArray(): array
     {
         if (null === $this->options) {
             $this->options = [];

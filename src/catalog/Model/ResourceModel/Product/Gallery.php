@@ -12,6 +12,7 @@ use Magento\Eav\Model\Entity\Attribute as EntityAttribute;
 use Magento\Framework\DB\Select;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Store\Model\Store;
+use Zend_Db_Select;
 
 class Gallery
 {
@@ -85,7 +86,7 @@ class Gallery
                     ' AND ',
                     [
                         $mainTableAlias . '.value_id = value.value_id',
-                        $this->getConnection()->quoteInto('value.store_id = ?', (int)$storeId),
+                        $this->getConnection()->quoteInto('value.store_id = ?', $storeId),
                         'value.' . $linkField . ' = entity.' . $linkField,
                     ]
                 ),
@@ -114,7 +115,7 @@ class Gallery
             ->where('entity.' . $linkField . ' IN (?)', $linkFieldIds)
             ->where('default_value.disabled is NULL or default_value.disabled != 1')
             ->where('value.disabled is NULL or value.disabled != 1')
-            ->order($positionCheckSql . ' ' . Select::SQL_ASC);
+            ->order($positionCheckSql . ' ' . Zend_Db_Select::SQL_ASC);
     }
 
     private function getConnection(): AdapterInterface

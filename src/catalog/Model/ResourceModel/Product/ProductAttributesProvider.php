@@ -10,6 +10,7 @@ use Magento\Framework\DB\Select;
 use Magento\Framework\EntityManager\EntityMetadataInterface;
 use Magento\Store\Model\Store;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
+use Zend_Db_Expr;
 
 class ProductAttributesProvider
 {
@@ -98,7 +99,7 @@ class ProductAttributesProvider
     /**
      * @throws Exception
      */
-    private function processValues(array $values): array
+    private function processValues(array $values): void
     {
         $productIdField = $this->getProductMetaData()->getIdentifierField();
 
@@ -112,8 +113,6 @@ class ProductAttributesProvider
                 $this->valuesByProductId[$productId][$attributeCode] = $attributeValues;
             }
         }
-
-        return $this->valuesByProductId;
     }
 
     private function convertAttributeValueToArray(Attribute $attribute, $attributeValue): array {
@@ -148,7 +147,7 @@ class ProductAttributesProvider
      */
     private function getLoadAttributesSelect(int $storeId, string $table, array $attributeIds, array $productIds): Select
     {
-        //  Either row_id (enterpise/commerce version) or entity_id.
+        //  Either row_id (enterprise/commerce version) or entity_id.
         $linkField = $this->getProductMetaData()->getLinkField();
         $productIdField = $this->getProductMetaData()->getIdentifierField();
 
@@ -173,7 +172,7 @@ class ProductAttributesProvider
             ->from(['entity' => $this->getProductMetaData()->getEntityTable()], [$productIdField])
             ->joinInner(
                 ['t_default' => $table],
-                new \Zend_Db_Expr("entity.{$linkField} = t_default.{$linkField}"),
+                new Zend_Db_Expr("entity.$linkField = t_default.$linkField"),
                 ['attribute_id']
             )
             ->joinLeft(
