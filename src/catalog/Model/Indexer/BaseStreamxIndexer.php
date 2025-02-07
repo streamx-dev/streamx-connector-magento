@@ -80,7 +80,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
         }
 
         foreach ($this->storeManager->getStores() as $store) {
-            $storeId = $store->getId();
+            $storeId = (int) $store->getId();
             $this->logger->info("Indexing $this->entityTypeName from store $storeId");
             $documents = $this->action->loadData($storeId, $ids);
             $this->indexHandler->saveIndex($documents, $storeId);

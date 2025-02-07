@@ -47,7 +47,7 @@ class Gallery
     {
         $attribute = $this->entityAttribute->loadByCode(Product::ENTITY, 'media_gallery');
 
-        return $attribute->getId();
+        return (int) $attribute->getId();
     }
 
     /**

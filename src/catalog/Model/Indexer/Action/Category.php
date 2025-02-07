@@ -33,7 +33,7 @@ class Category implements BaseAction {
             $categories = $this->resourceModel->getCategories($storeId, $categoryIds, $lastCategoryId);
 
             foreach ($categories as $category) {
-                $lastCategoryId = $category['id'];
+                $lastCategoryId = (int) $category['id'];
                 yield $lastCategoryId => $category;
                 $publishedCategoryIds[] = $lastCategoryId;
             }

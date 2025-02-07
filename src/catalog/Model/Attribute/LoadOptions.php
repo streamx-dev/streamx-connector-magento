@@ -40,7 +40,12 @@ class LoadOptions
         if (!isset($this->optionsByAttribute[$key])) {
             if ($this->useSourceModel($attribute)) {
                 $source = $attribute->getSource();
-                $options = $source->getAllOptions();
+                $options = array_map(function($option) {
+                    return [
+                        'value' => (string) $option['value'],
+                        'label' => (string) $option['label']
+                    ];
+                }, $source->getAllOptions());
             } else {
                 $loadSwatches = $this->isVisualSwatch($attribute);
                 $optionCollection = $this->getOptionCollection($attribute, $loadSwatches);

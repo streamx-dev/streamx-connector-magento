@@ -106,7 +106,10 @@ class Configurable
             $this->configurableAttributeCodes = [];
 
             foreach ($this->getConfigurableProductAttributes() as $configurableAttribute) {
-                $attributeIds = explode(',', $configurableAttribute['attribute_ids']);
+                $attributeIds = array_map(
+                    'intval',
+                    explode(',', $configurableAttribute['attribute_ids'])
+                );
 
                 foreach ($attributeIds as $attributeId) {
                     if ($attributeId && !isset($this->configurableAttributeCodes[$attributeId])) {

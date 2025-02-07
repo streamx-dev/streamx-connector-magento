@@ -78,8 +78,8 @@ class Category
     {
         $result = [];
         foreach ($rows as $row) {
-            $categoryId = $row['category_id'];
-            $productId = $row['product_id'];
+            $categoryId = (int) $row['category_id'];
+            $productId = (int) $row['product_id'];
             $result[$productId][] = $categoryId;
         }
         return $result;
@@ -146,7 +146,7 @@ class Category
      */
     private function filterByStore(Select $select, int $storeId): void
     {
-        $this->selectModifier->modify($select, (int) $storeId);
+        $this->selectModifier->modify($select, $storeId);
     }
 
     private function getConnection(): AdapterInterface

@@ -14,8 +14,8 @@ class OptionCollectionToArray
         foreach ($collection as $item) {
             $data = [];
 
-            $data['value'] = (string)$item->getData('option_id');
-            $data['label'] = $item->getData('value');
+            $data['value'] = (string) $item->getData('option_id');
+            $data['label'] = (string) $item->getData('value');
 
             if ($loadSwatches) {
                 $data['swatch'] = [
