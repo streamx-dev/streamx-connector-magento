@@ -29,7 +29,7 @@ class CatalogConfig
      * Product attributes to reindex
      */
     private const PRODUCT_ATTRIBUTES = 'product_attributes';
-    private const CHILD_ATTRIBUTES = 'child_attributes';
+    private const CHILD_PRODUCT_ATTRIBUTES = 'child_product_attributes';
 
     private array $settings = [];
     private ScopeConfigInterface $scopeConfig;
@@ -65,15 +65,15 @@ class CatalogConfig
     }
 
     // TODO: make sure attributes required by Unified Data Model are not configurable, and will be indexed always
-    public function getAttributesToIndex(int $storeId): array
+    public function getProductAttributesToIndex(int $storeId): array
     {
         return $this->explodeAttributeCodes(self::PRODUCT_ATTRIBUTES, $storeId);
     }
 
     // TODO: make sure attributes required by Unified Data Model are not configurable, and will be indexed always
-    public function getChildAttributesToIndex(int $storeId): array
+    public function getChildProductAttributesToIndex(int $storeId): array
     {
-        return $this->explodeAttributeCodes(self::CHILD_ATTRIBUTES, $storeId);
+        return $this->explodeAttributeCodes(self::CHILD_PRODUCT_ATTRIBUTES, $storeId);
     }
 
     private function explodeAttributeCodes(string $configParamName, int $storeId): array

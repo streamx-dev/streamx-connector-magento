@@ -19,6 +19,6 @@ class ChildProductAttributes extends BaseProductAttributes
 
     protected function getConfiguredAttributes(int $storeId): array
     {
-        return $this->catalogConfig->getChildAttributesToIndex($storeId);
+        return $this->catalogConfig->getChildProductAttributesToIndex($storeId);
     }
 }

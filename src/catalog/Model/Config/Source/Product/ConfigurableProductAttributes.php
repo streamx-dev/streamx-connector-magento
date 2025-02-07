@@ -4,7 +4,7 @@ namespace StreamX\ConnectorCatalog\Model\Config\Source\Product;
 
 use Magento\Catalog\Api\Data\ProductAttributeInterface;
 
-class Attributes extends AbstractAttributeSource
+class ConfigurableProductAttributes extends AbstractAttributeSource
 {
     const GENERAL_RESTRICTED_ATTRIBUTES = [
         'sku',

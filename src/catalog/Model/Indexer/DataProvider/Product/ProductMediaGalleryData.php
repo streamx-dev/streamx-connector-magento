@@ -12,6 +12,6 @@ class ProductMediaGalleryData extends BaseMediaGalleryData {
     }
 
     protected function getAttributesToIndex(int $storeId): array {
-        return $this->catalogConfig->getAttributesToIndex($storeId);
+        return $this->catalogConfig->getProductAttributesToIndex($storeId);
     }
 }
