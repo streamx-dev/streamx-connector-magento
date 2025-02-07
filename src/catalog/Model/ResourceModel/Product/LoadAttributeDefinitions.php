@@ -30,7 +30,7 @@ class LoadAttributeDefinitions
     }
 
     /**
-     * @param int[] $attributeIds
+     * @param int[] $attributeIds loads all attributes if $attributeIds is empty, otherwise loads only these attributes
      * @param int $storeId
      * @param int $fromId loads only attributes with ID greater than $fromId
      * @param int|null $limit loads all matching rows up to $limit rows, or loads all matching rows if $limit is null
@@ -42,7 +42,7 @@ class LoadAttributeDefinitions
     }
 
     /**
-     * @param string[] $attributeCodes
+     * @param string[] $attributeCodes loads all attributes if $attributeCodes is empty, otherwise loads only these attributes
      * @param int $storeId
      * @param int $fromId loads only attributes with ID greater than $fromId
      * @param int|null $limit loads all matching rows up to $limit rows, or loads all matching rows if $limit is null
@@ -60,7 +60,9 @@ class LoadAttributeDefinitions
     {
         $connection = $this->resource->getConnection();
         $select = $this->createAttributesSelect($connection, $fromId, $limit);
-        $select->where("ea.$columnToFilterBy IN (?)", $columnValues);
+        if (!empty($columnValues)) {
+            $select->where("ea.$columnToFilterBy IN (?)", $columnValues);
+        }
         $attributeRows = $connection->fetchAll($select);
 
         foreach ($attributeRows as &$attributeRow) {

@@ -25,6 +25,7 @@ abstract class BaseStreamxTest extends TestCase {
 
     private const STREAMX_DELIVERY_SERVICE_BASE_URL = "http://localhost:8081";
     private const DATA_PUBLISH_TIMEOUT_SECONDS = 3;
+    private const SLEEP_MICROS_BETWEEN_DATA_PUBLISH_CHECKS = 200_000;
 
     /**
      * @deprecated move to use assertExactDataIsPublished instead, as it gives more exact verification
@@ -43,7 +44,7 @@ abstract class BaseStreamxTest extends TestCase {
                     return;
                 }
             }
-            usleep(100000); // sleep for 100 milliseconds
+            usleep(self::SLEEP_MICROS_BETWEEN_DATA_PUBLISH_CHECKS);
         }
 
         if ($response !== false) {
@@ -53,7 +54,7 @@ abstract class BaseStreamxTest extends TestCase {
         }
     }
 
-    protected function assertExactDataIsPublished(string $key, string $validationFileName, array $regexReplacements = []): void {
+    protected function assertExactDataIsPublished(string $key, string $validationFileName, array $regexReplacements = [], bool $ignoreOrderInArrays = false): void {
         $url = self::STREAMX_DELIVERY_SERVICE_BASE_URL . '/' . $key;
 
         $expectedJson = $this->readValidationFileContent($validationFileName);
@@ -65,11 +66,11 @@ abstract class BaseStreamxTest extends TestCase {
             $response = @file_get_contents($url);
             if ($response !== false) {
                 echo "Published content: $response\n";
-                if ($this->verifySameJsonsSilently($expectedFormattedJson, $response, $regexReplacements)) {
+                if ($this->verifySameJsonsSilently($expectedFormattedJson, $response, $regexReplacements, $ignoreOrderInArrays)) {
                     return;
                 }
             }
-            usleep(100000); // sleep for 100 milliseconds
+            usleep(self::SLEEP_MICROS_BETWEEN_DATA_PUBLISH_CHECKS);
         }
 
         if ($response !== false) {
@@ -89,7 +90,7 @@ abstract class BaseStreamxTest extends TestCase {
                 $this->assertTrue(true); // needed to work around the "This test did not perform any assertions" warning
                 return;
             }
-            usleep(100000); // sleep for 100 milliseconds
+            usleep(self::SLEEP_MICROS_BETWEEN_DATA_PUBLISH_CHECKS);
         }
 
         $this->fail("$url: exists");
