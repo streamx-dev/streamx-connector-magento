@@ -2,7 +2,9 @@
 
 namespace StreamX\ConnectorCatalog\Model\Attributes;
 
-class AttributeDefinition
+use JsonSerializable;
+
+final class AttributeDefinition implements JsonSerializable
 {
     private int $id;
     private string $name;
@@ -55,5 +57,62 @@ class AttributeDefinition
             }
         }
         return $attributeValue;
+    }
+
+    public function isSameAs(AttributeDefinition $other): bool {
+        if ($this === $other) {
+            return true;
+        }
+
+        if ($this->id !== $other->id) {
+            return false;
+        }
+
+        if ($this->name !== $other->name) {
+            return false;
+        }
+
+        if ($this->label !== $other->label) {
+            return false;
+        }
+
+        if ($this->isFacet !== $other->isFacet) {
+            return false;
+        }
+
+        if (count($this->options) != count($other->options)) {
+            return false;
+        }
+
+        for ($i = 0; $i < count($this->options); $i++) {
+            $thisOption = $this->options[$i];
+            $otherOption = $other->options[$i];
+            if (!($thisOption->isSameAs($otherOption))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public function jsonSerialize(): array {
+        return get_object_vars($this);
+    }
+
+    public static function fromJson(string $json): AttributeDefinition {
+        $obj = json_decode($json);
+        return new AttributeDefinition(
+            $obj->id,
+            $obj->name,
+            $obj->label,
+            $obj->isFacet,
+            array_map(function ($option) {
+                return new AttributeOptionDefinition(
+                    $option->value,
+                    $option->label,
+                    $option->swatch
+                );
+            }, $obj->options),
+        );
     }
 }
