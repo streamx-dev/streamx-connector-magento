@@ -4,48 +4,42 @@ namespace StreamX\ConnectorCore\Streamx;
 
 use Psr\Log\LoggerInterface;
 use Streamx\Clients\Ingestion\Exceptions\StreamxClientException;
-use StreamX\ConnectorCore\Api\Client\ClientInterface;
-use StreamX\ConnectorCore\Api\Client\ConfigurationInterface;
-use StreamX\ConnectorCore\Api\Client\ConfigurationInterfaceFactory;
 
 class ClientResolver {
     private array $clients = [];
 
     private LoggerInterface $logger;
-    private ConfigurationInterfaceFactory $clientConfigurationFactory;
+    private ClientConfiguration $configuration;
     private StreamxPublisherProvider $streamxPublisherProvider;
 
     public function __construct(
-        LoggerInterface               $logger,
-        ConfigurationInterfaceFactory $clientConfiguration,
-        StreamxPublisherProvider      $streamxPublisherProvider
+        LoggerInterface $logger,
+        ClientConfiguration $configuration,
+        StreamxPublisherProvider $streamxPublisherProvider
     ) {
         $this->logger = $logger;
-        $this->clientConfigurationFactory = $clientConfiguration;
+        $this->configuration = $configuration;
         $this->streamxPublisherProvider = $streamxPublisherProvider;
     }
 
     /**
      * @throws StreamxClientException
      */
-    public function getClient(int $storeId): ClientInterface {
+    public function getClient(int $storeId): Client {
         if (!isset($this->clients[$storeId])) {
-            /** @var ConfigurationInterface $configuration */
-            $configuration = $this->clientConfigurationFactory->create(['storeId' => $storeId]);
-
             $publisher = $this->streamxPublisherProvider->getStreamxPublisher(
-                $configuration->getIngestionBaseUrl($storeId),
-                $configuration->getChannelName($storeId),
-                $configuration->getChannelSchemaName($storeId),
-                $configuration->getAuthToken($storeId),
-                $configuration->shouldDisableCertificateValidation($storeId)
+                $this->configuration->getIngestionBaseUrl($storeId),
+                $this->configuration->getChannelName($storeId),
+                $this->configuration->getChannelSchemaName($storeId),
+                $this->configuration->getAuthToken($storeId),
+                $this->configuration->shouldDisableCertificateValidation($storeId)
             );
 
             $this->clients[$storeId] = new Client(
                 $this->logger,
                 $publisher,
-                $configuration->getProductKeyPrefix($storeId),
-                $configuration->getCategoryKeyPrefix($storeId)
+                $this->configuration->getProductKeyPrefix($storeId),
+                $this->configuration->getCategoryKeyPrefix($storeId)
             );
         } else {
             $this->logger->info("Reusing StreamX client and publisher");

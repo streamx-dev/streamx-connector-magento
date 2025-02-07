@@ -4,7 +4,7 @@ namespace StreamX\ConnectorCore\Indexer;
 
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Store\Api\Data\StoreInterface;
-use StreamX\ConnectorCore\System\GeneralConfigInterface;
+use StreamX\ConnectorCore\System\GeneralConfig;
 use Magento\Store\Model\StoreManagerInterface;
 
 /**
@@ -13,11 +13,11 @@ use Magento\Store\Model\StoreManagerInterface;
 class StoreManager
 {
     private StoreManagerInterface $storeManager;
-    private GeneralConfigInterface $generalSettings;
+    private GeneralConfig $generalSettings;
     private ?array $loadedStores = null;
 
     public function __construct(
-        GeneralConfigInterface $generalSettings,
+        GeneralConfig $generalSettings,
         StoreManagerInterface $storeManager
     ) {
         $this->generalSettings = $generalSettings;

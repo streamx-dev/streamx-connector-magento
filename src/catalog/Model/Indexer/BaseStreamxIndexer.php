@@ -9,11 +9,11 @@ use StreamX\ConnectorCatalog\Model\Indexer\Action\BaseAction;
 use StreamX\ConnectorCore\Exception\ConnectionUnhealthyException;
 use StreamX\ConnectorCore\Indexer\GenericIndexerHandler;
 use StreamX\ConnectorCore\Indexer\StoreManager;
-use StreamX\ConnectorCore\System\GeneralConfigInterface;
+use StreamX\ConnectorCore\System\GeneralConfig;
 
 abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionInterface, \Magento\Framework\Mview\ActionInterface
 {
-    private GeneralConfigInterface $connectorConfig;
+    private GeneralConfig $connectorConfig;
     private StoreManager $storeManager;
     private GenericIndexerHandler $indexHandler;
     private BaseAction $action;
@@ -21,7 +21,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
     private string $entityTypeName;
 
     public function __construct(
-        GeneralConfigInterface $connectorConfig,
+        GeneralConfig $connectorConfig,
         GenericIndexerHandler $indexerHandler,
         StoreManager $storeManager,
         BaseAction $action,
