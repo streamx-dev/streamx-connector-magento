@@ -19,6 +19,16 @@ class ProductUpdateTest extends BaseDirectDbEntityUpdateTest {
     }
 
     /** @test */
+    public function shouldPublishSimpleProductEditedDirectlyInDatabaseToStreamxWithoutAttributes() {
+        $this->setConfigurationValue($this->PRODUCT_ATTRIBUTES_PATH, 'cost'); // index only an attr that bags don't have (so no attr expected in publish payload)
+        try {
+            $this->shouldPublishProductEditedDirectlyInDatabaseToStreamx('Joust Duffle Bag', 'bag-no-attributes');
+        } finally {
+            $this->restoreConfigurationValue($this->PRODUCT_ATTRIBUTES_PATH);
+        }
+    }
+
+    /** @test */
     public function shouldPublishBundleProductEditedDirectlyInDatabaseToStreamx() {
         $this->shouldPublishProductEditedDirectlyInDatabaseToStreamx('Sprite Yoga Companion Kit', 'bundle');
     }
