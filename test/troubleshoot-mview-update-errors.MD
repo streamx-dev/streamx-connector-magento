@@ -6,47 +6,22 @@ During tests execution, you may receive a generic error such as:
 To troubleshoot, temporarily edit (and upload to Magento) the `StreamxIndexerMviewProcessor` class.
 The below instructions are for troubleshooting the products indexer.
 
-1. Add uses:
+## 1. In the function `reindexMview` replace `$mView->update();` with:
 ```php
-use Magento\Framework\App\ResourceConnection;
-use StreamX\ConnectorCatalog\Model\Indexer\Attribute;
-use StreamX\ConnectorCatalog\Model\Indexer\BaseStreamxIndexer;
-use StreamX\ConnectorCatalog\Model\Indexer\Category;
-use StreamX\ConnectorCatalog\Model\Indexer\Product;
+    $this->updateViewManually($mView, $indexerViewId);
 ```
 
-2. Declare the below fields:
+## 2. Add the functions to the class:
 ```php
-    private ResourceConnection $resource;
-    private array $indexers;
-```
-
-3. Add constructor parameters:
-```php
-    ResourceConnection $resource,
-    Attribute $attrMviewAction,
-    Category $catMviewAction,
-    Product $prodMviewAction
-```
-
-4. Init fields inside constructor:
-```php
-        $this->resource = $resource;
-        $this->indexers = [
-            AttributeProcessor::INDEXER_ID => $attrMviewAction,
-            CategoryProcessor::INDEXER_ID => $catMviewAction,
-            ProductProcessor::INDEXER_ID => $prodMviewAction
+    private function updateViewManually(ViewInterface $mView, string $indexerViewId): void {
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $indexers = [
+            AttributeProcessor::INDEXER_ID => $objectManager->get(\StreamX\ConnectorCatalog\Model\Indexer\Attribute::class),
+            CategoryProcessor::INDEXER_ID => $objectManager->get(\StreamX\ConnectorCatalog\Model\Indexer\Category::class),
+            ProductProcessor::INDEXER_ID => $objectManager->get(\StreamX\ConnectorCatalog\Model\Indexer\Product::class)
         ];
-```
+        $indexer = $indexers[$indexerViewId];
 
-5. In the function `reindexMview` replace `$mView->update();` with:
-```php
-    $this->updateViewManually($mView, $this->indexers[$indexerViewId]);
-```
-
-6. Add the functions to the class:
-```php
-    private function updateViewManually(ViewInterface $mView, BaseStreamxIndexer $indexer): void {
         $ids = $this->selectIdsToReindex($mView);
         $indexer->execute($ids);
         $mView->getState()->loadByView($mView->getId());
@@ -57,8 +32,10 @@ use StreamX\ConnectorCatalog\Model\Indexer\Product;
         $fromVersionId = (int)$mView->getState()->getVersionId();
         $toVersionId = $changelog->getVersion();
 
-        $connection = $this->resource->getConnection();
-        $changelogTableName = $this->resource->getTableName($changelog->getName());
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $resource = $objectManager->get(\Magento\Framework\App\ResourceConnection::class);
+        $connection = $resource->getConnection();
+        $changelogTableName = $resource->getTableName($changelog->getName());
 
         $select = $connection->select()->distinct()
             ->where("version_id > $fromVersionId")
