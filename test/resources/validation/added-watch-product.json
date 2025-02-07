@@ -217,51 +217,99 @@
       "options": [
         {
           "value": "49",
-          "label": "Black"
+          "label": "Black",
+          "swatch": {
+            "type": "color",
+            "value": "#000000"
+          }
         },
         {
           "value": "50",
-          "label": "Blue"
+          "label": "Blue",
+          "swatch": {
+            "type": "color",
+            "value": "#1857f7"
+          }
         },
         {
           "value": "51",
-          "label": "Brown"
+          "label": "Brown",
+          "swatch": {
+            "type": "color",
+            "value": "#945454"
+          }
         },
         {
           "value": "52",
-          "label": "Gray"
+          "label": "Gray",
+          "swatch": {
+            "type": "color",
+            "value": "#8f8f8f"
+          }
         },
         {
           "value": "53",
-          "label": "Green"
+          "label": "Green",
+          "swatch": {
+            "type": "color",
+            "value": "#53a828"
+          }
         },
         {
           "value": "54",
-          "label": "Lavender"
+          "label": "Lavender",
+          "swatch": {
+            "type": "color",
+            "value": "#ce64d4"
+          }
         },
         {
           "value": "55",
-          "label": "Multi"
+          "label": "Multi",
+          "swatch": {
+            "type": "color",
+            "value": "#ffffff"
+          }
         },
         {
           "value": "56",
-          "label": "Orange"
+          "label": "Orange",
+          "swatch": {
+            "type": "color",
+            "value": "#eb6703"
+          }
         },
         {
           "value": "57",
-          "label": "Purple"
+          "label": "Purple",
+          "swatch": {
+            "type": "color",
+            "value": "#ef3dff"
+          }
         },
         {
           "value": "58",
-          "label": "Red"
+          "label": "Red",
+          "swatch": {
+            "type": "color",
+            "value": "#ff0000"
+          }
         },
         {
           "value": "59",
-          "label": "White"
+          "label": "White",
+          "swatch": {
+            "type": "color",
+            "value": "#ffffff"
+          }
         },
         {
           "value": "60",
-          "label": "Yellow"
+          "label": "Yellow",
+          "swatch": {
+            "type": "color",
+            "value": "#ffd500"
+          }
         }
       ]
     },
