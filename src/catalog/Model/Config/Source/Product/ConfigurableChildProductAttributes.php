@@ -17,7 +17,6 @@ class ConfigurableChildProductAttributes extends AbstractAttributeSource
         'media_gallery',
 
         // explicitly not allowed attributes
-        'tier_price',
         'gallery',
         'category_ids',
         'swatch_image',
