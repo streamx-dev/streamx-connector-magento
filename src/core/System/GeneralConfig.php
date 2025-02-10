@@ -3,9 +3,9 @@
 namespace StreamX\ConnectorCore\System;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use StreamX\ConnectorCore\Api\BaseConfigurationProvider;
+use StreamX\ConnectorCore\Api\BaseConfigurationReader;
 
-class GeneralConfig extends BaseConfigurationProvider
+class GeneralConfig extends BaseConfigurationReader
 {
     public function __construct(ScopeConfigInterface $scopeConfig) {
         parent::__construct($scopeConfig, 'general_settings');

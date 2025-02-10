@@ -5,7 +5,7 @@ namespace StreamX\ConnectorCore\Api;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
 
-abstract class BaseConfigurationProvider {
+abstract class BaseConfigurationReader {
 
     private const BASE_CONFIG_XML_NODE = 'streamx_connector_settings';
 
@@ -41,10 +41,17 @@ abstract class BaseConfigurationProvider {
             : explode(',', $commaSeparatedValue);
     }
 
+    /**
+     * @return mixed
+     */
     private function getConfigValue(string $configField, int $storeId = null) {
         // TODO: test with multistores magento
-        $path = $this->configXmlNodePath . '/' . $configField;
+        $path = $this->getConfigFieldFullPath($configField);
         $scopeType = $storeId ? ScopeInterface::SCOPE_STORES : ScopeConfigInterface::SCOPE_TYPE_DEFAULT;
         return $this->scopeConfig->getValue($path, $scopeType, $storeId);
+    }
+
+    protected function getConfigFieldFullPath(string $configField): string {
+        return $this->configXmlNodePath . '/' . $configField;
     }
 }
