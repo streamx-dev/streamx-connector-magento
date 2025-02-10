@@ -2,104 +2,66 @@
 
 namespace StreamX\ConnectorCore\Indexer;
 
-use Psr\Log\LoggerInterface;
 use Streamx\Clients\Ingestion\Exceptions\StreamxClientException;
-use StreamX\ConnectorCore\Exception\ConnectionUnhealthyException;
-use StreamX\ConnectorCore\Index\BulkRequest;
-use StreamX\ConnectorCore\Index\IndexOperations;
+use StreamX\ConnectorCore\Config\OptimizationSettings;
 use StreamX\ConnectorCore\Index\IndexerDefinition;
 use Magento\Framework\Indexer\SaveHandler\Batch;
+use StreamX\ConnectorCore\Streamx\Client;
 use Traversable;
 
 class GenericIndexerHandler {
 
     protected Batch $batch;
-    protected IndexOperations $indexOperations;
+    protected OptimizationSettings $optimizationSettings;
     private IndexerDefinition $indexerDefinition;
-    private LoggerInterface $logger;
 
     public function __construct(
-        IndexOperations $indexOperationProvider,
-        LoggerInterface $logger,
+        OptimizationSettings $optimizationSettings,
         IndexerDefinition $indexerDefinition
     ) {
         $this->batch = new Batch();
-        $this->indexOperations = $indexOperationProvider;
+        $this->optimizationSettings = $optimizationSettings;
         $this->indexerDefinition = $indexerDefinition;
-        $this->logger = $logger;
     }
 
     /**
-     * @throws ConnectionUnhealthyException
      * @throws StreamxClientException
      */
-    public function saveIndex(Traversable $documents, int $storeId): void {
-        try {
-            $batchSize = $this->indexOperations->getBatchIndexingSize();
+    public function saveIndex(Traversable $documents, int $storeId, Client $client): void {
+        $batchSize = $this->optimizationSettings->getBatchIndexingSize();
 
-            foreach ($this->batch->getItems($documents, $batchSize) as $docs) {
-                $this->processDocsBatch($docs, $storeId);
-            }
-        } catch (ConnectionUnhealthyException $exception) {
-            $this->logger->error($exception->getMessage());
-            throw $exception;
+        foreach ($this->batch->getItems($documents, $batchSize) as $docs) {
+            $this->processEntitiesBatch($docs, $storeId, $client);
         }
     }
 
     /**
-     * @throws ConnectionUnhealthyException
      * @throws StreamxClientException
      */
-    private function processDocsBatch(array $docs, int $storeId): void {
+    private function processEntitiesBatch(array $entities, int $storeId, Client $client): void {
         $entitiesToPublish = [];
         $idsToUnpublish = [];
-        foreach ($docs as $id => $doc) {
-            if (empty($doc)) {
+        foreach ($entities as $id => $entity) {
+            if (empty($entity)) {
                 $idsToUnpublish[] = $id;
             } else {
-                $entitiesToPublish[$id] = $doc;
+                $entitiesToPublish[$id] = $entity;
             }
         }
 
         if (!empty($entitiesToPublish)) {
-            $this->enrichDocs($entitiesToPublish, $storeId);
-            $this->publishEntities(array_values($entitiesToPublish), $storeId);
+            $this->addData($entitiesToPublish, $storeId);
+            $client->publish(array_values($entitiesToPublish), $this->indexerDefinition->getName());
         }
 
         if (!empty($idsToUnpublish)) {
-            $this->unpublishEntities($idsToUnpublish, $storeId);
+            $client->unpublish($idsToUnpublish, $this->indexerDefinition->getName());
         }
     }
 
-    private function enrichDocs(array &$docsToPublish, int $storeId): void {
+    private function addData(array &$entities, int $storeId): void {
         foreach ($this->indexerDefinition->getDataProviders() as $dataProvider) {
-            $docsToPublish = $dataProvider->addData($docsToPublish, $storeId);
+            $entities = $dataProvider->addData($entities, $storeId);
         }
-    }
-
-    /**
-     * @throws ConnectionUnhealthyException
-     * @throws StreamxClientException
-     */
-    private function publishEntities(array $entities, int $storeId): void {
-        $bulkRequest = BulkRequest::buildPublishRequest(
-            $this->indexerDefinition->getName(),
-            $entities
-        );
-
-        $this->indexOperations->executeBulk($storeId, $bulkRequest);
-    }
-
-    /**
-     * @throws ConnectionUnhealthyException
-     * @throws StreamxClientException
-     */
-    private function unpublishEntities(array $ids, int $storeId): void {
-        $bulkRequest = BulkRequest::buildUnpublishRequest(
-            $this->indexerDefinition->getName(),
-            $ids
-        );
-
-        $this->indexOperations->executeBulk($storeId, $bulkRequest);
     }
 }

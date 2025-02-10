@@ -44,7 +44,6 @@ class ProductVariantUpdateTest extends BaseDirectDbEntityUpdateTest {
 
     /** @test */
     public function shouldPublishParentOfProductVariantEditedUsingDirectlyInDatabaseToStreamx() {
-        // TODO check what causes both edited variant and parent be sent? Maybe due to change events?
         // given
         $nameOfProductToEdit = 'Chaz Kangeroo Hoodie-XL-Orange';
         $idOfProductToEdit = $this->db->getProductId($nameOfProductToEdit);
