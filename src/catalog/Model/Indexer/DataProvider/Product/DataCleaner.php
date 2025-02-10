@@ -17,7 +17,12 @@ class DataCleaner extends DataProviderInterface
     public function addData(array $indexData, int $storeId): array
     {
         foreach ($indexData as &$product) {
-            unset($product['type_id'], $product['url_key']);
+            unset(
+                $product['entity_id'],
+                $product['row_id'],
+                $product['type_id'],
+                $product['url_key']
+            );
         }
 
         return $indexData;
