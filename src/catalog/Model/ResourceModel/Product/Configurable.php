@@ -1,11 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
 use Exception;
 use Magento\Framework\DB\Adapter\AdapterInterface;
-use Magento\Framework\Exception\LocalizedException;
-use Magento\Framework\Exception\NoSuchEntityException;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
@@ -108,7 +106,10 @@ class Configurable
             $this->configurableAttributeCodes = [];
 
             foreach ($this->getConfigurableProductAttributes() as $configurableAttribute) {
-                $attributeIds = explode(',', $configurableAttribute['attribute_ids']);
+                $attributeIds = array_map(
+                    'intval',
+                    explode(',', $configurableAttribute['attribute_ids'])
+                );
 
                 foreach ($attributeIds as $attributeId) {
                     if ($attributeId && !isset($this->configurableAttributeCodes[$attributeId])) {
@@ -156,9 +157,6 @@ class Configurable
     /**
      * Return all associated simple products for the configurable products in
      * the current product collection.
-     *
-     * @throws LocalizedException
-     * @throws NoSuchEntityException
      */
     public function getSimpleProducts(int $storeId): ?array
     {

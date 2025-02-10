@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace StreamX\ConnectorCatalog\Model\Attribute;
 
@@ -16,8 +14,8 @@ class OptionCollectionToArray
         foreach ($collection as $item) {
             $data = [];
 
-            $data['value'] = (string)$item->getData('option_id');
-            $data['label'] = $item->getData('value');
+            $data['value'] = (string) $item->getData('option_id');
+            $data['label'] = (string) $item->getData('value');
 
             if ($loadSwatches) {
                 $data['swatch'] = [

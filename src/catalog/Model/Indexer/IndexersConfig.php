@@ -1,9 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace StreamX\ConnectorCatalog\Model\Indexer;
 
 use Exception;
-use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Attribute\ProductsWithChangedAttributesIndexer;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Category\CategoryDataFormatter;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\BundleOptionsData;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\CategoryData;

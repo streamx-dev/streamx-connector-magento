@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
@@ -78,7 +78,7 @@ class MediaGalleryData extends DataProviderInterface
 
     private function getLabel(array $image): string
     {
-        if (isset($image['label']) && (null !== $image['label'])) {
+        if (isset($image['label'])) {
             return $image['label'];
         }
 

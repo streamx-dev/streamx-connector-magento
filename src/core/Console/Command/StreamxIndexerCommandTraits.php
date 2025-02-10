@@ -1,9 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace StreamX\ConnectorCore\Console\Command;
 
 use Magento\Framework\Indexer\IndexerInterface;
-use Magento\Indexer\Console\Command\AbstractIndexerCommand;
 
 trait StreamxIndexerCommandTraits {
 

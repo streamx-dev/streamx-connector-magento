@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace StreamX\ConnectorCatalog\Model\Indexer\Action;
 
@@ -20,6 +20,7 @@ class Product implements BaseAction {
      * @inheritdoc
      * @throws LocalizedException
      * @throws NoSuchEntityException
+     * @throws Exception
      */
     public function loadData(int $storeId = 1, array $productIds = []): Traversable {
         if (empty($productIds)) {

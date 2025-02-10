@@ -1,7 +1,4 @@
-<?php
-
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
@@ -34,7 +31,6 @@ class CustomOptions extends DataProviderInterface
      */
     public function addData(array $indexData, int $storeId): array
     {
-        $storeId = (int)$storeId;
         $linkField = $this->productMetaData->get()->getLinkField();
         $linkFieldIds = array_column($indexData, $linkField);
 

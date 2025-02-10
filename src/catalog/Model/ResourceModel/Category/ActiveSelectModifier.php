@@ -1,17 +1,14 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace StreamX\ConnectorCatalog\Model\ResourceModel\Category;
 
+use Exception;
 use Magento\Catalog\Model\ResourceModel\Category\Attribute\CollectionFactory;
 use StreamX\ConnectorCatalog\Model\CategoryMetaData;
 use StreamX\ConnectorCatalog\Model\ResourceModel\SelectModifierInterface;
 use Magento\Eav\Model\Entity\Attribute as Attribute;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Select;
-use Magento\Framework\Exception\LocalizedException;
-use Magento\Framework\Exception\NoSuchEntityException;
 
 class ActiveSelectModifier implements SelectModifierInterface
 {
@@ -32,9 +29,7 @@ class ActiveSelectModifier implements SelectModifierInterface
 
     /**
      * Process the select statement - filter categories by vendor
-     *
-     * @throws LocalizedException
-     * @throws NoSuchEntityException
+     * @throws Exception
      */
     public function modify(Select $select, int $storeId): void
     {

@@ -1,14 +1,19 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Attribute;
 
 use Magento\Framework\App\ResourceConnection;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Psr\Log\LoggerInterface;
+use Streamx\Clients\Ingestion\Exceptions\StreamxClientException;
 use StreamX\ConnectorCatalog\Indexer\ProductIndexerHandler;
 use StreamX\ConnectorCatalog\Model\Attributes\AttributeDefinition;
 use StreamX\ConnectorCatalog\Model\Indexer\Action\Product as ProductAction;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
+use StreamX\ConnectorCore\Exception\ConnectionUnhealthyException;
 use Zend_Db_Expr;
+use Zend_Db_Select_Exception;
 
 // TODO implement checking if only relevant attribute properties have changed to trigger publishing products
 class ProductsWithChangedAttributesIndexer
@@ -44,6 +49,11 @@ class ProductsWithChangedAttributesIndexer
 
     /**
      * @param array<int, ?AttributeDefinition> $attributeDefinitions key = attributeId, value = AttributeDefinition
+     * @throws LocalizedException
+     * @throws NoSuchEntityException
+     * @throws ConnectionUnhealthyException
+     * @throws StreamxClientException
+     * @throws Zend_Db_Select_Exception
      */
     public function process(array $attributeDefinitions, int $storeId): void
     {
@@ -74,6 +84,7 @@ class ProductsWithChangedAttributesIndexer
     /**
      * @param int[] $attributeIds
      * @return int[]
+     * @throws Zend_Db_Select_Exception
      */
     private function loadEntityIdsOfProductThatUseAttributes(array $attributeIds): array
     {

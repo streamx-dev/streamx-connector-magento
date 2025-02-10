@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
@@ -161,12 +161,12 @@ abstract class BaseAttributeData extends DataProviderInterface
         return $productAttribute;
     }
 
-    private function getValueLabel(string $attributeCode, string $attributeValue, AttributeDefinition $attributeDefinition): string
+    private function getValueLabel(string $attributeCode, $attributeValue, AttributeDefinition $attributeDefinition): string
     {
         if (SpecialAttributes::isSpecialAttribute($attributeCode)) {
-            return SpecialAttributes::getAttributeValueLabel($attributeCode, $attributeValue);
+            return SpecialAttributes::getAttributeValueLabel($attributeCode, (int) $attributeValue);
         }
-        return $attributeDefinition->getValueLabel($attributeValue);
+        return $attributeDefinition->getValueLabel((string) $attributeValue);
     }
 
     function applySlug(array &$productData): void

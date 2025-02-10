@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
@@ -122,10 +122,10 @@ class LoadAttributeDefinitions
         return array_map(
             function (array $attributeRow) {
                 return new AttributeDefinition(
-                    $attributeRow['id'],
+                    (int) $attributeRow['id'],
                     $attributeRow['attribute_code'],
                     $attributeRow['frontend_label'],
-                    $attributeRow['is_facet'],
+                    (bool) $attributeRow['is_facet'],
                     $this->mapAttributeOptionRowsToDtos($attributeRow['options'])
                 );
             },

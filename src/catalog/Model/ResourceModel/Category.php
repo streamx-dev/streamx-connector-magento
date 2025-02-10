@@ -1,15 +1,15 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace StreamX\ConnectorCatalog\Model\ResourceModel;
 
 use Exception;
 use Magento\Framework\DB\Adapter\AdapterInterface;
-use Magento\Framework\Exception\NoSuchEntityException;
 use StreamX\ConnectorCatalog\Model\CategoryMetaData;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category\CompositeWithStoreModifier;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Catalog\Model\Category as CoreCategoryModel;
 use Magento\Framework\DB\Select;
+use Zend_Db_Select;
 
 class Category
 {
@@ -60,7 +60,7 @@ class Category
         $this->filterByStore($select, $storeId);
         $table = $this->resource->getTableName('catalog_category_product');
         $entityIdField = $this->categoryMetaData->get()->getIdentifierField();
-        $select->reset(Select::COLUMNS);
+        $select->reset(Zend_Db_Select::COLUMNS);
         $select->joinInner(
             ['cpi' => $table],
             "entity.$entityIdField = cpi.category_id",
@@ -78,8 +78,8 @@ class Category
     {
         $result = [];
         foreach ($rows as $row) {
-            $categoryId = $row['category_id'];
-            $productId = $row['product_id'];
+            $categoryId = (int) $row['category_id'];
+            $productId = (int) $row['product_id'];
             $result[$productId][] = $categoryId;
         }
         return $result;
@@ -135,19 +135,18 @@ class Category
             [$entityField]
         );
 
-        $catIdExpr = $connection->quote("%/{$categoryId}/%");
-        $select->where("path like {$catIdExpr}");
+        $catIdExpr = $connection->quote("%/$categoryId/%");
+        $select->where("path like $catIdExpr");
 
         return $connection->fetchCol($select);
     }
 
     /**
      * @throws Exception
-     * @throws NoSuchEntityException
      */
     private function filterByStore(Select $select, int $storeId): void
     {
-        $this->selectModifier->modify($select, (int) $storeId);
+        $this->selectModifier->modify($select, $storeId);
     }
 
     private function getConnection(): AdapterInterface

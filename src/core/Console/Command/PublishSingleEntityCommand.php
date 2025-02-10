@@ -1,10 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace StreamX\ConnectorCore\Console\Command;
 
 use StreamX\ConnectorCore\Indexer\StoreManager;
 use Magento\Framework\App\ObjectManagerFactory;
-use Magento\Framework\Indexer\IndexerInterface;
 use Magento\Indexer\Console\Command\AbstractIndexerCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

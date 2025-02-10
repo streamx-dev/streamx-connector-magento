@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
@@ -150,7 +150,7 @@ class Bundle
             );
             $select->joinLeft(
                 ['price' => $this->resource->getTableName('catalog_product_bundle_selection_price')],
-                'selection.selection_id = price.selection_id AND price.website_id = ' . (int)$websiteId .
+                "selection.selection_id = price.selection_id AND price.website_id = $websiteId" .
                 ' AND selection.parent_product_id = price.parent_product_id',
                 [
                     'selection_price_type' => $priceType,

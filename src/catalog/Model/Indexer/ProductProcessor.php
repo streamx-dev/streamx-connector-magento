@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace StreamX\ConnectorCatalog\Model\Indexer;
 
@@ -34,6 +34,7 @@ class ProductProcessor extends AbstractProcessor
      *
      * @param int $id
      * @param bool $forceReindex
+     * @throws NoSuchEntityException
      */
     public function reindexRow($id, $forceReindex = false): void
     {
@@ -45,6 +46,7 @@ class ProductProcessor extends AbstractProcessor
     /**
      * @param int[] $ids
      * @param bool $forceReindex
+     * @throws NoSuchEntityException
      */
     public function reindexList($ids, $forceReindex = false)
     {

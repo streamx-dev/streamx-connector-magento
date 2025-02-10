@@ -1,9 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
 use InvalidArgumentException;
 use Magento\Catalog\Model\Product\Visibility;
+use Magento\Framework\Phrase;
 
 /**
  * This class handles options for attributes that don't use eav_attribute_option table to store options,
@@ -21,14 +22,28 @@ class SpecialAttributes
 
     public static function getOptionsArray(string $attributeCode): array {
         if ($attributeCode === 'visibility') {
-            return Visibility::getAllOptions();
+            return array_map(function ($option) {
+
+                /** @var $value int */
+                $value = $option['value'];
+
+                /** @var $label Phrase */
+                $label = $option['label'];
+
+                return [
+                    'value' => (string) $value,
+                    'label' => $label->render()
+                ];
+            }, Visibility::getAllOptions());
         }
         throw new InvalidArgumentException("Not implemented for attribute $attributeCode");
     }
 
-    public static function getAttributeValueLabel(string $attributeCode, string $attributeNumericValue): string {
+    public static function getAttributeValueLabel(string $attributeCode, int $attributeNumericValue): string {
         if ($attributeCode === 'visibility') {
-            return Visibility::getOptionText(intval($attributeNumericValue)) ?? $attributeNumericValue;
+            /** @var $optionText Phrase */
+            $optionText = Visibility::getOptionText($attributeNumericValue);
+            return $optionText ? $optionText->render() : (string) $attributeNumericValue;
         }
         throw new InvalidArgumentException("Not implemented for attribute $attributeCode");
     }

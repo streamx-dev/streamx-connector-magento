@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Category;
 
@@ -72,7 +72,7 @@ class CategoryDataFormatter extends DataProviderInterface
     private function setParentCategory(array &$categories, array $allCategoriesMap): void
     {
         foreach ($categories as &$category) {
-            $parentCategoryId = $category['parent_id'];
+            $parentCategoryId = (int) $category['parent_id'];
             if (isset($allCategoriesMap[$parentCategoryId])) { // root category may not be present in the results, so leave parent as null
                 $parentCategory = $allCategoriesMap[$parentCategoryId];
                 $this->prepareCategory($parentCategory);

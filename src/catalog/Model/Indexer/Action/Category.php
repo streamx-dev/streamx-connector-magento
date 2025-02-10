@@ -1,7 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace StreamX\ConnectorCatalog\Model\Indexer\Action;
 
+use Exception;
 use Magento\Framework\Exception\NoSuchEntityException;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category as ResourceModel;
 use Traversable;
@@ -15,6 +16,7 @@ class Category implements BaseAction {
     }
 
     /**
+     * @throws Exception
      * @throws NoSuchEntityException
      */
     public function loadData(int $storeId = 1, array $categoryIds = []): Traversable {
@@ -31,7 +33,7 @@ class Category implements BaseAction {
             $categories = $this->resourceModel->getCategories($storeId, $categoryIds, $lastCategoryId);
 
             foreach ($categories as $category) {
-                $lastCategoryId = $category['id'];
+                $lastCategoryId = (int) $category['id'];
                 yield $lastCategoryId => $category;
                 $publishedCategoryIds[] = $lastCategoryId;
             }

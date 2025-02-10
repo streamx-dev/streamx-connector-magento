@@ -76,10 +76,10 @@ class Client implements ClientInterface {
 
     private function createStreamxKey(string $indexerName, int $entityId): string {
         if ($indexerName == ProductProcessor::INDEXER_ID) {
-            return "{$this->productKeyPrefix}$entityId";
+            return $this->productKeyPrefix . $entityId;
         }
         if ($indexerName == CategoryProcessor::INDEXER_ID) {
-            return "{$this->categoryKeyPrefix}$entityId";
+            return $this->categoryKeyPrefix . $entityId;
         }
         throw new Exception("Received data from unexpected indexer: $indexerName");
     }
