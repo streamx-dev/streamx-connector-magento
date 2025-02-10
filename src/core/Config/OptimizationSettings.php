@@ -13,7 +13,7 @@ class OptimizationSettings extends BaseConfigurationManager implements ObserverI
 {
     private const MIN_BATCH = 1;
     private const DEFAULT_BATCH = 100;
-    private const MAX_BATCH = 400;
+    private const MAX_BATCH = 500;
 
     private ManagerInterface $messageManager;
 
