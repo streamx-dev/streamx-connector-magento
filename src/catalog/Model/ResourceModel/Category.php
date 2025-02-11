@@ -5,7 +5,7 @@ namespace StreamX\ConnectorCatalog\Model\ResourceModel;
 use Exception;
 use Magento\Framework\DB\Adapter\AdapterInterface;
 use StreamX\ConnectorCatalog\Model\CategoryMetaData;
-use StreamX\ConnectorCatalog\Model\ResourceModel\Category\CompositeWithStoreModifier;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Category\StoreSelectModifier;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Catalog\Model\Category as CoreCategoryModel;
 use Magento\Framework\DB\Select;
@@ -14,11 +14,11 @@ use Zend_Db_Select;
 class Category
 {
     private ResourceConnection $resource;
-    private CompositeWithStoreModifier $selectModifier;
+    private StoreSelectModifier $selectModifier;
     private CategoryMetaData $categoryMetaData;
 
     public function __construct(
-        CompositeWithStoreModifier $selectModifier,
+        StoreSelectModifier $selectModifier,
         ResourceConnection $resourceConnection,
         CategoryMetaData $categoryMetaData
     ) {

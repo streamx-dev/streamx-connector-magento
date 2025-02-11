@@ -7,21 +7,23 @@ use Magento\Framework\DB\Adapter\AdapterInterface;
 use StreamX\ConnectorCatalog\Model\CategoryMetaData;
 use Magento\Framework\App\ResourceConnection;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category;
+use StreamX\ConnectorCatalog\Model\ResourceModel\CompositeSelectModifier;
 
 class Children
 {
     private ResourceConnection $resource;
-    private CompositeWithStoreChildrenModifier $selectModifier;
+    private CompositeSelectModifier $selectModifier;
     private CategoryMetaData $categoryMetaData;
 
     public function __construct(
-        CompositeWithStoreChildrenModifier $selectModifier,
+        StoreSelectModifier $storeSelectModifier,
+        ActiveSelectModifier $activeSelectModifier,
         ResourceConnection $resourceModel,
         CategoryMetaData $categoryMetaData
     ) {
         $this->resource = $resourceModel;
         $this->categoryMetaData = $categoryMetaData;
-        $this->selectModifier = $selectModifier;
+        $this->selectModifier = new CompositeSelectModifier($storeSelectModifier, $activeSelectModifier);
     }
 
     /**
