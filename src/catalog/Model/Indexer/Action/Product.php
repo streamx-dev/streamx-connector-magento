@@ -57,8 +57,8 @@ class Product implements BaseAction {
     }
 
     /**
-     * @param array<int> $productIds
-     * @return array<int>
+     * @param int[] $productIds
+     * @return int[]
      * @throws Exception
      */
     public function replaceProductVariantsWithTheirParents(array $productIds): array

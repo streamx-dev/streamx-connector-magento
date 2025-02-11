@@ -150,9 +150,6 @@ class LoadAttributeDefinitions
         );
     }
 
-    /**
-     * @return AttributeOptionSwatchDefinition
-     */
     private function mapAttributeOptionRowToSwatchDto(array $optionRow): ?AttributeOptionSwatchDefinition
     {
         if (isset($optionRow['swatch'])) {

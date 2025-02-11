@@ -19,8 +19,6 @@ abstract class AbstractAttributeSource implements OptionSourceInterface
 
     /**
      * @inheritDoc
-     *
-     * @return array
      */
     public function toOptionArray(): array
     {
