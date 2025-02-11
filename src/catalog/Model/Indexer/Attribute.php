@@ -6,7 +6,7 @@ use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCatalog\Indexer\AttributeIndexerHandler;
 use StreamX\ConnectorCatalog\Model\Indexer\Action\Attribute as AttributeAction;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
-use StreamX\ConnectorCore\Indexer\StoreManager;
+use StreamX\ConnectorCore\Indexer\IndexableStoresProvider;
 use StreamX\ConnectorCore\Streamx\ClientResolver;
 use StreamX\ConnectorCore\System\GeneralConfig;
 
@@ -15,7 +15,7 @@ class Attribute extends BaseStreamxIndexer {
     public function __construct(
         GeneralConfig $connectorConfig,
         AttributeIndexerHandler $indexerHandler,
-        StoreManager $storeManager,
+        IndexableStoresProvider $indexableStoresProvider,
         AttributeAction $action,
         LoggerInterface $logger,
         OptimizationSettings $optimizationSettings,
@@ -24,7 +24,7 @@ class Attribute extends BaseStreamxIndexer {
         parent::__construct(
             $connectorConfig,
             $indexerHandler,
-            $storeManager,
+            $indexableStoresProvider,
             $action,
             $logger,
             $optimizationSettings,
