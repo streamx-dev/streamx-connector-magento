@@ -4,7 +4,6 @@ namespace StreamX\ConnectorCore\Streamx;
 
 use Exception;
 use Psr\Log\LoggerInterface;
-use Streamx\Clients\Ingestion\Exceptions\StreamxClientException;
 use Streamx\Clients\Ingestion\Publisher\Message;
 use Streamx\Clients\Ingestion\Publisher\Publisher;
 use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
@@ -82,7 +81,7 @@ class Client {
                     $this->logger->error('Ingestion failure: ' . json_encode($messageStatus->getFailure()));
                 }
             }
-        } catch (StreamxClientException $e) {
+        } catch (Exception $e) {
             $this->logger->error('Ingestion exception: ' . $e->getMessage(), ['exception' => $e]);
         }
     }

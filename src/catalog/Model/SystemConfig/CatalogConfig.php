@@ -3,9 +3,9 @@
 namespace StreamX\ConnectorCatalog\Model\SystemConfig;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use StreamX\ConnectorCore\Api\BaseConfigurationProvider;
+use StreamX\ConnectorCore\Api\BaseConfigurationReader;
 
-class CatalogConfig extends BaseConfigurationProvider
+class CatalogConfig extends BaseConfigurationReader
 {
     public function __construct(ScopeConfigInterface $scopeConfig) {
         parent::__construct($scopeConfig, 'catalog_settings');
