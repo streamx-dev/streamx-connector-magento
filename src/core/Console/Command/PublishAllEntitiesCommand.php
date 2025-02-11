@@ -32,16 +32,20 @@ class PublishAllEntitiesCommand extends AbstractIndexerCommand
     const INPUT_STORE_OPTION_NAME = 'store';
     const INPUT_ALL_STORES_OPTION_NAME = 'all';
 
-    private ?IndexableStoresProvider $indexableStoresProvider = null;
-    private ?StoreManagerInterface $storeManager = null;
+    private IndexableStoresProvider $indexableStoresProvider;
+    private StoreManagerInterface $storeManager;
     private ManagerInterface $eventManager;
 
     public function __construct(
         ObjectManagerFactory $objectManagerFactory,
-        ManagerInterface $eventManager // Proxy
+        ManagerInterface $eventManager, // Proxy
+        IndexableStoresProvider $indexableStoresProvider,
+        StoreManagerInterface $storeManager
     ) {
         parent::__construct($objectManagerFactory);
         $this->eventManager = $eventManager;
+        $this->indexableStoresProvider = $indexableStoresProvider;
+        $this->storeManager = $storeManager;
     }
 
     /**
@@ -74,7 +78,6 @@ class PublishAllEntitiesCommand extends AbstractIndexerCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->initObjectManager();
         $output->setDecorated(true);
         $storeId = $input->getOption(self::INPUT_STORE_OPTION_NAME);
         $allStores = $input->getOption(self::INPUT_ALL_STORES_OPTION_NAME);
@@ -123,7 +126,7 @@ class PublishAllEntitiesCommand extends AbstractIndexerCommand
         ]);
 
         if ($storeId) {
-            $store = $this->getStoreManager()->getStore($storeId);
+            $store = $this->storeManager->getStore($storeId);
             $returnValue = false;
 
             if ($this->isAllowedToReindex($store)) {
@@ -179,7 +182,7 @@ class PublishAllEntitiesCommand extends AbstractIndexerCommand
      */
     private function reindexStore(StoreInterface $store, OutputInterface $output): int
     {
-        $this->getIndexableStoresProvider()->override([$store]);
+        $this->indexableStoresProvider->override([$store]);
 
         $returnValue = Cli::RETURN_FAILURE;
 
@@ -206,29 +209,6 @@ class PublishAllEntitiesCommand extends AbstractIndexerCommand
 
     private function getStoresAllowedToReindex(): array
     {
-        return $this->getIndexableStoresProvider()->getStores();
-    }
-
-    private function getStoreManager(): StoreManagerInterface
-    {
-        if (null === $this->storeManager) {
-            $this->storeManager = $this->getObjectManager()->get(StoreManagerInterface::class);
-        }
-
-        return $this->storeManager;
-    }
-
-    private function getIndexableStoresProvider(): IndexableStoresProvider
-    {
-        if (null === $this->indexableStoresProvider) {
-            $this->indexableStoresProvider = $this->getObjectManager()->get(IndexableStoresProvider::class);
-        }
-
-        return $this->indexableStoresProvider;
-    }
-
-    private function initObjectManager(): void
-    {
-        $this->getObjectManager();
+        return $this->indexableStoresProvider->getStores();
     }
 }

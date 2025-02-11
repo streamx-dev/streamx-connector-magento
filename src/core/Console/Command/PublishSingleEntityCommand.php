@@ -25,12 +25,17 @@ class PublishSingleEntityCommand extends AbstractIndexerCommand
     const INPUT_STORE_ARG = 'store';
     const INPUT_ENTITY_ID_ARG = 'id';
 
-    private ?IndexableStoresProvider $indexableStoresProvider = null;
-    private ?StoreManagerInterface $storeManager = null;
+    private IndexableStoresProvider $indexableStoresProvider;
+    private StoreManagerInterface $storeManager;
 
-    public function __construct(ObjectManagerFactory $objectManagerFactory)
-    {
+    public function __construct(
+        ObjectManagerFactory $objectManagerFactory,
+        IndexableStoresProvider $indexableStoresProvider,
+        StoreManagerInterface $storeManager
+    ) {
         parent::__construct($objectManagerFactory);
+        $this->indexableStoresProvider = $indexableStoresProvider;
+        $this->storeManager = $storeManager;
     }
 
     /**
@@ -75,15 +80,14 @@ class PublishSingleEntityCommand extends AbstractIndexerCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->initObjectManager();
         $output->setDecorated(true);
 
         $storeId = $input->getArgument(self::INPUT_STORE_ARG);
         $index = $input->getArgument(self::INPUT_INDEXER_CODE_ARG);
         $id = $input->getArgument(self::INPUT_ENTITY_ID_ARG);
 
-        $store = $this->getStoreManager()->getStore($storeId);
-        $this->getIndexableStoresProvider()->override([$store]);
+        $store = $this->storeManager->getStore($storeId);
+        $this->indexableStoresProvider->override([$store]);
         $indexer = $this->getStreamxIndex($index);
 
         if ($indexer) {
@@ -97,28 +101,5 @@ class PublishSingleEntityCommand extends AbstractIndexerCommand
             $output->writeln("<info>Index with code: $index hasn't been found. </info>");
             return -1;
         }
-    }
-
-    private function getStoreManager(): StoreManagerInterface
-    {
-        if (null === $this->storeManager) {
-            $this->storeManager = $this->getObjectManager()->get(StoreManagerInterface::class);
-        }
-
-        return $this->storeManager;
-    }
-
-    private function getIndexableStoresProvider(): IndexableStoresProvider
-    {
-        if (null === $this->indexableStoresProvider) {
-            $this->indexableStoresProvider = $this->getObjectManager()->get(IndexableStoresProvider::class);
-        }
-
-        return $this->indexableStoresProvider;
-    }
-
-    private function initObjectManager(): void
-    {
-        $this->getObjectManager();
     }
 }
