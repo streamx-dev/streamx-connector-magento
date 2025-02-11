@@ -4,9 +4,10 @@ namespace StreamX\ConnectorCatalog\Model\ResourceModel;
 
 use Exception;
 use Magento\Framework\DB\Adapter\AdapterInterface;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\StatusSelectModifier;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\WebsiteSelectModifier;
 use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
-use StreamX\ConnectorCatalog\Model\ResourceModel\Product\CompositeWithWebsiteModifier;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Helper as DbHelper;
 use Magento\Framework\DB\Select;
@@ -23,11 +24,12 @@ class Product
     private CatalogConfig $productSettings;
     private ?array $configurableAttributeIds = null;
     private ProductMetaData $productMetaData;
-    private CompositeWithWebsiteModifier $selectModifier;
+    private CompositeSelectModifier $selectModifier;
 
     public function __construct(
         CatalogConfig $configSettings,
-        CompositeWithWebsiteModifier $selectModifier,
+        WebsiteSelectModifier $websiteSelectModifier,
+        StatusSelectModifier $activeSelectModifier,
         ResourceConnection $resourceConnection,
         ProductMetaData $productMetaData,
         DbHelper $dbHelper
@@ -35,7 +37,7 @@ class Product
         $this->resourceConnection = $resourceConnection;
         $this->dbHelper = $dbHelper;
         $this->productSettings = $configSettings;
-        $this->selectModifier = $selectModifier;
+        $this->selectModifier = new CompositeSelectModifier($websiteSelectModifier, $activeSelectModifier);
         $this->productMetaData = $productMetaData;
     }
 

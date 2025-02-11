@@ -28,7 +28,7 @@ class ActiveSelectModifier implements SelectModifierInterface
     }
 
     /**
-     * Process the select statement - filter categories by vendor
+     * Process the select statement - filter categories to select only active categories
      * @throws Exception
      */
     public function modify(Select $select, int $storeId): void

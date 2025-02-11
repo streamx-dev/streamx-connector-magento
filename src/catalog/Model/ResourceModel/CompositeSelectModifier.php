@@ -1,11 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace StreamX\ConnectorCatalog\Model\ResourceModel\Category;
+namespace StreamX\ConnectorCatalog\Model\ResourceModel;
 
 use Magento\Framework\DB\Select;
-use StreamX\ConnectorCatalog\Model\ResourceModel\SelectModifierInterface;
 
-abstract class CompositeBaseSelectModifier
+class CompositeSelectModifier implements SelectModifierInterface
 {
     /**
      * @var SelectModifierInterface[]
