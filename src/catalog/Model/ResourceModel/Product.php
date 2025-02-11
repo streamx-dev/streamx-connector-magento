@@ -72,7 +72,7 @@ class Product
      */
     private function prepareProductSelect(array $columns, int $storeId): Select {
         $select = $this->prepareBaseProductSelect($columns, $storeId);
-        $this->addProductTypeFilter($select, $storeId);
+        $this->addProductTypeFilter($select);
         $select->order(sprintf("%s.entity_id ASC", self::MAIN_TABLE_ALIAS));
         return $select;
     }
@@ -142,9 +142,9 @@ class Product
         return $this->getConnection()->fetchAll($select);
     }
 
-    private function addProductTypeFilter(Select $select, int $storeId): void
+    private function addProductTypeFilter(Select $select): void
     {
-        $types = $this->productSettings->getAllowedProductTypes($storeId);
+        $types = $this->productSettings->getAllowedProductTypes();
         $select->where(sprintf('%s.type_id IN (?)', self::MAIN_TABLE_ALIAS), $types);
     }
 

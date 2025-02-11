@@ -32,7 +32,8 @@ class IndexableStoresProvider
             return $this->loadedStores;
         }
 
-        $allowedStoreIds = $this->generalSettings->getStoresToIndex();
+        $websiteId = (int) $this->storeManager->getStore()->getWebsiteId();
+        $allowedStoreIds = $this->generalSettings->getStoresToIndex($websiteId);
         $allowedStores = [];
 
         foreach ($this->storeManager->getStores() as $store) {

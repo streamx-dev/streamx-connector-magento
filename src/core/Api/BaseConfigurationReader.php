@@ -17,38 +17,34 @@ abstract class BaseConfigurationReader {
         $this->configXmlNodePath = self::BASE_CONFIG_XML_NODE . '/' . $configXmlNode;
     }
 
-    public function getBoolConfigValue(string $configField, int $storeId = null): bool {
-        return (bool) $this->getConfigValue($configField, $storeId);
-    }
-
-    public function getIntConfigValue(string $configField, int $storeId = null): int {
-        return (int) $this->getConfigValue($configField, $storeId);
-    }
-
-    public function getStringConfigValue(string $configField, int $storeId = null): string {
-        return (string) $this->getConfigValue($configField, $storeId);
-    }
-
-    public function getNullableStringConfigValue(string $configField, int $storeId = null): ?string {
-        return $this->getConfigValue($configField, $storeId);
-    }
-
-    public function getArrayConfigValue(string $configField, int $storeId = null): array {
-        $commaSeparatedValue = $this->getConfigValue($configField, $storeId);
-
+    public static function splitCommaSeparatedValueToArray(?string $commaSeparatedValue): array {
         return null === $commaSeparatedValue || '' === $commaSeparatedValue
             ? []
             : explode(',', $commaSeparatedValue);
     }
 
     /**
-     * @return mixed
+     * @return mixed|null
      */
-    private function getConfigValue(string $configField, int $storeId = null) {
-        // TODO: test with multistores magento
+    public function getGlobalConfigValue(string $configField) {
         $path = $this->getConfigFieldFullPath($configField);
-        $scopeType = $storeId ? ScopeInterface::SCOPE_STORES : ScopeConfigInterface::SCOPE_TYPE_DEFAULT;
-        return $this->scopeConfig->getValue($path, $scopeType, $storeId);
+        return $this->scopeConfig->getValue($path);
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getWebsiteLevelConfigValue(string $configField, int $websiteId) {
+        $path = $this->getConfigFieldFullPath($configField);
+        return $this->scopeConfig->getValue($path, ScopeInterface::SCOPE_WEBSITE, $websiteId);
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getStoreLevelConfigValue(string $configField, int $storeId) {
+        $path = $this->getConfigFieldFullPath($configField);
+        return $this->scopeConfig->getValue($path, ScopeInterface::SCOPE_STORE, $storeId);
     }
 
     protected function getConfigFieldFullPath(string $configField): string {
