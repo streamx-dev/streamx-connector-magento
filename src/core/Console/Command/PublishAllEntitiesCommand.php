@@ -4,7 +4,7 @@ namespace StreamX\ConnectorCore\Console\Command;
 
 use Exception;
 use Magento\Framework\Exception\NoSuchEntityException;
-use StreamX\ConnectorCore\Indexer\StoreManager;
+use StreamX\ConnectorCore\Indexer\IndexableStoresProvider;
 use Magento\Framework\App\ObjectManagerFactory;
 use Magento\Framework\Console\Cli;
 use Magento\Framework\Event\ManagerInterface;
@@ -32,7 +32,7 @@ class PublishAllEntitiesCommand extends AbstractIndexerCommand
     const INPUT_STORE_OPTION_NAME = 'store';
     const INPUT_ALL_STORES_OPTION_NAME = 'all';
 
-    private ?StoreManager $indexerStoreManager = null;
+    private ?IndexableStoresProvider $indexableStoresProvider = null;
     private ?StoreManagerInterface $storeManager = null;
     private ManagerInterface $eventManager;
 
@@ -160,8 +160,6 @@ class PublishAllEntitiesCommand extends AbstractIndexerCommand
 
     /**
      * Check if Store is allowed to reindex
-     *
-     * @throws NoSuchEntityException
      */
     private function isAllowedToReindex(StoreInterface $store): bool
     {
@@ -181,7 +179,7 @@ class PublishAllEntitiesCommand extends AbstractIndexerCommand
      */
     private function reindexStore(StoreInterface $store, OutputInterface $output): int
     {
-        $this->getIndexerStoreManager()->override([$store]);
+        $this->getIndexableStoresProvider()->override([$store]);
 
         $returnValue = Cli::RETURN_FAILURE;
 
@@ -206,12 +204,9 @@ class PublishAllEntitiesCommand extends AbstractIndexerCommand
         return $returnValue;
     }
 
-    /**
-     * @throws NoSuchEntityException
-     */
     private function getStoresAllowedToReindex(): array
     {
-        return $this->getIndexerStoreManager()->getStores();
+        return $this->getIndexableStoresProvider()->getStores();
     }
 
     private function getStoreManager(): StoreManagerInterface
@@ -223,13 +218,13 @@ class PublishAllEntitiesCommand extends AbstractIndexerCommand
         return $this->storeManager;
     }
 
-    private function getIndexerStoreManager(): StoreManager
+    private function getIndexableStoresProvider(): IndexableStoresProvider
     {
-        if (null === $this->indexerStoreManager) {
-            $this->indexerStoreManager = $this->getObjectManager()->get(StoreManager::class);
+        if (null === $this->indexableStoresProvider) {
+            $this->indexableStoresProvider = $this->getObjectManager()->get(IndexableStoresProvider::class);
         }
 
-        return $this->indexerStoreManager;
+        return $this->indexableStoresProvider;
     }
 
     private function initObjectManager(): void

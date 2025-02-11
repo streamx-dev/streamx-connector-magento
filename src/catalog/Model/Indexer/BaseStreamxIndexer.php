@@ -2,20 +2,19 @@
 
 namespace StreamX\ConnectorCatalog\Model\Indexer;
 
-use Magento\Framework\Exception\NoSuchEntityException;
 use Psr\Log\LoggerInterface;
 use Streamx\Clients\Ingestion\Exceptions\StreamxClientException;
 use StreamX\ConnectorCatalog\Model\Indexer\Action\BaseAction;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
 use StreamX\ConnectorCore\Indexer\GenericIndexerHandler;
-use StreamX\ConnectorCore\Indexer\StoreManager;
+use StreamX\ConnectorCore\Indexer\IndexableStoresProvider;
 use StreamX\ConnectorCore\Streamx\ClientResolver;
 use StreamX\ConnectorCore\System\GeneralConfig;
 
 abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionInterface, \Magento\Framework\Mview\ActionInterface
 {
     private GeneralConfig $connectorConfig;
-    private StoreManager $storeManager;
+    private IndexableStoresProvider $indexableStoresProvider;
     private GenericIndexerHandler $indexHandler;
     private BaseAction $action;
     private LoggerInterface $logger;
@@ -26,7 +25,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
     public function __construct(
         GeneralConfig $connectorConfig,
         GenericIndexerHandler $indexerHandler,
-        StoreManager $storeManager,
+        IndexableStoresProvider $indexableStoresProvider,
         BaseAction $action,
         LoggerInterface $logger,
         OptimizationSettings $optimizationSettings,
@@ -35,7 +34,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
     ) {
         $this->connectorConfig = $connectorConfig;
         $this->indexHandler = $indexerHandler;
-        $this->storeManager = $storeManager;
+        $this->indexableStoresProvider = $indexableStoresProvider;
         $this->action = $action;
         $this->logger = $logger;
         $this->optimizationSettings = $optimizationSettings;
@@ -76,7 +75,6 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
     }
 
     /**
-     * @throws NoSuchEntityException
      * @throws StreamxClientException
      */
     private function loadDocumentsAndSaveIndex($ids = []): void {
@@ -85,7 +83,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
             return;
         }
 
-        foreach ($this->storeManager->getStores() as $store) {
+        foreach ($this->indexableStoresProvider->getStores() as $store) {
             $storeId = (int) $store->getId();
 
             $client = $this->clientResolver->getClient($storeId);

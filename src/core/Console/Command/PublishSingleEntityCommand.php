@@ -2,7 +2,7 @@
 
 namespace StreamX\ConnectorCore\Console\Command;
 
-use StreamX\ConnectorCore\Indexer\StoreManager;
+use StreamX\ConnectorCore\Indexer\IndexableStoresProvider;
 use Magento\Framework\App\ObjectManagerFactory;
 use Magento\Indexer\Console\Command\AbstractIndexerCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -25,7 +25,7 @@ class PublishSingleEntityCommand extends AbstractIndexerCommand
     const INPUT_STORE_ARG = 'store';
     const INPUT_ENTITY_ID_ARG = 'id';
 
-    private ?StoreManager $indexerStoreManager = null;
+    private ?IndexableStoresProvider $indexableStoresProvider = null;
     private ?StoreManagerInterface $storeManager = null;
 
     public function __construct(ObjectManagerFactory $objectManagerFactory)
@@ -83,7 +83,7 @@ class PublishSingleEntityCommand extends AbstractIndexerCommand
         $id = $input->getArgument(self::INPUT_ENTITY_ID_ARG);
 
         $store = $this->getStoreManager()->getStore($storeId);
-        $this->getIndexerStoreManager()->override([$store]);
+        $this->getIndexableStoresProvider()->override([$store]);
         $indexer = $this->getStreamxIndex($index);
 
         if ($indexer) {
@@ -108,13 +108,13 @@ class PublishSingleEntityCommand extends AbstractIndexerCommand
         return $this->storeManager;
     }
 
-    private function getIndexerStoreManager(): StoreManager
+    private function getIndexableStoresProvider(): IndexableStoresProvider
     {
-        if (null === $this->indexerStoreManager) {
-            $this->indexerStoreManager = $this->getObjectManager()->get(StoreManager::class);
+        if (null === $this->indexableStoresProvider) {
+            $this->indexableStoresProvider = $this->getObjectManager()->get(IndexableStoresProvider::class);
         }
 
-        return $this->indexerStoreManager;
+        return $this->indexableStoresProvider;
     }
 
     private function initObjectManager(): void

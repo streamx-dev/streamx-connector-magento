@@ -2,7 +2,6 @@
 
 namespace StreamX\ConnectorCore\Indexer;
 
-use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Store\Api\Data\StoreInterface;
 use StreamX\ConnectorCore\System\GeneralConfig;
 use Magento\Store\Model\StoreManagerInterface;
@@ -10,7 +9,7 @@ use Magento\Store\Model\StoreManagerInterface;
 /**
  * Responsible for getting stores allowed to reindex
  */
-class StoreManager
+class IndexableStoresProvider
 {
     private StoreManagerInterface $storeManager;
     private GeneralConfig $generalSettings;
@@ -26,9 +25,8 @@ class StoreManager
 
     /**
      * @return StoreInterface[]
-     * @throws NoSuchEntityException
      */
-    public function getStores(int $storeId = null): array
+    public function getStores(): array
     {
         if ($this->loadedStores) {
             return $this->loadedStores;
@@ -37,13 +35,7 @@ class StoreManager
         $allowedStoreIds = $this->generalSettings->getStoresToIndex();
         $allowedStores = [];
 
-        if (null === $storeId) {
-            $stores = $this->storeManager->getStores();
-        } else {
-            $stores = [$this->storeManager->getStore($storeId)];
-        }
-
-        foreach ($stores as $store) {
+        foreach ($this->storeManager->getStores() as $store) {
             if (in_array($store->getId(), $allowedStoreIds)) {
                 $allowedStores[] = $store;
             }
