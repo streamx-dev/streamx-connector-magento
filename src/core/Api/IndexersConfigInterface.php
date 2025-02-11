@@ -2,9 +2,9 @@
 
 namespace StreamX\ConnectorCore\Api;
 
-use StreamX\ConnectorCore\Api\Index\TypeInterface;
+use StreamX\ConnectorCore\Index\IndexerDefinition;
 
 interface IndexersConfigInterface
 {
-    public function getByName(string $indexerName): TypeInterface;
+    public function getByName(string $indexerName): IndexerDefinition;
 }

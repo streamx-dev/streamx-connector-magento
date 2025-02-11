@@ -14,20 +14,19 @@ use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\MediaGalleryData
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\PriceData;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\ProductAttributeData;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\QuantityData;
-use StreamX\ConnectorCore\Api\Index\TypeInterface;
 use StreamX\ConnectorCore\Api\IndexersConfigInterface;
-use StreamX\ConnectorCore\Index\Type;
+use StreamX\ConnectorCore\Index\IndexerDefinition;
 use StreamX\ConnectorCore\Indexer\DataProviderProcessorFactory;
 
 class IndexersConfig implements IndexersConfigInterface
 {
-    /** @var TypeInterface[] */
-    private array $types;
+    /** @var IndexerDefinition[] */
+    private array $indexerDefinitions;
 
     public function __construct(DataProviderProcessorFactory $dataProviderFactory)
     {
-        $this->types = [
-            new Type(ProductProcessor::INDEXER_ID, [
+        $this->indexerDefinitions = [
+            new IndexerDefinition(ProductProcessor::INDEXER_ID, [
                 $dataProviderFactory->get(LangData::class),
                 $dataProviderFactory->get(ProductAttributeData::class),
                 // TODO review the provider; trim data produced by it only what we need
@@ -41,20 +40,20 @@ class IndexersConfig implements IndexersConfigInterface
                 $dataProviderFactory->get(CustomOptions::class),
                 $dataProviderFactory->get(DataCleaner::class),
             ]),
-            new Type(CategoryProcessor::INDEXER_ID, [
+            new IndexerDefinition(CategoryProcessor::INDEXER_ID, [
                 $dataProviderFactory->get(CategoryDataFormatter::class),
             ]),
-            new Type(AttributeProcessor::INDEXER_ID, [])
+            new IndexerDefinition(AttributeProcessor::INDEXER_ID, [])
         ];
     }
 
-    public function getByName(string $indexerName): TypeInterface
+    public function getByName(string $indexerName): IndexerDefinition
     {
-        foreach ($this->types as $type) {
-            if ($type->getName() === $indexerName) {
-                return $type;
+        foreach ($this->indexerDefinitions as $index) {
+            if ($index->getName() === $indexerName) {
+                return $index;
             }
         }
-        throw new Exception("Indexer configuration for $indexerName not found");
+        throw new Exception("Indexer $indexerName not found");
     }
 }

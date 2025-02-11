@@ -4,7 +4,6 @@
 
     <preference for="StreamX\ConnectorCore\Api\Client\ClientInterface" type="StreamX\ConnectorCore\Streamx\Client"/>
     <preference for="StreamX\ConnectorCore\Api\Client\ConfigurationInterface" type="StreamX\ConnectorCore\Streamx\ClientConfiguration"/>
-    <preference for="StreamX\ConnectorCore\Api\Index\TypeInterface" type="StreamX\ConnectorCore\Index\Type"/>
     <preference for="StreamX\ConnectorCore\System\GeneralConfigInterface" type="StreamX\ConnectorCore\System\GeneralConfig"/>
 
     <!-- Prevent sensitive fields from getting dumped with store config -->
