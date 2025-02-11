@@ -9,10 +9,9 @@ use Streamx\Clients\Ingestion\Publisher\Message;
 use Streamx\Clients\Ingestion\Publisher\Publisher;
 use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
-use StreamX\ConnectorCore\Api\Client\ClientInterface;
 use StreamX\ConnectorCore\Streamx\Model\Data;
 
-class Client implements ClientInterface {
+class Client {
 
     private LoggerInterface $logger;
     private Publisher $publisher;

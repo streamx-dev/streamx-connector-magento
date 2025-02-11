@@ -2,10 +2,6 @@
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
 
-    <preference for="StreamX\ConnectorCore\Api\Client\ClientInterface" type="StreamX\ConnectorCore\Streamx\Client"/>
-    <preference for="StreamX\ConnectorCore\Api\Client\ConfigurationInterface" type="StreamX\ConnectorCore\Streamx\ClientConfiguration"/>
-    <preference for="StreamX\ConnectorCore\System\GeneralConfigInterface" type="StreamX\ConnectorCore\System\GeneralConfig"/>
-
     <!-- Prevent sensitive fields from getting dumped with store config -->
     <type name="Magento\Config\Model\Config\TypePool">
         <arguments>

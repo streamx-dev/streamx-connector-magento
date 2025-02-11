@@ -2,50 +2,40 @@
 
 namespace StreamX\ConnectorCore\Streamx;
 
-use StreamX\ConnectorCore\Api\Client\ConfigurationInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Store\Model\ScopeInterface;
+use StreamX\ConnectorCore\Api\BaseConfigurationProvider;
 
-class ClientConfiguration implements ConfigurationInterface {
-
-    private const STREAMX_CLIENT_CONFIG_XML_PREFIX = 'streamx_connector_settings/streamx_client';
-
-    private ScopeConfigInterface $scopeConfig;
-
+class ClientConfiguration extends BaseConfigurationProvider
+{
     public function __construct(ScopeConfigInterface $scopeConfig) {
-        $this->scopeConfig = $scopeConfig;
+        parent::__construct($scopeConfig, 'streamx_client');
     }
 
     public function getIngestionBaseUrl(int $storeId): string {
-        return $this->getConfigParam('ingestion_base_url', $storeId);
+        return $this->getStringConfigValue('ingestion_base_url', $storeId);
     }
 
     public function getChannelName(int $storeId): string {
-        return $this->getConfigParam('channel_name', $storeId);
+        return $this->getStringConfigValue('channel_name', $storeId);
     }
 
     public function getChannelSchemaName(int $storeId): string {
-        return $this->getConfigParam('channel_schema_name', $storeId);
+        return $this->getStringConfigValue('channel_schema_name', $storeId);
     }
 
     public function getProductKeyPrefix(int $storeId): string {
-        return $this->getConfigParam('product_key_prefix', $storeId);
+        return $this->getStringConfigValue('product_key_prefix', $storeId);
     }
 
     public function getCategoryKeyPrefix(int $storeId): string {
-        return $this->getConfigParam('category_key_prefix', $storeId);
+        return $this->getStringConfigValue('category_key_prefix', $storeId);
     }
 
     public function getAuthToken(int $storeId): ?string {
-        return $this->getConfigParam('auth_token', $storeId);
+        return $this->getNullableStringConfigValue('auth_token', $storeId);
     }
 
     public function shouldDisableCertificateValidation(int $storeId): bool {
-        return (bool) $this->getConfigParam('disable_certificate_validation', $storeId);
-    }
-
-    private function getConfigParam(string $configField, $storeId): ?string {
-        $path = self::STREAMX_CLIENT_CONFIG_XML_PREFIX . '/' . $configField;
-        return $this->scopeConfig->getValue($path, ScopeInterface::SCOPE_STORE, $storeId);
+        return $this->getBoolConfigValue('disable_certificate_validation', $storeId);
     }
 }

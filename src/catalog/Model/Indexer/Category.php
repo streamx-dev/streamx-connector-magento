@@ -6,12 +6,12 @@ use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCatalog\Indexer\CategoryIndexerHandler;
 use StreamX\ConnectorCatalog\Model\Indexer\Action\Category as CategoryAction;
 use StreamX\ConnectorCore\Indexer\StoreManager;
-use StreamX\ConnectorCore\System\GeneralConfigInterface;
+use StreamX\ConnectorCore\System\GeneralConfig;
 
 class Category extends BaseStreamxIndexer {
 
     public function __construct(
-        GeneralConfigInterface $connectorConfig,
+        GeneralConfig $connectorConfig,
         CategoryIndexerHandler $indexerHandler,
         StoreManager $storeManager,
         CategoryAction $action,
