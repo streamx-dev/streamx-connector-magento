@@ -41,9 +41,17 @@ class MagentoMySqlQueryExecutor {
         }
     }
 
+    /**
+     * @return int last inserted ID
+     * @throws Exception
+     */
+    public function insert(string $insertQuery): int {
+        $this->execute($insertQuery);
+        return $this->selectFirstField('SELECT LAST_INSERT_ID()');
+    }
+
     public function execute(string $query): void {
-        $result = $this->connection->query($query);
-        if (!$result) {
+        if (!$this->connection->query($query)) {
             throw new Exception("Query $query failed: " . $this->connection->error);
         }
     }

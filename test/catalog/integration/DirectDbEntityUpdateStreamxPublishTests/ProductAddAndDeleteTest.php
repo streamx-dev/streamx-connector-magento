@@ -19,10 +19,40 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
     }
 
     /** @test */
+    public function shouldPublishMinimalProductAddedDirectlyInDatabaseToStreamx_AndUnpublishDeletedProduct() {
+        // given
+        $productName = 'The minimal product';
+
+        // when
+        $productId = $this->insertNewMinimalProduct($productName);
+        $expectedKey = "pim:$productId";
+
+        try {
+            // and
+            $this->reindexMview();
+
+            // then
+            $this->assertExactDataIsPublished($expectedKey, 'added-minimal-product.json', [
+                // mask variable parts (ids and generated sku)
+                '"id": [0-9]+' => '"id": 0',
+                '"sku": "[^"]+"' => '"sku": "[MASKED]"',
+                '"the-minimal-product-[0-9]+"' => '"the-minimal-product-0"'
+            ]);
+        } finally {
+            // and when
+            $this->deleteProduct($productId);
+            $this->reindexMview();
+
+            // then
+            $this->assertDataIsUnpublished($expectedKey);
+        }
+    }
+
+    /** @test */
     public function shouldPublishProductAddedDirectlyInDatabaseToStreamx_AndUnpublishDeletedProduct() {
         // given
-        $watchesCategoryId = $this->db->getCategoryId('Watches');
         $productName = 'The new great watch';
+        $watchesCategoryId = $this->db->getCategoryId('Watches');
 
         // when
         $this->allowIndexingAllAttributes();
@@ -96,6 +126,36 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
     }
 
     /**
+     * Inserts new minimal product to database
+     * @return int ID of the inserted product
+     */
+    private function insertNewMinimalProduct(string $productName): int {
+        $sku = (string) (new DateTime())->getTimestamp();
+
+        $defaultStoreId = 0;
+        $websiteId = 1;
+        $attributeSetId = $this->db->getDefaultProductAttributeSetId();
+
+        $productId = $this->db->insert("
+            INSERT INTO catalog_product_entity (attribute_set_id, type_id, sku, has_options, required_options) VALUES
+                ($attributeSetId, 'simple', '$sku', FALSE, FALSE)
+        ");
+
+        $this->db->executeAll(["
+            INSERT INTO catalog_product_entity_varchar (entity_id, attribute_id, store_id, value) VALUES
+                ($productId, " . self::attrId('name') . ", $defaultStoreId, '$productName')
+        ", "
+            INSERT INTO catalog_product_entity_int (entity_id, attribute_id, store_id, value) VALUES
+                ($productId, " . self::attrId('status') . ", $defaultStoreId, 1) -- enabled
+        ", "
+            INSERT INTO catalog_product_website (product_id, website_id) VALUES
+                ($productId, $websiteId)
+        "]);
+
+        return $productId;
+    }
+
+    /**
      * Inserts new product to database
      * @return int ID of the inserted product
      */
@@ -112,14 +172,12 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $plasticMaterialId = $this->db->getAttributeOptionId('material', 'Plastic');
         $leatherMaterialId = $this->db->getAttributeOptionId('material', 'Leather');
 
-        $attributeSetId = $this->db->getDefaultCategoryAttributeSetId();
+        $attributeSetId = $this->db->getDefaultProductAttributeSetId();
 
-        $this->db->execute("
+        $productId = $this->db->insert("
             INSERT INTO catalog_product_entity (attribute_set_id, type_id, sku, has_options, required_options) VALUES
                 ($attributeSetId, 'simple', '$sku', FALSE, FALSE)
         ");
-
-        $productId = $this->db->selectMaxId('catalog_product_entity', 'entity_id');
 
         $this->db->execute("
             INSERT INTO catalog_product_entity_varchar (entity_id, attribute_id, store_id, value) VALUES
@@ -177,11 +235,8 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
     }
 
     private function addProductOption(int $productId, int $defaultStoreId): void {
-        $this->db->execute("INSERT INTO catalog_product_option (product_id, type, is_require, sort_order) VALUES ($productId, 'drop_down', 1, 0)");
-        $optionId = $this->db->selectMaxId('catalog_product_option', 'option_id');
-
-        $this->db->execute("INSERT INTO catalog_product_option_type_value (option_id, sort_order) VALUES($optionId, 0)");
-        $optionTypeId = $this->db->selectMaxId('catalog_product_option_type_value', 'option_type_id');
+        $optionId = $this->db->insert("INSERT INTO catalog_product_option (product_id, type, is_require, sort_order) VALUES ($productId, 'drop_down', 1, 0)");
+        $optionTypeId = $this->db->insert("INSERT INTO catalog_product_option_type_value (option_id, sort_order) VALUES($optionId, 0)");
 
         $this->db->execute("INSERT INTO catalog_product_option_title (option_id, store_id, title) VALUES ($optionId, $defaultStoreId, 'Size')");
         $this->db->execute("INSERT INTO catalog_product_option_type_title (option_type_id, store_id, title) VALUES ($optionTypeId, $defaultStoreId, 'The size')");

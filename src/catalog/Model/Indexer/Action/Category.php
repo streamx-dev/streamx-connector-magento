@@ -19,7 +19,7 @@ class Category implements BaseAction {
      * @throws Exception
      * @throws NoSuchEntityException
      */
-    public function loadData(int $storeId = 1, array $categoryIds = []): Traversable {
+    public function loadData(int $storeId, array $categoryIds): Traversable {
         $lastCategoryId = 0;
 
         // Ensure to reindex also the parents category ids

@@ -15,13 +15,8 @@ abstract class BaseConfigurationManager extends BaseConfigurationReader {
         $this->configWriter = $configWriter;
     }
 
-    public function setConfigValue(string $configField, $configValue, int $storeId = null): void {
-        // TODO: test with multistores magento
+    public function setGlobalConfigValue(string $configField, $configValue): void {
         $path = $this->getConfigFieldFullPath($configField);
-        if ($storeId === null) {
-            $this->configWriter->save($path, $configValue);
-        } else {
-            $this->configWriter->save($path, $configValue, ScopeInterface::SCOPE_STORES, $storeId);
-        }
+        $this->configWriter->save($path, $configValue);
     }
 }

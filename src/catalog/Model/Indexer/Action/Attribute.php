@@ -14,7 +14,7 @@ class Attribute implements BaseAction {
         $this->loadAttributeDefinitions = $loadAttributeDefinitions;
     }
 
-    public function loadData(int $storeId = 1, array $attributeIds = []): Traversable {
+    public function loadData(int $storeId, array $attributeIds): Traversable {
         if (empty($attributeIds)) {
             throw new RuntimeException(
                 'Indexation of all attributes is not supported.

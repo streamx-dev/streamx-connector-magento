@@ -22,7 +22,7 @@ class Product implements BaseAction {
      * @throws NoSuchEntityException
      * @throws Exception
      */
-    public function loadData(int $storeId = 1, array $productIds = []): Traversable {
+    public function loadData(int $storeId, array $productIds): Traversable {
         if (empty($productIds)) {
             $productIds = $this->resourceModel->getAllProductIds($storeId);
         }
