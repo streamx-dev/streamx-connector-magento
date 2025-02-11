@@ -12,10 +12,12 @@ class GeneralConfig extends BaseConfigurationReader
     }
 
     public function getStoresToIndex(): array {
-        return $this->getArrayConfigValue('allowed_stores');
+        return parent::splitCommaSeparatedValueToArray(
+            $this->getGlobalConfigValue('allowed_stores')
+        );
     }
 
     public function isEnabled(): bool {
-        return $this->getBoolConfigValue('enable');
+        return (bool)$this->getGlobalConfigValue('enable');
     }
 }

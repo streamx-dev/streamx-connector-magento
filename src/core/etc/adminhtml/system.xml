@@ -29,7 +29,7 @@
             </group>
 
             <group id="streamx_client" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
-                <label>StreamX Connector Settings</label>
+                <label>StreamX Ingestion Settings</label>
                 <depends>
                     <field id="streamx_connector_settings/general_settings/enable">1</field>
                 </depends>

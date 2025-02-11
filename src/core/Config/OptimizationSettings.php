@@ -23,11 +23,11 @@ class OptimizationSettings extends BaseConfigurationManager implements ObserverI
     }
 
     public function shouldPerformStreamxAvailabilityCheck(): bool {
-        return $this->getBoolConfigValue('should_perform_streamx_availability_check');
+        return (bool)$this->getGlobalConfigValue('should_perform_streamx_availability_check');
     }
 
     public function getBatchIndexingSize(): int {
-        return $this->getIntConfigValue('batch_indexing_size');
+        return (int)$this->getGlobalConfigValue('batch_indexing_size');
     }
 
     // override method from ObserverInterface to validate user entered value for batch indexing size

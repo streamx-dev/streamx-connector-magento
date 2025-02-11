@@ -12,30 +12,30 @@ class ClientConfiguration extends BaseConfigurationReader
     }
 
     public function getIngestionBaseUrl(int $storeId): string {
-        return $this->getStringConfigValue('ingestion_base_url', $storeId);
+        return (string)$this->getStoreLevelConfigValue('ingestion_base_url', $storeId);
     }
 
     public function getChannelName(int $storeId): string {
-        return $this->getStringConfigValue('channel_name', $storeId);
+        return (string)$this->getStoreLevelConfigValue('channel_name', $storeId);
     }
 
     public function getChannelSchemaName(int $storeId): string {
-        return $this->getStringConfigValue('channel_schema_name', $storeId);
+        return (string)$this->getStoreLevelConfigValue('channel_schema_name', $storeId);
     }
 
     public function getProductKeyPrefix(int $storeId): string {
-        return $this->getStringConfigValue('product_key_prefix', $storeId);
+        return (string)$this->getStoreLevelConfigValue('product_key_prefix', $storeId);
     }
 
     public function getCategoryKeyPrefix(int $storeId): string {
-        return $this->getStringConfigValue('category_key_prefix', $storeId);
+        return (string)$this->getStoreLevelConfigValue('category_key_prefix', $storeId);
     }
 
     public function getAuthToken(int $storeId): ?string {
-        return $this->getNullableStringConfigValue('auth_token', $storeId);
+        return $this->getStoreLevelConfigValue('auth_token', $storeId);
     }
 
     public function shouldDisableCertificateValidation(int $storeId): bool {
-        return $this->getBoolConfigValue('disable_certificate_validation', $storeId);
+        return (bool)$this->getStoreLevelConfigValue('disable_certificate_validation', $storeId);
     }
 }
