@@ -9,6 +9,7 @@ use Streamx\Clients\Ingestion\Publisher\Publisher;
 use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCore\Streamx\Model\Data;
+use function Amp\asyncCall;
 
 class Client {
 
@@ -30,9 +31,6 @@ class Client {
     }
 
     public function publish(array $entities, string $indexerName): void {
-        $entityCount = count($entities);
-        $this->logger->info("Start publishing $entityCount entities from $indexerName");
-
         $publishMessages = [];
         foreach ($entities as $entity) {
             $key = self::createStreamxKey($indexerName, $entity['id']);
@@ -40,22 +38,17 @@ class Client {
             $publishMessages[] = Message::newPublishMessage($key, $payload)->build();
         }
 
-        $this->ingest($publishMessages);
-        $this->logger->info("Finished publishing $entityCount entities from $indexerName");
+        $this->ingestAsync($publishMessages, $indexerName, 'Publish');
     }
 
     public function unpublish(array $entityIds, string $indexerName): void {
-        $entityCount = count($entityIds);
-        $this->logger->info("Start unpublishing $entityCount entities");
-
         $unpublishMessages = [];
         foreach ($entityIds as $entityId) {
             $key = self::createStreamxKey($indexerName, $entityId);
             $unpublishMessages[] = Message::newUnpublishMessage($key)->build();
         }
 
-        $this->ingest($unpublishMessages);
-        $this->logger->info("Finished unpublishing $entityCount entities");
+        $this->ingestAsync($unpublishMessages, $indexerName, 'Unpublish');
     }
 
     private function createStreamxKey(string $indexerName, int $entityId): string {
@@ -68,12 +61,24 @@ class Client {
         throw new Exception("Received data from unexpected indexer: $indexerName");
     }
 
+    private function ingestAsync(array $messages, string $indexerName, string $operationName): void {
+        $messagesCount = count($messages);
+        $this->logger->info("Before calling async $operationName of $messagesCount messages from $indexerName");
+        asyncCall(function () use ($messages, $indexerName, $operationName, $messagesCount): \Generator {
+            $this->logger->info("Start async $operationName of $messagesCount messages from $indexerName");
+            $this->ingest($messages);
+            $this->logger->info("Finished async $operationName of $messagesCount messages from $indexerName");
+            yield 1;
+        });
+        $this->logger->info("After calling async $operationName of $messagesCount messages from $indexerName");
+    }
+
     /**
      * @param Message[] $messages Ingestion messages
      */
     private function ingest(array $messages): void {
         try {
-            // TODO make sure this will never block. Best by turning off Pulsar container
+            $this->simulateDelay();
             $messageStatuses = $this->publisher->sendMulti($messages);
 
             foreach ($messageStatuses as $messageStatus) {
@@ -97,5 +102,18 @@ class Client {
             $this->logger->error('Exception checking if StreamX is available: ' . $e->getMessage(), ['exception' => $e]);
         }
         return false;
+    }
+
+    private function simulateDelay(): void {
+        $start = microtime(true);
+        $limit = 10000000;
+        $result = 0;
+
+        for ($i = 0; $i < $limit; $i++) {
+            $result += sqrt($i) * log($i + 1);
+        }
+
+        $end = microtime(true);
+        $this->logger->info("Operation took " . ($end - $start) . " seconds.");
     }
 }
