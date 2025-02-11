@@ -34,6 +34,14 @@ abstract class BaseConfigurationReader {
     /**
      * @return mixed|null
      */
+    public function getWebsiteLevelConfigValue(string $configField, int $websiteId) {
+        $path = $this->getConfigFieldFullPath($configField);
+        return $this->scopeConfig->getValue($path, ScopeInterface::SCOPE_WEBSITE, $websiteId);
+    }
+
+    /**
+     * @return mixed|null
+     */
     public function getStoreLevelConfigValue(string $configField, int $storeId) {
         $path = $this->getConfigFieldFullPath($configField);
         return $this->scopeConfig->getValue($path, ScopeInterface::SCOPE_STORE, $storeId);

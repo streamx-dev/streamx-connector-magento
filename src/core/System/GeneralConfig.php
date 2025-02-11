@@ -11,9 +11,9 @@ class GeneralConfig extends BaseConfigurationReader
         parent::__construct($scopeConfig, 'general_settings');
     }
 
-    public function getStoresToIndex(): array {
+    public function getStoresToIndex(int $websiteId): array {
         return parent::splitCommaSeparatedValueToArray(
-            $this->getGlobalConfigValue('allowed_stores')
+            $this->getWebsiteLevelConfigValue('allowed_stores', $websiteId)
         );
     }
 
