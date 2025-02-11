@@ -30,47 +30,33 @@ class Client {
         $this->categoryKeyPrefix = $categoryKeyPrefix;
     }
 
-    public function ingest(array $bulkOperations): void {
-        $operationsCount = count($bulkOperations);
-        $this->logger->info("Start ingesting $operationsCount operations");
+    public function publish(array $entities, string $indexerName): void {
+        $entityCount = count($entities);
+        $this->logger->info("Start publishing $entityCount entities from $indexerName");
 
-        $ingestionMessages = array_map(
-            function (array $item) {
-                return $this->mapToIngestionMessage($item);
-            },
-            $bulkOperations
-        );
-
-        if (!empty($ingestionMessages)) {
-            $this->ingestToStreamX($ingestionMessages);
+        $publishMessages = [];
+        foreach ($entities as $entity) {
+            $key = self::createStreamxKey($indexerName, $entity['id']);
+            $payload = new Data(json_encode($entity));
+            $publishMessages[] = Message::newPublishMessage($key, $payload)->build();
         }
-        $this->logger->info("Finished ingesting $operationsCount operations");
+
+        $this->ingest($publishMessages);
+        $this->logger->info("Finished publishing $entityCount entities from $indexerName");
     }
 
-    private function mapToIngestionMessage(array $item): Message {
-        if (isset($item['publish'])) {
-            return $this->createPublishMessage($item['publish']);
-        }
-        if (isset($item['unpublish'])) {
-            return $this->createUnpublishMessage($item['unpublish']);
-        }
-        throw new Exception('Unexpected bulk item type: ' . json_encode($item, JSON_PRETTY_PRINT));
-    }
+    public function unpublish(array $entityIds, string $indexerName): void {
+        $entityCount = count($entityIds);
+        $this->logger->info("Start unpublishing $entityCount entities");
 
-    private function createPublishMessage(array $publishItem): Message {
-        $indexerName = $publishItem['indexer_name'];
-        $entity = $publishItem['entity'];
-        $entityId = $entity['id'];
-        $key = self::createStreamxKey($indexerName, $entityId);
-        $payload = new Data(json_encode($entity));
-        return Message::newPublishMessage($key, $payload)->build();
-    }
+        $unpublishMessages = [];
+        foreach ($entityIds as $entityId) {
+            $key = self::createStreamxKey($indexerName, $entityId);
+            $unpublishMessages[] = Message::newUnpublishMessage($key)->build();
+        }
 
-    private function createUnpublishMessage(array $unpublishItem): Message {
-        $indexerName = $unpublishItem['indexer_name'];
-        $entityId = $unpublishItem['id'];
-        $key = self::createStreamxKey($indexerName, $entityId);
-        return Message::newUnpublishMessage($key)->build();
+        $this->ingest($unpublishMessages);
+        $this->logger->info("Finished unpublishing $entityCount entities");
     }
 
     private function createStreamxKey(string $indexerName, int $entityId): string {
@@ -86,7 +72,7 @@ class Client {
     /**
      * @param Message[] $messages Ingestion messages
      */
-    private function ingestToStreamX(array $messages): void {
+    private function ingest(array $messages): void {
         try {
             // TODO make sure this will never block. Best by turning off Pulsar container
             $messageStatuses = $this->publisher->sendMulti($messages);
@@ -104,10 +90,13 @@ class Client {
     public function isStreamxAvailable(): bool {
         try {
             $schema = $this->publisher->fetchSchema();
-            return str_contains($schema, 'IngestionMessage');
+            if (str_contains($schema, 'IngestionMessage')) {
+                return true;
+            }
+            $this->logger->error("Requested StreamX channel is not available, Ingestion Message definition is missing in schema:\n$schema");
         } catch (Exception $e) {
             $this->logger->error('Exception checking if StreamX is available: ' . $e->getMessage(), ['exception' => $e]);
-            return false;
         }
+        return false;
     }
 }

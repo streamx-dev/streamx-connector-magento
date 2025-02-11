@@ -6,9 +6,10 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Psr\Log\LoggerInterface;
 use Streamx\Clients\Ingestion\Exceptions\StreamxClientException;
 use StreamX\ConnectorCatalog\Model\Indexer\Action\BaseAction;
-use StreamX\ConnectorCore\Exception\ConnectionUnhealthyException;
+use StreamX\ConnectorCore\Config\OptimizationSettings;
 use StreamX\ConnectorCore\Indexer\GenericIndexerHandler;
 use StreamX\ConnectorCore\Indexer\StoreManager;
+use StreamX\ConnectorCore\Streamx\ClientResolver;
 use StreamX\ConnectorCore\System\GeneralConfig;
 
 abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionInterface, \Magento\Framework\Mview\ActionInterface
@@ -18,6 +19,8 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
     private GenericIndexerHandler $indexHandler;
     private BaseAction $action;
     private LoggerInterface $logger;
+    private OptimizationSettings $optimizationSettings;
+    private ClientResolver $clientResolver;
     private string $entityTypeName;
 
     public function __construct(
@@ -26,14 +29,18 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
         StoreManager $storeManager,
         BaseAction $action,
         LoggerInterface $logger,
-        string $entityType
+        OptimizationSettings $optimizationSettings,
+        ClientResolver $clientResolver,
+        string $entityTypeName
     ) {
         $this->connectorConfig = $connectorConfig;
         $this->indexHandler = $indexerHandler;
         $this->storeManager = $storeManager;
         $this->action = $action;
         $this->logger = $logger;
-        $this->entityTypeName = $entityType;
+        $this->optimizationSettings = $optimizationSettings;
+        $this->clientResolver = $clientResolver;
+        $this->entityTypeName = $entityTypeName;
     }
 
     /**
@@ -70,7 +77,6 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
 
     /**
      * @throws NoSuchEntityException
-     * @throws ConnectionUnhealthyException
      * @throws StreamxClientException
      */
     private function loadDocumentsAndSaveIndex($ids = []): void {
@@ -81,10 +87,17 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
 
         foreach ($this->storeManager->getStores() as $store) {
             $storeId = (int) $store->getId();
-            $this->logger->info("Indexing $this->entityTypeName from store $storeId");
+
+            $client = $this->clientResolver->getClient($storeId);
+            if ($this->optimizationSettings->shouldPerformStreamxAvailabilityCheck() && !$client->isStreamxAvailable()) {
+                $this->logger->info("Cannot reindex $this->entityTypeName data for store $storeId - StreamX is not available");
+                continue;
+            }
+
+            $this->logger->info("Start indexing $this->entityTypeName from store $storeId");
             $documents = $this->action->loadData($storeId, $ids);
-            $this->indexHandler->saveIndex($documents, $storeId);
-            $this->logger->info("Indexed $this->entityTypeName from store $storeId");
+            $this->indexHandler->saveIndex($documents, $storeId, $client);
+            $this->logger->info("Finished indexing $this->entityTypeName from store $storeId");
         }
     }
 }

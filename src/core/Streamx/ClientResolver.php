@@ -41,8 +41,6 @@ class ClientResolver {
                 $this->configuration->getProductKeyPrefix($storeId),
                 $this->configuration->getCategoryKeyPrefix($storeId)
             );
-        } else {
-            $this->logger->info("Reusing StreamX client and publisher");
         }
 
         return $this->clients[$storeId];

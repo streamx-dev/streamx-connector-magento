@@ -11,7 +11,7 @@ use StreamX\ConnectorCatalog\Indexer\ProductIndexerHandler;
 use StreamX\ConnectorCatalog\Model\Attributes\AttributeDefinition;
 use StreamX\ConnectorCatalog\Model\Indexer\Action\Product as ProductAction;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
-use StreamX\ConnectorCore\Exception\ConnectionUnhealthyException;
+use StreamX\ConnectorCore\Streamx\Client;
 use Zend_Db_Expr;
 use Zend_Db_Select_Exception;
 
@@ -51,11 +51,10 @@ class ProductsWithChangedAttributesIndexer
      * @param array<int, ?AttributeDefinition> $attributeDefinitions key = attributeId, value = AttributeDefinition
      * @throws LocalizedException
      * @throws NoSuchEntityException
-     * @throws ConnectionUnhealthyException
      * @throws StreamxClientException
      * @throws Zend_Db_Select_Exception
      */
-    public function process(array $attributeDefinitions, int $storeId): void
+    public function process(array $attributeDefinitions, int $storeId, Client $client): void
     {
         $changedAttributeIds = [];
         foreach ($attributeDefinitions as $attributeDefinition) {
@@ -77,7 +76,7 @@ class ProductsWithChangedAttributesIndexer
             $this->logger->info("Detected the following products to re-publish due to attribute definition change: " . json_encode($productEntityIds));
 
             $productsData = $this->action->loadData($storeId, $productEntityIds);
-            $this->indexerHandler->saveIndex($productsData, $storeId);
+            $this->indexerHandler->saveIndex($productsData, $storeId, $client);
         }
     }
 

@@ -5,7 +5,9 @@ namespace StreamX\ConnectorCatalog\Model\Indexer;
 use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCatalog\Indexer\ProductIndexerHandler;
 use StreamX\ConnectorCatalog\Model\Indexer\Action\Product as ProductAction;
+use StreamX\ConnectorCore\Config\OptimizationSettings;
 use StreamX\ConnectorCore\Indexer\StoreManager;
+use StreamX\ConnectorCore\Streamx\ClientResolver;
 use StreamX\ConnectorCore\System\GeneralConfig;
 
 class Product extends BaseStreamxIndexer {
@@ -15,7 +17,9 @@ class Product extends BaseStreamxIndexer {
         ProductIndexerHandler $indexerHandler,
         StoreManager $storeManager,
         ProductAction $action,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        OptimizationSettings $optimizationSettings,
+        ClientResolver $clientResolver
     ) {
         parent::__construct(
             $connectorConfig,
@@ -23,6 +27,8 @@ class Product extends BaseStreamxIndexer {
             $storeManager,
             $action,
             $logger,
+            $optimizationSettings,
+            $clientResolver,
             'Products'
         );
     }
