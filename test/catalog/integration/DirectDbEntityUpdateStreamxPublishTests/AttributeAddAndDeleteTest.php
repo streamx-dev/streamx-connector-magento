@@ -57,12 +57,10 @@ class AttributeAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $entityTypeId = $this->db->getProductEntityTypeId();
         $defaultStoreId = 0;
 
-        $this->db->execute("
+        $attributeId = $this->db->insert("
             INSERT INTO eav_attribute (entity_type_id, attribute_code, frontend_label, backend_type, frontend_input, is_user_defined) VALUES
                 ($entityTypeId, '$attributeCode', '$attributeName', 'varchar', 'text', TRUE)
         ");
-
-        $attributeId = $this->db->selectMaxId('eav_attribute', 'attribute_id');
 
         $this->db->execute("
             INSERT INTO catalog_eav_attribute (attribute_id, is_visible, is_visible_on_front, used_in_product_listing, is_visible_in_advanced_search) VALUES

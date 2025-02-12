@@ -1,0 +1,34 @@
+{
+  "sku": "1739276322",
+  "id": 4062,
+  "lang": "en",
+  "attributes": [
+    {
+      "name": "status",
+      "label": "Enable Product",
+      "values": [
+        {
+          "value": "1",
+          "valueLabel": "Enabled"
+        }
+      ],
+      "isFacet": false,
+      "options": [
+        {
+          "value": "1",
+          "label": "Enabled"
+        },
+        {
+          "value": "2",
+          "label": "Disabled"
+        }
+      ]
+    }
+  ],
+  "name": "The minimal product",
+  "label": "The minimal product",
+  "slug": "the-minimal-product-4062",
+  "categories": [],
+  "gallery": [],
+  "variants": []
+}

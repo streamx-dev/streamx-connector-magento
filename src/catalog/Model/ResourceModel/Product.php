@@ -44,7 +44,7 @@ class Product
     /**
      * @throws Exception
      */
-    public function getProducts(int $storeId = 1, array $productIds = [], int $fromId = 0, int $limit = 1000): array
+    public function getProducts(int $storeId, array $productIds, int $fromId, int $limit = 1000): array
     {
         $entityIdColumn = self::MAIN_TABLE_ALIAS . ".entity_id";
 
@@ -63,7 +63,7 @@ class Product
     /**
      * @return int[]
      */
-    public function getAllProductIds(int $storeId = 1): array
+    public function getAllProductIds(int $storeId): array
     {
         $select = $this->prepareProductSelect(['entity_id'], $storeId);
         return $this->getConnection()->fetchCol($select);

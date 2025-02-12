@@ -37,10 +37,13 @@ class CategoryData extends DataProviderInterface
 
         // 4. add formatted categories data to products
         foreach ($indexData as $productId => &$productData) {
-            $productCategoryIds = $productCategoriesMap[$productId];
-            foreach ($formattedCategories as $formattedCategory) {
-                if (in_array($formattedCategory['id'], $productCategoryIds)) {
-                    $productData['categories'][] = $formattedCategory;
+            $productData['categories'] = [];
+            if (isset($productCategoriesMap[$productId])) {
+                $productCategoryIds = $productCategoriesMap[$productId];
+                foreach ($formattedCategories as $formattedCategory) {
+                    if (in_array($formattedCategory['id'], $productCategoryIds)) {
+                        $productData['categories'][] = $formattedCategory;
+                    }
                 }
             }
         }

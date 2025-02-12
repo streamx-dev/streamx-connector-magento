@@ -71,13 +71,13 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
      */
     public function executeFull()
     {
-        $this->loadDocumentsAndSaveIndex();
+        $this->loadDocumentsAndSaveIndex([]);
     }
 
     /**
      * @throws StreamxClientException
      */
-    private function loadDocumentsAndSaveIndex($ids = []): void {
+    private function loadDocumentsAndSaveIndex(array $ids): void {
         if (!$this->connectorConfig->isEnabled()) {
             $this->logger->info("StreamX Connector is disabled, skipping indexing $this->entityTypeName");
             return;

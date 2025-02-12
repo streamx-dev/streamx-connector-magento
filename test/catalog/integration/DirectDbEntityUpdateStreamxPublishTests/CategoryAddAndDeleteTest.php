@@ -47,14 +47,12 @@ class CategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $rootCategoryId = 1;
         $parentCategoryId = 2;
         $defaultStoreId = 0;
-        $attributeSetId = $this->db->getDefaultProductAttributeSetId();
+        $attributeSetId = $this->db->getDefaultCategoryAttributeSetId();
 
-        $this->db->execute("
+        $categoryId = $this->db->insert("
             INSERT INTO catalog_category_entity (attribute_set_id, parent_id, path, position, level, children_count) VALUES
                 ($attributeSetId, $parentCategoryId, '', 1, 2, 0)
         ");
-
-        $categoryId = $this->db->selectMaxId('catalog_category_entity', 'entity_id');
 
         $this->db->execute("
             UPDATE catalog_category_entity

@@ -30,7 +30,7 @@ class Category
     /**
      * @throws Exception
      */
-    public function getCategories(int $storeId = 1, array $categoryIds = [], int $fromId = 0, int $limit = 1000): array
+    public function getCategories(int $storeId, array $categoryIds = [], int $fromId = 0, int $limit = 1000): array
     {
         $select = self::getCategoriesBaseSelect($this->resource, $this->categoryMetaData);
         $this->filterByStore($select, $storeId);

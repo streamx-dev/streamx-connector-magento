@@ -39,7 +39,7 @@ class OptimizationSettings extends BaseConfigurationManager implements ObserverI
                 self::MIN_BATCH, self::MAX_BATCH, self::DEFAULT_BATCH
             );
             $this->messageManager->addErrorMessage($errorMessage);
-            $this->setConfigValue('batch_indexing_size', self::DEFAULT_BATCH);
+            $this->setGlobalConfigValue('batch_indexing_size', self::DEFAULT_BATCH);
         }
     }
 }
