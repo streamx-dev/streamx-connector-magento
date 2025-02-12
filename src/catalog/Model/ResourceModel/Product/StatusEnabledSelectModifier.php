@@ -8,7 +8,6 @@ use Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use StreamX\ConnectorCatalog\Model\ResourceModel\SelectModifierInterface;
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
-use Magento\Eav\Model\Entity\Attribute;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Select;
 
@@ -16,7 +15,8 @@ class StatusEnabledSelectModifier implements SelectModifierInterface
 {
     private ProductMetaData $productMetaData;
     private ResourceConnection $resourceConnection;
-    private Attribute $statusAttribute;
+    private int $statusAttributeId;
+    private string $statusAttributeBackendTable;
 
     public function __construct(
         ProductMetaData $productMetaData,
@@ -25,7 +25,7 @@ class StatusEnabledSelectModifier implements SelectModifierInterface
     ) {
         $this->productMetaData = $productMetaData;
         $this->resourceConnection = $resourceConnection;
-        $this->statusAttribute = $this->loadStatusAttribute($attributeCollectionFactory);
+        $this->loadStatusAttribute($attributeCollectionFactory);
     }
 
     /**
@@ -35,27 +35,20 @@ class StatusEnabledSelectModifier implements SelectModifierInterface
     public function modify(Select $select, int $storeId): void
     {
         $linkField = $this->productMetaData->get()->getLinkField();
-        $connection = $this->resourceConnection->getConnection();
-        $backendTable = $this->resourceConnection->getTableName($this->statusAttribute->getBackendTable());
+        $backendTable = $this->resourceConnection->getTableName($this->statusAttributeBackendTable);
 
         $select->joinLeft(
             ['d' => $backendTable],
-            $connection->quoteInto(
-                "d.attribute_id = ? AND d.store_id = 0 AND d.$linkField = entity.$linkField",
-                $this->statusAttribute->getAttributeId()
-            ),
+            "d.attribute_id = $this->statusAttributeId AND d.store_id = 0 AND d.$linkField = entity.$linkField",
             []
         )->joinLeft(
             ['c' => $backendTable],
-            $connection->quoteInto(
-                "c.attribute_id = ? AND c.store_id = ? AND c.$linkField = entity.$linkField",
-                $this->statusAttribute->getAttributeId(), $storeId
-            ),
+            "c.attribute_id = $this->statusAttributeId AND c.store_id = $storeId AND c.$linkField = entity.$linkField",
             []
         )->where("CASE WHEN c.value_id > 0 THEN c.value = ? ELSE d.value = ? END", Status::STATUS_ENABLED);
     }
 
-    private function loadStatusAttribute(CollectionFactory $attributeCollectionFactory): Attribute
+    private function loadStatusAttribute(CollectionFactory $attributeCollectionFactory): void
     {
         $attributeCollection = $attributeCollectionFactory
             ->create()
@@ -63,7 +56,9 @@ class StatusEnabledSelectModifier implements SelectModifierInterface
             ->setPageSize(1);
 
         foreach ($attributeCollection as $attribute) {
-            return $attribute;
+            $this->statusAttributeId = (int) $attribute->getId();
+            $this->statusAttributeBackendTable = $attribute->getBackendTable();
+            return;
         }
 
         throw new DomainException("Cannot load status attribute");

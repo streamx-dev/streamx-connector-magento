@@ -7,7 +7,6 @@ use Exception;
 use Magento\Catalog\Model\ResourceModel\Category\Attribute\CollectionFactory;
 use StreamX\ConnectorCatalog\Model\CategoryMetaData;
 use StreamX\ConnectorCatalog\Model\ResourceModel\SelectModifierInterface;
-use Magento\Eav\Model\Entity\Attribute;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Select;
 
@@ -15,7 +14,8 @@ class ActiveCategorySelectModifier implements SelectModifierInterface
 {
     private CategoryMetaData $categoryMetadata;
     private ResourceConnection $resourceConnection;
-    private Attribute $isActiveAttribute;
+    private int $isActiveAttributeId;
+    private string $isActiveAttributeBackendTable;
 
     public function __construct(
         CategoryMetaData $metadataPool,
@@ -24,7 +24,7 @@ class ActiveCategorySelectModifier implements SelectModifierInterface
     ) {
         $this->categoryMetadata = $metadataPool;
         $this->resourceConnection = $resourceConnection;
-        $this->isActiveAttribute = $this->loadIsActiveAttribute($attributeCollectionFactory);
+        $this->loadIsActiveAttribute($attributeCollectionFactory);
     }
 
     /**
@@ -34,27 +34,20 @@ class ActiveCategorySelectModifier implements SelectModifierInterface
     public function modify(Select $select, int $storeId): void
     {
         $linkField = $this->categoryMetadata->get()->getLinkField();
-        $connection = $this->resourceConnection->getConnection();
-        $backendTable = $this->resourceConnection->getTableName($this->isActiveAttribute->getBackendTable());
+        $backendTable = $this->resourceConnection->getTableName($this->isActiveAttributeBackendTable);
 
         $select->joinLeft(
             ['d' => $backendTable],
-            $connection->quoteInto(
-                "d.attribute_id = ? AND d.store_id = 0 AND d.$linkField = entity.$linkField",
-                $this->isActiveAttribute->getAttributeId()
-            ),
+            "d.attribute_id = $this->isActiveAttributeId AND d.store_id = 0 AND d.$linkField = entity.$linkField",
             []
         )->joinLeft(
             ['c' => $backendTable],
-            $connection->quoteInto(
-                "c.attribute_id = ? AND c.store_id = ? AND c.$linkField = entity.$linkField",
-                $this->isActiveAttribute->getAttributeId(), $storeId
-            ),
+            "c.attribute_id = $this->isActiveAttributeId AND c.store_id = $storeId AND c.$linkField = entity.$linkField",
             []
         )->where("CASE WHEN c.value_id > 0 THEN c.value = 1 ELSE d.value = 1 END");
     }
 
-    private function loadIsActiveAttribute(CollectionFactory $attributeCollectionFactory): Attribute
+    private function loadIsActiveAttribute(CollectionFactory $attributeCollectionFactory): void
     {
         $attributeCollection = $attributeCollectionFactory
             ->create()
@@ -62,7 +55,9 @@ class ActiveCategorySelectModifier implements SelectModifierInterface
             ->setPageSize(1);
 
         foreach ($attributeCollection as $attribute) {
-            return $attribute;
+            $this->isActiveAttributeId = (int) $attribute->getId();
+            $this->isActiveAttributeBackendTable = $attribute->getBackendTable();
+            return;
         }
 
         throw new DomainException("Cannot load is_active attribute");
