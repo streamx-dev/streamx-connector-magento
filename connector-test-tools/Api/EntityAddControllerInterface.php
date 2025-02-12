@@ -9,11 +9,11 @@ interface EntityAddControllerInterface {
     /**
      * Adds a product
      * @param string $productName The display name for the new product
-     * @param int $categoryId Id of the category for the new product
+     * @param int[] $categoryIds IDs of the categories for the new product
      * @return int ID of the inserted product
      * @throws Exception
      */
-    public function addProduct(string $productName, int $categoryId): int;
+    public function addProduct(string $productName, array $categoryIds): int;
 
     /**
      * Adds a category

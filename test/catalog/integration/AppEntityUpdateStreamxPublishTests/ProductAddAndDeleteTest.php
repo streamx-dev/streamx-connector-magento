@@ -17,21 +17,30 @@ class ProductAddAndDeleteTest extends BaseAppEntityUpdateTest {
     public function shouldPublishProductAddedUsingMagentoApplicationToStreamx_AndUnpublishDeletedProduct() {
         // given
         $productName = 'The new great watch';
-        $categoryId = $this->db->getCategoryId('Watches');
+        $categoryIds = [
+            $this->db->getCategoryId('Watches'),
+            $this->db->getCategoryId('Collections'), // note: this category is not active in sample data by default
+            $this->db->getCategoryId('Sale')
+        ];
 
         // when
         $this->allowIndexingAllAttributes();
-        $productId = self::addProduct($productName, $categoryId);
+        $productId = self::addProduct($productName, $categoryIds);
 
         // then
         $expectedKey = "pim:$productId";
         try {
-            $this->assertExactDataIsPublished($expectedKey, 'added-watch-product-without-custom-options.json', [
+            $publishedJson = $this->assertExactDataIsPublished($expectedKey, 'added-watch-product-without-custom-options.json', [
                 // mask variable parts (ids and generated sku)
                 '"id": [0-9]+' => '"id": 0',
                 '"sku": "[^"]+"' => '"sku": "[MASKED]"',
                 '"the-new-great-watch-[0-9]+"' => '"the-new-great-watch-0"'
             ]);
+
+            // and
+            $this->assertStringContainsString('Watches', $publishedJson);
+            $this->assertStringNotContainsString('Collections', $publishedJson);
+            $this->assertStringContainsString('Sale', $publishedJson);
         } finally {
             try {
                 // and when
@@ -45,10 +54,10 @@ class ProductAddAndDeleteTest extends BaseAppEntityUpdateTest {
         }
     }
 
-    private function addProduct(string $productName, int $categoryId): int {
+    private function addProduct(string $productName, array $categoryIds): int {
         return (int) $this->callMagentoPutEndpoint('product/add', [
             'productName' => $productName,
-            'categoryId' => $categoryId
+            'categoryIds' => $categoryIds
         ]);
     }
 

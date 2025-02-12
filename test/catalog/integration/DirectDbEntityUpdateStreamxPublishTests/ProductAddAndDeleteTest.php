@@ -53,11 +53,15 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
     public function shouldPublishProductAddedDirectlyInDatabaseToStreamx_AndUnpublishDeletedProduct() {
         // given
         $productName = 'The new great watch';
-        $watchesCategoryId = $this->db->getCategoryId('Watches');
+        $categoryIds = [
+            $this->db->getCategoryId('Watches'),
+            $this->db->getCategoryId('Collections'), // note: this category is not active in sample data by default
+            $this->db->getCategoryId('Sale')
+        ];
 
         // when
         $this->allowIndexingAllAttributes();
-        $productId = $this->insertNewProduct($productName, $watchesCategoryId);
+        $productId = $this->insertNewProduct($productName, $categoryIds);
         $expectedKey = "pim:$productId";
 
         try {
@@ -65,7 +69,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
             $this->reindexMview();
 
             // then
-            $this->assertExactDataIsPublished($expectedKey, 'added-watch-product.json', [
+            $publishedJson = $this->assertExactDataIsPublished($expectedKey, 'added-watch-product.json', [
                 // mask variable parts (ids and generated sku)
                 '"id": [0-9]+' => '"id": 0',
                 '"sku": "[^"]+"' => '"sku": "[MASKED]"',
@@ -76,6 +80,11 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
                 '"value": ' . self::PRODUCT_PRICE => '"value": ' . self::INDEXED_PRICE,
                 '"discountedValue": ' . self::PRODUCT_PRICE => '"discountedValue": ' . self::DISCOUNTED_PRICE
             ]);
+
+            // and
+            $this->assertStringContainsString('Watches', $publishedJson);
+            $this->assertStringNotContainsString('Collections', $publishedJson);
+            $this->assertStringContainsString('Sale', $publishedJson);
         } finally {
             try {
                 // and when
@@ -97,7 +106,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $watchesCategoryId = $this->db->getCategoryId('Watches');
 
         // when
-        $productId = $this->insertNewProduct($productName, $watchesCategoryId);
+        $productId = $this->insertNewProduct($productName, [$watchesCategoryId]);
         $expectedKey = "pim:$productId";
 
         // and: make the product not active:
@@ -133,7 +142,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $productIds = [];
         for ($i = 0; $i < $productsCount; $i++) {
             $productNames[] = "New watch $i";
-            $productIds[] = $this->insertNewProduct($productNames[$i], $watchesCategoryId);
+            $productIds[] = $this->insertNewProduct($productNames[$i], [$watchesCategoryId]);
         }
 
         try {
@@ -192,7 +201,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
      * Inserts new product to database
      * @return int ID of the inserted product
      */
-    private function insertNewProduct(string $productName, string $categoryId): int {
+    private function insertNewProduct(string $productName, array $categoryIds): int {
         $sku = (string) (new DateTime())->getTimestamp();
         $productInternalName = strtolower(str_replace(' ', '-', $productName));
 
@@ -242,10 +251,12 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
                 ($productId, $websiteId)
         ");
 
-        $this->db->execute("
-            INSERT INTO catalog_category_product (category_id, product_id, position) VALUES
-                ($categoryId, $productId, 0)
-        ");
+        foreach ($categoryIds as $categoryId) {
+            $this->db->execute("
+                INSERT INTO catalog_category_product (category_id, product_id, position) VALUES
+                    ($categoryId, $productId, 0)
+            ");
+        }
 
         $this->db->execute("
             INSERT INTO cataloginventory_stock_item (product_id, stock_id, qty, is_in_stock, is_qty_decimal, manage_stock) VALUES

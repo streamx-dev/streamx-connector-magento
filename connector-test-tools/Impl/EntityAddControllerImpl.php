@@ -67,7 +67,7 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
     /**
      * @inheritdoc
      */
-    public function addProduct(string $productName, int $categoryId): int {
+    public function addProduct(string $productName, array $categoryIds): int {
         $sku = (string) (new DateTime())->getTimestamp();
         $quantity = 100;
         $price = 350;
@@ -94,8 +94,10 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
 
             $transaction = new Transaction();
             $transaction->addObject($product);
-            $transaction->addCommitCallback(function () use ($sku, $categoryId, $product) {
-                $this->addProductToCategory($sku, $categoryId);
+            $transaction->addCommitCallback(function () use ($sku, $categoryIds, $product) {
+                foreach ($categoryIds as $categoryId) {
+                    $this->addProductToCategory($sku, $categoryId);
+                }
                 $this->addAttributeOptionsToProduct($product, 'color', ['Brown']);
                 $this->addAttributeOptionsToProduct($product, 'material', ['Metal', 'Plastic', 'Leather']);
             });
