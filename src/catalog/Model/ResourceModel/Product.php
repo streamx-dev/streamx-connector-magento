@@ -4,8 +4,8 @@ namespace StreamX\ConnectorCatalog\Model\ResourceModel;
 
 use Exception;
 use Magento\Framework\DB\Adapter\AdapterInterface;
-use StreamX\ConnectorCatalog\Model\ResourceModel\Product\StatusSelectModifier;
-use StreamX\ConnectorCatalog\Model\ResourceModel\Product\WebsiteSelectModifier;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\StatusEnabledSelectModifier;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\CurrentWebsiteSelectModifier;
 use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use Magento\Framework\App\ResourceConnection;
@@ -14,11 +14,6 @@ use Magento\Framework\DB\Select;
 
 class Product
 {
-    /**
-     * Alias for catalog_product_entity table
-     */
-    public const MAIN_TABLE_ALIAS = 'entity';
-
     private ResourceConnection $resourceConnection;
     private DbHelper $dbHelper;
     private CatalogConfig $productSettings;
@@ -28,8 +23,8 @@ class Product
 
     public function __construct(
         CatalogConfig $configSettings,
-        WebsiteSelectModifier $websiteSelectModifier,
-        StatusSelectModifier $activeSelectModifier,
+        CurrentWebsiteSelectModifier $currentWebsiteSelectModifier,
+        StatusEnabledSelectModifier $statusEnabledSelectModifier,
         ResourceConnection $resourceConnection,
         ProductMetaData $productMetaData,
         DbHelper $dbHelper
@@ -37,7 +32,7 @@ class Product
         $this->resourceConnection = $resourceConnection;
         $this->dbHelper = $dbHelper;
         $this->productSettings = $configSettings;
-        $this->selectModifier = new CompositeSelectModifier($websiteSelectModifier, $activeSelectModifier);
+        $this->selectModifier = new CompositeSelectModifier($currentWebsiteSelectModifier, $statusEnabledSelectModifier);
         $this->productMetaData = $productMetaData;
     }
 
@@ -46,7 +41,7 @@ class Product
      */
     public function getProducts(int $storeId, array $productIds, int $fromId, int $limit = 1000): array
     {
-        $entityIdColumn = self::MAIN_TABLE_ALIAS . ".entity_id";
+        $entityIdColumn = "entity.entity_id";
 
         $select = $this
             ->prepareProductSelect($this->getRequiredColumns(), $storeId)
@@ -75,7 +70,7 @@ class Product
     private function prepareProductSelect(array $columns, int $storeId): Select {
         $select = $this->prepareBaseProductSelect($columns, $storeId);
         $this->addProductTypeFilter($select);
-        $select->order(sprintf("%s.entity_id ASC", self::MAIN_TABLE_ALIAS));
+        $select->order('entity.entity_id ASC');
         return $select;
     }
 
@@ -86,11 +81,11 @@ class Product
     {
         $select = $this->getConnection()->select()
             ->from(
-                [self::MAIN_TABLE_ALIAS => $this->productMetaData->get()->getEntityTable()],
+                ['entity' => $this->productMetaData->get()->getEntityTable()],
                 $requiredColumns
             );
 
-        $this->selectModifier->modify($select, $storeId);
+        $this->selectModifier->modifyAll($select, $storeId);
 
         return $select;
     }
@@ -132,7 +127,7 @@ class Product
 
         $select->join(
             ['link_table' => $this->resourceConnection->getTableName('catalog_product_super_link')],
-            sprintf('link_table.product_id = %s.entity_id', self::MAIN_TABLE_ALIAS),
+            'link_table.product_id = entity.entity_id',
             []
         );
 
@@ -147,7 +142,7 @@ class Product
     private function addProductTypeFilter(Select $select): void
     {
         $types = $this->productSettings->getAllowedProductTypes();
-        $select->where(sprintf('%s.type_id IN (?)', self::MAIN_TABLE_ALIAS), $types);
+        $select->where('entity.type_id IN (?)', $types);
     }
 
     /**

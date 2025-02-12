@@ -9,7 +9,7 @@ use Magento\Framework\DB\Select;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Store\Model\StoreManagerInterface;
 
-class WebsiteSelectModifier implements SelectModifierInterface
+class CurrentWebsiteSelectModifier implements SelectModifierInterface
 {
     private ResourceConnection $resourceConnection;
     private StoreManagerInterface $storeManager;
@@ -27,14 +27,14 @@ class WebsiteSelectModifier implements SelectModifierInterface
      */
     public function modify(Select $select, int $storeId): void
     {
-        $connection = $select->getConnection();
         $websiteId = $this->getWebsiteId($storeId);
-        $indexTable = $this->resourceConnection->getTableName('catalog_product_website');
+        $tableName = $this->resourceConnection->getTableName('catalog_product_website');
 
-        $conditions = [sprintf('websites.product_id = %s.entity_id', Product::MAIN_TABLE_ALIAS)];
-        $conditions[] = $connection->quoteInto('websites.website_id = ?', $websiteId);
-
-        $select->join(['websites' => $indexTable], join(' AND ', $conditions), []);
+        $select->join(
+            $tableName,
+            "$tableName.product_id = entity.entity_id AND $tableName.website_id = $websiteId",
+            []
+        );
     }
 
     /**
