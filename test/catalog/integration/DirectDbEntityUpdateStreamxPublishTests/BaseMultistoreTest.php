@@ -13,7 +13,7 @@ namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxP
  *  - Go to StreamX Connector settings, add the new store view to the list of Stores to reindex
  *  - Open Streamx Ingestion settings, and override settings in scope of the newly created store (view):
  *    - "pim_store_2:" as the product key prefix
- *      "cat_store_2:" as the category key prefix
+ *    - "cat_store_2:" as the category key prefix
  */
 abstract class BaseMultistoreTest extends BaseDirectDbEntityUpdateTest {
 
