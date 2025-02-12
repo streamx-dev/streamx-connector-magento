@@ -4,7 +4,7 @@ namespace StreamX\ConnectorCatalog\Model\ResourceModel;
 
 use Magento\Framework\DB\Select;
 
-class CompositeSelectModifier implements SelectModifierInterface
+class CompositeSelectModifier
 {
     /**
      * @var SelectModifierInterface[]
@@ -16,10 +16,7 @@ class CompositeSelectModifier implements SelectModifierInterface
         $this->selectModifiers = $selectModifier;
     }
 
-    /**
-     * Modify the select statement
-     */
-    public function modify(Select $select, int $storeId): void
+    public function modifyAll(Select $select, int $storeId): void
     {
         foreach ($this->selectModifiers as $selectModifier) {
             $selectModifier->modify($select, $storeId);

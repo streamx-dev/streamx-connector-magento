@@ -16,14 +16,14 @@ class Children
     private CategoryMetaData $categoryMetaData;
 
     public function __construct(
-        StoreSelectModifier $storeSelectModifier,
-        ActiveSelectModifier $activeSelectModifier,
+        CategoryFromStoreSelectModifier $categoryFromStoreSelectModifier,
+        ActiveCategorySelectModifier $activeCategorySelectModifier,
         ResourceConnection $resourceModel,
         CategoryMetaData $categoryMetaData
     ) {
         $this->resource = $resourceModel;
         $this->categoryMetaData = $categoryMetaData;
-        $this->selectModifier = new CompositeSelectModifier($storeSelectModifier, $activeSelectModifier);
+        $this->selectModifier = new CompositeSelectModifier($categoryFromStoreSelectModifier, $activeCategorySelectModifier);
     }
 
     /**
@@ -33,7 +33,7 @@ class Children
     {
         $childIds = $this->getChildrenIds($category, $storeId);
         $select = Category::getCategoriesBaseSelect($this->resource, $this->categoryMetaData);
-        $this->selectModifier->modify($select, $storeId);
+        $this->selectModifier->modifyAll($select, $storeId);
 
         $select->where("entity.entity_id IN (?)", $childIds);
         $select->order('path asc');
@@ -58,7 +58,7 @@ class Children
             $connection->quoteIdentifier('path') . ' LIKE :c_path'
         );
 
-        $this->selectModifier->modify($select, $storeId);
+        $this->selectModifier->modifyAll($select, $storeId);
 
         return $this->getConnection()->fetchCol($select, $bind);
     }
