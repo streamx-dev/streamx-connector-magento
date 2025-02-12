@@ -19,5 +19,5 @@ abstract class BaseMultistoreTest extends BaseDirectDbEntityUpdateTest {
 
     protected const DEFAULT_STORE_ID = 0; // comes with markshust/docker-magento
     protected const STORE_1_ID = 1; // comes with markshust/docker-magento
-    protected const STORE_2_ID = 3; // manually created according to instructions in the class comments
+    protected const STORE_2_ID = 2; // manually created according to instructions in the class comments
 }
