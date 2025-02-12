@@ -45,7 +45,7 @@ class ProductCategoryUpdateTest extends BaseDirectDbEntityUpdateTest {
             $this->reindexMview();
 
             // then
-            $this->assertDataIsPublished($expectedKey, $newCategoryName);
+            $this->assertExactDataIsPublished($expectedKey, 'bag-with-edited-category.json');
         } finally {
             $this->changeProductCategoryInDb($productId, $newCategoryId, $oldCategoryId);
         }

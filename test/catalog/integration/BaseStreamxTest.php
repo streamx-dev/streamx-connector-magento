@@ -28,33 +28,6 @@ abstract class BaseStreamxTest extends TestCase {
     private const SLEEP_MICROS_BETWEEN_DATA_PUBLISH_CHECKS = 200_000;
 
     /**
-     * @deprecated move to use assertExactDataIsPublished instead, as it gives more exact verification
-     */
-    protected function assertDataIsPublished(string $key, string $contentSubstring): void {
-        $url = self::STREAMX_DELIVERY_SERVICE_BASE_URL . '/' . $key;
-
-        $startTime = time();
-        $response = null;
-        while (time() - $startTime < self::DATA_PUBLISH_TIMEOUT_SECONDS) {
-            $response = @file_get_contents($url);
-            if ($response !== false) {
-                echo "Published content: $response\n";
-                if (str_contains($response, $contentSubstring)) {
-                    $this->assertTrue(true); // needed to work around the "This test did not perform any assertions" warning
-                    return;
-                }
-            }
-            usleep(self::SLEEP_MICROS_BETWEEN_DATA_PUBLISH_CHECKS);
-        }
-
-        if ($response !== false) {
-            $this->assertStringContainsString($contentSubstring, $response);
-        } else {
-            $this->fail("$url: not found");
-        }
-    }
-
-    /**
      * @return string the actually published data if assertion passes, or exception if assertion failed
      */
     protected function assertExactDataIsPublished(string $key, string $validationFileName, array $regexReplacements = [], bool $ignoreOrderInArrays = false): ?string {

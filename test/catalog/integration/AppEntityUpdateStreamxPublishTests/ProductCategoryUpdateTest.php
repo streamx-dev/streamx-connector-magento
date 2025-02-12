@@ -47,10 +47,10 @@ class ProductCategoryUpdateTest extends BaseAppEntityUpdateTest {
 
         // then
         try {
-            $this->assertDataIsPublished($expectedKey, $newCategoryName);
+            $this->assertExactDataIsPublished($expectedKey, 'bag-with-edited-category.json');
         } finally {
             self::changeProductCategory($productId, $newCategoryId, $oldCategoryId);
-            $this->assertDataIsPublished($expectedKey, $oldCategoryName);
+            $this->assertExactDataIsPublished($expectedKey, 'original-bag-product.json');
         }
     }
 
