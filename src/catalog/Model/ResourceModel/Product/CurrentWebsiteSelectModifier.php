@@ -2,11 +2,9 @@
 
 namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
-use StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 use StreamX\ConnectorCatalog\Model\ResourceModel\SelectModifierInterface;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Select;
-use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Store\Model\StoreManagerInterface;
 
 class CurrentWebsiteSelectModifier implements SelectModifierInterface
@@ -27,7 +25,7 @@ class CurrentWebsiteSelectModifier implements SelectModifierInterface
      */
     public function modify(Select $select, int $storeId): void
     {
-        $websiteId = $this->getWebsiteId($storeId);
+        $websiteId = (int)$this->storeManager->getStore($storeId)->getWebsiteId();
         $tableName = $this->resourceConnection->getTableName('catalog_product_website');
 
         $select->join(
@@ -35,17 +33,5 @@ class CurrentWebsiteSelectModifier implements SelectModifierInterface
             "$tableName.product_id = entity.entity_id AND $tableName.website_id = $websiteId",
             []
         );
-    }
-
-    /**
-     * Retrieve WebsiteId for given store
-     *
-     * @throws NoSuchEntityException
-     */
-    private function getWebsiteId(int $storeId): int
-    {
-        $store = $this->storeManager->getStore($storeId);
-
-        return (int) $store->getWebsiteId();
     }
 }

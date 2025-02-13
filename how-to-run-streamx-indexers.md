@@ -57,28 +57,20 @@ To allow Magento cron jobs to be executed automatically, you can add them to the
  - verify if changes are saved:<br />
      `crontab -l`
 
-## Custom execution of StreamX Indexers
+## Command line execution of StreamX Indexers
 It is possible to publish all currently available products or categories by using the following command:
 ```bash
 bin/magento indexer:reindex [indexer-name]
 
-# for example:
+# examples:
+bin/magento indexer:reindex streamx_product_indexer
 bin/magento indexer:reindex streamx_category_indexer
 ```
 
-StreamX Connector comes with additional commands to publish entities to StreamX.
-
-The following command triggers all StreamX Indexers to publish data coming from Store with ID 1:
+Note: The below command would trigger re-publishing all products, so it's discouraged to execute it.
+This indexer re-publishes products when their attribute definitions have changed, and is mainly intended for internal use.
 ```bash
-bin/magento streamx:reindex --store=1
-```
-
-It is also possible to trigger publishing a single entity, using the following command:
-```bash
-bin/magento streamx:index [indexer-name] [store-id] [entity-id]
-
-# for example, to publish product with ID 6 from store 1 to StreamX:
-bin/magento streamx:index streamx_product_indexer 1 6
+bin/magento indexer:reindex streamx_attribute_indexer
 ```
 
 You can also perform any standard `bin/magento indexer:[operation-name]` operations on the StreamX Indexers (one example is `indexer:reset` command).

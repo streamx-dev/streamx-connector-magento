@@ -11,19 +11,4 @@
         </arguments>
     </type>
 
-    <type name="Magento\Framework\Console\CommandListInterface">
-        <arguments>
-            <argument name="commands" xsi:type="array">
-                <item name="publish_single_entity" xsi:type="object">StreamX\ConnectorCore\Console\Command\PublishSingleEntityCommand</item>
-                <item name="publish_all_entities" xsi:type="object">StreamX\ConnectorCore\Console\Command\PublishAllEntitiesCommand</item>
-                <item name="reset_streamx_indexers" xsi:type="object">StreamX\ConnectorCore\Console\Command\ResetStreamxIndexersCommand</item>
-            </argument>
-        </arguments>
-    </type>
-
-    <type name="StreamX\ConnectorCore\Console\Command\PublishAllEntitiesCommand">
-        <arguments>
-            <argument name="eventManager" xsi:type="object">Magento\Framework\Event\ManagerInterface\Proxy</argument>
-        </arguments>
-    </type>
 </config>

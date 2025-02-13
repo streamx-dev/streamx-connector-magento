@@ -12,7 +12,6 @@
                 <disable_certificate_validation>0</disable_certificate_validation>
             </streamx_client>
             <general_settings>
-                <allowed_stores>1</allowed_stores>
                 <enable>0</enable>
             </general_settings>
             <optimization_settings>
