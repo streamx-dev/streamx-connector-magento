@@ -13,7 +13,6 @@ class IndexableStoresProvider
 {
     private StoreManagerInterface $storeManager;
     private GeneralConfig $generalSettings;
-    private ?array $loadedStores = null;
 
     public function __construct(
         GeneralConfig $generalSettings,
@@ -28,25 +27,19 @@ class IndexableStoresProvider
      */
     public function getStores(): array
     {
-        if ($this->loadedStores) {
-            return $this->loadedStores;
-        }
-
-        $websiteId = (int) $this->storeManager->getStore()->getWebsiteId();
-        $allowedStoreIds = $this->generalSettings->getStoresToIndex($websiteId);
         $allowedStores = [];
 
-        foreach ($this->storeManager->getStores() as $store) {
-            if (in_array($store->getId(), $allowedStoreIds)) {
+        $allStores = $this->storeManager->getStores();
+        foreach ($allStores as $store) {
+            $storeId = (int)$store->getId();
+            $websiteId = (int)$store->getWebsiteId();
+
+            $storeIdsAllowedForWebsite = $this->generalSettings->getStoresToIndex($websiteId);
+            if (in_array($storeId, $storeIdsAllowedForWebsite)) {
                 $allowedStores[] = $store;
             }
         }
 
-        return $this->loadedStores = $allowedStores;
-    }
-
-    public function override(array $stores): void
-    {
-        $this->loadedStores = $stores;
+        return $allowedStores;
     }
 }

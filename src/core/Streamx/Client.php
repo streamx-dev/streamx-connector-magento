@@ -36,6 +36,7 @@ class Client {
         $publishMessages = [];
         foreach ($entities as $entity) {
             $key = self::createStreamxKey($indexerName, $entity['id']);
+            $this->logger->info("Publishing entity from $indexerName at $key");
             $payload = new Data(json_encode($entity));
             $publishMessages[] = Message::newPublishMessage($key, $payload)->build();
         }
@@ -51,6 +52,7 @@ class Client {
         $unpublishMessages = [];
         foreach ($entityIds as $entityId) {
             $key = self::createStreamxKey($indexerName, $entityId);
+            $this->logger->info("Unpublishing entity from $indexerName at $key");
             $unpublishMessages[] = Message::newUnpublishMessage($key)->build();
         }
 

@@ -28,10 +28,12 @@ You can find a basic mesh file at `src/catalog/test/resources/mesh.yaml`
    - Click on `STORES` on the left panel
    - Click `Configuration` in the `Settings` area
    - Expand `STREAMX` section, click on `Connector` item, then expand `General Settings` section on the right
-   - Select `Yes` for the `Enable StreamX Connector` setting
-   - Expand `StreamX Connector Settings` section below
+   - Select `Yes` for the `Enable StreamX Connector` setting and click the `Save Config` button
+   - Switch Scope to website and select stores on the `List of stores to reindex`
+   - Expand `StreamX Ingestion Settings` section below
    - Edit the settings you need, or leave the default values
    - Click the `Save Config` button
+   - You can also provide separate values for `StreamX Ingestion Settings` for each store
 
 
 ### 5. Verify the Connector by indexing and publishing all categories to StreamX

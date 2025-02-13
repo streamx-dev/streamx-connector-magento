@@ -16,7 +16,69 @@ class MultistoreProductAddAndDeleteTest extends BaseMultistoreTest {
     }
 
     /** @test */
-    public function shouldPublishProductAddedDirectlyInDatabaseToStreamx_AndUnpublishDeletedProduct() {
+    public function shouldPublishProductsFromWebsite() {
+        // given: insert product as enabled for all stores by default, but disabled for store 1:
+        $productIdOnlyInDefaultWebsite = 1;
+        $productIdInBothWebsites = 4; // as in how-to-setup-local-development-environment.md
+
+        // when change name of products at non-default store levels:
+        $this->addStoreLevelProductName(self::DEFAULT_WEBSITE_ID, self::STORE_2_ID, $productIdOnlyInDefaultWebsite);
+        $this->addStoreLevelProductName(self::DEFAULT_WEBSITE_ID, self::STORE_2_ID, $productIdInBothWebsites);
+
+        // and
+        $expectedPublishedKeys = [
+            "pim:$productIdInBothWebsites",
+            "pim:$productIdOnlyInDefaultWebsite",
+            "pim_store_2:$productIdOnlyInDefaultWebsite",
+            "pim_store_2:$productIdInBothWebsites",
+            "pim_store_3:$productIdInBothWebsites"
+        ];
+        $unexpectedPublishedKeys = [
+            "pim_store_3:$productIdOnlyInDefaultWebsite"
+        ];
+
+        foreach ($expectedPublishedKeys as $key) {
+            $this->removeFromStreamX($key);
+        }
+        foreach ($unexpectedPublishedKeys as $key) {
+            $this->removeFromStreamX($key);
+        }
+
+        try {
+            // when
+            $this->reindexMview();
+
+            // then
+            $this->assertPublished('pim:1', 'Joust Duffle Bag');
+            $this->assertPublished('pim:4', 'Wayfarer Messenger Bag');
+            $this->assertPublished('pim_store_2:1', 'Name of product 1 in store 2 of website 1');
+            $this->assertPublished('pim_store_2:4', 'Name of product 4 in store 2 of website 1');
+            $this->assertPublished('pim_store_3:4', 'Wayfarer Messenger Bag');
+
+            // and
+            foreach ($unexpectedPublishedKeys as $key) {
+                $this->assertDataIsNotPublished($key);
+            }
+        } finally {
+            $this->db->deleteLastRow('catalog_category_entity_varchar', 'value_id');
+            $this->db->deleteLastRow('catalog_category_entity_varchar', 'value_id');
+        }
+    }
+
+    private function addStoreLevelProductName(int $websiteId, int $storeId, int $productId): void {
+        $productNameAttributeId = $this->db->getProductNameAttributeId();
+        $this->db->execute("
+            INSERT INTO catalog_product_entity_varchar (entity_id, attribute_id, store_id, value) VALUES (
+                $productId,
+                $productNameAttributeId,
+                $storeId,
+                'Name of product $productId in store $storeId of website $websiteId'
+            )
+        ");
+    }
+
+    /** @test */
+    public function shouldPublishEnabledProduct() {
         // given: insert product as enabled for all stores by default, but disabled for store 1:
         $sku = (string) (new DateTime())->getTimestamp();
         $productId = $this->insertProduct(
@@ -64,7 +126,7 @@ class MultistoreProductAddAndDeleteTest extends BaseMultistoreTest {
     }
 
     private function insertProduct(string $sku, array $storeIdProductNameMap, array $storeIdProductStatusMap): int {
-        $websiteId = 1;
+        $websiteId = self::DEFAULT_WEBSITE_ID;
         $attributeSetId = $this->db->getDefaultProductAttributeSetId();
         $nameAttrId = $this->db->getProductAttributeId('name');
         $statusAttrId = $this->db->getProductAttributeId('status');

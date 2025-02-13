@@ -170,10 +170,6 @@ class MagentoMySqlQueryExecutor {
         ");
     }
 
-    public function selectMaxId(string $table, string $idColumn): int {
-        return $this->selectFirstField("SELECT MAX($idColumn) FROM $table");
-    }
-
     public function deleteLastRow(string $table, string $idColumn): void {
         $this->execute("
             DELETE FROM $table

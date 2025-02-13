@@ -11,7 +11,7 @@ use StreamX\ConnectorCatalog\test\integration\utils\ValidationFileUtils;
  * Prerequisites to run these tests:
  * 1. markshust/docker-magento images must be running
  * 2. StreamX Connector must be deployed to the Magento instance
- * 3. StreamX Connector must be enabled and configured in Magento
+ * 3. StreamX Connector must be enabled and configured in Magento (see how-to-setup-local-development-environment.md)
  * 4. StreamX must be running (test/resources/mesh.yaml as minimal mesh setup)
  * 5. The add-rest-ingestion-to-magento-network.sh script must be executed
  */
@@ -26,6 +26,23 @@ abstract class BaseStreamxTest extends TestCase {
     private const STREAMX_DELIVERY_SERVICE_BASE_URL = "http://localhost:8081";
     private const DATA_PUBLISH_TIMEOUT_SECONDS = 3;
     private const SLEEP_MICROS_BETWEEN_DATA_PUBLISH_CHECKS = 200_000;
+
+    // TODO: remove, replace usages with assertExactDataIsPublished
+    protected function assertPublished(string $key, string $contentFragment): void {
+        $url = self::STREAMX_DELIVERY_SERVICE_BASE_URL . '/' . $key;
+
+        $startTime = time();
+        while (time() - $startTime < self::DATA_PUBLISH_TIMEOUT_SECONDS) {
+            $response = @file_get_contents($url);
+            if ($response !== false) {
+                $this->assertStringContainsString($contentFragment, $response);
+                return;
+            }
+            usleep(self::SLEEP_MICROS_BETWEEN_DATA_PUBLISH_CHECKS);
+        }
+
+        $this->fail("$url: not found");
+    }
 
     /**
      * @return string the actually published data if assertion passes, or exception if assertion failed
