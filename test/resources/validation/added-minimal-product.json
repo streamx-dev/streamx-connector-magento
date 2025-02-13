@@ -1,6 +1,6 @@
 {
-  "sku": "1739276322",
-  "id": 4062,
+  "sku": "SKU",
+  "id": 123456789,
   "lang": "en",
   "attributes": [
     {
@@ -25,9 +25,9 @@
       ]
     }
   ],
-  "name": "The minimal product",
-  "label": "The minimal product",
-  "slug": "the-minimal-product-4062",
+  "name": "PRODUCT_NAME",
+  "label": "PRODUCT_NAME",
+  "slug": "PRODUCT_SLUG",
   "categories": [],
   "gallery": [],
   "variants": []

@@ -23,9 +23,10 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
     public function shouldPublishMinimalProductAddedDirectlyInDatabaseToStreamx_AndUnpublishDeletedProduct() {
         // given
         $productName = 'The minimal product';
+        $sku = (string) (new DateTime())->getTimestamp();
 
         // when
-        $productId = $this->insertNewMinimalProduct($productName);
+        $productId = $this->insertNewMinimalProduct($sku, $productName);
         $expectedKey = "pim:$productId";
 
         try {
@@ -34,10 +35,11 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
             // then
             $this->assertExactDataIsPublished($expectedKey, 'added-minimal-product.json', [
-                // mask variable parts (ids and generated sku)
-                '"id": [0-9]+' => '"id": 0',
-                '"sku": "[^"]+"' => '"sku": "[MASKED]"',
-                '"the-minimal-product-[0-9]+"' => '"the-minimal-product-0"'
+                // provide values for placeholders in the validation file
+                'SKU' => $sku,
+                123456789 => $productId,
+                'PRODUCT_NAME' => 'The minimal product',
+                'PRODUCT_SLUG' => "the-minimal-product-$productId"
             ]);
         } finally {
             // and when
@@ -134,15 +136,16 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
     /** @test */
     public function shouldPublishMultipleProductsAddedDirectlyInDatabaseToStreamx_AndUnpublishDeletedProducts() {
         // given
-        $watchesCategoryId = $this->db->getCategoryId('Watches');
         $productsCount = 200;
 
         // when
         $productNames = [];
+        $skus = [];
         $productIds = [];
         for ($i = 0; $i < $productsCount; $i++) {
-            $productNames[] = "New watch $i";
-            $productIds[] = $this->insertNewProduct($productNames[$i], [$watchesCategoryId]);
+            $productNames[] = "Watch $i";
+            $skus[] = (string) (new DateTime())->getTimestamp();
+            $productIds[] = $this->insertNewMinimalProduct($skus[$i], $productNames[$i]);
         }
 
         try {
@@ -151,7 +154,16 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
             // then
             for ($i = 0; $i < $productsCount; $i++) {
-                $this->assertDataIsPublished('pim:' . $productIds[$i], $productNames[$i]);
+                $productId = $productIds[$i];
+                $productName = $productNames[$i];
+                $expectedSlug = str_replace([' ', 'W'], ['-', 'w'], $productName) . "-$productId";
+                $this->assertExactDataIsPublished("pim:$productId", 'added-minimal-product.json', [
+                    // provide values for placeholders in the validation file
+                    'SKU' => $skus[$i],
+                    123456789 => $productId,
+                    'PRODUCT_NAME' => $productName,
+                    'PRODUCT_SLUG' => $expectedSlug
+                ]);
             }
         } finally {
             // and when
@@ -171,9 +183,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
      * Inserts new minimal product to database
      * @return int ID of the inserted product
      */
-    private function insertNewMinimalProduct(string $productName): int {
-        $sku = (string) (new DateTime())->getTimestamp();
-
+    private function insertNewMinimalProduct(string $sku, string $productName): int {
         $defaultStoreId = 0;
         $websiteId = 1;
         $attributeSetId = $this->db->getDefaultProductAttributeSetId();

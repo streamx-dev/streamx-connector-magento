@@ -8,19 +8,8 @@ use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 
 /**
  * @inheritdoc
- * Additional prerequisites to run this test: a second Store must be created and configured:
- *  - Login as Admin to Magento
- *  - Create second store: Stores -> Settings -> All Stores
- *    - Create Store with any name and code; use "Default Category" as Root Category
- *    - Create Store View for the newly created store (using any name and code); select Status as "Enabled"
- *  - Go to StreamX Connector settings, add the new store view to the list of Stores to reindex
- *  - Open Streamx Ingestion settings, and set "pim_store_2:" as the product key prefix for the scope of the newly created store (view)
  */
-class MultistoreProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
-
-    private const DEFAULT_STORE_ID = 0; // comes with markshust/docker-magento
-    private const STORE_1_ID = 1; // comes with markshust/docker-magento
-    private const STORE_2_ID = 2; // manually created according to instructions in the class comments
+class MultistoreProductAddAndDeleteTest extends BaseMultistoreTest {
 
     protected function indexerName(): string {
         return ProductProcessor::INDEXER_ID;
@@ -54,7 +43,7 @@ class MultistoreProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
             $this->reindexMview();
 
             // then
-            $this->assertExactDataIsPublished($expectedKeyForStore2, 'added-multistore-product.json', [
+            $this->assertExactDataIsPublished($expectedKeyForStore2, 'added-minimal-product.json', [
                 // provide values for placeholders in the validation file
                 'SKU' => $sku,
                 123456789 => $productId,

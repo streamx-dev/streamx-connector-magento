@@ -1,0 +1,162 @@
+{
+  "sku": "24-MB01",
+  "id": 1,
+  "lang": "en",
+  "attributes": [
+    {
+      "name": "small_image",
+      "label": "Small",
+      "values": [
+        {
+          "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/b\/mb01-blue-0.jpg",
+          "valueLabel": "\/m\/b\/mb01-blue-0.jpg"
+        }
+      ],
+      "isFacet": false,
+      "options": []
+    },
+    {
+      "name": "thumbnail",
+      "label": "Thumbnail",
+      "values": [
+        {
+          "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/b\/mb01-blue-0.jpg",
+          "valueLabel": "\/m\/b\/mb01-blue-0.jpg"
+        }
+      ],
+      "isFacet": false,
+      "options": []
+    },
+    {
+      "name": "url_key",
+      "label": "URL Key",
+      "values": [
+        {
+          "value": "joust-duffle-bag",
+          "valueLabel": "joust-duffle-bag"
+        }
+      ],
+      "isFacet": false,
+      "options": []
+    },
+    {
+      "name": "status",
+      "label": "Enable Product",
+      "values": [
+        {
+          "value": "1",
+          "valueLabel": "Enabled"
+        }
+      ],
+      "isFacet": false,
+      "options": [
+        {
+          "value": "1",
+          "label": "Enabled"
+        },
+        {
+          "value": "2",
+          "label": "Disabled"
+        }
+      ]
+    },
+    {
+      "name": "visibility",
+      "label": "Visibility",
+      "values": [
+        {
+          "value": "4",
+          "valueLabel": "Catalog, Search"
+        }
+      ],
+      "isFacet": false,
+      "options": [
+        {
+          "value": "1",
+          "label": "Not Visible Individually"
+        },
+        {
+          "value": "2",
+          "label": "Catalog"
+        },
+        {
+          "value": "3",
+          "label": "Search"
+        },
+        {
+          "value": "4",
+          "label": "Catalog, Search"
+        }
+      ]
+    },
+    {
+      "name": "tax_class_id",
+      "label": "Tax Class",
+      "values": [
+        {
+          "value": "2",
+          "valueLabel": "Taxable Goods"
+        }
+      ],
+      "isFacet": false,
+      "options": [
+        {
+          "value": "0",
+          "label": "None"
+        },
+        {
+          "value": "2",
+          "label": "Taxable Goods"
+        }
+      ]
+    }
+  ],
+  "name": "Joust Duffle Bag",
+  "label": "Joust Duffle Bag",
+  "primaryImage": {
+    "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/b\/mb01-blue-0.jpg",
+    "alt": "Image"
+  },
+  "description": "<p>The sporty Joust Duffle Bag can't be beat - not in the gym, not on the luggage carousel, not anywhere. Big enough to haul a basketball or soccer ball and some sneakers with plenty of room to spare, it's ideal for athletes with places to go.<p>\n<ul>\n<li>Dual top handles.<\/li>\n<li>Adjustable shoulder strap.<\/li>\n<li>Full-length zipper.<\/li>\n<li>L 29\" x W 13\" x H 11\".<\/li>\n<\/ul>",
+  "price": {
+    "value": 34,
+    "discountedValue": 34
+  },
+  "slug": "joust-duffle-bag-1",
+  "categories": [
+    {
+      "id": 4,
+      "name": "Bags",
+      "slug": "bags-4",
+      "label": "Bags",
+      "subcategories": [],
+      "parent": {
+        "id": 3,
+        "name": "Gear",
+        "slug": "gear-3",
+        "label": "Gear"
+      }
+    },
+    {
+      "id": 14,
+      "name": "Jackets",
+      "slug": "jackets-14",
+      "label": "Jackets",
+      "subcategories": [],
+      "parent": {
+        "id": 12,
+        "name": "Tops",
+        "slug": "tops-12",
+        "label": "Tops"
+      }
+    }
+  ],
+  "gallery": [
+    {
+      "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/b\/mb01-blue-0.jpg",
+      "alt": "Image"
+    }
+  ],
+  "quantity": 100.0,
+  "variants": []
+}
