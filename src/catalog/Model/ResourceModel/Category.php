@@ -5,6 +5,7 @@ namespace StreamX\ConnectorCatalog\Model\ResourceModel;
 use Exception;
 use Magento\Framework\DB\Adapter\AdapterInterface;
 use StreamX\ConnectorCatalog\Model\CategoryMetaData;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Category\ActiveCategorySelectModifier;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category\CategoryFromStoreSelectModifier;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Catalog\Model\Category as CoreCategoryModel;
@@ -14,17 +15,18 @@ use Zend_Db_Select;
 class Category
 {
     private ResourceConnection $resource;
-    private CategoryFromStoreSelectModifier $selectModifier;
+    private CompositeSelectModifier $selectModifier;
     private CategoryMetaData $categoryMetaData;
 
     public function __construct(
         CategoryFromStoreSelectModifier $categoryFromStoreSelectModifier,
+        ActiveCategorySelectModifier $activeCategorySelectModifier,
         ResourceConnection $resourceConnection,
         CategoryMetaData $categoryMetaData
     ) {
         $this->resource = $resourceConnection;
         $this->categoryMetaData = $categoryMetaData;
-        $this->selectModifier = $categoryFromStoreSelectModifier;
+        $this->selectModifier = new CompositeSelectModifier($categoryFromStoreSelectModifier, $activeCategorySelectModifier);
     }
 
     /**
@@ -33,7 +35,7 @@ class Category
     public function getCategories(int $storeId, array $categoryIds = [], int $fromId = 0, int $limit = 1000): array
     {
         $select = self::getCategoriesBaseSelect($this->resource, $this->categoryMetaData);
-        $this->filterByStore($select, $storeId);
+        $this->selectModifier->modifyAll($select, $storeId);
 
         if (!empty($categoryIds)) {
             $select->where("entity.entity_id IN (?)", $categoryIds);
@@ -57,7 +59,7 @@ class Category
             ['entity' => $metaData->getEntityTable()]
         );
 
-        $this->filterByStore($select, $storeId);
+        $this->selectModifier->modifyAll($select, $storeId);
         $table = $this->resource->getTableName('catalog_category_product');
         $entityIdField = $this->categoryMetaData->get()->getIdentifierField();
         $select->reset(Zend_Db_Select::COLUMNS);
@@ -139,14 +141,6 @@ class Category
         $select->where("path like $catIdExpr");
 
         return $connection->fetchCol($select);
-    }
-
-    /**
-     * @throws Exception
-     */
-    private function filterByStore(Select $select, int $storeId): void
-    {
-        $this->selectModifier->modify($select, $storeId);
     }
 
     private function getConnection(): AdapterInterface

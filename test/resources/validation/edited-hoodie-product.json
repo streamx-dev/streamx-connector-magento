@@ -496,13 +496,7 @@
       "name": "Eco Friendly",
       "slug": "eco-friendly-36",
       "label": "Eco Friendly",
-      "subcategories": [],
-      "parent": {
-        "id": 7,
-        "name": "Collections",
-        "slug": "collections-7",
-        "label": "Collections"
-      }
+      "subcategories": []
     }
   ],
   "gallery": [
