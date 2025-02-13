@@ -63,7 +63,7 @@ class MultistoreCategoryAddAndDeleteTest extends BaseMultistoreTest {
 
     /** @test */
     public function shouldPublishCategoriesAssignedToStore() {
-        // given: switch store with ID 2 to use category with ID 3 as its root category
+        // given: switch store with ID 2 to use a new category as its root category
         $rootCategoryIdForStore1 = 2; // this is the default root category for stores
         $rootCategoryIdForStore2 = $this->insertRootCategory('Root category for second store');
         $this->changeRootCategoryForStore(self::STORE_2_ID, $rootCategoryIdForStore2);
