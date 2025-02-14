@@ -36,7 +36,6 @@ class Client {
         $publishMessages = [];
         foreach ($entities as $entity) {
             $key = self::createStreamxKey($indexerName, $entity['id']);
-            $this->logger->info("Publishing entity from $indexerName at $key");
             $payload = new Data(json_encode($entity));
             $publishMessages[] = Message::newPublishMessage($key, $payload)->build();
         }
@@ -52,7 +51,6 @@ class Client {
         $unpublishMessages = [];
         foreach ($entityIds as $entityId) {
             $key = self::createStreamxKey($indexerName, $entityId);
-            $this->logger->info("Unpublishing entity from $indexerName at $key");
             $unpublishMessages[] = Message::newUnpublishMessage($key)->build();
         }
 
@@ -71,12 +69,15 @@ class Client {
     }
 
     /**
-     * @param Message[] $messages Ingestion messages
+     * @param Message[] $ingestionMessages
      */
-    private function ingest(array $messages): void {
+    private function ingest(array $ingestionMessages): void {
+        $keys = array_column($ingestionMessages, 'key');
+        $this->logger->info("Ingesting entities with keys " . json_encode($keys));
+
         try {
             // TODO make sure this will never block. Best by turning off Pulsar container
-            $messageStatuses = $this->publisher->sendMulti($messages);
+            $messageStatuses = $this->publisher->sendMulti($ingestionMessages);
 
             foreach ($messageStatuses as $messageStatus) {
                 if ($messageStatus->getSuccess() === null) {
