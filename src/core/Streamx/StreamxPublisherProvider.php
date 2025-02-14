@@ -42,13 +42,24 @@ class StreamxPublisherProvider {
             $builder->setAuthToken($authToken);
         }
 
-        if ($shouldDisableCertificateValidation) {
-            $httpClient = new GuzzleHttpClient([
-                'verify' => false
-            ]);
-            $builder->setHttpClient($httpClient);
-        }
+        $httpClient = $this->prepareHttpClient($shouldDisableCertificateValidation);
+        $builder->setHttpClient($httpClient);
 
         return $builder->build();
+    }
+
+    private function prepareHttpClient(bool $shouldDisableCertificateValidation): GuzzleHttpClient {
+        $clientOptions = [
+            'connect_timeout' => 1, // maximum time (in seconds) to establish the connection
+            'timeout' => 5 // maximum time (in seconds) to wait for response
+        ];
+
+        if ($shouldDisableCertificateValidation) {
+            $clientOptions[] = [
+                'verify' => false
+            ];
+        }
+
+        return new GuzzleHttpClient($clientOptions);
     }
 }
