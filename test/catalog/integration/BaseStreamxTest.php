@@ -41,7 +41,6 @@ abstract class BaseStreamxTest extends TestCase {
         while (time() - $startTime < self::DATA_PUBLISH_TIMEOUT_SECONDS) {
             $response = @file_get_contents($url);
             if ($response !== false) {
-                echo "Published content: $response\n";
                 if ($this->verifySameJsonsSilently($expectedFormattedJson, $response, $regexReplacements, $ignoreOrderInArrays)) {
                     return $response;
                 }

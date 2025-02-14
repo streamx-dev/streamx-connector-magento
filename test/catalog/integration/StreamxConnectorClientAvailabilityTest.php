@@ -3,10 +3,19 @@
 namespace StreamX\ConnectorCatalog\test\integration;
 
 use Psr\Log\LoggerInterface;
-use Streamx\Clients\Ingestion\Builders\StreamxClientBuilders;
+use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
+use StreamX\ConnectorCatalog\test\integration\utils\ValidationFileUtils;
 use StreamX\ConnectorCore\Streamx\Client;
+use StreamX\ConnectorCore\Streamx\ClientConfiguration;
+use StreamX\ConnectorCore\Streamx\ClientResolver;
+use StreamX\ConnectorCore\Streamx\StreamxPublisherProvider;
 
 class StreamxConnectorClientAvailabilityTest extends BaseStreamxTest {
+
+    use ValidationFileUtils;
+
+    private const PRODUCT_KEY_PREFIX = 'product_';
+    private const CATEGORY_KEY_PREFIX = 'category_';
 
     private const NOT_EXISTING_HOST = 'c793qwh0uqw3fg94ow';
     private const WRONG_INGESTION_PORT = 1234;
@@ -60,11 +69,62 @@ class StreamxConnectorClientAvailabilityTest extends BaseStreamxTest {
         $this->assertFalse($client->isStreamxAvailable());
     }
 
+    /** @test */
+    public function shouldPublishBigBatchesOfProductsWithoutErrors() {
+        // given
+        $bigProductJson = $this->readValidationFileContent('original-hoodie-product.json');
+        $entity = json_decode($bigProductJson, true);
+
+        $entitiesToPublishInBatch = 100;
+        $publishTimes = 10;
+
+        // and: load the same big product to list, but give each instance a unique ID
+        $entities = [];
+        for ($i = 0; $i < $entitiesToPublishInBatch; $i++) {
+            $entities[] = $entity;
+            $entities[$i]['id'] = $i;
+        }
+
+        // when: publish batch as the Connector would do
+        for ($i = 0; $i < $publishTimes; $i++) {
+            $client = $this->createClient(parent::STREAMX_REST_INGESTION_URL);
+            if ($client->isStreamxAvailable()) {
+                $client->publish($entities, ProductProcessor::INDEXER_ID);
+            }
+        }
+
+        // then
+        for ($i = 0; $i < $entitiesToPublishInBatch; $i++) {
+            $this->assertExactDataIsPublished(self::PRODUCT_KEY_PREFIX . $i,'original-hoodie-product.json', [
+                62 => $i // 62 is the product ID in validation file
+            ]);
+        }
+
+        // and when: unpublish
+        $client = $this->createClient(parent::STREAMX_REST_INGESTION_URL);
+        if ($client->isStreamxAvailable()) {
+            $client->unpublish(array_column($entities, 'id'), ProductProcessor::INDEXER_ID);
+        }
+
+        // then
+        for ($i = 0; $i < $entitiesToPublishInBatch; $i++) {
+            $this->assertDataIsUnpublished(self::PRODUCT_KEY_PREFIX . $i);
+        }
+    }
+
     private function createClient(string $restIngestionUrl): Client {
-        $publisher = StreamxClientBuilders::create($restIngestionUrl)
-            ->build()
-            ->newPublisher(parent::CHANNEL_NAME, parent::CHANNEL_SCHEMA_NAME);
-        return new Client($this->loggerMock, $publisher, 'product_', 'category_');
+        $clientConfigurationMock = $this->createMock(ClientConfiguration::class);
+        $clientConfigurationMock->method('getIngestionBaseUrl')->willReturn($restIngestionUrl);
+        $clientConfigurationMock->method('getChannelName')->willReturn(parent::CHANNEL_NAME);
+        $clientConfigurationMock->method('getChannelSchemaName')->willReturn(parent::CHANNEL_SCHEMA_NAME);
+        $clientConfigurationMock->method('getAuthToken')->willReturn(null);
+        $clientConfigurationMock->method('shouldDisableCertificateValidation')->willReturn(false);
+        $clientConfigurationMock->method('getProductKeyPrefix')->willReturn(self::PRODUCT_KEY_PREFIX);
+        $clientConfigurationMock->method('getCategoryKeyPrefix')->willReturn(self::CATEGORY_KEY_PREFIX);
+
+        $provider = new StreamxPublisherProvider($this->loggerMock);
+        $resolver = new ClientResolver($this->loggerMock, $clientConfigurationMock, $provider);
+        return $resolver->getClient(0);
     }
 
     private static function changedRestIngestionUrl(string $urlPartName, $newValue): string {

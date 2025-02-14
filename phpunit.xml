@@ -8,10 +8,10 @@
 
   <testsuites>
     <testsuite name="Core module tests">
-      <directory>src/core/test</directory>
+      <directory>test/core</directory>
     </testsuite>
     <testsuite name="Catalog module tests">
-      <directory>src/catalog/test</directory>
+      <directory>test/catalog</directory>
     </testsuite>
   </testsuites>
 
@@ -20,10 +20,6 @@
       <directory>src/core</directory>
       <directory>src/catalog</directory>
     </include>
-    <exclude>
-      <directory>src/core/test</directory>
-      <directory>src/catalog/test</directory>
-    </exclude>
     <report>
       <html outputDirectory="target/coverage-reports/html"/>
     </report>
