@@ -89,7 +89,7 @@ If the Magento admin page displays warning about invalidated cache - perform the
    - Save changes
  - Create second Website: `Stores` -> `Settings` -> `All Stores`
    - Create Website with any name and code
-   - For the new website, create a Store and StoreView (similar like in the previous section). Use `pim_store_3:` and `cat_store_3:` as key prefixes
+   - For the new website, create a Store and StoreView (similar like in the previous section). Use `pim_website_2:` and `cat_website_2:` as key prefixes
    - Go to `Catalog` -> `Products` and edit products with IDs 4, 5 and 6 to be visible in the new Website:
      - `Edit` -> `Product in Websites` -> check the checkbox for the new website -> `Save`
      - To verify, go to `Catalog` -> `Products`, expand `Filters`, select Store View for the new Website, click `Apply Filters`. Three products should be displayed
