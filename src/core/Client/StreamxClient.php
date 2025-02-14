@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace StreamX\ConnectorCore\Streamx;
+namespace StreamX\ConnectorCore\Client;
 
 use Exception;
 use Psr\Log\LoggerInterface;
@@ -8,9 +8,9 @@ use Streamx\Clients\Ingestion\Publisher\Message;
 use Streamx\Clients\Ingestion\Publisher\Publisher;
 use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
-use StreamX\ConnectorCore\Streamx\Model\Data;
+use StreamX\ConnectorCore\Client\Model\Data;
 
-class Client {
+class StreamxClient {
 
     private LoggerInterface $logger;
     private Publisher $publisher;

@@ -8,8 +8,8 @@ use Streamx\Clients\Ingestion\Exceptions\StreamxClientException;
 use StreamX\ConnectorCore\Api\BaseAction;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
 use StreamX\ConnectorCore\Index\IndexerDefinition;
-use StreamX\ConnectorCore\Streamx\Client;
-use StreamX\ConnectorCore\Streamx\ClientResolver;
+use StreamX\ConnectorCore\Client\StreamxClient;
+use StreamX\ConnectorCore\Client\StreamxClientProvider;
 use StreamX\ConnectorCore\System\GeneralConfig;
 use Traversable;
 
@@ -20,7 +20,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
     private BaseAction $action;
     private LoggerInterface $logger;
     private OptimizationSettings $optimizationSettings;
-    private ClientResolver $clientResolver;
+    private StreamxClientProvider $clientProvider;
     private IndexerDefinition $indexerDefinition;
     private string $indexerName;
 
@@ -30,7 +30,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
         BaseAction $action,
         LoggerInterface $logger,
         OptimizationSettings $optimizationSettings,
-        ClientResolver $clientResolver,
+        StreamxClientProvider $clientProvider,
         IndexerDefinition $indexerDefinition
     ) {
         $this->connectorConfig = $connectorConfig;
@@ -38,7 +38,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
         $this->action = $action;
         $this->logger = $logger;
         $this->optimizationSettings = $optimizationSettings;
-        $this->clientResolver = $clientResolver;
+        $this->clientProvider = $clientProvider;
         $this->indexerDefinition = $indexerDefinition;
         $this->indexerName = $indexerDefinition->getName();
     }
@@ -87,7 +87,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
         foreach ($this->indexableStoresProvider->getStores() as $store) {
             $storeId = (int) $store->getId();
 
-            $client = $this->clientResolver->getClient($storeId);
+            $client = $this->clientProvider->getClient($storeId);
             if ($this->optimizationSettings->shouldPerformStreamxAvailabilityCheck() && !$client->isStreamxAvailable()) {
                 $this->logger->info("Cannot reindex $this->indexerName for store $storeId - StreamX is not available");
                 continue;
@@ -103,7 +103,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
     /**
      * @throws StreamxClientException
      */
-    public final function saveIndex(Traversable $documents, int $storeId, Client $client): void {
+    public final function saveIndex(Traversable $documents, int $storeId, StreamxClient $client): void {
         $batchSize = $this->optimizationSettings->getBatchIndexingSize();
 
         foreach ((new Batch())->getItems($documents, $batchSize) as $docs) {
@@ -114,7 +114,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
     /**
      * @throws StreamxClientException
      */
-    protected function processEntitiesBatch(array $entities, int $storeId, Client $client): void {
+    protected function processEntitiesBatch(array $entities, int $storeId, StreamxClient $client): void {
         $entitiesToPublish = [];
         $idsToUnpublish = [];
         foreach ($entities as $id => $entity) {

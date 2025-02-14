@@ -11,8 +11,8 @@ use StreamX\ConnectorCore\Api\IndexersConfigInterface;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
 use StreamX\ConnectorCore\Indexer\BaseStreamxIndexer;
 use StreamX\ConnectorCore\Indexer\IndexableStoresProvider;
-use StreamX\ConnectorCore\Streamx\Client;
-use StreamX\ConnectorCore\Streamx\ClientResolver;
+use StreamX\ConnectorCore\Client\StreamxClient;
+use StreamX\ConnectorCore\Client\StreamxClientProvider;
 use StreamX\ConnectorCore\System\GeneralConfig;
 
 class AttributesIndexer extends BaseStreamxIndexer
@@ -25,7 +25,7 @@ class AttributesIndexer extends BaseStreamxIndexer
         AttributeAction $attributeAction,
         LoggerInterface $logger,
         OptimizationSettings $optimizationSettings,
-        ClientResolver $clientResolver,
+        StreamxClientProvider $clientProvider,
         IndexersConfigInterface $indexersConfig,
         ProductsWithChangedAttributesIndexer $productsWithChangedAttributesIndexer
     ) {
@@ -35,7 +35,7 @@ class AttributesIndexer extends BaseStreamxIndexer
             $attributeAction,
             $logger,
             $optimizationSettings,
-            $clientResolver,
+            $clientProvider,
             $indexersConfig->getByName(AttributeProcessor::INDEXER_ID)
         );
         $this->productsWithChangedAttributesIndexer = $productsWithChangedAttributesIndexer;
@@ -46,7 +46,7 @@ class AttributesIndexer extends BaseStreamxIndexer
      * to publish products that use those attributes
      * @throws StreamxClientException
      */
-    protected function processEntitiesBatch(array $entities, int $storeId, Client $client): void {
+    protected function processEntitiesBatch(array $entities, int $storeId, StreamxClient $client): void {
         $this->productsWithChangedAttributesIndexer->process($entities, $storeId, $client);
     }
 

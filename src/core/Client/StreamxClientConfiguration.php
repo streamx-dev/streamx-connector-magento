@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace StreamX\ConnectorCore\Streamx;
+namespace StreamX\ConnectorCore\Client;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use StreamX\ConnectorCore\Api\BaseConfigurationReader;
 
-class ClientConfiguration extends BaseConfigurationReader
+class StreamxClientConfiguration extends BaseConfigurationReader
 {
     public function __construct(ScopeConfigInterface $scopeConfig) {
         parent::__construct($scopeConfig, 'streamx_client');

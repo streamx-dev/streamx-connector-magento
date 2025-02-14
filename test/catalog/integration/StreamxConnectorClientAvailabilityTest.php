@@ -5,10 +5,9 @@ namespace StreamX\ConnectorCatalog\test\integration;
 use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\ValidationFileUtils;
-use StreamX\ConnectorCore\Streamx\Client;
-use StreamX\ConnectorCore\Streamx\ClientConfiguration;
-use StreamX\ConnectorCore\Streamx\ClientResolver;
-use StreamX\ConnectorCore\Streamx\StreamxPublisherProvider;
+use StreamX\ConnectorCore\Client\StreamxClient;
+use StreamX\ConnectorCore\Client\StreamxClientConfiguration;
+use StreamX\ConnectorCore\Client\StreamxClientProvider;
 
 class StreamxConnectorClientAvailabilityTest extends BaseStreamxTest {
 
@@ -112,8 +111,8 @@ class StreamxConnectorClientAvailabilityTest extends BaseStreamxTest {
         }
     }
 
-    private function createClient(string $restIngestionUrl): Client {
-        $clientConfigurationMock = $this->createMock(ClientConfiguration::class);
+    private function createClient(string $restIngestionUrl): StreamxClient {
+        $clientConfigurationMock = $this->createMock(StreamxClientConfiguration::class);
         $clientConfigurationMock->method('getIngestionBaseUrl')->willReturn($restIngestionUrl);
         $clientConfigurationMock->method('getChannelName')->willReturn(parent::CHANNEL_NAME);
         $clientConfigurationMock->method('getChannelSchemaName')->willReturn(parent::CHANNEL_SCHEMA_NAME);
@@ -122,9 +121,8 @@ class StreamxConnectorClientAvailabilityTest extends BaseStreamxTest {
         $clientConfigurationMock->method('getProductKeyPrefix')->willReturn(self::PRODUCT_KEY_PREFIX);
         $clientConfigurationMock->method('getCategoryKeyPrefix')->willReturn(self::CATEGORY_KEY_PREFIX);
 
-        $provider = new StreamxPublisherProvider($this->loggerMock);
-        $resolver = new ClientResolver($this->loggerMock, $clientConfigurationMock, $provider);
-        return $resolver->getClient(0);
+        $provider = new StreamxClientProvider($this->loggerMock, $clientConfigurationMock);
+        return $provider->getClient(0);
     }
 
     private static function changedRestIngestionUrl(string $urlPartName, $newValue): string {

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace StreamX\ConnectorCore\Streamx\Model;
+namespace StreamX\ConnectorCore\Client\Model;
 
 class Content {
     public string $bytes;
