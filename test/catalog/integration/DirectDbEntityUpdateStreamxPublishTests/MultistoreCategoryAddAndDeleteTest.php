@@ -100,7 +100,7 @@ class MultistoreCategoryAddAndDeleteTest extends BaseMultistoreTest {
                 'CATEGORY_NAME' => 'Bikes for second store',
                 'CATEGORY_SLUG' => "bikes-for-second-store-$store2CategoryId",
                 // expect different parent category than default
-                '"id": 2' => '"id": ' . $rootCategoryIdForStore2,
+                '"id": 2,' => '"id": ' . $rootCategoryIdForStore2 . ',',
                 'Default Category' => 'Root category for second store',
                 'default-category-2' => 'root-category-for-second-store-' . $rootCategoryIdForStore2
             ]);
