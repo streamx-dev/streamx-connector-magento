@@ -7,9 +7,9 @@ use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Psr\Log\LoggerInterface;
 use Streamx\Clients\Ingestion\Exceptions\StreamxClientException;
-use StreamX\ConnectorCatalog\Indexer\ProductIndexerHandler;
+use StreamX\ConnectorCatalog\Indexer\ProductsIndexer;
 use StreamX\ConnectorCatalog\Model\Attributes\AttributeDefinition;
-use StreamX\ConnectorCatalog\Model\Indexer\Action\Product as ProductAction;
+use StreamX\ConnectorCatalog\Model\Indexer\Action\ProductAction;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use StreamX\ConnectorCore\Streamx\Client;
 use Zend_Db_Expr;
@@ -30,20 +30,20 @@ class ProductsWithChangedAttributesIndexer
     private LoggerInterface $logger;
     private ResourceConnection $resourceConnection;
     private ProductMetaData $productMetaData;
-    private ProductIndexerHandler $indexerHandler;
+    private ProductsIndexer $productsIndexer;
     private ProductAction $action;
 
     public function __construct(
         LoggerInterface $logger,
         ResourceConnection $resourceConnection,
         ProductMetaData $productMetaData,
-        ProductIndexerHandler $indexerHandler,
+        ProductsIndexer $productsIndexer,
         ProductAction $action
     ) {
         $this->logger = $logger;
         $this->resourceConnection = $resourceConnection;
         $this->productMetaData = $productMetaData;
-        $this->indexerHandler = $indexerHandler;
+        $this->productsIndexer = $productsIndexer;
         $this->action = $action;
     }
 
@@ -76,7 +76,7 @@ class ProductsWithChangedAttributesIndexer
             $this->logger->info("Detected the following products to re-publish due to attribute definition change: " . json_encode($productEntityIds));
 
             $productsData = $this->action->loadData($storeId, $productEntityIds);
-            $this->indexerHandler->saveIndex($productsData, $storeId, $client);
+            $this->productsIndexer->saveIndex($productsData, $storeId, $client);
         }
     }
 

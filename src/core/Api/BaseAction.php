@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace StreamX\ConnectorCatalog\Model\Indexer\Action;
+namespace StreamX\ConnectorCore\Api;
 
 use Traversable;
 

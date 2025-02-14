@@ -1,35 +1,36 @@
 <?php declare(strict_types=1);
 
-namespace StreamX\ConnectorCatalog\Model\Indexer;
+namespace StreamX\ConnectorCatalog\Indexer;
 
 use Psr\Log\LoggerInterface;
-use StreamX\ConnectorCatalog\Indexer\AttributeIndexerHandler;
-use StreamX\ConnectorCatalog\Model\Indexer\Action\Attribute as AttributeAction;
+use StreamX\ConnectorCatalog\Model\Indexer\Action\ProductAction;
+use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
+use StreamX\ConnectorCore\Api\IndexersConfigInterface;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
+use StreamX\ConnectorCore\Indexer\BaseStreamxIndexer;
 use StreamX\ConnectorCore\Indexer\IndexableStoresProvider;
 use StreamX\ConnectorCore\Streamx\ClientResolver;
 use StreamX\ConnectorCore\System\GeneralConfig;
 
-class Attribute extends BaseStreamxIndexer {
-
+class ProductsIndexer extends BaseStreamxIndexer
+{
     public function __construct(
         GeneralConfig $connectorConfig,
-        AttributeIndexerHandler $indexerHandler,
         IndexableStoresProvider $indexableStoresProvider,
-        AttributeAction $action,
+        ProductAction $productAction,
         LoggerInterface $logger,
         OptimizationSettings $optimizationSettings,
-        ClientResolver $clientResolver
+        ClientResolver $clientResolver,
+        IndexersConfigInterface $indexersConfig
     ) {
         parent::__construct(
             $connectorConfig,
-            $indexerHandler,
             $indexableStoresProvider,
-            $action,
+            $productAction,
             $logger,
             $optimizationSettings,
             $clientResolver,
-            'Attributes'
+            $indexersConfig->getByName(ProductProcessor::INDEXER_ID)
         );
     }
 }
