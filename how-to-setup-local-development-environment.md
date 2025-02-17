@@ -217,3 +217,18 @@ SET GLOBAL general_log = 'OFF';
    - in summary view, the reports display classes as 100% covered, but when you open any class, the coverage is correct (green areas mark the actual covered code)
  - TODO:
    - it should be possible to measure summary view, by dumping raw results from each test, and then calling `$codeCoverage->append` on all of them
+
+## Troubleshooting when integration tests are randomly not passing
+You can try those methods:
+ - make sure streamx indexers are not in processing/suspended state. Invalidate/reset indexers by using magento command line: `bin/magento indexer:reset`
+ - if this does not help - try to change indexer state in `mview_state` table: set `mode` to `disabled`, `status` to `idle`
+ - if you interrupted tests in the middle, they might not have the chance to revert changes performed in SQL DB
+   - manually restore initial values of the entities under test:
+     - you can use Magento Admin UI to delete added categories and products, or restore initial values of modified entities
+     - to delete new attributes added by test, check for `SELECT * FROM eav_attribute ORDER BY attribute_id DESC` in phpmyadmin for existence of new rows added by tests, and delete them
+     - to delete a partially added category, see if there is a row in `url_rewrite` table (order by max id)
+ - try `cd magento && bin/restart phpfpm`
+ - remember to copy connector code to Magento and run `bin/magento setup:di:compile`, to make sure current code is used on the server
+ - make sure StreamX is running
+ - StreamX's `pulsar` container tends to terminate when high system load - restart StreamX (along with adding its containers to magento network afterward)
+ - if the `pulsar` container stops again or tests take unusual long time - it may be the time to do `sudo pkill docker` and then restart existing magento containers and start new fresh StreamX (removing its old containers)
