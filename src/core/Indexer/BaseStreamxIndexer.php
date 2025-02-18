@@ -9,7 +9,7 @@ use StreamX\ConnectorCore\Api\BaseAction;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
 use StreamX\ConnectorCore\Index\IndexerDefinition;
 use StreamX\ConnectorCore\Client\StreamxClient;
-use StreamX\ConnectorCore\Client\StreamxClientProvider;
+use StreamX\ConnectorCore\Client\StreamxClientConfiguration;
 use StreamX\ConnectorCore\System\GeneralConfig;
 use Traversable;
 
@@ -20,7 +20,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
     private BaseAction $action;
     private LoggerInterface $logger;
     private OptimizationSettings $optimizationSettings;
-    private StreamxClientProvider $clientProvider;
+    private StreamxClientConfiguration $clientConfiguration;
     private IndexerDefinition $indexerDefinition;
     private string $indexerName;
 
@@ -30,7 +30,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
         BaseAction $action,
         LoggerInterface $logger,
         OptimizationSettings $optimizationSettings,
-        StreamxClientProvider $clientProvider,
+        StreamxClientConfiguration $clientConfiguration,
         IndexerDefinition $indexerDefinition
     ) {
         $this->connectorConfig = $connectorConfig;
@@ -38,7 +38,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
         $this->action = $action;
         $this->logger = $logger;
         $this->optimizationSettings = $optimizationSettings;
-        $this->clientProvider = $clientProvider;
+        $this->clientConfiguration = $clientConfiguration;
         $this->indexerDefinition = $indexerDefinition;
         $this->indexerName = $indexerDefinition->getName();
     }
@@ -87,7 +87,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
         foreach ($this->indexableStoresProvider->getStores() as $store) {
             $storeId = (int) $store->getId();
 
-            $client = $this->clientProvider->getClient($storeId);
+            $client = new StreamxClient($this->logger, $this->clientConfiguration, $storeId);
             if ($this->optimizationSettings->shouldPerformStreamxAvailabilityCheck() && !$client->isStreamxAvailable()) {
                 $this->logger->info("Cannot reindex $this->indexerName for store $storeId - StreamX is not available");
                 continue;
