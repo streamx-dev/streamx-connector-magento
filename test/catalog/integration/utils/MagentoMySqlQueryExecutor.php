@@ -28,17 +28,21 @@ class MagentoMySqlQueryExecutor {
     }
 
     /**
-     * Returns the value of first field from first row, or null or error or no result data
+     * Returns the value of first field from first row found by the given query
      */
-    public function selectFirstField(string $selectQuery) {
+    public function selectSingleValue(string $selectQuery) {
         $result = $this->connection->query($selectQuery);
-        if ($result && $result->num_rows > 0) {
-            $row = $result->fetch_row();
-            $result->free();
-            return $row[0];
-        } else {
-            return null;
+        if (!$result) {
+            throw new Exception("No rows found for $selectQuery");
         }
+
+        $row = $result->fetch_row();
+        $result->free();
+        if (count($row) !== 1) {
+            throw new Exception("Expected a single field in the query: $selectQuery");
+        }
+
+        return $row[0];
     }
 
     /**
@@ -47,7 +51,7 @@ class MagentoMySqlQueryExecutor {
      */
     public function insert(string $insertQuery): int {
         $this->execute($insertQuery);
-        return $this->selectFirstField('SELECT LAST_INSERT_ID()');
+        return $this->selectSingleValue('SELECT LAST_INSERT_ID()');
     }
 
     public function execute(string $query): void {
@@ -65,7 +69,7 @@ class MagentoMySqlQueryExecutor {
     public function getProductId(string $productName): string {
         $productNameAttributeId = $this->getProductNameAttributeId();
 
-        return $this->selectFirstField("
+        return $this->selectSingleValue("
             SELECT entity_id
               FROM catalog_product_entity_varchar
              WHERE attribute_id = $productNameAttributeId
@@ -76,7 +80,7 @@ class MagentoMySqlQueryExecutor {
     public function getCategoryId(string $categoryName): string {
         $categoryNameAttributeId = $this->getCategoryNameAttributeId();
 
-        return $this->selectFirstField("
+        return $this->selectSingleValue("
             SELECT entity_id
               FROM catalog_category_entity_varchar
              WHERE attribute_id = $categoryNameAttributeId
@@ -113,7 +117,7 @@ class MagentoMySqlQueryExecutor {
     }
 
     private function getEntityTypeId(string $table): string {
-        return $this->selectFirstField("
+        return $this->selectSingleValue("
             SELECT entity_type_id
               FROM eav_entity_type
              WHERE entity_table = '$table'
@@ -125,7 +129,7 @@ class MagentoMySqlQueryExecutor {
     }
 
     public function getAttributeId(string $attributeCode, int $entityTypeId): string {
-        return $this->selectFirstField("
+        return $this->selectSingleValue("
             SELECT attribute_id
               FROM eav_attribute
              WHERE attribute_code = '$attributeCode'
@@ -134,7 +138,7 @@ class MagentoMySqlQueryExecutor {
     }
 
     public function getAttributeDisplayName(int $attributeId): string {
-        return $this->selectFirstField("
+        return $this->selectSingleValue("
             SELECT frontend_label
               FROM eav_attribute
              WHERE attribute_id = $attributeId
@@ -151,7 +155,7 @@ class MagentoMySqlQueryExecutor {
 
     private function getDefaultAttributeSetId(string $table): int {
         $entityTypeId = $this->getEntityTypeId($table);
-        return $this->selectFirstField("
+        return $this->selectSingleValue("
             SELECT attribute_set_id
               FROM eav_attribute_set
              WHERE entity_type_id = $entityTypeId
@@ -160,7 +164,7 @@ class MagentoMySqlQueryExecutor {
     }
 
     public function getAttributeOptionId(string $attributeCode, string $attributeValueLabel): int {
-        return $this->selectFirstField("
+        return $this->selectSingleValue("
             SELECT v.option_id
               FROM eav_attribute_option_value v
               JOIN eav_attribute_option o ON o.option_id = v.option_id

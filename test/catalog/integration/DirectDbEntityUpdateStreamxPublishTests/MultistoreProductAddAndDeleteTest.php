@@ -17,7 +17,7 @@ class MultistoreProductAddAndDeleteTest extends BaseMultistoreTest {
 
     /** @test */
     public function shouldPublishProductsFromWebsite() {
-        // given: as in how-to-setup-local-development-environment.md, product 1 exists only in default website, product 4 exists in both websites
+        // given: as in StoresControllerImpl, product 1 exists only in default website, product 4 exists in both websites
 
         // when: perform any change of both products - to trigger collecting their IDs by the mV iew feature
         $this->db->execute('UPDATE catalog_product_entity SET has_options = TRUE WHERE entity_id IN (1, 4)');
@@ -65,12 +65,12 @@ class MultistoreProductAddAndDeleteTest extends BaseMultistoreTest {
             [
                 self::DEFAULT_STORE_ID => 'Product name',
                 self::STORE_1_ID => 'Product name in first store',
-                self::STORE_2_ID => 'Product name in second store'
+                parent::getStore2Id() => 'Product name in second store'
             ],
             [
                 self::DEFAULT_STORE_ID => Status::STATUS_ENABLED,
                 self::STORE_1_ID => Status::STATUS_DISABLED,
-                self::STORE_2_ID => Status::STATUS_ENABLED
+                parent::getStore2Id() => Status::STATUS_ENABLED
             ]
         );
 

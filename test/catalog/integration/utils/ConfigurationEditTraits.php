@@ -52,6 +52,6 @@ trait ConfigurationEditTraits {
             'configurationFieldPath' => $configurationFieldPath,
             'value' => $value
         ]);
-        $this->indexerOperations->executeCommand('cache:flush');
+        $this->indexerOperations->flushCache();
     }
 }

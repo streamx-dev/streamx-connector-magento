@@ -2,6 +2,7 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\utils;
 
+use DateTime;
 use function shell_exec;
 
 class MagentoOperationsExecutor {
@@ -13,8 +14,16 @@ class MagentoOperationsExecutor {
     }
 
     public function executeCommand(string $command): ?string {
+        $startTime = new DateTime();
+
         $cdCommand = 'cd ' . $this->magentoFolder;
         $magentoCommand = "bin/magento $command";
-        return shell_exec("$cdCommand && $magentoCommand");
+        $result = shell_exec("$cdCommand && $magentoCommand");
+
+        $endTime = new DateTime();
+        $diff = $startTime->diff($endTime);
+        echo "The command $command took " . $diff->format('%s.%F') . " seconds\n";
+
+        return $result;
     }
 }

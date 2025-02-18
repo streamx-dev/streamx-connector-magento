@@ -78,21 +78,6 @@ If the Magento admin page displays warning about invalidated cache - perform the
  - Click `Configuration` in the `Settings` area
  - Expand `STREAMX` section, click on `Connector` item, then expand `General Settings` section on the right
  - Select `Yes` for the `Enable StreamX Connector` setting and click the `Save Config` button
- - Switch Scope to `Main Website` and select `Default Store View` on the `List of stores to reindex` and click the `Save Config` button
- - Create second Store: `Stores` -> `Settings` -> `All Stores`
-   - Create Store with any name and code; use `Default Category` as Root Category
-   - Create Store View for the newly created store (using any name and code); select Status as `Enabled`
-   - Go to StreamX Connector settings, switch scope to `Main Website` and add the new store view to the `List of stores to reindex`
-   - Expand `Streamx Ingestion Settings`, and override settings in scope of the newly created store (view) by unchecking `Use Default` and providing:
-     - `pim_store_2:` as the product key prefix
-     - `cat_store_2:` as the category key prefix
-   - Save changes
- - Create second Website: `Stores` -> `Settings` -> `All Stores`
-   - Create Website with any name and code
-   - For the new website, create a Store and StoreView (similar like in the previous section). Use `pim_website_2:` and `cat_website_2:` as key prefixes
-   - Go to `Catalog` -> `Products` and edit products with IDs 4, 5 and 6 to be visible in the new Website:
-     - `Edit` -> `Product in Websites` -> check the checkbox for the new website -> `Save`
-     - To verify, go to `Catalog` -> `Products`, expand `Filters`, select Store View for the new Website, click `Apply Filters`. Three products should be displayed
 
 ## Start the already configured magento
 If for example you stopped all its containers manually, you can start them using:
