@@ -20,7 +20,7 @@ class AttributeAddAndDeleteTest extends BaseAppEntityUpdateTest {
         $productId = $this->db->getProductId('Sprite Foam Roller');
 
         // and
-        $expectedKey = "pim:$productId";
+        $expectedKey = "default_product:$productId";
         $this->removeFromStreamX($expectedKey);
 
         // when

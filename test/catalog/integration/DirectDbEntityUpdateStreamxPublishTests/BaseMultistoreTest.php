@@ -27,7 +27,7 @@ abstract class BaseMultistoreTest extends BaseDirectDbEntityUpdateTest {
 
         $this->store2Id = $this->selectByCode('store_id', 'store', 'store_2_view');
         $this->secondWebsiteId = $this->selectByCode('website_id', 'store_website', 'second_website');
-        $this->secondWebsiteStoreId = $this->selectByCode('store_id', 'store', 'store_for_second_website_view');
+        $this->secondWebsiteStoreId = $this->selectByCode('store_id', 'store', 'store_view_for_second_website');
     }
 
     private function selectByCode(string $idField, string $table, string $code): int {

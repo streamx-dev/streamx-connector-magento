@@ -4,6 +4,7 @@ namespace StreamX\ConnectorCore\Client;
 
 use Exception;
 use GuzzleHttp\Client as GuzzleHttpClient;
+use Magento\Store\Api\Data\StoreInterface;
 use Psr\Log\LoggerInterface;
 use Streamx\Clients\Ingestion\Builders\StreamxClientBuilders;
 use Streamx\Clients\Ingestion\Publisher\Message;
@@ -14,33 +15,23 @@ use StreamX\ConnectorCore\Client\Model\Data;
 
 class StreamxClient {
 
-    private LoggerInterface $logger;
+    private const STREAMX_TYPE_PROPERTY_NAME = 'streamx:type';
 
-    private string $ingestionBaseUrl;
-    private string $channelName;
-    private string $channelSchemaName;
-    private string $productKeyPrefix;
-    private string $categoryKeyPrefix;
-    private ?string $authToken;
-    private bool $shouldDisableCertificateValidation;
+    private LoggerInterface $logger;
+    private string $storeCode;
     private Publisher $schemasFetcher;
     private Publisher $dataIngestor;
 
     public function __construct(
         LoggerInterface $logger,
         StreamxClientConfiguration $configuration,
-        int $storeId
+        StoreInterface $store
     ) {
         $this->logger = $logger;
-        $this->ingestionBaseUrl = $configuration->getIngestionBaseUrl($storeId);
-        $this->channelName = $configuration->getChannelName($storeId);
-        $this->channelSchemaName = $configuration->getChannelSchemaName($storeId);
-        $this->productKeyPrefix = $configuration->getProductKeyPrefix($storeId);
-        $this->categoryKeyPrefix = $configuration->getCategoryKeyPrefix($storeId);
-        $this->authToken = $configuration->getAuthToken($storeId);
-        $this->shouldDisableCertificateValidation = $configuration->shouldDisableCertificateValidation($storeId);
-        $this->schemasFetcher = $this->createStreamxPublisher(false);
-        $this->dataIngestor = $this->createStreamxPublisher(true);
+        $this->storeCode = $store->getCode();
+        $storeId = (int) $store->getId();
+        $this->schemasFetcher = $this->createStreamxPublisher($configuration, $storeId, false);
+        $this->dataIngestor = $this->createStreamxPublisher($configuration, $storeId, true);
     }
 
     public function publish(array $entities, string $indexerName): void {
@@ -49,9 +40,12 @@ class StreamxClient {
 
         $publishMessages = [];
         foreach ($entities as $entity) {
-            $key = self::createStreamxKey($indexerName, $entity['id']);
+            $entityType = EntityType::fromEntityAndIndexerName($entity, $indexerName);
+            $key = $this->createStreamxKey($entityType, $entity['id']);
             $payload = new Data(json_encode($entity));
-            $publishMessages[] = Message::newPublishMessage($key, $payload)->build();
+            $publishMessages[] = Message::newPublishMessage($key, $payload)
+                ->withProperty(self::STREAMX_TYPE_PROPERTY_NAME, $entityType->getFullyQualifiedName())
+                ->build();
         }
 
         $this->ingest($publishMessages);
@@ -64,22 +58,23 @@ class StreamxClient {
 
         $unpublishMessages = [];
         foreach ($entityIds as $entityId) {
-            $key = self::createStreamxKey($indexerName, $entityId);
-            $unpublishMessages[] = Message::newUnpublishMessage($key)->build();
+            $entityType = EntityType::fromIndexerName($indexerName);
+            $key = $this->createStreamxKey($entityType, $entityId);
+            $unpublishMessages[] = Message::newUnpublishMessage($key)
+                ->withProperty(self::STREAMX_TYPE_PROPERTY_NAME, $entityType->getFullyQualifiedName())
+                ->build();
         }
 
         $this->ingest($unpublishMessages);
         $this->logger->info("Finished unpublishing $entityCount entities");
     }
 
-    private function createStreamxKey(string $indexerName, int $entityId): string {
-        if ($indexerName == ProductProcessor::INDEXER_ID) {
-            return $this->productKeyPrefix . $entityId;
-        }
-        if ($indexerName == CategoryProcessor::INDEXER_ID) {
-            return $this->categoryKeyPrefix . $entityId;
-        }
-        throw new Exception("Received data from unexpected indexer: $indexerName");
+    private function createStreamxKey(EntityType $entityType, int $entityId): string {
+        return sprintf('%s_%s:%d',
+            $this->storeCode,
+            $entityType->getRootType(),
+            $entityId
+        );
     }
 
     /**
@@ -116,24 +111,24 @@ class StreamxClient {
         return false;
     }
 
-    private function createStreamxPublisher(bool $stream): Publisher {
+    private function createStreamxPublisher(StreamxClientConfiguration $configuration, int $storeId, bool $stream): Publisher {
         $httpClient = new GuzzleHttpClient([
             'connect_timeout' => 1, // maximum time (in seconds) to establish the connection
             'timeout' => 5, // maximum time (in seconds) to wait for response
-            'verify' => !$this->shouldDisableCertificateValidation,
+            'verify' => !$configuration->shouldDisableCertificateValidation($storeId),
             'stream' => $stream
         ]);
 
-        $ingestionClientBuilder = StreamxClientBuilders::create($this->ingestionBaseUrl)
+        $ingestionClientBuilder = StreamxClientBuilders::create($configuration->getIngestionBaseUrl($storeId))
             ->setHttpClient($httpClient);
 
-        if ($this->authToken) {
-            $ingestionClientBuilder->setAuthToken($this->authToken);
+        if ($configuration->getAuthToken($storeId)) {
+            $ingestionClientBuilder->setAuthToken($configuration->getAuthToken($storeId));
         }
 
         return $ingestionClientBuilder->build()->newPublisher(
-            $this->channelName,
-            $this->channelSchemaName
+            $configuration->getChannelName($storeId),
+            $configuration->getChannelSchemaName($storeId)
         );
     }
 

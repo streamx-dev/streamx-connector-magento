@@ -22,8 +22,8 @@ class ProductVariantUpdateTest extends BaseDirectDbEntityUpdateTest {
         $newNameOfProductToEdit = "Name modified for testing, was $nameOfProductToEdit";
 
         // and
-        $expectedPublishedKey = "pim:$idOfProductToEdit";
-        $unexpectedPublishedKey = 'pim:' . $this->db->getProductId('Chaz Kangeroo Hoodie-XL-Orange');
+        $expectedPublishedKey = "default_product:$idOfProductToEdit";
+        $unexpectedPublishedKey = 'default_product:' . $this->db->getProductId('Chaz Kangeroo Hoodie-XL-Orange');
 
         self::removeFromStreamX($expectedPublishedKey, $unexpectedPublishedKey);
 
@@ -50,8 +50,8 @@ class ProductVariantUpdateTest extends BaseDirectDbEntityUpdateTest {
         $newNameOfProductToEdit = "Name modified for testing, was $nameOfProductToEdit";
 
         // and
-        $expectedPublishedKey = 'pim:' . $this->db->getProductId('Chaz Kangeroo Hoodie');
-        $unexpectedPublishedKey = "pim:$idOfProductToEdit";
+        $expectedPublishedKey = 'default_product:' . $this->db->getProductId('Chaz Kangeroo Hoodie');
+        $unexpectedPublishedKey = "default_product:$idOfProductToEdit";
 
         self::removeFromStreamX($expectedPublishedKey, $unexpectedPublishedKey);
 

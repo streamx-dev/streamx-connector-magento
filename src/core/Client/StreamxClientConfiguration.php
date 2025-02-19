@@ -23,14 +23,6 @@ class StreamxClientConfiguration extends BaseConfigurationReader
         return (string)$this->getStoreLevelConfigValue('channel_schema_name', $storeId);
     }
 
-    public function getProductKeyPrefix(int $storeId): string {
-        return (string)$this->getStoreLevelConfigValue('product_key_prefix', $storeId);
-    }
-
-    public function getCategoryKeyPrefix(int $storeId): string {
-        return (string)$this->getStoreLevelConfigValue('category_key_prefix', $storeId);
-    }
-
     public function getAuthToken(int $storeId): ?string {
         return $this->getStoreLevelConfigValue('auth_token', $storeId);
     }
