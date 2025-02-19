@@ -5,9 +5,10 @@ namespace StreamX\ConnectorCatalog\Model\Indexer\Action;
 use Exception;
 use Magento\Framework\Exception\NoSuchEntityException;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category as ResourceModel;
+use StreamX\ConnectorCore\Api\BaseAction;
 use Traversable;
 
-class Category implements BaseAction {
+class CategoryAction implements BaseAction {
 
     private ResourceModel $resourceModel;
 

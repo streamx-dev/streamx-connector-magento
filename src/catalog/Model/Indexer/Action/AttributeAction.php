@@ -3,9 +3,10 @@
 namespace StreamX\ConnectorCatalog\Model\Indexer\Action;
 
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\LoadAttributeDefinitions;
+use StreamX\ConnectorCore\Api\BaseAction;
 use Traversable;
 
-class Attribute implements BaseAction {
+class AttributeAction implements BaseAction {
 
     private LoadAttributeDefinitions $loadAttributeDefinitions;
 

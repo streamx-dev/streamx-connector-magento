@@ -6,9 +6,10 @@ use Exception;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product as ResourceModel;
+use StreamX\ConnectorCore\Api\BaseAction;
 use Traversable;
 
-class Product implements BaseAction {
+class ProductAction implements BaseAction {
 
     private ResourceModel $resourceModel;
 

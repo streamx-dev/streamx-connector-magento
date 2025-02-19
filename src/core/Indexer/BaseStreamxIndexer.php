@@ -1,45 +1,46 @@
 <?php declare(strict_types=1);
 
-namespace StreamX\ConnectorCatalog\Model\Indexer;
+namespace StreamX\ConnectorCore\Indexer;
 
+use Magento\Framework\Indexer\SaveHandler\Batch;
 use Psr\Log\LoggerInterface;
 use Streamx\Clients\Ingestion\Exceptions\StreamxClientException;
-use StreamX\ConnectorCatalog\Model\Indexer\Action\BaseAction;
+use StreamX\ConnectorCore\Api\BaseAction;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
-use StreamX\ConnectorCore\Indexer\GenericIndexerHandler;
-use StreamX\ConnectorCore\Indexer\IndexableStoresProvider;
+use StreamX\ConnectorCore\Index\IndexerDefinition;
+use StreamX\ConnectorCore\Streamx\Client;
 use StreamX\ConnectorCore\Streamx\ClientResolver;
 use StreamX\ConnectorCore\System\GeneralConfig;
+use Traversable;
 
 abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionInterface, \Magento\Framework\Mview\ActionInterface
 {
     private GeneralConfig $connectorConfig;
     private IndexableStoresProvider $indexableStoresProvider;
-    private GenericIndexerHandler $indexHandler;
     private BaseAction $action;
     private LoggerInterface $logger;
     private OptimizationSettings $optimizationSettings;
     private ClientResolver $clientResolver;
-    private string $entityTypeName;
+    private IndexerDefinition $indexerDefinition;
+    private string $indexerName;
 
     public function __construct(
         GeneralConfig $connectorConfig,
-        GenericIndexerHandler $indexerHandler,
         IndexableStoresProvider $indexableStoresProvider,
         BaseAction $action,
         LoggerInterface $logger,
         OptimizationSettings $optimizationSettings,
         ClientResolver $clientResolver,
-        string $entityTypeName
+        IndexerDefinition $indexerDefinition
     ) {
         $this->connectorConfig = $connectorConfig;
-        $this->indexHandler = $indexerHandler;
         $this->indexableStoresProvider = $indexableStoresProvider;
         $this->action = $action;
         $this->logger = $logger;
         $this->optimizationSettings = $optimizationSettings;
         $this->clientResolver = $clientResolver;
-        $this->entityTypeName = $entityTypeName;
+        $this->indexerDefinition = $indexerDefinition;
+        $this->indexerName = $indexerDefinition->getName();
     }
 
     /**
@@ -79,7 +80,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
      */
     private function loadDocumentsAndSaveIndex(array $ids): void {
         if (!$this->connectorConfig->isEnabled()) {
-            $this->logger->info("StreamX Connector is disabled, skipping indexing $this->entityTypeName");
+            $this->logger->info("StreamX Connector is disabled, skipping indexing $this->indexerName");
             return;
         }
 
@@ -88,14 +89,55 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
 
             $client = $this->clientResolver->getClient($storeId);
             if ($this->optimizationSettings->shouldPerformStreamxAvailabilityCheck() && !$client->isStreamxAvailable()) {
-                $this->logger->info("Cannot reindex $this->entityTypeName data for store $storeId - StreamX is not available");
+                $this->logger->info("Cannot reindex $this->indexerName for store $storeId - StreamX is not available");
                 continue;
             }
 
-            $this->logger->info("Start indexing $this->entityTypeName from store $storeId");
+            $this->logger->info("Start indexing $this->indexerName for store $storeId");
             $documents = $this->action->loadData($storeId, $ids);
-            $this->indexHandler->saveIndex($documents, $storeId, $client);
-            $this->logger->info("Finished indexing $this->entityTypeName from store $storeId");
+            $this->saveIndex($documents, $storeId, $client);
+            $this->logger->info("Finished indexing $this->indexerName for store $storeId");
+        }
+    }
+
+    /**
+     * @throws StreamxClientException
+     */
+    public final function saveIndex(Traversable $documents, int $storeId, Client $client): void {
+        $batchSize = $this->optimizationSettings->getBatchIndexingSize();
+
+        foreach ((new Batch())->getItems($documents, $batchSize) as $docs) {
+            $this->processEntitiesBatch($docs, $storeId, $client);
+        }
+    }
+
+    /**
+     * @throws StreamxClientException
+     */
+    protected function processEntitiesBatch(array $entities, int $storeId, Client $client): void {
+        $entitiesToPublish = [];
+        $idsToUnpublish = [];
+        foreach ($entities as $id => $entity) {
+            if (empty($entity)) {
+                $idsToUnpublish[] = $id;
+            } else {
+                $entitiesToPublish[$id] = $entity;
+            }
+        }
+
+        if (!empty($entitiesToPublish)) {
+            $this->addData($entitiesToPublish, $storeId);
+            $client->publish(array_values($entitiesToPublish), $this->indexerDefinition->getName());
+        }
+
+        if (!empty($idsToUnpublish)) {
+            $client->unpublish($idsToUnpublish, $this->indexerDefinition->getName());
+        }
+    }
+
+    private function addData(array &$entities, int $storeId): void {
+        foreach ($this->indexerDefinition->getDataProviders() as $dataProvider) {
+            $entities = $dataProvider->addData($entities, $storeId);
         }
     }
 }
