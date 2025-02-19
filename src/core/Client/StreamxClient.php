@@ -85,7 +85,7 @@ class StreamxClient {
                 }
             }
         } catch (Exception $e) {
-            $this->logger->error('Ingestion exception: ' . $e->getMessage(), ['exception' => $e]);
+            $this->logException('Ingestion exception', $e);
         }
     }
 
@@ -97,8 +97,18 @@ class StreamxClient {
             }
             $this->logger->error("Requested StreamX channel is not available, Ingestion Message definition is missing in schema:\n$schema");
         } catch (Exception $e) {
-            $this->logger->error('Exception checking if StreamX is available: ' . $e->getMessage(), ['exception' => $e]);
+            $this->logException('Exception checking if StreamX is available', $e);
         }
         return false;
+    }
+
+    private function logException(string $customMessage, Exception $e): void {
+        $this->logger->error(
+            $customMessage . ': ' . $e->getMessage(),
+            [
+                'Exception' => $e,
+                'Stack trace' => $e->getTraceAsString(),
+            ]
+        );
     }
 }
