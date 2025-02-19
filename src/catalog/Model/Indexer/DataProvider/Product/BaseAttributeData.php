@@ -130,22 +130,24 @@ abstract class BaseAttributeData extends DataProviderInterface
     private function createProductAttributeArray(string $attributeCode, AttributeDefinition $attributeDefinition, array $attributeValues): array
     {
         $productAttribute['name'] = $attributeCode;
-        $productAttribute['label'] = $attributeDefinition->getLabel();
+        $productAttribute['label'] = $attributeDefinition->getValue();
 
         foreach ($attributeValues as $attributeValue) {
+            $value = in_array($attributeCode, self::IMAGE_ATTRIBUTES)
+                ? $this->imageUrlManager->getProductImageUrl($attributeValue)
+                : $this->getPotentialOptionValue($attributeCode, $attributeValue, $attributeDefinition);
             $productAttribute['values'][] = [
-                'value' => in_array($attributeCode, self::IMAGE_ATTRIBUTES)
-                    ? $this->imageUrlManager->getProductImageUrl($attributeValue)
-                    : $attributeValue,
-                'valueLabel' => $this->getValueLabel($attributeCode, $attributeValue, $attributeDefinition)
+                'value' => $value,
+                'label' => $value
             ];
         }
         $productAttribute['isFacet'] = $attributeDefinition->isFacet();
 
         $productAttribute['options'] = array_map(function ($option) {
+            $optionValue = $option->getValue();
             $mappedOption = [
-                'value' => $option->getValue(),
-                'label' => $option->getLabel()
+                'value' => $optionValue,
+                'label' => $optionValue
             ];
 
             $swatch = $option->getSwatch();
@@ -161,12 +163,24 @@ abstract class BaseAttributeData extends DataProviderInterface
         return $productAttribute;
     }
 
-    private function getValueLabel(string $attributeCode, $attributeValue, AttributeDefinition $attributeDefinition): string
+    /**
+     * If $attributeValue is an option ID for the given $attributeCode - returns value of the option. Otherwise - returns the input $attributeValue
+     */
+    private function getPotentialOptionValue(string $attributeCode, $attributeValue, AttributeDefinition $attributeDefinition): string
     {
         if (SpecialAttributes::isSpecialAttribute($attributeCode)) {
             return SpecialAttributes::getAttributeValueLabel($attributeCode, (int) $attributeValue);
         }
-        return $attributeDefinition->getValueLabel((string) $attributeValue);
+
+        if (is_numeric($attributeValue)) {
+            $potentialOptionId = (int)$attributeValue;
+            foreach ($attributeDefinition->getOptions() as $option) {
+                if ($option->getId() === $potentialOptionId) {
+                    return $option->getValue();
+                }
+            }
+        }
+        return (string) $attributeValue;
     }
 
     function applySlug(array &$productData): void

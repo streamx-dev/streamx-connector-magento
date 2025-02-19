@@ -100,7 +100,7 @@ class LoadAttributeDefinitions
             if (SpecialAttributes::isSpecialAttribute($attributeCode)) {
                 return SpecialAttributes::getOptionsArray($attributeCode);
             } else {
-                return $this->loadOptions->execute($attributeCode, $storeId);
+                return $this->loadOptions->getOptionsArray($attributeCode, $storeId);
             }
         } else {
             return [];
@@ -141,8 +141,8 @@ class LoadAttributeDefinitions
         return array_map(
             function ($option) {
                 return new AttributeOptionDefinition(
-                    $option['value'],
-                    $option['label'],
+                    (int) $option['id'],
+                    (string) $option['value'],
                     $this->mapAttributeOptionRowToSwatchDto($option)
                 );
             },

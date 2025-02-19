@@ -25,16 +25,11 @@ class LoadOptions
         $this->loadAttributes = $loadAttributes;
     }
 
-    public function execute(string $attributeCode, int $storeId): array
+    public function getOptionsArray(string $attributeCode, int $storeId): array
     {
-        $attributeModel = $this->loadAttributes->getAttributeByCode($attributeCode);
-        $attributeModel->setStoreId($storeId);
+        $attribute = $this->loadAttributes->getAttributeByCode($attributeCode);
+        $attribute->setStoreId($storeId);
 
-        return $this->loadOptions($attributeModel);
-    }
-
-    private function loadOptions(Attribute $attribute): array
-    {
         $key = $attribute->getId() . '_' . $attribute->getStoreId();
 
         if (!isset($this->optionsByAttribute[$key])) {
@@ -42,8 +37,8 @@ class LoadOptions
                 $source = $attribute->getSource();
                 $options = array_map(function($option) {
                     return [
-                        'value' => (string) $option['value'],
-                        'label' => (string) $option['label']
+                        'id' => $option['value'],
+                        'value' => $option['label']
                     ];
                 }, $source->getAllOptions());
             } else {

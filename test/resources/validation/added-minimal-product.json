@@ -8,18 +8,18 @@
       "label": "Enable Product",
       "values": [
         {
-          "value": "1",
-          "valueLabel": "Enabled"
+          "value": "Enabled",
+          "label": "Enabled"
         }
       ],
       "isFacet": false,
       "options": [
         {
-          "value": "1",
+          "value": "Enabled",
           "label": "Enabled"
         },
         {
-          "value": "2",
+          "value": "Disabled",
           "label": "Disabled"
         }
       ]

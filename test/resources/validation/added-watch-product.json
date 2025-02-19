@@ -9,7 +9,7 @@
       "values": [
         {
           "value": "The new great watch",
-          "valueLabel": "The new great watch"
+          "label": "The new great watch"
         }
       ],
       "isFacet": false,
@@ -21,7 +21,7 @@
       "values": [
         {
           "value": "The new great watch",
-          "valueLabel": "The new great watch"
+          "label": "The new great watch"
         }
       ],
       "isFacet": false,
@@ -33,7 +33,7 @@
       "values": [
         {
           "value": "the-new-great-watch",
-          "valueLabel": "the-new-great-watch"
+          "label": "the-new-great-watch"
         }
       ],
       "isFacet": false,
@@ -44,162 +44,162 @@
       "label": "Material",
       "values": [
         {
-          "value": 43,
-          "valueLabel": "Metal"
+          "value": "Metal",
+          "label": "Metal"
         },
         {
-          "value": 44,
-          "valueLabel": "Plastic"
+          "value": "Plastic",
+          "label": "Plastic"
         },
         {
-          "value": 35,
-          "valueLabel": "Leather"
+          "value": "Leather",
+          "label": "Leather"
         }
       ],
       "isFacet": true,
       "options": [
         {
-          "value": "31",
+          "value": "Burlap",
           "label": "Burlap"
         },
         {
-          "value": "142",
+          "value": "Cocona&reg; performance fabric",
           "label": "Cocona&reg; performance fabric"
         },
         {
-          "value": "32",
+          "value": "Canvas",
           "label": "Canvas"
         },
         {
-          "value": "143",
+          "value": "Wool",
           "label": "Wool"
         },
         {
-          "value": "33",
+          "value": "Cotton",
           "label": "Cotton"
         },
         {
-          "value": "144",
+          "value": "Fleece",
           "label": "Fleece"
         },
         {
-          "value": "34",
+          "value": "Faux Leather",
           "label": "Faux Leather"
         },
         {
-          "value": "145",
+          "value": "Hemp",
           "label": "Hemp"
         },
         {
-          "value": "146",
+          "value": "Jersey",
           "label": "Jersey"
         },
         {
-          "value": "35",
+          "value": "Leather",
           "label": "Leather"
         },
         {
-          "value": "147",
+          "value": "LumaTech&trade;",
           "label": "LumaTech&trade;"
         },
         {
-          "value": "36",
+          "value": "Mesh",
           "label": "Mesh"
         },
         {
-          "value": "148",
+          "value": "Lycra&reg;",
           "label": "Lycra&reg;"
         },
         {
-          "value": "37",
+          "value": "Nylon",
           "label": "Nylon"
         },
         {
-          "value": "149",
+          "value": "Microfiber",
           "label": "Microfiber"
         },
         {
-          "value": "38",
+          "value": "Polyester",
           "label": "Polyester"
         },
         {
-          "value": "39",
+          "value": "Rayon",
           "label": "Rayon"
         },
         {
-          "value": "150",
+          "value": "Spandex",
           "label": "Spandex"
         },
         {
-          "value": "151",
+          "value": "HeatTec&reg;",
           "label": "HeatTec&reg;"
         },
         {
-          "value": "40",
+          "value": "Ripstop",
           "label": "Ripstop"
         },
         {
-          "value": "152",
+          "value": "EverCool&trade;",
           "label": "EverCool&trade;"
         },
         {
-          "value": "41",
+          "value": "Suede",
           "label": "Suede"
         },
         {
-          "value": "42",
+          "value": "Foam",
           "label": "Foam"
         },
         {
-          "value": "153",
+          "value": "Organic Cotton",
           "label": "Organic Cotton"
         },
         {
-          "value": "43",
+          "value": "Metal",
           "label": "Metal"
         },
         {
-          "value": "154",
+          "value": "TENCEL",
           "label": "TENCEL"
         },
         {
-          "value": "155",
+          "value": "CoolTech&trade;",
           "label": "CoolTech&trade;"
         },
         {
-          "value": "44",
+          "value": "Plastic",
           "label": "Plastic"
         },
         {
-          "value": "156",
+          "value": "Khaki",
           "label": "Khaki"
         },
         {
-          "value": "45",
+          "value": "Rubber",
           "label": "Rubber"
         },
         {
-          "value": "157",
+          "value": "Linen",
           "label": "Linen"
         },
         {
-          "value": "46",
+          "value": "Synthetic",
           "label": "Synthetic"
         },
         {
-          "value": "47",
+          "value": "Stainless Steel",
           "label": "Stainless Steel"
         },
         {
-          "value": "158",
+          "value": "Wool",
           "label": "Wool"
         },
         {
-          "value": "48",
+          "value": "Silicone",
           "label": "Silicone"
         },
         {
-          "value": "159",
+          "value": "Terry",
           "label": "Terry"
         }
       ]
@@ -209,14 +209,14 @@
       "label": "Color",
       "values": [
         {
-          "value": "51",
-          "valueLabel": "Brown"
+          "value": "Brown",
+          "label": "Brown"
         }
       ],
       "isFacet": true,
       "options": [
         {
-          "value": "49",
+          "value": "Black",
           "label": "Black",
           "swatch": {
             "type": "color",
@@ -224,7 +224,7 @@
           }
         },
         {
-          "value": "50",
+          "value": "Blue",
           "label": "Blue",
           "swatch": {
             "type": "color",
@@ -232,7 +232,7 @@
           }
         },
         {
-          "value": "51",
+          "value": "Brown",
           "label": "Brown",
           "swatch": {
             "type": "color",
@@ -240,7 +240,7 @@
           }
         },
         {
-          "value": "52",
+          "value": "Gray",
           "label": "Gray",
           "swatch": {
             "type": "color",
@@ -248,7 +248,7 @@
           }
         },
         {
-          "value": "53",
+          "value": "Green",
           "label": "Green",
           "swatch": {
             "type": "color",
@@ -256,7 +256,7 @@
           }
         },
         {
-          "value": "54",
+          "value": "Lavender",
           "label": "Lavender",
           "swatch": {
             "type": "color",
@@ -264,7 +264,7 @@
           }
         },
         {
-          "value": "55",
+          "value": "Multi",
           "label": "Multi",
           "swatch": {
             "type": "color",
@@ -272,7 +272,7 @@
           }
         },
         {
-          "value": "56",
+          "value": "Orange",
           "label": "Orange",
           "swatch": {
             "type": "color",
@@ -280,7 +280,7 @@
           }
         },
         {
-          "value": "57",
+          "value": "Purple",
           "label": "Purple",
           "swatch": {
             "type": "color",
@@ -288,7 +288,7 @@
           }
         },
         {
-          "value": "58",
+          "value": "Red",
           "label": "Red",
           "swatch": {
             "type": "color",
@@ -296,7 +296,7 @@
           }
         },
         {
-          "value": "59",
+          "value": "White",
           "label": "White",
           "swatch": {
             "type": "color",
@@ -304,7 +304,7 @@
           }
         },
         {
-          "value": "60",
+          "value": "Yellow",
           "label": "Yellow",
           "swatch": {
             "type": "color",
@@ -318,18 +318,18 @@
       "label": "Enable Product",
       "values": [
         {
-          "value": "1",
-          "valueLabel": "Enabled"
+          "value": "Enabled",
+          "label": "Enabled"
         }
       ],
       "isFacet": false,
       "options": [
         {
-          "value": "1",
+          "value": "Enabled",
           "label": "Enabled"
         },
         {
-          "value": "2",
+          "value": "Disabled",
           "label": "Disabled"
         }
       ]
@@ -339,26 +339,26 @@
       "label": "Visibility",
       "values": [
         {
-          "value": "4",
-          "valueLabel": "Catalog, Search"
+          "value": "Catalog, Search",
+          "label": "Catalog, Search"
         }
       ],
       "isFacet": false,
       "options": [
         {
-          "value": "1",
+          "value": "Not Visible Individually",
           "label": "Not Visible Individually"
         },
         {
-          "value": "2",
+          "value": "Catalog",
           "label": "Catalog"
         },
         {
-          "value": "3",
+          "value": "Search",
           "label": "Search"
         },
         {
-          "value": "4",
+          "value": "Catalog, Search",
           "label": "Catalog, Search"
         }
       ]

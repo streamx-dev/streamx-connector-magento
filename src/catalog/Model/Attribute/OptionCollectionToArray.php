@@ -12,10 +12,10 @@ class OptionCollectionToArray
         $res = [];
 
         foreach ($collection as $item) {
-            $data = [];
-
-            $data['value'] = (string) $item->getData('option_id');
-            $data['label'] = (string) $item->getData('value');
+            $data = [
+                'id' => $item->getData('option_id'),
+                'value' => $item->getData('value')
+            ];
 
             if ($loadSwatches) {
                 $data['swatch'] = [
