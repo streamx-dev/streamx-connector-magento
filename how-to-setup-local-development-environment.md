@@ -78,6 +78,7 @@ If the Magento admin page displays warning about invalidated cache - perform the
  - Click `Configuration` in the `Settings` area
  - Expand `STREAMX` section, click on `Connector` item, then expand `General Settings` section on the right
  - Select `Yes` for the `Enable StreamX Connector` setting and click the `Save Config` button
+ - Change scope to `Main Website` and select `Default Store View` in the `List of stores to reindex` and click the `Save Config` button
 
 ## Start the already configured magento
 If for example you stopped all its containers manually, you can start them using:
