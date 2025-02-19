@@ -3,13 +3,13 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
   <group id="default">
     <job name="streamx_product_indexer_cron" instance="StreamX\ConnectorCatalog\Cron\MView\StreamxIndexerMviewProcessor" method="reindexProductMview">
-      <schedule>* * * * *</schedule> <!-- Every minute -->
+      <schedule>*/5 * * * *</schedule> <!-- Every 5 minutes -->
     </job>
     <job name="streamx_category_indexer_cron" instance="StreamX\ConnectorCatalog\Cron\MView\StreamxIndexerMviewProcessor" method="reindexCategoryMview">
-      <schedule>* * * * *</schedule> <!-- Every minute -->
+      <schedule>*/5 * * * *</schedule> <!-- Every 5 minutes -->
     </job>
     <job name="streamx_attribute_indexer_cron" instance="StreamX\ConnectorCatalog\Cron\MView\StreamxIndexerMviewProcessor" method="reindexAttributeMview">
-      <schedule>* * * * *</schedule> <!-- Every minute -->
+      <schedule>*/5 * * * *</schedule> <!-- Every 5 minutes -->
     </job>
   </group>
 </config>
