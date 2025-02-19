@@ -18,20 +18,14 @@ use StreamX\ConnectorTestTools\Api\StoresControllerInterface;
 class StoresControllerImpl implements StoresControllerInterface
 {
     private const STORE_2_CODE = 'store_2';
+    private const STORE_2_VIEW_CODE = 'store_2_view';
 
     private const SECOND_WEBSITE_CODE = 'second_website';
-    private const STORE_FOR_SECOND_WEBSITE_CODE = 'store_for_second_website';
-
-    private const STORE_2_PRODUCT_KEY_PREFIX = 'pim_store_2:';
-    private const STORE_2_CATEGORY_KEY_PREFIX = 'cat_store_2:';
-
-    private const SECOND_WEBSITE_PRODUCT_KEY_PREFIX = 'pim_website_2:';
-    private const SECOND_WEBSITE_CATEGORY_KEY_PREFIX = 'cat_website_2:';
+    private const STORE_CODE_FOR_SECOND_WEBSITE = 'store_for_second_website';
+    private const STORE_VIEW_CODE_FOR_SECOND_WEBSITE = 'store_view_for_second_website';
 
     private const PRODUCT_IDS_IN_SECOND_WEBSITE = [4, 5, 6, 61, 62]; // 4, 5, 6 are simple products. 61 is a variant of configurable product 62
 
-    private const PRODUCT_KEY_PREFIX = 'streamx_connector_settings/streamx_client/product_key_prefix';
-    private const CATEGORY_KEY_PREFIX = 'streamx_connector_settings/streamx_client/category_key_prefix';
     private const CONNECTOR_ENABLE_CONFIG_KEY = 'streamx_connector_settings/general_settings/enable';
     private const ALLOWED_STORES_CONFIG_KEY = 'streamx_connector_settings/general_settings/allowed_stores';
 
@@ -73,20 +67,13 @@ class StoresControllerImpl implements StoresControllerInterface
         $defaultWebsite = array_values($this->storeManager->getWebsites())[0];
         $defaultStoreId = $this->storeManager->getStore('default')->getId();
 
-        $store2 = $this->createStore($defaultWebsite->getId(), self::STORE_2_CODE);
+        $store2 = $this->createStore($defaultWebsite->getId(), self::STORE_2_CODE, self::STORE_2_VIEW_CODE);
         $secondWebsite = $this->createWebsite(self::SECOND_WEBSITE_CODE);
-        $storeForSecondWebsite = $this->createStore($secondWebsite->getId(), self::STORE_FOR_SECOND_WEBSITE_CODE);
-
-        // configure keys
-        $this->setStoreLevelConfigValue(self::PRODUCT_KEY_PREFIX, self::STORE_2_PRODUCT_KEY_PREFIX, $store2);
-        $this->setStoreLevelConfigValue(self::CATEGORY_KEY_PREFIX, self::STORE_2_CATEGORY_KEY_PREFIX, $store2);
-
-        $this->setWebsiteLevelConfigValue(self::PRODUCT_KEY_PREFIX, self::SECOND_WEBSITE_PRODUCT_KEY_PREFIX, $secondWebsite);
-        $this->setWebsiteLevelConfigValue(self::CATEGORY_KEY_PREFIX, self::SECOND_WEBSITE_CATEGORY_KEY_PREFIX, $secondWebsite);
+        $storeForSecondWebsite = $this->createStore($secondWebsite->getId(), self::STORE_CODE_FOR_SECOND_WEBSITE, self::STORE_VIEW_CODE_FOR_SECOND_WEBSITE);
 
         // configure exported stores
-        $this->setWebsiteLevelConfigValue(self::ALLOWED_STORES_CONFIG_KEY, $defaultStoreId . ',' . $store2->getId(), $defaultWebsite);
-        $this->setWebsiteLevelConfigValue(self::ALLOWED_STORES_CONFIG_KEY, $storeForSecondWebsite->getId(), $secondWebsite);
+        $this->setIndexedStoresForWebsite($defaultStoreId . ',' . $store2->getId(), $defaultWebsite);
+        $this->setIndexedStoresForWebsite($storeForSecondWebsite->getId(), $secondWebsite);
 
         // add products to the new website
         foreach (self::PRODUCT_IDS_IN_SECOND_WEBSITE as $productId) {
@@ -99,27 +86,27 @@ class StoresControllerImpl implements StoresControllerInterface
         return true;
     }
 
-    private function createStore(int $websiteId, string $code): Store {
-        $storeGroup = $this->createStoreGroup($websiteId, $code);
+    private function createStore(int $websiteId, string $storeCode, string $viewCode): Store {
+        $store = $this->createStoreGroup($websiteId, $storeCode);
 
-        $store = $this->storeFactory->create()
-            ->setCode($code . '_view')
+        $storeView = $this->storeFactory->create()
+            ->setCode($viewCode)
             ->setWebsiteId($websiteId)
-            ->setStoreGroupId($storeGroup->getId())
-            ->setName(strtoupper($code . '_view'))
+            ->setStoreGroupId($store->getId())
+            ->setName(self::codeToName($viewCode))
             ->setIsActive(true)
             ->save();
 
-        $storeGroup->setDefaultStoreId($store->getId())->save();
+        $store->setDefaultStoreId($storeView->getId())->save();
 
-        return $store;
+        return $storeView;
     }
 
     private function createStoreGroup(int $websiteId, string $code): Group {
         return $this->groupFactory->create()
             ->setWebsiteId($websiteId)
             ->setCode($code)
-            ->setName(strtoupper($code))
+            ->setName(self::codeToName($code))
             ->setRootCategoryId(2)
             ->save();
     }
@@ -127,16 +114,21 @@ class StoresControllerImpl implements StoresControllerInterface
     private function createWebsite(string $code): Website {
         return $this->websiteFactory->create()
             ->setCode($code)
-            ->setName(strtoupper($code))
+            ->setName(self::codeToName($code))
             ->save();
     }
 
-    private function setStoreLevelConfigValue(string $key, string $value, Store $store): void {
-        $this->writer->save($key, $value, ScopeInterface::SCOPE_STORES, $store->getId());
+    private static function codeToName(string $code): string {
+        return strtoupper($code);
     }
 
-    private function setWebsiteLevelConfigValue(string $key, string $value, WebsiteInterface $website): void {
-        $this->writer->save($key, $value, ScopeInterface::SCOPE_WEBSITES, $website->getId());
+    private function setIndexedStoresForWebsite(string $value, WebsiteInterface $website): void {
+        $this->writer->save(
+            self::ALLOWED_STORES_CONFIG_KEY,
+            $value,
+            ScopeInterface::SCOPE_WEBSITES,
+            $website->getId()
+        );
     }
 
     private function setGlobalLevelConfigValue(string $key, string $value): void {

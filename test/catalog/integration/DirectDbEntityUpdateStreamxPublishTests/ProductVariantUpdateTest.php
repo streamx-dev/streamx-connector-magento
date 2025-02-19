@@ -32,9 +32,9 @@ class ProductVariantUpdateTest extends BaseDirectDbEntityUpdateTest {
         self::$db->setProductsVisibleInStore(self::STORE_1_ID, ...array_keys($visibleChildProducts));
 
         // and
-        $expectedParentProductKey = "pim:$parentProductId";
+        $expectedParentProductKey = "default_product:$parentProductId";
         $expectedChildProductsKeys = array_map(function ($childProductId) {
-            return "pim:$childProductId";
+            return "default_product:$childProductId";
         }, array_keys($childProducts));
 
         self::removeFromStreamX($expectedParentProductKey, ...$expectedChildProductsKeys);
@@ -49,12 +49,12 @@ class ProductVariantUpdateTest extends BaseDirectDbEntityUpdateTest {
             // then
             $this->assertExactDataIsPublished($expectedParentProductKey, 'edited-hoodie-product.json');
             foreach ($visibleChildProducts as $childProductId => $childProductName) {
-                $publishedChildProduct = $this->downloadContentAtKey("pim:$childProductId");
+                $publishedChildProduct = $this->downloadContentAtKey("default_product:$childProductId");
                 $this->assertStringContainsString('"id":' . $childProductId, $publishedChildProduct);
                 $this->assertStringContainsString('"name":"' . $childProductName . '"', $publishedChildProduct);
             }
             foreach ($invisibleChildProducts as $childProductId => $childProductName) {
-                $this->assertDataIsNotPublished("pim:$childProductId");
+                $this->assertDataIsNotPublished("default_product:$childProductId");
             }
         } finally {
             self::$db->renameProduct($parentProductId, self::PARENT_PRODUCT_NAME);
@@ -87,9 +87,9 @@ class ProductVariantUpdateTest extends BaseDirectDbEntityUpdateTest {
         $parentProductId = self::$db->getProductId(self::PARENT_PRODUCT_NAME);
 
         // and
-        $expectedChildProductKey = "pim:$childProductId";
-        $expectedParentProductKey = "pim:$parentProductId";
-        $unexpectedChildProductKey = 'pim:' . self::$db->getProductId('Chaz Kangeroo Hoodie-L-Orange'); // a different child of the same parent product
+        $expectedChildProductKey = "default_product:$childProductId";
+        $expectedParentProductKey = "default_product:$parentProductId";
+        $unexpectedChildProductKey = 'default_product:' . self::$db->getProductId('Chaz Kangeroo Hoodie-L-Orange'); // a different child of the same parent product
 
         self::removeFromStreamX($expectedChildProductKey, $expectedParentProductKey, $unexpectedChildProductKey);
 

@@ -62,7 +62,7 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
 
         self::$store2Id = self::$db->selectSingleValue("SELECT store_id FROM store WHERE code = 'store_2_view'");
         self::$secondWebsiteId = self::$db->selectSingleValue("SELECT website_id FROM store_website WHERE code = 'second_website'");
-        self::$secondWebsiteStoreId = self::$db->selectSingleValue("SELECT store_id FROM store WHERE code = 'store_for_second_website_view'");
+        self::$secondWebsiteStoreId = self::$db->selectSingleValue("SELECT store_id FROM store WHERE code = 'store_view_for_second_website'");
 
         if (self::$db->isEnterpriseMagento()) {
             self::disableGiftCardsCategory();

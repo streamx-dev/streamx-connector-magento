@@ -50,7 +50,7 @@ class ProductUpdateTest extends BaseAppEntityUpdateTest {
         $productId = self::$db->getProductId($productName);
 
         // and
-        $expectedKey = "pim:$productId";
+        $expectedKey = "default_product:$productId";
         self::removeFromStreamX($expectedKey);
 
         // when

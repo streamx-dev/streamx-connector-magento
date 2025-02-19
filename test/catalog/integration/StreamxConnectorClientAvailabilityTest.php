@@ -2,6 +2,7 @@
 
 namespace StreamX\ConnectorCatalog\test\integration;
 
+use Magento\Store\Api\Data\StoreInterface;
 use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\ValidationFileUtils;
@@ -12,8 +13,8 @@ class StreamxConnectorClientAvailabilityTest extends BaseStreamxTest {
 
     use ValidationFileUtils;
 
-    private const PRODUCT_KEY_PREFIX = 'product_';
-    private const CATEGORY_KEY_PREFIX = 'category_';
+    private const STORE_ID = 1;
+    private const STORE_CODE = 'store_1';
 
     private const NOT_EXISTING_HOST = 'c793qwh0uqw3fg94ow';
     private const WRONG_INGESTION_PORT = 1234;
@@ -90,7 +91,7 @@ class StreamxConnectorClientAvailabilityTest extends BaseStreamxTest {
 
         // then
         for ($i = 0; $i < $entitiesToPublishInBatch; $i++) {
-            $this->assertExactDataIsPublished(self::PRODUCT_KEY_PREFIX . $i,'original-hoodie-product.json', [
+            $this->assertExactDataIsPublished(self::expectedStreamxProductKey($i), 'original-hoodie-product.json', [
                 62 => $i // 62 is the product ID in validation file
             ]);
         }
@@ -103,8 +104,12 @@ class StreamxConnectorClientAvailabilityTest extends BaseStreamxTest {
 
         // then
         for ($i = 0; $i < $entitiesToPublishInBatch; $i++) {
-            $this->assertDataIsUnpublished(self::PRODUCT_KEY_PREFIX . $i);
+            $this->assertDataIsUnpublished(self::expectedStreamxProductKey($i));
         }
+    }
+
+    private static function expectedStreamxProductKey(int $productId): string {
+        return self::STORE_CODE . "_product:$productId";
     }
 
     private function createClient(string $restIngestionUrl): StreamxClient {
@@ -114,10 +119,11 @@ class StreamxConnectorClientAvailabilityTest extends BaseStreamxTest {
         $clientConfigurationMock->method('getChannelSchemaName')->willReturn(parent::CHANNEL_SCHEMA_NAME);
         $clientConfigurationMock->method('getAuthToken')->willReturn(null);
         $clientConfigurationMock->method('shouldDisableCertificateValidation')->willReturn(false);
-        $clientConfigurationMock->method('getProductKeyPrefix')->willReturn(self::PRODUCT_KEY_PREFIX);
-        $clientConfigurationMock->method('getCategoryKeyPrefix')->willReturn(self::CATEGORY_KEY_PREFIX);
 
-        return new StreamxClient($this->loggerMock, $clientConfigurationMock, 1);
+        $storeMock = $this->createMock(StoreInterface::class);
+        $storeMock->method('getId')->willReturn(self::STORE_ID);
+        $storeMock->method('getCode')->willReturn(self::STORE_CODE);
+        return new StreamxClient($this->loggerMock, $clientConfigurationMock, $storeMock);
     }
 
     private static function changedRestIngestionUrl(string $urlPartName, $newValue): string {
