@@ -14,8 +14,8 @@ use StreamX\ConnectorCore\Indexer\ImageUrlManager;
 
 class ProductAttributeDataTest extends TestCase
 {
-
-    public function testApplySlug() {
+    /** @test */
+    public function shouldApplySlug() {
         // test all possible combinations
         $this->assertApplySlug(false, false, null, 'joust-duffle-bag-1');
         $this->assertApplySlug(false, false, 'abc', 'joust-duffle-bag-1');

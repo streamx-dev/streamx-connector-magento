@@ -11,8 +11,8 @@ use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 
 class CategoryDataFormatterTest extends TestCase
 {
-
-    public function testComputeSlug() {
+    /** @test */
+    public function shouldComputeSlug() {
         // test all possible combinations
         $this->assertComputeSlug(false, false, null, 'bags-4');
         $this->assertComputeSlug(false, false, 'abc', 'bags-4');
