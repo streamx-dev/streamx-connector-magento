@@ -22,7 +22,7 @@ class MagentoOperationsExecutor {
 
         $endTime = new DateTime();
         $diff = $startTime->diff($endTime);
-        echo "The command $command took " . $diff->format('%s.%F') . " seconds\n";
+        echo $diff->format('%s.%F') . " seconds elapsed for $command\n";
 
         return $result;
     }

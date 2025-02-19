@@ -7,7 +7,6 @@ use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\ValidationFileUtils;
 use StreamX\ConnectorCore\Client\StreamxClient;
 use StreamX\ConnectorCore\Client\StreamxClientConfiguration;
-use StreamX\ConnectorCore\Client\StreamxClientProvider;
 
 class StreamxConnectorClientAvailabilityTest extends BaseStreamxTest {
 
@@ -121,8 +120,7 @@ class StreamxConnectorClientAvailabilityTest extends BaseStreamxTest {
         $clientConfigurationMock->method('getProductKeyPrefix')->willReturn(self::PRODUCT_KEY_PREFIX);
         $clientConfigurationMock->method('getCategoryKeyPrefix')->willReturn(self::CATEGORY_KEY_PREFIX);
 
-        $provider = new StreamxClientProvider($this->loggerMock, $clientConfigurationMock);
-        return $provider->getClient(0);
+        return new StreamxClient($this->loggerMock, $clientConfigurationMock, 1);
     }
 
     private static function changedRestIngestionUrl(string $urlPartName, $newValue): string {

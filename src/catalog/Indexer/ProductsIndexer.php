@@ -9,7 +9,7 @@ use StreamX\ConnectorCore\Api\IndexersConfigInterface;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
 use StreamX\ConnectorCore\Indexer\BaseStreamxIndexer;
 use StreamX\ConnectorCore\Indexer\IndexableStoresProvider;
-use StreamX\ConnectorCore\Client\StreamxClientProvider;
+use StreamX\ConnectorCore\Client\StreamxClientConfiguration;
 use StreamX\ConnectorCore\System\GeneralConfig;
 
 class ProductsIndexer extends BaseStreamxIndexer
@@ -20,7 +20,7 @@ class ProductsIndexer extends BaseStreamxIndexer
         ProductAction $productAction,
         LoggerInterface $logger,
         OptimizationSettings $optimizationSettings,
-        StreamxClientProvider $clientProvider,
+        StreamxClientConfiguration $clientConfiguration,
         IndexersConfigInterface $indexersConfig
     ) {
         parent::__construct(
@@ -29,7 +29,7 @@ class ProductsIndexer extends BaseStreamxIndexer
             $productAction,
             $logger,
             $optimizationSettings,
-            $clientProvider,
+            $clientConfiguration,
             $indexersConfig->getByName(ProductProcessor::INDEXER_ID)
         );
     }

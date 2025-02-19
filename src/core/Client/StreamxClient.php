@@ -3,7 +3,9 @@
 namespace StreamX\ConnectorCore\Client;
 
 use Exception;
+use GuzzleHttp\Client as GuzzleHttpClient;
 use Psr\Log\LoggerInterface;
+use Streamx\Clients\Ingestion\Builders\StreamxClientBuilders;
 use Streamx\Clients\Ingestion\Publisher\Message;
 use Streamx\Clients\Ingestion\Publisher\Publisher;
 use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
@@ -13,20 +15,32 @@ use StreamX\ConnectorCore\Client\Model\Data;
 class StreamxClient {
 
     private LoggerInterface $logger;
-    private Publisher $publisher;
+
+    private string $ingestionBaseUrl;
+    private string $channelName;
+    private string $channelSchemaName;
     private string $productKeyPrefix;
     private string $categoryKeyPrefix;
+    private ?string $authToken;
+    private bool $shouldDisableCertificateValidation;
+    private Publisher $schemasFetcher;
+    private Publisher $dataIngestor;
 
     public function __construct(
         LoggerInterface $logger,
-        Publisher $publisher,
-        string $productKeyPrefix,
-        string $categoryKeyPrefix
+        StreamxClientConfiguration $configuration,
+        int $storeId
     ) {
         $this->logger = $logger;
-        $this->publisher = $publisher;
-        $this->productKeyPrefix = $productKeyPrefix;
-        $this->categoryKeyPrefix = $categoryKeyPrefix;
+        $this->ingestionBaseUrl = $configuration->getIngestionBaseUrl($storeId);
+        $this->channelName = $configuration->getChannelName($storeId);
+        $this->channelSchemaName = $configuration->getChannelSchemaName($storeId);
+        $this->productKeyPrefix = $configuration->getProductKeyPrefix($storeId);
+        $this->categoryKeyPrefix = $configuration->getCategoryKeyPrefix($storeId);
+        $this->authToken = $configuration->getAuthToken($storeId);
+        $this->shouldDisableCertificateValidation = $configuration->shouldDisableCertificateValidation($storeId);
+        $this->schemasFetcher = $this->createStreamxPublisher(false);
+        $this->dataIngestor = $this->createStreamxPublisher(true);
     }
 
     public function publish(array $entities, string $indexerName): void {
@@ -77,7 +91,7 @@ class StreamxClient {
 
         try {
             // TODO make sure this will never block. Best by turning off Pulsar container
-            $messageStatuses = $this->publisher->sendMulti($ingestionMessages);
+            $messageStatuses = $this->dataIngestor->sendMulti($ingestionMessages);
 
             foreach ($messageStatuses as $messageStatus) {
                 if ($messageStatus->getSuccess() === null) {
@@ -91,7 +105,7 @@ class StreamxClient {
 
     public function isStreamxAvailable(): bool {
         try {
-            $schema = $this->publisher->fetchSchema();
+            $schema = $this->schemasFetcher->fetchSchema();
             if (str_contains($schema, 'IngestionMessage')) {
                 return true;
             }
@@ -100,6 +114,27 @@ class StreamxClient {
             $this->logException('Exception checking if StreamX is available', $e);
         }
         return false;
+    }
+
+    private function createStreamxPublisher(bool $stream): Publisher {
+        $httpClient = new GuzzleHttpClient([
+            'connect_timeout' => 1, // maximum time (in seconds) to establish the connection
+            'timeout' => 5, // maximum time (in seconds) to wait for response
+            'verify' => !$this->shouldDisableCertificateValidation,
+            'stream' => $stream
+        ]);
+
+        $ingestionClientBuilder = StreamxClientBuilders::create($this->ingestionBaseUrl)
+            ->setHttpClient($httpClient);
+
+        if ($this->authToken) {
+            $ingestionClientBuilder->setAuthToken($this->authToken);
+        }
+
+        return $ingestionClientBuilder->build()->newPublisher(
+            $this->channelName,
+            $this->channelSchemaName
+        );
     }
 
     private function logException(string $customMessage, Exception $e): void {

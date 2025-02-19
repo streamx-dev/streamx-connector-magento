@@ -12,7 +12,7 @@ use StreamX\ConnectorCore\Config\OptimizationSettings;
 use StreamX\ConnectorCore\Indexer\BaseStreamxIndexer;
 use StreamX\ConnectorCore\Indexer\IndexableStoresProvider;
 use StreamX\ConnectorCore\Client\StreamxClient;
-use StreamX\ConnectorCore\Client\StreamxClientProvider;
+use StreamX\ConnectorCore\Client\StreamxClientConfiguration;
 use StreamX\ConnectorCore\System\GeneralConfig;
 
 class AttributesIndexer extends BaseStreamxIndexer
@@ -25,7 +25,7 @@ class AttributesIndexer extends BaseStreamxIndexer
         AttributeAction $attributeAction,
         LoggerInterface $logger,
         OptimizationSettings $optimizationSettings,
-        StreamxClientProvider $clientProvider,
+        StreamxClientConfiguration $clientConfiguration,
         IndexersConfigInterface $indexersConfig,
         ProductsWithChangedAttributesIndexer $productsWithChangedAttributesIndexer
     ) {
@@ -35,7 +35,7 @@ class AttributesIndexer extends BaseStreamxIndexer
             $attributeAction,
             $logger,
             $optimizationSettings,
-            $clientProvider,
+            $clientConfiguration,
             $indexersConfig->getByName(AttributeProcessor::INDEXER_ID)
         );
         $this->productsWithChangedAttributesIndexer = $productsWithChangedAttributesIndexer;
