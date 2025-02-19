@@ -1,41 +1,50 @@
 <?php declare(strict_types=1);
 
-namespace StreamX\ConnectorCore\Streamx;
+namespace StreamX\ConnectorCore\Client;
 
 use GuzzleHttp\Client as GuzzleHttpClient;
 use Psr\Log\LoggerInterface;
 use Streamx\Clients\Ingestion\Builders\StreamxClientBuilders;
 use Streamx\Clients\Ingestion\Exceptions\StreamxClientException;
-use Streamx\Clients\Ingestion\Publisher\Publisher;
-use Streamx\Clients\Ingestion\StreamxClient;
+use Streamx\Clients\Ingestion\StreamxClient as IngestionClient;
 
-class StreamxPublisherProvider {
+class StreamxClientProvider {
 
     private LoggerInterface $logger;
+    private StreamxClientConfiguration $configuration;
 
-    public function __construct(LoggerInterface $logger) {
+    public function __construct(LoggerInterface $logger, StreamxClientConfiguration $configuration) {
         $this->logger = $logger;
+        $this->configuration = $configuration;
     }
 
     /**
      * @throws StreamxClientException
      */
-    public function getStreamxPublisher(
-        string $ingestionBaseUrl,
-        string $channelName,
-        string $channelSchemaName,
-        ?string $authToken,
-        bool $shouldDisableCertificateValidation
-    ): Publisher {
-        $this->logger->info("Creating new publisher for $ingestionBaseUrl / $channelName / $channelSchemaName");
-        $ingestionClient = $this->buildStreamxClient($ingestionBaseUrl, $authToken, $shouldDisableCertificateValidation);
-        return $ingestionClient->newPublisher($channelName, $channelSchemaName);
+    public function getClient(int $storeId): StreamxClient {
+        $ingestionClient = $this->buildIngestionClient(
+            $this->configuration->getIngestionBaseUrl($storeId),
+            $this->configuration->getAuthToken($storeId),
+            $this->configuration->shouldDisableCertificateValidation($storeId)
+        );
+
+        $publisher = $ingestionClient->newPublisher(
+            $this->configuration->getChannelName($storeId),
+            $this->configuration->getChannelSchemaName($storeId)
+        );
+
+        return new StreamxClient(
+            $this->logger,
+            $publisher,
+            $this->configuration->getProductKeyPrefix($storeId),
+            $this->configuration->getCategoryKeyPrefix($storeId)
+        );
     }
 
     /**
      * @throws StreamxClientException
      */
-    private function buildStreamxClient(string $ingestionBaseUrl, ?string $authToken, bool $shouldDisableCertificateValidation): StreamxClient {
+    private function buildIngestionClient(string $ingestionBaseUrl, ?string $authToken, bool $shouldDisableCertificateValidation): IngestionClient {
         $builder = StreamxClientBuilders::create($ingestionBaseUrl);
 
         if (!empty($authToken)) {

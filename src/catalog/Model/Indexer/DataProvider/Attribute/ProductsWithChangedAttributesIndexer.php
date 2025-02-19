@@ -11,7 +11,7 @@ use StreamX\ConnectorCatalog\Indexer\ProductsIndexer;
 use StreamX\ConnectorCatalog\Model\Attributes\AttributeDefinition;
 use StreamX\ConnectorCatalog\Model\Indexer\Action\ProductAction;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
-use StreamX\ConnectorCore\Streamx\Client;
+use StreamX\ConnectorCore\Client\StreamxClient;
 use Zend_Db_Expr;
 use Zend_Db_Select_Exception;
 
@@ -54,7 +54,7 @@ class ProductsWithChangedAttributesIndexer
      * @throws StreamxClientException
      * @throws Zend_Db_Select_Exception
      */
-    public function process(array $attributeDefinitions, int $storeId, Client $client): void
+    public function process(array $attributeDefinitions, int $storeId, StreamxClient $client): void
     {
         $changedAttributeIds = [];
         foreach ($attributeDefinitions as $attributeDefinition) {
