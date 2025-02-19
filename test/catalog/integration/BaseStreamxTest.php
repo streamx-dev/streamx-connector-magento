@@ -90,7 +90,10 @@ abstract class BaseStreamxTest extends TestCase {
 
     private function isCurrentlyPublished(string $key): bool {
         $url = self::STREAMX_DELIVERY_SERVICE_BASE_URL . '/' . $key;
-        $response = @file_get_contents($url);
-        return !empty($response);
+        $headers = @get_headers($url);
+        if ($headers === false) {
+            return false;
+        }
+        return str_contains($headers[0], "200 OK");
     }
 }

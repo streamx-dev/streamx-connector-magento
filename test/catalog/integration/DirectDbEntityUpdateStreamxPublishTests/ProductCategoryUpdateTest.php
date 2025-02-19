@@ -25,7 +25,7 @@ class ProductCategoryUpdateTest extends BaseDirectDbEntityUpdateTest {
         $newCategoryId = $this->db->getCategoryId($newCategoryName);
 
         // read ID of first category assigned to the product
-        $oldCategoryId = $this->db->selectFirstField("
+        $oldCategoryId = $this->db->selectSingleValue("
             SELECT MIN(category_id)
               FROM catalog_category_product
              WHERE product_id = $productId

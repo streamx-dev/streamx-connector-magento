@@ -17,6 +17,7 @@ It's designed to work with PHP Storm IDE.
      - open `.idea/workspace.xml` file in a text editor (the file may be hidden)
      - below the existing line `<mapping local-root="$PROJECT_DIR$/src" remote-root="/var/www/html/app/code/StreamX/Connector/src" />`
      - add this line: `<mapping local-root="$PROJECT_DIR$/magento/src" remote-root="/var/www/html" />`
+     - additionally, add this line: `<mapping local-root="$PROJECT_DIR$/magento/src/pub" remote-root="/var/www/html/pub" />`
 3. Prepare Magento for debugging:
    - from magento base dir, execute commands to override default xdebug mode that was set by the `install-magento-with-connector.sh` script as `coverage`
      ```bash
