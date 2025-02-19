@@ -83,7 +83,15 @@ abstract class BaseStreamxTest extends TestCase {
             ->build()
             ->newPublisher(self::CHANNEL_NAME, self::CHANNEL_SCHEMA_NAME);
         foreach ($keys as $key) {
-            $publisher->unpublish($key);
+            if ($this->isCurrentlyPublished($key)) {
+                $publisher->unpublish($key);
+            }
         }
+    }
+
+    private function isCurrentlyPublished(string $key): bool {
+        $url = self::STREAMX_DELIVERY_SERVICE_BASE_URL . '/' . $key;
+        $response = @file_get_contents($url);
+        return !empty($response);
     }
 }
