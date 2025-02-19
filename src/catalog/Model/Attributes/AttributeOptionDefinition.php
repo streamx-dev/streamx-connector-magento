@@ -4,22 +4,22 @@ namespace StreamX\ConnectorCatalog\Model\Attributes;
 
 class AttributeOptionDefinition
 {
+    private int $id;
     private string $value;
-    private string $label;
     private ?AttributeOptionSwatchDefinition $swatch;
 
-    public function __construct(string $value, string $label, ?AttributeOptionSwatchDefinition $swatch) {
+    public function __construct(int $id, string $value, ?AttributeOptionSwatchDefinition $swatch) {
+        $this->id = $id;
         $this->value = $value;
-        $this->label = $label;
         $this->swatch = $swatch;
+    }
+
+    public function getId(): int {
+        return $this->id;
     }
 
     public function getValue(): string {
         return $this->value;
-    }
-
-    public function getLabel(): string {
-        return $this->label;
     }
 
     public function getSwatch(): ?AttributeOptionSwatchDefinition {

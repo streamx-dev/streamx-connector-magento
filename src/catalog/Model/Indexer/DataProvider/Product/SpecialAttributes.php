@@ -24,15 +24,15 @@ class SpecialAttributes
         if ($attributeCode === 'visibility') {
             return array_map(function ($option) {
 
-                /** @var $value int */
-                $value = $option['value'];
+                /** @var $id int */
+                $id = $option['value'];
 
-                /** @var $label Phrase */
-                $label = $option['label'];
+                /** @var $value Phrase */
+                $value = $option['label'];
 
                 return [
-                    'value' => (string) $value,
-                    'label' => $label->render()
+                    'id' => $id,
+                    'value' => $value->render()
                 ];
             }, Visibility::getAllOptions());
         }

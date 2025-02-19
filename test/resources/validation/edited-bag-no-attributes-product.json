@@ -9,7 +9,7 @@
       "values": [
         {
           "value": "joust-duffle-bag",
-          "valueLabel": "joust-duffle-bag"
+          "label": "joust-duffle-bag"
         }
       ],
       "isFacet": false,

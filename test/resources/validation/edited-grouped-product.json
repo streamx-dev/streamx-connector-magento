@@ -9,7 +9,7 @@
       "values": [
         {
           "value": "https:\/\/magento.test:444\/media\/catalog\/product\/l\/u\/luma-yoga-strap-set.jpg",
-          "valueLabel": "\/l\/u\/luma-yoga-strap-set.jpg"
+          "label": "https:\/\/magento.test:444\/media\/catalog\/product\/l\/u\/luma-yoga-strap-set.jpg"
         }
       ],
       "isFacet": false,
@@ -21,7 +21,7 @@
       "values": [
         {
           "value": "https:\/\/magento.test:444\/media\/catalog\/product\/l\/u\/luma-yoga-strap-set.jpg",
-          "valueLabel": "\/l\/u\/luma-yoga-strap-set.jpg"
+          "label": "https:\/\/magento.test:444\/media\/catalog\/product\/l\/u\/luma-yoga-strap-set.jpg"
         }
       ],
       "isFacet": false,
@@ -33,7 +33,7 @@
       "values": [
         {
           "value": "set-of-sprite-yoga-straps",
-          "valueLabel": "set-of-sprite-yoga-straps"
+          "label": "set-of-sprite-yoga-straps"
         }
       ],
       "isFacet": false,
@@ -44,18 +44,18 @@
       "label": "Enable Product",
       "values": [
         {
-          "value": "1",
-          "valueLabel": "Enabled"
+          "value": "Enabled",
+          "label": "Enabled"
         }
       ],
       "isFacet": false,
       "options": [
         {
-          "value": "1",
+          "value": "Enabled",
           "label": "Enabled"
         },
         {
-          "value": "2",
+          "value": "Disabled",
           "label": "Disabled"
         }
       ]
@@ -65,26 +65,26 @@
       "label": "Visibility",
       "values": [
         {
-          "value": "4",
-          "valueLabel": "Catalog, Search"
+          "value": "Catalog, Search",
+          "label": "Catalog, Search"
         }
       ],
       "isFacet": false,
       "options": [
         {
-          "value": "1",
+          "value": "Not Visible Individually",
           "label": "Not Visible Individually"
         },
         {
-          "value": "2",
+          "value": "Catalog",
           "label": "Catalog"
         },
         {
-          "value": "3",
+          "value": "Search",
           "label": "Search"
         },
         {
-          "value": "4",
+          "value": "Catalog, Search",
           "label": "Catalog, Search"
         }
       ]

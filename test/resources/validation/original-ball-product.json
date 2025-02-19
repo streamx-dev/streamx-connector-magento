@@ -9,7 +9,7 @@
       "values": [
         {
           "value": "https:\/\/magento.test:444\/media\/catalog\/product\/l\/u\/luma-stability-ball-gray.jpg",
-          "valueLabel": "\/l\/u\/luma-stability-ball-gray.jpg"
+          "label": "https:\/\/magento.test:444\/media\/catalog\/product\/l\/u\/luma-stability-ball-gray.jpg"
         }
       ],
       "isFacet": false,
@@ -21,7 +21,7 @@
       "values": [
         {
           "value": "https:\/\/magento.test:444\/media\/catalog\/product\/l\/u\/luma-stability-ball-gray.jpg",
-          "valueLabel": "\/l\/u\/luma-stability-ball-gray.jpg"
+          "label": "https:\/\/magento.test:444\/media\/catalog\/product\/l\/u\/luma-stability-ball-gray.jpg"
         }
       ],
       "isFacet": false,
@@ -33,7 +33,7 @@
       "values": [
         {
           "value": "sprite-stasis-ball-55-cm-gray",
-          "valueLabel": "sprite-stasis-ball-55-cm-gray"
+          "label": "sprite-stasis-ball-55-cm-gray"
         }
       ],
       "isFacet": false,
@@ -44,154 +44,154 @@
       "label": "Material",
       "values": [
         {
-          "value": 44,
-          "valueLabel": "Plastic"
+          "value": "Plastic",
+          "label": "Plastic"
         }
       ],
       "isFacet": true,
       "options": [
         {
-          "value": "31",
+          "value": "Burlap",
           "label": "Burlap"
         },
         {
-          "value": "142",
+          "value": "Cocona&reg; performance fabric",
           "label": "Cocona&reg; performance fabric"
         },
         {
-          "value": "32",
+          "value": "Canvas",
           "label": "Canvas"
         },
         {
-          "value": "143",
+          "value": "Wool",
           "label": "Wool"
         },
         {
-          "value": "33",
+          "value": "Cotton",
           "label": "Cotton"
         },
         {
-          "value": "144",
+          "value": "Fleece",
           "label": "Fleece"
         },
         {
-          "value": "34",
+          "value": "Faux Leather",
           "label": "Faux Leather"
         },
         {
-          "value": "145",
+          "value": "Hemp",
           "label": "Hemp"
         },
         {
-          "value": "146",
+          "value": "Jersey",
           "label": "Jersey"
         },
         {
-          "value": "35",
+          "value": "Leather",
           "label": "Leather"
         },
         {
-          "value": "147",
+          "value": "LumaTech&trade;",
           "label": "LumaTech&trade;"
         },
         {
-          "value": "36",
+          "value": "Mesh",
           "label": "Mesh"
         },
         {
-          "value": "148",
+          "value": "Lycra&reg;",
           "label": "Lycra&reg;"
         },
         {
-          "value": "37",
+          "value": "Nylon",
           "label": "Nylon"
         },
         {
-          "value": "149",
+          "value": "Microfiber",
           "label": "Microfiber"
         },
         {
-          "value": "38",
+          "value": "Polyester",
           "label": "Polyester"
         },
         {
-          "value": "39",
+          "value": "Rayon",
           "label": "Rayon"
         },
         {
-          "value": "150",
+          "value": "Spandex",
           "label": "Spandex"
         },
         {
-          "value": "151",
+          "value": "HeatTec&reg;",
           "label": "HeatTec&reg;"
         },
         {
-          "value": "40",
+          "value": "Ripstop",
           "label": "Ripstop"
         },
         {
-          "value": "152",
+          "value": "EverCool&trade;",
           "label": "EverCool&trade;"
         },
         {
-          "value": "41",
+          "value": "Suede",
           "label": "Suede"
         },
         {
-          "value": "42",
+          "value": "Foam",
           "label": "Foam"
         },
         {
-          "value": "153",
+          "value": "Organic Cotton",
           "label": "Organic Cotton"
         },
         {
-          "value": "43",
+          "value": "Metal",
           "label": "Metal"
         },
         {
-          "value": "154",
+          "value": "TENCEL",
           "label": "TENCEL"
         },
         {
-          "value": "155",
+          "value": "CoolTech&trade;",
           "label": "CoolTech&trade;"
         },
         {
-          "value": "44",
+          "value": "Plastic",
           "label": "Plastic"
         },
         {
-          "value": "156",
+          "value": "Khaki",
           "label": "Khaki"
         },
         {
-          "value": "45",
+          "value": "Rubber",
           "label": "Rubber"
         },
         {
-          "value": "157",
+          "value": "Linen",
           "label": "Linen"
         },
         {
-          "value": "46",
+          "value": "Synthetic",
           "label": "Synthetic"
         },
         {
-          "value": "47",
+          "value": "Stainless Steel",
           "label": "Stainless Steel"
         },
         {
-          "value": "158",
+          "value": "Wool",
           "label": "Wool"
         },
         {
-          "value": "48",
+          "value": "Silicone",
           "label": "Silicone"
         },
         {
-          "value": "159",
+          "value": "Terry",
           "label": "Terry"
         }
       ]
@@ -201,34 +201,34 @@
       "label": "Category Gear",
       "values": [
         {
-          "value": 87,
-          "valueLabel": "Exercise"
+          "value": "Exercise",
+          "label": "Exercise"
         }
       ],
       "isFacet": true,
       "options": [
         {
-          "value": "85",
+          "value": "Cardio",
           "label": "Cardio"
         },
         {
-          "value": "86",
+          "value": "Electronic",
           "label": "Electronic"
         },
         {
-          "value": "87",
+          "value": "Exercise",
           "label": "Exercise"
         },
         {
-          "value": "88",
+          "value": "Fashion",
           "label": "Fashion"
         },
         {
-          "value": "89",
+          "value": "Hydration",
           "label": "Hydration"
         },
         {
-          "value": "90",
+          "value": "Timepiece",
           "label": "Timepiece"
         }
       ]
@@ -238,14 +238,14 @@
       "label": "Color",
       "values": [
         {
-          "value": "52",
-          "valueLabel": "Gray"
+          "value": "Gray",
+          "label": "Gray"
         }
       ],
       "isFacet": true,
       "options": [
         {
-          "value": "49",
+          "value": "Black",
           "label": "Black",
           "swatch": {
             "type": "color",
@@ -253,7 +253,7 @@
           }
         },
         {
-          "value": "50",
+          "value": "Blue",
           "label": "Blue",
           "swatch": {
             "type": "color",
@@ -261,7 +261,7 @@
           }
         },
         {
-          "value": "51",
+          "value": "Brown",
           "label": "Brown",
           "swatch": {
             "type": "color",
@@ -269,7 +269,7 @@
           }
         },
         {
-          "value": "52",
+          "value": "Gray",
           "label": "Gray",
           "swatch": {
             "type": "color",
@@ -277,7 +277,7 @@
           }
         },
         {
-          "value": "53",
+          "value": "Green",
           "label": "Green",
           "swatch": {
             "type": "color",
@@ -285,7 +285,7 @@
           }
         },
         {
-          "value": "54",
+          "value": "Lavender",
           "label": "Lavender",
           "swatch": {
             "type": "color",
@@ -293,7 +293,7 @@
           }
         },
         {
-          "value": "55",
+          "value": "Multi",
           "label": "Multi",
           "swatch": {
             "type": "color",
@@ -301,7 +301,7 @@
           }
         },
         {
-          "value": "56",
+          "value": "Orange",
           "label": "Orange",
           "swatch": {
             "type": "color",
@@ -309,7 +309,7 @@
           }
         },
         {
-          "value": "57",
+          "value": "Purple",
           "label": "Purple",
           "swatch": {
             "type": "color",
@@ -317,7 +317,7 @@
           }
         },
         {
-          "value": "58",
+          "value": "Red",
           "label": "Red",
           "swatch": {
             "type": "color",
@@ -325,7 +325,7 @@
           }
         },
         {
-          "value": "59",
+          "value": "White",
           "label": "White",
           "swatch": {
             "type": "color",
@@ -333,7 +333,7 @@
           }
         },
         {
-          "value": "60",
+          "value": "Yellow",
           "label": "Yellow",
           "swatch": {
             "type": "color",
@@ -347,18 +347,18 @@
       "label": "Enable Product",
       "values": [
         {
-          "value": "1",
-          "valueLabel": "Enabled"
+          "value": "Enabled",
+          "label": "Enabled"
         }
       ],
       "isFacet": false,
       "options": [
         {
-          "value": "1",
+          "value": "Enabled",
           "label": "Enabled"
         },
         {
-          "value": "2",
+          "value": "Disabled",
           "label": "Disabled"
         }
       ]
@@ -368,26 +368,26 @@
       "label": "Visibility",
       "values": [
         {
-          "value": "1",
-          "valueLabel": "Not Visible Individually"
+          "value": "Not Visible Individually",
+          "label": "Not Visible Individually"
         }
       ],
       "isFacet": false,
       "options": [
         {
-          "value": "1",
+          "value": "Not Visible Individually",
           "label": "Not Visible Individually"
         },
         {
-          "value": "2",
+          "value": "Catalog",
           "label": "Catalog"
         },
         {
-          "value": "3",
+          "value": "Search",
           "label": "Search"
         },
         {
-          "value": "4",
+          "value": "Catalog, Search",
           "label": "Catalog, Search"
         }
       ]
@@ -397,14 +397,14 @@
       "label": "Size",
       "values": [
         {
-          "value": "91",
-          "valueLabel": "55 cm"
+          "value": "55 cm",
+          "label": "55 cm"
         }
       ],
       "isFacet": true,
       "options": [
         {
-          "value": "91",
+          "value": "55 cm",
           "label": "55 cm",
           "swatch": {
             "type": "textual",
@@ -412,7 +412,7 @@
           }
         },
         {
-          "value": "166",
+          "value": "XS",
           "label": "XS",
           "swatch": {
             "type": "textual",
@@ -420,7 +420,7 @@
           }
         },
         {
-          "value": "92",
+          "value": "65 cm",
           "label": "65 cm",
           "swatch": {
             "type": "textual",
@@ -428,7 +428,7 @@
           }
         },
         {
-          "value": "167",
+          "value": "S",
           "label": "S",
           "swatch": {
             "type": "textual",
@@ -436,7 +436,7 @@
           }
         },
         {
-          "value": "93",
+          "value": "75 cm",
           "label": "75 cm",
           "swatch": {
             "type": "textual",
@@ -444,7 +444,7 @@
           }
         },
         {
-          "value": "168",
+          "value": "M",
           "label": "M",
           "swatch": {
             "type": "textual",
@@ -452,7 +452,7 @@
           }
         },
         {
-          "value": "94",
+          "value": "6 foot",
           "label": "6 foot",
           "swatch": {
             "type": "textual",
@@ -460,7 +460,7 @@
           }
         },
         {
-          "value": "169",
+          "value": "L",
           "label": "L",
           "swatch": {
             "type": "textual",
@@ -468,7 +468,7 @@
           }
         },
         {
-          "value": "95",
+          "value": "8 foot",
           "label": "8 foot",
           "swatch": {
             "type": "textual",
@@ -476,7 +476,7 @@
           }
         },
         {
-          "value": "170",
+          "value": "XL",
           "label": "XL",
           "swatch": {
             "type": "textual",
@@ -484,7 +484,7 @@
           }
         },
         {
-          "value": "96",
+          "value": "10 foot",
           "label": "10 foot",
           "swatch": {
             "type": "textual",
@@ -492,7 +492,7 @@
           }
         },
         {
-          "value": "171",
+          "value": "28",
           "label": "28",
           "swatch": {
             "type": "textual",
@@ -500,7 +500,7 @@
           }
         },
         {
-          "value": "172",
+          "value": "29",
           "label": "29",
           "swatch": {
             "type": "textual",
@@ -508,7 +508,7 @@
           }
         },
         {
-          "value": "173",
+          "value": "30",
           "label": "30",
           "swatch": {
             "type": "textual",
@@ -516,7 +516,7 @@
           }
         },
         {
-          "value": "174",
+          "value": "31",
           "label": "31",
           "swatch": {
             "type": "textual",
@@ -524,7 +524,7 @@
           }
         },
         {
-          "value": "175",
+          "value": "32",
           "label": "32",
           "swatch": {
             "type": "textual",
@@ -532,7 +532,7 @@
           }
         },
         {
-          "value": "176",
+          "value": "33",
           "label": "33",
           "swatch": {
             "type": "textual",
@@ -540,7 +540,7 @@
           }
         },
         {
-          "value": "177",
+          "value": "34",
           "label": "34",
           "swatch": {
             "type": "textual",
@@ -548,7 +548,7 @@
           }
         },
         {
-          "value": "178",
+          "value": "36",
           "label": "36",
           "swatch": {
             "type": "textual",
@@ -556,7 +556,7 @@
           }
         },
         {
-          "value": "179",
+          "value": "38",
           "label": "38",
           "swatch": {
             "type": "textual",
