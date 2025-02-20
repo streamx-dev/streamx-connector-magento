@@ -3,7 +3,7 @@
 namespace StreamX\ConnectorCatalog\Indexer;
 
 use Psr\Log\LoggerInterface;
-use StreamX\ConnectorCatalog\Model\Indexer\Action\ProductAction;
+use StreamX\ConnectorCatalog\Model\Indexer\DataLoader\ProductDataLoader;
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCore\Api\IndexersConfigInterface;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
@@ -17,7 +17,7 @@ class ProductsIndexer extends BaseStreamxIndexer
     public function __construct(
         GeneralConfig $connectorConfig,
         IndexableStoresProvider $indexableStoresProvider,
-        ProductAction $productAction,
+        ProductDataLoader $dataLoader,
         LoggerInterface $logger,
         OptimizationSettings $optimizationSettings,
         StreamxClientConfiguration $clientConfiguration,
@@ -26,7 +26,7 @@ class ProductsIndexer extends BaseStreamxIndexer
         parent::__construct(
             $connectorConfig,
             $indexableStoresProvider,
-            $productAction,
+            $dataLoader,
             $logger,
             $optimizationSettings,
             $clientConfiguration,

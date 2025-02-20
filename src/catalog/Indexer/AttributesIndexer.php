@@ -4,7 +4,7 @@ namespace StreamX\ConnectorCatalog\Indexer;
 
 use Psr\Log\LoggerInterface;
 use Streamx\Clients\Ingestion\Exceptions\StreamxClientException;
-use StreamX\ConnectorCatalog\Model\Indexer\Action\AttributeAction;
+use StreamX\ConnectorCatalog\Model\Indexer\DataLoader\AttributeDataLoader;
 use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Attribute\ProductsWithChangedAttributesIndexer;
 use StreamX\ConnectorCore\Api\IndexersConfigInterface;
@@ -22,7 +22,7 @@ class AttributesIndexer extends BaseStreamxIndexer
     public function __construct(
         GeneralConfig $connectorConfig,
         IndexableStoresProvider $indexableStoresProvider,
-        AttributeAction $attributeAction,
+        AttributeDataLoader $dataLoader,
         LoggerInterface $logger,
         OptimizationSettings $optimizationSettings,
         StreamxClientConfiguration $clientConfiguration,
@@ -32,7 +32,7 @@ class AttributesIndexer extends BaseStreamxIndexer
         parent::__construct(
             $connectorConfig,
             $indexableStoresProvider,
-            $attributeAction,
+            $dataLoader,
             $logger,
             $optimizationSettings,
             $clientConfiguration,
