@@ -13,6 +13,7 @@ trait ConfigurationEditTraits {
             $path,
             $value
         );
+        $this->indexerOperations->flushCache();
     }
 
     public function restoreConfigurationValue(string $path): void {
@@ -20,6 +21,7 @@ trait ConfigurationEditTraits {
             $path,
             $this->readDefaultValue($path)
         );
+        $this->indexerOperations->flushCache();
     }
 
     protected function allowIndexingAllAttributes(): void {
@@ -39,6 +41,7 @@ trait ConfigurationEditTraits {
     private function setIndexedAttributes(string $productAttributes, string $childProductAttributes): void {
         $this->callMagentoConfigurationEditEndpoint($this->PRODUCT_ATTRIBUTES_PATH, $productAttributes);
         $this->callMagentoConfigurationEditEndpoint($this->CHILD_PRODUCT_ATTRIBUTES_PATH, $childProductAttributes);
+        $this->indexerOperations->flushCache();
     }
 
     private function readDefaultValue(string $configurationFieldPath): string {
@@ -52,6 +55,5 @@ trait ConfigurationEditTraits {
             'configurationFieldPath' => $configurationFieldPath,
             'value' => $value
         ]);
-        $this->indexerOperations->flushCache();
     }
 }

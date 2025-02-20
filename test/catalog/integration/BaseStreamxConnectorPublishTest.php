@@ -31,12 +31,12 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
     }
 
     public function setUp(): void {
+        // TODO refactor to call setUp() and tearDown() once per class, not before/after every test method
         $this->setUpIndexerTool();
         $this->setUpDbTool();
     }
 
     public function tearDown(): void {
-        $this->resetIndexer();
         $this->tearDownIndexerTool();
         $this->tearDownDbTool();
     }
@@ -66,15 +66,6 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
 
     private function tearDownDbTool(): void {
         $this->db->disconnect();
-    }
-
-    private function resetIndexer(): void {
-        $this->db->execute("
-            UPDATE mview_state
-               SET mode = 'disabled',
-                   status = 'idle'
-             WHERE view_id='{$this->viewId()}'
-        ");
     }
 
     protected function callMagentoPutEndpoint(string $relativeUrl, array $params): string {
