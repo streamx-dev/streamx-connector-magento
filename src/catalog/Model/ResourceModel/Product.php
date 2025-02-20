@@ -151,8 +151,6 @@ class Product
 
     public function retrieveAllVariantParentAndChildIds(array $productIds): array
     {
-        // TODO additionally filter data by website and isActive, as other methods in this class do
-
         /** The full query to load all parent and child IDs for the given products (community DB version) is:
          * SELECT
          *        child.entity_id AS child_id,

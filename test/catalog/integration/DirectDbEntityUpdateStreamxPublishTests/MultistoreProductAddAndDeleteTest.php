@@ -15,22 +15,41 @@ class MultistoreProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
     /** @test */
     public function shouldPublishProductsFromWebsite() {
-        // given: as in StoresControllerImpl, product 1 exists only in default website, product 4 exists in both websites
+        // given (as in StoresControllerImpl), the following products exist in both websites:
+        //  - simple products 4, 5 and 6
+        //  - product 61 that is a variant of configurable product 62
 
-        // when: perform any change of both products - to trigger collecting their IDs by the mV iew feature
-        self::$db->execute('UPDATE catalog_product_entity SET has_options = TRUE WHERE entity_id IN (1, 4)');
+        // when: perform any change of products - to trigger collecting their IDs by the mView feature
+        $productsUpdateQuery  = 'UPDATE catalog_product_entity SET attribute_set_id = attribute_set_id + 1 WHERE entity_id IN (1, 4, 62)';
+        $productsRestoreQuery = 'UPDATE catalog_product_entity SET attribute_set_id = attribute_set_id - 1 WHERE entity_id IN (1, 4, 62)';
+        self::$db->execute($productsUpdateQuery);
 
         $expectedPublishedKeys = [
             'pim:1',
             'pim:4',
+            'pim:60',
+            'pim:61',
+            'pim:62', // note: editing parent product is expected to trigger publishing also all its variants
+
             'pim_store_2:1',
             'pim_store_2:4',
-            'pim_website_2:4'
+            'pim_store_2:60',
+            'pim_store_2:61',
+            'pim_store_2:62',
+
+            'pim_website_2:4',
+            'pim_website_2:61',
+            'pim_website_2:62',
         ];
-        $unexpectedPublishedKey = 'pim_website_2:1';
+
+        $unexpectedPublishedKeys = [
+            'pim_website_2:1', // those products are not available in the second website
+            'pim_website_2:59',
+            'pim_website_2:60'
+        ];
 
         // and
-        $this->removeFromStreamX($unexpectedPublishedKey, ...$expectedPublishedKeys);
+        $this->removeFromStreamX(...$expectedPublishedKeys, ...$unexpectedPublishedKeys);
 
         try {
             // when
@@ -39,15 +58,27 @@ class MultistoreProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
             // then
             $this->assertExactDataIsPublished('pim:1', 'original-bag-product.json');
             $this->assertExactDataIsPublished('pim:4', 'wayfarer-bag-product.json');
+            $this->assertExactDataIsPublished('pim:60', 'original-hoodie-xl-gray-product.json');
+            $this->assertExactDataIsPublished('pim:61', 'original-hoodie-xl-orange-product.json');
+            $this->assertExactDataIsPublished('pim:62', 'original-hoodie-product.json');
+
             $this->assertExactDataIsPublished('pim_store_2:1', 'original-bag-product.json');
             $this->assertExactDataIsPublished('pim_store_2:4', 'wayfarer-bag-product.json');
+            $this->assertExactDataIsPublished('pim_store_2:60', 'original-hoodie-xl-gray-product.json');
+            $this->assertExactDataIsPublished('pim_store_2:61', 'original-hoodie-xl-orange-product.json');
+            $this->assertExactDataIsPublished('pim_store_2:62', 'original-hoodie-product.json');
+
             $this->assertExactDataIsPublished('pim_website_2:4', 'wayfarer-bag-product.json');
+            $this->assertExactDataIsPublished('pim_website_2:61', 'original-hoodie-xl-orange-product.json');
+            $this->assertExactDataIsPublished('pim_website_2:62', 'original-hoodie-product-in-second-website.json');
 
             // and
-            $this->assertDataIsNotPublished($unexpectedPublishedKey);
+            foreach ($unexpectedPublishedKeys as $unexpectedPublishedKey) {
+                $this->assertDataIsNotPublished($unexpectedPublishedKey);
+            }
         } finally {
             // restore DB changes
-            self::$db->execute('UPDATE catalog_product_entity SET has_options = FALSE WHERE entity_id IN (1, 4)');
+            self::$db->execute($productsRestoreQuery);
         }
     }
 
