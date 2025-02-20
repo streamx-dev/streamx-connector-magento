@@ -52,17 +52,26 @@ class MagentoMySqlQueryExecutor {
      */
     public function selectSingleValue(string $selectQuery) {
         $result = $this->connection->query($selectQuery);
-        if (!$result) {
+        $row = $result->fetch_row();
+        $result->close();
+
+        if (!$row) {
             throw new Exception("No rows found for $selectQuery");
         }
-
-        $row = $result->fetch_row();
-        $result->free();
         if (count($row) !== 1) {
             throw new Exception("Expected a single field in the query: $selectQuery");
         }
-
         return $row[0];
+    }
+
+    public function selectRows(string $selectQuery): array {
+        $result = $this->connection->query($selectQuery);
+        $values = [];
+        while ($row = $result->fetch_row()) {
+            $values[] = array_values($row);
+        }
+        $result->close();
+        return $values;
     }
 
     /**
@@ -95,6 +104,23 @@ class MagentoMySqlQueryExecutor {
              WHERE attribute_id = $productNameAttributeId
                AND value = '$productName'
         ");
+    }
+
+    public function getProductIdsAndNamesMap(string $productNamePrefix): array {
+        $productNameAttributeId = $this->getProductNameAttributeId();
+
+        $rows = $this->selectRows("
+            SELECT DISTINCT entity_id, value
+              FROM catalog_product_entity_varchar
+             WHERE attribute_id = $productNameAttributeId
+               AND value LIKE '$productNamePrefix%'
+        ");
+
+        $result = [];
+        foreach ($rows as $row) {
+            $result[$row[0]] = $row[1];
+        }
+        return $result;
     }
 
     public function getCategoryId(string $categoryName): string {

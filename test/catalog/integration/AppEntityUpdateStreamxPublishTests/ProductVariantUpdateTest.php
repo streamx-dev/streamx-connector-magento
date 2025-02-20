@@ -12,59 +12,78 @@ use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageReportGenerator;
 class ProductVariantUpdateTest extends BaseAppEntityUpdateTest {
 
     /** @test */
-    public function shouldPublishProductWithVariantsEditedUsingMagentoApplicationToStreamx() {
+    public function shouldPublishParentProductAndAllVariants_WhenParentIsEditedUsingMagentoApplication() {
         // given
-        $nameOfProductToEdit = 'Chaz Kangeroo Hoodie';
-        $idOfProductToEdit = self::$db->getProductId($nameOfProductToEdit);
-        $newNameOfProductToEdit = "Name modified for testing, was $nameOfProductToEdit";
+        $parentProductName = 'Chaz Kangeroo Hoodie';
+        $parentProductId = self::$db->getProductId($parentProductName);
+
+        $childProducts = self::$db->getProductIdsAndNamesMap("$parentProductName-");
+        $this->assertCount(15, $childProducts);
 
         // and
-        $expectedPublishedKey = "pim:$idOfProductToEdit";
-        $unexpectedPublishedKey = 'pim:' . self::$db->getProductId('Chaz Kangeroo Hoodie-XL-Orange');
+        $expectedParentProductKey = "pim:$parentProductId";
+        $expectedChildProductsKeys = array_map(function ($childProductId) {
+            return "pim:$childProductId";
+        }, array_keys($childProducts));
 
-        self::removeFromStreamX($expectedPublishedKey, $unexpectedPublishedKey);
+        self::removeFromStreamX($expectedParentProductKey, ...$expectedChildProductsKeys);
 
         // when
-        self::renameProduct($idOfProductToEdit, $newNameOfProductToEdit);
+        self::renameProduct($parentProductId, "Name modified for testing, was $parentProductName");
 
         // then
         try {
-            $this->assertExactDataIsPublished($expectedPublishedKey, 'edited-hoodie-product.json');
-            $this->assertDataIsNotPublished($unexpectedPublishedKey);
+            $this->assertExactDataIsPublished($expectedParentProductKey, 'edited-hoodie-product.json');
+            foreach ($childProducts as $childProductId => $childProductName) {
+                $publishedChildProduct = $this->downloadContentAtKey("pim:$childProductId");
+                $this->assertStringContainsString('"id":' . $childProductId, $publishedChildProduct);
+                $this->assertStringContainsString('"name":"' . $childProductName . '"', $publishedChildProduct);
+            }
         } finally {
-            self::renameProduct($idOfProductToEdit, $nameOfProductToEdit);
-            $this->assertExactDataIsPublished($expectedPublishedKey, 'original-hoodie-product.json');
-            $this->assertDataIsNotPublished($unexpectedPublishedKey);
+            self::renameProduct($parentProductId, $parentProductName);
+            $this->assertExactDataIsPublished($expectedParentProductKey, 'original-hoodie-product.json');
         }
     }
 
     /** @test */
-    public function shouldPublishParentOfProductVariantEditedUsingMagentoApplicationToStreamx() {
+    public function shouldPublishVariantAndParentProduct_WhenVariantIsEditedUsingMagentoApplication() {
         // given
-        $nameOfProductToEdit = 'Chaz Kangeroo Hoodie-XL-Orange';
-        $idOfProductToEdit = self::$db->getProductId($nameOfProductToEdit);
-        $newNameOfProductToEdit = "Name modified for testing, was $nameOfProductToEdit";
+        $childProductName = 'Chaz Kangeroo Hoodie-XL-Orange';
+        $childProductId = self::$db->getProductId($childProductName);
+
+        $parentProductName = 'Chaz Kangeroo Hoodie';
+        $parentProductId = self::$db->getProductId($parentProductName);
 
         // and
-        $expectedPublishedKey = 'pim:' . self::$db->getProductId('Chaz Kangeroo Hoodie');
-        $unexpectedPublishedKey = "pim:$idOfProductToEdit";
+        $expectedChildProductKey = "pim:$childProductId";
+        $expectedParentProductKey = "pim:$parentProductId";
+        $unexpectedChildProductKey = 'pim:' . self::$db->getProductId('Chaz Kangeroo Hoodie-L-Orange'); // a different child of the same parent product
 
-        self::removeFromStreamX($expectedPublishedKey, $unexpectedPublishedKey);
+        self::removeFromStreamX($expectedChildProductKey, $expectedParentProductKey, $unexpectedChildProductKey);
 
         // when
-        self::renameProduct($idOfProductToEdit, $newNameOfProductToEdit);
+        $childProductModifiedName = "Name modified for testing, was $childProductName";
+        self::renameProduct($childProductId, $childProductModifiedName);
 
-        // then
+        // then: expecting both products to be published (with modified name of the child product in both payloads). Other child should not be published
         try {
-            $this->assertExactDataIsPublished($expectedPublishedKey, 'original-hoodie-product.json', [
-                '"' . $nameOfProductToEdit => '"' . $newNameOfProductToEdit,
-                '"' . SlugGenerator::slugify($nameOfProductToEdit) => '"' . SlugGenerator::slugify($newNameOfProductToEdit)
+            $this->assertExactDataIsPublished($expectedChildProductKey, 'original-hoodie-xl-orange-product.json', [
+                '"' . $childProductName => '"' . $childProductModifiedName,
+                '"' . SlugGenerator::slugify($childProductName) => '"' . SlugGenerator::slugify($childProductModifiedName)
             ]);
-            $this->assertDataIsNotPublished($unexpectedPublishedKey);
+            $this->assertExactDataIsPublished($expectedParentProductKey, 'original-hoodie-product.json', [
+                '"' . $childProductName => '"' . $childProductModifiedName,
+                '"' . SlugGenerator::slugify($childProductName) => '"' . SlugGenerator::slugify($childProductModifiedName)
+            ]);
+            $this->assertDataIsNotPublished($unexpectedChildProductKey);
         } finally {
-            self::renameProduct($idOfProductToEdit, $nameOfProductToEdit);
-            $this->assertExactDataIsPublished($expectedPublishedKey, 'original-hoodie-product.json');
-            $this->assertDataIsNotPublished($unexpectedPublishedKey);
+            // when: restore product name
+            self::renameProduct($childProductId, $childProductName);
+
+            // then: expecting both products to be published (with original name of the child product in both payloads)
+            $this->assertExactDataIsPublished($expectedChildProductKey, 'original-hoodie-xl-orange-product.json');
+            $this->assertExactDataIsPublished($expectedParentProductKey, 'original-hoodie-product.json');
+            $this->assertDataIsNotPublished($unexpectedChildProductKey);
         }
     }
 

@@ -28,8 +28,12 @@ class ProductDataLoader implements BasicDataLoader {
             $productIds = $this->resourceModel->getAllProductIds($storeId);
         }
 
-        // if any product is a child (variant) product - ensure to index only its parent, not the child product itself
-        $productIds = $this->replaceProductVariantsWithTheirParents($productIds);
+        $productIds = array_map('intval', $productIds);
+
+        // for each input ID that resolves to a product variant -> add also ID of its parent to the list
+        // and: for each input ID that resolves to a parent -> add also IDs of all its variants to the list
+        $parentAndChildIds = $this->resourceModel->retrieveAllVariantParentAndChildIds($productIds);
+        $productIds = array_unique(array_merge($productIds, $parentAndChildIds));
 
         // note: a simple product can only be a child of a single configurable product, but can be a child of multiple grouped or bundle products
         // TODO: verify what is published when a grouped product or its child is edited (expecting only parent with all children to be published)
@@ -55,26 +59,5 @@ class ProductDataLoader implements BasicDataLoader {
         foreach ($idsOfProductsToUnpublish as $productId) {
             yield $productId => [];
         }
-    }
-
-    /**
-     * @param int[] $productIds
-     * @return int[]
-     * @throws Exception
-     */
-    public function replaceProductVariantsWithTheirParents(array $productIds): array
-    {
-        $childrenIdsWithParentIds = $this->resourceModel->getParentsForProductVariants($productIds);
-
-        foreach ($childrenIdsWithParentIds as $childId => $parentIds) {
-            // remove child product id
-            $keyToUnset = array_search($childId, $productIds);
-            unset($productIds[$keyToUnset]);
-
-            // replace it with its parent id
-            $productIds = array_merge($productIds, $parentIds);
-        }
-
-        return array_unique($productIds);
     }
 }
