@@ -67,7 +67,7 @@ class LoadAttributeDefinitions
 
         foreach ($attributeRows as &$attributeRow) {
             $attributeCode = $attributeRow['attribute_code'];
-            $attributeRow['options'] = $this->getOptionsArray($attributeRow, $attributeCode, $storeId);
+            $attributeRow['options'] = $this->getOptions($attributeRow, $attributeCode, $storeId);
         }
 
         return $this->mapAttributeRowsToDtos($attributeRows);
@@ -94,13 +94,16 @@ class LoadAttributeDefinitions
             ->order('ea.attribute_id');
     }
 
-    private function getOptionsArray(array $attributeRow, string $attributeCode, int $storeId): array
+    /**
+     * @return AttributeOptionDefinition[]
+     */
+    private function getOptions(array $attributeRow, string $attributeCode, int $storeId): array
     {
         if ($this->useSource($attributeRow)) {
             if (SpecialAttributes::isSpecialAttribute($attributeCode)) {
-                return SpecialAttributes::getOptionsArray($attributeCode);
+                return SpecialAttributes::getOptions($attributeCode);
             } else {
-                return $this->loadOptions->getOptionsArray($attributeCode, $storeId);
+                return $this->loadOptions->getOptions($attributeCode, $storeId);
             }
         } else {
             return [];
@@ -126,39 +129,10 @@ class LoadAttributeDefinitions
                     $attributeRow['attribute_code'],
                     $attributeRow['frontend_label'],
                     (bool) $attributeRow['is_facet'],
-                    $this->mapAttributeOptionRowsToDtos($attributeRow['options'])
+                    $attributeRow['options']
                 );
             },
             $attributeRows
         );
-    }
-
-    /**
-     * @return AttributeOptionDefinition[]
-     */
-    private function mapAttributeOptionRowsToDtos(array $optionRows): array
-    {
-        return array_map(
-            function ($option) {
-                return new AttributeOptionDefinition(
-                    (int) $option['id'],
-                    (string) $option['value'],
-                    $this->mapAttributeOptionRowToSwatchDto($option)
-                );
-            },
-            $optionRows
-        );
-    }
-
-    private function mapAttributeOptionRowToSwatchDto(array $optionRow): ?AttributeOptionSwatchDefinition
-    {
-        if (isset($optionRow['swatch'])) {
-            return new AttributeOptionSwatchDefinition(
-                $optionRow['swatch']['type_string'],
-                $optionRow['swatch']['value']
-            );
-        }
-
-        return null;
     }
 }
