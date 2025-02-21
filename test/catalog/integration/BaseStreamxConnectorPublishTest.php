@@ -15,6 +15,7 @@ use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoIndexerOperationsExecutor;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoLogFileUtils;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
+use StreamX\ConnectorCatalog\test\integration\utils\MagentoOperationsExecutor;
 
 /**
  * @inheritDoc
@@ -32,13 +33,14 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
 
     protected const STORE_1_CODE = 'default';
     protected const STORE_2_CODE = 'store_2';
+    protected const WEBSITE_2_CODE = 'second_website';
     protected const WEBSITE_2_STORE_CODE = 'store_for_second_website';
 
     protected static bool $areTestsInitialized = false;
 
     protected static MagentoMySqlQueryExecutor $db;
 
-    protected static MagentoIndexerOperationsExecutor $indexerOperations;
+    private static array $initialIndexerModes;
     private static string $originalIndexerMode;
     private static bool $indexModeNeedsRestoring;
 
@@ -58,19 +60,32 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
 
     public static function initializeTests(): void {
         self::$db = new MagentoMySqlQueryExecutor();
-        self::$indexerOperations = new MagentoIndexerOperationsExecutor();
 
         if ("true" === MagentoEndpointsCaller::call('stores/setup')) {
-            self::$indexerOperations->flushCache();
+            MagentoOperationsExecutor::flushCache();
         }
-
-        self::$store2Id = self::$db->selectSingleValue("SELECT store_id FROM store WHERE code = '" . self::STORE_2_CODE . "'");
-        self::$website2Id = self::$db->selectSingleValue("SELECT website_id FROM store_website WHERE code = 'second_website'");
-        self::$website2StoreId = self::$db->selectSingleValue("SELECT store_id FROM store WHERE code = '" . self::WEBSITE_2_STORE_CODE . "'");
+        self::loadInitialIndexerModes();
+        self::loadStoreAndWebsiteIds();
 
         if (self::$db->isEnterpriseMagento()) {
             self::disableGiftCardsCategory();
         }
+    }
+
+    private static function loadInitialIndexerModes(): void {
+        foreach ([ProductProcessor::INDEXER_ID, CategoryProcessor::INDEXER_ID, AttributeProcessor::INDEXER_ID] as $indexerName) {
+            self::$initialIndexerModes[$indexerName] = MagentoIndexerOperationsExecutor::getIndexerMode($indexerName);
+        }
+    }
+
+    private static function loadStoreAndWebsiteIds(): void {
+        self::$store2Id = self::loadIdByCode('store', 'store_id', self::STORE_2_CODE);
+        self::$website2Id = self::loadIdByCode('store_website', 'website_id', self::WEBSITE_2_CODE);
+        self::$website2StoreId = self::loadIdByCode('store', 'store_id', self::WEBSITE_2_STORE_CODE);
+    }
+
+    private static function loadIdByCode(string $table, string $column, string $code): int {
+        return self::$db->selectSingleValue("SELECT $column FROM $table WHERE code = '$code'");
     }
 
     private static function disableGiftCardsCategory(): void {
@@ -85,11 +100,10 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
     }
 
     private static function setIndexerModeInMagento(): void {
-        self::$indexerOperations->setIndexerName(self::$testedIndexerName);
-        self::$originalIndexerMode = self::$indexerOperations->getIndexerMode();
+        self::$originalIndexerMode = self::$initialIndexerModes[self::$testedIndexerName];
 
         if (self::$testedIndexerMode !== self::$originalIndexerMode) {
-            self::$indexerOperations->setIndexerMode(self::$testedIndexerMode);
+            MagentoIndexerOperationsExecutor::setIndexerMode(self::$testedIndexerName, self::$testedIndexerMode);
             self::$indexModeNeedsRestoring = true;
         } else {
             self::$indexModeNeedsRestoring = false;
@@ -98,7 +112,7 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
 
     private static function restoreIndexerModeInMagento(): void {
         if (self::$indexModeNeedsRestoring) {
-            self::$indexerOperations->setIndexerMode(self::$originalIndexerMode);
+            MagentoIndexerOperationsExecutor::setIndexerMode(self::$testedIndexerName, self::$originalIndexerMode);
         }
     }
 
