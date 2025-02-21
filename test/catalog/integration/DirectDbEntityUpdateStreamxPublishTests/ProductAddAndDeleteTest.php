@@ -4,20 +4,16 @@ namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxP
 
 use DateTime;
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
-use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 
 /**
  * @inheritdoc
+ * @UsesProductIndexer
  */
 class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
     private const PRODUCT_PRICE = 350;
     private const INDEXED_PRICE = 370;
     private const DISCOUNTED_PRICE = 330;
-
-    protected function indexerName(): string {
-        return ProductProcessor::INDEXER_ID;
-    }
 
     /** @test */
     public function shouldPublishMinimalProductAddedDirectlyInDatabaseToStreamx_AndUnpublishDeletedProduct() {
@@ -56,9 +52,9 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         // given
         $productName = 'The new great watch';
         $categoryIds = [
-            $this->db->getCategoryId('Watches'),
-            $this->db->getCategoryId('Collections'), // note: this category is not active in sample data by default
-            $this->db->getCategoryId('Sale')
+            self::$db->getCategoryId('Watches'),
+            self::$db->getCategoryId('Collections'), // note: this category is not active in sample data by default
+            self::$db->getCategoryId('Sale')
         ];
 
         // when
@@ -105,7 +101,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
     public function shouldNotPublishNotActiveProduct() {
         // given
         $productName = 'The second watch';
-        $watchesCategoryId = $this->db->getCategoryId('Watches');
+        $watchesCategoryId = self::$db->getCategoryId('Watches');
 
         // when
         $productId = $this->insertNewProduct($productName, [$watchesCategoryId]);
@@ -113,7 +109,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
         // and: make the product not active:
         $defaultStoreId = 0;
-        $this->db->execute("
+        self::$db->execute("
             UPDATE catalog_product_entity_int
                SET value = " . Status::STATUS_DISABLED . "
              WHERE entity_id = $productId
@@ -186,14 +182,14 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
     private function insertNewMinimalProduct(string $sku, string $productName): int {
         $defaultStoreId = 0;
         $websiteId = 1;
-        $attributeSetId = $this->db->getDefaultProductAttributeSetId();
+        $attributeSetId = self::$db->getDefaultProductAttributeSetId();
 
-        $productId = $this->db->insert("
+        $productId = self::$db->insert("
             INSERT INTO catalog_product_entity (attribute_set_id, type_id, sku, has_options, required_options) VALUES
                 ($attributeSetId, 'simple', '$sku', FALSE, FALSE)
         ");
 
-        $this->db->executeAll(["
+        self::$db->executeAll(["
             INSERT INTO catalog_product_entity_varchar (entity_id, attribute_id, store_id, value) VALUES
                 ($productId, " . self::attrId('name') . ", $defaultStoreId, '$productName')
         ", "
@@ -219,19 +215,19 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $stockId = 1;
         $quantity = 100;
         $websiteId = 1;
-        $brownColorId = $this->db->getAttributeOptionId('color', 'Brown');
-        $metalMaterialId = $this->db->getAttributeOptionId('material', 'Metal');
-        $plasticMaterialId = $this->db->getAttributeOptionId('material', 'Plastic');
-        $leatherMaterialId = $this->db->getAttributeOptionId('material', 'Leather');
+        $brownColorId = self::$db->getAttributeOptionId('color', 'Brown');
+        $metalMaterialId = self::$db->getAttributeOptionId('material', 'Metal');
+        $plasticMaterialId = self::$db->getAttributeOptionId('material', 'Plastic');
+        $leatherMaterialId = self::$db->getAttributeOptionId('material', 'Leather');
 
-        $attributeSetId = $this->db->getDefaultProductAttributeSetId();
+        $attributeSetId = self::$db->getDefaultProductAttributeSetId();
 
-        $productId = $this->db->insert("
+        $productId = self::$db->insert("
             INSERT INTO catalog_product_entity (attribute_set_id, type_id, sku, has_options, required_options) VALUES
                 ($attributeSetId, 'simple', '$sku', FALSE, FALSE)
         ");
 
-        $this->db->execute("
+        self::$db->execute("
             INSERT INTO catalog_product_entity_varchar (entity_id, attribute_id, store_id, value) VALUES
                 ($productId, " . self::attrId('name') . ", $defaultStoreId, '$productName'),
                 ($productId, " . self::attrId('meta_title') . ", $defaultStoreId, '$productName'),
@@ -239,46 +235,46 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
                 ($productId, " . self::attrId('url_key') . ", $defaultStoreId, '$productInternalName')
         ");
 
-        $this->db->execute("
+        self::$db->execute("
             INSERT INTO catalog_product_entity_text (entity_id, attribute_id, store_id, value) VALUES
                 ($productId, " . self::attrId('material') . ", $defaultStoreId, '$metalMaterialId,$plasticMaterialId,$leatherMaterialId')
         ");
 
-        $this->db->execute("
+        self::$db->execute("
             INSERT INTO catalog_product_entity_decimal (entity_id, attribute_id, store_id, value) VALUES
                 ($productId, " . self::attrId('price') . ", $defaultStoreId, " . self::PRODUCT_PRICE . ")
         ");
 
-        $this->db->execute("
+        self::$db->execute("
             INSERT INTO catalog_product_entity_int (entity_id, attribute_id, store_id, value) VALUES
                 ($productId, " . self::attrId('visibility') . ", $defaultStoreId, 4), -- visibility in Catalog and Search
                 ($productId, " . self::attrId('status') . ", $defaultStoreId, " . Status::STATUS_ENABLED . "),
                 ($productId, " . self::attrId('color') . ", $defaultStoreId, $brownColorId)
         ");
 
-        $this->db->execute("
+        self::$db->execute("
             INSERT INTO catalog_product_website (product_id, website_id) VALUES
                 ($productId, $websiteId)
         ");
 
         foreach ($categoryIds as $categoryId) {
-            $this->db->execute("
+            self::$db->execute("
                 INSERT INTO catalog_category_product (category_id, product_id, position) VALUES
                     ($categoryId, $productId, 0)
             ");
         }
 
-        $this->db->execute("
+        self::$db->execute("
             INSERT INTO cataloginventory_stock_item (product_id, stock_id, qty, is_in_stock, is_qty_decimal, manage_stock) VALUES
                 ($productId, $stockId, $quantity, TRUE, FALSE, TRUE)
         ");
 
-        $this->db->execute("
+        self::$db->execute("
             INSERT INTO cataloginventory_stock_status (product_id, website_id, stock_id, qty, stock_status) VALUES
                 ($productId, $websiteId, $stockId, $quantity, 1)
         ");
 
-        $this->db->execute("
+        self::$db->execute("
             INSERT INTO catalog_product_index_price (entity_id, customer_group_id, website_id, price, final_price) VALUES
                 ($productId, 0, $websiteId, " . self::INDEXED_PRICE . ", " . self::DISCOUNTED_PRICE . ")
         ");
@@ -289,18 +285,18 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
     }
 
     private function addProductOption(int $productId, int $storeId): void {
-        $optionId = $this->db->insert("INSERT INTO catalog_product_option (product_id, type, is_require, sort_order) VALUES ($productId, 'drop_down', 1, 0)");
-        $optionTypeId = $this->db->insert("INSERT INTO catalog_product_option_type_value (option_id, sort_order) VALUES($optionId, 0)");
+        $optionId = self::$db->insert("INSERT INTO catalog_product_option (product_id, type, is_require, sort_order) VALUES ($productId, 'drop_down', 1, 0)");
+        $optionTypeId = self::$db->insert("INSERT INTO catalog_product_option_type_value (option_id, sort_order) VALUES($optionId, 0)");
 
-        $this->db->execute("INSERT INTO catalog_product_option_title (option_id, store_id, title) VALUES ($optionId, $storeId, 'Size')");
-        $this->db->execute("INSERT INTO catalog_product_option_type_title (option_type_id, store_id, title) VALUES ($optionTypeId, $storeId, 'The size')");
+        self::$db->execute("INSERT INTO catalog_product_option_title (option_id, store_id, title) VALUES ($optionId, $storeId, 'Size')");
+        self::$db->execute("INSERT INTO catalog_product_option_type_title (option_type_id, store_id, title) VALUES ($optionTypeId, $storeId, 'The size')");
 
-        $this->db->execute("INSERT INTO catalog_product_option_price (option_id, store_id, price, price_type) VALUES ($optionId, $storeId, 1.23, 'fixed')");
-        $this->db->execute("INSERT INTO catalog_product_option_type_price (option_type_id, store_id, price, price_type) VALUES ($optionTypeId, $storeId, 9.87, 'fixed')");
+        self::$db->execute("INSERT INTO catalog_product_option_price (option_id, store_id, price, price_type) VALUES ($optionId, $storeId, 1.23, 'fixed')");
+        self::$db->execute("INSERT INTO catalog_product_option_type_price (option_type_id, store_id, price, price_type) VALUES ($optionTypeId, $storeId, 9.87, 'fixed')");
     }
 
     private function deleteProduct(int $productId): void {
-        $this->db->executeAll([
+        self::$db->executeAll([
             "DELETE FROM catalog_product_index_price WHERE entity_id = $productId",
             "DELETE FROM cataloginventory_stock_status WHERE product_id = $productId",
             "DELETE FROM cataloginventory_stock_item WHERE product_id = $productId",
@@ -315,15 +311,15 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
     }
 
     private function deleteProductOption(): void {
-        $this->db->deleteLastRow('catalog_product_option_type_price', 'option_type_price_id');
-        $this->db->deleteLastRow('catalog_product_option_price', 'option_price_id');
-        $this->db->deleteLastRow('catalog_product_option_type_title', 'option_type_title_id');
-        $this->db->deleteLastRow('catalog_product_option_title', 'option_title_id');
-        $this->db->deleteLastRow('catalog_product_option_type_value', 'option_type_id');
-        $this->db->deleteLastRow('catalog_product_option', 'option_id');
+        self::$db->deleteLastRow('catalog_product_option_type_price', 'option_type_price_id');
+        self::$db->deleteLastRow('catalog_product_option_price', 'option_price_id');
+        self::$db->deleteLastRow('catalog_product_option_type_title', 'option_type_title_id');
+        self::$db->deleteLastRow('catalog_product_option_title', 'option_title_id');
+        self::$db->deleteLastRow('catalog_product_option_type_value', 'option_type_id');
+        self::$db->deleteLastRow('catalog_product_option', 'option_id');
     }
 
     private function attrId($attrCode): string {
-        return $this->db->getProductAttributeId($attrCode);
+        return self::$db->getProductAttributeId($attrCode);
     }
 }

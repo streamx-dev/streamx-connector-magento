@@ -2,29 +2,25 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
-use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageReportGenerator;
 
 /**
  * @inheritdoc
+ * @UsesProductIndexer
  */
 class ProductCategoryUpdateTest extends BaseAppEntityUpdateTest {
-
-    protected function indexerName(): string {
-        return ProductProcessor::INDEXER_ID;
-    }
 
     /** @test */
     public function shouldPublishProductCategoryEditedUsingMagentoApplicationToStreamx() {
         // given
         $productName = 'Joust Duffle Bag';
-        $productId = $this->db->getProductId($productName);
+        $productId = self::$db->getProductId($productName);
 
         $newCategoryName = 'Jackets';
-        $newCategoryId = $this->db->getCategoryId($newCategoryName);
+        $newCategoryId = self::$db->getCategoryId($newCategoryName);
 
         // read ID (and name) of first category assigned to the product
-        $oldCategoryId = $this->db->selectSingleValue("
+        $oldCategoryId = self::$db->selectSingleValue("
             SELECT MIN(category_id)
               FROM catalog_category_product
              WHERE product_id = $productId
@@ -49,7 +45,7 @@ class ProductCategoryUpdateTest extends BaseAppEntityUpdateTest {
     }
 
     private function changeProductCategory(int $productId, int $oldCategoryId, int $newCategoryId): void {
-        $coverage = $this->callMagentoPutEndpoint('product/category/change', [
+        $coverage = self::callMagentoPutEndpoint('product/category/change', [
             'productId' => $productId,
             'oldCategoryId' => $oldCategoryId,
             'newCategoryId' => $newCategoryId

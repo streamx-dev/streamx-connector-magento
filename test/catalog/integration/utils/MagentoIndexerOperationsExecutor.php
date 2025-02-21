@@ -33,8 +33,12 @@ class MagentoIndexerOperationsExecutor extends MagentoOperationsExecutor {
         $this->executeIndexerCommand("set-mode $modeInternalName");
     }
 
-    public function flushCache(): void {
-        $this->executeCommand('cache:flush');
+    public function flushConfigCache(): void {
+        $this->flushCache('config');
+    }
+
+    public function flushCache(string $cacheType = ''): void {
+        $this->executeCommand("cache:flush $cacheType");
     }
 
     private function executeIndexerCommand(string $indexerCommand): ?string {

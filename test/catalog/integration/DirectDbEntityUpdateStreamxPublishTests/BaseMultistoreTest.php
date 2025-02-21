@@ -13,38 +13,37 @@ abstract class BaseMultistoreTest extends BaseDirectDbEntityUpdateTest {
     protected const DEFAULT_STORE_ID = 0;
     protected const STORE_1_ID = 1;
 
-    private int $store2Id;
-    private int $secondWebsiteId;
-    private int $secondWebsiteStoreId;
+    private static int $store2Id;
+    private static int $secondWebsiteId;
+    private static int $secondWebsiteStoreId;
 
-    public function setUp(): void {
-        parent::setUp();
-
-        $wasDataCreated = $this->callMagentoPutEndpoint('stores/setup', []);
+    public static function setUpBeforeClass(): void {
+        parent::setUpBeforeClass();
+        $wasDataCreated = self::callMagentoPutEndpoint('stores/setup', []);
         if ($wasDataCreated) {
-            $this->indexerOperations->flushCache();
+            self::$indexerOperations->flushCache();
         }
 
-        $this->store2Id = $this->selectByCode('store_id', 'store', 'store_2_view');
-        $this->secondWebsiteId = $this->selectByCode('website_id', 'store_website', 'second_website');
-        $this->secondWebsiteStoreId = $this->selectByCode('store_id', 'store', 'store_for_second_website_view');
+        self::$store2Id = self::selectByCode('store_id', 'store', 'store_2_view');
+        self::$secondWebsiteId = self::selectByCode('website_id', 'store_website', 'second_website');
+        self::$secondWebsiteStoreId = self::selectByCode('store_id', 'store', 'store_for_second_website_view');
     }
 
-    private function selectByCode(string $idField, string $table, string $code): int {
+    private static function selectByCode(string $idField, string $table, string $code): int {
         return intval(
-            $this->db->selectSingleValue("SELECT $idField FROM $table WHERE code = '$code'")
+            self::$db->selectSingleValue("SELECT $idField FROM $table WHERE code = '$code'")
         );
     }
 
-    protected function getStore2Id(): int {
-        return $this->store2Id;
+    protected static function getStore2Id(): int {
+        return self::$store2Id;
     }
 
-    protected function getSecondWebsiteId(): int {
-        return $this->secondWebsiteId;
+    protected static function getSecondWebsiteId(): int {
+        return self::$secondWebsiteId;
     }
 
-    protected function getSecondWebsiteStoreId(): int {
-        return $this->secondWebsiteStoreId;
+    protected static function getSecondWebsiteStoreId(): int {
+        return self::$secondWebsiteStoreId;
     }
 }

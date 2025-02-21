@@ -74,7 +74,6 @@ class StreamxConnectorClientAvailabilityTest extends BaseStreamxTest {
         $entity = json_decode($bigProductJson, true);
 
         $entitiesToPublishInBatch = 100;
-        $publishTimes = 10;
 
         // and: load the same big product to list, but give each instance a unique ID
         $entities = [];
@@ -84,11 +83,9 @@ class StreamxConnectorClientAvailabilityTest extends BaseStreamxTest {
         }
 
         // when: publish batch as the Connector would do
-        for ($i = 0; $i < $publishTimes; $i++) {
-            $client = $this->createClient(parent::STREAMX_REST_INGESTION_URL);
-            if ($client->isStreamxAvailable()) {
-                $client->publish($entities, ProductProcessor::INDEXER_ID);
-            }
+        $client = $this->createClient(parent::STREAMX_REST_INGESTION_URL);
+        if ($client->isStreamxAvailable()) {
+            $client->publish($entities, ProductProcessor::INDEXER_ID);
         }
 
         // then

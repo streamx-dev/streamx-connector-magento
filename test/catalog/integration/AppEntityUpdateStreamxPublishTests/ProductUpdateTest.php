@@ -2,17 +2,13 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
-use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageReportGenerator;
 
 /**
  * @inheritdoc
+ * @UsesProductIndexer
  */
 class ProductUpdateTest extends BaseAppEntityUpdateTest {
-
-    protected function indexerName(): string {
-        return ProductProcessor::INDEXER_ID;
-    }
 
     /** @test */
     public function shouldPublishSimpleProductEditedUsingMagentoApplicationToStreamx() {
@@ -43,7 +39,7 @@ class ProductUpdateTest extends BaseAppEntityUpdateTest {
     private function shouldPublishProductEditedUsingMagentoApplicationToStreamx(string $productName, string $productNameInValidationFileName): void {
         // given
         $productNewName = "Name modified for testing, was $productName";
-        $productId = $this->db->getProductId($productName);
+        $productId = self::$db->getProductId($productName);
 
         // and
         $expectedKey = "pim:$productId";
@@ -62,7 +58,7 @@ class ProductUpdateTest extends BaseAppEntityUpdateTest {
     }
 
     private function renameProduct(int $productId, string $newName): void {
-        $coverage = $this->callMagentoPutEndpoint('product/rename', [
+        $coverage = self::callMagentoPutEndpoint('product/rename', [
             'productId' => $productId,
             'newName' => $newName
         ]);

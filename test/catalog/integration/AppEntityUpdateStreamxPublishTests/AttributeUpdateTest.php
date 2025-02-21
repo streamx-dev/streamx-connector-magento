@@ -2,17 +2,13 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
-use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageReportGenerator;
 
 /**
  * @inheritdoc
+ * @UsesAttributeIndexer
  */
 class AttributeUpdateTest extends BaseAppEntityUpdateTest {
-
-    protected function indexerName(): string {
-        return AttributeProcessor::INDEXER_ID;
-    }
 
     /** @test */
     public function shouldPublishProductThatUsesSimpleAttributeEditedUsingMagentoApplicationToStreamx() {
@@ -32,13 +28,13 @@ class AttributeUpdateTest extends BaseAppEntityUpdateTest {
 
     private function shouldPublishProductThatUsesAttributeEditedUsingMagentoApplicationToStreamx(string $attributeCode, array $regexReplacementsForEditedValidationFile): void {
         // given
-        $attributeId = $this->db->getProductAttributeId($attributeCode);
+        $attributeId = self::$db->getProductAttributeId($attributeCode);
 
-        $oldDisplayName = $this->db->getAttributeDisplayName($attributeId);
+        $oldDisplayName = self::$db->getAttributeDisplayName($attributeId);
         $newDisplayName = "Name modified for testing, was $oldDisplayName";
 
         // and
-        $productId = $this->db->getProductId('Sprite Stasis Ball 55 cm'); // this product is known to have both "color" and "material" attributes
+        $productId = self::$db->getProductId('Sprite Stasis Ball 55 cm'); // this product is known to have both "color" and "material" attributes
         $expectedKey = "pim:$productId";
         self::removeFromStreamX($expectedKey);
 
@@ -60,7 +56,7 @@ class AttributeUpdateTest extends BaseAppEntityUpdateTest {
     }
 
     private function renameAttribute(string $attributeCode, string $newName): void {
-        $coverage = $this->callMagentoPutEndpoint('attribute/rename', [
+        $coverage = self::callMagentoPutEndpoint('attribute/rename', [
             'attributeCode' => $attributeCode,
             'newName' => $newName
         ]);

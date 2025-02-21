@@ -2,25 +2,20 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
-use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
-
 /**
  * @inheritdoc
+ * @UsesProductIndexer
  */
 class ProductAddAndDeleteTest extends BaseAppEntityUpdateTest {
-
-    protected function indexerName(): string {
-        return ProductProcessor::INDEXER_ID;
-    }
 
     /** @test */
     public function shouldPublishProductAddedUsingMagentoApplicationToStreamx_AndUnpublishDeletedProduct() {
         // given
         $productName = 'The new great watch';
         $categoryIds = [
-            $this->db->getCategoryId('Watches'),
-            $this->db->getCategoryId('Collections'), // note: this category is not active in sample data by default
-            $this->db->getCategoryId('Sale')
+            self::$db->getCategoryId('Watches'),
+            self::$db->getCategoryId('Collections'), // note: this category is not active in sample data by default
+            self::$db->getCategoryId('Sale')
         ];
 
         // when
@@ -55,14 +50,14 @@ class ProductAddAndDeleteTest extends BaseAppEntityUpdateTest {
     }
 
     private function addProduct(string $productName, array $categoryIds): int {
-        return (int) $this->callMagentoPutEndpoint('product/add', [
+        return (int) self::callMagentoPutEndpoint('product/add', [
             'productName' => $productName,
             'categoryIds' => $categoryIds
         ]);
     }
 
     private function deleteProduct(int $productId): void {
-        $this->callMagentoPutEndpoint('product/delete', [
+        self::callMagentoPutEndpoint('product/delete', [
             'productId' => $productId
         ]);
     }

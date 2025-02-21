@@ -2,16 +2,11 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
-use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
-
 /**
  * @inheritdoc
+ * @UsesCategoryIndexer
  */
 class CategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
-
-    protected function indexerName(): string {
-        return CategoryProcessor::INDEXER_ID;
-    }
 
     /** @test */
     public function shouldPublishCategoryAddedDirectlyInDatabaseToStreamx_AndUnpublishDeletedCategory() {
@@ -52,27 +47,27 @@ class CategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $rootCategoryId = 1;
         $parentCategoryId = 2;
         $defaultStoreId = 0;
-        $attributeSetId = $this->db->getDefaultCategoryAttributeSetId();
+        $attributeSetId = self::$db->getDefaultCategoryAttributeSetId();
 
-        $categoryId = $this->db->insert("
+        $categoryId = self::$db->insert("
             INSERT INTO catalog_category_entity (attribute_set_id, parent_id, path, position, level, children_count) VALUES
                 ($attributeSetId, $parentCategoryId, '', 1, 2, 0)
         ");
 
-        $this->db->execute("
+        self::$db->execute("
             UPDATE catalog_category_entity
                SET path = '$rootCategoryId/$parentCategoryId/$categoryId'
              WHERE entity_id = $categoryId
         ");
 
-        $this->db->execute("
+        self::$db->execute("
             INSERT INTO catalog_category_entity_varchar (entity_id, attribute_id, store_id, value) VALUES
                 ($categoryId, " . $this->attrId('name') . ", $defaultStoreId, '$categoryName'),
                 ($categoryId, " . $this->attrId('display_mode') . ", $defaultStoreId, 'PRODUCTS'),
                 ($categoryId, " . $this->attrId('url_key') . ", $defaultStoreId, '$categoryInternalName')
         ");
 
-        $this->db->execute("
+        self::$db->execute("
             INSERT INTO catalog_category_entity_int (entity_id, attribute_id, store_id, value) VALUES
                 ($categoryId, " . $this->attrId('is_active') . ", $defaultStoreId, TRUE),
                 ($categoryId, " . $this->attrId('include_in_menu') . ", $defaultStoreId, TRUE)
@@ -82,7 +77,7 @@ class CategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
     }
 
     private function deleteCategory(int $categoryId): void {
-        $this->db->executeAll([
+        self::$db->executeAll([
             "DELETE FROM catalog_category_entity_int WHERE entity_id = $categoryId",
             "DELETE FROM catalog_category_entity_varchar WHERE entity_id = $categoryId",
             "DELETE FROM catalog_category_entity WHERE entity_id = $categoryId",
@@ -90,6 +85,6 @@ class CategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
     }
 
     private function attrId($attrCode): string {
-        return $this->db->getCategoryAttributeId($attrCode);
+        return self::$db->getCategoryAttributeId($attrCode);
     }
 }

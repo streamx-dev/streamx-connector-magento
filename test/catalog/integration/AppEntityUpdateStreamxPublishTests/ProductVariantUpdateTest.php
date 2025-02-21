@@ -2,26 +2,22 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
-use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\Model\SlugGenerator;
 use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageReportGenerator;
 
 /**
  * @inheritdoc
+ * @UsesProductIndexer
  */
 class ProductVariantUpdateTest extends BaseAppEntityUpdateTest {
-
-    protected function indexerName(): string {
-        return ProductProcessor::INDEXER_ID;
-    }
 
     /** @test */
     public function shouldPublishParentProductAndAllVariants_WhenParentIsEditedUsingMagentoApplication() {
         // given
         $parentProductName = 'Chaz Kangeroo Hoodie';
-        $parentProductId = $this->db->getProductId($parentProductName);
+        $parentProductId = self::$db->getProductId($parentProductName);
 
-        $childProducts = $this->db->getProductIdsAndNamesMap("$parentProductName-");
+        $childProducts = self::$db->getProductIdsAndNamesMap("$parentProductName-");
         $this->assertCount(15, $childProducts);
 
         // and
@@ -53,15 +49,15 @@ class ProductVariantUpdateTest extends BaseAppEntityUpdateTest {
     public function shouldPublishVariantAndParentProduct_WhenVariantIsEditedUsingMagentoApplication() {
         // given
         $childProductName = 'Chaz Kangeroo Hoodie-XL-Orange';
-        $childProductId = $this->db->getProductId($childProductName);
+        $childProductId = self::$db->getProductId($childProductName);
 
         $parentProductName = 'Chaz Kangeroo Hoodie';
-        $parentProductId = $this->db->getProductId($parentProductName);
+        $parentProductId = self::$db->getProductId($parentProductName);
 
         // and
         $expectedChildProductKey = "pim:$childProductId";
         $expectedParentProductKey = "pim:$parentProductId";
-        $unexpectedChildProductKey = 'pim:' . $this->db->getProductId('Chaz Kangeroo Hoodie-L-Orange'); // a different child of the same parent product
+        $unexpectedChildProductKey = 'pim:' . self::$db->getProductId('Chaz Kangeroo Hoodie-L-Orange'); // a different child of the same parent product
 
         self::removeFromStreamX($expectedChildProductKey, $expectedParentProductKey, $unexpectedChildProductKey);
 
@@ -92,7 +88,7 @@ class ProductVariantUpdateTest extends BaseAppEntityUpdateTest {
     }
 
     private function renameProduct(int $productId, string $newName): void {
-        $coverage = $this->callMagentoPutEndpoint('product/rename', [
+        $coverage = self::callMagentoPutEndpoint('product/rename', [
             'productId' => $productId,
             'newName' => $newName
         ]);

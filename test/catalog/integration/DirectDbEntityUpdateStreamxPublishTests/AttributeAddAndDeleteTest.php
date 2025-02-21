@@ -2,22 +2,17 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
-use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
-
 /**
  * @inheritdoc
+ * @UsesAttributeIndexer
  */
 class AttributeAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
-
-    protected function indexerName(): string {
-        return AttributeProcessor::INDEXER_ID;
-    }
 
     /** @test */
     public function shouldPublishProductThatUsesAttributeAddedDirectlyInDatabaseToStreamx() {
         // given
         $attributeCode = 'the_new_attribute';
-        $productId = $this->db->getProductId('Sprite Foam Roller');
+        $productId = self::$db->getProductId('Sprite Foam Roller');
 
         // and
         $expectedKey = "pim:$productId";
@@ -54,21 +49,21 @@ class AttributeAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
      */
     private function insertNewAttribute(string $attributeCode, int $productId): int {
         $attributeName = "Display name of $attributeCode";
-        $entityTypeId = $this->db->getProductEntityTypeId();
+        $entityTypeId = self::$db->getProductEntityTypeId();
         $defaultStoreId = 0;
 
-        $attributeId = $this->db->insert("
+        $attributeId = self::$db->insert("
             INSERT INTO eav_attribute (entity_type_id, attribute_code, frontend_label, backend_type, frontend_input, is_user_defined) VALUES
                 ($entityTypeId, '$attributeCode', '$attributeName', 'varchar', 'text', TRUE)
         ");
 
-        $this->db->execute("
+        self::$db->execute("
             INSERT INTO catalog_eav_attribute (attribute_id, is_visible, is_visible_on_front, used_in_product_listing, is_visible_in_advanced_search) VALUES
                 ($attributeId, TRUE, TRUE, TRUE, TRUE)
         ");
 
         // add attribute to product
-        $this->db->execute("
+        self::$db->execute("
             INSERT INTO catalog_product_entity_varchar (entity_id, attribute_id, store_id, value) VALUES
                 ($productId, $attributeId, $defaultStoreId, '$attributeCode value for product $productId')
         ");
@@ -77,7 +72,7 @@ class AttributeAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
     }
 
     private function deleteAttribute(int $attributeId): void {
-        $this->db->executeAll([
+        self::$db->executeAll([
             "DELETE FROM catalog_product_entity_varchar WHERE attribute_id = $attributeId",
             "DELETE FROM catalog_eav_attribute WHERE attribute_id = $attributeId",
             "DELETE FROM eav_attribute WHERE attribute_id = $attributeId"

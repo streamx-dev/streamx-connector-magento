@@ -2,23 +2,18 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
-use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
-
 /**
  * @inheritdoc
+ * @UsesCategoryIndexer
  */
 class CategoryUpdateTest extends BaseDirectDbEntityUpdateTest {
-
-    protected function indexerName(): string {
-        return CategoryProcessor::INDEXER_ID;
-    }
 
     /** @test */
     public function shouldPublishCategoryEditedDirectlyInDatabaseToStreamx() {
         // given
         $categoryOldName = 'Gear';
         $categoryNewName = 'Gear Articles';
-        $categoryId = $this->db->getCategoryId($categoryOldName);
+        $categoryId = self::$db->getCategoryId($categoryOldName);
 
         // and
         $expectedKey = "cat:$categoryId";
@@ -39,8 +34,8 @@ class CategoryUpdateTest extends BaseDirectDbEntityUpdateTest {
     }
 
     private function renameCategoryInDb(int $categoryId, string $newName): void {
-        $categoryNameAttributeId = $this->db->getCategoryNameAttributeId();
-        $this->db->execute("
+        $categoryNameAttributeId = self::$db->getCategoryNameAttributeId();
+        self::$db->execute("
             UPDATE catalog_category_entity_varchar
                SET value = '$newName'
              WHERE attribute_id = $categoryNameAttributeId
