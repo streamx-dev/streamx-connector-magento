@@ -2,6 +2,7 @@
 
 namespace StreamX\ConnectorCore\Indexer;
 
+use Magento\Framework\UrlInterface;
 use Magento\Store\Model\StoreManagerInterface;
 
 class ImageUrlManager {
@@ -9,7 +10,7 @@ class ImageUrlManager {
     private string $productImagesBaseUrl;
 
     public function __construct(StoreManagerInterface $storeManager) {
-        $storeBaseUrl = $storeManager->getStore()->getBaseUrl();
+        $storeBaseUrl = $storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_LINK, true);
         $this->productImagesBaseUrl = self::joinUrlParts($storeBaseUrl, '/media/catalog/product/');
     }
 
