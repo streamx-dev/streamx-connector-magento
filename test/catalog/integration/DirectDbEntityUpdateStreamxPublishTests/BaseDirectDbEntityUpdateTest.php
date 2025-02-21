@@ -4,38 +4,24 @@ namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxP
 
 use StreamX\ConnectorCatalog\test\integration\BaseStreamxConnectorPublishTest;
 use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageReportGenerator;
-use StreamX\ConnectorCatalog\test\integration\utils\MagentoIndexerOperationsExecutor;
 
 /**
  * @inheritdoc
+ * @UpdateByScheduleIndexerMode
  */
 abstract class BaseDirectDbEntityUpdateTest extends BaseStreamxConnectorPublishTest {
 
-    protected abstract function indexerName(): string;
-
-    private function indexerChangelogTableName(): string {
-        return $this->indexerName() . '_cl';
-    }
-
-    protected function desiredIndexerMode(): string {
-        // Magento creates triggers to save db-level changes only when the scheduler is in the below mode:
-        return MagentoIndexerOperationsExecutor::UPDATE_BY_SCHEDULE_DISPLAY_NAME;
+    private function viewId(): string {
+        return self::$testedIndexerName; // note: assuming that every indexer in the indexer.xml file has the same value of id and view_id fields
     }
 
     protected function reindexMview(): void {
-        $coverage = $this->callMagentoPutEndpoint('mview/reindex', [
+        $coverage = self::callMagentoPutEndpoint('mview/reindex', [
             'indexerViewId' => $this->viewId()
         ]);
 
         if (getenv('GENERATE_CODE_COVERAGE_REPORT') === 'true') {
             CodeCoverageReportGenerator::generateCodeCoverageReport($coverage, $this);
         }
-    }
-
-    public function tearDown(): void {
-        $tableName = $this->indexerChangelogTableName();
-        $this->db->execute("DELETE FROM $tableName;");
-
-        parent::tearDown();
     }
 }

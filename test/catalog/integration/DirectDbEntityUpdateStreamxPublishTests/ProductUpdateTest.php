@@ -2,16 +2,11 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
-use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
-
 /**
  * @inheritdoc
+ * @UsesProductIndexer
  */
 class ProductUpdateTest extends BaseDirectDbEntityUpdateTest {
-
-    protected function indexerName(): string {
-        return ProductProcessor::INDEXER_ID;
-    }
 
     /** @test */
     public function shouldPublishSimpleProductEditedDirectlyInDatabaseToStreamx() {
@@ -42,14 +37,14 @@ class ProductUpdateTest extends BaseDirectDbEntityUpdateTest {
     private function shouldPublishProductEditedDirectlyInDatabaseToStreamx(string $productName, string $productNameInValidationFileName): void {
         // given
         $productNewName = "Name modified for testing, was $productName";
-        $productId = $this->db->getProductId($productName);
+        $productId = self::$db->getProductId($productName);
 
         // and
         $expectedKey = "pim:$productId";
         self::removeFromStreamX($expectedKey);
 
         // when
-        $this->db->renameProduct($productId, $productNewName);
+        self::$db->renameProduct($productId, $productNewName);
 
         try {
             // and
@@ -58,7 +53,7 @@ class ProductUpdateTest extends BaseDirectDbEntityUpdateTest {
             // then
             $this->assertExactDataIsPublished($expectedKey, "edited-$productNameInValidationFileName-product.json");
         } finally {
-            $this->db->renameProduct($productId, $productName);
+            self::$db->renameProduct($productId, $productName);
         }
     }
 }

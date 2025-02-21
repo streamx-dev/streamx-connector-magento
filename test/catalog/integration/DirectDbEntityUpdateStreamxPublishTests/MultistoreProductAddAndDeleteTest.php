@@ -4,23 +4,19 @@ namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxP
 
 use DateTime;
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
-use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 
 /**
  * @inheritdoc
+ * @UsesProductIndexer
  */
 class MultistoreProductAddAndDeleteTest extends BaseMultistoreTest {
-
-    protected function indexerName(): string {
-        return ProductProcessor::INDEXER_ID;
-    }
 
     /** @test */
     public function shouldPublishProductsFromWebsite() {
         // given: as in StoresControllerImpl, product 1 exists only in default website, product 4 exists in both websites
 
         // when: perform any change of both products - to trigger collecting their IDs by the mV iew feature
-        $this->db->execute('UPDATE catalog_product_entity SET has_options = TRUE WHERE entity_id IN (1, 4)');
+        self::$db->execute('UPDATE catalog_product_entity SET has_options = TRUE WHERE entity_id IN (1, 4)');
 
         $expectedPublishedKeys = [
             'pim:1',
@@ -52,7 +48,7 @@ class MultistoreProductAddAndDeleteTest extends BaseMultistoreTest {
             $this->assertDataIsNotPublished($unexpectedPublishedKey);
         } finally {
             // restore DB changes
-            $this->db->execute('UPDATE catalog_product_entity SET has_options = FALSE WHERE entity_id IN (1, 4)');
+            self::$db->execute('UPDATE catalog_product_entity SET has_options = FALSE WHERE entity_id IN (1, 4)');
         }
     }
 
@@ -106,25 +102,25 @@ class MultistoreProductAddAndDeleteTest extends BaseMultistoreTest {
 
     private function insertProduct(string $sku, array $storeIdProductNameMap, array $storeIdProductStatusMap): int {
         $websiteId = self::DEFAULT_WEBSITE_ID;
-        $attributeSetId = $this->db->getDefaultProductAttributeSetId();
-        $nameAttrId = $this->db->getProductAttributeId('name');
-        $statusAttrId = $this->db->getProductAttributeId('status');
+        $attributeSetId = self::$db->getDefaultProductAttributeSetId();
+        $nameAttrId = self::$db->getProductAttributeId('name');
+        $statusAttrId = self::$db->getProductAttributeId('status');
 
         // 1. Create product
-        $productId = $this->db->insert("
+        $productId = self::$db->insert("
             INSERT INTO catalog_product_entity (attribute_set_id, type_id, sku, has_options, required_options) VALUES
                 ($attributeSetId, 'simple', '$sku', FALSE, FALSE)
         ");
 
         // 2. Add the product to the website's catalog
-        $this->db->execute("
+        self::$db->execute("
             INSERT INTO catalog_product_website (product_id, website_id) VALUES
                 ($productId, $websiteId)
         ");
 
         // 3. Set default and store-scoped names for the product
         foreach ($storeIdProductNameMap as $storeId => $productName) {
-            $this->db->execute("
+            self::$db->execute("
                INSERT INTO catalog_product_entity_varchar (entity_id, attribute_id, store_id, value) VALUES
                     ($productId, $nameAttrId, $storeId, '$productName')
             ");
@@ -132,7 +128,7 @@ class MultistoreProductAddAndDeleteTest extends BaseMultistoreTest {
 
         // 4. Set default and store-scoped statuses for the product
         foreach ($storeIdProductStatusMap as $storeId => $productStatus) {
-            $this->db->execute("
+            self::$db->execute("
                 INSERT INTO catalog_product_entity_int (entity_id, attribute_id, store_id, value) VALUES
                     ($productId, $statusAttrId, $storeId, $productStatus)
             ");
@@ -142,7 +138,7 @@ class MultistoreProductAddAndDeleteTest extends BaseMultistoreTest {
     }
 
     private function deleteProduct(int $productId): void {
-        $this->db->executeAll([
+        self::$db->executeAll([
             "DELETE FROM catalog_product_website WHERE product_id = $productId",
             "DELETE FROM catalog_product_entity_int WHERE entity_id = $productId",
             "DELETE FROM catalog_product_entity_varchar WHERE entity_id = $productId",

@@ -2,16 +2,11 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
-use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
-
 /**
  * @inheritdoc
+ * @UsesAttributeIndexer
  */
 class AttributeUpdateTest extends BaseDirectDbEntityUpdateTest {
-
-    protected function indexerName(): string {
-        return AttributeProcessor::INDEXER_ID;
-    }
 
     /** @test */
     public function shouldPublishProductThatUsesSimpleAttributeEditedDirectlyInDatabaseToStreamx() {
@@ -31,13 +26,13 @@ class AttributeUpdateTest extends BaseDirectDbEntityUpdateTest {
 
     private function shouldPublishProductThatUsesAttributeEditedDirectlyInDatabaseToStreamx(string $attributeCode, array $regexReplacementsForEditedValidationFile): void {
         // given
-        $attributeId = $this->db->getProductAttributeId($attributeCode);
+        $attributeId = self::$db->getProductAttributeId($attributeCode);
 
-        $oldDisplayName = $this->db->getAttributeDisplayName($attributeId);
+        $oldDisplayName = self::$db->getAttributeDisplayName($attributeId);
         $newDisplayName = "Name modified for testing, was $oldDisplayName";
 
         // and
-        $productId = $this->db->getProductId('Sprite Stasis Ball 55 cm'); // this product is known to have both "color" and "material" attributes
+        $productId = self::$db->getProductId('Sprite Stasis Ball 55 cm'); // this product is known to have both "color" and "material" attributes
         $expectedKey = "pim:$productId";
         self::removeFromStreamX($expectedKey);
 
@@ -61,7 +56,7 @@ class AttributeUpdateTest extends BaseDirectDbEntityUpdateTest {
     }
 
     private function renameAttributeInDb($attributeId, string $newDisplayName): void {
-        $this->db->execute("
+        self::$db->execute("
             UPDATE eav_attribute
                SET frontend_label = '$newDisplayName'
              WHERE attribute_id = $attributeId

@@ -2,22 +2,17 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
-use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
-
 /**
  * @inheritdoc
+ * @UsesAttributeIndexer
  */
 class AttributeAddAndDeleteTest extends BaseAppEntityUpdateTest {
-
-    protected function indexerName(): string {
-        return AttributeProcessor::INDEXER_ID;
-    }
 
     /** @test */
     public function shouldPublishProductThatUsesAttributeAddedUsingMagentoApplicationToStreamx() {
         // given
         $attributeCode = 'the_new_attribute';
-        $productId = $this->db->getProductId('Sprite Foam Roller');
+        $productId = self::$db->getProductId('Sprite Foam Roller');
 
         // and
         $expectedKey = "pim:$productId";
@@ -45,14 +40,14 @@ class AttributeAddAndDeleteTest extends BaseAppEntityUpdateTest {
     }
 
     private function addAttribute(string $attributeCode, int $productId): int {
-        return (int) $this->callMagentoPutEndpoint('attribute/add', [
+        return (int) self::callMagentoPutEndpoint('attribute/add', [
             'attributeCode' => $attributeCode,
             'productId' => $productId
         ]);
     }
 
     private function deleteAttribute(int $attributeId): void {
-        $this->callMagentoPutEndpoint('attribute/delete', [
+        self::callMagentoPutEndpoint('attribute/delete', [
             'attributeId' => $attributeId
         ]);
     }

@@ -9,19 +9,19 @@ trait ConfigurationEditTraits {
     public string $CHILD_PRODUCT_ATTRIBUTES_PATH = 'streamx_connector_settings/catalog_settings/child_product_attributes';
 
     public function setConfigurationValue(string $path, string $value): void {
-        $this->callMagentoConfigurationEditEndpoint(
+        self::callMagentoConfigurationEditEndpoint(
             $path,
             $value
         );
-        $this->indexerOperations->flushCache();
+        self::$indexerOperations->flushConfigCache();
     }
 
     public function restoreConfigurationValue(string $path): void {
-        $this->callMagentoConfigurationEditEndpoint(
+        self::callMagentoConfigurationEditEndpoint(
             $path,
             $this->readDefaultValue($path)
         );
-        $this->indexerOperations->flushCache();
+        self::$indexerOperations->flushConfigCache();
     }
 
     protected function allowIndexingAllAttributes(): void {
@@ -39,9 +39,9 @@ trait ConfigurationEditTraits {
     }
 
     private function setIndexedAttributes(string $productAttributes, string $childProductAttributes): void {
-        $this->callMagentoConfigurationEditEndpoint($this->PRODUCT_ATTRIBUTES_PATH, $productAttributes);
-        $this->callMagentoConfigurationEditEndpoint($this->CHILD_PRODUCT_ATTRIBUTES_PATH, $childProductAttributes);
-        $this->indexerOperations->flushCache();
+        self::callMagentoConfigurationEditEndpoint($this->PRODUCT_ATTRIBUTES_PATH, $productAttributes);
+        self::callMagentoConfigurationEditEndpoint($this->CHILD_PRODUCT_ATTRIBUTES_PATH, $childProductAttributes);
+        self::$indexerOperations->flushConfigCache();
     }
 
     private function readDefaultValue(string $configurationFieldPath): string {
@@ -51,7 +51,7 @@ trait ConfigurationEditTraits {
     }
 
     private function callMagentoConfigurationEditEndpoint(string $configurationFieldPath, string $value): void {
-        $this->callMagentoPutEndpoint($this->CONFIGURATION_EDIT_ENDPOINT, [
+        self::callMagentoPutEndpoint($this->CONFIGURATION_EDIT_ENDPOINT, [
             'configurationFieldPath' => $configurationFieldPath,
             'value' => $value
         ]);
