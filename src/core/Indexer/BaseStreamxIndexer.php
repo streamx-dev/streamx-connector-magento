@@ -5,7 +5,7 @@ namespace StreamX\ConnectorCore\Indexer;
 use Magento\Framework\Indexer\SaveHandler\Batch;
 use Psr\Log\LoggerInterface;
 use Streamx\Clients\Ingestion\Exceptions\StreamxClientException;
-use StreamX\ConnectorCore\Api\BaseAction;
+use StreamX\ConnectorCore\Api\BasicDataLoader;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
 use StreamX\ConnectorCore\Index\IndexerDefinition;
 use StreamX\ConnectorCore\Client\StreamxClient;
@@ -17,7 +17,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
 {
     private GeneralConfig $connectorConfig;
     private IndexableStoresProvider $indexableStoresProvider;
-    private BaseAction $action;
+    private BasicDataLoader $entityDataLoader;
     private LoggerInterface $logger;
     private OptimizationSettings $optimizationSettings;
     private StreamxClientConfiguration $clientConfiguration;
@@ -27,7 +27,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
     public function __construct(
         GeneralConfig $connectorConfig,
         IndexableStoresProvider $indexableStoresProvider,
-        BaseAction $action,
+        BasicDataLoader $entityDataLoader,
         LoggerInterface $logger,
         OptimizationSettings $optimizationSettings,
         StreamxClientConfiguration $clientConfiguration,
@@ -35,7 +35,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
     ) {
         $this->connectorConfig = $connectorConfig;
         $this->indexableStoresProvider = $indexableStoresProvider;
-        $this->action = $action;
+        $this->entityDataLoader = $entityDataLoader;
         $this->logger = $logger;
         $this->optimizationSettings = $optimizationSettings;
         $this->clientConfiguration = $clientConfiguration;
@@ -94,7 +94,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
             }
 
             $this->logger->info("Start indexing $this->indexerName for store $storeId");
-            $documents = $this->action->loadData($storeId, $ids);
+            $documents = $this->entityDataLoader->loadData($storeId, $ids);
             $this->saveIndex($documents, $storeId, $client);
             $this->logger->info("Finished indexing $this->indexerName for store $storeId");
         }

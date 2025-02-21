@@ -1,15 +1,15 @@
 <?php declare(strict_types=1);
 
-namespace StreamX\ConnectorCatalog\Model\Indexer\Action;
+namespace StreamX\ConnectorCatalog\Model\Indexer\DataLoader;
 
 use Exception;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product as ResourceModel;
-use StreamX\ConnectorCore\Api\BaseAction;
+use StreamX\ConnectorCore\Api\BasicDataLoader;
 use Traversable;
 
-class ProductAction implements BaseAction {
+class ProductDataLoader implements BasicDataLoader {
 
     private ResourceModel $resourceModel;
 

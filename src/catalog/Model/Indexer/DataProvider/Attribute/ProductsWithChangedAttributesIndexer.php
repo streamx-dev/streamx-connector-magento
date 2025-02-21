@@ -9,7 +9,7 @@ use Psr\Log\LoggerInterface;
 use Streamx\Clients\Ingestion\Exceptions\StreamxClientException;
 use StreamX\ConnectorCatalog\Indexer\ProductsIndexer;
 use StreamX\ConnectorCatalog\Model\Attributes\AttributeDefinition;
-use StreamX\ConnectorCatalog\Model\Indexer\Action\ProductAction;
+use StreamX\ConnectorCatalog\Model\Indexer\DataLoader\ProductDataLoader;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use StreamX\ConnectorCore\Client\StreamxClient;
 use Zend_Db_Expr;
@@ -31,20 +31,20 @@ class ProductsWithChangedAttributesIndexer
     private ResourceConnection $resourceConnection;
     private ProductMetaData $productMetaData;
     private ProductsIndexer $productsIndexer;
-    private ProductAction $action;
+    private ProductDataLoader $productDataLoader;
 
     public function __construct(
         LoggerInterface $logger,
         ResourceConnection $resourceConnection,
         ProductMetaData $productMetaData,
         ProductsIndexer $productsIndexer,
-        ProductAction $action
+        ProductDataLoader $productDataLoader
     ) {
         $this->logger = $logger;
         $this->resourceConnection = $resourceConnection;
         $this->productMetaData = $productMetaData;
         $this->productsIndexer = $productsIndexer;
-        $this->action = $action;
+        $this->productDataLoader = $productDataLoader;
     }
 
     /**
@@ -75,7 +75,7 @@ class ProductsWithChangedAttributesIndexer
         if (!empty($productEntityIds)) {
             $this->logger->info("Detected the following products to re-publish due to attribute definition change: " . json_encode($productEntityIds));
 
-            $productsData = $this->action->loadData($storeId, $productEntityIds);
+            $productsData = $this->productDataLoader->loadData($storeId, $productEntityIds);
             $this->productsIndexer->saveIndex($productsData, $storeId, $client);
         }
     }

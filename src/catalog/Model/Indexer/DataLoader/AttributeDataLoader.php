@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace StreamX\ConnectorCatalog\Model\Indexer\Action;
+namespace StreamX\ConnectorCatalog\Model\Indexer\DataLoader;
 
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\LoadAttributeDefinitions;
-use StreamX\ConnectorCore\Api\BaseAction;
+use StreamX\ConnectorCore\Api\BasicDataLoader;
 use Traversable;
 
-class AttributeAction implements BaseAction {
+class AttributeDataLoader implements BasicDataLoader {
 
     private LoadAttributeDefinitions $loadAttributeDefinitions;
 
