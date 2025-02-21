@@ -15,6 +15,10 @@
     </testsuite>
   </testsuites>
 
+  <listeners>
+    <listener class="StreamX\ConnectorCatalog\test\integration\TestSuiteManager" />
+  </listeners>
+
   <coverage pathCoverage="true">
     <include>
       <directory>src/core</directory>

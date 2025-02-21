@@ -39,10 +39,6 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
         self::setIndexerModeInMagento();
     }
 
-    public static function tearDownAfterClass(): void {
-        self::restoreIndexerModeInMagento();
-    }
-
     private static function connectToDatabase(): void {
         if (!self::$db) {
             self::$db = new MagentoMySqlQueryExecutor();
@@ -52,20 +48,8 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
 
     private static function setIndexerModeInMagento(): void {
         self::$indexerOperations = new MagentoIndexerOperationsExecutor(self::$testedIndexerName);
-        self::$originalIndexerMode = self::$indexerOperations->getIndexerMode();
-
-        if (self::$testedIndexerMode !== self::$originalIndexerMode) {
-            self::$indexerOperations->setIndexerMode(self::$testedIndexerMode);
-            self::$indexModeNeedsRestoring = true;
-        } else {
-            self::$indexModeNeedsRestoring = false;
-        }
-    }
-
-    private static function restoreIndexerModeInMagento(): void {
-        if (self::$indexModeNeedsRestoring) {
-            self::$indexerOperations->setIndexerMode(self::$originalIndexerMode);
-        }
+        // TODO: store last set value in map. If $testedIndexerMode is the same - don't execute this:
+        self::$indexerOperations->setIndexerMode(self::$testedIndexerMode);
     }
 
     private static function loadDesiredIndexerSettings(): void {
