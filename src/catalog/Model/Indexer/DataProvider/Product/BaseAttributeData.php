@@ -97,7 +97,8 @@ abstract class BaseAttributeData extends DataProviderInterface
             $productData['name'] = $name;
             $productData['label'] = $name;
         } elseif($attributeCode == 'description') {
-            $productData['description'] = $this->getSingleAttributeValue($attributeCode, $attributeValues, $productId);
+            $description = $this->getSingleAttributeValue($attributeCode, $attributeValues, $productId);
+            $productData['description'] = ProductDescriptionUnwrapper::unwrapIfWrapped($description);
         } elseif ($attributeCode == 'image') {
             $productData['primaryImage'] = [
                 'url' => $this->imageUrlManager->getProductImageUrl($this->getSingleAttributeValue($attributeCode, $attributeValues, $productId)),
