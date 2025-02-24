@@ -32,7 +32,8 @@ class StoresControllerImpl implements StoresControllerInterface
 
     private const PRODUCT_KEY_PREFIX = 'streamx_connector_settings/streamx_client/product_key_prefix';
     private const CATEGORY_KEY_PREFIX = 'streamx_connector_settings/streamx_client/category_key_prefix';
-    private const ALLOWED_STORES = 'streamx_connector_settings/general_settings/allowed_stores';
+    private const CONNECTOR_ENABLE_CONFIG_KEY = 'streamx_connector_settings/general_settings/enable';
+    private const ALLOWED_STORES_CONFIG_KEY = 'streamx_connector_settings/general_settings/allowed_stores';
 
     private WebsiteFactory $websiteFactory;
     private GroupFactory $groupFactory;
@@ -61,6 +62,9 @@ class StoresControllerImpl implements StoresControllerInterface
      * @inheritdoc
      */
     public function setUpStoresAndWebsites(): bool {
+        // make sure StreamX Connector is turned on
+        $this->setGlobalLevelConfigValue(self::CONNECTOR_ENABLE_CONFIG_KEY, 1);
+
         if (count($this->storeManager->getWebsites()) == 2) {
             // assuming all is already set up
             return false;
@@ -81,8 +85,8 @@ class StoresControllerImpl implements StoresControllerInterface
         $this->setWebsiteLevelConfigValue(self::CATEGORY_KEY_PREFIX, self::SECOND_WEBSITE_CATEGORY_KEY_PREFIX, $secondWebsite);
 
         // configure exported stores
-        $this->setWebsiteLevelConfigValue(self::ALLOWED_STORES, $defaultStoreId . ',' . $store2->getId(), $defaultWebsite);
-        $this->setWebsiteLevelConfigValue(self::ALLOWED_STORES, $storeForSecondWebsite->getId(), $secondWebsite);
+        $this->setWebsiteLevelConfigValue(self::ALLOWED_STORES_CONFIG_KEY, $defaultStoreId . ',' . $store2->getId(), $defaultWebsite);
+        $this->setWebsiteLevelConfigValue(self::ALLOWED_STORES_CONFIG_KEY, $storeForSecondWebsite->getId(), $secondWebsite);
 
         // add products to the new website
         foreach (self::PRODUCT_IDS_IN_SECOND_WEBSITE as $productId) {
@@ -133,5 +137,9 @@ class StoresControllerImpl implements StoresControllerInterface
 
     private function setWebsiteLevelConfigValue(string $key, string $value, WebsiteInterface $website): void {
         $this->writer->save($key, $value, ScopeInterface::SCOPE_WEBSITES, $website->getId());
+    }
+
+    private function setGlobalLevelConfigValue(string $key, string $value): void {
+        $this->writer->save($key, $value);
     }
 }
