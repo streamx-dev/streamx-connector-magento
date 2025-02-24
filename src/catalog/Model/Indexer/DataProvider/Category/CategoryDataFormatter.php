@@ -7,7 +7,7 @@ use StreamX\ConnectorCatalog\Model\ResourceModel\Category\Children as CategoryCh
 use StreamX\ConnectorCatalog\Model\SlugGenerator;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 
-class CategoryDataFormatter extends DataProviderInterface
+class CategoryDataFormatter implements DataProviderInterface
 {
     // TODO convert to DTO class
     private const ID = 'id';
@@ -31,12 +31,12 @@ class CategoryDataFormatter extends DataProviderInterface
         $this->slugGenerator = $slugGenerator;
     }
 
-    public function addData(array $indexData, int $storeId): array
+    public function addData(array &$indexData, int $storeId): void
     {
-        return $this->formatCategoriesAsTree($indexData, $storeId);
+        $this->formatCategoriesAsTree($indexData, $storeId);
     }
 
-    public function formatCategoriesAsTree(array $categoriesData, int $storeId): array {
+    public function formatCategoriesAsTree(array &$categoriesData, int $storeId): void {
         foreach ($categoriesData as &$categoryData) {
             $this->prepareCategory($categoryData);
             $children = $this->childrenResourceModel->loadChildren($categoryData, $storeId);
@@ -49,8 +49,6 @@ class CategoryDataFormatter extends DataProviderInterface
         $allCategoriesMap = $this->getAllCategoriesMap($storeId);
         $this->setParentCategory($categoriesData, $allCategoriesMap);
         $this->removeUnnecessaryFieldsRecursively($categoriesData);
-
-        return $categoriesData;
     }
 
     private function removeUnnecessaryFieldsRecursively(array &$categories): void

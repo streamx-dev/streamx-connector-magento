@@ -8,7 +8,7 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Prices as Resource;
 
-class PriceData extends DataProviderInterface
+class PriceData implements DataProviderInterface
 {
     private Resource $resourcePriceModel;
 
@@ -22,7 +22,7 @@ class PriceData extends DataProviderInterface
      * @throws LocalizedException
      * @throws NoSuchEntityException
      */
-    public function addData(array $indexData, int $storeId): array
+    public function addData(array &$indexData, int $storeId): void
     {
         $productIds = array_keys($indexData);
         $priceData = $this->resourcePriceModel->loadPriceDataFromPriceIndex($storeId, $productIds);
@@ -37,8 +37,6 @@ class PriceData extends DataProviderInterface
                 $indexData[$productId]['price']['discountedValue'] = (float)$priceDataRow['final_price'];
             }
         }
-
-        return $indexData;
     }
 
 }

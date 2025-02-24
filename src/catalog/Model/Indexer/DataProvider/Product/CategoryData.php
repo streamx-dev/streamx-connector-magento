@@ -6,7 +6,7 @@ use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Category\CategoryDataFor
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category as CategoryResource;
 
-class CategoryData extends DataProviderInterface
+class CategoryData implements DataProviderInterface
 {
     private CategoryResource $categoryResource;
     private CategoryDataFormatter $categoryDataFormatter;
@@ -22,7 +22,7 @@ class CategoryData extends DataProviderInterface
     /**
      * @inheritdoc
      */
-    public function addData(array $indexData, int $storeId): array
+    public function addData(array &$indexData, int $storeId): void
     {
         // 1. load map of: productId -> its categoryIds
         $productIds = array_keys($indexData);
@@ -33,22 +33,20 @@ class CategoryData extends DataProviderInterface
         $categoryData = $this->categoryResource->getCategories($storeId, $categoryIds);
 
         // 3. format each category as tree with subcategories and parents
-        $formattedCategories = $this->categoryDataFormatter->formatCategoriesAsTree($categoryData, $storeId);
+        $this->categoryDataFormatter->formatCategoriesAsTree($categoryData, $storeId);
 
         // 4. add formatted categories data to products
         foreach ($indexData as $productId => &$productData) {
             $productData['categories'] = [];
             if (isset($productCategoriesMap[$productId])) {
                 $productCategoryIds = $productCategoriesMap[$productId];
-                foreach ($formattedCategories as $formattedCategory) {
-                    if (in_array($formattedCategory['id'], $productCategoryIds)) {
-                        $productData['categories'][] = $formattedCategory;
+                foreach ($categoryData as $category) {
+                    if (in_array($category['id'], $productCategoryIds)) {
+                        $productData['categories'][] = $category;
                     }
                 }
             }
         }
-
-        return $indexData;
     }
 
     private function extractCategoryIds(array $productCategoriesMap): array
