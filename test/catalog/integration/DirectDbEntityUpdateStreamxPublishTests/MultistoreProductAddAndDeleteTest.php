@@ -102,47 +102,36 @@ class MultistoreProductAddAndDeleteTest extends BaseMultistoreTest {
 
     private function insertProduct(string $sku, array $storeIdProductNameMap, array $storeIdProductStatusMap): int {
         $websiteId = self::DEFAULT_WEBSITE_ID;
-        $attributeSetId = self::$db->getDefaultProductAttributeSetId();
         $nameAttrId = self::$db->getProductAttributeId('name');
         $statusAttrId = self::$db->getProductAttributeId('status');
 
         // 1. Create product
-        $productId = self::$db->insert("
-            INSERT INTO catalog_product_entity (attribute_set_id, type_id, sku, has_options, required_options) VALUES
-                ($attributeSetId, 'simple', '$sku', FALSE, FALSE)
-        ");
+        $productIds = self::$db->insertSimpleProduct($sku);
+        $productId = $productIds[0];
+        $entityId = $productIds[1];
 
         // 2. Add the product to the website's catalog
-        self::$db->execute("
-            INSERT INTO catalog_product_website (product_id, website_id) VALUES
-                ($productId, $websiteId)
-        ");
+        self::$db->addProductToWebsite($entityId, $websiteId);
 
         // 3. Set default and store-scoped names for the product
         foreach ($storeIdProductNameMap as $storeId => $productName) {
-            self::$db->execute("
-               INSERT INTO catalog_product_entity_varchar (entity_id, attribute_id, store_id, value) VALUES
-                    ($productId, $nameAttrId, $storeId, '$productName')
-            ");
+            self::$db->insertVarcharProductAttribute($productId, $nameAttrId, $storeId, $productName);
         }
 
         // 4. Set default and store-scoped statuses for the product
         foreach ($storeIdProductStatusMap as $storeId => $productStatus) {
-            self::$db->execute("
-                INSERT INTO catalog_product_entity_int (entity_id, attribute_id, store_id, value) VALUES
-                    ($productId, $statusAttrId, $storeId, $productStatus)
-            ");
+            self::$db->insertIntProductAttribute($productId, $statusAttrId, $storeId, $productStatus);
         }
 
         return $productId;
     }
 
     private function deleteProduct(int $productId): void {
-        self::$db->executeAll([
-            "DELETE FROM catalog_product_website WHERE product_id = $productId",
-            "DELETE FROM catalog_product_entity_int WHERE entity_id = $productId",
-            "DELETE FROM catalog_product_entity_varchar WHERE entity_id = $productId",
-            "DELETE FROM catalog_product_entity WHERE entity_id = $productId"
+        self::$db->deleteAll($productId, [
+            'catalog_product_website' => 'product_id',
+            'catalog_product_entity_int' => self::$db->getEntityAttributeLinkField(),
+            'catalog_product_entity_varchar' => self::$db->getEntityAttributeLinkField(),
+            'catalog_product_entity' => 'entity_id'
         ]);
     }
 }

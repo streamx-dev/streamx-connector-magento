@@ -4,6 +4,7 @@ namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxP
 
 use DateTime;
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
+use Magento\Catalog\Model\Product\Visibility;
 
 /**
  * @inheritdoc
@@ -109,10 +110,11 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
         // and: make the product not active:
         $defaultStoreId = 0;
+        $linkField = self::$db->getEntityAttributeLinkField();
         self::$db->execute("
             UPDATE catalog_product_entity_int
                SET value = " . Status::STATUS_DISABLED . "
-             WHERE entity_id = $productId
+             WHERE $linkField = $productId
                AND attribute_id = " . self::attrId('status') . "
                AND store_id = $defaultStoreId
                AND value = " . Status::STATUS_ENABLED . "
@@ -177,30 +179,18 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
     /**
      * Inserts new minimal product to database
-     * @return int ID of the inserted product
+     * @return int entity_id of the inserted product
      */
     private function insertNewMinimalProduct(string $sku, string $productName): int {
         $defaultStoreId = 0;
         $websiteId = 1;
-        $attributeSetId = self::$db->getDefaultProductAttributeSetId();
+        $productIds = self::$db->insertSimpleProduct($sku);
 
-        $productId = self::$db->insert("
-            INSERT INTO catalog_product_entity (attribute_set_id, type_id, sku, has_options, required_options) VALUES
-                ($attributeSetId, 'simple', '$sku', FALSE, FALSE)
-        ");
+        self::$db->insertVarcharProductAttribute($productIds[0], self::attrId('name'), $defaultStoreId, $productName);
+        self::$db->insertIntProductAttribute($productIds[0], self::attrId('status'), $defaultStoreId, Status::STATUS_ENABLED);
+        self::$db->addProductToWebsite($productIds[1], $websiteId);
 
-        self::$db->executeAll(["
-            INSERT INTO catalog_product_entity_varchar (entity_id, attribute_id, store_id, value) VALUES
-                ($productId, " . self::attrId('name') . ", $defaultStoreId, '$productName')
-        ", "
-            INSERT INTO catalog_product_entity_int (entity_id, attribute_id, store_id, value) VALUES
-                ($productId, " . self::attrId('status') . ", $defaultStoreId, " . Status::STATUS_ENABLED . ")
-        ", "
-            INSERT INTO catalog_product_website (product_id, website_id) VALUES
-                ($productId, $websiteId)
-        "]);
-
-        return $productId;
+        return $productIds[1];
     }
 
     /**
@@ -220,42 +210,21 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $plasticMaterialId = self::$db->getAttributeOptionId('material', 'Plastic');
         $leatherMaterialId = self::$db->getAttributeOptionId('material', 'Leather');
 
-        $attributeSetId = self::$db->getDefaultProductAttributeSetId();
+        $productIds = self::$db->insertSimpleProduct($sku);
+        $productId = $productIds[0];
+        $entityId = $productIds[1];
 
-        $productId = self::$db->insert("
-            INSERT INTO catalog_product_entity (attribute_set_id, type_id, sku, has_options, required_options) VALUES
-                ($attributeSetId, 'simple', '$sku', FALSE, FALSE)
-        ");
+        self::$db->insertVarcharProductAttribute($productId, self::attrId('name'), $defaultStoreId, $productName);
+        self::$db->insertVarcharProductAttribute($productId, self::attrId('meta_title'), $defaultStoreId, $productName);
+        self::$db->insertVarcharProductAttribute($productId, self::attrId('meta_description'), $defaultStoreId, $productName);
+        self::$db->insertVarcharProductAttribute($productId, self::attrId('url_key'), $defaultStoreId, $productInternalName);
+        self::$db->insertTextProductAttribute($productId, self::attrId('material'), $defaultStoreId, "$metalMaterialId,$plasticMaterialId,$leatherMaterialId");
+        self::$db->insertDecimalProductAttribute($productId, self::attrId('price'), $defaultStoreId, self::PRODUCT_PRICE);
+        self::$db->insertIntProductAttribute($productId, self::attrId('visibility'), $defaultStoreId, Visibility::VISIBILITY_BOTH);
+        self::$db->insertIntProductAttribute($productId, self::attrId('status'), $defaultStoreId, Status::STATUS_ENABLED);
+        self::$db->insertIntProductAttribute($productId, self::attrId('color'), $defaultStoreId, $brownColorId);
 
-        self::$db->execute("
-            INSERT INTO catalog_product_entity_varchar (entity_id, attribute_id, store_id, value) VALUES
-                ($productId, " . self::attrId('name') . ", $defaultStoreId, '$productName'),
-                ($productId, " . self::attrId('meta_title') . ", $defaultStoreId, '$productName'),
-                ($productId, " . self::attrId('meta_description') . ", $defaultStoreId, '$productName'),
-                ($productId, " . self::attrId('url_key') . ", $defaultStoreId, '$productInternalName')
-        ");
-
-        self::$db->execute("
-            INSERT INTO catalog_product_entity_text (entity_id, attribute_id, store_id, value) VALUES
-                ($productId, " . self::attrId('material') . ", $defaultStoreId, '$metalMaterialId,$plasticMaterialId,$leatherMaterialId')
-        ");
-
-        self::$db->execute("
-            INSERT INTO catalog_product_entity_decimal (entity_id, attribute_id, store_id, value) VALUES
-                ($productId, " . self::attrId('price') . ", $defaultStoreId, " . self::PRODUCT_PRICE . ")
-        ");
-
-        self::$db->execute("
-            INSERT INTO catalog_product_entity_int (entity_id, attribute_id, store_id, value) VALUES
-                ($productId, " . self::attrId('visibility') . ", $defaultStoreId, 4), -- visibility in Catalog and Search
-                ($productId, " . self::attrId('status') . ", $defaultStoreId, " . Status::STATUS_ENABLED . "),
-                ($productId, " . self::attrId('color') . ", $defaultStoreId, $brownColorId)
-        ");
-
-        self::$db->execute("
-            INSERT INTO catalog_product_website (product_id, website_id) VALUES
-                ($productId, $websiteId)
-        ");
+        self::$db->addProductToWebsite($entityId, $websiteId);
 
         foreach ($categoryIds as $categoryId) {
             self::$db->execute("
@@ -296,16 +265,16 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
     }
 
     private function deleteProduct(int $productId): void {
-        self::$db->executeAll([
-            "DELETE FROM catalog_product_index_price WHERE entity_id = $productId",
-            "DELETE FROM cataloginventory_stock_status WHERE product_id = $productId",
-            "DELETE FROM cataloginventory_stock_item WHERE product_id = $productId",
-            "DELETE FROM catalog_category_product WHERE product_id = $productId",
-            "DELETE FROM catalog_product_website WHERE product_id = $productId",
-            "DELETE FROM catalog_product_entity_int WHERE entity_id = $productId",
-            "DELETE FROM catalog_product_entity_decimal WHERE entity_id = $productId",
-            "DELETE FROM catalog_product_entity_varchar WHERE entity_id = $productId",
-            "DELETE FROM catalog_product_entity WHERE entity_id = $productId"
+        self::$db->deleteAll($productId, [
+            'catalog_product_index_price' => 'entity_id',
+            'cataloginventory_stock_status' => 'product_id',
+            'cataloginventory_stock_item' => 'product_id',
+            'catalog_category_product' => 'product_id',
+            'catalog_product_website' => 'product_id',
+            'catalog_product_entity_int' => self::$db->getEntityAttributeLinkField(),
+            'catalog_product_entity_decimal' => self::$db->getEntityAttributeLinkField(),
+            'catalog_product_entity_varchar' => self::$db->getEntityAttributeLinkField(),
+            'catalog_product_entity' => 'entity_id'
         ]);
         $this->deleteProductOption();
     }
@@ -319,7 +288,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         self::$db->deleteLastRow('catalog_product_option', 'option_id');
     }
 
-    private function attrId($attrCode): string {
+    private static function attrId($attrCode): string {
         return self::$db->getProductAttributeId($attrCode);
     }
 }

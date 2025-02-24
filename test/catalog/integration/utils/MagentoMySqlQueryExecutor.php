@@ -14,17 +14,31 @@ class MagentoMySqlQueryExecutor {
     private const PASSWORD = "magento";
     private const DB_NAME = "magento";
 
-    private ?mysqli $connection = null;
+    private mysqli $connection;
 
-    public function connect(): void {
+    /**
+     * either row_id (enterprise/cloud version) or entity_id (community version)
+     */
+    private string $entityAttributeLinkField;
+
+    public function __construct() {
         $this->connection = new mysqli(self::SERVER_NAME, self::USER, self::PASSWORD, self::DB_NAME);
+
+        $this->entityAttributeLinkField = $this->selectSingleValue("
+            SELECT COLUMN_NAME
+              FROM information_schema.COLUMNS 
+             WHERE TABLE_SCHEMA = '" . self::DB_NAME . "'  
+               AND TABLE_NAME = 'catalog_product_entity_varchar' 
+               AND COLUMN_NAME IN ('row_id', 'entity_id')
+        ");
     }
 
     public function disconnect(): void {
-        if ($this->connection) {
-            $this->connection->close();
-            $this->connection = null;
-        }
+        $this->connection->close();
+    }
+
+    public function getEntityAttributeLinkField(): string {
+        return $this->entityAttributeLinkField;
     }
 
     /**
@@ -60,9 +74,9 @@ class MagentoMySqlQueryExecutor {
         }
     }
 
-    public function executeAll(array $queries): void {
-        foreach ($queries as $query) {
-            $this->execute($query);
+    public function deleteAll(int $id, array $tableNameAndIdColumnList): void {
+        foreach ($tableNameAndIdColumnList as $tableName => $idColumn) {
+            $this->execute("DELETE FROM $tableName WHERE $idColumn = $id");
         }
     }
 
@@ -70,7 +84,7 @@ class MagentoMySqlQueryExecutor {
         $productNameAttributeId = $this->getProductNameAttributeId();
 
         return $this->selectSingleValue("
-            SELECT entity_id
+            SELECT $this->entityAttributeLinkField
               FROM catalog_product_entity_varchar
              WHERE attribute_id = $productNameAttributeId
                AND value = '$productName'
@@ -81,7 +95,7 @@ class MagentoMySqlQueryExecutor {
         $categoryNameAttributeId = $this->getCategoryNameAttributeId();
 
         return $this->selectSingleValue("
-            SELECT entity_id
+            SELECT $this->entityAttributeLinkField
               FROM catalog_category_entity_varchar
              WHERE attribute_id = $categoryNameAttributeId
                AND value = '$categoryName'
@@ -145,14 +159,6 @@ class MagentoMySqlQueryExecutor {
         ");
     }
 
-    public function getDefaultProductAttributeSetId(): int {
-        return $this->getDefaultAttributeSetId('catalog_product_entity');
-    }
-
-    public function getDefaultCategoryAttributeSetId(): int {
-        return $this->getDefaultAttributeSetId('catalog_category_entity');
-    }
-
     private function getDefaultAttributeSetId(string $table): int {
         $entityTypeId = $this->getEntityTypeId($table);
         return $this->selectSingleValue("
@@ -182,13 +188,110 @@ class MagentoMySqlQueryExecutor {
         ");
     }
 
+    /**
+     * @return int[] first element is entityAttributeLinkField, second is entity_id
+     */
+    public function insertSimpleProduct(string $sku): array {
+        $attributeSetId = $this->getDefaultAttributeSetId('catalog_product_entity');
+        if ($this->entityAttributeLinkField === 'row_id') {
+            $entityId = $this->selectSingleValue('SELECT 1 + MAX(sequence_value) FROM sequence_product');
+            $this->execute("INSERT INTO sequence_product(sequence_value) VALUES($entityId)");
+            $rowId = $this->insert("
+                INSERT INTO catalog_product_entity (entity_id, attribute_set_id, type_id, sku, has_options, required_options) 
+                                            VALUES ($entityId, $attributeSetId, 'simple', '$sku', FALSE, FALSE)
+            ");
+            return [$rowId, $entityId];
+        } else {
+            $entityId = $this->insert("
+                INSERT INTO catalog_product_entity (attribute_set_id, type_id, sku, has_options, required_options) 
+                                            VALUES ($attributeSetId, 'simple', '$sku', FALSE, FALSE)     
+            ");
+            return [$entityId, $entityId];
+        }
+    }
+
+    /**
+     * @return int entityAttributeLinkField
+     */
+    public function insertCategory(int $parentCategoryId, string $rootPath): int {
+        $attributeSetId = $this->getDefaultAttributeSetId('catalog_category_entity');
+        $level = substr_count($rootPath, '/');
+
+        if ($this->entityAttributeLinkField === 'row_id') {
+            $entityId = $this->selectSingleValue('SELECT 1 + MAX(sequence_value) FROM sequence_catalog_category');
+            $this->execute("INSERT INTO sequence_catalog_category(sequence_value) VALUES($entityId)");
+            $rowId = $this->insert("
+                INSERT INTO catalog_category_entity (entity_id, attribute_set_id, parent_id, path, position, level, children_count)
+                                             VALUES ($entityId, $attributeSetId, $parentCategoryId, '', 1, $level, 0)
+            ");
+            $result = [$rowId, $entityId];
+        } else {
+            $entityId = $this->insert("
+                INSERT INTO catalog_category_entity (attribute_set_id, parent_id, path, position, level, children_count)
+                                             VALUES ($attributeSetId, $parentCategoryId, '', 1, $level, 0)
+            ");
+            $result = [$entityId, $entityId];
+        }
+
+        // now path can be set
+        $entityId = $result[0];
+        $this->execute("
+            UPDATE catalog_category_entity
+               SET path = '$rootPath/$entityId'
+             WHERE entity_id = $entityId
+        ");
+        return $result[0];
+    }
+
+    public function addProductToWebsite(int $productId, int $websiteId): void {
+        $this->execute("
+            INSERT INTO catalog_product_website (product_id, website_id) 
+                                         VALUES ($productId, $websiteId)
+        ");
+    }
+
     public function renameProduct(int $productId, string $newName): void {
         $productNameAttributeId = $this->getProductNameAttributeId();
         $this->execute("
             UPDATE catalog_product_entity_varchar
                SET value = '$newName'
              WHERE attribute_id = $productNameAttributeId
-               AND entity_id = $productId
+               AND $this->entityAttributeLinkField = $productId
         ");
+    }
+
+    public function renameCategory(int $categoryId, string $newName): void {
+        $categoryNameAttributeId = $this->getCategoryNameAttributeId();
+        $this->execute("
+            UPDATE catalog_category_entity_varchar
+               SET value = '$newName'
+             WHERE attribute_id = $categoryNameAttributeId
+               AND $this->entityAttributeLinkField = $categoryId
+        ");
+    }
+
+    public function insertIntProductAttribute(int $productId, int $attributeId, int $storeId, $attributeValue): void {
+        $this->insertEntityAttribute('catalog_product_entity_int', $productId, $attributeId, $storeId, $attributeValue);
+    }
+    public function insertDecimalProductAttribute(int $productId, int $attributeId, int $storeId, $attributeValue): void {
+        $this->insertEntityAttribute('catalog_product_entity_decimal', $productId, $attributeId, $storeId, $attributeValue);
+    }
+    public function insertVarcharProductAttribute(int $productId, int $attributeId, int $storeId, $attributeValue): void {
+        $this->insertEntityAttribute('catalog_product_entity_varchar', $productId, $attributeId, $storeId, $attributeValue);
+    }
+    public function insertTextProductAttribute(int $productId, int $attributeId, int $storeId, $attributeValue): void {
+        $this->insertEntityAttribute('catalog_product_entity_text', $productId, $attributeId, $storeId, $attributeValue);
+    }
+
+    public function insertIntCategoryAttribute(int $categoryId, int $attributeId, int $storeId, $attributeValue): void {
+        $this->insertEntityAttribute('catalog_category_entity_int', $categoryId, $attributeId, $storeId, $attributeValue);
+    }
+    public function insertVarcharCategoryAttribute(int $categoryId, int $attributeId, int $storeId, $attributeValue): void {
+        $this->insertEntityAttribute('catalog_category_entity_varchar', $categoryId, $attributeId, $storeId, $attributeValue);
+    }
+
+    private function insertEntityAttribute(string $tableName, int $entityId, int $attributeId, int $storeId, $attributeValue): void {
+        $columns = "$this->entityAttributeLinkField, attribute_id, store_id, value";
+        $this->execute("INSERT INTO $tableName ($columns) VALUES ($entityId, $attributeId, $storeId, '$attributeValue')");
     }
 }

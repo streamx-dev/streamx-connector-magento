@@ -47,44 +47,26 @@ class CategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $rootCategoryId = 1;
         $parentCategoryId = 2;
         $defaultStoreId = 0;
-        $attributeSetId = self::$db->getDefaultCategoryAttributeSetId();
 
-        $categoryId = self::$db->insert("
-            INSERT INTO catalog_category_entity (attribute_set_id, parent_id, path, position, level, children_count) VALUES
-                ($attributeSetId, $parentCategoryId, '', 1, 2, 0)
-        ");
-
-        self::$db->execute("
-            UPDATE catalog_category_entity
-               SET path = '$rootCategoryId/$parentCategoryId/$categoryId'
-             WHERE entity_id = $categoryId
-        ");
-
-        self::$db->execute("
-            INSERT INTO catalog_category_entity_varchar (entity_id, attribute_id, store_id, value) VALUES
-                ($categoryId, " . $this->attrId('name') . ", $defaultStoreId, '$categoryName'),
-                ($categoryId, " . $this->attrId('display_mode') . ", $defaultStoreId, 'PRODUCTS'),
-                ($categoryId, " . $this->attrId('url_key') . ", $defaultStoreId, '$categoryInternalName')
-        ");
-
-        self::$db->execute("
-            INSERT INTO catalog_category_entity_int (entity_id, attribute_id, store_id, value) VALUES
-                ($categoryId, " . $this->attrId('is_active') . ", $defaultStoreId, TRUE),
-                ($categoryId, " . $this->attrId('include_in_menu') . ", $defaultStoreId, TRUE)
-        ");
+        $categoryId = self::$db->insertCategory($parentCategoryId, "$rootCategoryId/$parentCategoryId");
+        self::$db->insertVarcharCategoryAttribute($categoryId,  self::attrId('name'), $defaultStoreId, $categoryName);
+        self::$db->insertVarcharCategoryAttribute($categoryId, self::attrId('display_mode'), $defaultStoreId, 'PRODUCTS');
+        self::$db->insertVarcharCategoryAttribute($categoryId, self::attrId('url_key'), $defaultStoreId, $categoryInternalName);
+        self::$db->insertIntCategoryAttribute($categoryId, self::attrId('is_active'), $defaultStoreId, TRUE);
+        self::$db->insertIntCategoryAttribute($categoryId, self::attrId('include_in_menu'), $defaultStoreId, TRUE);
 
         return $categoryId;
     }
 
     private function deleteCategory(int $categoryId): void {
-        self::$db->executeAll([
-            "DELETE FROM catalog_category_entity_int WHERE entity_id = $categoryId",
-            "DELETE FROM catalog_category_entity_varchar WHERE entity_id = $categoryId",
-            "DELETE FROM catalog_category_entity WHERE entity_id = $categoryId",
+        self::$db->deleteAll($categoryId, [
+            'catalog_category_entity_int' => self::$db->getEntityAttributeLinkField(),
+            'catalog_category_entity_varchar' => self::$db->getEntityAttributeLinkField(),
+            'catalog_category_entity' => 'entity_id'
         ]);
     }
 
-    private function attrId($attrCode): string {
+    private static function attrId($attrCode): string {
         return self::$db->getCategoryAttributeId($attrCode);
     }
 }

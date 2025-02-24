@@ -46,7 +46,6 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
     private static function connectToDatabase(): void {
         if (!self::$db) {
             self::$db = new MagentoMySqlQueryExecutor();
-            self::$db->connect();
         }
     }
 
