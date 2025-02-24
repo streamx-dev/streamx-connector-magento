@@ -27,16 +27,24 @@ class ProductUpdateTest extends BaseAppEntityUpdateTest {
 
     /** @test */
     public function shouldPublishBundleProductEditedUsingMagentoApplicationToStreamx() {
-        $this->shouldPublishProductEditedUsingMagentoApplicationToStreamx('Sprite Yoga Companion Kit', 'bundle');
+        $regexReplacements = self::$db->isEnterpriseMagento() ? [ // in enterprise magento DB, ID of the bundle product is 46, not 45 as in community version
+            '"id": 45,' => '"id": 46,',
+            '-45"' => '-46"'
+        ] : [];
+        $this->shouldPublishProductEditedUsingMagentoApplicationToStreamx('Sprite Yoga Companion Kit', 'bundle', $regexReplacements);
     }
 
     /** @test */
     public function shouldPublishGroupedProductEditedUsingMagentoApplicationToStreamx() {
+        $regexReplacements = self::$db->isEnterpriseMagento() ? [ // in enterprise magento DB, ID of the grouped product is 45, not 46 as in community version
+            '"id": 46,' => '"id": 45,',
+            '-46"' => '-45"'
+        ] : [];
         // TODO: the produced json doesn't contain information about the components that make up the grouped product
-        $this->shouldPublishProductEditedUsingMagentoApplicationToStreamx('Set of Sprite Yoga Straps', 'grouped');
+        $this->shouldPublishProductEditedUsingMagentoApplicationToStreamx('Set of Sprite Yoga Straps', 'grouped', $regexReplacements);
     }
 
-    private function shouldPublishProductEditedUsingMagentoApplicationToStreamx(string $productName, string $productNameInValidationFileName): void {
+    private function shouldPublishProductEditedUsingMagentoApplicationToStreamx(string $productName, string $productNameInValidationFileName, array $regexReplacements = []): void {
         // given
         $productNewName = "Name modified for testing, was $productName";
         $productId = self::$db->getProductId($productName);
@@ -50,10 +58,10 @@ class ProductUpdateTest extends BaseAppEntityUpdateTest {
 
         // then
         try {
-            $this->assertExactDataIsPublished($expectedKey, "edited-$productNameInValidationFileName-product.json");
+            $this->assertExactDataIsPublished($expectedKey, "edited-$productNameInValidationFileName-product.json", $regexReplacements);
         } finally {
             self::renameProduct($productId, $productName);
-            $this->assertExactDataIsPublished($expectedKey, "original-$productNameInValidationFileName-product.json");
+            $this->assertExactDataIsPublished($expectedKey, "original-$productNameInValidationFileName-product.json", $regexReplacements);
         }
     }
 

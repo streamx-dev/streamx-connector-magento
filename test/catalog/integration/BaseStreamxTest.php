@@ -30,7 +30,7 @@ abstract class BaseStreamxTest extends TestCase {
     /**
      * @return string the actually published data if assertion passes, or exception if assertion failed
      */
-    protected function assertExactDataIsPublished(string $key, string $validationFileName, array $regexReplacements = [], bool $ignoreOrderInArrays = false): ?string {
+    protected function assertExactDataIsPublished(string $key, string $validationFileName, array $regexReplacements = []): ?string {
         $url = self::STREAMX_DELIVERY_SERVICE_BASE_URL . '/' . $key;
 
         $expectedJson = $this->readValidationFileContent($validationFileName);
@@ -41,7 +41,7 @@ abstract class BaseStreamxTest extends TestCase {
         while (time() - $startTime < self::DATA_PUBLISH_TIMEOUT_SECONDS) {
             $response = @file_get_contents($url);
             if ($response !== false) {
-                if ($this->verifySameJsonsSilently($expectedFormattedJson, $response, $regexReplacements, $ignoreOrderInArrays)) {
+                if ($this->verifySameJsonsSilently($expectedFormattedJson, $response, $regexReplacements)) {
                     return $response;
                 }
             }
