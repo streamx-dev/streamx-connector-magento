@@ -2,6 +2,8 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
+use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
+
 /**
  * @inheritdoc
  * @UsesCategoryIndexer
@@ -13,7 +15,7 @@ class MultistoreCategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         // given: insert category as enabled for all stores by default, but disabled for store 1:
         $parentCategoryId = 2;
 
-        $categoryId = $this->insertMultistoreCategory(
+        $category = $this->insertMultistoreCategory(
             $parentCategoryId,
             [
                 self::DEFAULT_STORE_ID => 'Category name',
@@ -26,6 +28,7 @@ class MultistoreCategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
                 parent::$store2Id => true
             ]
         );
+        $categoryId = $category->getEntityId();
 
         // and
         $expectedKeyForStore1 = "cat:$categoryId";
@@ -48,7 +51,7 @@ class MultistoreCategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
             $this->assertDataIsNotPublished($expectedKeyForStore1);
         } finally {
             // and when
-            $this->deleteCategory($categoryId);
+            $this->deleteCategory($category);
             $this->reindexMview();
 
             // then
@@ -60,12 +63,16 @@ class MultistoreCategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
     public function shouldPublishCategoriesAssignedToStore() {
         // given: switch store with ID 2 to use a new category as its root category
         $rootCategoryIdForStore1 = 2; // this is the default root category for stores
-        $rootCategoryIdForStore2 = $this->insertRootCategory('Root category for second store');
+        $rootCategoryForStore2 = $this->insertRootCategory('Root category for second store');
+        $rootCategoryIdForStore2 = $rootCategoryForStore2->getEntityId();
         $this->changeRootCategoryForStore(parent::$store2Id, $rootCategoryIdForStore2);
 
         // and: insert two new categories with different parent category IDs
-        $store1CategoryId = $this->insertCategory($rootCategoryIdForStore1, 'Bikes for first store');
-        $store2CategoryId = $this->insertCategory($rootCategoryIdForStore2, 'Bikes for second store');
+        $store1Category = $this->insertCategory($rootCategoryIdForStore1, 'Bikes for first store');
+        $store2Category = $this->insertCategory($rootCategoryIdForStore2, 'Bikes for second store');
+
+        $store1CategoryId = $store1Category->getEntityId();
+        $store2CategoryId = $store2Category->getEntityId();
 
         // and
         $expectedKeyForStore1 = "cat:$store1CategoryId";
@@ -102,9 +109,9 @@ class MultistoreCategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
             $this->assertDataIsNotPublished($unexpectedKeyForStore2);
         } finally {
             // and when
-            $this->deleteCategory($store1CategoryId);
-            $this->deleteCategory($store2CategoryId);
-            $this->deleteCategory($rootCategoryIdForStore2);
+            $this->deleteCategory($store1Category);
+            $this->deleteCategory($store2Category);
+            $this->deleteCategory($rootCategoryForStore2);
             try {
                 $this->reindexMview();
 
@@ -117,7 +124,7 @@ class MultistoreCategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         }
     }
 
-    private function insertCategory(int $parentCategoryId, string $defaultName): int {
+    private function insertCategory(int $parentCategoryId, string $defaultName): EntityIds {
         return $this->insertMultistoreCategory(
             $parentCategoryId,
             [self::DEFAULT_STORE_ID => $defaultName],
@@ -125,99 +132,62 @@ class MultistoreCategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         );
     }
 
-    private function insertMultistoreCategory(int $parentCategoryId, array $storeIdCategoryNameMap, array $storeIdCategoryStatusMap): int {
+    private function insertMultistoreCategory(int $parentCategoryId, array $storeIdCategoryNameMap, array $storeIdCategoryStatusMap): EntityIds {
         $defaultStoreId = self::DEFAULT_STORE_ID;
         $rootCategoryId = 1;
-        $attributeSetId = self::$db->getDefaultCategoryAttributeSetId();
 
-        $nameAttrId = self::$db->getCategoryAttributeId('name');
-        $displayModeAttrId = self::$db->getCategoryAttributeId('display_mode');
-        $urlKeyAttrId = self::$db->getCategoryAttributeId('url_key');
-        $isActiveAttrId = self::$db->getCategoryAttributeId('is_active');
-        $includeInMenuAttrId = self::$db->getCategoryAttributeId('include_in_menu');
+        $nameAttrId = self::attrId('name');
+        $displayModeAttrId = self::attrId('display_mode');
+        $urlKeyAttrId = self::attrId('url_key');
+        $isActiveAttrId = self::attrId('is_active');
+        $includeInMenuAttrId = self::attrId('include_in_menu');
 
-        // 1. Create category
-        $categoryId = self::$db->insert("
-            INSERT INTO catalog_category_entity (attribute_set_id, parent_id, path, position, level, children_count) VALUES
-                ($attributeSetId, $parentCategoryId, '', 1, 2, 0)
-        ");
+        $category = self::$db->insertCategory($parentCategoryId, "$rootCategoryId/$parentCategoryId");
+        $linkFieldId = $category->getLinkFieldId();
 
-        // 2. Update category path
-        self::$db->execute("
-            UPDATE catalog_category_entity
-               SET path = '$rootCategoryId/$parentCategoryId/$categoryId'
-             WHERE entity_id = $categoryId
-        ");
+        // 2. Set basic attributes
+        self::$db->insertVarcharCategoryAttribute($linkFieldId, $displayModeAttrId, $defaultStoreId, 'PRODUCTS');
+        self::$db->insertIntCategoryAttribute($linkFieldId, $includeInMenuAttrId, $defaultStoreId, 1);
 
-        // 3. Set basic attributes
-        self::$db->executeAll(["
-            INSERT INTO catalog_category_entity_varchar (entity_id, attribute_id, store_id, value) VALUES
-                ($categoryId, $displayModeAttrId, $defaultStoreId, 'PRODUCTS')
-        ", "
-            INSERT INTO catalog_category_entity_int (entity_id, attribute_id, store_id, value) VALUES
-                ($categoryId, $includeInMenuAttrId, $defaultStoreId, 1)
-        "]);
-
-        // 4. Set default and store-scoped names for the category
+        // 3. Set default and store-scoped names for the category
         foreach ($storeIdCategoryNameMap as $storeId => $categoryName) {
             $categoryInternalName = strtolower(str_replace(' ', '_', $categoryName));
-            self::$db->execute("
-                INSERT INTO catalog_category_entity_varchar (entity_id, attribute_id, store_id, value) VALUES
-                    ($categoryId, $nameAttrId, $storeId, '$categoryName'),
-                    ($categoryId, $urlKeyAttrId, $storeId, '$categoryInternalName')
-            ");
+            self::$db->insertVarcharCategoryAttribute($linkFieldId, $nameAttrId, $storeId, $categoryName);
+            self::$db->insertVarcharCategoryAttribute($linkFieldId, $urlKeyAttrId, $storeId, $categoryInternalName);
         }
 
-        // 5. Set default and store-scoped active statuses for the category
+        // 4. Set default and store-scoped active statuses for the category
         foreach ($storeIdCategoryStatusMap as $storeId => $isCategoryActive) {
-            $isActiveValue = $isCategoryActive ? 1 : 0;
-            self::$db->execute("
-                INSERT INTO catalog_category_entity_int (entity_id, attribute_id, store_id, value) VALUES
-                    ($categoryId, $isActiveAttrId, $storeId, $isActiveValue)
-            ");
+            self::$db->insertIntCategoryAttribute($linkFieldId, $isActiveAttrId, $storeId, $isCategoryActive ? 1 : 0);
         }
 
-        return $categoryId;
+        return $category;
     }
 
-    private function insertRootCategory(string $categoryName): int {
+    private function insertRootCategory(string $categoryName): EntityIds {
         $defaultStoreId = self::DEFAULT_STORE_ID;
         $rootCategoryId = 1;
-        $attributeSetId = self::$db->getDefaultCategoryAttributeSetId();
+
         $categoryInternalName = strtolower(str_replace(' ', '_', $categoryName));
 
-        $nameAttrId = self::$db->getCategoryAttributeId('name');
-        $displayModeAttrId = self::$db->getCategoryAttributeId('display_mode');
-        $urlKeyAttrId = self::$db->getCategoryAttributeId('url_key');
-        $isActiveAttrId = self::$db->getCategoryAttributeId('is_active');
-        $includeInMenuAttrId = self::$db->getCategoryAttributeId('include_in_menu');
+        $nameAttrId = self::attrId('name');
+        $displayModeAttrId = self::attrId('display_mode');
+        $urlKeyAttrId = self::attrId('url_key');
+        $isActiveAttrId = self::attrId('is_active');
+        $includeInMenuAttrId = self::attrId('include_in_menu');
 
         // 1. Create category
-        $categoryId = self::$db->insert("
-            INSERT INTO catalog_category_entity (attribute_set_id, parent_id, path, position, level, children_count) VALUES
-                ($attributeSetId, $rootCategoryId, '', 1, 1, 0)
-        ");
+        $category = self::$db->insertCategory($rootCategoryId, $rootCategoryId);
+        $linkFieldId = $category->getLinkFieldId();
 
-        // 2. Update category path
-        self::$db->execute("
-            UPDATE catalog_category_entity
-               SET path = '$rootCategoryId/$categoryId'
-             WHERE entity_id = $categoryId
-        ");
+        // 2. Set attributes
+        self::$db->insertVarcharCategoryAttribute($linkFieldId, $displayModeAttrId, $defaultStoreId, 'PRODUCTS');
+        self::$db->insertVarcharCategoryAttribute($linkFieldId, $nameAttrId, $defaultStoreId, $categoryName);
+        self::$db->insertVarcharCategoryAttribute($linkFieldId, $urlKeyAttrId, $defaultStoreId, $categoryInternalName);
+        self::$db->insertIntCategoryAttribute($linkFieldId, $includeInMenuAttrId, $defaultStoreId, 1);
+        self::$db->insertIntCategoryAttribute($linkFieldId, $isActiveAttrId, $defaultStoreId, 1);
 
-        // 3. Set attributes
-        self::$db->executeAll(["
-            INSERT INTO catalog_category_entity_varchar (entity_id, attribute_id, store_id, value) VALUES
-                ($categoryId, $displayModeAttrId, $defaultStoreId, 'PRODUCTS'),
-                ($categoryId, $nameAttrId, $defaultStoreId, '$categoryName'),
-                ($categoryId, $urlKeyAttrId, $defaultStoreId, '$categoryInternalName')
-        ", "
-            INSERT INTO catalog_category_entity_int (entity_id, attribute_id, store_id, value) VALUES
-                ($categoryId, $includeInMenuAttrId, $defaultStoreId, 1),
-                ($categoryId, $isActiveAttrId, $defaultStoreId, 1)
-        "]);
-
-        return $categoryId;
+        return $category;
     }
 
     private function changeRootCategoryForStore(int $storeId, int $categoryId): void {
@@ -228,11 +198,11 @@ class MultistoreCategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         );
     }
 
-    private function deleteCategory(int $categoryId): void {
-        self::$db->executeAll([
-            "DELETE FROM catalog_category_entity_int WHERE entity_id = $categoryId",
-            "DELETE FROM catalog_category_entity_varchar WHERE entity_id = $categoryId",
-            "DELETE FROM catalog_category_entity WHERE entity_id = $categoryId",
-        ]);
+    private function deleteCategory(EntityIds $categoryIds): void {
+        CategoryAddAndDeleteTest::deleteCategory($categoryIds);
+    }
+
+    private static function attrId($attrCode): string {
+        return self::$db->getCategoryAttributeId($attrCode);
     }
 }

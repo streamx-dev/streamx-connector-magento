@@ -2,6 +2,8 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
+use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
+
 /**
  * @inheritdoc
  * @UsesCategoryIndexer
@@ -14,7 +16,8 @@ class CategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $categoryName = 'The new Category';
 
         // when
-        $categoryId = $this->insertNewCategory($categoryName);
+        $category = $this->insertNewCategory($categoryName);
+        $categoryId = $category->getEntityId();
         $expectedKey = "cat:$categoryId";
 
         try {
@@ -30,7 +33,7 @@ class CategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
             ]);
         } finally {
             // and when
-            $this->deleteCategory($categoryId);
+            $this->deleteCategory($category);
             $this->reindexMview();
 
             // then
@@ -38,53 +41,40 @@ class CategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         }
     }
 
-    /**
-     * Inserts new category to database
-     * @return int ID of the inserted category
-     */
-    private function insertNewCategory(string $categoryName): int {
+    private function insertNewCategory(string $categoryName): EntityIds {
         $categoryInternalName = strtolower(str_replace(' ', '_', $categoryName));
         $rootCategoryId = 1;
         $parentCategoryId = 2;
         $defaultStoreId = self::DEFAULT_STORE_ID;
-        $attributeSetId = self::$db->getDefaultCategoryAttributeSetId();
 
-        $categoryId = self::$db->insert("
-            INSERT INTO catalog_category_entity (attribute_set_id, parent_id, path, position, level, children_count) VALUES
-                ($attributeSetId, $parentCategoryId, '', 1, 2, 0)
-        ");
+        $category = self::$db->insertCategory($parentCategoryId, "$rootCategoryId/$parentCategoryId");
+        $linkFieldId = $category->getLinkFieldId();
 
-        self::$db->execute("
-            UPDATE catalog_category_entity
-               SET path = '$rootCategoryId/$parentCategoryId/$categoryId'
-             WHERE entity_id = $categoryId
-        ");
+        self::$db->insertVarcharCategoryAttribute($linkFieldId,  self::attrId('name'), $defaultStoreId, $categoryName);
+        self::$db->insertVarcharCategoryAttribute($linkFieldId, self::attrId('display_mode'), $defaultStoreId, 'PRODUCTS');
+        self::$db->insertVarcharCategoryAttribute($linkFieldId, self::attrId('url_key'), $defaultStoreId, $categoryInternalName);
+        self::$db->insertIntCategoryAttribute($linkFieldId, self::attrId('is_active'), $defaultStoreId, TRUE);
+        self::$db->insertIntCategoryAttribute($linkFieldId, self::attrId('include_in_menu'), $defaultStoreId, TRUE);
 
-        self::$db->execute("
-            INSERT INTO catalog_category_entity_varchar (entity_id, attribute_id, store_id, value) VALUES
-                ($categoryId, " . $this->attrId('name') . ", $defaultStoreId, '$categoryName'),
-                ($categoryId, " . $this->attrId('display_mode') . ", $defaultStoreId, 'PRODUCTS'),
-                ($categoryId, " . $this->attrId('url_key') . ", $defaultStoreId, '$categoryInternalName')
-        ");
-
-        self::$db->execute("
-            INSERT INTO catalog_category_entity_int (entity_id, attribute_id, store_id, value) VALUES
-                ($categoryId, " . $this->attrId('is_active') . ", $defaultStoreId, TRUE),
-                ($categoryId, " . $this->attrId('include_in_menu') . ", $defaultStoreId, TRUE)
-        ");
-
-        return $categoryId;
+        return $category;
     }
 
-    private function deleteCategory(int $categoryId): void {
-        self::$db->executeAll([
-            "DELETE FROM catalog_category_entity_int WHERE entity_id = $categoryId",
-            "DELETE FROM catalog_category_entity_varchar WHERE entity_id = $categoryId",
-            "DELETE FROM catalog_category_entity WHERE entity_id = $categoryId",
+    static function deleteCategory(EntityIds $categoryIds): void {
+        self::$db->deleteById($categoryIds->getLinkFieldId(), [
+            'catalog_category_entity_int' => self::$db->getEntityAttributeLinkField(),
+            'catalog_category_entity_varchar' => self::$db->getEntityAttributeLinkField()
         ]);
+        self::$db->deleteById($categoryIds->getEntityId(), [
+            'catalog_category_entity' => 'entity_id'
+        ]);
+        if (self::$db->isEnterpriseMagento()) {
+            self::$db->deleteById($categoryIds->getEntityId(), [
+                'sequence_catalog_category' => 'sequence_value'
+            ]);
+        }
     }
 
-    private function attrId($attrCode): string {
+    private static function attrId($attrCode): string {
         return self::$db->getCategoryAttributeId($attrCode);
     }
 }
