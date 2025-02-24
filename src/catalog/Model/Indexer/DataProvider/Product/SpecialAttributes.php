@@ -5,6 +5,7 @@ namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 use InvalidArgumentException;
 use Magento\Catalog\Model\Product\Visibility;
 use Magento\Framework\Phrase;
+use StreamX\ConnectorCatalog\Model\Attributes\AttributeOptionDefinition;
 
 /**
  * This class handles options for attributes that don't use eav_attribute_option table to store options,
@@ -20,7 +21,10 @@ class SpecialAttributes
         return in_array($attributeCode, self::SPECIAL_ATTRIBUTES);
     }
 
-    public static function getOptionsArray(string $attributeCode): array {
+    /**
+     * @return AttributeOptionDefinition[]
+     */
+    public static function getOptions(string $attributeCode): array {
         if ($attributeCode === 'visibility') {
             return array_map(function ($option) {
 
@@ -30,10 +34,7 @@ class SpecialAttributes
                 /** @var $value Phrase */
                 $value = $option['label'];
 
-                return [
-                    'id' => $id,
-                    'value' => $value->render()
-                ];
+                return new AttributeOptionDefinition($id, $value->render(), null);
             }, Visibility::getAllOptions());
         }
         throw new InvalidArgumentException("Not implemented for attribute $attributeCode");

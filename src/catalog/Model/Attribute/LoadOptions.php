@@ -2,6 +2,7 @@
 
 namespace StreamX\ConnectorCatalog\Model\Attribute;
 
+use StreamX\ConnectorCatalog\Model\Attributes\AttributeOptionDefinition;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\LoadAttributes;
 
 use Magento\Eav\Model\ResourceModel\Entity\Attribute\Option\Collection as OptionCollection;
@@ -25,7 +26,10 @@ class LoadOptions
         $this->loadAttributes = $loadAttributes;
     }
 
-    public function getOptionsArray(string $attributeCode, int $storeId): array
+    /**
+     * @return AttributeOptionDefinition[]
+     */
+    public function getOptions(string $attributeCode, int $storeId): array
     {
         $attribute = $this->loadAttributes->getAttributeByCode($attributeCode);
         $attribute->setStoreId($storeId);
@@ -33,24 +37,31 @@ class LoadOptions
         $key = $attribute->getId() . '_' . $attribute->getStoreId();
 
         if (!isset($this->optionsByAttribute[$key])) {
-            if ($this->useSourceModel($attribute)) {
-                $source = $attribute->getSource();
-                $options = array_map(function($option) {
-                    return [
-                        'id' => $option['value'],
-                        'value' => $option['label']
-                    ];
-                }, $source->getAllOptions());
-            } else {
-                $loadSwatches = $this->isVisualSwatch($attribute);
-                $optionCollection = $this->getOptionCollection($attribute, $loadSwatches);
-                $options = OptionCollectionToArray::execute($optionCollection, $loadSwatches);
-            }
-
-            $this->optionsByAttribute[$key] = $options;
+            $this->optionsByAttribute[$key] = $this->loadOptions($attribute);
         }
 
         return $this->optionsByAttribute[$key];
+    }
+
+    /**
+     * @return AttributeOptionDefinition[]
+     */
+    private function loadOptions(\Magento\Catalog\Model\ResourceModel\Eav\Attribute $attribute): array
+    {
+        if ($this->useSourceModel($attribute)) {
+            $source = $attribute->getSource();
+            return array_map(function ($option) {
+                return new AttributeOptionDefinition(
+                    (int)$option['value'],
+                    (string)$option['label'],
+                    null
+                );
+            }, $source->getAllOptions());
+        } else {
+            $loadSwatches = $this->isVisualSwatch($attribute);
+            $optionCollection = $this->getOptionCollection($attribute, $loadSwatches);
+            return AttributeOptionDefinitionParser::parseToArray($optionCollection, $loadSwatches);
+        }
     }
 
     private function useSourceModel(Attribute $attribute): bool
