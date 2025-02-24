@@ -12,8 +12,7 @@
           "label": "The new great watch"
         }
       ],
-      "isFacet": false,
-      "options": []
+      "isFacet": false
     },
     {
       "name": "meta_description",
@@ -24,8 +23,7 @@
           "label": "The new great watch"
         }
       ],
-      "isFacet": false,
-      "options": []
+      "isFacet": false
     },
     {
       "name": "url_key",
@@ -36,8 +34,7 @@
           "label": "the-new-great-watch"
         }
       ],
-      "isFacet": false,
-      "options": []
+      "isFacet": false
     },
     {
       "name": "material",
@@ -56,153 +53,7 @@
           "label": "Leather"
         }
       ],
-      "isFacet": true,
-      "options": [
-        {
-          "value": "Burlap",
-          "label": "Burlap"
-        },
-        {
-          "value": "Cocona&reg; performance fabric",
-          "label": "Cocona&reg; performance fabric"
-        },
-        {
-          "value": "Canvas",
-          "label": "Canvas"
-        },
-        {
-          "value": "Wool",
-          "label": "Wool"
-        },
-        {
-          "value": "Cotton",
-          "label": "Cotton"
-        },
-        {
-          "value": "Fleece",
-          "label": "Fleece"
-        },
-        {
-          "value": "Faux Leather",
-          "label": "Faux Leather"
-        },
-        {
-          "value": "Hemp",
-          "label": "Hemp"
-        },
-        {
-          "value": "Jersey",
-          "label": "Jersey"
-        },
-        {
-          "value": "Leather",
-          "label": "Leather"
-        },
-        {
-          "value": "LumaTech&trade;",
-          "label": "LumaTech&trade;"
-        },
-        {
-          "value": "Mesh",
-          "label": "Mesh"
-        },
-        {
-          "value": "Lycra&reg;",
-          "label": "Lycra&reg;"
-        },
-        {
-          "value": "Nylon",
-          "label": "Nylon"
-        },
-        {
-          "value": "Microfiber",
-          "label": "Microfiber"
-        },
-        {
-          "value": "Polyester",
-          "label": "Polyester"
-        },
-        {
-          "value": "Rayon",
-          "label": "Rayon"
-        },
-        {
-          "value": "Spandex",
-          "label": "Spandex"
-        },
-        {
-          "value": "HeatTec&reg;",
-          "label": "HeatTec&reg;"
-        },
-        {
-          "value": "Ripstop",
-          "label": "Ripstop"
-        },
-        {
-          "value": "EverCool&trade;",
-          "label": "EverCool&trade;"
-        },
-        {
-          "value": "Suede",
-          "label": "Suede"
-        },
-        {
-          "value": "Foam",
-          "label": "Foam"
-        },
-        {
-          "value": "Organic Cotton",
-          "label": "Organic Cotton"
-        },
-        {
-          "value": "Metal",
-          "label": "Metal"
-        },
-        {
-          "value": "TENCEL",
-          "label": "TENCEL"
-        },
-        {
-          "value": "CoolTech&trade;",
-          "label": "CoolTech&trade;"
-        },
-        {
-          "value": "Plastic",
-          "label": "Plastic"
-        },
-        {
-          "value": "Khaki",
-          "label": "Khaki"
-        },
-        {
-          "value": "Rubber",
-          "label": "Rubber"
-        },
-        {
-          "value": "Linen",
-          "label": "Linen"
-        },
-        {
-          "value": "Synthetic",
-          "label": "Synthetic"
-        },
-        {
-          "value": "Stainless Steel",
-          "label": "Stainless Steel"
-        },
-        {
-          "value": "Wool",
-          "label": "Wool"
-        },
-        {
-          "value": "Silicone",
-          "label": "Silicone"
-        },
-        {
-          "value": "Terry",
-          "label": "Terry"
-        }
-      ]
+      "isFacet": true
     },
     {
       "name": "color",
@@ -210,108 +61,14 @@
       "values": [
         {
           "value": "Brown",
-          "label": "Brown"
-        }
-      ],
-      "isFacet": true,
-      "options": [
-        {
-          "value": "Black",
-          "label": "Black",
-          "swatch": {
-            "type": "color",
-            "value": "#000000"
-          }
-        },
-        {
-          "value": "Blue",
-          "label": "Blue",
-          "swatch": {
-            "type": "color",
-            "value": "#1857f7"
-          }
-        },
-        {
-          "value": "Brown",
           "label": "Brown",
           "swatch": {
             "type": "color",
             "value": "#945454"
           }
-        },
-        {
-          "value": "Gray",
-          "label": "Gray",
-          "swatch": {
-            "type": "color",
-            "value": "#8f8f8f"
-          }
-        },
-        {
-          "value": "Green",
-          "label": "Green",
-          "swatch": {
-            "type": "color",
-            "value": "#53a828"
-          }
-        },
-        {
-          "value": "Lavender",
-          "label": "Lavender",
-          "swatch": {
-            "type": "color",
-            "value": "#ce64d4"
-          }
-        },
-        {
-          "value": "Multi",
-          "label": "Multi",
-          "swatch": {
-            "type": "color",
-            "value": "#ffffff"
-          }
-        },
-        {
-          "value": "Orange",
-          "label": "Orange",
-          "swatch": {
-            "type": "color",
-            "value": "#eb6703"
-          }
-        },
-        {
-          "value": "Purple",
-          "label": "Purple",
-          "swatch": {
-            "type": "color",
-            "value": "#ef3dff"
-          }
-        },
-        {
-          "value": "Red",
-          "label": "Red",
-          "swatch": {
-            "type": "color",
-            "value": "#ff0000"
-          }
-        },
-        {
-          "value": "White",
-          "label": "White",
-          "swatch": {
-            "type": "color",
-            "value": "#ffffff"
-          }
-        },
-        {
-          "value": "Yellow",
-          "label": "Yellow",
-          "swatch": {
-            "type": "color",
-            "value": "#ffd500"
-          }
         }
-      ]
+      ],
+      "isFacet": true
     },
     {
       "name": "status",
@@ -322,17 +79,7 @@
           "label": "Enabled"
         }
       ],
-      "isFacet": false,
-      "options": [
-        {
-          "value": "Enabled",
-          "label": "Enabled"
-        },
-        {
-          "value": "Disabled",
-          "label": "Disabled"
-        }
-      ]
+      "isFacet": false
     },
     {
       "name": "visibility",
@@ -343,25 +90,7 @@
           "label": "Catalog, Search"
         }
       ],
-      "isFacet": false,
-      "options": [
-        {
-          "value": "Not Visible Individually",
-          "label": "Not Visible Individually"
-        },
-        {
-          "value": "Catalog",
-          "label": "Catalog"
-        },
-        {
-          "value": "Search",
-          "label": "Search"
-        },
-        {
-          "value": "Catalog, Search",
-          "label": "Catalog, Search"
-        }
-      ]
+      "isFacet": false
     }
   ],
   "name": "The new great watch",

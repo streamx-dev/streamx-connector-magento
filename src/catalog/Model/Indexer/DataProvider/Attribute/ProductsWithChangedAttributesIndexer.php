@@ -62,7 +62,7 @@ class ProductsWithChangedAttributesIndexer
                 // a deleted attribute. Currently, no way of collecting products that used it before
                 continue;
             }
-            $this->logger->info("Definition of attribute '{$attributeDefinition->getName()}' has changed");
+            $this->logger->info("Definition of attribute '{$attributeDefinition->getCode()}' has changed");
             $changedAttributeIds[] = $attributeDefinition->getId();
         }
 

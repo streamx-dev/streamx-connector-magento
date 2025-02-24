@@ -112,8 +112,7 @@ abstract class BaseAttributeData extends DataProviderInterface
             ];
         } else {
             $attributeDefinition = $attributeDefinitionsMap[$attributeCode];
-            $productAttribute = $this->createProductAttributeArray($attributeCode, $attributeDefinition, $attributeValues);
-            $productData['attributes'][] = $productAttribute;
+            $productData['attributes'][] = $this->formatAttributeAsArray($attributeDefinition, $attributeValues);
         }
     }
 
@@ -128,49 +127,61 @@ abstract class BaseAttributeData extends DataProviderInterface
         return $attributeValues[0];
     }
 
-    private function createProductAttributeArray(string $attributeCode, AttributeDefinition $attributeDefinition, array $attributeValues): array
+    private function formatAttributeAsArray(AttributeDefinition $attributeDefinition, array $attributeValues): array
     {
-        $productAttribute['name'] = $attributeCode;
-        $productAttribute['label'] = $attributeDefinition->getValue();
+        return [
+            'name' => $attributeDefinition->getCode(),
+            'label' => $attributeDefinition->getValue(),
+            'values' => array_map(function ($attributeValue) use ($attributeDefinition) {
+                return $this->formatAttributeValueAsArray($attributeDefinition, $attributeValue);
+            }, $attributeValues),
+            'isFacet' => $attributeDefinition->isFacet()
+        ];
+    }
 
-        foreach ($attributeValues as $attributeValue) {
-            $value = in_array($attributeCode, self::IMAGE_ATTRIBUTES)
-                ? $this->imageUrlManager->getProductImageUrl($attributeValue)
-                : $this->getPotentialOptionValue($attributeCode, $attributeValue, $attributeDefinition);
-            $productAttribute['values'][] = [
+    private function formatAttributeValueAsArray(AttributeDefinition $attributeDefinition, $attributeValue): array
+    {
+        if (in_array($attributeDefinition->getCode(), self::IMAGE_ATTRIBUTES)) {
+            $value = $this->imageUrlManager->getProductImageUrl($attributeValue);
+            return [
                 'value' => $value,
                 'label' => $value
             ];
         }
-        $productAttribute['isFacet'] = $attributeDefinition->isFacet();
 
-        $productAttribute['options'] = array_map(function ($option) {
-            $optionValue = $option->getValue();
-            $mappedOption = [
-                'value' => $optionValue,
-                'label' => $optionValue
+        $potentialOptionValue = $this->getPotentialOptionValue($attributeDefinition, $attributeValue);
+        if ($potentialOptionValue) {
+            $value = $potentialOptionValue;
+            $result = [
+                'value' => $value,
+                'label' => $value
             ];
 
-            $swatch = $option->getSwatch();
-            if ($swatch !== null) {
-                $mappedOption['swatch'] = [
+            $swatch = $attributeDefinition->getOptionSwatch((int) $attributeValue);
+            if ($swatch) {
+                $result['swatch'] = [
                     'type' => $swatch->getType(),
                     'value' => $swatch->getValue()
                 ];
             }
-            return $mappedOption;
-        }, $attributeDefinition->getOptions());
+            return $result;
+        }
 
-        return $productAttribute;
+        $value = (string)$attributeValue;
+        return [
+            'value' => $value,
+            'label' => $value
+        ];
     }
 
     /**
-     * If $attributeValue is an option ID for the given $attributeCode - returns value of the option. Otherwise - returns the input $attributeValue
+     * If $attributeValue is an option ID for the given $attributeDefinition - returns value of the option. Otherwise, returns null
      */
-    private function getPotentialOptionValue(string $attributeCode, $attributeValue, AttributeDefinition $attributeDefinition): string
+    private function getPotentialOptionValue(AttributeDefinition $attributeDefinition, $attributeValue): ?string
     {
-        if (SpecialAttributes::isSpecialAttribute($attributeCode)) {
-            return SpecialAttributes::getAttributeValueLabel($attributeCode, (int) $attributeValue);
+        if (SpecialAttributes::isSpecialAttribute($attributeDefinition->getCode())) {
+            $optionId = (int) $attributeValue;
+            return SpecialAttributes::getAttributeValueLabel($attributeDefinition->getCode(), $optionId);
         }
 
         if (is_numeric($attributeValue)) {
@@ -181,7 +192,7 @@ abstract class BaseAttributeData extends DataProviderInterface
                 }
             }
         }
-        return (string) $attributeValue;
+        return null;
     }
 
     function applySlug(array &$productData): void
@@ -206,7 +217,7 @@ abstract class BaseAttributeData extends DataProviderInterface
 
         $attributeDefinitionsMap = [];
         foreach ($attributeDefinitions as $attributeDefinition) {
-            $attributeDefinitionsMap[$attributeDefinition->getName()] = $attributeDefinition;
+            $attributeDefinitionsMap[$attributeDefinition->getCode()] = $attributeDefinition;
         }
         return $attributeDefinitionsMap;
     }

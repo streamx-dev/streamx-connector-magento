@@ -12,8 +12,7 @@
           "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg"
         }
       ],
-      "isFacet": false,
-      "options": []
+      "isFacet": false
     },
     {
       "name": "thumbnail",
@@ -24,8 +23,7 @@
           "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg"
         }
       ],
-      "isFacet": false,
-      "options": []
+      "isFacet": false
     },
     {
       "name": "url_key",
@@ -36,8 +34,7 @@
           "label": "chaz-kangeroo-hoodie"
         }
       ],
-      "isFacet": false,
-      "options": []
+      "isFacet": false
     },
     {
       "name": "status",
@@ -48,17 +45,7 @@
           "label": "Enabled"
         }
       ],
-      "isFacet": false,
-      "options": [
-        {
-          "value": "Enabled",
-          "label": "Enabled"
-        },
-        {
-          "value": "Disabled",
-          "label": "Disabled"
-        }
-      ]
+      "isFacet": false
     },
     {
       "name": "visibility",
@@ -69,25 +56,7 @@
           "label": "Catalog, Search"
         }
       ],
-      "isFacet": false,
-      "options": [
-        {
-          "value": "Not Visible Individually",
-          "label": "Not Visible Individually"
-        },
-        {
-          "value": "Catalog",
-          "label": "Catalog"
-        },
-        {
-          "value": "Search",
-          "label": "Search"
-        },
-        {
-          "value": "Catalog, Search",
-          "label": "Catalog, Search"
-        }
-      ]
+      "isFacet": false
     },
     {
       "name": "tax_class_id",
@@ -98,17 +67,7 @@
           "label": "Taxable Goods"
         }
       ],
-      "isFacet": false,
-      "options": [
-        {
-          "value": "None",
-          "label": "None"
-        },
-        {
-          "value": "Taxable Goods",
-          "label": "Taxable Goods"
-        }
-      ]
+      "isFacet": false
     }
   ],
   "name": "Chaz Kangeroo Hoodie",
@@ -528,8 +487,7 @@
               "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "thumbnail",
@@ -540,8 +498,7 @@
               "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "url_key",
@@ -552,8 +509,7 @@
               "label": "chaz-kangeroo-hoodie-xs-black"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "color",
@@ -561,108 +517,14 @@
           "values": [
             {
               "value": "Black",
-              "label": "Black"
-            }
-          ],
-          "isFacet": true,
-          "options": [
-            {
-              "value": "Black",
               "label": "Black",
               "swatch": {
                 "type": "color",
                 "value": "#000000"
               }
-            },
-            {
-              "value": "Blue",
-              "label": "Blue",
-              "swatch": {
-                "type": "color",
-                "value": "#1857f7"
-              }
-            },
-            {
-              "value": "Brown",
-              "label": "Brown",
-              "swatch": {
-                "type": "color",
-                "value": "#945454"
-              }
-            },
-            {
-              "value": "Gray",
-              "label": "Gray",
-              "swatch": {
-                "type": "color",
-                "value": "#8f8f8f"
-              }
-            },
-            {
-              "value": "Green",
-              "label": "Green",
-              "swatch": {
-                "type": "color",
-                "value": "#53a828"
-              }
-            },
-            {
-              "value": "Lavender",
-              "label": "Lavender",
-              "swatch": {
-                "type": "color",
-                "value": "#ce64d4"
-              }
-            },
-            {
-              "value": "Multi",
-              "label": "Multi",
-              "swatch": {
-                "type": "color",
-                "value": "#ffffff"
-              }
-            },
-            {
-              "value": "Orange",
-              "label": "Orange",
-              "swatch": {
-                "type": "color",
-                "value": "#eb6703"
-              }
-            },
-            {
-              "value": "Purple",
-              "label": "Purple",
-              "swatch": {
-                "type": "color",
-                "value": "#ef3dff"
-              }
-            },
-            {
-              "value": "Red",
-              "label": "Red",
-              "swatch": {
-                "type": "color",
-                "value": "#ff0000"
-              }
-            },
-            {
-              "value": "White",
-              "label": "White",
-              "swatch": {
-                "type": "color",
-                "value": "#ffffff"
-              }
-            },
-            {
-              "value": "Yellow",
-              "label": "Yellow",
-              "swatch": {
-                "type": "color",
-                "value": "#ffd500"
-              }
             }
-          ]
+          ],
+          "isFacet": true
         },
         {
           "name": "size",
@@ -670,172 +532,14 @@
           "values": [
             {
               "value": "XS",
-              "label": "XS"
-            }
-          ],
-          "isFacet": true,
-          "options": [
-            {
-              "value": "55 cm",
-              "label": "55 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "55 cm"
-              }
-            },
-            {
-              "value": "XS",
               "label": "XS",
               "swatch": {
                 "type": "textual",
                 "value": "XS"
               }
-            },
-            {
-              "value": "65 cm",
-              "label": "65 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "65 cm"
-              }
-            },
-            {
-              "value": "S",
-              "label": "S",
-              "swatch": {
-                "type": "textual",
-                "value": "S"
-              }
-            },
-            {
-              "value": "75 cm",
-              "label": "75 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "75 cm"
-              }
-            },
-            {
-              "value": "M",
-              "label": "M",
-              "swatch": {
-                "type": "textual",
-                "value": "M"
-              }
-            },
-            {
-              "value": "6 foot",
-              "label": "6 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "6 foot"
-              }
-            },
-            {
-              "value": "L",
-              "label": "L",
-              "swatch": {
-                "type": "textual",
-                "value": "L"
-              }
-            },
-            {
-              "value": "8 foot",
-              "label": "8 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "8 foot"
-              }
-            },
-            {
-              "value": "XL",
-              "label": "XL",
-              "swatch": {
-                "type": "textual",
-                "value": "XL"
-              }
-            },
-            {
-              "value": "10 foot",
-              "label": "10 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "10 foot"
-              }
-            },
-            {
-              "value": "28",
-              "label": "28",
-              "swatch": {
-                "type": "textual",
-                "value": "28"
-              }
-            },
-            {
-              "value": "29",
-              "label": "29",
-              "swatch": {
-                "type": "textual",
-                "value": "29"
-              }
-            },
-            {
-              "value": "30",
-              "label": "30",
-              "swatch": {
-                "type": "textual",
-                "value": "30"
-              }
-            },
-            {
-              "value": "31",
-              "label": "31",
-              "swatch": {
-                "type": "textual",
-                "value": "31"
-              }
-            },
-            {
-              "value": "32",
-              "label": "32",
-              "swatch": {
-                "type": "textual",
-                "value": "32"
-              }
-            },
-            {
-              "value": "33",
-              "label": "33",
-              "swatch": {
-                "type": "textual",
-                "value": "33"
-              }
-            },
-            {
-              "value": "34",
-              "label": "34",
-              "swatch": {
-                "type": "textual",
-                "value": "34"
-              }
-            },
-            {
-              "value": "36",
-              "label": "36",
-              "swatch": {
-                "type": "textual",
-                "value": "36"
-              }
-            },
-            {
-              "value": "38",
-              "label": "38",
-              "swatch": {
-                "type": "textual",
-                "value": "38"
-              }
             }
-          ]
+          ],
+          "isFacet": true
         }
       ],
       "name": "Chaz Kangeroo Hoodie-XS-Black",
@@ -870,8 +574,7 @@
               "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "thumbnail",
@@ -882,8 +585,7 @@
               "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "url_key",
@@ -894,8 +596,7 @@
               "label": "chaz-kangeroo-hoodie-xs-gray"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "color",
@@ -903,108 +604,14 @@
           "values": [
             {
               "value": "Gray",
-              "label": "Gray"
-            }
-          ],
-          "isFacet": true,
-          "options": [
-            {
-              "value": "Black",
-              "label": "Black",
-              "swatch": {
-                "type": "color",
-                "value": "#000000"
-              }
-            },
-            {
-              "value": "Blue",
-              "label": "Blue",
-              "swatch": {
-                "type": "color",
-                "value": "#1857f7"
-              }
-            },
-            {
-              "value": "Brown",
-              "label": "Brown",
-              "swatch": {
-                "type": "color",
-                "value": "#945454"
-              }
-            },
-            {
-              "value": "Gray",
               "label": "Gray",
               "swatch": {
                 "type": "color",
                 "value": "#8f8f8f"
               }
-            },
-            {
-              "value": "Green",
-              "label": "Green",
-              "swatch": {
-                "type": "color",
-                "value": "#53a828"
-              }
-            },
-            {
-              "value": "Lavender",
-              "label": "Lavender",
-              "swatch": {
-                "type": "color",
-                "value": "#ce64d4"
-              }
-            },
-            {
-              "value": "Multi",
-              "label": "Multi",
-              "swatch": {
-                "type": "color",
-                "value": "#ffffff"
-              }
-            },
-            {
-              "value": "Orange",
-              "label": "Orange",
-              "swatch": {
-                "type": "color",
-                "value": "#eb6703"
-              }
-            },
-            {
-              "value": "Purple",
-              "label": "Purple",
-              "swatch": {
-                "type": "color",
-                "value": "#ef3dff"
-              }
-            },
-            {
-              "value": "Red",
-              "label": "Red",
-              "swatch": {
-                "type": "color",
-                "value": "#ff0000"
-              }
-            },
-            {
-              "value": "White",
-              "label": "White",
-              "swatch": {
-                "type": "color",
-                "value": "#ffffff"
-              }
-            },
-            {
-              "value": "Yellow",
-              "label": "Yellow",
-              "swatch": {
-                "type": "color",
-                "value": "#ffd500"
-              }
             }
-          ]
+          ],
+          "isFacet": true
         },
         {
           "name": "size",
@@ -1012,172 +619,14 @@
           "values": [
             {
               "value": "XS",
-              "label": "XS"
-            }
-          ],
-          "isFacet": true,
-          "options": [
-            {
-              "value": "55 cm",
-              "label": "55 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "55 cm"
-              }
-            },
-            {
-              "value": "XS",
               "label": "XS",
               "swatch": {
                 "type": "textual",
                 "value": "XS"
               }
-            },
-            {
-              "value": "65 cm",
-              "label": "65 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "65 cm"
-              }
-            },
-            {
-              "value": "S",
-              "label": "S",
-              "swatch": {
-                "type": "textual",
-                "value": "S"
-              }
-            },
-            {
-              "value": "75 cm",
-              "label": "75 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "75 cm"
-              }
-            },
-            {
-              "value": "M",
-              "label": "M",
-              "swatch": {
-                "type": "textual",
-                "value": "M"
-              }
-            },
-            {
-              "value": "6 foot",
-              "label": "6 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "6 foot"
-              }
-            },
-            {
-              "value": "L",
-              "label": "L",
-              "swatch": {
-                "type": "textual",
-                "value": "L"
-              }
-            },
-            {
-              "value": "8 foot",
-              "label": "8 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "8 foot"
-              }
-            },
-            {
-              "value": "XL",
-              "label": "XL",
-              "swatch": {
-                "type": "textual",
-                "value": "XL"
-              }
-            },
-            {
-              "value": "10 foot",
-              "label": "10 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "10 foot"
-              }
-            },
-            {
-              "value": "28",
-              "label": "28",
-              "swatch": {
-                "type": "textual",
-                "value": "28"
-              }
-            },
-            {
-              "value": "29",
-              "label": "29",
-              "swatch": {
-                "type": "textual",
-                "value": "29"
-              }
-            },
-            {
-              "value": "30",
-              "label": "30",
-              "swatch": {
-                "type": "textual",
-                "value": "30"
-              }
-            },
-            {
-              "value": "31",
-              "label": "31",
-              "swatch": {
-                "type": "textual",
-                "value": "31"
-              }
-            },
-            {
-              "value": "32",
-              "label": "32",
-              "swatch": {
-                "type": "textual",
-                "value": "32"
-              }
-            },
-            {
-              "value": "33",
-              "label": "33",
-              "swatch": {
-                "type": "textual",
-                "value": "33"
-              }
-            },
-            {
-              "value": "34",
-              "label": "34",
-              "swatch": {
-                "type": "textual",
-                "value": "34"
-              }
-            },
-            {
-              "value": "36",
-              "label": "36",
-              "swatch": {
-                "type": "textual",
-                "value": "36"
-              }
-            },
-            {
-              "value": "38",
-              "label": "38",
-              "swatch": {
-                "type": "textual",
-                "value": "38"
-              }
             }
-          ]
+          ],
+          "isFacet": true
         }
       ],
       "name": "Chaz Kangeroo Hoodie-XS-Gray",
@@ -1220,8 +669,7 @@
               "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "thumbnail",
@@ -1232,8 +680,7 @@
               "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "url_key",
@@ -1244,8 +691,7 @@
               "label": "chaz-kangeroo-hoodie-xs-orange"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "color",
@@ -1253,108 +699,14 @@
           "values": [
             {
               "value": "Orange",
-              "label": "Orange"
-            }
-          ],
-          "isFacet": true,
-          "options": [
-            {
-              "value": "Black",
-              "label": "Black",
-              "swatch": {
-                "type": "color",
-                "value": "#000000"
-              }
-            },
-            {
-              "value": "Blue",
-              "label": "Blue",
-              "swatch": {
-                "type": "color",
-                "value": "#1857f7"
-              }
-            },
-            {
-              "value": "Brown",
-              "label": "Brown",
-              "swatch": {
-                "type": "color",
-                "value": "#945454"
-              }
-            },
-            {
-              "value": "Gray",
-              "label": "Gray",
-              "swatch": {
-                "type": "color",
-                "value": "#8f8f8f"
-              }
-            },
-            {
-              "value": "Green",
-              "label": "Green",
-              "swatch": {
-                "type": "color",
-                "value": "#53a828"
-              }
-            },
-            {
-              "value": "Lavender",
-              "label": "Lavender",
-              "swatch": {
-                "type": "color",
-                "value": "#ce64d4"
-              }
-            },
-            {
-              "value": "Multi",
-              "label": "Multi",
-              "swatch": {
-                "type": "color",
-                "value": "#ffffff"
-              }
-            },
-            {
-              "value": "Orange",
               "label": "Orange",
               "swatch": {
                 "type": "color",
                 "value": "#eb6703"
               }
-            },
-            {
-              "value": "Purple",
-              "label": "Purple",
-              "swatch": {
-                "type": "color",
-                "value": "#ef3dff"
-              }
-            },
-            {
-              "value": "Red",
-              "label": "Red",
-              "swatch": {
-                "type": "color",
-                "value": "#ff0000"
-              }
-            },
-            {
-              "value": "White",
-              "label": "White",
-              "swatch": {
-                "type": "color",
-                "value": "#ffffff"
-              }
-            },
-            {
-              "value": "Yellow",
-              "label": "Yellow",
-              "swatch": {
-                "type": "color",
-                "value": "#ffd500"
-              }
             }
-          ]
+          ],
+          "isFacet": true
         },
         {
           "name": "size",
@@ -1362,172 +714,14 @@
           "values": [
             {
               "value": "XS",
-              "label": "XS"
-            }
-          ],
-          "isFacet": true,
-          "options": [
-            {
-              "value": "55 cm",
-              "label": "55 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "55 cm"
-              }
-            },
-            {
-              "value": "XS",
               "label": "XS",
               "swatch": {
                 "type": "textual",
                 "value": "XS"
               }
-            },
-            {
-              "value": "65 cm",
-              "label": "65 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "65 cm"
-              }
-            },
-            {
-              "value": "S",
-              "label": "S",
-              "swatch": {
-                "type": "textual",
-                "value": "S"
-              }
-            },
-            {
-              "value": "75 cm",
-              "label": "75 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "75 cm"
-              }
-            },
-            {
-              "value": "M",
-              "label": "M",
-              "swatch": {
-                "type": "textual",
-                "value": "M"
-              }
-            },
-            {
-              "value": "6 foot",
-              "label": "6 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "6 foot"
-              }
-            },
-            {
-              "value": "L",
-              "label": "L",
-              "swatch": {
-                "type": "textual",
-                "value": "L"
-              }
-            },
-            {
-              "value": "8 foot",
-              "label": "8 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "8 foot"
-              }
-            },
-            {
-              "value": "XL",
-              "label": "XL",
-              "swatch": {
-                "type": "textual",
-                "value": "XL"
-              }
-            },
-            {
-              "value": "10 foot",
-              "label": "10 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "10 foot"
-              }
-            },
-            {
-              "value": "28",
-              "label": "28",
-              "swatch": {
-                "type": "textual",
-                "value": "28"
-              }
-            },
-            {
-              "value": "29",
-              "label": "29",
-              "swatch": {
-                "type": "textual",
-                "value": "29"
-              }
-            },
-            {
-              "value": "30",
-              "label": "30",
-              "swatch": {
-                "type": "textual",
-                "value": "30"
-              }
-            },
-            {
-              "value": "31",
-              "label": "31",
-              "swatch": {
-                "type": "textual",
-                "value": "31"
-              }
-            },
-            {
-              "value": "32",
-              "label": "32",
-              "swatch": {
-                "type": "textual",
-                "value": "32"
-              }
-            },
-            {
-              "value": "33",
-              "label": "33",
-              "swatch": {
-                "type": "textual",
-                "value": "33"
-              }
-            },
-            {
-              "value": "34",
-              "label": "34",
-              "swatch": {
-                "type": "textual",
-                "value": "34"
-              }
-            },
-            {
-              "value": "36",
-              "label": "36",
-              "swatch": {
-                "type": "textual",
-                "value": "36"
-              }
-            },
-            {
-              "value": "38",
-              "label": "38",
-              "swatch": {
-                "type": "textual",
-                "value": "38"
-              }
             }
-          ]
+          ],
+          "isFacet": true
         }
       ],
       "name": "Chaz Kangeroo Hoodie-XS-Orange",
@@ -1562,8 +756,7 @@
               "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "thumbnail",
@@ -1574,8 +767,7 @@
               "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "url_key",
@@ -1586,8 +778,7 @@
               "label": "chaz-kangeroo-hoodie-s-black"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "color",
@@ -1595,108 +786,14 @@
           "values": [
             {
               "value": "Black",
-              "label": "Black"
-            }
-          ],
-          "isFacet": true,
-          "options": [
-            {
-              "value": "Black",
               "label": "Black",
               "swatch": {
                 "type": "color",
                 "value": "#000000"
               }
-            },
-            {
-              "value": "Blue",
-              "label": "Blue",
-              "swatch": {
-                "type": "color",
-                "value": "#1857f7"
-              }
-            },
-            {
-              "value": "Brown",
-              "label": "Brown",
-              "swatch": {
-                "type": "color",
-                "value": "#945454"
-              }
-            },
-            {
-              "value": "Gray",
-              "label": "Gray",
-              "swatch": {
-                "type": "color",
-                "value": "#8f8f8f"
-              }
-            },
-            {
-              "value": "Green",
-              "label": "Green",
-              "swatch": {
-                "type": "color",
-                "value": "#53a828"
-              }
-            },
-            {
-              "value": "Lavender",
-              "label": "Lavender",
-              "swatch": {
-                "type": "color",
-                "value": "#ce64d4"
-              }
-            },
-            {
-              "value": "Multi",
-              "label": "Multi",
-              "swatch": {
-                "type": "color",
-                "value": "#ffffff"
-              }
-            },
-            {
-              "value": "Orange",
-              "label": "Orange",
-              "swatch": {
-                "type": "color",
-                "value": "#eb6703"
-              }
-            },
-            {
-              "value": "Purple",
-              "label": "Purple",
-              "swatch": {
-                "type": "color",
-                "value": "#ef3dff"
-              }
-            },
-            {
-              "value": "Red",
-              "label": "Red",
-              "swatch": {
-                "type": "color",
-                "value": "#ff0000"
-              }
-            },
-            {
-              "value": "White",
-              "label": "White",
-              "swatch": {
-                "type": "color",
-                "value": "#ffffff"
-              }
-            },
-            {
-              "value": "Yellow",
-              "label": "Yellow",
-              "swatch": {
-                "type": "color",
-                "value": "#ffd500"
-              }
             }
-          ]
+          ],
+          "isFacet": true
         },
         {
           "name": "size",
@@ -1704,172 +801,14 @@
           "values": [
             {
               "value": "S",
-              "label": "S"
-            }
-          ],
-          "isFacet": true,
-          "options": [
-            {
-              "value": "55 cm",
-              "label": "55 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "55 cm"
-              }
-            },
-            {
-              "value": "XS",
-              "label": "XS",
-              "swatch": {
-                "type": "textual",
-                "value": "XS"
-              }
-            },
-            {
-              "value": "65 cm",
-              "label": "65 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "65 cm"
-              }
-            },
-            {
-              "value": "S",
               "label": "S",
               "swatch": {
                 "type": "textual",
                 "value": "S"
               }
-            },
-            {
-              "value": "75 cm",
-              "label": "75 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "75 cm"
-              }
-            },
-            {
-              "value": "M",
-              "label": "M",
-              "swatch": {
-                "type": "textual",
-                "value": "M"
-              }
-            },
-            {
-              "value": "6 foot",
-              "label": "6 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "6 foot"
-              }
-            },
-            {
-              "value": "L",
-              "label": "L",
-              "swatch": {
-                "type": "textual",
-                "value": "L"
-              }
-            },
-            {
-              "value": "8 foot",
-              "label": "8 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "8 foot"
-              }
-            },
-            {
-              "value": "XL",
-              "label": "XL",
-              "swatch": {
-                "type": "textual",
-                "value": "XL"
-              }
-            },
-            {
-              "value": "10 foot",
-              "label": "10 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "10 foot"
-              }
-            },
-            {
-              "value": "28",
-              "label": "28",
-              "swatch": {
-                "type": "textual",
-                "value": "28"
-              }
-            },
-            {
-              "value": "29",
-              "label": "29",
-              "swatch": {
-                "type": "textual",
-                "value": "29"
-              }
-            },
-            {
-              "value": "30",
-              "label": "30",
-              "swatch": {
-                "type": "textual",
-                "value": "30"
-              }
-            },
-            {
-              "value": "31",
-              "label": "31",
-              "swatch": {
-                "type": "textual",
-                "value": "31"
-              }
-            },
-            {
-              "value": "32",
-              "label": "32",
-              "swatch": {
-                "type": "textual",
-                "value": "32"
-              }
-            },
-            {
-              "value": "33",
-              "label": "33",
-              "swatch": {
-                "type": "textual",
-                "value": "33"
-              }
-            },
-            {
-              "value": "34",
-              "label": "34",
-              "swatch": {
-                "type": "textual",
-                "value": "34"
-              }
-            },
-            {
-              "value": "36",
-              "label": "36",
-              "swatch": {
-                "type": "textual",
-                "value": "36"
-              }
-            },
-            {
-              "value": "38",
-              "label": "38",
-              "swatch": {
-                "type": "textual",
-                "value": "38"
-              }
             }
-          ]
+          ],
+          "isFacet": true
         }
       ],
       "name": "Chaz Kangeroo Hoodie-S-Black",
@@ -1904,8 +843,7 @@
               "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "thumbnail",
@@ -1916,8 +854,7 @@
               "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "url_key",
@@ -1928,8 +865,7 @@
               "label": "chaz-kangeroo-hoodie-s-gray"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "color",
@@ -1937,108 +873,14 @@
           "values": [
             {
               "value": "Gray",
-              "label": "Gray"
-            }
-          ],
-          "isFacet": true,
-          "options": [
-            {
-              "value": "Black",
-              "label": "Black",
-              "swatch": {
-                "type": "color",
-                "value": "#000000"
-              }
-            },
-            {
-              "value": "Blue",
-              "label": "Blue",
-              "swatch": {
-                "type": "color",
-                "value": "#1857f7"
-              }
-            },
-            {
-              "value": "Brown",
-              "label": "Brown",
-              "swatch": {
-                "type": "color",
-                "value": "#945454"
-              }
-            },
-            {
-              "value": "Gray",
               "label": "Gray",
               "swatch": {
                 "type": "color",
                 "value": "#8f8f8f"
               }
-            },
-            {
-              "value": "Green",
-              "label": "Green",
-              "swatch": {
-                "type": "color",
-                "value": "#53a828"
-              }
-            },
-            {
-              "value": "Lavender",
-              "label": "Lavender",
-              "swatch": {
-                "type": "color",
-                "value": "#ce64d4"
-              }
-            },
-            {
-              "value": "Multi",
-              "label": "Multi",
-              "swatch": {
-                "type": "color",
-                "value": "#ffffff"
-              }
-            },
-            {
-              "value": "Orange",
-              "label": "Orange",
-              "swatch": {
-                "type": "color",
-                "value": "#eb6703"
-              }
-            },
-            {
-              "value": "Purple",
-              "label": "Purple",
-              "swatch": {
-                "type": "color",
-                "value": "#ef3dff"
-              }
-            },
-            {
-              "value": "Red",
-              "label": "Red",
-              "swatch": {
-                "type": "color",
-                "value": "#ff0000"
-              }
-            },
-            {
-              "value": "White",
-              "label": "White",
-              "swatch": {
-                "type": "color",
-                "value": "#ffffff"
-              }
-            },
-            {
-              "value": "Yellow",
-              "label": "Yellow",
-              "swatch": {
-                "type": "color",
-                "value": "#ffd500"
-              }
             }
-          ]
+          ],
+          "isFacet": true
         },
         {
           "name": "size",
@@ -2046,172 +888,14 @@
           "values": [
             {
               "value": "S",
-              "label": "S"
-            }
-          ],
-          "isFacet": true,
-          "options": [
-            {
-              "value": "55 cm",
-              "label": "55 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "55 cm"
-              }
-            },
-            {
-              "value": "XS",
-              "label": "XS",
-              "swatch": {
-                "type": "textual",
-                "value": "XS"
-              }
-            },
-            {
-              "value": "65 cm",
-              "label": "65 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "65 cm"
-              }
-            },
-            {
-              "value": "S",
               "label": "S",
               "swatch": {
                 "type": "textual",
                 "value": "S"
               }
-            },
-            {
-              "value": "75 cm",
-              "label": "75 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "75 cm"
-              }
-            },
-            {
-              "value": "M",
-              "label": "M",
-              "swatch": {
-                "type": "textual",
-                "value": "M"
-              }
-            },
-            {
-              "value": "6 foot",
-              "label": "6 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "6 foot"
-              }
-            },
-            {
-              "value": "L",
-              "label": "L",
-              "swatch": {
-                "type": "textual",
-                "value": "L"
-              }
-            },
-            {
-              "value": "8 foot",
-              "label": "8 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "8 foot"
-              }
-            },
-            {
-              "value": "XL",
-              "label": "XL",
-              "swatch": {
-                "type": "textual",
-                "value": "XL"
-              }
-            },
-            {
-              "value": "10 foot",
-              "label": "10 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "10 foot"
-              }
-            },
-            {
-              "value": "28",
-              "label": "28",
-              "swatch": {
-                "type": "textual",
-                "value": "28"
-              }
-            },
-            {
-              "value": "29",
-              "label": "29",
-              "swatch": {
-                "type": "textual",
-                "value": "29"
-              }
-            },
-            {
-              "value": "30",
-              "label": "30",
-              "swatch": {
-                "type": "textual",
-                "value": "30"
-              }
-            },
-            {
-              "value": "31",
-              "label": "31",
-              "swatch": {
-                "type": "textual",
-                "value": "31"
-              }
-            },
-            {
-              "value": "32",
-              "label": "32",
-              "swatch": {
-                "type": "textual",
-                "value": "32"
-              }
-            },
-            {
-              "value": "33",
-              "label": "33",
-              "swatch": {
-                "type": "textual",
-                "value": "33"
-              }
-            },
-            {
-              "value": "34",
-              "label": "34",
-              "swatch": {
-                "type": "textual",
-                "value": "34"
-              }
-            },
-            {
-              "value": "36",
-              "label": "36",
-              "swatch": {
-                "type": "textual",
-                "value": "36"
-              }
-            },
-            {
-              "value": "38",
-              "label": "38",
-              "swatch": {
-                "type": "textual",
-                "value": "38"
-              }
             }
-          ]
+          ],
+          "isFacet": true
         }
       ],
       "name": "Chaz Kangeroo Hoodie-S-Gray",
@@ -2254,8 +938,7 @@
               "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "thumbnail",
@@ -2266,8 +949,7 @@
               "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "url_key",
@@ -2278,8 +960,7 @@
               "label": "chaz-kangeroo-hoodie-s-orange"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "color",
@@ -2287,108 +968,14 @@
           "values": [
             {
               "value": "Orange",
-              "label": "Orange"
-            }
-          ],
-          "isFacet": true,
-          "options": [
-            {
-              "value": "Black",
-              "label": "Black",
-              "swatch": {
-                "type": "color",
-                "value": "#000000"
-              }
-            },
-            {
-              "value": "Blue",
-              "label": "Blue",
-              "swatch": {
-                "type": "color",
-                "value": "#1857f7"
-              }
-            },
-            {
-              "value": "Brown",
-              "label": "Brown",
-              "swatch": {
-                "type": "color",
-                "value": "#945454"
-              }
-            },
-            {
-              "value": "Gray",
-              "label": "Gray",
-              "swatch": {
-                "type": "color",
-                "value": "#8f8f8f"
-              }
-            },
-            {
-              "value": "Green",
-              "label": "Green",
-              "swatch": {
-                "type": "color",
-                "value": "#53a828"
-              }
-            },
-            {
-              "value": "Lavender",
-              "label": "Lavender",
-              "swatch": {
-                "type": "color",
-                "value": "#ce64d4"
-              }
-            },
-            {
-              "value": "Multi",
-              "label": "Multi",
-              "swatch": {
-                "type": "color",
-                "value": "#ffffff"
-              }
-            },
-            {
-              "value": "Orange",
               "label": "Orange",
               "swatch": {
                 "type": "color",
                 "value": "#eb6703"
               }
-            },
-            {
-              "value": "Purple",
-              "label": "Purple",
-              "swatch": {
-                "type": "color",
-                "value": "#ef3dff"
-              }
-            },
-            {
-              "value": "Red",
-              "label": "Red",
-              "swatch": {
-                "type": "color",
-                "value": "#ff0000"
-              }
-            },
-            {
-              "value": "White",
-              "label": "White",
-              "swatch": {
-                "type": "color",
-                "value": "#ffffff"
-              }
-            },
-            {
-              "value": "Yellow",
-              "label": "Yellow",
-              "swatch": {
-                "type": "color",
-                "value": "#ffd500"
-              }
             }
-          ]
+          ],
+          "isFacet": true
         },
         {
           "name": "size",
@@ -2396,172 +983,14 @@
           "values": [
             {
               "value": "S",
-              "label": "S"
-            }
-          ],
-          "isFacet": true,
-          "options": [
-            {
-              "value": "55 cm",
-              "label": "55 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "55 cm"
-              }
-            },
-            {
-              "value": "XS",
-              "label": "XS",
-              "swatch": {
-                "type": "textual",
-                "value": "XS"
-              }
-            },
-            {
-              "value": "65 cm",
-              "label": "65 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "65 cm"
-              }
-            },
-            {
-              "value": "S",
               "label": "S",
               "swatch": {
                 "type": "textual",
                 "value": "S"
               }
-            },
-            {
-              "value": "75 cm",
-              "label": "75 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "75 cm"
-              }
-            },
-            {
-              "value": "M",
-              "label": "M",
-              "swatch": {
-                "type": "textual",
-                "value": "M"
-              }
-            },
-            {
-              "value": "6 foot",
-              "label": "6 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "6 foot"
-              }
-            },
-            {
-              "value": "L",
-              "label": "L",
-              "swatch": {
-                "type": "textual",
-                "value": "L"
-              }
-            },
-            {
-              "value": "8 foot",
-              "label": "8 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "8 foot"
-              }
-            },
-            {
-              "value": "XL",
-              "label": "XL",
-              "swatch": {
-                "type": "textual",
-                "value": "XL"
-              }
-            },
-            {
-              "value": "10 foot",
-              "label": "10 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "10 foot"
-              }
-            },
-            {
-              "value": "28",
-              "label": "28",
-              "swatch": {
-                "type": "textual",
-                "value": "28"
-              }
-            },
-            {
-              "value": "29",
-              "label": "29",
-              "swatch": {
-                "type": "textual",
-                "value": "29"
-              }
-            },
-            {
-              "value": "30",
-              "label": "30",
-              "swatch": {
-                "type": "textual",
-                "value": "30"
-              }
-            },
-            {
-              "value": "31",
-              "label": "31",
-              "swatch": {
-                "type": "textual",
-                "value": "31"
-              }
-            },
-            {
-              "value": "32",
-              "label": "32",
-              "swatch": {
-                "type": "textual",
-                "value": "32"
-              }
-            },
-            {
-              "value": "33",
-              "label": "33",
-              "swatch": {
-                "type": "textual",
-                "value": "33"
-              }
-            },
-            {
-              "value": "34",
-              "label": "34",
-              "swatch": {
-                "type": "textual",
-                "value": "34"
-              }
-            },
-            {
-              "value": "36",
-              "label": "36",
-              "swatch": {
-                "type": "textual",
-                "value": "36"
-              }
-            },
-            {
-              "value": "38",
-              "label": "38",
-              "swatch": {
-                "type": "textual",
-                "value": "38"
-              }
             }
-          ]
+          ],
+          "isFacet": true
         }
       ],
       "name": "Chaz Kangeroo Hoodie-S-Orange",
@@ -2596,8 +1025,7 @@
               "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "thumbnail",
@@ -2608,8 +1036,7 @@
               "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "url_key",
@@ -2620,8 +1047,7 @@
               "label": "chaz-kangeroo-hoodie-m-black"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "color",
@@ -2629,108 +1055,14 @@
           "values": [
             {
               "value": "Black",
-              "label": "Black"
-            }
-          ],
-          "isFacet": true,
-          "options": [
-            {
-              "value": "Black",
               "label": "Black",
               "swatch": {
                 "type": "color",
                 "value": "#000000"
               }
-            },
-            {
-              "value": "Blue",
-              "label": "Blue",
-              "swatch": {
-                "type": "color",
-                "value": "#1857f7"
-              }
-            },
-            {
-              "value": "Brown",
-              "label": "Brown",
-              "swatch": {
-                "type": "color",
-                "value": "#945454"
-              }
-            },
-            {
-              "value": "Gray",
-              "label": "Gray",
-              "swatch": {
-                "type": "color",
-                "value": "#8f8f8f"
-              }
-            },
-            {
-              "value": "Green",
-              "label": "Green",
-              "swatch": {
-                "type": "color",
-                "value": "#53a828"
-              }
-            },
-            {
-              "value": "Lavender",
-              "label": "Lavender",
-              "swatch": {
-                "type": "color",
-                "value": "#ce64d4"
-              }
-            },
-            {
-              "value": "Multi",
-              "label": "Multi",
-              "swatch": {
-                "type": "color",
-                "value": "#ffffff"
-              }
-            },
-            {
-              "value": "Orange",
-              "label": "Orange",
-              "swatch": {
-                "type": "color",
-                "value": "#eb6703"
-              }
-            },
-            {
-              "value": "Purple",
-              "label": "Purple",
-              "swatch": {
-                "type": "color",
-                "value": "#ef3dff"
-              }
-            },
-            {
-              "value": "Red",
-              "label": "Red",
-              "swatch": {
-                "type": "color",
-                "value": "#ff0000"
-              }
-            },
-            {
-              "value": "White",
-              "label": "White",
-              "swatch": {
-                "type": "color",
-                "value": "#ffffff"
-              }
-            },
-            {
-              "value": "Yellow",
-              "label": "Yellow",
-              "swatch": {
-                "type": "color",
-                "value": "#ffd500"
-              }
             }
-          ]
+          ],
+          "isFacet": true
         },
         {
           "name": "size",
@@ -2738,172 +1070,14 @@
           "values": [
             {
               "value": "M",
-              "label": "M"
-            }
-          ],
-          "isFacet": true,
-          "options": [
-            {
-              "value": "55 cm",
-              "label": "55 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "55 cm"
-              }
-            },
-            {
-              "value": "XS",
-              "label": "XS",
-              "swatch": {
-                "type": "textual",
-                "value": "XS"
-              }
-            },
-            {
-              "value": "65 cm",
-              "label": "65 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "65 cm"
-              }
-            },
-            {
-              "value": "S",
-              "label": "S",
-              "swatch": {
-                "type": "textual",
-                "value": "S"
-              }
-            },
-            {
-              "value": "75 cm",
-              "label": "75 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "75 cm"
-              }
-            },
-            {
-              "value": "M",
               "label": "M",
               "swatch": {
                 "type": "textual",
                 "value": "M"
               }
-            },
-            {
-              "value": "6 foot",
-              "label": "6 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "6 foot"
-              }
-            },
-            {
-              "value": "L",
-              "label": "L",
-              "swatch": {
-                "type": "textual",
-                "value": "L"
-              }
-            },
-            {
-              "value": "8 foot",
-              "label": "8 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "8 foot"
-              }
-            },
-            {
-              "value": "XL",
-              "label": "XL",
-              "swatch": {
-                "type": "textual",
-                "value": "XL"
-              }
-            },
-            {
-              "value": "10 foot",
-              "label": "10 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "10 foot"
-              }
-            },
-            {
-              "value": "28",
-              "label": "28",
-              "swatch": {
-                "type": "textual",
-                "value": "28"
-              }
-            },
-            {
-              "value": "29",
-              "label": "29",
-              "swatch": {
-                "type": "textual",
-                "value": "29"
-              }
-            },
-            {
-              "value": "30",
-              "label": "30",
-              "swatch": {
-                "type": "textual",
-                "value": "30"
-              }
-            },
-            {
-              "value": "31",
-              "label": "31",
-              "swatch": {
-                "type": "textual",
-                "value": "31"
-              }
-            },
-            {
-              "value": "32",
-              "label": "32",
-              "swatch": {
-                "type": "textual",
-                "value": "32"
-              }
-            },
-            {
-              "value": "33",
-              "label": "33",
-              "swatch": {
-                "type": "textual",
-                "value": "33"
-              }
-            },
-            {
-              "value": "34",
-              "label": "34",
-              "swatch": {
-                "type": "textual",
-                "value": "34"
-              }
-            },
-            {
-              "value": "36",
-              "label": "36",
-              "swatch": {
-                "type": "textual",
-                "value": "36"
-              }
-            },
-            {
-              "value": "38",
-              "label": "38",
-              "swatch": {
-                "type": "textual",
-                "value": "38"
-              }
             }
-          ]
+          ],
+          "isFacet": true
         }
       ],
       "name": "Chaz Kangeroo Hoodie-M-Black",
@@ -2938,8 +1112,7 @@
               "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "thumbnail",
@@ -2950,8 +1123,7 @@
               "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "url_key",
@@ -2962,8 +1134,7 @@
               "label": "chaz-kangeroo-hoodie-m-gray"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "color",
@@ -2971,108 +1142,14 @@
           "values": [
             {
               "value": "Gray",
-              "label": "Gray"
-            }
-          ],
-          "isFacet": true,
-          "options": [
-            {
-              "value": "Black",
-              "label": "Black",
-              "swatch": {
-                "type": "color",
-                "value": "#000000"
-              }
-            },
-            {
-              "value": "Blue",
-              "label": "Blue",
-              "swatch": {
-                "type": "color",
-                "value": "#1857f7"
-              }
-            },
-            {
-              "value": "Brown",
-              "label": "Brown",
-              "swatch": {
-                "type": "color",
-                "value": "#945454"
-              }
-            },
-            {
-              "value": "Gray",
               "label": "Gray",
               "swatch": {
                 "type": "color",
                 "value": "#8f8f8f"
               }
-            },
-            {
-              "value": "Green",
-              "label": "Green",
-              "swatch": {
-                "type": "color",
-                "value": "#53a828"
-              }
-            },
-            {
-              "value": "Lavender",
-              "label": "Lavender",
-              "swatch": {
-                "type": "color",
-                "value": "#ce64d4"
-              }
-            },
-            {
-              "value": "Multi",
-              "label": "Multi",
-              "swatch": {
-                "type": "color",
-                "value": "#ffffff"
-              }
-            },
-            {
-              "value": "Orange",
-              "label": "Orange",
-              "swatch": {
-                "type": "color",
-                "value": "#eb6703"
-              }
-            },
-            {
-              "value": "Purple",
-              "label": "Purple",
-              "swatch": {
-                "type": "color",
-                "value": "#ef3dff"
-              }
-            },
-            {
-              "value": "Red",
-              "label": "Red",
-              "swatch": {
-                "type": "color",
-                "value": "#ff0000"
-              }
-            },
-            {
-              "value": "White",
-              "label": "White",
-              "swatch": {
-                "type": "color",
-                "value": "#ffffff"
-              }
-            },
-            {
-              "value": "Yellow",
-              "label": "Yellow",
-              "swatch": {
-                "type": "color",
-                "value": "#ffd500"
-              }
             }
-          ]
+          ],
+          "isFacet": true
         },
         {
           "name": "size",
@@ -3080,172 +1157,14 @@
           "values": [
             {
               "value": "M",
-              "label": "M"
-            }
-          ],
-          "isFacet": true,
-          "options": [
-            {
-              "value": "55 cm",
-              "label": "55 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "55 cm"
-              }
-            },
-            {
-              "value": "XS",
-              "label": "XS",
-              "swatch": {
-                "type": "textual",
-                "value": "XS"
-              }
-            },
-            {
-              "value": "65 cm",
-              "label": "65 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "65 cm"
-              }
-            },
-            {
-              "value": "S",
-              "label": "S",
-              "swatch": {
-                "type": "textual",
-                "value": "S"
-              }
-            },
-            {
-              "value": "75 cm",
-              "label": "75 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "75 cm"
-              }
-            },
-            {
-              "value": "M",
               "label": "M",
               "swatch": {
                 "type": "textual",
                 "value": "M"
               }
-            },
-            {
-              "value": "6 foot",
-              "label": "6 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "6 foot"
-              }
-            },
-            {
-              "value": "L",
-              "label": "L",
-              "swatch": {
-                "type": "textual",
-                "value": "L"
-              }
-            },
-            {
-              "value": "8 foot",
-              "label": "8 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "8 foot"
-              }
-            },
-            {
-              "value": "XL",
-              "label": "XL",
-              "swatch": {
-                "type": "textual",
-                "value": "XL"
-              }
-            },
-            {
-              "value": "10 foot",
-              "label": "10 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "10 foot"
-              }
-            },
-            {
-              "value": "28",
-              "label": "28",
-              "swatch": {
-                "type": "textual",
-                "value": "28"
-              }
-            },
-            {
-              "value": "29",
-              "label": "29",
-              "swatch": {
-                "type": "textual",
-                "value": "29"
-              }
-            },
-            {
-              "value": "30",
-              "label": "30",
-              "swatch": {
-                "type": "textual",
-                "value": "30"
-              }
-            },
-            {
-              "value": "31",
-              "label": "31",
-              "swatch": {
-                "type": "textual",
-                "value": "31"
-              }
-            },
-            {
-              "value": "32",
-              "label": "32",
-              "swatch": {
-                "type": "textual",
-                "value": "32"
-              }
-            },
-            {
-              "value": "33",
-              "label": "33",
-              "swatch": {
-                "type": "textual",
-                "value": "33"
-              }
-            },
-            {
-              "value": "34",
-              "label": "34",
-              "swatch": {
-                "type": "textual",
-                "value": "34"
-              }
-            },
-            {
-              "value": "36",
-              "label": "36",
-              "swatch": {
-                "type": "textual",
-                "value": "36"
-              }
-            },
-            {
-              "value": "38",
-              "label": "38",
-              "swatch": {
-                "type": "textual",
-                "value": "38"
-              }
             }
-          ]
+          ],
+          "isFacet": true
         }
       ],
       "name": "Chaz Kangeroo Hoodie-M-Gray",
@@ -3288,8 +1207,7 @@
               "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "thumbnail",
@@ -3300,8 +1218,7 @@
               "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "url_key",
@@ -3312,8 +1229,7 @@
               "label": "chaz-kangeroo-hoodie-m-orange"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "color",
@@ -3321,108 +1237,14 @@
           "values": [
             {
               "value": "Orange",
-              "label": "Orange"
-            }
-          ],
-          "isFacet": true,
-          "options": [
-            {
-              "value": "Black",
-              "label": "Black",
-              "swatch": {
-                "type": "color",
-                "value": "#000000"
-              }
-            },
-            {
-              "value": "Blue",
-              "label": "Blue",
-              "swatch": {
-                "type": "color",
-                "value": "#1857f7"
-              }
-            },
-            {
-              "value": "Brown",
-              "label": "Brown",
-              "swatch": {
-                "type": "color",
-                "value": "#945454"
-              }
-            },
-            {
-              "value": "Gray",
-              "label": "Gray",
-              "swatch": {
-                "type": "color",
-                "value": "#8f8f8f"
-              }
-            },
-            {
-              "value": "Green",
-              "label": "Green",
-              "swatch": {
-                "type": "color",
-                "value": "#53a828"
-              }
-            },
-            {
-              "value": "Lavender",
-              "label": "Lavender",
-              "swatch": {
-                "type": "color",
-                "value": "#ce64d4"
-              }
-            },
-            {
-              "value": "Multi",
-              "label": "Multi",
-              "swatch": {
-                "type": "color",
-                "value": "#ffffff"
-              }
-            },
-            {
-              "value": "Orange",
               "label": "Orange",
               "swatch": {
                 "type": "color",
                 "value": "#eb6703"
               }
-            },
-            {
-              "value": "Purple",
-              "label": "Purple",
-              "swatch": {
-                "type": "color",
-                "value": "#ef3dff"
-              }
-            },
-            {
-              "value": "Red",
-              "label": "Red",
-              "swatch": {
-                "type": "color",
-                "value": "#ff0000"
-              }
-            },
-            {
-              "value": "White",
-              "label": "White",
-              "swatch": {
-                "type": "color",
-                "value": "#ffffff"
-              }
-            },
-            {
-              "value": "Yellow",
-              "label": "Yellow",
-              "swatch": {
-                "type": "color",
-                "value": "#ffd500"
-              }
             }
-          ]
+          ],
+          "isFacet": true
         },
         {
           "name": "size",
@@ -3430,172 +1252,14 @@
           "values": [
             {
               "value": "M",
-              "label": "M"
-            }
-          ],
-          "isFacet": true,
-          "options": [
-            {
-              "value": "55 cm",
-              "label": "55 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "55 cm"
-              }
-            },
-            {
-              "value": "XS",
-              "label": "XS",
-              "swatch": {
-                "type": "textual",
-                "value": "XS"
-              }
-            },
-            {
-              "value": "65 cm",
-              "label": "65 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "65 cm"
-              }
-            },
-            {
-              "value": "S",
-              "label": "S",
-              "swatch": {
-                "type": "textual",
-                "value": "S"
-              }
-            },
-            {
-              "value": "75 cm",
-              "label": "75 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "75 cm"
-              }
-            },
-            {
-              "value": "M",
               "label": "M",
               "swatch": {
                 "type": "textual",
                 "value": "M"
               }
-            },
-            {
-              "value": "6 foot",
-              "label": "6 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "6 foot"
-              }
-            },
-            {
-              "value": "L",
-              "label": "L",
-              "swatch": {
-                "type": "textual",
-                "value": "L"
-              }
-            },
-            {
-              "value": "8 foot",
-              "label": "8 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "8 foot"
-              }
-            },
-            {
-              "value": "XL",
-              "label": "XL",
-              "swatch": {
-                "type": "textual",
-                "value": "XL"
-              }
-            },
-            {
-              "value": "10 foot",
-              "label": "10 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "10 foot"
-              }
-            },
-            {
-              "value": "28",
-              "label": "28",
-              "swatch": {
-                "type": "textual",
-                "value": "28"
-              }
-            },
-            {
-              "value": "29",
-              "label": "29",
-              "swatch": {
-                "type": "textual",
-                "value": "29"
-              }
-            },
-            {
-              "value": "30",
-              "label": "30",
-              "swatch": {
-                "type": "textual",
-                "value": "30"
-              }
-            },
-            {
-              "value": "31",
-              "label": "31",
-              "swatch": {
-                "type": "textual",
-                "value": "31"
-              }
-            },
-            {
-              "value": "32",
-              "label": "32",
-              "swatch": {
-                "type": "textual",
-                "value": "32"
-              }
-            },
-            {
-              "value": "33",
-              "label": "33",
-              "swatch": {
-                "type": "textual",
-                "value": "33"
-              }
-            },
-            {
-              "value": "34",
-              "label": "34",
-              "swatch": {
-                "type": "textual",
-                "value": "34"
-              }
-            },
-            {
-              "value": "36",
-              "label": "36",
-              "swatch": {
-                "type": "textual",
-                "value": "36"
-              }
-            },
-            {
-              "value": "38",
-              "label": "38",
-              "swatch": {
-                "type": "textual",
-                "value": "38"
-              }
             }
-          ]
+          ],
+          "isFacet": true
         }
       ],
       "name": "Chaz Kangeroo Hoodie-M-Orange",
@@ -3630,8 +1294,7 @@
               "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "thumbnail",
@@ -3642,8 +1305,7 @@
               "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "url_key",
@@ -3654,8 +1316,7 @@
               "label": "chaz-kangeroo-hoodie-l-black"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "color",
@@ -3663,108 +1324,14 @@
           "values": [
             {
               "value": "Black",
-              "label": "Black"
-            }
-          ],
-          "isFacet": true,
-          "options": [
-            {
-              "value": "Black",
               "label": "Black",
               "swatch": {
                 "type": "color",
                 "value": "#000000"
               }
-            },
-            {
-              "value": "Blue",
-              "label": "Blue",
-              "swatch": {
-                "type": "color",
-                "value": "#1857f7"
-              }
-            },
-            {
-              "value": "Brown",
-              "label": "Brown",
-              "swatch": {
-                "type": "color",
-                "value": "#945454"
-              }
-            },
-            {
-              "value": "Gray",
-              "label": "Gray",
-              "swatch": {
-                "type": "color",
-                "value": "#8f8f8f"
-              }
-            },
-            {
-              "value": "Green",
-              "label": "Green",
-              "swatch": {
-                "type": "color",
-                "value": "#53a828"
-              }
-            },
-            {
-              "value": "Lavender",
-              "label": "Lavender",
-              "swatch": {
-                "type": "color",
-                "value": "#ce64d4"
-              }
-            },
-            {
-              "value": "Multi",
-              "label": "Multi",
-              "swatch": {
-                "type": "color",
-                "value": "#ffffff"
-              }
-            },
-            {
-              "value": "Orange",
-              "label": "Orange",
-              "swatch": {
-                "type": "color",
-                "value": "#eb6703"
-              }
-            },
-            {
-              "value": "Purple",
-              "label": "Purple",
-              "swatch": {
-                "type": "color",
-                "value": "#ef3dff"
-              }
-            },
-            {
-              "value": "Red",
-              "label": "Red",
-              "swatch": {
-                "type": "color",
-                "value": "#ff0000"
-              }
-            },
-            {
-              "value": "White",
-              "label": "White",
-              "swatch": {
-                "type": "color",
-                "value": "#ffffff"
-              }
-            },
-            {
-              "value": "Yellow",
-              "label": "Yellow",
-              "swatch": {
-                "type": "color",
-                "value": "#ffd500"
-              }
             }
-          ]
+          ],
+          "isFacet": true
         },
         {
           "name": "size",
@@ -3772,172 +1339,14 @@
           "values": [
             {
               "value": "L",
-              "label": "L"
-            }
-          ],
-          "isFacet": true,
-          "options": [
-            {
-              "value": "55 cm",
-              "label": "55 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "55 cm"
-              }
-            },
-            {
-              "value": "XS",
-              "label": "XS",
-              "swatch": {
-                "type": "textual",
-                "value": "XS"
-              }
-            },
-            {
-              "value": "65 cm",
-              "label": "65 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "65 cm"
-              }
-            },
-            {
-              "value": "S",
-              "label": "S",
-              "swatch": {
-                "type": "textual",
-                "value": "S"
-              }
-            },
-            {
-              "value": "75 cm",
-              "label": "75 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "75 cm"
-              }
-            },
-            {
-              "value": "M",
-              "label": "M",
-              "swatch": {
-                "type": "textual",
-                "value": "M"
-              }
-            },
-            {
-              "value": "6 foot",
-              "label": "6 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "6 foot"
-              }
-            },
-            {
-              "value": "L",
               "label": "L",
               "swatch": {
                 "type": "textual",
                 "value": "L"
               }
-            },
-            {
-              "value": "8 foot",
-              "label": "8 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "8 foot"
-              }
-            },
-            {
-              "value": "XL",
-              "label": "XL",
-              "swatch": {
-                "type": "textual",
-                "value": "XL"
-              }
-            },
-            {
-              "value": "10 foot",
-              "label": "10 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "10 foot"
-              }
-            },
-            {
-              "value": "28",
-              "label": "28",
-              "swatch": {
-                "type": "textual",
-                "value": "28"
-              }
-            },
-            {
-              "value": "29",
-              "label": "29",
-              "swatch": {
-                "type": "textual",
-                "value": "29"
-              }
-            },
-            {
-              "value": "30",
-              "label": "30",
-              "swatch": {
-                "type": "textual",
-                "value": "30"
-              }
-            },
-            {
-              "value": "31",
-              "label": "31",
-              "swatch": {
-                "type": "textual",
-                "value": "31"
-              }
-            },
-            {
-              "value": "32",
-              "label": "32",
-              "swatch": {
-                "type": "textual",
-                "value": "32"
-              }
-            },
-            {
-              "value": "33",
-              "label": "33",
-              "swatch": {
-                "type": "textual",
-                "value": "33"
-              }
-            },
-            {
-              "value": "34",
-              "label": "34",
-              "swatch": {
-                "type": "textual",
-                "value": "34"
-              }
-            },
-            {
-              "value": "36",
-              "label": "36",
-              "swatch": {
-                "type": "textual",
-                "value": "36"
-              }
-            },
-            {
-              "value": "38",
-              "label": "38",
-              "swatch": {
-                "type": "textual",
-                "value": "38"
-              }
             }
-          ]
+          ],
+          "isFacet": true
         }
       ],
       "name": "Chaz Kangeroo Hoodie-L-Black",
@@ -3972,8 +1381,7 @@
               "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "thumbnail",
@@ -3984,8 +1392,7 @@
               "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "url_key",
@@ -3996,8 +1403,7 @@
               "label": "chaz-kangeroo-hoodie-l-gray"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "color",
@@ -4005,108 +1411,14 @@
           "values": [
             {
               "value": "Gray",
-              "label": "Gray"
-            }
-          ],
-          "isFacet": true,
-          "options": [
-            {
-              "value": "Black",
-              "label": "Black",
-              "swatch": {
-                "type": "color",
-                "value": "#000000"
-              }
-            },
-            {
-              "value": "Blue",
-              "label": "Blue",
-              "swatch": {
-                "type": "color",
-                "value": "#1857f7"
-              }
-            },
-            {
-              "value": "Brown",
-              "label": "Brown",
-              "swatch": {
-                "type": "color",
-                "value": "#945454"
-              }
-            },
-            {
-              "value": "Gray",
               "label": "Gray",
               "swatch": {
                 "type": "color",
                 "value": "#8f8f8f"
               }
-            },
-            {
-              "value": "Green",
-              "label": "Green",
-              "swatch": {
-                "type": "color",
-                "value": "#53a828"
-              }
-            },
-            {
-              "value": "Lavender",
-              "label": "Lavender",
-              "swatch": {
-                "type": "color",
-                "value": "#ce64d4"
-              }
-            },
-            {
-              "value": "Multi",
-              "label": "Multi",
-              "swatch": {
-                "type": "color",
-                "value": "#ffffff"
-              }
-            },
-            {
-              "value": "Orange",
-              "label": "Orange",
-              "swatch": {
-                "type": "color",
-                "value": "#eb6703"
-              }
-            },
-            {
-              "value": "Purple",
-              "label": "Purple",
-              "swatch": {
-                "type": "color",
-                "value": "#ef3dff"
-              }
-            },
-            {
-              "value": "Red",
-              "label": "Red",
-              "swatch": {
-                "type": "color",
-                "value": "#ff0000"
-              }
-            },
-            {
-              "value": "White",
-              "label": "White",
-              "swatch": {
-                "type": "color",
-                "value": "#ffffff"
-              }
-            },
-            {
-              "value": "Yellow",
-              "label": "Yellow",
-              "swatch": {
-                "type": "color",
-                "value": "#ffd500"
-              }
             }
-          ]
+          ],
+          "isFacet": true
         },
         {
           "name": "size",
@@ -4114,172 +1426,14 @@
           "values": [
             {
               "value": "L",
-              "label": "L"
-            }
-          ],
-          "isFacet": true,
-          "options": [
-            {
-              "value": "55 cm",
-              "label": "55 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "55 cm"
-              }
-            },
-            {
-              "value": "XS",
-              "label": "XS",
-              "swatch": {
-                "type": "textual",
-                "value": "XS"
-              }
-            },
-            {
-              "value": "65 cm",
-              "label": "65 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "65 cm"
-              }
-            },
-            {
-              "value": "S",
-              "label": "S",
-              "swatch": {
-                "type": "textual",
-                "value": "S"
-              }
-            },
-            {
-              "value": "75 cm",
-              "label": "75 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "75 cm"
-              }
-            },
-            {
-              "value": "M",
-              "label": "M",
-              "swatch": {
-                "type": "textual",
-                "value": "M"
-              }
-            },
-            {
-              "value": "6 foot",
-              "label": "6 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "6 foot"
-              }
-            },
-            {
-              "value": "L",
               "label": "L",
               "swatch": {
                 "type": "textual",
                 "value": "L"
               }
-            },
-            {
-              "value": "8 foot",
-              "label": "8 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "8 foot"
-              }
-            },
-            {
-              "value": "XL",
-              "label": "XL",
-              "swatch": {
-                "type": "textual",
-                "value": "XL"
-              }
-            },
-            {
-              "value": "10 foot",
-              "label": "10 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "10 foot"
-              }
-            },
-            {
-              "value": "28",
-              "label": "28",
-              "swatch": {
-                "type": "textual",
-                "value": "28"
-              }
-            },
-            {
-              "value": "29",
-              "label": "29",
-              "swatch": {
-                "type": "textual",
-                "value": "29"
-              }
-            },
-            {
-              "value": "30",
-              "label": "30",
-              "swatch": {
-                "type": "textual",
-                "value": "30"
-              }
-            },
-            {
-              "value": "31",
-              "label": "31",
-              "swatch": {
-                "type": "textual",
-                "value": "31"
-              }
-            },
-            {
-              "value": "32",
-              "label": "32",
-              "swatch": {
-                "type": "textual",
-                "value": "32"
-              }
-            },
-            {
-              "value": "33",
-              "label": "33",
-              "swatch": {
-                "type": "textual",
-                "value": "33"
-              }
-            },
-            {
-              "value": "34",
-              "label": "34",
-              "swatch": {
-                "type": "textual",
-                "value": "34"
-              }
-            },
-            {
-              "value": "36",
-              "label": "36",
-              "swatch": {
-                "type": "textual",
-                "value": "36"
-              }
-            },
-            {
-              "value": "38",
-              "label": "38",
-              "swatch": {
-                "type": "textual",
-                "value": "38"
-              }
             }
-          ]
+          ],
+          "isFacet": true
         }
       ],
       "name": "Chaz Kangeroo Hoodie-L-Gray",
@@ -4322,8 +1476,7 @@
               "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "thumbnail",
@@ -4334,8 +1487,7 @@
               "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "url_key",
@@ -4346,8 +1498,7 @@
               "label": "chaz-kangeroo-hoodie-l-orange"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "color",
@@ -4355,108 +1506,14 @@
           "values": [
             {
               "value": "Orange",
-              "label": "Orange"
-            }
-          ],
-          "isFacet": true,
-          "options": [
-            {
-              "value": "Black",
-              "label": "Black",
-              "swatch": {
-                "type": "color",
-                "value": "#000000"
-              }
-            },
-            {
-              "value": "Blue",
-              "label": "Blue",
-              "swatch": {
-                "type": "color",
-                "value": "#1857f7"
-              }
-            },
-            {
-              "value": "Brown",
-              "label": "Brown",
-              "swatch": {
-                "type": "color",
-                "value": "#945454"
-              }
-            },
-            {
-              "value": "Gray",
-              "label": "Gray",
-              "swatch": {
-                "type": "color",
-                "value": "#8f8f8f"
-              }
-            },
-            {
-              "value": "Green",
-              "label": "Green",
-              "swatch": {
-                "type": "color",
-                "value": "#53a828"
-              }
-            },
-            {
-              "value": "Lavender",
-              "label": "Lavender",
-              "swatch": {
-                "type": "color",
-                "value": "#ce64d4"
-              }
-            },
-            {
-              "value": "Multi",
-              "label": "Multi",
-              "swatch": {
-                "type": "color",
-                "value": "#ffffff"
-              }
-            },
-            {
-              "value": "Orange",
               "label": "Orange",
               "swatch": {
                 "type": "color",
                 "value": "#eb6703"
               }
-            },
-            {
-              "value": "Purple",
-              "label": "Purple",
-              "swatch": {
-                "type": "color",
-                "value": "#ef3dff"
-              }
-            },
-            {
-              "value": "Red",
-              "label": "Red",
-              "swatch": {
-                "type": "color",
-                "value": "#ff0000"
-              }
-            },
-            {
-              "value": "White",
-              "label": "White",
-              "swatch": {
-                "type": "color",
-                "value": "#ffffff"
-              }
-            },
-            {
-              "value": "Yellow",
-              "label": "Yellow",
-              "swatch": {
-                "type": "color",
-                "value": "#ffd500"
-              }
             }
-          ]
+          ],
+          "isFacet": true
         },
         {
           "name": "size",
@@ -4464,172 +1521,14 @@
           "values": [
             {
               "value": "L",
-              "label": "L"
-            }
-          ],
-          "isFacet": true,
-          "options": [
-            {
-              "value": "55 cm",
-              "label": "55 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "55 cm"
-              }
-            },
-            {
-              "value": "XS",
-              "label": "XS",
-              "swatch": {
-                "type": "textual",
-                "value": "XS"
-              }
-            },
-            {
-              "value": "65 cm",
-              "label": "65 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "65 cm"
-              }
-            },
-            {
-              "value": "S",
-              "label": "S",
-              "swatch": {
-                "type": "textual",
-                "value": "S"
-              }
-            },
-            {
-              "value": "75 cm",
-              "label": "75 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "75 cm"
-              }
-            },
-            {
-              "value": "M",
-              "label": "M",
-              "swatch": {
-                "type": "textual",
-                "value": "M"
-              }
-            },
-            {
-              "value": "6 foot",
-              "label": "6 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "6 foot"
-              }
-            },
-            {
-              "value": "L",
               "label": "L",
               "swatch": {
                 "type": "textual",
                 "value": "L"
               }
-            },
-            {
-              "value": "8 foot",
-              "label": "8 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "8 foot"
-              }
-            },
-            {
-              "value": "XL",
-              "label": "XL",
-              "swatch": {
-                "type": "textual",
-                "value": "XL"
-              }
-            },
-            {
-              "value": "10 foot",
-              "label": "10 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "10 foot"
-              }
-            },
-            {
-              "value": "28",
-              "label": "28",
-              "swatch": {
-                "type": "textual",
-                "value": "28"
-              }
-            },
-            {
-              "value": "29",
-              "label": "29",
-              "swatch": {
-                "type": "textual",
-                "value": "29"
-              }
-            },
-            {
-              "value": "30",
-              "label": "30",
-              "swatch": {
-                "type": "textual",
-                "value": "30"
-              }
-            },
-            {
-              "value": "31",
-              "label": "31",
-              "swatch": {
-                "type": "textual",
-                "value": "31"
-              }
-            },
-            {
-              "value": "32",
-              "label": "32",
-              "swatch": {
-                "type": "textual",
-                "value": "32"
-              }
-            },
-            {
-              "value": "33",
-              "label": "33",
-              "swatch": {
-                "type": "textual",
-                "value": "33"
-              }
-            },
-            {
-              "value": "34",
-              "label": "34",
-              "swatch": {
-                "type": "textual",
-                "value": "34"
-              }
-            },
-            {
-              "value": "36",
-              "label": "36",
-              "swatch": {
-                "type": "textual",
-                "value": "36"
-              }
-            },
-            {
-              "value": "38",
-              "label": "38",
-              "swatch": {
-                "type": "textual",
-                "value": "38"
-              }
             }
-          ]
+          ],
+          "isFacet": true
         }
       ],
       "name": "Chaz Kangeroo Hoodie-L-Orange",
@@ -4664,8 +1563,7 @@
               "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "thumbnail",
@@ -4676,8 +1574,7 @@
               "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-black_main_1.jpg"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "url_key",
@@ -4688,8 +1585,7 @@
               "label": "chaz-kangeroo-hoodie-xl-black"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "color",
@@ -4697,108 +1593,14 @@
           "values": [
             {
               "value": "Black",
-              "label": "Black"
-            }
-          ],
-          "isFacet": true,
-          "options": [
-            {
-              "value": "Black",
               "label": "Black",
               "swatch": {
                 "type": "color",
                 "value": "#000000"
               }
-            },
-            {
-              "value": "Blue",
-              "label": "Blue",
-              "swatch": {
-                "type": "color",
-                "value": "#1857f7"
-              }
-            },
-            {
-              "value": "Brown",
-              "label": "Brown",
-              "swatch": {
-                "type": "color",
-                "value": "#945454"
-              }
-            },
-            {
-              "value": "Gray",
-              "label": "Gray",
-              "swatch": {
-                "type": "color",
-                "value": "#8f8f8f"
-              }
-            },
-            {
-              "value": "Green",
-              "label": "Green",
-              "swatch": {
-                "type": "color",
-                "value": "#53a828"
-              }
-            },
-            {
-              "value": "Lavender",
-              "label": "Lavender",
-              "swatch": {
-                "type": "color",
-                "value": "#ce64d4"
-              }
-            },
-            {
-              "value": "Multi",
-              "label": "Multi",
-              "swatch": {
-                "type": "color",
-                "value": "#ffffff"
-              }
-            },
-            {
-              "value": "Orange",
-              "label": "Orange",
-              "swatch": {
-                "type": "color",
-                "value": "#eb6703"
-              }
-            },
-            {
-              "value": "Purple",
-              "label": "Purple",
-              "swatch": {
-                "type": "color",
-                "value": "#ef3dff"
-              }
-            },
-            {
-              "value": "Red",
-              "label": "Red",
-              "swatch": {
-                "type": "color",
-                "value": "#ff0000"
-              }
-            },
-            {
-              "value": "White",
-              "label": "White",
-              "swatch": {
-                "type": "color",
-                "value": "#ffffff"
-              }
-            },
-            {
-              "value": "Yellow",
-              "label": "Yellow",
-              "swatch": {
-                "type": "color",
-                "value": "#ffd500"
-              }
             }
-          ]
+          ],
+          "isFacet": true
         },
         {
           "name": "size",
@@ -4806,172 +1608,14 @@
           "values": [
             {
               "value": "XL",
-              "label": "XL"
-            }
-          ],
-          "isFacet": true,
-          "options": [
-            {
-              "value": "55 cm",
-              "label": "55 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "55 cm"
-              }
-            },
-            {
-              "value": "XS",
-              "label": "XS",
-              "swatch": {
-                "type": "textual",
-                "value": "XS"
-              }
-            },
-            {
-              "value": "65 cm",
-              "label": "65 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "65 cm"
-              }
-            },
-            {
-              "value": "S",
-              "label": "S",
-              "swatch": {
-                "type": "textual",
-                "value": "S"
-              }
-            },
-            {
-              "value": "75 cm",
-              "label": "75 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "75 cm"
-              }
-            },
-            {
-              "value": "M",
-              "label": "M",
-              "swatch": {
-                "type": "textual",
-                "value": "M"
-              }
-            },
-            {
-              "value": "6 foot",
-              "label": "6 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "6 foot"
-              }
-            },
-            {
-              "value": "L",
-              "label": "L",
-              "swatch": {
-                "type": "textual",
-                "value": "L"
-              }
-            },
-            {
-              "value": "8 foot",
-              "label": "8 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "8 foot"
-              }
-            },
-            {
-              "value": "XL",
               "label": "XL",
               "swatch": {
                 "type": "textual",
                 "value": "XL"
               }
-            },
-            {
-              "value": "10 foot",
-              "label": "10 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "10 foot"
-              }
-            },
-            {
-              "value": "28",
-              "label": "28",
-              "swatch": {
-                "type": "textual",
-                "value": "28"
-              }
-            },
-            {
-              "value": "29",
-              "label": "29",
-              "swatch": {
-                "type": "textual",
-                "value": "29"
-              }
-            },
-            {
-              "value": "30",
-              "label": "30",
-              "swatch": {
-                "type": "textual",
-                "value": "30"
-              }
-            },
-            {
-              "value": "31",
-              "label": "31",
-              "swatch": {
-                "type": "textual",
-                "value": "31"
-              }
-            },
-            {
-              "value": "32",
-              "label": "32",
-              "swatch": {
-                "type": "textual",
-                "value": "32"
-              }
-            },
-            {
-              "value": "33",
-              "label": "33",
-              "swatch": {
-                "type": "textual",
-                "value": "33"
-              }
-            },
-            {
-              "value": "34",
-              "label": "34",
-              "swatch": {
-                "type": "textual",
-                "value": "34"
-              }
-            },
-            {
-              "value": "36",
-              "label": "36",
-              "swatch": {
-                "type": "textual",
-                "value": "36"
-              }
-            },
-            {
-              "value": "38",
-              "label": "38",
-              "swatch": {
-                "type": "textual",
-                "value": "38"
-              }
             }
-          ]
+          ],
+          "isFacet": true
         }
       ],
       "name": "Chaz Kangeroo Hoodie-XL-Black",
@@ -5006,8 +1650,7 @@
               "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "thumbnail",
@@ -5018,8 +1661,7 @@
               "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "url_key",
@@ -5030,8 +1672,7 @@
               "label": "chaz-kangeroo-hoodie-xl-gray"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "color",
@@ -5039,108 +1680,14 @@
           "values": [
             {
               "value": "Gray",
-              "label": "Gray"
-            }
-          ],
-          "isFacet": true,
-          "options": [
-            {
-              "value": "Black",
-              "label": "Black",
-              "swatch": {
-                "type": "color",
-                "value": "#000000"
-              }
-            },
-            {
-              "value": "Blue",
-              "label": "Blue",
-              "swatch": {
-                "type": "color",
-                "value": "#1857f7"
-              }
-            },
-            {
-              "value": "Brown",
-              "label": "Brown",
-              "swatch": {
-                "type": "color",
-                "value": "#945454"
-              }
-            },
-            {
-              "value": "Gray",
               "label": "Gray",
               "swatch": {
                 "type": "color",
                 "value": "#8f8f8f"
               }
-            },
-            {
-              "value": "Green",
-              "label": "Green",
-              "swatch": {
-                "type": "color",
-                "value": "#53a828"
-              }
-            },
-            {
-              "value": "Lavender",
-              "label": "Lavender",
-              "swatch": {
-                "type": "color",
-                "value": "#ce64d4"
-              }
-            },
-            {
-              "value": "Multi",
-              "label": "Multi",
-              "swatch": {
-                "type": "color",
-                "value": "#ffffff"
-              }
-            },
-            {
-              "value": "Orange",
-              "label": "Orange",
-              "swatch": {
-                "type": "color",
-                "value": "#eb6703"
-              }
-            },
-            {
-              "value": "Purple",
-              "label": "Purple",
-              "swatch": {
-                "type": "color",
-                "value": "#ef3dff"
-              }
-            },
-            {
-              "value": "Red",
-              "label": "Red",
-              "swatch": {
-                "type": "color",
-                "value": "#ff0000"
-              }
-            },
-            {
-              "value": "White",
-              "label": "White",
-              "swatch": {
-                "type": "color",
-                "value": "#ffffff"
-              }
-            },
-            {
-              "value": "Yellow",
-              "label": "Yellow",
-              "swatch": {
-                "type": "color",
-                "value": "#ffd500"
-              }
             }
-          ]
+          ],
+          "isFacet": true
         },
         {
           "name": "size",
@@ -5148,172 +1695,14 @@
           "values": [
             {
               "value": "XL",
-              "label": "XL"
-            }
-          ],
-          "isFacet": true,
-          "options": [
-            {
-              "value": "55 cm",
-              "label": "55 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "55 cm"
-              }
-            },
-            {
-              "value": "XS",
-              "label": "XS",
-              "swatch": {
-                "type": "textual",
-                "value": "XS"
-              }
-            },
-            {
-              "value": "65 cm",
-              "label": "65 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "65 cm"
-              }
-            },
-            {
-              "value": "S",
-              "label": "S",
-              "swatch": {
-                "type": "textual",
-                "value": "S"
-              }
-            },
-            {
-              "value": "75 cm",
-              "label": "75 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "75 cm"
-              }
-            },
-            {
-              "value": "M",
-              "label": "M",
-              "swatch": {
-                "type": "textual",
-                "value": "M"
-              }
-            },
-            {
-              "value": "6 foot",
-              "label": "6 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "6 foot"
-              }
-            },
-            {
-              "value": "L",
-              "label": "L",
-              "swatch": {
-                "type": "textual",
-                "value": "L"
-              }
-            },
-            {
-              "value": "8 foot",
-              "label": "8 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "8 foot"
-              }
-            },
-            {
-              "value": "XL",
               "label": "XL",
               "swatch": {
                 "type": "textual",
                 "value": "XL"
               }
-            },
-            {
-              "value": "10 foot",
-              "label": "10 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "10 foot"
-              }
-            },
-            {
-              "value": "28",
-              "label": "28",
-              "swatch": {
-                "type": "textual",
-                "value": "28"
-              }
-            },
-            {
-              "value": "29",
-              "label": "29",
-              "swatch": {
-                "type": "textual",
-                "value": "29"
-              }
-            },
-            {
-              "value": "30",
-              "label": "30",
-              "swatch": {
-                "type": "textual",
-                "value": "30"
-              }
-            },
-            {
-              "value": "31",
-              "label": "31",
-              "swatch": {
-                "type": "textual",
-                "value": "31"
-              }
-            },
-            {
-              "value": "32",
-              "label": "32",
-              "swatch": {
-                "type": "textual",
-                "value": "32"
-              }
-            },
-            {
-              "value": "33",
-              "label": "33",
-              "swatch": {
-                "type": "textual",
-                "value": "33"
-              }
-            },
-            {
-              "value": "34",
-              "label": "34",
-              "swatch": {
-                "type": "textual",
-                "value": "34"
-              }
-            },
-            {
-              "value": "36",
-              "label": "36",
-              "swatch": {
-                "type": "textual",
-                "value": "36"
-              }
-            },
-            {
-              "value": "38",
-              "label": "38",
-              "swatch": {
-                "type": "textual",
-                "value": "38"
-              }
             }
-          ]
+          ],
+          "isFacet": true
         }
       ],
       "name": "Chaz Kangeroo Hoodie-XL-Gray",
@@ -5356,8 +1745,7 @@
               "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "thumbnail",
@@ -5368,8 +1756,7 @@
               "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "url_key",
@@ -5380,8 +1767,7 @@
               "label": "chaz-kangeroo-hoodie-xl-orange"
             }
           ],
-          "isFacet": false,
-          "options": []
+          "isFacet": false
         },
         {
           "name": "color",
@@ -5389,108 +1775,14 @@
           "values": [
             {
               "value": "Orange",
-              "label": "Orange"
-            }
-          ],
-          "isFacet": true,
-          "options": [
-            {
-              "value": "Black",
-              "label": "Black",
-              "swatch": {
-                "type": "color",
-                "value": "#000000"
-              }
-            },
-            {
-              "value": "Blue",
-              "label": "Blue",
-              "swatch": {
-                "type": "color",
-                "value": "#1857f7"
-              }
-            },
-            {
-              "value": "Brown",
-              "label": "Brown",
-              "swatch": {
-                "type": "color",
-                "value": "#945454"
-              }
-            },
-            {
-              "value": "Gray",
-              "label": "Gray",
-              "swatch": {
-                "type": "color",
-                "value": "#8f8f8f"
-              }
-            },
-            {
-              "value": "Green",
-              "label": "Green",
-              "swatch": {
-                "type": "color",
-                "value": "#53a828"
-              }
-            },
-            {
-              "value": "Lavender",
-              "label": "Lavender",
-              "swatch": {
-                "type": "color",
-                "value": "#ce64d4"
-              }
-            },
-            {
-              "value": "Multi",
-              "label": "Multi",
-              "swatch": {
-                "type": "color",
-                "value": "#ffffff"
-              }
-            },
-            {
-              "value": "Orange",
               "label": "Orange",
               "swatch": {
                 "type": "color",
                 "value": "#eb6703"
               }
-            },
-            {
-              "value": "Purple",
-              "label": "Purple",
-              "swatch": {
-                "type": "color",
-                "value": "#ef3dff"
-              }
-            },
-            {
-              "value": "Red",
-              "label": "Red",
-              "swatch": {
-                "type": "color",
-                "value": "#ff0000"
-              }
-            },
-            {
-              "value": "White",
-              "label": "White",
-              "swatch": {
-                "type": "color",
-                "value": "#ffffff"
-              }
-            },
-            {
-              "value": "Yellow",
-              "label": "Yellow",
-              "swatch": {
-                "type": "color",
-                "value": "#ffd500"
-              }
             }
-          ]
+          ],
+          "isFacet": true
         },
         {
           "name": "size",
@@ -5498,172 +1790,14 @@
           "values": [
             {
               "value": "XL",
-              "label": "XL"
-            }
-          ],
-          "isFacet": true,
-          "options": [
-            {
-              "value": "55 cm",
-              "label": "55 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "55 cm"
-              }
-            },
-            {
-              "value": "XS",
-              "label": "XS",
-              "swatch": {
-                "type": "textual",
-                "value": "XS"
-              }
-            },
-            {
-              "value": "65 cm",
-              "label": "65 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "65 cm"
-              }
-            },
-            {
-              "value": "S",
-              "label": "S",
-              "swatch": {
-                "type": "textual",
-                "value": "S"
-              }
-            },
-            {
-              "value": "75 cm",
-              "label": "75 cm",
-              "swatch": {
-                "type": "textual",
-                "value": "75 cm"
-              }
-            },
-            {
-              "value": "M",
-              "label": "M",
-              "swatch": {
-                "type": "textual",
-                "value": "M"
-              }
-            },
-            {
-              "value": "6 foot",
-              "label": "6 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "6 foot"
-              }
-            },
-            {
-              "value": "L",
-              "label": "L",
-              "swatch": {
-                "type": "textual",
-                "value": "L"
-              }
-            },
-            {
-              "value": "8 foot",
-              "label": "8 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "8 foot"
-              }
-            },
-            {
-              "value": "XL",
               "label": "XL",
               "swatch": {
                 "type": "textual",
                 "value": "XL"
               }
-            },
-            {
-              "value": "10 foot",
-              "label": "10 foot",
-              "swatch": {
-                "type": "textual",
-                "value": "10 foot"
-              }
-            },
-            {
-              "value": "28",
-              "label": "28",
-              "swatch": {
-                "type": "textual",
-                "value": "28"
-              }
-            },
-            {
-              "value": "29",
-              "label": "29",
-              "swatch": {
-                "type": "textual",
-                "value": "29"
-              }
-            },
-            {
-              "value": "30",
-              "label": "30",
-              "swatch": {
-                "type": "textual",
-                "value": "30"
-              }
-            },
-            {
-              "value": "31",
-              "label": "31",
-              "swatch": {
-                "type": "textual",
-                "value": "31"
-              }
-            },
-            {
-              "value": "32",
-              "label": "32",
-              "swatch": {
-                "type": "textual",
-                "value": "32"
-              }
-            },
-            {
-              "value": "33",
-              "label": "33",
-              "swatch": {
-                "type": "textual",
-                "value": "33"
-              }
-            },
-            {
-              "value": "34",
-              "label": "34",
-              "swatch": {
-                "type": "textual",
-                "value": "34"
-              }
-            },
-            {
-              "value": "36",
-              "label": "36",
-              "swatch": {
-                "type": "textual",
-                "value": "36"
-              }
-            },
-            {
-              "value": "38",
-              "label": "38",
-              "swatch": {
-                "type": "textual",
-                "value": "38"
-              }
             }
-          ]
+          ],
+          "isFacet": true
         }
       ],
       "name": "Chaz Kangeroo Hoodie-XL-Orange",

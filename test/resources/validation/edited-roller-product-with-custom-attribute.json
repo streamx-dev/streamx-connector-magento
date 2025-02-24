@@ -12,8 +12,7 @@
           "label": "https:\/\/magento.test:444\/media\/catalog\/product\/l\/u\/luma-foam-roller.jpg"
         }
       ],
-      "isFacet": false,
-      "options": []
+      "isFacet": false
     },
     {
       "name": "thumbnail",
@@ -24,8 +23,7 @@
           "label": "https:\/\/magento.test:444\/media\/catalog\/product\/l\/u\/luma-foam-roller.jpg"
         }
       ],
-      "isFacet": false,
-      "options": []
+      "isFacet": false
     },
     {
       "name": "image_label",
@@ -36,8 +34,7 @@
           "label": "Image"
         }
       ],
-      "isFacet": false,
-      "options": []
+      "isFacet": false
     },
     {
       "name": "small_image_label",
@@ -48,8 +45,7 @@
           "label": "Image"
         }
       ],
-      "isFacet": false,
-      "options": []
+      "isFacet": false
     },
     {
       "name": "thumbnail_label",
@@ -60,8 +56,7 @@
           "label": "Image"
         }
       ],
-      "isFacet": false,
-      "options": []
+      "isFacet": false
     },
     {
       "name": "url_key",
@@ -72,8 +67,7 @@
           "label": "sprite-foam-roller"
         }
       ],
-      "isFacet": false,
-      "options": []
+      "isFacet": false
     },
     {
       "name": "msrp_display_actual_price_type",
@@ -84,25 +78,7 @@
           "label": "Use config"
         }
       ],
-      "isFacet": false,
-      "options": [
-        {
-          "value": "Use config",
-          "label": "Use config"
-        },
-        {
-          "value": "On Gesture",
-          "label": "On Gesture"
-        },
-        {
-          "value": "In Cart",
-          "label": "In Cart"
-        },
-        {
-          "value": "Before Order Confirmation",
-          "label": "Before Order Confirmation"
-        }
-      ]
+      "isFacet": false
     },
     {
       "name": "the_new_attribute",
@@ -113,8 +89,7 @@
           "label": "the_new_attribute value for product 22"
         }
       ],
-      "isFacet": false,
-      "options": []
+      "isFacet": false
     },
     {
       "name": "activity",
@@ -129,89 +104,7 @@
           "label": "Gym"
         }
       ],
-      "isFacet": true,
-      "options": [
-        {
-          "value": "Hike",
-          "label": "Hike"
-        },
-        {
-          "value": "Outdoor",
-          "label": "Outdoor"
-        },
-        {
-          "value": "Running",
-          "label": "Running"
-        },
-        {
-          "value": "Warmup",
-          "label": "Warmup"
-        },
-        {
-          "value": "Yoga",
-          "label": "Yoga"
-        },
-        {
-          "value": "Recreation",
-          "label": "Recreation"
-        },
-        {
-          "value": "Lounge",
-          "label": "Lounge"
-        },
-        {
-          "value": "Gym",
-          "label": "Gym"
-        },
-        {
-          "value": "Climbing",
-          "label": "Climbing"
-        },
-        {
-          "value": "Crosstraining",
-          "label": "Crosstraining"
-        },
-        {
-          "value": "Post-workout",
-          "label": "Post-workout"
-        },
-        {
-          "value": "Cycling",
-          "label": "Cycling"
-        },
-        {
-          "value": "Athletic",
-          "label": "Athletic"
-        },
-        {
-          "value": "Sports",
-          "label": "Sports"
-        },
-        {
-          "value": "Hiking",
-          "label": "Hiking"
-        },
-        {
-          "value": "Overnight",
-          "label": "Overnight"
-        },
-        {
-          "value": "School",
-          "label": "School"
-        },
-        {
-          "value": "Trail",
-          "label": "Trail"
-        },
-        {
-          "value": "Travel",
-          "label": "Travel"
-        },
-        {
-          "value": "Urban",
-          "label": "Urban"
-        }
-      ]
+      "isFacet": true
     },
     {
       "name": "material",
@@ -222,153 +115,7 @@
           "label": "Foam"
         }
       ],
-      "isFacet": true,
-      "options": [
-        {
-          "value": "Burlap",
-          "label": "Burlap"
-        },
-        {
-          "value": "Cocona&reg; performance fabric",
-          "label": "Cocona&reg; performance fabric"
-        },
-        {
-          "value": "Canvas",
-          "label": "Canvas"
-        },
-        {
-          "value": "Wool",
-          "label": "Wool"
-        },
-        {
-          "value": "Cotton",
-          "label": "Cotton"
-        },
-        {
-          "value": "Fleece",
-          "label": "Fleece"
-        },
-        {
-          "value": "Faux Leather",
-          "label": "Faux Leather"
-        },
-        {
-          "value": "Hemp",
-          "label": "Hemp"
-        },
-        {
-          "value": "Jersey",
-          "label": "Jersey"
-        },
-        {
-          "value": "Leather",
-          "label": "Leather"
-        },
-        {
-          "value": "LumaTech&trade;",
-          "label": "LumaTech&trade;"
-        },
-        {
-          "value": "Mesh",
-          "label": "Mesh"
-        },
-        {
-          "value": "Lycra&reg;",
-          "label": "Lycra&reg;"
-        },
-        {
-          "value": "Nylon",
-          "label": "Nylon"
-        },
-        {
-          "value": "Microfiber",
-          "label": "Microfiber"
-        },
-        {
-          "value": "Polyester",
-          "label": "Polyester"
-        },
-        {
-          "value": "Rayon",
-          "label": "Rayon"
-        },
-        {
-          "value": "Spandex",
-          "label": "Spandex"
-        },
-        {
-          "value": "HeatTec&reg;",
-          "label": "HeatTec&reg;"
-        },
-        {
-          "value": "Ripstop",
-          "label": "Ripstop"
-        },
-        {
-          "value": "EverCool&trade;",
-          "label": "EverCool&trade;"
-        },
-        {
-          "value": "Suede",
-          "label": "Suede"
-        },
-        {
-          "value": "Foam",
-          "label": "Foam"
-        },
-        {
-          "value": "Organic Cotton",
-          "label": "Organic Cotton"
-        },
-        {
-          "value": "Metal",
-          "label": "Metal"
-        },
-        {
-          "value": "TENCEL",
-          "label": "TENCEL"
-        },
-        {
-          "value": "CoolTech&trade;",
-          "label": "CoolTech&trade;"
-        },
-        {
-          "value": "Plastic",
-          "label": "Plastic"
-        },
-        {
-          "value": "Khaki",
-          "label": "Khaki"
-        },
-        {
-          "value": "Rubber",
-          "label": "Rubber"
-        },
-        {
-          "value": "Linen",
-          "label": "Linen"
-        },
-        {
-          "value": "Synthetic",
-          "label": "Synthetic"
-        },
-        {
-          "value": "Stainless Steel",
-          "label": "Stainless Steel"
-        },
-        {
-          "value": "Wool",
-          "label": "Wool"
-        },
-        {
-          "value": "Silicone",
-          "label": "Silicone"
-        },
-        {
-          "value": "Terry",
-          "label": "Terry"
-        }
-      ]
+      "isFacet": true
     },
     {
       "name": "gender",
@@ -387,29 +134,7 @@
           "label": "Unisex"
         }
       ],
-      "isFacet": true,
-      "options": [
-        {
-          "value": "Men",
-          "label": "Men"
-        },
-        {
-          "value": "Women",
-          "label": "Women"
-        },
-        {
-          "value": "Boys",
-          "label": "Boys"
-        },
-        {
-          "value": "Girls",
-          "label": "Girls"
-        },
-        {
-          "value": "Unisex",
-          "label": "Unisex"
-        }
-      ]
+      "isFacet": true
     },
     {
       "name": "category_gear",
@@ -420,33 +145,7 @@
           "label": "Exercise"
         }
       ],
-      "isFacet": true,
-      "options": [
-        {
-          "value": "Cardio",
-          "label": "Cardio"
-        },
-        {
-          "value": "Electronic",
-          "label": "Electronic"
-        },
-        {
-          "value": "Exercise",
-          "label": "Exercise"
-        },
-        {
-          "value": "Fashion",
-          "label": "Fashion"
-        },
-        {
-          "value": "Hydration",
-          "label": "Hydration"
-        },
-        {
-          "value": "Timepiece",
-          "label": "Timepiece"
-        }
-      ]
+      "isFacet": true
     },
     {
       "name": "color",
@@ -454,108 +153,14 @@
       "values": [
         {
           "value": "Black",
-          "label": "Black"
-        }
-      ],
-      "isFacet": true,
-      "options": [
-        {
-          "value": "Black",
           "label": "Black",
           "swatch": {
             "type": "color",
             "value": "#000000"
           }
-        },
-        {
-          "value": "Blue",
-          "label": "Blue",
-          "swatch": {
-            "type": "color",
-            "value": "#1857f7"
-          }
-        },
-        {
-          "value": "Brown",
-          "label": "Brown",
-          "swatch": {
-            "type": "color",
-            "value": "#945454"
-          }
-        },
-        {
-          "value": "Gray",
-          "label": "Gray",
-          "swatch": {
-            "type": "color",
-            "value": "#8f8f8f"
-          }
-        },
-        {
-          "value": "Green",
-          "label": "Green",
-          "swatch": {
-            "type": "color",
-            "value": "#53a828"
-          }
-        },
-        {
-          "value": "Lavender",
-          "label": "Lavender",
-          "swatch": {
-            "type": "color",
-            "value": "#ce64d4"
-          }
-        },
-        {
-          "value": "Multi",
-          "label": "Multi",
-          "swatch": {
-            "type": "color",
-            "value": "#ffffff"
-          }
-        },
-        {
-          "value": "Orange",
-          "label": "Orange",
-          "swatch": {
-            "type": "color",
-            "value": "#eb6703"
-          }
-        },
-        {
-          "value": "Purple",
-          "label": "Purple",
-          "swatch": {
-            "type": "color",
-            "value": "#ef3dff"
-          }
-        },
-        {
-          "value": "Red",
-          "label": "Red",
-          "swatch": {
-            "type": "color",
-            "value": "#ff0000"
-          }
-        },
-        {
-          "value": "White",
-          "label": "White",
-          "swatch": {
-            "type": "color",
-            "value": "#ffffff"
-          }
-        },
-        {
-          "value": "Yellow",
-          "label": "Yellow",
-          "swatch": {
-            "type": "color",
-            "value": "#ffd500"
-          }
         }
-      ]
+      ],
+      "isFacet": true
     },
     {
       "name": "status",
@@ -566,17 +171,7 @@
           "label": "Enabled"
         }
       ],
-      "isFacet": false,
-      "options": [
-        {
-          "value": "Enabled",
-          "label": "Enabled"
-        },
-        {
-          "value": "Disabled",
-          "label": "Disabled"
-        }
-      ]
+      "isFacet": false
     },
     {
       "name": "visibility",
@@ -587,25 +182,7 @@
           "label": "Catalog, Search"
         }
       ],
-      "isFacet": false,
-      "options": [
-        {
-          "value": "Not Visible Individually",
-          "label": "Not Visible Individually"
-        },
-        {
-          "value": "Catalog",
-          "label": "Catalog"
-        },
-        {
-          "value": "Search",
-          "label": "Search"
-        },
-        {
-          "value": "Catalog, Search",
-          "label": "Catalog, Search"
-        }
-      ]
+      "isFacet": false
     },
     {
       "name": "tax_class_id",
@@ -616,17 +193,7 @@
           "label": "Taxable Goods"
         }
       ],
-      "isFacet": false,
-      "options": [
-        {
-          "value": "None",
-          "label": "None"
-        },
-        {
-          "value": "Taxable Goods",
-          "label": "Taxable Goods"
-        }
-      ]
+      "isFacet": false
     }
   ],
   "name": "Sprite Foam Roller",

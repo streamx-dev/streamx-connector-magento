@@ -12,17 +12,7 @@
           "label": "Enabled"
         }
       ],
-      "isFacet": false,
-      "options": [
-        {
-          "value": "Enabled",
-          "label": "Enabled"
-        },
-        {
-          "value": "Disabled",
-          "label": "Disabled"
-        }
-      ]
+      "isFacet": false
     }
   ],
   "name": "PRODUCT_NAME",
