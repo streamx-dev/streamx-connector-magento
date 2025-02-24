@@ -27,7 +27,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
         // when
         $productId = $this->insertNewMinimalProduct($sku, $productName);
-        $expectedKey = "pim:$productId";
+        $expectedKey = "default_product:$productId";
 
         try {
             // and
@@ -64,7 +64,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         // when
         $this->allowIndexingAllAttributes();
         $productId = $this->insertNewProduct($productName, $categoryIds);
-        $expectedKey = "pim:$productId";
+        $expectedKey = "default_product:$productId";
 
         try {
             // and
@@ -109,7 +109,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
         // when
         $productId = $this->insertNewProduct($productName, [$watchesCategoryId]);
-        $expectedKey = "pim:$productId";
+        $expectedKey = "default_product:$productId";
 
         // and: make the product not active:
         $defaultStoreId = 0;
@@ -157,7 +157,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
                 $productId = $productIds[$i];
                 $productName = $productNames[$i];
                 $expectedSlug = str_replace([' ', 'W'], ['-', 'w'], $productName) . "-$productId";
-                $this->assertExactDataIsPublished("pim:$productId", 'added-minimal-product.json', [
+                $this->assertExactDataIsPublished("default_product:$productId", 'added-minimal-product.json', [
                     // provide values for placeholders in the validation file
                     'SKU' => $skus[$i],
                     123456789 => $productId,
@@ -174,7 +174,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
             // then
             for ($i = 0; $i < $productsCount; $i++) {
-                $this->assertDataIsUnpublished('pim:' . $productIds[$i]);
+                $this->assertDataIsUnpublished('default_product:' . $productIds[$i]);
             }
         }
     }

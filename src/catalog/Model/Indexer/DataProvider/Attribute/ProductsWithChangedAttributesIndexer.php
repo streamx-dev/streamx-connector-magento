@@ -6,7 +6,6 @@ use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Psr\Log\LoggerInterface;
-use Streamx\Clients\Ingestion\Exceptions\StreamxClientException;
 use StreamX\ConnectorCatalog\Indexer\ProductsIndexer;
 use StreamX\ConnectorCatalog\Model\Attributes\AttributeDefinition;
 use StreamX\ConnectorCatalog\Model\Indexer\DataLoader\ProductDataLoader;
@@ -51,7 +50,6 @@ class ProductsWithChangedAttributesIndexer
      * @param array<int, ?AttributeDefinition> $attributeDefinitions key = attributeId, value = AttributeDefinition
      * @throws LocalizedException
      * @throws NoSuchEntityException
-     * @throws StreamxClientException
      * @throws Zend_Db_Select_Exception
      */
     public function process(array $attributeDefinitions, int $storeId, StreamxClient $client): void

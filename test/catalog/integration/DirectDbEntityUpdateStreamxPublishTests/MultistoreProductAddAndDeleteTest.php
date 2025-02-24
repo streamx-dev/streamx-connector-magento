@@ -23,13 +23,13 @@ class MultistoreProductAddAndDeleteTest extends BaseMultistoreTest {
         $this->db->execute('UPDATE catalog_product_entity SET has_options = TRUE WHERE entity_id IN (1, 4)');
 
         $expectedPublishedKeys = [
-            'pim:1',
-            'pim:4',
-            'pim_store_2:1',
-            'pim_store_2:4',
-            'pim_website_2:4'
+            'default_product:1',
+            'default_product:4',
+            'store_2_view_product:1',
+            'store_2_view_product:4',
+            'store_view_for_second_website_product:4'
         ];
-        $unexpectedPublishedKey = 'pim_website_2:1';
+        $unexpectedPublishedKey = 'store_view_for_second_website_product:1';
 
         // and
         foreach ($expectedPublishedKeys as $key) {
@@ -42,11 +42,11 @@ class MultistoreProductAddAndDeleteTest extends BaseMultistoreTest {
             $this->reindexMview();
 
             // then
-            $this->assertExactDataIsPublished('pim:1', 'original-bag-product.json');
-            $this->assertExactDataIsPublished('pim:4', 'wayfarer-bag-product.json');
-            $this->assertExactDataIsPublished('pim_store_2:1', 'original-bag-product.json');
-            $this->assertExactDataIsPublished('pim_store_2:4', 'wayfarer-bag-product.json');
-            $this->assertExactDataIsPublished('pim_website_2:4', 'wayfarer-bag-product.json');
+            $this->assertExactDataIsPublished('default_product:1', 'original-bag-product.json');
+            $this->assertExactDataIsPublished('default_product:4', 'wayfarer-bag-product.json');
+            $this->assertExactDataIsPublished('store_2_view_product:1', 'original-bag-product.json');
+            $this->assertExactDataIsPublished('store_2_view_product:4', 'wayfarer-bag-product.json');
+            $this->assertExactDataIsPublished('store_view_for_second_website_product:4', 'wayfarer-bag-product.json');
 
             // and
             $this->assertDataIsNotPublished($unexpectedPublishedKey);
@@ -75,8 +75,8 @@ class MultistoreProductAddAndDeleteTest extends BaseMultistoreTest {
         );
 
         // and
-        $expectedKeyForStore1 = "pim:$productId";
-        $expectedKeyForStore2 = "pim_store_2:$productId";
+        $expectedKeyForStore1 = "default_product:$productId";
+        $expectedKeyForStore2 = "store_2_view_product:$productId";
         $this->removeFromStreamX($expectedKeyForStore1, $expectedKeyForStore2);
 
         try {
