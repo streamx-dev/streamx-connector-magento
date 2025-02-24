@@ -108,7 +108,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $expectedKey = "pim:$productId";
 
         // and: make the product not active:
-        $defaultStoreId = 0;
+        $defaultStoreId = self::DEFAULT_STORE_ID;
         self::$db->execute("
             UPDATE catalog_product_entity_int
                SET value = " . Status::STATUS_DISABLED . "
@@ -180,8 +180,8 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
      * @return int ID of the inserted product
      */
     private function insertNewMinimalProduct(string $sku, string $productName): int {
-        $defaultStoreId = 0;
-        $websiteId = 1;
+        $defaultStoreId = self::DEFAULT_STORE_ID;
+        $websiteId = self::DEFAULT_WEBSITE_ID;
         $attributeSetId = self::$db->getDefaultProductAttributeSetId();
 
         $productId = self::$db->insert("
@@ -211,10 +211,10 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $sku = (string) (new DateTime())->getTimestamp();
         $productInternalName = strtolower(str_replace(' ', '-', $productName));
 
-        $defaultStoreId = 0;
+        $defaultStoreId = self::DEFAULT_STORE_ID;
         $stockId = 1;
         $quantity = 100;
-        $websiteId = 1;
+        $websiteId = self::DEFAULT_WEBSITE_ID;
         $brownColorId = self::$db->getAttributeOptionId('color', 'Brown');
         $metalMaterialId = self::$db->getAttributeOptionId('material', 'Metal');
         $plasticMaterialId = self::$db->getAttributeOptionId('material', 'Plastic');

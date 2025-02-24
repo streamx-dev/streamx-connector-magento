@@ -9,7 +9,7 @@ use Magento\Catalog\Model\Product\Attribute\Source\Status;
  * @inheritdoc
  * @UsesProductIndexer
  */
-class MultistoreProductAddAndDeleteTest extends BaseMultistoreTest {
+class MultistoreProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
     /** @test */
     public function shouldPublishProductsFromWebsite() {
@@ -61,12 +61,12 @@ class MultistoreProductAddAndDeleteTest extends BaseMultistoreTest {
             [
                 self::DEFAULT_STORE_ID => 'Product name',
                 self::STORE_1_ID => 'Product name in first store',
-                parent::getStore2Id() => 'Product name in second store'
+                parent::$store2Id => 'Product name in second store'
             ],
             [
                 self::DEFAULT_STORE_ID => Status::STATUS_ENABLED,
                 self::STORE_1_ID => Status::STATUS_DISABLED,
-                parent::getStore2Id() => Status::STATUS_ENABLED
+                parent::$store2Id => Status::STATUS_ENABLED
             ]
         );
 
