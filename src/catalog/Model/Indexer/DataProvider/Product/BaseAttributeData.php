@@ -85,8 +85,6 @@ abstract class BaseAttributeData extends DataProviderInterface
             $this->applySlug($indexData[$productId]);
         }
 
-        $attributesData = null;
-
         return $indexData;
     }
 

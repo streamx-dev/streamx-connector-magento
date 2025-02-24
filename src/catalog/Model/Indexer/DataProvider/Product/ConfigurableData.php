@@ -100,8 +100,6 @@ class ConfigurableData extends DataProviderInterface
                 $indexData[$parentId]['variants'][] = $child;
             }
         }
-
-        $allChildren = null;
     }
 
     private function removeFields(array &$childData): void
