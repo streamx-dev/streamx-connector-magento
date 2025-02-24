@@ -64,7 +64,7 @@ class StreamxClient {
 
         $unpublishMessages = [];
         foreach ($entityIds as $entityId) {
-            $key = self::createStreamxKey($indexerName, $entityId);
+            $key = self::createStreamxKey($indexerName, (string) $entityId);
             $unpublishMessages[] = Message::newUnpublishMessage($key)->build();
         }
 
@@ -72,7 +72,7 @@ class StreamxClient {
         $this->logger->info("Finished unpublishing $entityCount entities");
     }
 
-    private function createStreamxKey(string $indexerName, int $entityId): string {
+    private function createStreamxKey(string $indexerName, string $entityId): string {
         if ($indexerName == ProductProcessor::INDEXER_ID) {
             return $this->productKeyPrefix . $entityId;
         }

@@ -1,6 +1,6 @@
 {
   "sku": "24-WG085_Group",
-  "id": 46,
+  "id": "46",
   "lang": "en",
   "attributes": [
     {
@@ -100,45 +100,45 @@
   "slug": "set-of-sprite-yoga-straps-46",
   "categories": [
     {
-      "id": 3,
+      "id": "3",
       "name": "Gear",
       "slug": "gear-3",
       "label": "Gear",
       "subcategories": [
         {
-          "id": 4,
+          "id": "4",
           "name": "Bags",
           "subcategories": [],
           "slug": "bags-4",
           "label": "Bags",
           "parent": {
-            "id": 3,
+            "id": "3",
             "name": "Gear",
             "slug": "gear-3",
             "label": "Gear"
           }
         },
         {
-          "id": 5,
+          "id": "5",
           "name": "Fitness Equipment",
           "subcategories": [],
           "slug": "fitness-equipment-5",
           "label": "Fitness Equipment",
           "parent": {
-            "id": 3,
+            "id": "3",
             "name": "Gear",
             "slug": "gear-3",
             "label": "Gear"
           }
         },
         {
-          "id": 6,
+          "id": "6",
           "name": "Watches",
           "subcategories": [],
           "slug": "watches-6",
           "label": "Watches",
           "parent": {
-            "id": 3,
+            "id": "3",
             "name": "Gear",
             "slug": "gear-3",
             "label": "Gear"
@@ -146,20 +146,20 @@
         }
       ],
       "parent": {
-        "id": 2,
+        "id": "2",
         "name": "Default Category",
         "slug": "default-category-2",
         "label": "Default Category"
       }
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "Fitness Equipment",
       "slug": "fitness-equipment-5",
       "label": "Fitness Equipment",
       "subcategories": [],
       "parent": {
-        "id": 3,
+        "id": "3",
         "name": "Gear",
         "slug": "gear-3",
         "label": "Gear"
