@@ -28,10 +28,7 @@ class MultistoreProductAddAndDeleteTest extends BaseMultistoreTest {
         $unexpectedPublishedKey = 'pim_website_2:1';
 
         // and
-        foreach ($expectedPublishedKeys as $key) {
-            $this->removeFromStreamX($key);
-        }
-        $this->removeFromStreamX($unexpectedPublishedKey);
+        $this->removeFromStreamX($unexpectedPublishedKey, ...$expectedPublishedKeys);
 
         try {
             // when
