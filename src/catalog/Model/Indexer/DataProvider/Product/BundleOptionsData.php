@@ -33,7 +33,6 @@ class BundleOptionsData extends DataProviderInterface
         }
 
         $this->resourceModel->clear();
-        $productBundleOptions = null;
 
         return $indexData;
     }
