@@ -5,7 +5,7 @@ namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Bundle as Resource;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 
-class BundleOptionsData extends DataProviderInterface
+class BundleOptionsData implements DataProviderInterface
 {
     private Resource $resourceModel;
 
@@ -17,7 +17,7 @@ class BundleOptionsData extends DataProviderInterface
     /**
      * @inheritdoc
      */
-    public function addData(array $indexData, int $storeId): array
+    public function addData(array &$indexData, int $storeId): void
     {
         $this->resourceModel->clear();
         $this->resourceModel->setProducts($indexData);
@@ -33,7 +33,5 @@ class BundleOptionsData extends DataProviderInterface
         }
 
         $this->resourceModel->clear();
-
-        return $indexData;
     }
 }
