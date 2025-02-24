@@ -14,8 +14,7 @@ class MagentoIndexerOperationsExecutor extends MagentoOperationsExecutor {
 
     private string $indexerName;
 
-    public function __construct(string $indexerName) {
-        parent::__construct();
+    public function setIndexerName(string $indexerName) {
         $this->indexerName = $indexerName;
     }
 

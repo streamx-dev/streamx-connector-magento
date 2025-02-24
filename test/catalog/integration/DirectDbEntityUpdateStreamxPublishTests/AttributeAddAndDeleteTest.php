@@ -50,7 +50,7 @@ class AttributeAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
     private function insertNewAttribute(string $attributeCode, int $productId): int {
         $attributeName = "Display name of $attributeCode";
         $entityTypeId = self::$db->getProductEntityTypeId();
-        $defaultStoreId = 0;
+        $defaultStoreId = self::DEFAULT_STORE_ID;
 
         $attributeId = self::$db->insert("
             INSERT INTO eav_attribute (entity_type_id, attribute_code, frontend_label, backend_type, frontend_input, is_user_defined) VALUES
