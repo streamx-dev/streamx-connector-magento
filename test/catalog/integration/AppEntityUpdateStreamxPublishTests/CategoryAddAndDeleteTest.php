@@ -2,16 +2,11 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
-use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
-
 /**
  * @inheritdoc
+ * @UsesCategoryIndexer
  */
 class CategoryAddAndDeleteTest extends BaseAppEntityUpdateTest {
-
-    protected function indexerName(): string {
-        return CategoryProcessor::INDEXER_ID;
-    }
 
     /** @test */
     public function shouldPublishCategoryAddedUsingMagentoApplicationToStreamx_AndUnpublishDeletedCategory() {
@@ -40,13 +35,13 @@ class CategoryAddAndDeleteTest extends BaseAppEntityUpdateTest {
     }
 
     private function addCategory(string $categoryName): int {
-        return (int) $this->callMagentoPutEndpoint('category/add', [
+        return (int) self::callMagentoPutEndpoint('category/add', [
             'categoryName' => $categoryName
         ]);
     }
 
     private function deleteCategory(int $categoryId): void {
-        $this->callMagentoPutEndpoint('category/delete', [
+        self::callMagentoPutEndpoint('category/delete', [
             'categoryId' => $categoryId
         ]);
     }

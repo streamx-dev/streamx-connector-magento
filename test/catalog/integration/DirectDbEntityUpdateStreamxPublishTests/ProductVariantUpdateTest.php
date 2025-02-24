@@ -2,33 +2,29 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
-use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\Model\SlugGenerator;
 
 /**
  * @inheritdoc
+ * @UsesProductIndexer
  */
 class ProductVariantUpdateTest extends BaseDirectDbEntityUpdateTest {
-
-    protected function indexerName(): string {
-        return ProductProcessor::INDEXER_ID;
-    }
 
     /** @test */
     public function shouldPublishProductWithVariantsEditedDirectlyInDatabaseToStreamx() {
         // given
         $nameOfProductToEdit = 'Chaz Kangeroo Hoodie';
-        $idOfProductToEdit = $this->db->getProductId($nameOfProductToEdit);
+        $idOfProductToEdit = self::$db->getProductId($nameOfProductToEdit);
         $newNameOfProductToEdit = "Name modified for testing, was $nameOfProductToEdit";
 
         // and
         $expectedPublishedKey = "pim:$idOfProductToEdit";
-        $unexpectedPublishedKey = 'pim:' . $this->db->getProductId('Chaz Kangeroo Hoodie-XL-Orange');
+        $unexpectedPublishedKey = 'pim:' . self::$db->getProductId('Chaz Kangeroo Hoodie-XL-Orange');
 
         self::removeFromStreamX($expectedPublishedKey, $unexpectedPublishedKey);
 
         // when
-        $this->db->renameProduct($idOfProductToEdit, $newNameOfProductToEdit);
+        self::$db->renameProduct($idOfProductToEdit, $newNameOfProductToEdit);
 
         try {
             // and
@@ -38,7 +34,7 @@ class ProductVariantUpdateTest extends BaseDirectDbEntityUpdateTest {
             $this->assertExactDataIsPublished($expectedPublishedKey, 'edited-hoodie-product.json');
             $this->assertDataIsNotPublished($unexpectedPublishedKey);
         } finally {
-            $this->db->renameProduct($idOfProductToEdit, $nameOfProductToEdit);
+            self::$db->renameProduct($idOfProductToEdit, $nameOfProductToEdit);
         }
     }
 
@@ -46,17 +42,17 @@ class ProductVariantUpdateTest extends BaseDirectDbEntityUpdateTest {
     public function shouldPublishParentOfProductVariantEditedUsingDirectlyInDatabaseToStreamx() {
         // given
         $nameOfProductToEdit = 'Chaz Kangeroo Hoodie-XL-Orange';
-        $idOfProductToEdit = $this->db->getProductId($nameOfProductToEdit);
+        $idOfProductToEdit = self::$db->getProductId($nameOfProductToEdit);
         $newNameOfProductToEdit = "Name modified for testing, was $nameOfProductToEdit";
 
         // and
-        $expectedPublishedKey = 'pim:' . $this->db->getProductId('Chaz Kangeroo Hoodie');
+        $expectedPublishedKey = 'pim:' . self::$db->getProductId('Chaz Kangeroo Hoodie');
         $unexpectedPublishedKey = "pim:$idOfProductToEdit";
 
         self::removeFromStreamX($expectedPublishedKey, $unexpectedPublishedKey);
 
         // when
-        $this->db->renameProduct($idOfProductToEdit, $newNameOfProductToEdit);
+        self::$db->renameProduct($idOfProductToEdit, $newNameOfProductToEdit);
 
         try {
             // and
@@ -69,7 +65,7 @@ class ProductVariantUpdateTest extends BaseDirectDbEntityUpdateTest {
             ]);
             $this->assertDataIsNotPublished($unexpectedPublishedKey);
         } finally {
-            $this->db->renameProduct($idOfProductToEdit, $nameOfProductToEdit);
+            self::$db->renameProduct($idOfProductToEdit, $nameOfProductToEdit);
         }
     }
 }

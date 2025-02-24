@@ -2,8 +2,15 @@
 
 namespace StreamX\ConnectorCatalog\test\integration;
 
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
+use ReflectionClass;
+use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
+use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
+use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
+use StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests\BaseAppEntityUpdateTest;
+use StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests\BaseDirectDbEntityUpdateTest;
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditTraits;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoIndexerOperationsExecutor;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
@@ -17,58 +24,82 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
 
     private const MAGENTO_REST_API_BASE_URL = 'https://magento.test:444/rest/all/V1';
 
-    protected MagentoIndexerOperationsExecutor $indexerOperations;
-    private string $originalIndexerMode;
-    private bool $indexModeNeedsRestoring;
+    protected static MagentoIndexerOperationsExecutor $indexerOperations;
+    private static string $originalIndexerMode;
+    private static bool $indexModeNeedsRestoring;
 
-    protected MagentoMySqlQueryExecutor $db;
+    protected static string $testedIndexerName;
+    private static string $testedIndexerMode;
 
-    protected abstract function indexerName(): string;
-    protected abstract function desiredIndexerMode(): string;
+    protected static ?MagentoMySqlQueryExecutor $db = null;
 
-    protected function viewId(): string {
-        return $this->indexerName(); // note: assuming that every indexer in the indexer.xml file has the same value of id and view_id fields
+    public static function setUpBeforeClass(): void {
+        self::loadDesiredIndexerSettings();
+        self::connectToDatabase();
+        self::setIndexerModeInMagento();
     }
 
-    public function setUp(): void {
-        // TODO refactor to call setUp() and tearDown() once per class, not before/after every test method
-        $this->setUpIndexerTool();
-        $this->setUpDbTool();
+    public static function tearDownAfterClass(): void {
+        self::restoreIndexerModeInMagento();
     }
 
-    public function tearDown(): void {
-        $this->tearDownIndexerTool();
-        $this->tearDownDbTool();
+    private static function connectToDatabase(): void {
+        if (!self::$db) {
+            self::$db = new MagentoMySqlQueryExecutor();
+            self::$db->connect();
+        }
     }
 
-    private function setUpIndexerTool(): void {
-        $this->indexerOperations = new MagentoIndexerOperationsExecutor($this->indexerName());
-        $this->originalIndexerMode = $this->indexerOperations->getIndexerMode();
+    private static function setIndexerModeInMagento(): void {
+        self::$indexerOperations = new MagentoIndexerOperationsExecutor(self::$testedIndexerName);
+        self::$originalIndexerMode = self::$indexerOperations->getIndexerMode();
 
-        if ($this->desiredIndexerMode() !== $this->originalIndexerMode) {
-            $this->indexerOperations->setIndexerMode($this->desiredIndexerMode());
-            $this->indexModeNeedsRestoring = true;
+        if (self::$testedIndexerMode !== self::$originalIndexerMode) {
+            self::$indexerOperations->setIndexerMode(self::$testedIndexerMode);
+            self::$indexModeNeedsRestoring = true;
         } else {
-            $this->indexModeNeedsRestoring = false;
+            self::$indexModeNeedsRestoring = false;
         }
     }
 
-    private function tearDownIndexerTool(): void {
-        if ($this->indexModeNeedsRestoring) {
-            $this->indexerOperations->setIndexerMode($this->originalIndexerMode);
+    private static function restoreIndexerModeInMagento(): void {
+        if (self::$indexModeNeedsRestoring) {
+            self::$indexerOperations->setIndexerMode(self::$originalIndexerMode);
         }
     }
 
-    private function setUpDbTool(): void {
-        $this->db = new MagentoMySqlQueryExecutor();
-        $this->db->connect();
+    private static function loadDesiredIndexerSettings(): void {
+        $cls = new ReflectionClass(static::class);
+        self::$testedIndexerName = self::getTestedIndexerName($cls);
+        self::$testedIndexerMode = self::getTestedIndexerMode($cls);
     }
 
-    private function tearDownDbTool(): void {
-        $this->db->disconnect();
+    private static function getTestedIndexerName(ReflectionClass $cls): string {
+        $docComment = $cls->getDocComment();
+        if (str_contains($docComment, '@UsesProductIndexer')) {
+            return ProductProcessor::INDEXER_ID;
+        }
+        if (str_contains($docComment, '@UsesCategoryIndexer')) {
+            return CategoryProcessor::INDEXER_ID;
+        }
+        if (str_contains($docComment, '@UsesAttributeIndexer')) {
+            return AttributeProcessor::INDEXER_ID;
+        }
+        throw new Exception("Cannot detect indexer to use for $cls");
     }
 
-    protected function callMagentoPutEndpoint(string $relativeUrl, array $params): string {
+    private static function getTestedIndexerMode(ReflectionClass $cls): string {
+        if ($cls->isSubclassOf(BaseAppEntityUpdateTest::class)) {
+            return MagentoIndexerOperationsExecutor::UPDATE_ON_SAVE_DISPLAY_NAME;
+        }
+        if ($cls->isSubclassOf(BaseDirectDbEntityUpdateTest::class)) {
+            // Magento creates triggers to save db-level changes only when the scheduler is in the below mode:
+            return MagentoIndexerOperationsExecutor::UPDATE_BY_SCHEDULE_DISPLAY_NAME;
+        }
+        throw new Exception("Cannot detect desired indexer mode for $cls");
+    }
+
+    protected static function callMagentoPutEndpoint(string $relativeUrl, array $params): string {
         $endpointUrl = self::MAGENTO_REST_API_BASE_URL . "/$relativeUrl?XDEBUG_SESSION_START=PHPSTORM";
         $jsonBody = json_encode($params);
         $headers = ['Content-Type' => 'application/json; charset=UTF-8'];
@@ -77,7 +108,9 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
         $httpClient = new Client(['verify' => false]);
         $response = $httpClient->sendRequest($request);
         $responseBody = (string)$response->getBody();
-        $this->assertEquals(200, $response->getStatusCode(), $responseBody);
+        if ($response->getStatusCode() !== 200) {
+            throw new Exception('Unexpected status code: ' . $response->getStatusCode());
+        }
 
         return $responseBody;
     }

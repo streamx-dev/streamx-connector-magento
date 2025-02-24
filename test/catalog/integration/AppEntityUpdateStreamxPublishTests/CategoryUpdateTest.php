@@ -2,24 +2,20 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
-use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageReportGenerator;
 
 /**
  * @inheritdoc
+ * @UsesCategoryIndexer
  */
 class CategoryUpdateTest extends BaseAppEntityUpdateTest {
-
-    protected function indexerName(): string {
-        return CategoryProcessor::INDEXER_ID;
-    }
 
     /** @test */
     public function shouldPublishCategoryEditedUsingMagentoApplicationToStreamx() {
         // given
         $categoryOldName = 'Gear';
         $categoryNewName = 'Gear Articles';
-        $categoryId = $this->db->getCategoryId($categoryOldName);
+        $categoryId = self::$db->getCategoryId($categoryOldName);
 
         // and
         $expectedKey = "cat:$categoryId";
@@ -38,7 +34,7 @@ class CategoryUpdateTest extends BaseAppEntityUpdateTest {
     }
 
     private function renameCategory(int $categoryId, string $newName): void {
-        $coverage = $this->callMagentoPutEndpoint('category/rename', [
+        $coverage = self::callMagentoPutEndpoint('category/rename', [
             'categoryId' => $categoryId,
             'newName' => $newName
         ]);

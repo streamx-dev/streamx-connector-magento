@@ -2,16 +2,11 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
-use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
-
 /**
  * @inheritdoc
+ * @UsesCategoryIndexer
  */
 class MultistoreCategoryAddAndDeleteTest extends BaseMultistoreTest {
-
-    protected function indexerName(): string {
-        return CategoryProcessor::INDEXER_ID;
-    }
 
     /** @test */
     public function shouldPublishActiveCategories() {
@@ -133,29 +128,29 @@ class MultistoreCategoryAddAndDeleteTest extends BaseMultistoreTest {
     private function insertMultistoreCategory(int $parentCategoryId, array $storeIdCategoryNameMap, array $storeIdCategoryStatusMap): int {
         $defaultStoreId = self::DEFAULT_STORE_ID;
         $rootCategoryId = 1;
-        $attributeSetId = $this->db->getDefaultCategoryAttributeSetId();
+        $attributeSetId = self::$db->getDefaultCategoryAttributeSetId();
 
-        $nameAttrId = $this->db->getCategoryAttributeId('name');
-        $displayModeAttrId = $this->db->getCategoryAttributeId('display_mode');
-        $urlKeyAttrId = $this->db->getCategoryAttributeId('url_key');
-        $isActiveAttrId = $this->db->getCategoryAttributeId('is_active');
-        $includeInMenuAttrId = $this->db->getCategoryAttributeId('include_in_menu');
+        $nameAttrId = self::$db->getCategoryAttributeId('name');
+        $displayModeAttrId = self::$db->getCategoryAttributeId('display_mode');
+        $urlKeyAttrId = self::$db->getCategoryAttributeId('url_key');
+        $isActiveAttrId = self::$db->getCategoryAttributeId('is_active');
+        $includeInMenuAttrId = self::$db->getCategoryAttributeId('include_in_menu');
 
         // 1. Create category
-        $categoryId = $this->db->insert("
+        $categoryId = self::$db->insert("
             INSERT INTO catalog_category_entity (attribute_set_id, parent_id, path, position, level, children_count) VALUES
                 ($attributeSetId, $parentCategoryId, '', 1, 2, 0)
         ");
 
         // 2. Update category path
-        $this->db->execute("
+        self::$db->execute("
             UPDATE catalog_category_entity
                SET path = '$rootCategoryId/$parentCategoryId/$categoryId'
              WHERE entity_id = $categoryId
         ");
 
         // 3. Set basic attributes
-        $this->db->executeAll(["
+        self::$db->executeAll(["
             INSERT INTO catalog_category_entity_varchar (entity_id, attribute_id, store_id, value) VALUES
                 ($categoryId, $displayModeAttrId, $defaultStoreId, 'PRODUCTS')
         ", "
@@ -166,7 +161,7 @@ class MultistoreCategoryAddAndDeleteTest extends BaseMultistoreTest {
         // 4. Set default and store-scoped names for the category
         foreach ($storeIdCategoryNameMap as $storeId => $categoryName) {
             $categoryInternalName = strtolower(str_replace(' ', '_', $categoryName));
-            $this->db->execute("
+            self::$db->execute("
                 INSERT INTO catalog_category_entity_varchar (entity_id, attribute_id, store_id, value) VALUES
                     ($categoryId, $nameAttrId, $storeId, '$categoryName'),
                     ($categoryId, $urlKeyAttrId, $storeId, '$categoryInternalName')
@@ -176,7 +171,7 @@ class MultistoreCategoryAddAndDeleteTest extends BaseMultistoreTest {
         // 5. Set default and store-scoped active statuses for the category
         foreach ($storeIdCategoryStatusMap as $storeId => $isCategoryActive) {
             $isActiveValue = $isCategoryActive ? 1 : 0;
-            $this->db->execute("
+            self::$db->execute("
                 INSERT INTO catalog_category_entity_int (entity_id, attribute_id, store_id, value) VALUES
                     ($categoryId, $isActiveAttrId, $storeId, $isActiveValue)
             ");
@@ -188,30 +183,30 @@ class MultistoreCategoryAddAndDeleteTest extends BaseMultistoreTest {
     private function insertRootCategory(string $categoryName): int {
         $defaultStoreId = self::DEFAULT_STORE_ID;
         $rootCategoryId = 1;
-        $attributeSetId = $this->db->getDefaultCategoryAttributeSetId();
+        $attributeSetId = self::$db->getDefaultCategoryAttributeSetId();
         $categoryInternalName = strtolower(str_replace(' ', '_', $categoryName));
 
-        $nameAttrId = $this->db->getCategoryAttributeId('name');
-        $displayModeAttrId = $this->db->getCategoryAttributeId('display_mode');
-        $urlKeyAttrId = $this->db->getCategoryAttributeId('url_key');
-        $isActiveAttrId = $this->db->getCategoryAttributeId('is_active');
-        $includeInMenuAttrId = $this->db->getCategoryAttributeId('include_in_menu');
+        $nameAttrId = self::$db->getCategoryAttributeId('name');
+        $displayModeAttrId = self::$db->getCategoryAttributeId('display_mode');
+        $urlKeyAttrId = self::$db->getCategoryAttributeId('url_key');
+        $isActiveAttrId = self::$db->getCategoryAttributeId('is_active');
+        $includeInMenuAttrId = self::$db->getCategoryAttributeId('include_in_menu');
 
         // 1. Create category
-        $categoryId = $this->db->insert("
+        $categoryId = self::$db->insert("
             INSERT INTO catalog_category_entity (attribute_set_id, parent_id, path, position, level, children_count) VALUES
                 ($attributeSetId, $rootCategoryId, '', 1, 1, 0)
         ");
 
         // 2. Update category path
-        $this->db->execute("
+        self::$db->execute("
             UPDATE catalog_category_entity
                SET path = '$rootCategoryId/$categoryId'
              WHERE entity_id = $categoryId
         ");
 
         // 3. Set attributes
-        $this->db->executeAll(["
+        self::$db->executeAll(["
             INSERT INTO catalog_category_entity_varchar (entity_id, attribute_id, store_id, value) VALUES
                 ($categoryId, $displayModeAttrId, $defaultStoreId, 'PRODUCTS'),
                 ($categoryId, $nameAttrId, $defaultStoreId, '$categoryName'),
@@ -226,7 +221,7 @@ class MultistoreCategoryAddAndDeleteTest extends BaseMultistoreTest {
     }
 
     private function changeRootCategoryForStore(int $storeId, int $categoryId): void {
-        $this->db->execute("
+        self::$db->execute("
             UPDATE store_group
                SET root_category_id = $categoryId
              WHERE default_store_id = $storeId"
@@ -234,7 +229,7 @@ class MultistoreCategoryAddAndDeleteTest extends BaseMultistoreTest {
     }
 
     private function deleteCategory(int $categoryId): void {
-        $this->db->executeAll([
+        self::$db->executeAll([
             "DELETE FROM catalog_category_entity_int WHERE entity_id = $categoryId",
             "DELETE FROM catalog_category_entity_varchar WHERE entity_id = $categoryId",
             "DELETE FROM catalog_category_entity WHERE entity_id = $categoryId",
