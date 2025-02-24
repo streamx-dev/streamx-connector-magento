@@ -28,7 +28,7 @@ class StoresControllerImpl implements StoresControllerInterface
     private const SECOND_WEBSITE_PRODUCT_KEY_PREFIX = 'pim_website_2:';
     private const SECOND_WEBSITE_CATEGORY_KEY_PREFIX = 'cat_website_2:';
 
-    private const PRODUCT_IDS_IN_SECOND_WEBSITE = [4, 5, 6];
+    private const PRODUCT_IDS_IN_SECOND_WEBSITE = [4, 5, 6, 61, 62]; // 4, 5, 6 are simple products. 61 is a variant of configurable product 62
 
     private const PRODUCT_KEY_PREFIX = 'streamx_connector_settings/streamx_client/product_key_prefix';
     private const CATEGORY_KEY_PREFIX = 'streamx_connector_settings/streamx_client/category_key_prefix';
