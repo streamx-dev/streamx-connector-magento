@@ -1,6 +1,6 @@
 {
   "sku": "MH01",
-  "id": 62,
+  "id": "62",
   "lang": "en",
   "attributes": [
     {
@@ -84,66 +84,66 @@
   "slug": "chaz-kangeroo-hoodie-62",
   "categories": [
     {
-      "id": 2,
+      "id": "2",
       "name": "Default Category",
       "slug": "default-category-2",
       "label": "Default Category",
       "subcategories": [
         {
-          "id": 11,
+          "id": "11",
           "name": "Men",
           "subcategories": [
             {
-              "id": 12,
+              "id": "12",
               "name": "Tops",
               "subcategories": [
                 {
-                  "id": 14,
+                  "id": "14",
                   "name": "Jackets",
                   "subcategories": [],
                   "slug": "jackets-14",
                   "label": "Jackets",
                   "parent": {
-                    "id": 12,
+                    "id": "12",
                     "name": "Tops",
                     "slug": "tops-12",
                     "label": "Tops"
                   }
                 },
                 {
-                  "id": 15,
+                  "id": "15",
                   "name": "Hoodies & Sweatshirts",
                   "subcategories": [],
                   "slug": "hoodies-and-sweatshirts-15",
                   "label": "Hoodies & Sweatshirts",
                   "parent": {
-                    "id": 12,
+                    "id": "12",
                     "name": "Tops",
                     "slug": "tops-12",
                     "label": "Tops"
                   }
                 },
                 {
-                  "id": 16,
+                  "id": "16",
                   "name": "Tees",
                   "subcategories": [],
                   "slug": "tees-16",
                   "label": "Tees",
                   "parent": {
-                    "id": 12,
+                    "id": "12",
                     "name": "Tops",
                     "slug": "tops-12",
                     "label": "Tops"
                   }
                 },
                 {
-                  "id": 17,
+                  "id": "17",
                   "name": "Tanks",
                   "subcategories": [],
                   "slug": "tanks-17",
                   "label": "Tanks",
                   "parent": {
-                    "id": 12,
+                    "id": "12",
                     "name": "Tops",
                     "slug": "tops-12",
                     "label": "Tops"
@@ -153,37 +153,37 @@
               "slug": "tops-12",
               "label": "Tops",
               "parent": {
-                "id": 11,
+                "id": "11",
                 "name": "Men",
                 "slug": "men-11",
                 "label": "Men"
               }
             },
             {
-              "id": 13,
+              "id": "13",
               "name": "Bottoms",
               "subcategories": [
                 {
-                  "id": 18,
+                  "id": "18",
                   "name": "Pants",
                   "subcategories": [],
                   "slug": "pants-18",
                   "label": "Pants",
                   "parent": {
-                    "id": 13,
+                    "id": "13",
                     "name": "Bottoms",
                     "slug": "bottoms-13",
                     "label": "Bottoms"
                   }
                 },
                 {
-                  "id": 19,
+                  "id": "19",
                   "name": "Shorts",
                   "subcategories": [],
                   "slug": "shorts-19",
                   "label": "Shorts",
                   "parent": {
-                    "id": 13,
+                    "id": "13",
                     "name": "Bottoms",
                     "slug": "bottoms-13",
                     "label": "Bottoms"
@@ -193,7 +193,7 @@
               "slug": "bottoms-13",
               "label": "Bottoms",
               "parent": {
-                "id": 11,
+                "id": "11",
                 "name": "Men",
                 "slug": "men-11",
                 "label": "Men"
@@ -203,67 +203,67 @@
           "slug": "men-11",
           "label": "Men",
           "parent": {
-            "id": 2,
+            "id": "2",
             "name": "Default Category",
             "slug": "default-category-2",
             "label": "Default Category"
           }
         },
         {
-          "id": 20,
+          "id": "20",
           "name": "Women",
           "subcategories": [
             {
-              "id": 21,
+              "id": "21",
               "name": "Tops",
               "subcategories": [
                 {
-                  "id": 23,
+                  "id": "23",
                   "name": "Jackets",
                   "subcategories": [],
                   "slug": "jackets-23",
                   "label": "Jackets",
                   "parent": {
-                    "id": 21,
+                    "id": "21",
                     "name": "Tops",
                     "slug": "tops-21",
                     "label": "Tops"
                   }
                 },
                 {
-                  "id": 24,
+                  "id": "24",
                   "name": "Hoodies & Sweatshirts",
                   "subcategories": [],
                   "slug": "hoodies-and-sweatshirts-24",
                   "label": "Hoodies & Sweatshirts",
                   "parent": {
-                    "id": 21,
+                    "id": "21",
                     "name": "Tops",
                     "slug": "tops-21",
                     "label": "Tops"
                   }
                 },
                 {
-                  "id": 25,
+                  "id": "25",
                   "name": "Tees",
                   "subcategories": [],
                   "slug": "tees-25",
                   "label": "Tees",
                   "parent": {
-                    "id": 21,
+                    "id": "21",
                     "name": "Tops",
                     "slug": "tops-21",
                     "label": "Tops"
                   }
                 },
                 {
-                  "id": 26,
+                  "id": "26",
                   "name": "Bras & Tanks",
                   "subcategories": [],
                   "slug": "bras-and-tanks-26",
                   "label": "Bras & Tanks",
                   "parent": {
-                    "id": 21,
+                    "id": "21",
                     "name": "Tops",
                     "slug": "tops-21",
                     "label": "Tops"
@@ -273,37 +273,37 @@
               "slug": "tops-21",
               "label": "Tops",
               "parent": {
-                "id": 20,
+                "id": "20",
                 "name": "Women",
                 "slug": "women-20",
                 "label": "Women"
               }
             },
             {
-              "id": 22,
+              "id": "22",
               "name": "Bottoms",
               "subcategories": [
                 {
-                  "id": 27,
+                  "id": "27",
                   "name": "Pants",
                   "subcategories": [],
                   "slug": "pants-27",
                   "label": "Pants",
                   "parent": {
-                    "id": 22,
+                    "id": "22",
                     "name": "Bottoms",
                     "slug": "bottoms-22",
                     "label": "Bottoms"
                   }
                 },
                 {
-                  "id": 28,
+                  "id": "28",
                   "name": "Shorts",
                   "subcategories": [],
                   "slug": "shorts-28",
                   "label": "Shorts",
                   "parent": {
-                    "id": 22,
+                    "id": "22",
                     "name": "Bottoms",
                     "slug": "bottoms-22",
                     "label": "Bottoms"
@@ -313,7 +313,7 @@
               "slug": "bottoms-22",
               "label": "Bottoms",
               "parent": {
-                "id": 20,
+                "id": "20",
                 "name": "Women",
                 "slug": "women-20",
                 "label": "Women"
@@ -323,50 +323,50 @@
           "slug": "women-20",
           "label": "Women",
           "parent": {
-            "id": 2,
+            "id": "2",
             "name": "Default Category",
             "slug": "default-category-2",
             "label": "Default Category"
           }
         },
         {
-          "id": 3,
+          "id": "3",
           "name": "Gear",
           "subcategories": [
             {
-              "id": 4,
+              "id": "4",
               "name": "Bags",
               "subcategories": [],
               "slug": "bags-4",
               "label": "Bags",
               "parent": {
-                "id": 3,
+                "id": "3",
                 "name": "Gear",
                 "slug": "gear-3",
                 "label": "Gear"
               }
             },
             {
-              "id": 5,
+              "id": "5",
               "name": "Fitness Equipment",
               "subcategories": [],
               "slug": "fitness-equipment-5",
               "label": "Fitness Equipment",
               "parent": {
-                "id": 3,
+                "id": "3",
                 "name": "Gear",
                 "slug": "gear-3",
                 "label": "Gear"
               }
             },
             {
-              "id": 6,
+              "id": "6",
               "name": "Watches",
               "subcategories": [],
               "slug": "watches-6",
               "label": "Watches",
               "parent": {
-                "id": 3,
+                "id": "3",
                 "name": "Gear",
                 "slug": "gear-3",
                 "label": "Gear"
@@ -376,50 +376,50 @@
           "slug": "gear-3",
           "label": "Gear",
           "parent": {
-            "id": 2,
+            "id": "2",
             "name": "Default Category",
             "slug": "default-category-2",
             "label": "Default Category"
           }
         },
         {
-          "id": 37,
+          "id": "37",
           "name": "Sale",
           "subcategories": [],
           "slug": "sale-37",
           "label": "Sale",
           "parent": {
-            "id": 2,
+            "id": "2",
             "name": "Default Category",
             "slug": "default-category-2",
             "label": "Default Category"
           }
         },
         {
-          "id": 38,
+          "id": "38",
           "name": "What's New",
           "subcategories": [],
           "slug": "whats-new-38",
           "label": "What's New",
           "parent": {
-            "id": 2,
+            "id": "2",
             "name": "Default Category",
             "slug": "default-category-2",
             "label": "Default Category"
           }
         },
         {
-          "id": 9,
+          "id": "9",
           "name": "Training",
           "subcategories": [
             {
-              "id": 10,
+              "id": "10",
               "name": "Video Download",
               "subcategories": [],
               "slug": "video-download-10",
               "label": "Video Download",
               "parent": {
-                "id": 9,
+                "id": "9",
                 "name": "Training",
                 "slug": "training-9",
                 "label": "Training"
@@ -429,7 +429,7 @@
           "slug": "training-9",
           "label": "Training",
           "parent": {
-            "id": 2,
+            "id": "2",
             "name": "Default Category",
             "slug": "default-category-2",
             "label": "Default Category"
@@ -438,20 +438,20 @@
       ]
     },
     {
-      "id": 15,
+      "id": "15",
       "name": "Hoodies & Sweatshirts",
       "slug": "hoodies-and-sweatshirts-15",
       "label": "Hoodies & Sweatshirts",
       "subcategories": [],
       "parent": {
-        "id": 12,
+        "id": "12",
         "name": "Tops",
         "slug": "tops-12",
         "label": "Tops"
       }
     },
     {
-      "id": 36,
+      "id": "36",
       "name": "Eco Friendly",
       "slug": "eco-friendly-36",
       "label": "Eco Friendly",
@@ -476,7 +476,7 @@
   "variants": [
     {
       "sku": "MH01-XS-Black",
-      "id": 47,
+      "id": "47",
       "attributes": [
         {
           "name": "small_image",
@@ -563,7 +563,7 @@
     },
     {
       "sku": "MH01-XS-Gray",
-      "id": 48,
+      "id": "48",
       "attributes": [
         {
           "name": "small_image",
@@ -658,7 +658,7 @@
     },
     {
       "sku": "MH01-XS-Orange",
-      "id": 49,
+      "id": "49",
       "attributes": [
         {
           "name": "small_image",
@@ -745,7 +745,7 @@
     },
     {
       "sku": "MH01-S-Black",
-      "id": 50,
+      "id": "50",
       "attributes": [
         {
           "name": "small_image",
@@ -832,7 +832,7 @@
     },
     {
       "sku": "MH01-S-Gray",
-      "id": 51,
+      "id": "51",
       "attributes": [
         {
           "name": "small_image",
@@ -927,7 +927,7 @@
     },
     {
       "sku": "MH01-S-Orange",
-      "id": 52,
+      "id": "52",
       "attributes": [
         {
           "name": "small_image",
@@ -1014,7 +1014,7 @@
     },
     {
       "sku": "MH01-M-Black",
-      "id": 53,
+      "id": "53",
       "attributes": [
         {
           "name": "small_image",
@@ -1101,7 +1101,7 @@
     },
     {
       "sku": "MH01-M-Gray",
-      "id": 54,
+      "id": "54",
       "attributes": [
         {
           "name": "small_image",
@@ -1196,7 +1196,7 @@
     },
     {
       "sku": "MH01-M-Orange",
-      "id": 55,
+      "id": "55",
       "attributes": [
         {
           "name": "small_image",
@@ -1283,7 +1283,7 @@
     },
     {
       "sku": "MH01-L-Black",
-      "id": 56,
+      "id": "56",
       "attributes": [
         {
           "name": "small_image",
@@ -1370,7 +1370,7 @@
     },
     {
       "sku": "MH01-L-Gray",
-      "id": 57,
+      "id": "57",
       "attributes": [
         {
           "name": "small_image",
@@ -1465,7 +1465,7 @@
     },
     {
       "sku": "MH01-L-Orange",
-      "id": 58,
+      "id": "58",
       "attributes": [
         {
           "name": "small_image",
@@ -1552,7 +1552,7 @@
     },
     {
       "sku": "MH01-XL-Black",
-      "id": 59,
+      "id": "59",
       "attributes": [
         {
           "name": "small_image",
@@ -1639,7 +1639,7 @@
     },
     {
       "sku": "MH01-XL-Gray",
-      "id": 60,
+      "id": "60",
       "attributes": [
         {
           "name": "small_image",
@@ -1734,7 +1734,7 @@
     },
     {
       "sku": "MH01-XL-Orange",
-      "id": 61,
+      "id": "61",
       "attributes": [
         {
           "name": "small_image",
