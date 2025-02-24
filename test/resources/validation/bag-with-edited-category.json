@@ -1,6 +1,6 @@
 {
   "sku": "24-MB01",
-  "id": 1,
+  "id": "1",
   "lang": "en",
   "attributes": [
     {
@@ -125,26 +125,26 @@
   "slug": "joust-duffle-bag-1",
   "categories": [
     {
-      "id": 4,
+      "id": "4",
       "name": "Bags",
       "slug": "bags-4",
       "label": "Bags",
       "subcategories": [],
       "parent": {
-        "id": 3,
+        "id": "3",
         "name": "Gear",
         "slug": "gear-3",
         "label": "Gear"
       }
     },
     {
-      "id": 14,
+      "id": "14",
       "name": "Jackets",
       "slug": "jackets-14",
       "label": "Jackets",
       "subcategories": [],
       "parent": {
-        "id": 12,
+        "id": "12",
         "name": "Tops",
         "slug": "tops-12",
         "label": "Tops"
