@@ -12,8 +12,7 @@
           "label": "https:\/\/magento.test:444\/media\/catalog\/product\/l\/u\/luma-yoga-strap-set.jpg"
         }
       ],
-      "isFacet": false,
-      "options": []
+      "isFacet": false
     },
     {
       "name": "thumbnail",
@@ -24,8 +23,7 @@
           "label": "https:\/\/magento.test:444\/media\/catalog\/product\/l\/u\/luma-yoga-strap-set.jpg"
         }
       ],
-      "isFacet": false,
-      "options": []
+      "isFacet": false
     },
     {
       "name": "url_key",
@@ -36,8 +34,7 @@
           "label": "set-of-sprite-yoga-straps"
         }
       ],
-      "isFacet": false,
-      "options": []
+      "isFacet": false
     },
     {
       "name": "status",
@@ -48,17 +45,7 @@
           "label": "Enabled"
         }
       ],
-      "isFacet": false,
-      "options": [
-        {
-          "value": "Enabled",
-          "label": "Enabled"
-        },
-        {
-          "value": "Disabled",
-          "label": "Disabled"
-        }
-      ]
+      "isFacet": false
     },
     {
       "name": "visibility",
@@ -69,25 +56,7 @@
           "label": "Catalog, Search"
         }
       ],
-      "isFacet": false,
-      "options": [
-        {
-          "value": "Not Visible Individually",
-          "label": "Not Visible Individually"
-        },
-        {
-          "value": "Catalog",
-          "label": "Catalog"
-        },
-        {
-          "value": "Search",
-          "label": "Search"
-        },
-        {
-          "value": "Catalog, Search",
-          "label": "Catalog, Search"
-        }
-      ]
+      "isFacet": false
     }
   ],
   "name": "Name modified for testing, was Set of Sprite Yoga Straps",
