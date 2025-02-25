@@ -69,7 +69,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
             // then
             $publishedJson = $this->assertExactDataIsPublished($expectedKey, 'added-watch-product.json', [
                 // mask variable parts (ids and generated sku)
-                '"id": [0-9]+' => '"id": 0',
+                '"id": \"[0-9]+\"' => '"id": \"0\"',
                 '"sku": "[^"]+"' => '"sku": "[MASKED]"',
                 '"the-new-great-watch-[0-9]+"' => '"the-new-great-watch-0"',
                 '"option_id": "[0-9]+"' => '"option_id": "0"',
