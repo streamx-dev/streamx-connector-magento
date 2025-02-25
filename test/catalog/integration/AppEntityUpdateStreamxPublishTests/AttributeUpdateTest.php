@@ -40,6 +40,8 @@ class AttributeUpdateTest extends BaseAppEntityUpdateTest {
 
         // when
         $this->allowIndexingAllAttributes();
+        $this->setConfigurationValue($this->EXPORT_PRODUCTS_NOT_VISIBLE_INDIVIDUALLY_PATH, 1);
+
         self::renameAttribute($attributeCode, $newDisplayName);
 
         // then
@@ -50,7 +52,9 @@ class AttributeUpdateTest extends BaseAppEntityUpdateTest {
                 self::renameAttribute($attributeCode, $oldDisplayName);
                 $this->assertExactDataIsPublished($expectedKey, "original-ball-product.json");
             } finally {
+                // TODO refactor to execute both the below operations with a single cache:flush
                 self::restoreDefaultIndexingAttributes();
+                self::restoreConfigurationValue($this->EXPORT_PRODUCTS_NOT_VISIBLE_INDIVIDUALLY_PATH);
             }
         }
     }

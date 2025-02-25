@@ -7,6 +7,7 @@ trait ConfigurationEditTraits {
     private string $CONFIGURATION_EDIT_ENDPOINT = 'configuration/edit';
     public string $PRODUCT_ATTRIBUTES_PATH = 'streamx_connector_settings/catalog_settings/product_attributes';
     public string $CHILD_PRODUCT_ATTRIBUTES_PATH = 'streamx_connector_settings/catalog_settings/child_product_attributes';
+    public string $EXPORT_PRODUCTS_NOT_VISIBLE_INDIVIDUALLY_PATH = 'streamx_connector_settings/catalog_settings/export_products_not_visible_individually';
 
     public function setConfigurationValue(string $path, string $value): void {
         self::callMagentoConfigurationEditEndpoint(

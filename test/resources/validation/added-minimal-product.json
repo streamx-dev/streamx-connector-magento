@@ -13,6 +13,17 @@
         }
       ],
       "isFacet": false
+    },
+    {
+      "name": "visibility",
+      "label": "Visibility",
+      "values": [
+        {
+          "value": "VISIBILITY",
+          "label": "VISIBILITY"
+        }
+      ],
+      "isFacet": false
     }
   ],
   "name": "PRODUCT_NAME",

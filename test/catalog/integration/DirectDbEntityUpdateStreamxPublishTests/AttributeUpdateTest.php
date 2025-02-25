@@ -38,6 +38,8 @@ class AttributeUpdateTest extends BaseDirectDbEntityUpdateTest {
 
         // when
         $this->allowIndexingAllAttributes();
+        $this->setConfigurationValue($this->EXPORT_PRODUCTS_NOT_VISIBLE_INDIVIDUALLY_PATH, 1);
+
         $this->renameAttributeInDb($attributeId, $newDisplayName);
 
         try {
@@ -50,7 +52,9 @@ class AttributeUpdateTest extends BaseDirectDbEntityUpdateTest {
             try {
                 $this->renameAttributeInDb($attributeId, $oldDisplayName);
             } finally {
+                // TODO refactor to execute both the below operations with a single cache:flush
                 self::restoreDefaultIndexingAttributes();
+                self::restoreConfigurationValue($this->EXPORT_PRODUCTS_NOT_VISIBLE_INDIVIDUALLY_PATH);
             }
         }
     }

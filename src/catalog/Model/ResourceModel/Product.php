@@ -6,6 +6,7 @@ use Exception;
 use Magento\Framework\DB\Adapter\AdapterInterface;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\StatusEnabledSelectModifier;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\CurrentWebsiteSelectModifier;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\VisibleSelectModifier;
 use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use Magento\Framework\App\ResourceConnection;
@@ -25,6 +26,7 @@ class Product
         CatalogConfig $configSettings,
         CurrentWebsiteSelectModifier $currentWebsiteSelectModifier,
         StatusEnabledSelectModifier $statusEnabledSelectModifier,
+        VisibleSelectModifier $visibleSelectModifier,
         ResourceConnection $resourceConnection,
         ProductMetaData $productMetaData,
         DbHelper $dbHelper
@@ -32,7 +34,7 @@ class Product
         $this->resourceConnection = $resourceConnection;
         $this->dbHelper = $dbHelper;
         $this->productSettings = $configSettings;
-        $this->selectModifier = new CompositeSelectModifier($currentWebsiteSelectModifier, $statusEnabledSelectModifier);
+        $this->selectModifier = new CompositeSelectModifier($currentWebsiteSelectModifier, $statusEnabledSelectModifier, $visibleSelectModifier);
         $this->productMetaData = $productMetaData;
     }
 

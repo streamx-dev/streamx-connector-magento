@@ -192,6 +192,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
         self::$db->insertVarcharProductAttribute($linkFieldId, self::attrId('name'), $defaultStoreId, $productName);
         self::$db->insertIntProductAttribute($linkFieldId, self::attrId('status'), $defaultStoreId, Status::STATUS_ENABLED);
+        self::$db->insertIntProductAttribute($linkFieldId, self::attrId('visibility'), $defaultStoreId, Visibility::VISIBILITY_BOTH);
 
         return $product;
     }
