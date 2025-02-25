@@ -5,7 +5,7 @@ namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 use Magento\Framework\Locale\Resolver;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 
-class LangData extends DataProviderInterface
+class LangData implements DataProviderInterface
 {
     private Resolver $localeResolver;
 
@@ -16,15 +16,13 @@ class LangData extends DataProviderInterface
     /**
      * @inheritdoc
      */
-    public function addData(array $indexData, int $storeId): array
+    public function addData(array &$indexData, int $storeId): void
     {
         $currentLanguage = $this->getCurrentLanguage();
 
         foreach ($indexData as &$product) {
             $product['lang'] = $currentLanguage;
         }
-
-        return $indexData;
     }
 
     private function getCurrentLanguage(): string

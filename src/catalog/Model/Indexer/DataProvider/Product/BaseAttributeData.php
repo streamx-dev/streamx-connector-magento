@@ -12,7 +12,7 @@ use StreamX\ConnectorCatalog\Model\SlugGenerator;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 use StreamX\ConnectorCore\Indexer\ImageUrlManager;
 
-abstract class BaseAttributeData extends DataProviderInterface
+abstract class BaseAttributeData implements DataProviderInterface
 {
     private const IMAGE_ATTRIBUTES = [
         'image',
@@ -52,7 +52,7 @@ abstract class BaseAttributeData extends DataProviderInterface
     /**
      * @throws Exception
      */
-    public function addData(array $indexData, int $storeId): array
+    public function addData(array &$indexData, int $storeId): void
     {
         // note: the call returns empty array if the Connector is configured to export all attributes:
         $attributesToIndex = $this->productAttributes->getAttributesToIndex($storeId);
@@ -86,8 +86,6 @@ abstract class BaseAttributeData extends DataProviderInterface
         }
 
         $attributesData = null;
-
-        return $indexData;
     }
 
     private function addAttributeToProduct(array &$productData, int $productId, string $attributeCode, array $attributeValues, array $attributeDefinitionsMap): void

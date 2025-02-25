@@ -5,18 +5,9 @@ namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 use Exception;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Configurable as ConfigurableResource;
-use Magento\ConfigurableProduct\Model\Product\Type\Configurable as ConfigurableType;
 
-class ConfigurableData extends DataProviderInterface
+class ConfigurableData implements DataProviderInterface
 {
-    private array $fieldsToRemove = [
-        'entity_id',
-        'row_id',
-        'type_id',
-        'parent_id',
-        'parent_ids',
-    ];
-
     private ConfigurableResource $configurableResource;
     private ChildProductAttributeData $childProductAttributeDataProvider;
 
@@ -29,7 +20,7 @@ class ConfigurableData extends DataProviderInterface
         MediaGalleryData $mediaGalleryDataProvider,
         PriceData $priceData,
         QuantityData $quantityDataProvider,
-        DataCleaner $dataCleaner
+        ChildProductDataCleaner $dataCleaner
     ) {
         $this->configurableResource = $configurableResource;
         $this->childProductAttributeDataProvider = $childProductAttributeDataProvider;
@@ -45,7 +36,7 @@ class ConfigurableData extends DataProviderInterface
     /**
      * @inheritdoc
      */
-    public function addData(array $indexData, int $storeId): array
+    public function addData(array &$indexData, int $storeId): void
     {
         $this->configurableResource->clear();
         $this->configurableResource->setProducts($indexData);
@@ -54,31 +45,26 @@ class ConfigurableData extends DataProviderInterface
         $configurableChildrenAttributes = $this->configurableResource->getConfigurableAttributeCodes();
         $this->childProductAttributeDataProvider->setAdditionalAttributesToIndex($configurableChildrenAttributes);
 
-        $productsList = [];
-
-        foreach ($indexData as $productId => $productDTO) {
-            if (!isset($productDTO['variants'])) {
-                $productDTO['variants'] = [];
-
-                if (ConfigurableType::TYPE_CODE !== $productDTO['type_id']) {
-                    $productsList[$productId] = $productDTO;
-                }
-                continue;
+        foreach ($indexData as &$product) {
+            if (isset($product['variants'])) {
+                $this->addDataFromProviders($product['variants'], $storeId);
+            } else {
+                $product['variants'] = [];
             }
-
-            $productsList[$productId] = $productDTO;
-
-            $childProducts = $productsList[$productId]['variants'];
-            $childProducts = DataProviderInterface::addDataToEntities($childProducts, $storeId, $this->dataProviders);
-            foreach ($childProducts as &$childProduct) {
-                $this->removeFields($childProduct);
-            }
-            $productsList[$productId]['variants'] = $childProducts;
         }
 
         $this->configurableResource->clear();
+    }
 
-        return $productsList;
+    private function addDataFromProviders(array &$childProducts, int $storeId): void {
+        $productsMap = [];
+        foreach ($childProducts as $product) {
+            $productsMap[$product['id']] = $product;
+        }
+        foreach ($this->dataProviders as $dataProvider) {
+            $dataProvider->addData($productsMap, $storeId);
+        }
+        $childProducts = array_values($productsMap);
     }
 
     /**
@@ -102,12 +88,5 @@ class ConfigurableData extends DataProviderInterface
         }
 
         $allChildren = null;
-    }
-
-    private function removeFields(array &$childData): void
-    {
-        foreach ($this->fieldsToRemove as $key) {
-            unset($childData[$key]);
-        }
     }
 }

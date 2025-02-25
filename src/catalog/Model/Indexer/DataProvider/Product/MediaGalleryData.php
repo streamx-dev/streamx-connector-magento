@@ -7,7 +7,7 @@ use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Gallery as Resource;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 use StreamX\ConnectorCore\Indexer\ImageUrlManager;
 
-class MediaGalleryData extends DataProviderInterface
+class MediaGalleryData implements DataProviderInterface
 {
     private Resource $resourceModel;
     private ProductMetaData $productMetaData;
@@ -27,7 +27,7 @@ class MediaGalleryData extends DataProviderInterface
     /**
      * @inheritdoc
      */
-    public function addData(array $indexData, int $storeId): array
+    public function addData(array &$indexData, int $storeId): void
     {
         $this->mapRowIdToEntityId($indexData);
         $linkField = $this->productMetaData->get()->getLinkField();
@@ -60,8 +60,6 @@ class MediaGalleryData extends DataProviderInterface
         }
 
         $this->rowIdToEntityId = [];
-
-        return $indexData;
     }
 
     private function mapRowIdToEntityId(array $products): void

@@ -137,7 +137,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
 
     private function addData(array &$entities, int $storeId): void {
         foreach ($this->indexerDefinition->getDataProviders() as $dataProvider) {
-            $entities = $dataProvider->addData($entities, $storeId);
+            $dataProvider->addData($entities, $storeId);
         }
     }
 }
