@@ -2,25 +2,10 @@
 
 namespace StreamX\ConnectorCore\Api;
 
-abstract class DataProviderInterface
+interface DataProviderInterface
 {
     /**
      * @param array<int, array> $indexData key: entity id, value: the entity as array
      */
-    public abstract function addData(array $indexData, int $storeId): array;
-
-    /**
-     * @param array<array> $entities array of entities, each entity is an array that must contain "id" field
-     */
-    public static function addDataToEntities(array $entities, int $storeId, array $dataProviders): array {
-        $indexData = [];
-        foreach ($entities as $entity) {
-            $indexData[$entity['id']] = $entity;
-        }
-        foreach ($dataProviders as $dataProvider) {
-            $indexData = $dataProvider->addData($indexData, $storeId);
-        }
-        return array_values($indexData);
-    }
-
+    public function addData(array &$indexData, int $storeId): void;
 }

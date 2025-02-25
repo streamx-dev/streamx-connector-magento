@@ -7,7 +7,7 @@ use StreamX\ConnectorCatalog\Model\ResourceModel\Product\CustomOptions as Resour
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\CustomOptionValues as OptionValuesResource;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 
-class CustomOptions extends DataProviderInterface
+class CustomOptions implements DataProviderInterface
 {
     private Resource $optionsResourceModel;
     private OptionValuesResource $optionValuesResourceModel;
@@ -29,7 +29,7 @@ class CustomOptions extends DataProviderInterface
     /**
      * @inheritdoc
      */
-    public function addData(array $indexData, int $storeId): array
+    public function addData(array &$indexData, int $storeId): void
     {
         $linkField = $this->productMetaData->get()->getLinkField();
         $linkFieldIds = array_column($indexData, $linkField);
@@ -37,7 +37,7 @@ class CustomOptions extends DataProviderInterface
         $options = $this->optionsResourceModel->loadProductOptions($linkFieldIds, $storeId);
 
         if (empty($options)) {
-            return $indexData;
+            return;
         }
 
         $optionIds = array_column($options, 'option_id');
@@ -45,14 +45,12 @@ class CustomOptions extends DataProviderInterface
 
         $optionsByProduct = $this->productOptionProcessor->process($options, $values);
 
-        foreach ($indexData as $productId => $productData) {
+        foreach ($indexData as &$productData) {
             $linkFieldValue = $productData[$linkField];
 
             if (isset($optionsByProduct[$linkFieldValue])) {
-                $indexData[$productId]['custom_options'] = $optionsByProduct[$linkFieldValue];
+                $productData['custom_options'] = $optionsByProduct[$linkFieldValue];
             }
         }
-
-        return $indexData;
     }
 }

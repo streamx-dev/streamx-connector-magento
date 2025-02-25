@@ -5,7 +5,7 @@ namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 use Magento\Framework\App\ResourceConnection;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 
-class QuantityData extends DataProviderInterface
+class QuantityData implements DataProviderInterface
 {
     private ResourceConnection $resource;
 
@@ -14,7 +14,7 @@ class QuantityData extends DataProviderInterface
         $this->resource = $resource;
     }
 
-    public function addData(array $indexData, int $storeId): array
+    public function addData(array &$indexData, int $storeId): void
     {
         $quantityDataRows = $this->loadQuantityDataRows($indexData);
 
@@ -23,8 +23,6 @@ class QuantityData extends DataProviderInterface
             $quantity = (float)$quantityDataRow['qty'];
             $indexData[$productId]['quantity'] = $quantity;
         }
-
-        return $indexData;
     }
 
     private function loadQuantityDataRows(array $indexData): array
