@@ -46,7 +46,7 @@ class CategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $categoryInternalName = strtolower(str_replace(' ', '_', $categoryName));
         $rootCategoryId = 1;
         $parentCategoryId = 2;
-        $defaultStoreId = 0;
+        $defaultStoreId = self::DEFAULT_STORE_ID;
         $attributeSetId = self::$db->getDefaultCategoryAttributeSetId();
 
         $categoryId = self::$db->insert("

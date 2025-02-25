@@ -6,7 +6,7 @@ namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxP
  * @inheritdoc
  * @UsesCategoryIndexer
  */
-class MultistoreCategoryAddAndDeleteTest extends BaseMultistoreTest {
+class MultistoreCategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
     /** @test */
     public function shouldPublishActiveCategories() {
@@ -18,12 +18,12 @@ class MultistoreCategoryAddAndDeleteTest extends BaseMultistoreTest {
             [
                 self::DEFAULT_STORE_ID => 'Category name',
                 self::STORE_1_ID => 'Category name in first store',
-                parent::getStore2Id() => 'Category name in second store'
+                parent::$store2Id => 'Category name in second store'
             ],
             [
                 self::DEFAULT_STORE_ID => true,
                 self::STORE_1_ID => false,
-                parent::getStore2Id() => true
+                parent::$store2Id => true
             ]
         );
 
@@ -61,7 +61,7 @@ class MultistoreCategoryAddAndDeleteTest extends BaseMultistoreTest {
         // given: switch store with ID 2 to use a new category as its root category
         $rootCategoryIdForStore1 = 2; // this is the default root category for stores
         $rootCategoryIdForStore2 = $this->insertRootCategory('Root category for second store');
-        $this->changeRootCategoryForStore(parent::getStore2Id(), $rootCategoryIdForStore2);
+        $this->changeRootCategoryForStore(parent::$store2Id, $rootCategoryIdForStore2);
 
         // and: insert two new categories with different parent category IDs
         $store1CategoryId = $this->insertCategory($rootCategoryIdForStore1, 'Bikes for first store');
@@ -112,7 +112,7 @@ class MultistoreCategoryAddAndDeleteTest extends BaseMultistoreTest {
                 $this->assertDataIsUnpublished($expectedKeyForStore1);
                 $this->assertDataIsUnpublished($expectedKeyForStore2);
             } finally {
-                $this->changeRootCategoryForStore(parent::getStore2Id(), $rootCategoryIdForStore1);
+                $this->changeRootCategoryForStore(parent::$store2Id, $rootCategoryIdForStore1);
             }
         }
     }

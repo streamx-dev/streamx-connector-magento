@@ -17,12 +17,24 @@ use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
 
 /**
  * @inheritDoc
+ *  Note: see StoresControllerImpl for additional stores and website created for these tests
  */
 abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
 
     use ConfigurationEditTraits;
 
     private const MAGENTO_REST_API_BASE_URL = 'https://magento.test:444/rest/all/V1';
+
+    protected const DEFAULT_WEBSITE_ID = 1;
+    protected const DEFAULT_STORE_ID = 0;
+    protected const STORE_1_ID = 1;
+    protected static int $store2Id;
+    protected static int $secondWebsiteId;
+    protected static int $secondWebsiteStoreId;
+
+    protected static bool $areTestsInitialized = false;
+
+    protected static MagentoMySqlQueryExecutor $db;
 
     protected static MagentoIndexerOperationsExecutor $indexerOperations;
     private static string $originalIndexerMode;
@@ -31,27 +43,35 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
     protected static string $testedIndexerName;
     private static string $testedIndexerMode;
 
-    protected static ?MagentoMySqlQueryExecutor $db = null;
-
     public static function setUpBeforeClass(): void {
+        if (!self::$areTestsInitialized) {
+            self::initializeTests();
+            self::$areTestsInitialized = true;
+        }
         self::loadDesiredIndexerSettings();
-        self::connectToDatabase();
         self::setIndexerModeInMagento();
+    }
+
+    public static function initializeTests(): void {
+        self::$db = new MagentoMySqlQueryExecutor();
+        self::$db->connect();
+        self::$indexerOperations = new MagentoIndexerOperationsExecutor();
+
+        if ("true" === self::callMagentoPutEndpoint('stores/setup')) {
+            self::$indexerOperations->flushCache();
+        }
+
+        self::$store2Id = self::$db->selectSingleValue("SELECT store_id FROM store WHERE code = 'store_2_view'");
+        self::$secondWebsiteId = self::$db->selectSingleValue("SELECT website_id FROM store_website WHERE code = 'second_website'");
+        self::$secondWebsiteStoreId = self::$db->selectSingleValue("SELECT store_id FROM store WHERE code = 'store_for_second_website_view'");
     }
 
     public static function tearDownAfterClass(): void {
         self::restoreIndexerModeInMagento();
     }
 
-    private static function connectToDatabase(): void {
-        if (!self::$db) {
-            self::$db = new MagentoMySqlQueryExecutor();
-            self::$db->connect();
-        }
-    }
-
     private static function setIndexerModeInMagento(): void {
-        self::$indexerOperations = new MagentoIndexerOperationsExecutor(self::$testedIndexerName);
+        self::$indexerOperations->setIndexerName(self::$testedIndexerName);
         self::$originalIndexerMode = self::$indexerOperations->getIndexerMode();
 
         if (self::$testedIndexerMode !== self::$originalIndexerMode) {
@@ -99,7 +119,7 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
         throw new Exception("Cannot detect desired indexer mode for $cls");
     }
 
-    protected static function callMagentoPutEndpoint(string $relativeUrl, array $params): string {
+    protected static function callMagentoPutEndpoint(string $relativeUrl, array $params = []): string {
         $endpointUrl = self::MAGENTO_REST_API_BASE_URL . "/$relativeUrl?XDEBUG_SESSION_START=PHPSTORM";
         $jsonBody = json_encode($params);
         $headers = ['Content-Type' => 'application/json; charset=UTF-8'];
