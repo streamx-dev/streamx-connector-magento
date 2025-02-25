@@ -37,7 +37,11 @@ class AttributeUpdateTest extends BaseDirectDbEntityUpdateTest {
         self::removeFromStreamX($expectedKey);
 
         // when
-        $this->allowIndexingAllAttributes();
+        $this->setConfigurationValues([
+            $this->PRODUCT_ATTRIBUTES_PATH => '', // make sure color and material attributes will always be exported
+            $this->EXPORT_PRODUCTS_NOT_VISIBLE_INDIVIDUALLY_PATH => 1 // normally, the product is not visible individually
+        ]);
+
         $this->renameAttributeInDb($attributeId, $newDisplayName);
 
         try {
@@ -50,7 +54,10 @@ class AttributeUpdateTest extends BaseDirectDbEntityUpdateTest {
             try {
                 $this->renameAttributeInDb($attributeId, $oldDisplayName);
             } finally {
-                self::restoreDefaultIndexingAttributes();
+                $this->restoreConfigurationValues([
+                    $this->PRODUCT_ATTRIBUTES_PATH,
+                    $this->EXPORT_PRODUCTS_NOT_VISIBLE_INDIVIDUALLY_PATH
+                ]);
             }
         }
     }

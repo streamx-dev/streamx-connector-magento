@@ -6,6 +6,7 @@ use Exception;
 use Magento\Framework\DB\Adapter\AdapterInterface;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\StatusEnabledSelectModifier;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\CurrentWebsiteSelectModifier;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\VisibleSelectModifier;
 use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use Magento\Framework\App\ResourceConnection;
@@ -19,12 +20,14 @@ class Product
     private CatalogConfig $productSettings;
     private ?array $configurableAttributeIds = null;
     private ProductMetaData $productMetaData;
-    private CompositeSelectModifier $selectModifier;
+    private CompositeSelectModifier $mainProductSelectModifier;
+    private CompositeSelectModifier $childProductSelectModifier;
 
     public function __construct(
         CatalogConfig $configSettings,
         CurrentWebsiteSelectModifier $currentWebsiteSelectModifier,
         StatusEnabledSelectModifier $statusEnabledSelectModifier,
+        VisibleSelectModifier $visibleSelectModifier,
         ResourceConnection $resourceConnection,
         ProductMetaData $productMetaData,
         DbHelper $dbHelper
@@ -32,7 +35,8 @@ class Product
         $this->resourceConnection = $resourceConnection;
         $this->dbHelper = $dbHelper;
         $this->productSettings = $configSettings;
-        $this->selectModifier = new CompositeSelectModifier($currentWebsiteSelectModifier, $statusEnabledSelectModifier);
+        $this->mainProductSelectModifier = new CompositeSelectModifier($currentWebsiteSelectModifier, $statusEnabledSelectModifier, $visibleSelectModifier);
+        $this->childProductSelectModifier = new CompositeSelectModifier($currentWebsiteSelectModifier, $statusEnabledSelectModifier); // load child products even if configured as not visible
         $this->productMetaData = $productMetaData;
     }
 
@@ -68,7 +72,7 @@ class Product
      * Prepares product select for selecting main products
      */
     private function prepareProductSelect(array $columns, int $storeId): Select {
-        $select = $this->prepareBaseProductSelect($columns, $storeId);
+        $select = $this->prepareBaseProductSelect($columns, $storeId, $this->mainProductSelectModifier);
         $this->addProductTypeFilter($select);
         $select->order('entity.entity_id ASC');
         return $select;
@@ -77,7 +81,7 @@ class Product
     /**
      * Prepares base product select for selecting main or variant products
      */
-    private function prepareBaseProductSelect(array $requiredColumns, int $storeId): Select
+    private function prepareBaseProductSelect(array $requiredColumns, int $storeId, CompositeSelectModifier $selectModifier): Select
     {
         $select = $this->getConnection()->select()
             ->from(
@@ -85,7 +89,7 @@ class Product
                 $requiredColumns
             );
 
-        $this->selectModifier->modifyAll($select, $storeId);
+        $selectModifier->modifyAll($select, $storeId);
 
         return $select;
     }
@@ -123,7 +127,7 @@ class Product
             $columns[] = $linkField;
         }
 
-        $select = $this->prepareBaseProductSelect($columns, $storeId);
+        $select = $this->prepareBaseProductSelect($columns, $storeId, $this->childProductSelectModifier);
 
         $select->join(
             ['link_table' => $this->resourceConnection->getTableName('catalog_product_super_link')],

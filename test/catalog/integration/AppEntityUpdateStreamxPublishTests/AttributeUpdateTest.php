@@ -39,7 +39,11 @@ class AttributeUpdateTest extends BaseAppEntityUpdateTest {
         self::removeFromStreamX($expectedKey);
 
         // when
-        $this->allowIndexingAllAttributes();
+        $this->setConfigurationValues([
+            $this->PRODUCT_ATTRIBUTES_PATH => '', // make sure color and material attributes will always be exported
+            $this->EXPORT_PRODUCTS_NOT_VISIBLE_INDIVIDUALLY_PATH => 1 // normally, the product is not visible individually
+        ]);
+
         self::renameAttribute($attributeCode, $newDisplayName);
 
         // then
@@ -50,7 +54,10 @@ class AttributeUpdateTest extends BaseAppEntityUpdateTest {
                 self::renameAttribute($attributeCode, $oldDisplayName);
                 $this->assertExactDataIsPublished($expectedKey, "original-ball-product.json");
             } finally {
-                self::restoreDefaultIndexingAttributes();
+                $this->restoreConfigurationValues([
+                    $this->PRODUCT_ATTRIBUTES_PATH,
+                    $this->EXPORT_PRODUCTS_NOT_VISIBLE_INDIVIDUALLY_PATH
+                ]);
             }
         }
     }

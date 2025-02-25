@@ -6,42 +6,36 @@ trait ConfigurationEditTraits {
 
     private string $CONFIGURATION_EDIT_ENDPOINT = 'configuration/edit';
     public string $PRODUCT_ATTRIBUTES_PATH = 'streamx_connector_settings/catalog_settings/product_attributes';
-    public string $CHILD_PRODUCT_ATTRIBUTES_PATH = 'streamx_connector_settings/catalog_settings/child_product_attributes';
+    public string $EXPORT_PRODUCTS_NOT_VISIBLE_INDIVIDUALLY_PATH = 'streamx_connector_settings/catalog_settings/export_products_not_visible_individually';
+
+    public function setConfigurationValues(array $pathValueMap): void {
+        foreach ($pathValueMap as $path => $value) {
+            self::callMagentoConfigurationEditEndpoint($path, $value);
+        }
+        self::$indexerOperations->flushConfigCache();
+    }
+
+    public function restoreConfigurationValues(array $paths): void {
+        foreach ($paths as $path) {
+            self::callMagentoConfigurationEditEndpoint($path, $this->readDefaultValue($path));
+        }
+        self::$indexerOperations->flushConfigCache();
+    }
 
     public function setConfigurationValue(string $path, string $value): void {
-        self::callMagentoConfigurationEditEndpoint(
-            $path,
-            $value
-        );
-        self::$indexerOperations->flushConfigCache();
+        $this->setConfigurationValues([$path => $value]);
     }
 
     public function restoreConfigurationValue(string $path): void {
-        self::callMagentoConfigurationEditEndpoint(
-            $path,
-            $this->readDefaultValue($path)
-        );
-        self::$indexerOperations->flushConfigCache();
+        $this->restoreConfigurationValues([$path]);
     }
 
-    protected function allowIndexingAllAttributes(): void {
-        $this->setIndexedAttributes(
-            '',
-            ''
-        );
+    protected function allowIndexingAllProductAttributes(): void {
+        $this->setConfigurationValue($this->PRODUCT_ATTRIBUTES_PATH, '');
     }
 
-    protected function restoreDefaultIndexingAttributes(): void {
-        $this->setIndexedAttributes(
-            $this->readDefaultValue($this->PRODUCT_ATTRIBUTES_PATH),
-            $this->readDefaultValue($this->CHILD_PRODUCT_ATTRIBUTES_PATH)
-        );
-    }
-
-    private function setIndexedAttributes(string $productAttributes, string $childProductAttributes): void {
-        self::callMagentoConfigurationEditEndpoint($this->PRODUCT_ATTRIBUTES_PATH, $productAttributes);
-        self::callMagentoConfigurationEditEndpoint($this->CHILD_PRODUCT_ATTRIBUTES_PATH, $childProductAttributes);
-        self::$indexerOperations->flushConfigCache();
+    protected function restoreDefaultIndexedProductAttributes(): void {
+        $this->restoreConfigurationValue($this->PRODUCT_ATTRIBUTES_PATH);
     }
 
     private function readDefaultValue(string $configurationFieldPath): string {

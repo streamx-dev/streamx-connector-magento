@@ -23,6 +23,10 @@ class CatalogConfig extends BaseConfigurationReader
         return (bool)$this->getGlobalConfigValue('use_catalog_rules');
     }
 
+    public function shouldExportProductsNotVisibleIndividually(): bool {
+        return (bool)$this->getGlobalConfigValue('export_products_not_visible_individually');
+    }
+
     public function getAllowedProductTypes(): array {
         return parent::splitCommaSeparatedValueToArray(
             $this->getGlobalConfigValue('allowed_product_types')
