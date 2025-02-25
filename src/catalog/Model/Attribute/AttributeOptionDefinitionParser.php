@@ -26,14 +26,11 @@ class AttributeOptionDefinitionParser
     {
         $id = (int)$option->getData('option_id');
         $value = (string)$option->getData('value');
-        $swatch = null;
-
-        if ($loadSwatches) {
-            $swatch = new AttributeOptionSwatchDefinition(
+        $swatch = $loadSwatches ?
+            new AttributeOptionSwatchDefinition(
                 self::getSwatchTypeAsString((int)$option->getData('swatch_type')),
                 $option->getData('swatch_value')
-            );
-        }
+            ) : null;
 
         return new AttributeOptionDefinition($id, $value, $swatch);
     }

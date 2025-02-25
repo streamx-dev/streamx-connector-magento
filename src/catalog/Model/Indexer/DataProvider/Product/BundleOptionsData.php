@@ -33,6 +33,5 @@ class BundleOptionsData implements DataProviderInterface
         }
 
         $this->resourceModel->clear();
-        $productBundleOptions = null;
     }
 }
