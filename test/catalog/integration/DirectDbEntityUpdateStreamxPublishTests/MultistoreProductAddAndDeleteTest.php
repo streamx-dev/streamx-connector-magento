@@ -4,6 +4,7 @@ namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxP
 
 use DateTime;
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
+use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 
 /**
  * @inheritdoc
@@ -56,7 +57,7 @@ class MultistoreProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
     public function shouldPublishEnabledProduct() {
         // given: insert product as enabled for all stores by default, but disabled for store 1:
         $sku = (string) (new DateTime())->getTimestamp();
-        $productId = $this->insertProduct(
+        $product = $this->insertProduct(
             $sku,
             [
                 self::DEFAULT_STORE_ID => 'Product name',
@@ -69,6 +70,7 @@ class MultistoreProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
                 parent::$store2Id => Status::STATUS_ENABLED
             ]
         );
+        $productId = $product->getEntityId();
 
         // and
         $expectedKeyForStore1 = "pim:$productId";
@@ -92,7 +94,7 @@ class MultistoreProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
             $this->assertDataIsNotPublished($expectedKeyForStore1);
         } finally {
             // and when
-            $this->deleteProduct($productId);
+            $this->deleteProduct($product);
             $this->reindexMview();
 
             // then
@@ -100,49 +102,43 @@ class MultistoreProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         }
     }
 
-    private function insertProduct(string $sku, array $storeIdProductNameMap, array $storeIdProductStatusMap): int {
+    private function insertProduct(string $sku, array $storeIdProductNameMap, array $storeIdProductStatusMap): EntityIds {
         $websiteId = self::DEFAULT_WEBSITE_ID;
-        $attributeSetId = self::$db->getDefaultProductAttributeSetId();
         $nameAttrId = self::$db->getProductAttributeId('name');
         $statusAttrId = self::$db->getProductAttributeId('status');
 
         // 1. Create product
-        $productId = self::$db->insert("
-            INSERT INTO catalog_product_entity (attribute_set_id, type_id, sku, has_options, required_options) VALUES
-                ($attributeSetId, 'simple', '$sku', FALSE, FALSE)
-        ");
+        $product = self::$db->insertProduct($sku, $websiteId);
+        $linkFieldId = $product->getLinkFieldId();
 
-        // 2. Add the product to the website's catalog
-        self::$db->execute("
-            INSERT INTO catalog_product_website (product_id, website_id) VALUES
-                ($productId, $websiteId)
-        ");
-
-        // 3. Set default and store-scoped names for the product
+        // 2. Set default and store-scoped names for the product
         foreach ($storeIdProductNameMap as $storeId => $productName) {
-            self::$db->execute("
-               INSERT INTO catalog_product_entity_varchar (entity_id, attribute_id, store_id, value) VALUES
-                    ($productId, $nameAttrId, $storeId, '$productName')
-            ");
+            self::$db->insertVarcharProductAttribute($linkFieldId, $nameAttrId, $storeId, $productName);
         }
 
-        // 4. Set default and store-scoped statuses for the product
+        // 3. Set default and store-scoped statuses for the product
         foreach ($storeIdProductStatusMap as $storeId => $productStatus) {
-            self::$db->execute("
-                INSERT INTO catalog_product_entity_int (entity_id, attribute_id, store_id, value) VALUES
-                    ($productId, $statusAttrId, $storeId, $productStatus)
-            ");
+            self::$db->insertIntProductAttribute($linkFieldId, $statusAttrId, $storeId, $productStatus);
         }
 
-        return $productId;
+        return $product;
     }
 
-    private function deleteProduct(int $productId): void {
-        self::$db->executeAll([
-            "DELETE FROM catalog_product_website WHERE product_id = $productId",
-            "DELETE FROM catalog_product_entity_int WHERE entity_id = $productId",
-            "DELETE FROM catalog_product_entity_varchar WHERE entity_id = $productId",
-            "DELETE FROM catalog_product_entity WHERE entity_id = $productId"
+    private function deleteProduct(EntityIds $productIds): void {
+        self::$db->deleteById($productIds->getLinkFieldId(), [
+            'catalog_product_entity_int' => self::$db->getEntityAttributeLinkField(),
+            'catalog_product_entity_varchar' => self::$db->getEntityAttributeLinkField()
         ]);
+
+        self::$db->deleteById($productIds->getEntityId(), [
+            'catalog_product_website' => 'product_id',
+            'catalog_product_entity' => 'entity_id'
+        ]);
+
+        if (self::$db->isEnterpriseMagento()) {
+            self::$db->deleteById($productIds->getEntityId(), [
+                'sequence_product' => 'sequence_value'
+            ]);
+        }
     }
 }

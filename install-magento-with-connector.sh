@@ -35,7 +35,8 @@ sed -i '' 's/8080:80/8090:80/g' compose.dev.yaml
 ### Enable gathering code coverage
 echo -e "\nXDEBUG_MODE=coverage" >> env/phpfpm.env
 
-### Download source code and perform pre-installation
+### Download source code and perform pre-installation.
+# Depending on your repo.magento.com permissions provided in auth.json file, available versions for the below command are: community and enterprise
 bin/download community 2.4.7-p3
 
 ### Install the magento docker machinery

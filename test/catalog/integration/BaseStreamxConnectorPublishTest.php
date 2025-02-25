@@ -54,7 +54,6 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
 
     public static function initializeTests(): void {
         self::$db = new MagentoMySqlQueryExecutor();
-        self::$db->connect();
         self::$indexerOperations = new MagentoIndexerOperationsExecutor();
 
         if ("true" === self::callMagentoPutEndpoint('stores/setup')) {
@@ -64,6 +63,17 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
         self::$store2Id = self::$db->selectSingleValue("SELECT store_id FROM store WHERE code = 'store_2_view'");
         self::$secondWebsiteId = self::$db->selectSingleValue("SELECT website_id FROM store_website WHERE code = 'second_website'");
         self::$secondWebsiteStoreId = self::$db->selectSingleValue("SELECT store_id FROM store WHERE code = 'store_for_second_website_view'");
+
+        if (self::$db->isEnterpriseMagento()) {
+            self::disableGiftCardsCategory();
+        }
+    }
+
+    private static function disableGiftCardsCategory(): void {
+        // disable a category that exists only in enterprise magento, to allow having common validation files for both versions
+        $categoryId = self::$db->getCategoryId('Gift Cards');
+        $isActiveAttributeId = self::$db->getCategoryAttributeId('is_active');
+        self::$db->insertIntCategoryAttribute($categoryId, $isActiveAttributeId, 0, 0);
     }
 
     public static function tearDownAfterClass(): void {
