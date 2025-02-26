@@ -5,18 +5,26 @@ namespace StreamX\ConnectorCatalog\test\integration;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use StreamX\ConnectorCatalog\test\integration\utils\ValidationFileUtils;
-use Swaggest\JsonSchema\InvalidValue;
-use Swaggest\JsonSchema\Schema;
+use JsonSchema\Validator;
 
 class JsonSchemaValidationTest extends TestCase {
 
     use ValidationFileUtils;
 
     private const SCHEMA_URL = 'https://raw.githubusercontent.com/streamx-dev/streamx-commerce-accelerator/refs/heads/main/spec/model/SxModel.json';
-    private static stdClass $schema;
+    private const SCHEMA_JSON_FILE = __DIR__ . '/schema.json';
+    private static object $schema;
 
     public static function setUpBeforeClass(): void {
-        self::$schema = self::readJson(self::SCHEMA_URL);
+        $schemaJson = file_get_contents(JsonSchemaValidationTest::SCHEMA_URL);
+        // TODO remove this line when https://github.com/streamx-dev/streamx-commerce-accelerator/pull/52 is merged
+        $schemaJson = str_replace('"definitions"', '"anyOf": [{ "$ref": "#/definitions/SxProduct" }, { "$ref": "#/definitions/SxCategory" }], "definitions"',$schemaJson);
+        file_put_contents(self::SCHEMA_JSON_FILE, $schemaJson);
+        self::$schema = (object) ['$ref' => 'file://' . self::SCHEMA_JSON_FILE];
+    }
+
+    public static function tearDownAfterClass(): void {
+        unlink(self::SCHEMA_JSON_FILE);
     }
 
     public function validationFilesProvider(): array {
@@ -31,16 +39,20 @@ class JsonSchemaValidationTest extends TestCase {
      */
     public function testAllValidationFilesShouldMatchSchema(string $validationFilePath) {
         // given
+        $validator = new Validator();
         $validatedContent = self::readJson($validationFilePath);
 
-        try {
-            // when
-            $result = Schema::import(self::$schema)->in($validatedContent);
+        // when
+        $validator->validate($validatedContent, self::$schema);
+        $errors = $validator->getErrors();
 
-            // then
-            $this->assertNotNull($result);
-        } catch (InvalidValue $e) {
-            $this->fail("Error in file $validationFilePath:\n {$e->getMessage()} at line {$e->getLine()}");
+        // then
+        if ($validator->isValid()) {
+            $this->assertEmpty($errors);
+        } else {
+            $errorsCount = count($errors);
+            $errorsJson = json_encode($errors, JSON_PRETTY_PRINT);
+            $this->fail("Detected $errorsCount errors in file $validationFilePath:\n$errorsJson");
         }
     }
 

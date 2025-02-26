@@ -49,7 +49,7 @@ class ProductVariantUpdateTest extends BaseAppEntityUpdateTest {
             $this->assertExactDataIsPublished($expectedParentProductKey, 'edited-hoodie-product.json');
             foreach ($visibleChildProducts as $childProductId => $childProductName) {
                 $publishedChildProduct = $this->downloadContentAtKey("default_product:$childProductId");
-                $this->assertStringContainsString('"id":' . $childProductId, $publishedChildProduct);
+                $this->assertStringContainsString('"id":"' . $childProductId . '"', $publishedChildProduct);
                 $this->assertStringContainsString('"name":"' . $childProductName . '"', $publishedChildProduct);
             }
             foreach ($invisibleChildProducts as $childProductId => $childProductName) {

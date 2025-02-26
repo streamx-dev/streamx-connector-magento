@@ -29,7 +29,7 @@
     "phpunit/phpunit": "^9.5",
     "ext-mysqli": "*",
     "ext-simplexml": "*",
-    "swaggest/json-schema": "*"
+    "justinrainbow/json-schema": "*"
   },
   "autoload": {
     "files": [
