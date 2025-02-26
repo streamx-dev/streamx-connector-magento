@@ -127,6 +127,8 @@ class ProductVariantUpdateTest extends BaseAppEntityUpdateTest {
             // then: expecting both products to be published (with original name of the child product in both payloads)
             if ($expectingVariantToBePublished) {
                 $this->assertExactDataIsPublished($expectedChildProductKey, 'original-hoodie-xl-orange-product.json');
+            } else {
+                $this->assertDataIsNotPublished($expectedChildProductKey);
             }
             $this->assertExactDataIsPublished($expectedParentProductKey, 'original-hoodie-product.json');
             $this->assertDataIsNotPublished($unexpectedChildProductKey);
