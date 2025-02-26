@@ -1,6 +1,6 @@
 {
   "sku": "24-MB05",
-  "id": 4,
+  "id": "4",
   "lang": "en",
   "attributes": [
     {
@@ -99,19 +99,19 @@
   "slug": "wayfarer-messenger-bag-4",
   "categories": [
     {
-      "id": 3,
+      "id": "3",
       "name": "Gear",
       "slug": "gear-3",
       "label": "Gear"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Bags",
       "slug": "bags-4",
       "label": "Bags"
     },
     {
-      "id": 8,
+      "id": "8",
       "name": "New Luma Yoga Collection",
       "slug": "new-luma-yoga-collection-8",
       "label": "New Luma Yoga Collection"

@@ -1,6 +1,6 @@
 {
   "sku": "MH01",
-  "id": 62,
+  "id": "62",
   "lang": "en",
   "attributes": [
     {
@@ -84,19 +84,19 @@
   "slug": "chaz-kangeroo-hoodie-62",
   "categories": [
     {
-      "id": 2,
+      "id": "2",
       "name": "Default Category",
       "slug": "default-category-2",
       "label": "Default Category"
     },
     {
-      "id": 15,
+      "id": "15",
       "name": "Hoodies & Sweatshirts",
       "slug": "hoodies-and-sweatshirts-15",
       "label": "Hoodies & Sweatshirts"
     },
     {
-      "id": 36,
+      "id": "36",
       "name": "Eco Friendly",
       "slug": "eco-friendly-36",
       "label": "Eco Friendly"
@@ -120,7 +120,7 @@
   "variants": [
     {
       "sku": "MH01-XS-Black",
-      "id": 47,
+      "id": "47",
       "attributes": [
         {
           "name": "small_image",
@@ -208,7 +208,7 @@
     },
     {
       "sku": "MH01-XS-Gray",
-      "id": 48,
+      "id": "48",
       "attributes": [
         {
           "name": "small_image",
@@ -304,7 +304,7 @@
     },
     {
       "sku": "MH01-XS-Orange",
-      "id": 49,
+      "id": "49",
       "attributes": [
         {
           "name": "small_image",
@@ -392,7 +392,7 @@
     },
     {
       "sku": "MH01-S-Black",
-      "id": 50,
+      "id": "50",
       "attributes": [
         {
           "name": "small_image",
@@ -480,7 +480,7 @@
     },
     {
       "sku": "MH01-S-Gray",
-      "id": 51,
+      "id": "51",
       "attributes": [
         {
           "name": "small_image",
@@ -576,7 +576,7 @@
     },
     {
       "sku": "MH01-S-Orange",
-      "id": 52,
+      "id": "52",
       "attributes": [
         {
           "name": "small_image",
@@ -664,7 +664,7 @@
     },
     {
       "sku": "MH01-M-Black",
-      "id": 53,
+      "id": "53",
       "attributes": [
         {
           "name": "small_image",
@@ -752,7 +752,7 @@
     },
     {
       "sku": "MH01-M-Gray",
-      "id": 54,
+      "id": "54",
       "attributes": [
         {
           "name": "small_image",
@@ -848,7 +848,7 @@
     },
     {
       "sku": "MH01-M-Orange",
-      "id": 55,
+      "id": "55",
       "attributes": [
         {
           "name": "small_image",
@@ -936,7 +936,7 @@
     },
     {
       "sku": "MH01-L-Black",
-      "id": 56,
+      "id": "56",
       "attributes": [
         {
           "name": "small_image",
@@ -1024,7 +1024,7 @@
     },
     {
       "sku": "MH01-L-Gray",
-      "id": 57,
+      "id": "57",
       "attributes": [
         {
           "name": "small_image",
@@ -1120,7 +1120,7 @@
     },
     {
       "sku": "MH01-L-Orange",
-      "id": 58,
+      "id": "58",
       "attributes": [
         {
           "name": "small_image",
@@ -1208,7 +1208,7 @@
     },
     {
       "sku": "MH01-XL-Black",
-      "id": 59,
+      "id": "59",
       "attributes": [
         {
           "name": "small_image",
@@ -1296,7 +1296,7 @@
     },
     {
       "sku": "MH01-XL-Gray",
-      "id": 60,
+      "id": "60",
       "attributes": [
         {
           "name": "small_image",
@@ -1392,7 +1392,7 @@
     },
     {
       "sku": "MH01-XL-Orange",
-      "id": 61,
+      "id": "61",
       "attributes": [
         {
           "name": "small_image",

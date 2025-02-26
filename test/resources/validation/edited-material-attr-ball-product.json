@@ -1,6 +1,6 @@
 {
   "sku": "24-UG07",
-  "id": 16,
+  "id": "16",
   "lang": "en",
   "attributes": [
     {
@@ -51,13 +51,13 @@
   "slug": "dual-handle-cardio-ball-16",
   "categories": [
     {
-      "id": 3,
+      "id": "3",
       "name": "Gear",
       "slug": "gear-3",
       "label": "Gear"
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "Fitness Equipment",
       "slug": "fitness-equipment-5",
       "label": "Fitness Equipment"
