@@ -73,7 +73,7 @@ class ProductAttributesProvider
             }
         }
 
-        return $this->valuesByProductId; // TODO for full determinism, maybe worth adding ordering attributes by attribute_code
+        return $this->valuesByProductId;
     }
 
     /**

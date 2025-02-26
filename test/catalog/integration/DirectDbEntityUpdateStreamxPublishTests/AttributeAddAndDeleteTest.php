@@ -19,7 +19,7 @@ class AttributeAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $this->removeFromStreamX($expectedKey);
 
         // when
-        $this->allowIndexingAllAttributes();
+        $this->setConfigurationValue($this->PRODUCT_ATTRIBUTES_PATH, 'the_new_attribute');
         $attributeId = $this->insertNewAttribute($attributeCode, $productId);
 
         try {
@@ -38,7 +38,7 @@ class AttributeAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
                 // note: we don't implement code to retrieve (and republish) product that used a deleted attribute, so the product is not republished, its last published version still has the custom attribute:
                 $this->assertExactDataIsPublished($expectedKey, 'edited-roller-product-with-custom-attribute.json');
             } finally {
-                $this->restoreDefaultIndexingAttributes();
+                $this->restoreConfigurationValue($this->PRODUCT_ATTRIBUTES_PATH);
             }
         }
     }
@@ -63,19 +63,16 @@ class AttributeAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         ");
 
         // add attribute to product
-        self::$db->execute("
-            INSERT INTO catalog_product_entity_varchar (entity_id, attribute_id, store_id, value) VALUES
-                ($productId, $attributeId, $defaultStoreId, '$attributeCode value for product $productId')
-        ");
+        self::$db->insertVarcharProductAttribute($productId, $attributeId, $defaultStoreId, "$attributeCode value for product $productId");
 
         return $attributeId;
     }
 
     private function deleteAttribute(int $attributeId): void {
-        self::$db->executeAll([
-            "DELETE FROM catalog_product_entity_varchar WHERE attribute_id = $attributeId",
-            "DELETE FROM catalog_eav_attribute WHERE attribute_id = $attributeId",
-            "DELETE FROM eav_attribute WHERE attribute_id = $attributeId"
+        self::$db->deleteById($attributeId, [
+            'catalog_product_entity_varchar' => 'attribute_id',
+            'catalog_eav_attribute' => 'attribute_id',
+            'eav_attribute' => 'attribute_id'
         ]);
     }
 }

@@ -11,24 +11,20 @@ trait ValidationFileUtils  {
         return file_get_contents("$validationFilesDir/$validationFileName");
     }
 
-    public function verifySameJsonsOrThrow(string $expectedFormattedJson, string $actualJson, array $regexReplacements = [], bool $ignoreOrderInArrays = false): void {
-        $this->verifySameJsons($expectedFormattedJson, $actualJson, true, $regexReplacements, $ignoreOrderInArrays);
+    public function verifySameJsonsOrThrow(string $expectedFormattedJson, string $actualJson, array $regexReplacements = []): void {
+        $this->verifySameJsons($expectedFormattedJson, $actualJson, true, $regexReplacements);
     }
 
-    public function verifySameJsonsSilently(string $expectedFormattedJson, string $actualJson, array $regexReplacements = [], bool $ignoreOrderInArrays = false): bool {
-        return $this->verifySameJsons($expectedFormattedJson, $actualJson, false, $regexReplacements, $ignoreOrderInArrays);
+    public function verifySameJsonsSilently(string $expectedFormattedJson, string $actualJson, array $regexReplacements = []): bool {
+        return $this->verifySameJsons($expectedFormattedJson, $actualJson, false, $regexReplacements);
     }
 
-    private function verifySameJsons(string $expectedFormattedJson, string $actualJson, bool $throwOnAssertionError, array $regexReplacements = [], bool $ignoreOrderInArrays = false): bool {
+    private function verifySameJsons(string $expectedFormattedJson, string $actualJson, bool $throwOnAssertionError, array $regexReplacements = []): bool {
         $actualFormattedJson = JsonFormatter::formatJson($actualJson);
         try {
             $expected = self::standardizeNewlines(self::replaceRegexes($expectedFormattedJson, $regexReplacements));
             $actual = self::standardizeNewlines(self::replaceRegexes($actualFormattedJson, $regexReplacements));
-            if ($ignoreOrderInArrays) {
-                $this->compareJsonsIgnoringOrderInArrayFields($expected, $actual);
-            } else {
-                $this->assertEquals($expected, $actual);
-            }
+            $this->assertEquals($expected, $actual);
             return true;
         } catch (ExpectationFailedException $e) {
             if ($throwOnAssertionError) {
@@ -47,27 +43,5 @@ trait ValidationFileUtils  {
             $json = preg_replace('/' . $regex . '/', $replacement, $json);
         }
         return $json;
-    }
-
-    private function compareJsonsIgnoringOrderInArrayFields(string $expectedJson, string $actualJson): void {
-        $expectedAsArray = json_decode($expectedJson, true);
-        $actualAsArray = json_decode($actualJson, true);
-
-        $this->sortArrayRecursive($expectedAsArray);
-        $this->sortArrayRecursive($actualAsArray);
-
-        $this->assertEquals($expectedAsArray, $actualAsArray);
-    }
-
-    private function sortArrayRecursive(&$array): void {
-        if (!is_array($array)) {
-            return;
-        }
-
-        sort($array);
-
-        foreach ($array as &$value) {
-            $this->sortArrayRecursive($value);
-        }
     }
 }
