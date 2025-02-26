@@ -6,17 +6,9 @@ use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 
 class ChildProductAttributes extends BaseProductAttributes
 {
-    const ALWAYS_LOADED_ATTRIBUTES = [
-        'name',
-        'image',
-        'price',
-        'url_key',
-        'media_gallery'
-    ];
-
     public function __construct(CatalogConfig $catalogConfiguration)
     {
-        parent::__construct($catalogConfiguration, self::ALWAYS_LOADED_ATTRIBUTES);
+        parent::__construct($catalogConfiguration);
     }
 
     protected function getConfiguredAttributes(int $storeId): array
