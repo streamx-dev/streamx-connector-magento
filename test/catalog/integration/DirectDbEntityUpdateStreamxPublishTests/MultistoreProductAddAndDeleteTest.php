@@ -5,6 +5,7 @@ namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxP
 use DateTime;
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
+use Magento\Catalog\Model\Product\Visibility;
 
 /**
  * @inheritdoc
@@ -54,58 +55,102 @@ class MultistoreProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
     }
 
     /** @test */
-    public function shouldPublishEnabledProduct() {
-        // given: insert product as enabled for all stores by default, but disabled for store 1:
-        $sku = (string) (new DateTime())->getTimestamp();
-        $product = $this->insertProduct(
-            $sku,
+    public function shouldPublishEnabledAndVisibleProduct() {
+        // given: insert two products, with different status/visibility settings
+        $sku1 = (string) (new DateTime())->getTimestamp();
+        $product1 = $this->insertProduct(
+            $sku1,
             [
-                self::DEFAULT_STORE_ID => 'Product name',
-                self::STORE_1_ID => 'Product name in first store',
-                parent::$store2Id => 'Product name in second store'
+                self::DEFAULT_STORE_ID => 'Default name of Product A',
+                self::STORE_1_ID => 'Name of Product A in first store',
+                parent::$store2Id => 'Name of Product A in second store'
             ],
             [
                 self::DEFAULT_STORE_ID => Status::STATUS_ENABLED,
                 self::STORE_1_ID => Status::STATUS_DISABLED,
                 parent::$store2Id => Status::STATUS_ENABLED
+            ],
+            [
+                self::DEFAULT_STORE_ID => Visibility::VISIBILITY_NOT_VISIBLE, // enabled but not visible product - should not be exported
+                self::STORE_1_ID => Visibility::VISIBILITY_IN_CATALOG, // disabled but visible product - should not be exported
+                parent::$store2Id => Visibility::VISIBILITY_IN_SEARCH // enabled and visible product - should be exported
             ]
         );
-        $productId = $product->getEntityId();
+        $product1Id = $product1->getEntityId();
+
+        $sku2 = $sku1.'2';
+        $product2 = $this->insertProduct(
+            $sku2,
+            [
+                self::DEFAULT_STORE_ID => 'Default name of Product B',
+                self::STORE_1_ID => 'Name of Product B in first store',
+                parent::$store2Id => 'Name of Product B in second store'
+            ],
+            [
+                self::DEFAULT_STORE_ID => Status::STATUS_ENABLED,
+                self::STORE_1_ID => Status::STATUS_ENABLED,
+                parent::$store2Id => Status::STATUS_DISABLED
+            ],
+            [
+                self::DEFAULT_STORE_ID => Visibility::VISIBILITY_BOTH, // enabled and visible product - should be exported
+                self::STORE_1_ID => Visibility::VISIBILITY_IN_CATALOG, // enabled and visible product - should be exported
+                parent::$store2Id => Visibility::VISIBILITY_NOT_VISIBLE // disabled and not visible product - should not be exported
+            ]
+        );
+        $product2Id = $product2->getEntityId();
 
         // and
-        $expectedKeyForStore1 = "pim:$productId";
-        $expectedKeyForStore2 = "pim_store_2:$productId";
-        $this->removeFromStreamX($expectedKeyForStore1, $expectedKeyForStore2);
+        $expectedKeyForProduct1 = "pim_store_2:$product1Id";
+        $expectedKeyForProduct2 = "pim:$product2Id";
+
+        $unexpectedKeyForProduct1 = "pim:$product1Id";
+        $unexpectedKeyForProduct2 = "pim_store_2:$product2Id";
+
+        $this->removeFromStreamX($unexpectedKeyForProduct2, $expectedKeyForProduct2, $unexpectedKeyForProduct1, $expectedKeyForProduct1);
 
         try {
             // when
             $this->reindexMview();
 
             // then
-            $this->assertExactDataIsPublished($expectedKeyForStore2, 'added-minimal-product.json', [
+            $this->assertExactDataIsPublished($expectedKeyForProduct1, 'added-minimal-product.json', [
                 // provide values for placeholders in the validation file
-                'SKU' => $sku,
-                123456789 => $productId,
-                'PRODUCT_NAME' => 'Product name in second store',
-                'PRODUCT_SLUG' => "product-name-in-second-store-$productId"
+                'SKU' => $sku1,
+                123456789 => $product1Id,
+                'PRODUCT_NAME' => 'Name of Product A in second store',
+                'PRODUCT_SLUG' => "name-of-product-a-in-second-store-$product1Id",
+                'VISIBILITY' => 'Search'
+            ]);
+
+            $this->assertExactDataIsPublished($expectedKeyForProduct2, 'added-minimal-product.json', [
+                // provide values for placeholders in the validation file
+                'SKU' => $sku2,
+                123456789 => $product2Id,
+                'PRODUCT_NAME' => 'Name of Product B in first store',
+                'PRODUCT_SLUG' => "name-of-product-b-in-first-store-$product2Id",
+                'VISIBILITY' => 'Catalog'
             ]);
 
             // and
-            $this->assertDataIsNotPublished($expectedKeyForStore1);
+            $this->assertDataIsNotPublished($unexpectedKeyForProduct1);
+            $this->assertDataIsNotPublished($unexpectedKeyForProduct2);
         } finally {
             // and when
-            $this->deleteProduct($product);
+            $this->deleteProduct($product1);
+            $this->deleteProduct($product2);
             $this->reindexMview();
 
             // then
-            $this->assertDataIsUnpublished($expectedKeyForStore2);
+            $this->assertDataIsUnpublished($expectedKeyForProduct1);
+            $this->assertDataIsUnpublished($expectedKeyForProduct2);
         }
     }
 
-    private function insertProduct(string $sku, array $storeIdProductNameMap, array $storeIdProductStatusMap): EntityIds {
+    private function insertProduct(string $sku, array $storeIdProductNameMap, array $storeIdProductStatusMap, array $storeIdProductVisibilityMap): EntityIds {
         $websiteId = self::DEFAULT_WEBSITE_ID;
         $nameAttrId = self::$db->getProductAttributeId('name');
         $statusAttrId = self::$db->getProductAttributeId('status');
+        $visibilityAttrId = self::$db->getProductAttributeId('visibility');
 
         // 1. Create product
         $product = self::$db->insertProduct($sku, $websiteId);
@@ -119,6 +164,11 @@ class MultistoreProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         // 3. Set default and store-scoped statuses for the product
         foreach ($storeIdProductStatusMap as $storeId => $productStatus) {
             self::$db->insertIntProductAttribute($linkFieldId, $statusAttrId, $storeId, $productStatus);
+        }
+
+        // 4. Set default and store-scoped visibilities for the product
+        foreach ($storeIdProductVisibilityMap as $storeId => $productVisibility) {
+            self::$db->insertIntProductAttribute($linkFieldId, $visibilityAttrId, $storeId, $productVisibility);
         }
 
         return $product;

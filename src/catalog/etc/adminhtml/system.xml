@@ -21,6 +21,11 @@
                         <field id="use_url_key_to_generate_slug">0</field>
                     </depends>
                 </field>
+                <field id="export_products_not_visible_individually" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Should products not visible individually be published</label>
+                    <comment>Note: when a configurable product is published, it will always contain all its variants, even if some of them are not visible individually</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
                 <field id="allowed_product_types" translate="label comment" type="multiselect" sortOrder="101" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Types of products to export</label>
                     <source_model>StreamX\ConnectorCatalog\Model\Config\Source\Product\ProductType</source_model>

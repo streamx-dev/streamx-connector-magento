@@ -19,7 +19,7 @@ class ProductAddAndDeleteTest extends BaseAppEntityUpdateTest {
         ];
 
         // when
-        $this->allowIndexingAllAttributes();
+        $this->allowIndexingAllProductAttributes();
         $productId = self::addProduct($productName, $categoryIds);
 
         // then
@@ -44,7 +44,7 @@ class ProductAddAndDeleteTest extends BaseAppEntityUpdateTest {
                 // then
                 $this->assertDataIsUnpublished($expectedKey);
             } finally {
-                $this->restoreDefaultIndexingAttributes();
+                $this->restoreDefaultIndexedProductAttributes();
             }
         }
     }

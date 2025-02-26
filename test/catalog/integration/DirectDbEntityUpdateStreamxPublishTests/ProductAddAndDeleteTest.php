@@ -38,7 +38,8 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
                 'SKU' => $sku,
                 123456789 => $productId,
                 'PRODUCT_NAME' => 'The minimal product',
-                'PRODUCT_SLUG' => "the-minimal-product-$productId"
+                'PRODUCT_SLUG' => "the-minimal-product-$productId",
+                'VISIBILITY' => 'Catalog, Search'
             ]);
         } finally {
             // and when
@@ -61,7 +62,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         ];
 
         // when
-        $this->allowIndexingAllAttributes();
+        $this->allowIndexingAllProductAttributes();
         $product = $this->insertNewProduct($productName, $categoryIds);
         $productId = $product->getEntityId();
         $expectedKey = "pim:$productId";
@@ -96,7 +97,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
                 // then
                 $this->assertDataIsUnpublished($expectedKey);
             } finally {
-                $this->restoreDefaultIndexingAttributes();
+                $this->restoreDefaultIndexedProductAttributes();
             }
         }
     }
@@ -166,7 +167,8 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
                     'SKU' => $skus[$i],
                     123456789 => $productId,
                     'PRODUCT_NAME' => $productName,
-                    'PRODUCT_SLUG' => $expectedSlug
+                    'PRODUCT_SLUG' => $expectedSlug,
+                    'VISIBILITY' => 'Catalog, Search'
                 ]);
             }
         } finally {
@@ -192,6 +194,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
         self::$db->insertVarcharProductAttribute($linkFieldId, self::attrId('name'), $defaultStoreId, $productName);
         self::$db->insertIntProductAttribute($linkFieldId, self::attrId('status'), $defaultStoreId, Status::STATUS_ENABLED);
+        self::$db->insertIntProductAttribute($linkFieldId, self::attrId('visibility'), $defaultStoreId, Visibility::VISIBILITY_BOTH);
 
         return $product;
     }
