@@ -80,7 +80,7 @@ class StreamxConnectorClientAvailabilityTest extends BaseStreamxTest {
         $entities = [];
         for ($i = 0; $i < $entitiesToPublishInBatch; $i++) {
             $entities[] = $entity;
-            $entities[$i]['id'] = $i;
+            $entities[$i]['id'] = strval($i);
         }
 
         self::removeFromStreamX(...array_map(function ($id) {
