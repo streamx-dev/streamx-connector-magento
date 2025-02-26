@@ -1,6 +1,6 @@
 {
-  "sku": "MH01-XL-Orange",
-  "id": 61,
+  "sku": "MH01",
+  "id": 62,
   "lang": "en",
   "attributes": [
     {
@@ -8,8 +8,8 @@
       "label": "Small",
       "values": [
         {
-          "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
-          "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg"
+          "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
+          "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg"
         }
       ],
       "isFacet": false
@@ -19,8 +19,8 @@
       "label": "Thumbnail",
       "values": [
         {
-          "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
-          "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg"
+          "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
+          "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg"
         }
       ],
       "isFacet": false
@@ -30,8 +30,8 @@
       "label": "URL Key",
       "values": [
         {
-          "value": "chaz-kangeroo-hoodie-xl-orange",
-          "label": "chaz-kangeroo-hoodie-xl-orange"
+          "value": "chaz-kangeroo-hoodie",
+          "label": "chaz-kangeroo-hoodie"
         }
       ],
       "isFacet": false
@@ -70,10 +70,10 @@
       "isFacet": false
     }
   ],
-  "name": "Chaz Kangeroo Hoodie-XL-Orange",
-  "label": "Chaz Kangeroo Hoodie-XL-Orange",
+  "name": "Chaz Kangeroo Hoodie",
+  "label": "Chaz Kangeroo Hoodie",
   "primaryImage": {
-    "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
+    "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
     "alt": ""
   },
   "description": "<p>Ideal for cold-weather training or work outdoors, the Chaz Hoodie promises superior warmth with every wear. Thick material blocks out the wind as ribbed cuffs and bottom band seal in body heat.<\/p>\n<p>&bull; Two-tone gray heather hoodie.<br \/>&bull; Drawstring-adjustable hood. <br \/>&bull; Machine wash\/dry.<\/p>",
@@ -81,7 +81,7 @@
     "value": 52,
     "discountedValue": 52
   },
-  "slug": "chaz-kangeroo-hoodie-xl-orange-61",
+  "slug": "chaz-kangeroo-hoodie-62",
   "categories": [
     {
       "id": 2,
@@ -460,10 +460,106 @@
   ],
   "gallery": [
     {
-      "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
+      "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_main_1.jpg",
+      "alt": ""
+    },
+    {
+      "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_alt1_1.jpg",
+      "alt": ""
+    },
+    {
+      "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-gray_back_1.jpg",
       "alt": ""
     }
   ],
-  "quantity": 100,
-  "variants": []
+  "quantity": 0,
+  "variants": [
+    {
+      "sku": "MH01-XL-Orange",
+      "id": 61,
+      "attributes": [
+        {
+          "name": "small_image",
+          "label": "Small",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
+              "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "thumbnail",
+          "label": "Thumbnail",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
+              "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "url_key",
+          "label": "URL Key",
+          "values": [
+            {
+              "value": "chaz-kangeroo-hoodie-xl-orange",
+              "label": "chaz-kangeroo-hoodie-xl-orange"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "color",
+          "label": "Color",
+          "values": [
+            {
+              "value": "Orange",
+              "label": "Orange",
+              "swatch": {
+                "type": "color",
+                "value": "#eb6703"
+              }
+            }
+          ],
+          "isFacet": true
+        },
+        {
+          "name": "size",
+          "label": "Size",
+          "values": [
+            {
+              "value": "XL",
+              "label": "XL",
+              "swatch": {
+                "type": "textual",
+                "value": "XL"
+              }
+            }
+          ],
+          "isFacet": true
+        }
+      ],
+      "name": "Chaz Kangeroo Hoodie-XL-Orange",
+      "label": "Chaz Kangeroo Hoodie-XL-Orange",
+      "primaryImage": {
+        "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
+        "alt": ""
+      },
+      "price": {
+        "value": 52,
+        "discountedValue": 52
+      },
+      "slug": "chaz-kangeroo-hoodie-xl-orange-61",
+      "gallery": [
+        {
+          "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg",
+          "alt": ""
+        }
+      ],
+      "quantity": 100
+    }
+  ]
 }
