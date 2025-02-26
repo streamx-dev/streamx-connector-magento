@@ -149,13 +149,11 @@ class Product
         $select->where('entity.type_id IN (?)', $types);
     }
 
-    /**
-     * @return array<int,array<int>> key: child ID, value: parent ID(s). Returns data only for those of the products that have parent of type "Configurable Product"
-     * @throws Exception
-     */
-    public function getParentsForProductVariants(array $productIds): array
+    public function retrieveAllVariantParentAndChildIds(array $productIds): array
     {
-        /** The full query to load parent IDs for products (community DB version) is:
+        // TODO additionally filter data by website and isActive, as other methods in this class do
+
+        /** The full query to load all parent and child IDs for the given products (community DB version) is:
          * SELECT
          *        child.entity_id AS child_id,
          *        child.type_id AS child_type,
@@ -167,6 +165,7 @@ class Product
          *   JOIN catalog_product_relation relation ON relation.child_id = child.entity_id
          *   JOIN catalog_product_entity parent ON parent.entity_id = relation.parent_id
          *  WHERE parent.type_id = 'configurable'
+         *    AND (child.entity_id IN ($productIds) OR parent.entity_id IN ($productIds))
          *  ORDER BY child_id, parent_id
          */
         $metadata = $this->productMetaData->get();
@@ -174,23 +173,27 @@ class Product
         $productIdField = $metadata->getIdentifierField();
         $entityTable = $this->resourceConnection->getTableName($metadata->getEntityTable());
         $relationTable = $this->resourceConnection->getTableName('catalog_product_relation');
+        $productIdsString = implode(',', $productIds);
 
         $select = $this->getConnection()->select()
             ->from(['child' => $entityTable], ['child_id' => $productIdField])
             ->join(['relation' => $relationTable], "relation.child_id = child.$linkFieldId", ['parent_id'])
             ->join(['parent' => $entityTable], "relation.parent_id = parent.$linkFieldId", [])
-            ->where('parent.type_id = ?', 'configurable')
-            ->where('relation.child_id IN(?)', array_map('intval', $productIds));
+            ->where(
+                sprintf('%s AND (%s OR %s)',
+                    "parent.type_id = 'configurable'",
+                    "relation.parent_id IN($productIdsString)",
+                    "relation.child_id IN($productIdsString)"
+            ));
 
         $rows = $this->getConnection()->fetchAll($select);
 
-        $resultMap = [];
+        $resultIds = [];
         foreach ($rows as $row) {
-            $childId = (int) $row['child_id'];
-            $parentId = (int) $row['parent_id'];
-            $resultMap[$childId][] = $parentId;
+            $resultIds[] = (int) $row['child_id'];
+            $resultIds[] = (int) $row['parent_id'];
         }
-        return $resultMap;
+        return array_unique($resultIds);
     }
 
     /**

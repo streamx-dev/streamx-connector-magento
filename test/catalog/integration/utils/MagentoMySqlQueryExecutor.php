@@ -52,17 +52,26 @@ class MagentoMySqlQueryExecutor {
      */
     public function selectSingleValue(string $selectQuery) {
         $result = $this->connection->query($selectQuery);
-        if (!$result) {
+        $row = $result->fetch_row();
+        $result->close();
+
+        if (!$row) {
             throw new Exception("No rows found for $selectQuery");
         }
-
-        $row = $result->fetch_row();
-        $result->free();
         if (count($row) !== 1) {
             throw new Exception("Expected a single field in the query: $selectQuery");
         }
-
         return $row[0];
+    }
+
+    public function selectRows(string $selectQuery): array {
+        $result = $this->connection->query($selectQuery);
+        $values = [];
+        while ($row = $result->fetch_row()) {
+            $values[] = array_values($row);
+        }
+        $result->close();
+        return $values;
     }
 
     /**
@@ -95,6 +104,23 @@ class MagentoMySqlQueryExecutor {
              WHERE attribute_id = $productNameAttributeId
                AND value = '$productName'
         ");
+    }
+
+    public function getProductIdsAndNamesMap(string $productNamePrefix): array {
+        $productNameAttributeId = $this->getProductNameAttributeId();
+
+        $rows = $this->selectRows("
+            SELECT DISTINCT entity_id, value
+              FROM catalog_product_entity_varchar
+             WHERE attribute_id = $productNameAttributeId
+               AND value LIKE '$productNamePrefix%'
+        ");
+
+        $result = [];
+        foreach ($rows as $row) {
+            $result[$row[0]] = $row[1];
+        }
+        return $result;
     }
 
     public function getCategoryId(string $categoryName): string {
@@ -293,5 +319,18 @@ class MagentoMySqlQueryExecutor {
     private function insertEntityAttribute(string $tableName, int $entityId, int $attributeId, int $storeId, $attributeValue): void {
         $columns = "$this->entityAttributeLinkField, attribute_id, store_id, value";
         $this->execute("REPLACE INTO $tableName ($columns) VALUES ($entityId, $attributeId, $storeId, '$attributeValue')");
+    }
+
+    public function deleteIntProductAttribute(int $productId, int $attributeId, int $storeId): void {
+        $this->deleteEntityAttribute('catalog_product_entity_int', $productId, $attributeId, $storeId);
+    }
+
+    private function deleteEntityAttribute(string $tableName, int $entityId, int $attributeId, int $storeId): void {
+        $this->execute("
+            DELETE FROM $tableName
+             WHERE $this->entityAttributeLinkField = $entityId
+               AND attribute_id = $attributeId
+               AND store_id = $storeId
+        ");
     }
 }
