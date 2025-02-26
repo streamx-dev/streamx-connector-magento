@@ -12,8 +12,7 @@
           "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg"
         }
       ],
-      "isFacet": false,
-      "options": []
+      "isFacet": false
     },
     {
       "name": "thumbnail",
@@ -24,8 +23,7 @@
           "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/h\/mh01-orange_main_1.jpg"
         }
       ],
-      "isFacet": false,
-      "options": []
+      "isFacet": false
     },
     {
       "name": "url_key",
@@ -36,8 +34,7 @@
           "label": "chaz-kangeroo-hoodie-xl-orange"
         }
       ],
-      "isFacet": false,
-      "options": []
+      "isFacet": false
     },
     {
       "name": "status",
@@ -48,46 +45,18 @@
           "label": "Enabled"
         }
       ],
-      "isFacet": false,
-      "options": [
-        {
-          "value": "Enabled",
-          "label": "Enabled"
-        },
-        {
-          "value": "Disabled",
-          "label": "Disabled"
-        }
-      ]
+      "isFacet": false
     },
     {
       "name": "visibility",
       "label": "Visibility",
       "values": [
         {
-          "value": "Not Visible Individually",
-          "label": "Not Visible Individually"
-        }
-      ],
-      "isFacet": false,
-      "options": [
-        {
-          "value": "Not Visible Individually",
-          "label": "Not Visible Individually"
-        },
-        {
           "value": "Catalog",
           "label": "Catalog"
-        },
-        {
-          "value": "Search",
-          "label": "Search"
-        },
-        {
-          "value": "Catalog, Search",
-          "label": "Catalog, Search"
         }
-      ]
+      ],
+      "isFacet": false
     },
     {
       "name": "tax_class_id",
@@ -98,17 +67,7 @@
           "label": "Taxable Goods"
         }
       ],
-      "isFacet": false,
-      "options": [
-        {
-          "value": "None",
-          "label": "None"
-        },
-        {
-          "value": "Taxable Goods",
-          "label": "Taxable Goods"
-        }
-      ]
+      "isFacet": false
     }
   ],
   "name": "Chaz Kangeroo Hoodie-XL-Orange",

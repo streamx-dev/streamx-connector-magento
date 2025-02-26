@@ -320,4 +320,17 @@ class MagentoMySqlQueryExecutor {
         $columns = "$this->entityAttributeLinkField, attribute_id, store_id, value";
         $this->execute("REPLACE INTO $tableName ($columns) VALUES ($entityId, $attributeId, $storeId, '$attributeValue')");
     }
+
+    public function deleteIntProductAttribute(int $productId, int $attributeId, int $storeId): void {
+        $this->deleteEntityAttribute('catalog_product_entity_int', $productId, $attributeId, $storeId);
+    }
+
+    private function deleteEntityAttribute(string $tableName, int $entityId, int $attributeId, int $storeId): void {
+        $this->execute("
+            DELETE FROM $tableName
+             WHERE $this->entityAttributeLinkField = $entityId
+               AND attribute_id = $attributeId
+               AND store_id = $storeId
+        ");
+    }
 }
