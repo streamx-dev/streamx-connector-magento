@@ -3,6 +3,7 @@
 namespace StreamX\ConnectorCatalog\test\integration\utils;
 
 use Exception;
+use Magento\Catalog\Model\Product\Visibility;
 use mysqli;
 
 class MagentoMySqlQueryExecutor {
@@ -332,5 +333,19 @@ class MagentoMySqlQueryExecutor {
                AND attribute_id = $attributeId
                AND store_id = $storeId
         ");
+    }
+
+    public function setProductsVisibleInStore(int $storeId, int... $productIds): void {
+        $visibilityAttributeId = self::getProductAttributeId('visibility');
+        foreach ($productIds as $productId) {
+            self::insertIntProductAttribute($productId, $visibilityAttributeId, $storeId, Visibility::VISIBILITY_BOTH);
+        }
+    }
+
+    public function unsetProductsVisibleInStore(int $storeId, int... $productIds): void {
+        $visibilityAttributeId = self::getProductAttributeId('visibility');
+        foreach ($productIds as $productId) {
+            self::deleteIntProductAttribute($productId, $visibilityAttributeId, $storeId);
+        }
     }
 }

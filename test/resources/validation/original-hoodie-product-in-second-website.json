@@ -517,7 +517,11 @@
           "values": [
             {
               "value": "Orange",
-              "label": "Orange"
+              "label": "Orange",
+              "swatch": {
+                "type": "color",
+                "value": "#eb6703"
+              }
             }
           ],
           "isFacet": true
@@ -528,7 +532,11 @@
           "values": [
             {
               "value": "XL",
-              "label": "XL"
+              "label": "XL",
+              "swatch": {
+                "type": "textual",
+                "value": "XL"
+              }
             }
           ],
           "isFacet": true

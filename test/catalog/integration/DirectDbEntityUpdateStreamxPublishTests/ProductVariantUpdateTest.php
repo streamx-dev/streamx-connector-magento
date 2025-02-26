@@ -2,7 +2,6 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
-use Magento\Catalog\Model\Product\Visibility;
 use StreamX\ConnectorCatalog\Model\SlugGenerator;
 
 /**
@@ -23,15 +22,14 @@ class ProductVariantUpdateTest extends BaseDirectDbEntityUpdateTest {
         $this->assertCount(15, $childProducts);
 
         // and: make some of the child products visible
-        $visibilityAttributeId = self::$db->getProductAttributeId('visibility');
         foreach (array_keys($childProducts) as $childId) {
             if ($childId %2 == 1) {
-                self::$db->insertIntProductAttribute($childId, $visibilityAttributeId, self::STORE_1_ID, Visibility::VISIBILITY_IN_SEARCH);
                 $visibleChildProducts[$childId] = $childProducts[$childId];
             } else {
                 $invisibleChildProducts[$childId] = $childProducts[$childId];
             }
         }
+        self::$db->setProductsVisibleInStore(self::STORE_1_ID, ...array_keys($visibleChildProducts));
 
         // and
         $expectedParentProductKey = "pim:$parentProductId";
@@ -61,23 +59,20 @@ class ProductVariantUpdateTest extends BaseDirectDbEntityUpdateTest {
         } finally {
             self::$db->renameProduct($parentProductId, self::PARENT_PRODUCT_NAME);
             // restore default visibility of child products
-            foreach (array_keys($visibleChildProducts) as $childProductId) {
-                self::$db->deleteIntProductAttribute($childProductId, $visibilityAttributeId, self::STORE_1_ID);
-            }
+            self::$db->unsetProductsVisibleInStore(self::STORE_1_ID, ...array_keys($visibleChildProducts));
         }
     }
 
     /** @test */
     public function shouldPublishVisibleVariantAndParentProduct_WhenVariantIsEditedUsingDirectlyInDatabase() {
         $childProductId = self::$db->getProductId(self::CHILD_PRODUCT_NAME);
-        $visibilityAttributeId = self::$db->getProductAttributeId('visibility');
         try {
             // make the variant visible at store level, so it can be published
-            self::$db->insertIntProductAttribute($childProductId, $visibilityAttributeId, self::STORE_1_ID, Visibility::VISIBILITY_IN_CATALOG);
+            self::$db->setProductsVisibleInStore(self::STORE_1_ID, $childProductId);
             $this->testPublishingWhenVariantIsEdited(true);
         } finally {
             // restore no visibility for variant
-            self::$db->deleteIntProductAttribute($childProductId, $visibilityAttributeId, self::STORE_1_ID);
+            self::$db->unsetProductsVisibleInStore(self::STORE_1_ID, $childProductId);
         }
     }
 

@@ -18,11 +18,13 @@ class MultistoreProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         // given (as in StoresControllerImpl), the following products exist in both websites:
         //  - simple products 4, 5 and 6
         //  - product 61 that is a variant of configurable product 62
+        $testedProductIds = [1, 4, 60, 61, 62];
+        $testedStoreIds = [self::STORE_1_ID, self::$store2Id, self::$secondWebsiteStoreId];
 
-        // when: perform any change of products - to trigger collecting their IDs by the mView feature
-        $productsUpdateQuery  = 'UPDATE catalog_product_entity SET attribute_set_id = attribute_set_id + 1 WHERE entity_id IN (1, 4, 62)';
-        $productsRestoreQuery = 'UPDATE catalog_product_entity SET attribute_set_id = attribute_set_id - 1 WHERE entity_id IN (1, 4, 62)';
-        self::$db->execute($productsUpdateQuery);
+        // when: perform any change of products - to trigger collecting their IDs by the mView feature. A good sample change is to make sure all are visible in the stores
+        foreach ($testedStoreIds as $storeId) {
+            self::$db->setProductsVisibleInStore($storeId, ...$testedProductIds);
+        }
 
         $expectedPublishedKeys = [
             'pim:1',
@@ -78,7 +80,9 @@ class MultistoreProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
             }
         } finally {
             // restore DB changes
-            self::$db->execute($productsRestoreQuery);
+            foreach ($testedStoreIds as $storeId) {
+                self::$db->unsetProductsVisibleInStore($storeId, ...$testedProductIds);
+            }
         }
     }
 
