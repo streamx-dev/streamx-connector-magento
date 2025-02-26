@@ -86,7 +86,5 @@ class ConfigurableData implements DataProviderInterface
                 $indexData[$parentId]['variants'][] = $child;
             }
         }
-
-        $allChildren = null;
     }
 }

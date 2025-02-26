@@ -84,8 +84,6 @@ abstract class BaseAttributeData implements DataProviderInterface
 
             $this->applySlug($indexData[$productId]);
         }
-
-        $attributesData = null;
     }
 
     private function addAttributeToProduct(array &$productData, int $productId, string $attributeCode, array $attributeValues, array $attributeDefinitionsMap): void
