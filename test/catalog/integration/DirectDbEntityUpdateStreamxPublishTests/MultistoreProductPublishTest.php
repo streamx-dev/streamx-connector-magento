@@ -149,7 +149,7 @@ class MultistoreProductPublishTest extends BaseDirectDbEntityUpdateTest {
             $this->assertExactDataIsPublished($expectedKeyForProduct1, 'added-minimal-product.json', [
                 // provide values for placeholders in the validation file
                 $sku1 => 'SKU',
-                '"id": ' . $product1Id => '"id": 123456789',
+                '"id": "' . $product1Id . '"' => '"id": "123456789"',
                 'Name of Product A in second store' => 'PRODUCT_NAME',
                 "name-of-product-a-in-second-store-$product1Id" => 'PRODUCT_SLUG',
                 'Search' => 'VISIBILITY'
@@ -158,7 +158,7 @@ class MultistoreProductPublishTest extends BaseDirectDbEntityUpdateTest {
             $this->assertExactDataIsPublished($expectedKeyForProduct2, 'added-minimal-product.json', [
                 // provide values for placeholders in the validation file
                 $sku2 => 'SKU',
-                '"id": ' . $product2Id => '"id": 123456789',
+                '"id": "' . $product2Id . '"' => '"id": "123456789"',
                 'Name of Product B in first store' => 'PRODUCT_NAME',
                 "name-of-product-b-in-first-store-$product2Id" => 'PRODUCT_SLUG',
                 'Catalog' => 'VISIBILITY'

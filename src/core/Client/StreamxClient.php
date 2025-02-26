@@ -50,7 +50,7 @@ class StreamxClient {
         $unpublishMessages = [];
         foreach ($entityIds as $entityId) {
             $entityType = EntityType::fromIndexerName($indexerName);
-            $key = $this->createStreamxKey($entityType, $entityId);
+            $key = $this->createStreamxKey($entityType, (string) $entityId);
             $unpublishMessages[] = Message::newUnpublishMessage($key)
                 ->withProperty(self::STREAMX_TYPE_PROPERTY_NAME, $entityType->getFullyQualifiedName())
                 ->build();
@@ -59,7 +59,7 @@ class StreamxClient {
         $this->ingest($unpublishMessages, "unpublishing", $indexerName);
     }
 
-    private function createStreamxKey(EntityType $entityType, int $entityId): string {
+    private function createStreamxKey(EntityType $entityType, string $entityId): string {
         return sprintf('%s_%s:%d',
             $this->storeCode,
             $entityType->getRootType(),

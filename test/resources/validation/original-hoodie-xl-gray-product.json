@@ -1,6 +1,6 @@
 {
   "sku": "MH01-XL-Gray",
-  "id": 60,
+  "id": "60",
   "lang": "en",
   "attributes": [
     {
@@ -84,39 +84,39 @@
   "slug": "chaz-kangeroo-hoodie-xl-gray-60",
   "categories": [
     {
-      "id": 2,
+      "id": "2",
       "name": "Default Category",
       "slug": "default-category-2",
       "label": "Default Category",
       "parent": {
-        "id": 1,
+        "id": "1",
         "name": "Root Catalog",
         "slug": "root-catalog-1",
         "label": "Root Catalog"
       }
     },
     {
-      "id": 15,
+      "id": "15",
       "name": "Hoodies & Sweatshirts",
       "slug": "hoodies-and-sweatshirts-15",
       "label": "Hoodies & Sweatshirts",
       "parent": {
-        "id": 12,
+        "id": "12",
         "name": "Tops",
         "slug": "tops-12",
         "label": "Tops",
         "parent": {
-          "id": 11,
+          "id": "11",
           "name": "Men",
           "slug": "men-11",
           "label": "Men",
           "parent": {
-            "id": 2,
+            "id": "2",
             "name": "Default Category",
             "slug": "default-category-2",
             "label": "Default Category",
             "parent": {
-              "id": 1,
+              "id": "1",
               "name": "Root Catalog",
               "slug": "root-catalog-1",
               "label": "Root Catalog"
@@ -126,22 +126,22 @@
       }
     },
     {
-      "id": 36,
+      "id": "36",
       "name": "Eco Friendly",
       "slug": "eco-friendly-36",
       "label": "Eco Friendly",
       "parent": {
-        "id": 7,
+        "id": "7",
         "name": "Collections",
         "slug": "collections-7",
         "label": "Collections",
         "parent": {
-          "id": 2,
+          "id": "2",
           "name": "Default Category",
           "slug": "default-category-2",
           "label": "Default Category",
           "parent": {
-            "id": 1,
+            "id": "1",
             "name": "Root Catalog",
             "slug": "root-catalog-1",
             "label": "Root Catalog"
