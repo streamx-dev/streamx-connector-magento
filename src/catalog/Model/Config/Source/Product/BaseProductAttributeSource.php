@@ -7,14 +7,37 @@ use Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory;
 use Magento\Framework\Data\Collection;
 use Magento\Framework\Data\OptionSourceInterface;
 
-abstract class AbstractAttributeSource implements OptionSourceInterface
+abstract class BaseProductAttributeSource implements OptionSourceInterface
 {
+    // always loaded product attributes - don't allow the user to select them or not
+    public const ALWAYS_LOADED_ATTRIBUTES = [
+        'name',
+        'image',
+        'description',
+        'price',
+        'url_key',
+        'media_gallery'
+    ];
+
+    private const ADDITIONAL_ATTRIBUTES_NOT_ALLOWED_IN_SELECT_LIST = [
+        'gallery',
+        'category_ids',
+        'swatch_image',
+        'quantity_and_stock_status',
+        'options_container',
+    ];
+
     private ?array $options = null;
     private CollectionFactory $collectionFactory;
+    private array $attributesNotAllowedInSelectList;
 
     public function __construct(CollectionFactory $collectionFactory)
     {
         $this->collectionFactory = $collectionFactory;
+        $this->attributesNotAllowedInSelectList = array_merge(
+            self::ALWAYS_LOADED_ATTRIBUTES,
+            self::ADDITIONAL_ATTRIBUTES_NOT_ALLOWED_IN_SELECT_LIST
+        );
     }
 
     /**
@@ -58,5 +81,8 @@ abstract class AbstractAttributeSource implements OptionSourceInterface
     /**
      * Validate if attribute can be shown
      */
-    abstract public function isAllowedInSelectList(ProductAttributeInterface $attribute): bool;
+    public function isAllowedInSelectList(ProductAttributeInterface $attribute): bool
+    {
+        return !in_array($attribute->getAttributeCode(), $this->attributesNotAllowedInSelectList);
+    }
 }
