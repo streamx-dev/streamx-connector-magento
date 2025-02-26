@@ -35,7 +35,7 @@ class AttributeUpdateTest extends BaseAppEntityUpdateTest {
 
         // and
         $productId = self::$db->getProductId('Sprite Stasis Ball 55 cm'); // this product is known to have both "color" and "material" attributes
-        $expectedKey = "pim:$productId";
+        $expectedKey = "default_product:$productId";
         self::removeFromStreamX($expectedKey);
 
         // when

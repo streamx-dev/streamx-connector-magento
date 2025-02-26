@@ -26,7 +26,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         // when
         $product = $this->insertNewMinimalProduct($sku, $productName);
         $productId = $product->getEntityId();
-        $expectedKey = "pim:$productId";
+        $expectedKey = "default_product:$productId";
 
         try {
             // and
@@ -65,7 +65,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $this->allowIndexingAllProductAttributes();
         $product = $this->insertNewProduct($productName, $categoryIds);
         $productId = $product->getEntityId();
-        $expectedKey = "pim:$productId";
+        $expectedKey = "default_product:$productId";
 
         try {
             // and
@@ -113,7 +113,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $productId = $product->getEntityId();
         $linkFieldId = $product->getLinkFieldId();
 
-        $expectedKey = "pim:$productId";
+        $expectedKey = "default_product:$productId";
 
         // and: make the product not active:
         $defaultStoreId = self::DEFAULT_STORE_ID;
@@ -162,7 +162,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
                 $productId = $productsIds[$i]->getEntityId();
                 $productName = $productNames[$i];
                 $expectedSlug = str_replace([' ', 'W'], ['-', 'w'], $productName) . "-$productId";
-                $this->assertExactDataIsPublished("pim:$productId", 'added-minimal-product.json', [
+                $this->assertExactDataIsPublished("default_product:$productId", 'added-minimal-product.json', [
                     // provide values for placeholders in the validation file
                     'SKU' => $skus[$i],
                     123456789 => $productId,
@@ -180,14 +180,14 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
             // then
             for ($i = 0; $i < $productsCount; $i++) {
-                $this->assertDataIsUnpublished('pim:' . $productsIds[$i]->getEntityId());
+                $this->assertDataIsUnpublished('default_product:' . $productsIds[$i]->getEntityId());
             }
         }
     }
 
     private function insertNewMinimalProduct(string $sku, string $productName): EntityIds {
-        $defaultStoreId = 0;
-        $websiteId = 1;
+        $defaultStoreId = self::DEFAULT_STORE_ID;
+        $websiteId = self::DEFAULT_WEBSITE_ID;
 
         $product = self::$db->insertProduct($sku, $websiteId);
         $linkFieldId = $product->getLinkFieldId();

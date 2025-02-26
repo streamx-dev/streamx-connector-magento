@@ -31,8 +31,8 @@ class MultistoreCategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $categoryId = $category->getEntityId();
 
         // and
-        $expectedKeyForStore1 = "cat:$categoryId";
-        $expectedKeyForStore2 = "cat_store_2:$categoryId";
+        $expectedKeyForStore1 = "default_category:$categoryId";
+        $expectedKeyForStore2 = "store_2_view_category:$categoryId";
         $this->removeFromStreamX($expectedKeyForStore1, $expectedKeyForStore2);
 
         try {
@@ -75,11 +75,11 @@ class MultistoreCategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $store2CategoryId = $store2Category->getEntityId();
 
         // and
-        $expectedKeyForStore1 = "cat:$store1CategoryId";
-        $expectedKeyForStore2 = "cat_store_2:$store2CategoryId";
+        $expectedKeyForStore1 = "default_category:$store1CategoryId";
+        $expectedKeyForStore2 = "store_2_view_category:$store2CategoryId";
 
-        $unexpectedKeyForStore1 = "cat:$store2CategoryId";
-        $unexpectedKeyForStore2 = "cat_store_2:$store1CategoryId";
+        $unexpectedKeyForStore1 = "default_category:$store2CategoryId";
+        $unexpectedKeyForStore2 = "store_2_view_category:$store1CategoryId";
 
         $this->removeFromStreamX($expectedKeyForStore1, $expectedKeyForStore2, $unexpectedKeyForStore1, $unexpectedKeyForStore2);
 

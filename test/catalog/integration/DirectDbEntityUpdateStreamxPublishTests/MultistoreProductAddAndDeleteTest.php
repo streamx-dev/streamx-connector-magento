@@ -27,27 +27,27 @@ class MultistoreProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         }
 
         $expectedPublishedKeys = [
-            'pim:1',
-            'pim:4',
-            'pim:60',
-            'pim:61',
-            'pim:62', // note: editing parent product is expected to trigger publishing also all its variants
+            'default_product:1',
+            'default_product:4',
+            'default_product:60',
+            'default_product:61',
+            'default_product:62', // note: editing parent product is expected to trigger publishing also all its variants
 
-            'pim_store_2:1',
-            'pim_store_2:4',
-            'pim_store_2:60',
-            'pim_store_2:61',
-            'pim_store_2:62',
+            'store_2_view_product:1',
+            'store_2_view_product:4',
+            'store_2_view_product:60',
+            'store_2_view_product:61',
+            'store_2_view_product:62',
 
-            'pim_website_2:4',
-            'pim_website_2:61',
-            'pim_website_2:62',
+            'store_view_for_second_website_product:4',
+            'store_view_for_second_website_product:61',
+            'store_view_for_second_website_product:62',
         ];
 
         $unexpectedPublishedKeys = [
-            'pim_website_2:1', // those products are not available in the second website
-            'pim_website_2:59',
-            'pim_website_2:60'
+            'store_view_for_second_website_product:1', // those products are not available in the second website
+            'store_view_for_second_website_product:59',
+            'store_view_for_second_website_product:60'
         ];
 
         // and
@@ -58,21 +58,21 @@ class MultistoreProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
             $this->reindexMview();
 
             // then
-            $this->assertExactDataIsPublished('pim:1', 'original-bag-product.json');
-            $this->assertExactDataIsPublished('pim:4', 'wayfarer-bag-product.json');
-            $this->assertExactDataIsPublished('pim:60', 'original-hoodie-xl-gray-product.json');
-            $this->assertExactDataIsPublished('pim:61', 'original-hoodie-xl-orange-product.json');
-            $this->assertExactDataIsPublished('pim:62', 'original-hoodie-product.json');
+            $this->assertExactDataIsPublished('default_product:1', 'original-bag-product.json');
+            $this->assertExactDataIsPublished('default_product:4', 'wayfarer-bag-product.json');
+            $this->assertExactDataIsPublished('default_product:60', 'original-hoodie-xl-gray-product.json');
+            $this->assertExactDataIsPublished('default_product:61', 'original-hoodie-xl-orange-product.json');
+            $this->assertExactDataIsPublished('default_product:62', 'original-hoodie-product.json');
 
-            $this->assertExactDataIsPublished('pim_store_2:1', 'original-bag-product.json');
-            $this->assertExactDataIsPublished('pim_store_2:4', 'wayfarer-bag-product.json');
-            $this->assertExactDataIsPublished('pim_store_2:60', 'original-hoodie-xl-gray-product.json');
-            $this->assertExactDataIsPublished('pim_store_2:61', 'original-hoodie-xl-orange-product.json');
-            $this->assertExactDataIsPublished('pim_store_2:62', 'original-hoodie-product.json');
+            $this->assertExactDataIsPublished('store_2_view_product:1', 'original-bag-product.json');
+            $this->assertExactDataIsPublished('store_2_view_product:4', 'wayfarer-bag-product.json');
+            $this->assertExactDataIsPublished('store_2_view_product:60', 'original-hoodie-xl-gray-product.json');
+            $this->assertExactDataIsPublished('store_2_view_product:61', 'original-hoodie-xl-orange-product.json');
+            $this->assertExactDataIsPublished('store_2_view_product:62', 'original-hoodie-product.json');
 
-            $this->assertExactDataIsPublished('pim_website_2:4', 'wayfarer-bag-product.json');
-            $this->assertExactDataIsPublished('pim_website_2:61', 'original-hoodie-xl-orange-product.json');
-            $this->assertExactDataIsPublished('pim_website_2:62', 'original-hoodie-product-in-second-website.json');
+            $this->assertExactDataIsPublished('store_view_for_second_website_product:4', 'wayfarer-bag-product.json');
+            $this->assertExactDataIsPublished('store_view_for_second_website_product:61', 'original-hoodie-xl-orange-product.json');
+            $this->assertExactDataIsPublished('store_view_for_second_website_product:62', 'original-hoodie-product-in-second-website.json');
 
             // and
             foreach ($unexpectedPublishedKeys as $unexpectedPublishedKey) {
@@ -132,11 +132,11 @@ class MultistoreProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $product2Id = $product2->getEntityId();
 
         // and
-        $expectedKeyForProduct1 = "pim_store_2:$product1Id";
-        $expectedKeyForProduct2 = "pim:$product2Id";
+        $expectedKeyForProduct1 = "store_2_view_product:$product1Id";
+        $expectedKeyForProduct2 = "default_product:$product2Id";
 
-        $unexpectedKeyForProduct1 = "pim:$product1Id";
-        $unexpectedKeyForProduct2 = "pim_store_2:$product2Id";
+        $unexpectedKeyForProduct1 = "default_product:$product1Id";
+        $unexpectedKeyForProduct2 = "store_2_view_product:$product2Id";
 
         $this->removeFromStreamX($unexpectedKeyForProduct2, $expectedKeyForProduct2, $unexpectedKeyForProduct1, $expectedKeyForProduct1);
 

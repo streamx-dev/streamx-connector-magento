@@ -4,7 +4,6 @@ namespace StreamX\ConnectorCore\Indexer;
 
 use Magento\Framework\Indexer\SaveHandler\Batch;
 use Psr\Log\LoggerInterface;
-use Streamx\Clients\Ingestion\Exceptions\StreamxClientException;
 use StreamX\ConnectorCore\Api\BasicDataLoader;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
 use StreamX\ConnectorCore\Index\IndexerDefinition;
@@ -75,9 +74,6 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
         $this->loadDocumentsAndSaveIndex([]);
     }
 
-    /**
-     * @throws StreamxClientException
-     */
     private function loadDocumentsAndSaveIndex(array $ids): void {
         if (!$this->connectorConfig->isEnabled()) {
             $this->logger->info("StreamX Connector is disabled, skipping indexing $this->indexerName");
@@ -87,7 +83,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
         foreach ($this->indexableStoresProvider->getStores() as $store) {
             $storeId = (int) $store->getId();
 
-            $client = new StreamxClient($this->logger, $this->clientConfiguration, $storeId);
+            $client = new StreamxClient($this->logger, $this->clientConfiguration, $store);
             if ($this->optimizationSettings->shouldPerformStreamxAvailabilityCheck() && !$client->isStreamxAvailable()) {
                 $this->logger->info("Cannot reindex $this->indexerName for store $storeId - StreamX is not available");
                 continue;
@@ -100,9 +96,6 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
         }
     }
 
-    /**
-     * @throws StreamxClientException
-     */
     public final function saveIndex(Traversable $documents, int $storeId, StreamxClient $client): void {
         $batchSize = $this->optimizationSettings->getBatchIndexingSize();
 
@@ -111,9 +104,6 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
         }
     }
 
-    /**
-     * @throws StreamxClientException
-     */
     protected function processEntitiesBatch(array $entities, int $storeId, StreamxClient $client): void {
         $entitiesToPublish = [];
         $idsToUnpublish = [];

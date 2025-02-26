@@ -3,7 +3,6 @@
 namespace StreamX\ConnectorCatalog\Indexer;
 
 use Psr\Log\LoggerInterface;
-use Streamx\Clients\Ingestion\Exceptions\StreamxClientException;
 use StreamX\ConnectorCatalog\Model\Indexer\DataLoader\AttributeDataLoader;
 use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Attribute\ProductsWithChangedAttributesIndexer;
@@ -44,7 +43,6 @@ class AttributesIndexer extends BaseStreamxIndexer
     /**
      * Override to instead of publishing attributes -> redirect them to productsWithChangedAttributesIndexer
      * to publish products that use those attributes
-     * @throws StreamxClientException
      */
     protected function processEntitiesBatch(array $entities, int $storeId, StreamxClient $client): void {
         $this->productsWithChangedAttributesIndexer->process($entities, $storeId, $client);

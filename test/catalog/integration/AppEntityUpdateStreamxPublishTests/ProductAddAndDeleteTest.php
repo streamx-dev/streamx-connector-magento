@@ -23,7 +23,7 @@ class ProductAddAndDeleteTest extends BaseAppEntityUpdateTest {
         $productId = self::addProduct($productName, $categoryIds);
 
         // then
-        $expectedKey = "pim:$productId";
+        $expectedKey = "default_product:$productId";
         try {
             $publishedJson = $this->assertExactDataIsPublished($expectedKey, 'added-watch-product-without-custom-options.json', [
                 // mask variable parts (ids and generated sku)
