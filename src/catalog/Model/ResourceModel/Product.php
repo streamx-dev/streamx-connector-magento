@@ -12,9 +12,20 @@ use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Helper as DbHelper;
 use Magento\Framework\DB\Select;
+use Zend_Db_Expr;
+use Zend_Db_Select_Exception;
 
 class Product
 {
+    private const PRODUCT_ATTRIBUTE_TABLES = [
+        'catalog_product_entity_datetime',
+        'catalog_product_entity_decimal',
+        'catalog_product_entity_gallery',
+        'catalog_product_entity_int',
+        'catalog_product_entity_text',
+        'catalog_product_entity_varchar'
+    ];
+
     private ResourceConnection $resourceConnection;
     private DbHelper $dbHelper;
     private CatalogConfig $productSettings;
@@ -149,8 +160,50 @@ class Product
         $select->where('entity.type_id IN (?)', $types);
     }
 
+    /**
+     * @param int[] $attributeIds
+     * @return int[]
+     * @throws Zend_Db_Select_Exception
+     */
+    // TODO add conditions for products only from current website / active / visible
+    public function loadIdsOfProductsThatUseAttributes(array $attributeIds): array
+    {
+        if (empty($attributeIds)) {
+            return [];
+        }
+
+        $linkField = $this->productMetaData->get()->getLinkField();
+        $connection = $this->resourceConnection->getConnection();
+
+        $selectProductIdsQueries = [];
+        foreach (self::PRODUCT_ATTRIBUTE_TABLES as $table) {
+            // select values of all [row_id] or [entity_id] from each product attributes table
+            $selectProductIdsQueries[] = $connection->select()
+                ->from($this->resourceConnection->getTableName($table), [$linkField])
+                ->distinct()
+                ->where('attribute_id IN(?)', $attributeIds);
+        }
+
+        // union results of all the selects
+        $selectProductIdsUnionQuery = $connection->select()->union($selectProductIdsQueries);
+
+        // select actual entity_ids from main products table, that have the product ids found in all the product attribute tables
+        $selectProductEntityIds = $connection->select()
+            ->from($this->resourceConnection->getTableName('catalog_product_entity'), ['entity_id'])
+            ->distinct()
+            ->where("$linkField IN(?)", new Zend_Db_Expr($selectProductIdsUnionQuery))
+            ->order('entity_id');
+
+        return $connection->fetchCol($selectProductEntityIds);
+    }
+
+    /**
+     * @param int[] $productIds
+     * @return int[]
+     */
     public function retrieveAllVariantParentAndChildIds(array $productIds): array
     {
+        // TODO add conditions for products only from current website / active / visible
         /** The full query to load all parent and child IDs for the given products (community DB version) is:
          * SELECT
          *        child.entity_id AS child_id,
