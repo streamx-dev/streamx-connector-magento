@@ -40,6 +40,7 @@ class MultistoreCategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
             $this->reindexMview();
 
             // then
+            // TODO investigate - this assertion sometimes fails
             $this->assertExactDataIsPublished($expectedKeyForStore2, 'added-category.json', [
                 // provide values for placeholders in the validation file
                 123456789 => $categoryId,
