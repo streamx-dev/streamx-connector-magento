@@ -96,7 +96,7 @@ class Product
     {
         $select = $this->getConnection()->select()
             ->from(
-                ['entity' => $this->productMetaData->get()->getEntityTable()],
+                ['entity' => $this->productMetaData->getEntityTable()],
                 $requiredColumns
             );
 
@@ -107,16 +107,15 @@ class Product
 
     private function getRequiredColumns(): array
     {
-        $productMetaData = $this->productMetaData->get();
         $columns = [
             'entity_id',
             'type_id',
             'sku',
         ];
 
-        $linkField = $productMetaData->getLinkField();
+        $linkField = $this->productMetaData->getLinkField();
 
-        if ($productMetaData->getIdentifierField() !== $linkField) {
+        if ($this->productMetaData->getIdentifierField() !== $linkField) {
             $columns[] = $linkField;
         }
 
@@ -127,8 +126,8 @@ class Product
      */
     public function loadChildrenProducts(array $parentIds, int $storeId): array
     {
-        $linkField = $this->productMetaData->get()->getLinkField();
-        $entityId = $this->productMetaData->get()->getIdentifierField();
+        $linkField = $this->productMetaData->getLinkField();
+        $entityId = $this->productMetaData->getIdentifierField();
         $columns = [
             'sku',
             $entityId,
@@ -172,7 +171,7 @@ class Product
             return [];
         }
 
-        $linkField = $this->productMetaData->get()->getLinkField();
+        $linkField = $this->productMetaData->getLinkField();
         $connection = $this->resourceConnection->getConnection();
 
         $selectProductIdsQueries = [];
@@ -219,10 +218,9 @@ class Product
          *    AND (child.entity_id IN ($productIds) OR parent.entity_id IN ($productIds))
          *  ORDER BY child_id, parent_id
          */
-        $metadata = $this->productMetaData->get();
-        $linkFieldId = $metadata->getLinkField();
-        $productIdField = $metadata->getIdentifierField();
-        $entityTable = $this->resourceConnection->getTableName($metadata->getEntityTable());
+        $linkFieldId = $this->productMetaData->getLinkField();
+        $productIdField = $this->productMetaData->getIdentifierField();
+        $entityTable = $this->resourceConnection->getTableName($this->productMetaData->getEntityTable());
         $relationTable = $this->resourceConnection->getTableName('catalog_product_relation');
         $productIdsString = implode(',', $productIds);
 
