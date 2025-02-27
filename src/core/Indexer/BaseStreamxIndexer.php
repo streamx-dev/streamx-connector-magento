@@ -17,7 +17,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
     private GeneralConfig $connectorConfig;
     private IndexableStoresProvider $indexableStoresProvider;
     private BasicDataLoader $entityDataLoader;
-    private LoggerInterface $logger;
+    protected LoggerInterface $logger;
     private OptimizationSettings $optimizationSettings;
     private StreamxClientConfiguration $clientConfiguration;
     private IndexerDefinition $indexerDefinition;
@@ -47,7 +47,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
      */
     public function executeRow($id)
     {
-        $this->loadDocumentsAndSaveIndex([$id]);
+        $this->loadAndIngestEntities([$id]);
     }
 
     /**
@@ -55,7 +55,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
      */
     public function execute($ids)
     {
-        $this->loadDocumentsAndSaveIndex($ids);
+        $this->loadAndIngestEntities($ids);
     }
 
     /**
@@ -63,7 +63,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
      */
     public function executeList(array $ids)
     {
-        $this->loadDocumentsAndSaveIndex($ids);
+        $this->loadAndIngestEntities($ids);
     }
 
     /**
@@ -71,10 +71,10 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
      */
     public function executeFull()
     {
-        $this->loadDocumentsAndSaveIndex([]);
+        $this->loadAndIngestEntities([]);
     }
 
-    private function loadDocumentsAndSaveIndex(array $ids): void {
+    private function loadAndIngestEntities(array $ids): void {
         if (!$this->connectorConfig->isEnabled()) {
             $this->logger->info("StreamX Connector is disabled, skipping indexing $this->indexerName");
             return;
@@ -90,21 +90,21 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
             }
 
             $this->logger->info("Start indexing $this->indexerName for store $storeId");
-            $documents = $this->entityDataLoader->loadData($storeId, $ids);
-            $this->saveIndex($documents, $storeId, $client);
+            $entities = $this->entityDataLoader->loadData($storeId, $ids);
+            $this->ingestEntities($entities, $storeId, $client);
             $this->logger->info("Finished indexing $this->indexerName for store $storeId");
         }
     }
 
-    public final function saveIndex(Traversable $documents, int $storeId, StreamxClient $client): void {
+    public function ingestEntities(Traversable $entities, int $storeId, StreamxClient $client): void {
         $batchSize = $this->optimizationSettings->getBatchIndexingSize();
 
-        foreach ((new Batch())->getItems($documents, $batchSize) as $docs) {
-            $this->processEntitiesBatch($docs, $storeId, $client);
+        foreach ((new Batch())->getItems($entities, $batchSize) as $entitiesBatch) {
+            $this->processEntitiesBatch($entitiesBatch, $storeId, $client);
         }
     }
 
-    protected function processEntitiesBatch(array $entities, int $storeId, StreamxClient $client): void {
+    private function processEntitiesBatch(array $entities, int $storeId, StreamxClient $client): void {
         $entitiesToPublish = [];
         $idsToUnpublish = [];
         foreach ($entities as $id => $entity) {
