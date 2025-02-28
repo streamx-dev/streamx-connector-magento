@@ -16,7 +16,7 @@ class CategoryUpdateTest extends BaseDirectDbEntityUpdateTest {
         $categoryId = self::$db->getCategoryId($categoryOldName);
 
         // and
-        $expectedKey = "default_category:$categoryId";
+        $expectedKey = self::categoryKey($categoryId);
         self::removeFromStreamX($expectedKey);
 
         // when

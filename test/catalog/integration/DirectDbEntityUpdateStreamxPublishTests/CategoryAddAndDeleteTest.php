@@ -17,8 +17,7 @@ class CategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
         // when
         $category = $this->insertNewCategory($categoryName);
-        $categoryId = $category->getEntityId();
-        $expectedKey = "default_category:$categoryId";
+        $expectedKey = self::categoryKey($category);
 
         try {
             // and
@@ -27,9 +26,9 @@ class CategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
             // then
             $this->assertExactDataIsPublished($expectedKey, 'added-category.json', [
                 // provide values for placeholders in the validation file
-                123456789 => $categoryId,
+                123456789 => $category->getEntityId(),
                 'CATEGORY_NAME' => 'The new Category',
-                'CATEGORY_SLUG' => "the-new-category-$categoryId"
+                'CATEGORY_SLUG' => "the-new-category-{$category->getEntityId()}"
             ]);
         } finally {
             // and when
@@ -48,11 +47,10 @@ class CategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $defaultStoreId = self::DEFAULT_STORE_ID;
 
         $category = self::$db->insertCategory($parentCategoryId, "$rootCategoryId/$parentCategoryId");
-        $linkFieldId = $category->getLinkFieldId();
 
-        self::$db->insertVarcharCategoryAttribute($linkFieldId,  self::attrId('name'), $defaultStoreId, $categoryName);
-        self::$db->insertVarcharCategoryAttribute($linkFieldId, self::attrId('url_key'), $defaultStoreId, $categoryInternalName);
-        self::$db->insertIntCategoryAttribute($linkFieldId, self::attrId('is_active'), $defaultStoreId, TRUE);
+        self::$db->insertVarcharCategoryAttribute($category,  self::attrId('name'), $defaultStoreId, $categoryName);
+        self::$db->insertVarcharCategoryAttribute($category, self::attrId('url_key'), $defaultStoreId, $categoryInternalName);
+        self::$db->insertIntCategoryAttribute($category, self::attrId('is_active'), $defaultStoreId, TRUE);
 
         return $category;
     }

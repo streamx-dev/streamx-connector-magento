@@ -65,6 +65,26 @@ class MagentoMySqlQueryExecutor {
         return $row[0];
     }
 
+    /**
+     * Expects the query to select two columms: entity id and link field id (in that order)
+     */
+    public function selectEntityIds(string $selectQuery): EntityIds {
+        $result = $this->connection->query($selectQuery);
+        $row = $result->fetch_row();
+        $result->close();
+
+        if (!$row) {
+            throw new Exception("No rows found for $selectQuery");
+        }
+        if (count($row) !== 2) {
+            throw new Exception("Expected exactly two select fields in the query: $selectQuery");
+        }
+        return new EntityIds(
+            $row[0],
+            $row[1]
+        );
+    }
+
     public function selectRows(string $selectQuery): array {
         $result = $this->connection->query($selectQuery);
         $values = [];
@@ -96,40 +116,52 @@ class MagentoMySqlQueryExecutor {
         }
     }
 
-    public function getProductId(string $productName): string {
+    public function getProductId(string $productName): EntityIds {
         $productNameAttributeId = $this->getProductNameAttributeId();
+        $linkField = $this->entityAttributeLinkField;
 
-        return $this->selectSingleValue("
-            SELECT $this->entityAttributeLinkField
-              FROM catalog_product_entity_varchar
+        return $this->selectEntityIds("
+            SELECT prod.entity_id, prod.$linkField
+              FROM catalog_product_entity prod
+              JOIN catalog_product_entity_varchar attr ON attr.$linkField = prod.$linkField
              WHERE attribute_id = $productNameAttributeId
                AND value = '$productName'
         ");
     }
 
-    public function getProductIdsAndNamesMap(string $productNamePrefix): array {
+    /**
+     * @return EntityIdsAndName[]
+     */
+    public function getProductIdsAndNamesList(string $productNamePrefix): array {
         $productNameAttributeId = $this->getProductNameAttributeId();
+        $linkField = $this->entityAttributeLinkField;
 
         $rows = $this->selectRows("
-            SELECT DISTINCT $this->entityAttributeLinkField, value
-              FROM catalog_product_entity_varchar
+            SELECT DISTINCT prod.entity_id, prod.$linkField, attr.value
+              FROM catalog_product_entity prod
+              JOIN catalog_product_entity_varchar attr ON attr.$linkField = prod.$linkField
              WHERE attribute_id = $productNameAttributeId
                AND value LIKE '$productNamePrefix%'
         ");
 
         $result = [];
         foreach ($rows as $row) {
-            $result[$row[0]] = $row[1];
+            $result[] = new EntityIdsAndName(
+                new EntityIds($row[0], $row[1]),
+                $row[2]
+            );
         }
         return $result;
     }
 
-    public function getCategoryId(string $categoryName): string {
+    public function getCategoryId(string $categoryName): EntityIds {
         $categoryNameAttributeId = $this->getCategoryNameAttributeId();
+        $linkField = $this->entityAttributeLinkField;
 
-        return $this->selectSingleValue("
-            SELECT $this->entityAttributeLinkField
-              FROM catalog_category_entity_varchar
+        return $this->selectEntityIds("
+            SELECT cat.entity_id, cat.$linkField
+              FROM catalog_category_entity cat
+              JOIN catalog_category_entity_varchar attr ON attr.$linkField = cat.$linkField
              WHERE attribute_id = $categoryNameAttributeId
                AND value = '$categoryName'
         ");
@@ -282,72 +314,74 @@ class MagentoMySqlQueryExecutor {
         return $entityIds;
     }
 
-    public function renameProduct(int $productId, string $newName): void {
+    public function renameProduct(EntityIds $productId, string $newName): void {
         $productNameAttributeId = $this->getProductNameAttributeId();
         $this->execute("
             UPDATE catalog_product_entity_varchar
                SET value = '$newName'
              WHERE attribute_id = $productNameAttributeId
-               AND $this->entityAttributeLinkField = $productId
+               AND $this->entityAttributeLinkField = {$productId->getLinkFieldId()}
         ");
     }
 
-    public function renameCategory(int $categoryId, string $newName): void {
+    public function renameCategory(EntityIds $categoryId, string $newName): void {
         $categoryNameAttributeId = $this->getCategoryNameAttributeId();
         $this->execute("
             UPDATE catalog_category_entity_varchar
                SET value = '$newName'
              WHERE attribute_id = $categoryNameAttributeId
-               AND $this->entityAttributeLinkField = $categoryId
+               AND $this->entityAttributeLinkField = {$categoryId->getLinkFieldId()}
         ");
     }
 
-    public function insertIntProductAttribute(int $productId, int $attributeId, int $storeId, $attributeValue): void {
+    public function insertIntProductAttribute(EntityIds $productId, int $attributeId, int $storeId, $attributeValue): void {
         $this->insertEntityAttribute('catalog_product_entity_int', $productId, $attributeId, $storeId, $attributeValue);
     }
-    public function insertDecimalProductAttribute(int $productId, int $attributeId, int $storeId, $attributeValue): void {
+    public function insertDecimalProductAttribute(EntityIds $productId, int $attributeId, int $storeId, $attributeValue): void {
         $this->insertEntityAttribute('catalog_product_entity_decimal', $productId, $attributeId, $storeId, $attributeValue);
     }
-    public function insertVarcharProductAttribute(int $productId, int $attributeId, int $storeId, $attributeValue): void {
+    public function insertVarcharProductAttribute(EntityIds $productId, int $attributeId, int $storeId, $attributeValue): void {
         $this->insertEntityAttribute('catalog_product_entity_varchar', $productId, $attributeId, $storeId, $attributeValue);
     }
-    public function insertTextProductAttribute(int $productId, int $attributeId, int $storeId, $attributeValue): void {
+    public function insertTextProductAttribute(EntityIds $productId, int $attributeId, int $storeId, $attributeValue): void {
         $this->insertEntityAttribute('catalog_product_entity_text', $productId, $attributeId, $storeId, $attributeValue);
     }
 
-    public function insertIntCategoryAttribute(int $categoryId, int $attributeId, int $storeId, $attributeValue): void {
+    public function insertIntCategoryAttribute(EntityIds $categoryId, int $attributeId, int $storeId, $attributeValue): void {
         $this->insertEntityAttribute('catalog_category_entity_int', $categoryId, $attributeId, $storeId, $attributeValue);
     }
-    public function insertVarcharCategoryAttribute(int $categoryId, int $attributeId, int $storeId, $attributeValue): void {
+    public function insertVarcharCategoryAttribute(EntityIds $categoryId, int $attributeId, int $storeId, $attributeValue): void {
         $this->insertEntityAttribute('catalog_category_entity_varchar', $categoryId, $attributeId, $storeId, $attributeValue);
     }
 
-    private function insertEntityAttribute(string $tableName, int $entityId, int $attributeId, int $storeId, $attributeValue): void {
-        $columns = "$this->entityAttributeLinkField, attribute_id, store_id, value";
-        $this->execute("REPLACE INTO $tableName ($columns) VALUES ($entityId, $attributeId, $storeId, '$attributeValue')");
+    private function insertEntityAttribute(string $tableName, EntityIds $entityId, int $attributeId, int $storeId, $attributeValue): void {
+        $idColumn = $this->entityAttributeLinkField;
+        $idValue = $entityId->getLinkFieldId();
+        $this->execute("REPLACE INTO $tableName ($idColumn, attribute_id, store_id, value)
+                                               VALUES ($idValue, $attributeId, $storeId, '$attributeValue')");
     }
 
-    public function deleteIntProductAttribute(int $productId, int $attributeId, int $storeId): void {
+    public function deleteIntProductAttribute(EntityIds $productId, int $attributeId, int $storeId): void {
         $this->deleteEntityAttribute('catalog_product_entity_int', $productId, $attributeId, $storeId);
     }
 
-    private function deleteEntityAttribute(string $tableName, int $entityId, int $attributeId, int $storeId): void {
+    private function deleteEntityAttribute(string $tableName, EntityIds $entityId, int $attributeId, int $storeId): void {
         $this->execute("
             DELETE FROM $tableName
-             WHERE $this->entityAttributeLinkField = $entityId
+             WHERE $this->entityAttributeLinkField = {$entityId->getLinkFieldId()}
                AND attribute_id = $attributeId
                AND store_id = $storeId
         ");
     }
 
-    public function setProductsVisibleInStore(int $storeId, int... $productIds): void {
+    public function setProductsVisibleInStore(int $storeId, EntityIds... $productIds): void {
         $visibilityAttributeId = self::getProductAttributeId('visibility');
         foreach ($productIds as $productId) {
             self::insertIntProductAttribute($productId, $visibilityAttributeId, $storeId, Visibility::VISIBILITY_BOTH);
         }
     }
 
-    public function unsetProductsVisibleInStore(int $storeId, int... $productIds): void {
+    public function unsetProductsVisibleInStore(int $storeId, EntityIds... $productIds): void {
         $visibilityAttributeId = self::getProductAttributeId('visibility');
         foreach ($productIds as $productId) {
             self::deleteIntProductAttribute($productId, $visibilityAttributeId, $storeId);
