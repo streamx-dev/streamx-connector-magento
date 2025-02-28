@@ -32,8 +32,7 @@ class Category
      */
     public function getCategories(int $storeId, array $categoryIds = [], int $fromId = 0, int $limit = 1000): array
     {
-        $select = self::getCategoriesBaseSelect($this->resource, $this->categoryMetaData);
-        $this->eligibleCategorySelectModifier->modify($select, $storeId);
+        $select = $this->getCategoriesBaseSelect($storeId);
 
         if (!empty($categoryIds)) {
             $select->where("entity.entity_id IN (?)", $categoryIds);
@@ -143,20 +142,22 @@ class Category
         return $this->resource->getConnection();
     }
 
-    public static function getCategoriesBaseSelect(ResourceConnection $resource, CategoryMetaData $metaData): Select
+    public function getCategoriesBaseSelect(int $storeId): Select
     {
-        $linkField = $metaData->getLinkField();
+        $resource = $this->resource;
+        $entityTable = $this->categoryMetaData->getEntityTable();
+        $linkField = $this->categoryMetaData->getLinkField();
 
-        return $resource->getConnection()
+        $select = $this->resource->getConnection()
             ->select()
             ->from(
-                ['entity' => $metaData->getEntityTable()], // alias for the catalog_category_entity table, to use in joins
+                ['entity' => $this->categoryMetaData->getEntityTable()], // alias for the catalog_category_entity table, to use in joins
                 ['parent_id', 'path'] // columns to select
             )->columns( // select also entity_id column, but alias it to id
                 ['id' => 'entity_id']
             )->joinLeft( // join eav_entity_type table to read entity_type_id
                 ['e' => $resource->getTableName('eav_entity_type')],
-                "e.entity_table = '{$metaData->getEntityTable()}'",
+                "e.entity_table = '$entityTable'",
                 [] // don't include any columns in the query results
             )->joinLeft( // join eav_attribute table to read category name attribute definition
                 ['name_attr' => $resource->getTableName('eav_attribute')],
@@ -175,6 +176,9 @@ class Category
                 "category_url_key_attr.$linkField = entity.$linkField AND category_url_key_attr.attribute_id = url_key_attr.attribute_id",
                 ['url_key' => 'value'] // include attr value as "url_key" in the query results
             );
+
+        $this->eligibleCategorySelectModifier->modify($select, $storeId);
+        return $select;
     }
 
     /**
@@ -185,19 +189,29 @@ class Category
      * @param int[] $categoryIds
      * @param int $storeId
      */
-    public function removeNotEligibleCategories(array &$categoryIds, int $storeId): void {
+    public function removeNotEligibleCategories(array &$categoryIds, int $storeId): void
+    {
         $connection = $this->getConnection();
         $entityTable = $this->categoryMetaData->getEntityTable();
-        $eavEntityTypeTable = $connection->getTableName('eav_entity_type');
 
-        $select = $connection
-            ->select()
-            ->from(['entity' => $entityTable], ['entity_id'])
-            ->joinLeft(['e' => $eavEntityTypeTable], "e.entity_table = '$entityTable'", []);
+        $selectCategoryIds = $connection->select()->from(['entity' => $entityTable], ['entity_id']);
+        $allExistingCategoryIds = self::fetchNumericCol($connection, $selectCategoryIds);
 
-        $this->eligibleCategorySelectModifier->modifyNegate($select, $storeId);
+        $categoryIdsToCheckForEligibility = array_intersect($categoryIds, $allExistingCategoryIds);
+        if (empty($categoryIdsToCheckForEligibility)) {
+            return;
+        }
 
-        $notEligibleCategoryIds = array_map('intval', $connection->fetchCol($select));
-        $categoryIds = array_diff($categoryIds, $notEligibleCategoryIds);
+        $this->eligibleCategorySelectModifier->modify($selectCategoryIds, $storeId);
+        $eligibleCategoryIds = self::fetchNumericCol($connection, $selectCategoryIds);
+
+        $categoryIds = array_intersect($categoryIds, $eligibleCategoryIds);
+    }
+
+    /**
+     * @return int[]
+     */
+    private static function fetchNumericCol(AdapterInterface $connection, Select $select): array {
+        return array_map('intval', $connection->fetchCol($select));
     }
 }

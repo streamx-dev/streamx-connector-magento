@@ -3,7 +3,6 @@
 namespace StreamX\ConnectorCatalog\Model\ResourceModel\Category;
 
 use DomainException;
-use Exception;
 use Magento\Catalog\Model\Category;
 use Magento\Catalog\Model\ResourceModel\Category\Attribute\CollectionFactory;
 use Magento\Store\Model\StoreManagerInterface;
@@ -33,14 +32,11 @@ class EligibleCategorySelectModifier implements SelectModifierInterface
     }
 
     public function modify(Select $select, int $storeId): void {
-        $this->addConditions($select, $storeId, true);
+        $this->addActiveCondition($select, $storeId);
+        $this->addStoreCondition($select, $storeId);
     }
 
-    public function modifyNegate(Select $select, int $storeId): void {
-        $this->addConditions($select, $storeId, false);
-    }
-
-    private function addConditions(Select $select, int $storeId, bool $isActiveAndFromCurrentStore): void {
+    private function addActiveCondition(Select $select, int $storeId): void {
         $linkField = $this->categoryMetadata->getLinkField();
         $backendTable = $this->resourceConnection->getTableName($this->isActiveAttributeBackendTable);
 
@@ -52,17 +48,13 @@ class EligibleCategorySelectModifier implements SelectModifierInterface
             ['c' => $backendTable],
             "c.attribute_id = $this->isActiveAttributeId AND c.store_id = $storeId AND c.$linkField = entity.$linkField",
             []
-        );
+        )->where('CASE WHEN c.value_id > 0 THEN c.value = 1 ELSE d.value = 1 END');
+    }
 
-        if ($isActiveAndFromCurrentStore) {
-            $activeCondition = "CASE WHEN c.value_id > 0 THEN c.value = 1 ELSE d.value = 1 END";
-            $fromStoreCondition = $this->categoryPathCondition($storeId);
-            $select->where("(($activeCondition) AND ($fromStoreCondition))");
-        } else {
-            $notActiveCondition = "CASE WHEN c.value_id > 0 THEN c.value = 0 ELSE d.value = 0 END";
-            $notFromStoreCondition = "NOT(" . $this->categoryPathCondition($storeId) . ")";
-            $select->where("(($notActiveCondition) OR ($notFromStoreCondition))");
-        }
+    private function addStoreCondition(Select $select, int $storeId): void {
+        $store = $this->storeManager->getStore($storeId);
+        $rootCategoryPath = Category::TREE_ROOT_ID . "/" . $store->getRootCategoryId();
+        $select->where("path = '$rootCategoryPath' OR path like '$rootCategoryPath/%'");
     }
 
     private function loadIsActiveAttribute(CollectionFactory $attributeCollectionFactory): void {
@@ -80,9 +72,4 @@ class EligibleCategorySelectModifier implements SelectModifierInterface
         throw new DomainException("Cannot load is_active attribute");
     }
 
-    private function categoryPathCondition(int $storeId): string {
-        $store = $this->storeManager->getStore($storeId);
-        $rootCategoryPath = Category::TREE_ROOT_ID . "/" . $store->getRootCategoryId();
-        return "path = '$rootCategoryPath' OR path like '$rootCategoryPath/%'";
-    }
 }

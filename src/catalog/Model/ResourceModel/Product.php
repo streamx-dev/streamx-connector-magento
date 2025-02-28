@@ -50,15 +50,13 @@ class Product
      */
     public function getProducts(int $storeId, array $productIds, int $fromId, int $limit = 1000): array
     {
-        $entityIdColumn = "entity.entity_id";
-
         $select = $this
             ->prepareProductSelect($this->getRequiredColumns(), $storeId)
-            ->where("$entityIdColumn > ?", $fromId)
+            ->where("entity.entity_id > ?", $fromId)
             ->limit($limit);
 
         if (!empty($productIds)) {
-            $select->where("$entityIdColumn IN (?)", $productIds);
+            $select->where("entity.entity_id IN (?)", $productIds);
         }
 
         return $this->getConnection()->fetchAll($select);
@@ -259,6 +257,41 @@ class Product
         $this->eligibleProductSelectModifier->modify($select, $storeId);
 
         return array_map('intval', $this->getConnection()->fetchCol($select));
+    }
+
+    /**
+     * Removes not eligible product ids from the given array.
+     * Not eligible products are those that are:
+     *  - not available in the given website
+     *  - not enabled in the given store
+     *  - not visible in the given store
+     * @param int[] $productIds
+     * @param int $storeId
+     */
+    public function removeNotEligibleProducts(array &$productIds, int $storeId): void
+    {
+        $connection = $this->getConnection();
+        $entityTable = $this->productMetaData->getEntityTable();
+
+        $selectAllExistingProductIds = $connection->select()->from(['entity' => $entityTable], ['entity_id']);
+        $allExistingProductIds = self::fetchNumericCol($connection, $selectAllExistingProductIds);
+
+        $existingProductIdsToCheckForEligibility = array_intersect($productIds, $allExistingProductIds);
+        if (empty($existingProductIdsToCheckForEligibility)) {
+            return;
+        }
+
+        $selectAllEligibleProductIds = $this->prepareProductSelect(['entity_id'], $storeId);
+        $eligibleProductIds = self::fetchNumericCol($connection, $selectAllEligibleProductIds);
+
+        $productIds = array_intersect($productIds, $eligibleProductIds);
+    }
+
+    /**
+     * @return int[]
+     */
+    private static function fetchNumericCol(AdapterInterface $connection, Select $select): array {
+        return array_map('intval', $connection->fetchCol($select));
     }
 
     /**
