@@ -5,28 +5,26 @@ namespace StreamX\ConnectorCatalog\Model\ResourceModel;
 use Exception;
 use Magento\Framework\DB\Adapter\AdapterInterface;
 use StreamX\ConnectorCatalog\Model\CategoryMetaData;
-use StreamX\ConnectorCatalog\Model\ResourceModel\Category\ActiveCategorySelectModifier;
-use StreamX\ConnectorCatalog\Model\ResourceModel\Category\CategoryFromStoreSelectModifier;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Catalog\Model\Category as CoreCategoryModel;
 use Magento\Framework\DB\Select;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Category\EligibleCategorySelectModifier;
 use Zend_Db_Select;
 
 class Category
 {
     private ResourceConnection $resource;
-    private CompositeSelectModifier $selectModifier;
+    private EligibleCategorySelectModifier $eligibleCategorySelectModifier;
     private CategoryMetaData $categoryMetaData;
 
     public function __construct(
-        CategoryFromStoreSelectModifier $categoryFromStoreSelectModifier,
-        ActiveCategorySelectModifier $activeCategorySelectModifier,
+        EligibleCategorySelectModifier $eligibleCategorySelectModifier,
         ResourceConnection $resourceConnection,
         CategoryMetaData $categoryMetaData
     ) {
         $this->resource = $resourceConnection;
         $this->categoryMetaData = $categoryMetaData;
-        $this->selectModifier = new CompositeSelectModifier($categoryFromStoreSelectModifier, $activeCategorySelectModifier);
+        $this->eligibleCategorySelectModifier = $eligibleCategorySelectModifier;
     }
 
     /**
@@ -35,7 +33,7 @@ class Category
     public function getCategories(int $storeId, array $categoryIds = [], int $fromId = 0, int $limit = 1000): array
     {
         $select = self::getCategoriesBaseSelect($this->resource, $this->categoryMetaData);
-        $this->selectModifier->modifyAll($select, $storeId);
+        $this->eligibleCategorySelectModifier->modify($select, $storeId);
 
         if (!empty($categoryIds)) {
             $select->where("entity.entity_id IN (?)", $categoryIds);
@@ -58,7 +56,7 @@ class Category
             ['entity' => $this->categoryMetaData->getEntityTable()]
         );
 
-        $this->selectModifier->modifyAll($select, $storeId);
+        $this->eligibleCategorySelectModifier->modify($select, $storeId);
         $table = $this->resource->getTableName('catalog_category_product');
         $entityIdField = $this->categoryMetaData->getEntityIdField();
         $select->reset(Zend_Db_Select::COLUMNS);
