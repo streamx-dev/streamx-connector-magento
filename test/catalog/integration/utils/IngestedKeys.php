@@ -45,6 +45,7 @@ class IngestedKeys {
             $id = $parts[1];
             $idsByPrefix[$prefix][] = $id;
         }
+        ksort($idsByPrefix);
         return $idsByPrefix;
     }
 }

@@ -6,6 +6,7 @@ use DomainException;
 use Exception;
 use Magento\Catalog\Model\Product\Visibility;
 use Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory;
+use Magento\Store\Model\StoreManagerInterface;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use StreamX\ConnectorCatalog\Model\ResourceModel\SelectModifierInterface;
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
@@ -13,31 +14,67 @@ use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Select;
 use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 
-class VisibleSelectModifier implements SelectModifierInterface
+class EligibleProductSelectModifier implements SelectModifierInterface
 {
     private ProductMetaData $productMetaData;
     private ResourceConnection $resourceConnection;
+    private StoreManagerInterface $storeManager;
     private CatalogConfig $catalogConfig;
+    private int $statusAttributeId;
+    private string $statusAttributeBackendTable;
     private int $visibilityAttributeId;
     private string $visibilityAttributeBackendTable;
 
     public function __construct(
         ProductMetaData $productMetaData,
         ResourceConnection $resourceConnection,
+        StoreManagerInterface $storeManager,
         CatalogConfig $catalogConfig,
         CollectionFactory $attributeCollectionFactory
     ) {
         $this->productMetaData = $productMetaData;
         $this->resourceConnection = $resourceConnection;
+        $this->storeManager = $storeManager;
         $this->catalogConfig = $catalogConfig;
+        $this->loadStatusAttribute($attributeCollectionFactory);
         $this->loadVisibilityAttribute($attributeCollectionFactory);
     }
 
-    /**
-     * Process the select statement - filter products to select only visible products
-     * @throws Exception
-     */
     public function modify(Select $select, int $storeId): void
+    {
+        $this->modifyByStatus($select, $storeId);
+        $this->modifyByVisibility($select, $storeId);
+        $this->modifyByWebsite($select, $storeId);
+    }
+
+    public function modifyWithIrrelevantVisibility(Select $select, int $storeId): void
+    {
+        $this->modifyByStatus($select, $storeId);
+        $this->modifyByWebsite($select, $storeId);
+    }
+
+    public function modifyNegate(Select $select, int $storeId): void
+    {
+        // TODO: Implement modifyNegate() method.
+    }
+
+    private function modifyByStatus(Select $select, int $storeId): void
+    {
+        $linkField = $this->productMetaData->getLinkField();
+        $backendTable = $this->resourceConnection->getTableName($this->statusAttributeBackendTable);
+
+        $select->joinLeft(
+            ['d' => $backendTable],
+            "d.attribute_id = $this->statusAttributeId AND d.store_id = 0 AND d.$linkField = entity.$linkField",
+            []
+        )->joinLeft(
+            ['c' => $backendTable],
+            "c.attribute_id = $this->statusAttributeId AND c.store_id = $storeId AND c.$linkField = entity.$linkField",
+            []
+        )->where("CASE WHEN c.value_id > 0 THEN c.value = ? ELSE d.value = ? END", Status::STATUS_ENABLED);
+    }
+
+    private function modifyByVisibility(Select $select, int $storeId): void
     {
         if ($this->catalogConfig->shouldExportProductsNotVisibleIndividually()) {
             return;
@@ -57,6 +94,34 @@ class VisibleSelectModifier implements SelectModifierInterface
         )->where("CASE WHEN c2.value_id > 0 THEN c2.value <> ? ELSE d2.value <> ? END", Visibility::VISIBILITY_NOT_VISIBLE);
     }
 
+    private function modifyByWebsite(Select $select, int $storeId): void
+    {
+        $websiteId = (int)$this->storeManager->getStore($storeId)->getWebsiteId();
+        $tableName = $this->resourceConnection->getTableName('catalog_product_website');
+
+        $select->join(
+            $tableName,
+            "$tableName.product_id = entity.entity_id AND $tableName.website_id = $websiteId",
+            []
+        );
+    }
+
+    private function loadStatusAttribute(CollectionFactory $attributeCollectionFactory): void
+    {
+        $attributeCollection = $attributeCollectionFactory
+            ->create()
+            ->addFieldToFilter('attribute_code', 'status')
+            ->setPageSize(1);
+
+        foreach ($attributeCollection as $attribute) {
+            $this->statusAttributeId = (int) $attribute->getId();
+            $this->statusAttributeBackendTable = $attribute->getBackendTable();
+            return;
+        }
+
+        throw new DomainException("Cannot load status attribute");
+    }
+
     private function loadVisibilityAttribute(CollectionFactory $attributeCollectionFactory): void
     {
         $attributeCollection = $attributeCollectionFactory
@@ -71,10 +136,5 @@ class VisibleSelectModifier implements SelectModifierInterface
         }
 
         throw new DomainException("Cannot load visibility attribute");
-    }
-
-    public function modifyNegate(Select $select, int $storeId): void
-    {
-        // TODO: Implement modifyNegate() method.
     }
 }

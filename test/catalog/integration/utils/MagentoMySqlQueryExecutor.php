@@ -317,6 +317,7 @@ class MagentoMySqlQueryExecutor {
         $this->insertEntityAttribute('catalog_category_entity_varchar', $categoryId, $attributeId, $storeId, $attributeValue);
     }
 
+    // TODO change type of $entityId from `int` to `EntityIds`, to avoid using wrong ID by the callers
     private function insertEntityAttribute(string $tableName, int $entityId, int $attributeId, int $storeId, $attributeValue): void {
         $columns = "$this->entityAttributeLinkField, attribute_id, store_id, value";
         $this->execute("REPLACE INTO $tableName ($columns) VALUES ($entityId, $attributeId, $storeId, '$attributeValue')");
