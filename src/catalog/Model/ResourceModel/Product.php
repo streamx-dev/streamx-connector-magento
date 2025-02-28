@@ -4,9 +4,7 @@ namespace StreamX\ConnectorCatalog\Model\ResourceModel;
 
 use Exception;
 use Magento\Framework\DB\Adapter\AdapterInterface;
-use StreamX\ConnectorCatalog\Model\ResourceModel\Product\StatusEnabledSelectModifier;
-use StreamX\ConnectorCatalog\Model\ResourceModel\Product\CurrentWebsiteSelectModifier;
-use StreamX\ConnectorCatalog\Model\ResourceModel\Product\VisibleSelectModifier;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\EligibleProductSelectModifier;
 use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use Magento\Framework\App\ResourceConnection;
@@ -31,14 +29,11 @@ class Product
     private CatalogConfig $productSettings;
     private ?array $configurableAttributeIds = null;
     private ProductMetaData $productMetaData;
-    private CompositeSelectModifier $websiteAndStatusAndVisibleSelectModifier;
-    private CompositeSelectModifier $websiteAndStatusSelectModifier;
+    private EligibleProductSelectModifier $eligibleProductSelectModifier;
 
     public function __construct(
         CatalogConfig $configSettings,
-        CurrentWebsiteSelectModifier $currentWebsiteSelectModifier,
-        StatusEnabledSelectModifier $statusEnabledSelectModifier,
-        VisibleSelectModifier $visibleSelectModifier,
+        EligibleProductSelectModifier $eligibleProductSelectModifier,
         ResourceConnection $resourceConnection,
         ProductMetaData $productMetaData,
         DbHelper $dbHelper
@@ -46,8 +41,7 @@ class Product
         $this->resourceConnection = $resourceConnection;
         $this->dbHelper = $dbHelper;
         $this->productSettings = $configSettings;
-        $this->websiteAndStatusAndVisibleSelectModifier = new CompositeSelectModifier($currentWebsiteSelectModifier, $statusEnabledSelectModifier, $visibleSelectModifier);
-        $this->websiteAndStatusSelectModifier = new CompositeSelectModifier($currentWebsiteSelectModifier, $statusEnabledSelectModifier);
+        $this->eligibleProductSelectModifier = $eligibleProductSelectModifier;
         $this->productMetaData = $productMetaData;
     }
 
@@ -83,7 +77,7 @@ class Product
      * Prepares product select for selecting main products
      */
     private function prepareProductSelect(array $columns, int $storeId): Select {
-        $select = $this->prepareBaseProductSelect($columns, $storeId, $this->websiteAndStatusAndVisibleSelectModifier);
+        $select = $this->prepareBaseProductSelect($columns, $storeId, true);
         $this->addProductTypeFilter($select);
         $select->order('entity.entity_id ASC');
         return $select;
@@ -92,7 +86,7 @@ class Product
     /**
      * Prepares base product select for selecting main or variant products
      */
-    private function prepareBaseProductSelect(array $requiredColumns, int $storeId, CompositeSelectModifier $selectModifier): Select
+    private function prepareBaseProductSelect(array $requiredColumns, int $storeId, bool $filterByVisibility): Select
     {
         $select = $this->getConnection()->select()
             ->from(
@@ -100,7 +94,11 @@ class Product
                 $requiredColumns
             );
 
-        $selectModifier->modifyAll($select, $storeId);
+        if ($filterByVisibility) {
+            $this->eligibleProductSelectModifier->modify($select, $storeId);
+        } else {
+            $this->eligibleProductSelectModifier->modifyWithIrrelevantVisibility($select, $storeId);
+        }
 
         return $select;
     }
@@ -138,7 +136,7 @@ class Product
         }
 
         // when loading children (variants) for a configurable product, don't filter by visibility
-        $select = $this->prepareBaseProductSelect($columns, $storeId, $this->websiteAndStatusSelectModifier);
+        $select = $this->prepareBaseProductSelect($columns, $storeId, false);
 
         $select->join(
             ['link_table' => $this->resourceConnection->getTableName('catalog_product_super_link')],
@@ -193,7 +191,7 @@ class Product
             ->where("entity.$linkField IN(?)", new Zend_Db_Expr($selectProductIdsUnionQuery))
             ->order('entity_id');
 
-        $this->websiteAndStatusAndVisibleSelectModifier->modifyAll($selectProductEntityIds, $storeId);
+        $this->eligibleProductSelectModifier->modify($selectProductEntityIds, $storeId);
 
         return $connection->fetchCol($selectProductEntityIds);
     }
@@ -224,7 +222,7 @@ class Product
             ->where("entity.type_id = 'configurable'")
             ->where("relation.child_id IN($productIdsString)");
 
-        $this->websiteAndStatusAndVisibleSelectModifier->modifyAll($select, $storeId);
+        $this->eligibleProductSelectModifier->modify($select, $storeId);
 
         return array_map('intval', $this->getConnection()->fetchCol($select));
     }
@@ -257,7 +255,7 @@ class Product
             ->where("parent.type_id = 'configurable'")
             ->where("relation.parent_id IN($productIdsString)");
 
-        $this->websiteAndStatusAndVisibleSelectModifier->modifyAll($select, $storeId);
+        $this->eligibleProductSelectModifier->modify($select, $storeId);
 
         return array_map('intval', $this->getConnection()->fetchCol($select));
     }
