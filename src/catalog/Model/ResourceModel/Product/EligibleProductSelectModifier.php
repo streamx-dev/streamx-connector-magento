@@ -3,9 +3,9 @@
 namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
 use DomainException;
-use Exception;
 use Magento\Catalog\Model\Product\Visibility;
 use Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory;
+use Magento\Framework\Model\AbstractModel;
 use Magento\Store\Model\StoreManagerInterface;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use StreamX\ConnectorCatalog\Model\ResourceModel\SelectModifierInterface;
@@ -36,8 +36,7 @@ class EligibleProductSelectModifier implements SelectModifierInterface
         $this->resourceConnection = $resourceConnection;
         $this->storeManager = $storeManager;
         $this->catalogConfig = $catalogConfig;
-        $this->loadStatusAttribute($attributeCollectionFactory);
-        $this->loadVisibilityAttribute($attributeCollectionFactory);
+        $this->loadAttributes($attributeCollectionFactory);
     }
 
     public function modify(Select $select, int $storeId): void
@@ -106,35 +105,28 @@ class EligibleProductSelectModifier implements SelectModifierInterface
         );
     }
 
-    private function loadStatusAttribute(CollectionFactory $attributeCollectionFactory): void
+    private function loadAttributes(CollectionFactory $attributeCollectionFactory): void
     {
-        $attributeCollection = $attributeCollectionFactory
-            ->create()
-            ->addFieldToFilter('attribute_code', 'status')
-            ->setPageSize(1);
+        $statusAttribute = $this->loadAttribute($attributeCollectionFactory, 'status');
+        $this->statusAttributeId = (int) $statusAttribute->getId();
+        $this->statusAttributeBackendTable = $statusAttribute->getBackendTable();
 
-        foreach ($attributeCollection as $attribute) {
-            $this->statusAttributeId = (int) $attribute->getId();
-            $this->statusAttributeBackendTable = $attribute->getBackendTable();
-            return;
-        }
-
-        throw new DomainException("Cannot load status attribute");
+        $visibilityAttribute = $this->loadAttribute($attributeCollectionFactory, 'visibility');
+        $this->visibilityAttributeId = (int) $visibilityAttribute->getId();
+        $this->visibilityAttributeBackendTable = $visibilityAttribute->getBackendTable();
     }
 
-    private function loadVisibilityAttribute(CollectionFactory $attributeCollectionFactory): void
+    private function loadAttribute(CollectionFactory $attributeCollectionFactory, string $attributeCode): AbstractModel
     {
         $attributeCollection = $attributeCollectionFactory
             ->create()
-            ->addFieldToFilter('attribute_code', 'visibility')
+            ->addFieldToFilter('attribute_code', $attributeCode)
             ->setPageSize(1);
 
         foreach ($attributeCollection as $attribute) {
-            $this->visibilityAttributeId = (int) $attribute->getId();
-            $this->visibilityAttributeBackendTable = $attribute->getBackendTable();
-            return;
+            return $attribute;
         }
 
-        throw new DomainException("Cannot load visibility attribute");
+        throw new DomainException("Cannot load $attributeCode attribute");
     }
 }
