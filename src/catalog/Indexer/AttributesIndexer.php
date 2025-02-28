@@ -67,7 +67,7 @@ class AttributesIndexer extends BaseStreamxIndexer
             $changedAttributeIds[] = $attributeDefinition->getId();
         }
 
-        $productIds = $this->productModel->loadIdsOfProductsThatUseAttributes($changedAttributeIds);
+        $productIds = $this->productModel->loadIdsOfProductsThatUseAttributes($changedAttributeIds, $storeId);
         if (empty($productIds)) {
             // no changes in the attributes that should cause republishing products
             return;
