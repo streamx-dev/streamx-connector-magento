@@ -76,7 +76,7 @@ class StreamxClient {
         $this->logger->info("Start $operationName $messagesCount entities from $indexerName with keys " . json_encode($keys));
 
         try {
-            // TODO make sure this will never block. Best by turning off Pulsar container
+            // TODO make sure this will never block. Best by turning off Pulsar container. Migrate to RabbitMQ to handle ingestion asynchronously (and receive NAK/ACK based retry features)
             $messageStatuses = $this->dataIngestor->sendMulti($ingestionMessages);
 
             foreach ($messageStatuses as $messageStatus) {
