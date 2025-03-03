@@ -50,7 +50,6 @@ class EntityType {
                 return self::productEntityType('master');
             }
 
-            // TODO: maybe we should differentiate between a variant and a simple product that has no variants. For now return simple in both cases:
             return self::productEntityType('simple');
         }
         if ($indexerName == CategoryProcessor::INDEXER_ID) {
