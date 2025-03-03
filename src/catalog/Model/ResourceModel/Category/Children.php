@@ -30,11 +30,11 @@ class Children
     /**
      * @throws Exception
      */
-    public function loadChildren(array $category, int $storeId): array
+    public function loadChildren(string $categoryPath, int $storeId): array
     {
         $select = $this->category->getCategoriesBaseSelect($storeId);
 
-        $childIds = $this->getChildrenIds($category, $storeId);
+        $childIds = $this->getChildrenIds($categoryPath, $storeId);
         $select->where("entity.entity_id IN (?)", $childIds);
         $select->order('path asc');
         $select->order('position asc');
@@ -45,11 +45,11 @@ class Children
     /**
      * @throws Exception
      */
-    private function getChildrenIds(array $category, int $storeId): array
+    private function getChildrenIds(string $categoryPath, int $storeId): array
     {
         $connection = $this->getConnection();
 
-        $bind = ['c_path' => $category['path'] . '/%'];
+        $bind = ['c_path' => "$categoryPath/%"];
 
         $select = $this->getConnection()->select()->from(
             ['entity' => $this->categoryMetaData->getEntityTable()],

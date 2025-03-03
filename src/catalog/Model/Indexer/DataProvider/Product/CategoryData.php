@@ -2,21 +2,21 @@
 
 namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
-use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Category\CategoryDataFormatter;
+use StreamX\ConnectorCatalog\Model\SlugGenerator;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category as CategoryResource;
 
 class CategoryData implements DataProviderInterface
 {
     private CategoryResource $categoryResource;
-    private CategoryDataFormatter $categoryDataFormatter;
+    private SlugGenerator $slugGenerator;
 
     public function __construct(
         CategoryResource $categoryResource,
-        CategoryDataFormatter $categoryDataFormatter
+        SlugGenerator $slugGenerator
     ) {
         $this->categoryResource = $categoryResource;
-        $this->categoryDataFormatter = $categoryDataFormatter;
+        $this->slugGenerator = $slugGenerator;
     }
 
     /**
@@ -29,11 +29,11 @@ class CategoryData implements DataProviderInterface
         $productCategoriesMap = $this->categoryResource->getProductCategoriesMap($storeId, $productIds);
 
         // 2. load category data of all categories
-        $categoryIds = $this->extractCategoryIds($productCategoriesMap);
+        $categoryIds = array_unique(array_merge(...array_values($productCategoriesMap)));
         $categoryData = $this->categoryResource->getCategories($storeId, $categoryIds);
 
-        // 3. format each category as tree with subcategories and parents
-        $this->categoryDataFormatter->formatCategoriesAsTree($categoryData, $storeId);
+        // 3. format each category
+        $this->adjustCategoriesFormat($categoryData);
 
         // 4. add formatted categories data to products
         foreach ($indexData as $productId => &$productData) {
@@ -49,12 +49,17 @@ class CategoryData implements DataProviderInterface
         }
     }
 
-    private function extractCategoryIds(array $productCategoriesMap): array
+    private function adjustCategoriesFormat(array &$categories): void
     {
-        $categoryIds = [];
-        foreach ($productCategoriesMap as $productCategoryIds) {
-            $categoryIds = array_unique(array_merge($categoryIds, $productCategoryIds));
+        foreach ($categories as &$category) {
+            $category['id'] = (int)$category['id'];
+            $category['slug'] = $this->slugGenerator->compute($category);
+            $category['label'] = $category['name'];
+            unset(
+                $category['url_key'],
+                $category['path'],
+                $category['parent_id']
+            );
         }
-        return $categoryIds;
     }
 }
