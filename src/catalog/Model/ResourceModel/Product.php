@@ -161,7 +161,6 @@ class Product
      * @return int[]
      * @throws Zend_Db_Select_Exception
      */
-    // TODO add conditions for products only from current website / active / visible
     public function loadIdsOfProductsThatUseAttributes(array $attributeIds, int $storeId): array
     {
         if (empty($attributeIds)) {
