@@ -2,6 +2,8 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
+use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
+
 /**
  * @inheritdoc
  * @UsesAttributeIndexer
@@ -15,7 +17,7 @@ class AttributeAddAndDeleteTest extends BaseAppEntityUpdateTest {
         $productId = self::$db->getProductId('Sprite Foam Roller');
 
         // and
-        $expectedKey = "default_product:$productId";
+        $expectedKey = self::productKey($productId);
         $this->removeFromStreamX($expectedKey);
 
         // when
@@ -39,10 +41,10 @@ class AttributeAddAndDeleteTest extends BaseAppEntityUpdateTest {
         }
     }
 
-    private function addAttribute(string $attributeCode, int $productId): int {
+    private function addAttribute(string $attributeCode, EntityIds $productId): int {
         return (int) self::callMagentoPutEndpoint('attribute/add', [
             'attributeCode' => $attributeCode,
-            'productId' => $productId
+            'productId' => $productId->getEntityId()
         ]);
     }
 

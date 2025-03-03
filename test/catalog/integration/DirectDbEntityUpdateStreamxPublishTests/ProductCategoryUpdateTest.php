@@ -2,6 +2,8 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
+use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
+
 /**
  * @inheritdoc
  * @UsesProductIndexer
@@ -17,19 +19,19 @@ class ProductCategoryUpdateTest extends BaseDirectDbEntityUpdateTest {
         $productId = self::$db->getProductId($productName);
 
         $newCategoryName = 'Jackets';
-        $newCategoryId = self::$db->getCategoryId($newCategoryName);
+        $newCategoryId = self::$db->getCategoryId($newCategoryName)->getEntityId();
 
         // read ID of first category assigned to the product
         $oldCategoryId = self::$db->selectSingleValue("
             SELECT MIN(category_id)
               FROM catalog_category_product
-             WHERE product_id = $productId
+             WHERE product_id = {$productId->getEntityId()}
         ");
 
         $this->assertNotEquals($newCategoryId, $oldCategoryId);
 
         // and
-        $expectedKey = "default_product:$productId";
+        $expectedKey = self::productKey($productId);
         self::removeFromStreamX($expectedKey);
 
         // when
@@ -46,12 +48,12 @@ class ProductCategoryUpdateTest extends BaseDirectDbEntityUpdateTest {
         }
     }
 
-    private function changeProductCategoryInDb(int $productId, string $oldCategoryId, string $newCategoryId) {
+    private function changeProductCategoryInDb(EntityIds $productId, string $oldCategoryId, string $newCategoryId) {
         self::$db->execute("
             UPDATE catalog_category_product
                SET category_id = $newCategoryId
              WHERE category_id = $oldCategoryId
-               AND product_id = $productId
+               AND product_id = {$productId->getEntityId()}
         ");
     }
 }

@@ -23,7 +23,7 @@ class ProductAddAndDeleteTest extends BaseAppEntityUpdateTest {
         $productId = self::addProduct($productName, $categoryIds);
 
         // then
-        $expectedKey = "default_product:$productId";
+        $expectedKey = self::productKeyFromEntityId($productId);
         try {
             $publishedJson = $this->assertExactDataIsPublished($expectedKey, 'added-watch-product-without-custom-options.json', [
                 // mask variable parts (ids and generated sku)
@@ -49,7 +49,11 @@ class ProductAddAndDeleteTest extends BaseAppEntityUpdateTest {
         }
     }
 
-    private function addProduct(string $productName, array $categoryIds): int {
+    private function addProduct(string $productName, array $categories): int {
+        $categoryIds = array_map(function ($category) {
+            return $category->getEntityId();
+        }, $categories);
+
         return (int) self::callMagentoPutEndpoint('product/add', [
             'productName' => $productName,
             'categoryIds' => $categoryIds

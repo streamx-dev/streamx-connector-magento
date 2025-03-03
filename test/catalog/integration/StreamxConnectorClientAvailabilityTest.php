@@ -83,6 +83,10 @@ class StreamxConnectorClientAvailabilityTest extends BaseStreamxTest {
             $entities[$i]['id'] = $i;
         }
 
+        self::removeFromStreamX(...array_map(function ($id) {
+            return self::expectedStreamxProductKey($id);
+        }, array_keys($entities)));
+
         // when: publish batch as the Connector would do
         $client = $this->createClient(parent::STREAMX_REST_INGESTION_URL);
         if ($client->isStreamxAvailable()) {
@@ -109,7 +113,7 @@ class StreamxConnectorClientAvailabilityTest extends BaseStreamxTest {
     }
 
     private static function expectedStreamxProductKey(int $productId): string {
-        return self::STORE_CODE . "_product:$productId";
+        return BaseStreamxConnectorPublishTest::productKeyFromEntityId($productId, self::STORE_CODE);
     }
 
     private function createClient(string $restIngestionUrl): StreamxClient {

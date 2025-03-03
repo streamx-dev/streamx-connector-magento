@@ -25,8 +25,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
         // when
         $product = $this->insertNewMinimalProduct($sku, $productName);
-        $productId = $product->getEntityId();
-        $expectedKey = "default_product:$productId";
+        $expectedKey = self::productKey($product);
 
         try {
             // and
@@ -36,9 +35,9 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
             $this->assertExactDataIsPublished($expectedKey, 'added-minimal-product.json', [
                 // provide values for placeholders in the validation file
                 'SKU' => $sku,
-                123456789 => $productId,
+                123456789 => $product->getEntityId(),
                 'PRODUCT_NAME' => 'The minimal product',
-                'PRODUCT_SLUG' => "the-minimal-product-$productId",
+                'PRODUCT_SLUG' => "the-minimal-product-{$product->getEntityId()}",
                 'VISIBILITY' => 'Catalog, Search'
             ]);
         } finally {
@@ -64,8 +63,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         // when
         $this->allowIndexingAllProductAttributes();
         $product = $this->insertNewProduct($productName, $categoryIds);
-        $productId = $product->getEntityId();
-        $expectedKey = "default_product:$productId";
+        $expectedKey = self::productKey($product);
 
         try {
             // and
@@ -110,10 +108,9 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
         // when
         $product = $this->insertNewProduct($productName, [$watchesCategoryId]);
-        $productId = $product->getEntityId();
         $linkFieldId = $product->getLinkFieldId();
 
-        $expectedKey = "default_product:$productId";
+        $expectedKey = self::productKey($product);
 
         // and: make the product not active:
         $defaultStoreId = self::DEFAULT_STORE_ID;
@@ -180,7 +177,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
             // then
             for ($i = 0; $i < $productsCount; $i++) {
-                $this->assertDataIsUnpublished('default_product:' . $productsIds[$i]->getEntityId());
+                $this->assertDataIsUnpublished(self::productKey($productsIds[$i]));
             }
         }
     }
@@ -190,11 +187,10 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $websiteId = self::DEFAULT_WEBSITE_ID;
 
         $product = self::$db->insertProduct($sku, $websiteId);
-        $linkFieldId = $product->getLinkFieldId();
 
-        self::$db->insertVarcharProductAttribute($linkFieldId, self::attrId('name'), $defaultStoreId, $productName);
-        self::$db->insertIntProductAttribute($linkFieldId, self::attrId('status'), $defaultStoreId, Status::STATUS_ENABLED);
-        self::$db->insertIntProductAttribute($linkFieldId, self::attrId('visibility'), $defaultStoreId, Visibility::VISIBILITY_BOTH);
+        self::$db->insertVarcharProductAttribute($product, self::attrId('name'), $defaultStoreId, $productName);
+        self::$db->insertIntProductAttribute($product, self::attrId('status'), $defaultStoreId, Status::STATUS_ENABLED);
+        self::$db->insertIntProductAttribute($product, self::attrId('visibility'), $defaultStoreId, Visibility::VISIBILITY_BOTH);
 
         return $product;
     }
@@ -214,22 +210,21 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
         $product = self::$db->insertProduct($sku, $websiteId);
         $productId = $product->getEntityId();
-        $linkFieldId = $product->getLinkFieldId();
 
-        self::$db->insertVarcharProductAttribute($linkFieldId, self::attrId('name'), $defaultStoreId, $productName);
-        self::$db->insertVarcharProductAttribute($linkFieldId, self::attrId('meta_title'), $defaultStoreId, $productName);
-        self::$db->insertVarcharProductAttribute($linkFieldId, self::attrId('meta_description'), $defaultStoreId, $productName);
-        self::$db->insertVarcharProductAttribute($linkFieldId, self::attrId('url_key'), $defaultStoreId, $productInternalName);
-        self::$db->insertTextProductAttribute($linkFieldId, self::attrId('material'), $defaultStoreId, "$metalMaterialId,$plasticMaterialId,$leatherMaterialId");
-        self::$db->insertDecimalProductAttribute($linkFieldId, self::attrId('price'), $defaultStoreId, self::PRODUCT_PRICE);
-        self::$db->insertIntProductAttribute($linkFieldId, self::attrId('visibility'), $defaultStoreId, Visibility::VISIBILITY_BOTH);
-        self::$db->insertIntProductAttribute($linkFieldId, self::attrId('status'), $defaultStoreId, Status::STATUS_ENABLED);
-        self::$db->insertIntProductAttribute($linkFieldId, self::attrId('color'), $defaultStoreId, $brownColorId);
+        self::$db->insertVarcharProductAttribute($product, self::attrId('name'), $defaultStoreId, $productName);
+        self::$db->insertVarcharProductAttribute($product, self::attrId('meta_title'), $defaultStoreId, $productName);
+        self::$db->insertVarcharProductAttribute($product, self::attrId('meta_description'), $defaultStoreId, $productName);
+        self::$db->insertVarcharProductAttribute($product, self::attrId('url_key'), $defaultStoreId, $productInternalName);
+        self::$db->insertTextProductAttribute($product, self::attrId('material'), $defaultStoreId, "$metalMaterialId,$plasticMaterialId,$leatherMaterialId");
+        self::$db->insertDecimalProductAttribute($product, self::attrId('price'), $defaultStoreId, self::PRODUCT_PRICE);
+        self::$db->insertIntProductAttribute($product, self::attrId('visibility'), $defaultStoreId, Visibility::VISIBILITY_BOTH);
+        self::$db->insertIntProductAttribute($product, self::attrId('status'), $defaultStoreId, Status::STATUS_ENABLED);
+        self::$db->insertIntProductAttribute($product, self::attrId('color'), $defaultStoreId, $brownColorId);
 
         foreach ($categoryIds as $categoryId) {
             self::$db->execute("
                 INSERT INTO catalog_category_product (category_id, product_id, position) VALUES
-                    ($categoryId, $productId, 0)
+                    ({$categoryId->getEntityId()}, $productId, 0)
             ");
         }
 
@@ -248,12 +243,13 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
                 ($productId, 0, $websiteId, " . self::INDEXED_PRICE . ", " . self::DISCOUNTED_PRICE . ")
         ");
 
-        $this->addProductOption($linkFieldId, $defaultStoreId);
+        $this->addProductOption($product, $defaultStoreId);
 
         return $product;
     }
 
-    private function addProductOption(int $productId, int $storeId): void {
+    private function addProductOption(EntityIds $product, int $storeId): void {
+        $productId = $product->getLinkFieldId();
         $optionId = self::$db->insert("INSERT INTO catalog_product_option (product_id, type, is_require, sort_order) VALUES ($productId, 'drop_down', 1, 0)");
         $optionTypeId = self::$db->insert("INSERT INTO catalog_product_option_type_value (option_id, sort_order) VALUES($optionId, 0)");
 

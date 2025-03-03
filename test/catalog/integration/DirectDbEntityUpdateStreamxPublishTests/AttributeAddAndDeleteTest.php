@@ -2,6 +2,8 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
+use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
+
 /**
  * @inheritdoc
  * @UsesAttributeIndexer
@@ -15,7 +17,7 @@ class AttributeAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $productId = self::$db->getProductId('Sprite Foam Roller');
 
         // and
-        $expectedKey = "default_product:$productId";
+        $expectedKey = self::productKey($productId);
         $this->removeFromStreamX($expectedKey);
 
         // when
@@ -47,7 +49,7 @@ class AttributeAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
      * Inserts new attribute to database along with adding it to the provided product
      * @return int ID of the inserted attribute
      */
-    private function insertNewAttribute(string $attributeCode, int $productId): int {
+    private function insertNewAttribute(string $attributeCode, EntityIds $productId): int {
         $attributeName = "Display name of $attributeCode";
         $entityTypeId = self::$db->getProductEntityTypeId();
         $defaultStoreId = self::DEFAULT_STORE_ID;
@@ -63,7 +65,7 @@ class AttributeAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         ");
 
         // add attribute to product
-        self::$db->insertVarcharProductAttribute($productId, $attributeId, $defaultStoreId, "$attributeCode value for product $productId");
+        self::$db->insertVarcharProductAttribute($productId, $attributeId, $defaultStoreId, "$attributeCode value for product {$productId->getLinkFieldId()}");
 
         return $attributeId;
     }
