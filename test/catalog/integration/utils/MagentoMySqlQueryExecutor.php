@@ -308,8 +308,8 @@ class MagentoMySqlQueryExecutor {
         ");
 
         // insert basic attributes
-        self::insertVarcharCategoryAttribute($entityIds->getLinkFieldId(), self::getCategoryAttributeId('display_mode'), 0, 'PRODUCTS');
-        self::insertIntCategoryAttribute($entityIds->getLinkFieldId(), self::getCategoryAttributeId('include_in_menu'), 0, 1);
+        self::insertVarcharCategoryAttribute($entityIds, self::getCategoryAttributeId('display_mode'), 0, 'PRODUCTS');
+        self::insertIntCategoryAttribute($entityIds, self::getCategoryAttributeId('include_in_menu'), 0, 1);
 
         return $entityIds;
     }

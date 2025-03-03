@@ -27,7 +27,7 @@
     },
     {
       "name": "sale",
-      "label": "Sale",
+      "label": "Name modified for testing, was Sale",
       "values": [
         {
           "value": "Yes",
