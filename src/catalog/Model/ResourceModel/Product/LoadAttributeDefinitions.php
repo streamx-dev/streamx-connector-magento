@@ -127,7 +127,7 @@ class LoadAttributeDefinitions
                 return new AttributeDefinition(
                     (int) $attributeRow['id'],
                     $attributeRow['attribute_code'],
-                    $attributeRow['frontend_label'],
+                    $attributeRow['frontend_label'], // TODO: table eav_attribute_label contains store-level frontend labels
                     (bool) $attributeRow['is_facet'],
                     $attributeRow['options']
                 );

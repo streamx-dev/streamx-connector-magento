@@ -12,7 +12,7 @@ class AttributeUpdateTest extends BaseDirectDbEntityUpdateTest {
     public function shouldPublishProductThatUsesSimpleAttributeEditedDirectlyInDatabaseToStreamx() {
         $this->shouldPublishProductThatUsesAttributeEditedDirectlyInDatabaseToStreamx(
             'sale',
-            ['"label": "Sale"' => '"label": "Name modified for testing, was Sale"']
+            'edited-sale-attr-ball-product.json'
         );
     }
 
@@ -20,11 +20,11 @@ class AttributeUpdateTest extends BaseDirectDbEntityUpdateTest {
     public function shouldPublishProductThatUsesAttributeWithOptionsEditedDirectlyInDatabaseToStreamx() {
         $this->shouldPublishProductThatUsesAttributeEditedDirectlyInDatabaseToStreamx(
             'material',
-            ['"label": "Material"' => '"label": "Name modified for testing, was Material"']
+            'edited-material-attr-ball-product.json'
         );
     }
 
-    private function shouldPublishProductThatUsesAttributeEditedDirectlyInDatabaseToStreamx(string $attributeCode, array $regexReplacementsForEditedValidationFile): void {
+    private function shouldPublishProductThatUsesAttributeEditedDirectlyInDatabaseToStreamx(string $attributeCode, string $validationFile): void {
         // given
         $attributeId = self::$db->getProductAttributeId($attributeCode);
 
@@ -46,7 +46,7 @@ class AttributeUpdateTest extends BaseDirectDbEntityUpdateTest {
             $this->reindexMview();
 
             // then
-            $this->assertExactDataIsPublished($expectedKey, "edited-ball-product.json", $regexReplacementsForEditedValidationFile);
+            $this->assertExactDataIsPublished($expectedKey, $validationFile);
         } finally {
             try {
                 $this->renameAttributeInDb($attributeId, $oldDisplayName);

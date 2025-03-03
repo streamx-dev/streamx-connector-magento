@@ -14,7 +14,7 @@ class AttributeUpdateTest extends BaseAppEntityUpdateTest {
     public function shouldPublishProductThatUsesSimpleAttributeEditedUsingMagentoApplicationToStreamx() {
         $this->shouldPublishProductThatUsesAttributeEditedUsingMagentoApplicationToStreamx(
             'sale',
-            ['"label": "Sale"' => '"label": "Name modified for testing, was Sale"']
+            'edited-sale-attr-ball-product.json'
         );
     }
 
@@ -22,11 +22,11 @@ class AttributeUpdateTest extends BaseAppEntityUpdateTest {
     public function shouldPublishProductThatUsesAttributeWithOptionsEditedUsingMagentoApplicationToStreamx() {
         $this->shouldPublishProductThatUsesAttributeEditedUsingMagentoApplicationToStreamx(
             'material',
-            ['"label": "Material"' => '"label": "Name modified for testing, was Material"']
+            'edited-material-attr-ball-product.json'
         );
     }
 
-    private function shouldPublishProductThatUsesAttributeEditedUsingMagentoApplicationToStreamx(string $attributeCode, array $regexReplacementsForEditedValidationFile): void {
+    private function shouldPublishProductThatUsesAttributeEditedUsingMagentoApplicationToStreamx(string $attributeCode, string $validationFile): void {
         // given
         $attributeId = self::$db->getProductAttributeId($attributeCode);
 
@@ -45,11 +45,10 @@ class AttributeUpdateTest extends BaseAppEntityUpdateTest {
 
         // then
         try {
-            $this->assertExactDataIsPublished($expectedKey, "edited-ball-product.json", $regexReplacementsForEditedValidationFile);
+            $this->assertExactDataIsPublished($expectedKey, $validationFile);
         } finally {
             try {
                 self::renameAttribute($attributeCode, $oldDisplayName);
-                // TODO original and edited products have the same attribute name, the original attribute name. Attribute name change is not reflected in edited-ball-product.json
                 $this->assertExactDataIsPublished($expectedKey, "original-ball-product.json");
             } finally {
                 $this->restoreConfigurationValue($this->PRODUCT_ATTRIBUTES_PATH);
