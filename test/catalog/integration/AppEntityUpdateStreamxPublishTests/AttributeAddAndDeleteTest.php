@@ -21,7 +21,7 @@ class AttributeAddAndDeleteTest extends BaseAppEntityUpdateTest {
         $this->removeFromStreamX($expectedKey);
 
         // when
-        $this->setConfigurationValue($this->PRODUCT_ATTRIBUTES_PATH, 'the_new_attribute');
+        $this->setIndexedProductAttributes('the_new_attribute');
         $attributeId = self::addAttribute($attributeCode, $productId);
 
         try {
@@ -36,7 +36,7 @@ class AttributeAddAndDeleteTest extends BaseAppEntityUpdateTest {
                 // note: we don't implement code to retrieve (and republish) product that used a deleted attribute, so the product is not republished, its last published version still has the custom attribute:
                 $this->assertExactDataIsPublished($expectedKey, 'edited-roller-product-with-custom-attribute.json');
             } finally {
-                $this->restoreConfigurationValue($this->PRODUCT_ATTRIBUTES_PATH);
+                $this->restoreDefaultIndexedProductAttributes();
             }
         }
     }
