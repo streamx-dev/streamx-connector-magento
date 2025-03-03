@@ -3,6 +3,7 @@
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageReportGenerator;
+use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 
 /**
  * @inheritdoc
@@ -17,19 +18,19 @@ class ProductCategoryUpdateTest extends BaseAppEntityUpdateTest {
         $productId = self::$db->getProductId($productName);
 
         $newCategoryName = 'Jackets';
-        $newCategoryId = self::$db->getCategoryId($newCategoryName);
+        $newCategoryId = self::$db->getCategoryId($newCategoryName)->getEntityId();
 
         // read ID (and name) of first category assigned to the product
         $oldCategoryId = self::$db->selectSingleValue("
             SELECT MIN(category_id)
               FROM catalog_category_product
-             WHERE product_id = $productId
+             WHERE product_id = {$productId->getEntityId()}
         ");
 
         $this->assertNotEquals($newCategoryId, $oldCategoryId);
 
         // and
-        $expectedKey = "default_product:$productId";
+        $expectedKey = self::productKey($productId);
         self::removeFromStreamX($expectedKey);
 
         // when
@@ -44,9 +45,9 @@ class ProductCategoryUpdateTest extends BaseAppEntityUpdateTest {
         }
     }
 
-    private function changeProductCategory(int $productId, int $oldCategoryId, int $newCategoryId): void {
+    private function changeProductCategory(EntityIds $productId, int $oldCategoryId, int $newCategoryId): void {
         $coverage = self::callMagentoPutEndpoint('product/category/change', [
-            'productId' => $productId,
+            'productId' => $productId->getEntityId(),
             'oldCategoryId' => $oldCategoryId,
             'newCategoryId' => $newCategoryId
         ]);

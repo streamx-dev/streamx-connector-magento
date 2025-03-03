@@ -12,6 +12,7 @@ use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests\BaseAppEntityUpdateTest;
 use StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests\BaseDirectDbEntityUpdateTest;
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditTraits;
+use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoIndexerOperationsExecutor;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoLogFileUtils;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
@@ -32,6 +33,10 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
     protected static int $store2Id;
     protected static int $secondWebsiteId;
     protected static int $secondWebsiteStoreId;
+
+    protected const DEFAULT_STORE_CODE = 'default';
+    protected const STORE_2_CODE = 'store_2_view';
+    protected const SECOND_WEBSITE_STORE_CODE = 'store_view_for_second_website';
 
     protected static bool $areTestsInitialized = false;
 
@@ -63,9 +68,9 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
             self::$indexerOperations->flushCache();
         }
 
-        self::$store2Id = self::$db->selectSingleValue("SELECT store_id FROM store WHERE code = 'store_2_view'");
+        self::$store2Id = self::$db->selectSingleValue("SELECT store_id FROM store WHERE code = '" . self::STORE_2_CODE . "'");
         self::$secondWebsiteId = self::$db->selectSingleValue("SELECT website_id FROM store_website WHERE code = 'second_website'");
-        self::$secondWebsiteStoreId = self::$db->selectSingleValue("SELECT store_id FROM store WHERE code = 'store_view_for_second_website'");
+        self::$secondWebsiteStoreId = self::$db->selectSingleValue("SELECT store_id FROM store WHERE code = '" . self::SECOND_WEBSITE_STORE_CODE . "'");
 
         if (self::$db->isEnterpriseMagento()) {
             self::disableGiftCardsCategory();
@@ -158,4 +163,23 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
         echo 'Keys ingested during the test:' . PHP_EOL;
         echo $ingestedKeys->formatted() . PHP_EOL;
     }
+
+    public static function productKey(EntityIds $productId, string $storeCode = self::DEFAULT_STORE_CODE): string {
+        return self::productKeyFromEntityId($productId->getEntityId(), $storeCode);
+    }
+    public static function productKeyFromEntityId(int $productEntityId, string $storeCode = self::DEFAULT_STORE_CODE): string {
+        return self::expectedStreamxKey($productEntityId, 'product', $storeCode);
+    }
+
+    public static function categoryKey(EntityIds $categoryId, string $storeCode = self::DEFAULT_STORE_CODE): string {
+        return self::categoryKeyFromEntityId($categoryId->getEntityId(), $storeCode);
+    }
+    public static function categoryKeyFromEntityId(int $categoryEntityId, string $storeCode = self::DEFAULT_STORE_CODE): string {
+        return self::expectedStreamxKey($categoryEntityId, 'category', $storeCode);
+    }
+
+    private static function expectedStreamxKey(int $entityId, string $type, string $storeCode): string {
+        return "{$storeCode}_$type:$entityId";
+    }
+
 }

@@ -28,11 +28,10 @@ class MultistoreCategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
                 parent::$store2Id => true
             ]
         );
-        $categoryId = $category->getEntityId();
 
         // and
-        $expectedKeyForStore1 = "default_category:$categoryId";
-        $expectedKeyForStore2 = "store_2_view_category:$categoryId";
+        $expectedKeyForStore1 = self::categoryKey($category, self::DEFAULT_STORE_CODE);
+        $expectedKeyForStore2 = self::categoryKey($category, self::STORE_2_CODE);
         $this->removeFromStreamX($expectedKeyForStore1, $expectedKeyForStore2);
 
         try {
@@ -42,9 +41,9 @@ class MultistoreCategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
             // then
             $this->assertExactDataIsPublished($expectedKeyForStore2, 'added-category.json', [
                 // provide values for placeholders in the validation file
-                123456789 => $categoryId,
+                123456789 => $category->getEntityId(),
                 'CATEGORY_NAME' => 'Category name in second store',
-                'CATEGORY_SLUG' => "category-name-in-second-store-$categoryId"
+                'CATEGORY_SLUG' => "category-name-in-second-store-{$category->getEntityId()}"
             ]);
 
             // and
@@ -75,11 +74,11 @@ class MultistoreCategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $store2CategoryId = $store2Category->getEntityId();
 
         // and
-        $expectedKeyForStore1 = "default_category:$store1CategoryId";
-        $expectedKeyForStore2 = "store_2_view_category:$store2CategoryId";
+        $expectedKeyForStore1 = self::categoryKey($store1Category, self::DEFAULT_STORE_CODE);
+        $expectedKeyForStore2 = self::categoryKey($store2Category, self::STORE_2_CODE);
 
-        $unexpectedKeyForStore1 = "default_category:$store2CategoryId";
-        $unexpectedKeyForStore2 = "store_2_view_category:$store1CategoryId";
+        $unexpectedKeyForStore1 = self::categoryKey($store2Category, self::DEFAULT_STORE_CODE);
+        $unexpectedKeyForStore2 = self::categoryKey($store1Category, self::STORE_2_CODE);
 
         $this->removeFromStreamX($expectedKeyForStore1, $expectedKeyForStore2, $unexpectedKeyForStore1, $unexpectedKeyForStore2);
 
@@ -143,22 +142,21 @@ class MultistoreCategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $includeInMenuAttrId = self::attrId('include_in_menu');
 
         $category = self::$db->insertCategory($parentCategoryId, "$rootCategoryId/$parentCategoryId");
-        $linkFieldId = $category->getLinkFieldId();
 
         // 2. Set basic attributes
-        self::$db->insertVarcharCategoryAttribute($linkFieldId, $displayModeAttrId, $defaultStoreId, 'PRODUCTS');
-        self::$db->insertIntCategoryAttribute($linkFieldId, $includeInMenuAttrId, $defaultStoreId, 1);
+        self::$db->insertVarcharCategoryAttribute($category, $displayModeAttrId, $defaultStoreId, 'PRODUCTS');
+        self::$db->insertIntCategoryAttribute($category, $includeInMenuAttrId, $defaultStoreId, 1);
 
         // 3. Set default and store-scoped names for the category
         foreach ($storeIdCategoryNameMap as $storeId => $categoryName) {
             $categoryInternalName = strtolower(str_replace(' ', '_', $categoryName));
-            self::$db->insertVarcharCategoryAttribute($linkFieldId, $nameAttrId, $storeId, $categoryName);
-            self::$db->insertVarcharCategoryAttribute($linkFieldId, $urlKeyAttrId, $storeId, $categoryInternalName);
+            self::$db->insertVarcharCategoryAttribute($category, $nameAttrId, $storeId, $categoryName);
+            self::$db->insertVarcharCategoryAttribute($category, $urlKeyAttrId, $storeId, $categoryInternalName);
         }
 
         // 4. Set default and store-scoped active statuses for the category
         foreach ($storeIdCategoryStatusMap as $storeId => $isCategoryActive) {
-            self::$db->insertIntCategoryAttribute($linkFieldId, $isActiveAttrId, $storeId, $isCategoryActive ? 1 : 0);
+            self::$db->insertIntCategoryAttribute($category, $isActiveAttrId, $storeId, $isCategoryActive ? 1 : 0);
         }
 
         return $category;
@@ -178,14 +176,13 @@ class MultistoreCategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
         // 1. Create category
         $category = self::$db->insertCategory($rootCategoryId, $rootCategoryId);
-        $linkFieldId = $category->getLinkFieldId();
 
         // 2. Set attributes
-        self::$db->insertVarcharCategoryAttribute($linkFieldId, $displayModeAttrId, $defaultStoreId, 'PRODUCTS');
-        self::$db->insertVarcharCategoryAttribute($linkFieldId, $nameAttrId, $defaultStoreId, $categoryName);
-        self::$db->insertVarcharCategoryAttribute($linkFieldId, $urlKeyAttrId, $defaultStoreId, $categoryInternalName);
-        self::$db->insertIntCategoryAttribute($linkFieldId, $includeInMenuAttrId, $defaultStoreId, 1);
-        self::$db->insertIntCategoryAttribute($linkFieldId, $isActiveAttrId, $defaultStoreId, 1);
+        self::$db->insertVarcharCategoryAttribute($category, $displayModeAttrId, $defaultStoreId, 'PRODUCTS');
+        self::$db->insertVarcharCategoryAttribute($category, $nameAttrId, $defaultStoreId, $categoryName);
+        self::$db->insertVarcharCategoryAttribute($category, $urlKeyAttrId, $defaultStoreId, $categoryInternalName);
+        self::$db->insertIntCategoryAttribute($category, $includeInMenuAttrId, $defaultStoreId, 1);
+        self::$db->insertIntCategoryAttribute($category, $isActiveAttrId, $defaultStoreId, 1);
 
         return $category;
     }

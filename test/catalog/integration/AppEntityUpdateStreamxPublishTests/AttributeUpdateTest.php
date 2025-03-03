@@ -35,7 +35,7 @@ class AttributeUpdateTest extends BaseAppEntityUpdateTest {
 
         // and
         $productId = self::$db->getProductId('Dual Handle Cardio Ball'); // this product is known to have both "sale" and "material" attributes
-        $expectedKey = "default_product:$productId";
+        $expectedKey = self::productKey($productId);
         self::removeFromStreamX($expectedKey);
 
         // when

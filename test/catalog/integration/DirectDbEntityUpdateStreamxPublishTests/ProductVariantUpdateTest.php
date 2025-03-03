@@ -18,24 +18,28 @@ class ProductVariantUpdateTest extends BaseDirectDbEntityUpdateTest {
         // given
         $parentProductId = self::$db->getProductId(self::PARENT_PRODUCT_NAME);
 
-        $childProducts = self::$db->getProductIdsAndNamesMap(self::PARENT_PRODUCT_NAME . '-');
+        $childProducts = self::$db->getProductIdsAndNamesList(self::PARENT_PRODUCT_NAME . '-');
         $this->assertCount(15, $childProducts);
 
         // and: make some of the child products visible
-        foreach (array_keys($childProducts) as $childId) {
-            if ($childId %2 == 1) {
-                $visibleChildProducts[$childId] = $childProducts[$childId];
+        foreach ($childProducts as $childProduct) {
+            $entityIds = $childProduct->getEntityIds();
+            if ($entityIds->getLinkFieldId() %2 == 0) {
+                $visibleChildProducts[] = $childProduct;
             } else {
-                $invisibleChildProducts[$childId] = $childProducts[$childId];
+                $invisibleChildProducts[] = $childProduct;
             }
         }
-        self::$db->setProductsVisibleInStore(self::STORE_1_ID, ...array_keys($visibleChildProducts));
+        $visibleChildProductIds = array_map(function ($product) {
+            return $product->getEntityIds();
+        }, $visibleChildProducts);
+        self::$db->setProductsVisibleInStore(self::STORE_1_ID, ...$visibleChildProductIds);
 
         // and
-        $expectedParentProductKey = "default_product:$parentProductId";
-        $expectedChildProductsKeys = array_map(function ($childProductId) {
-            return "default_product:$childProductId";
-        }, array_keys($childProducts));
+        $expectedParentProductKey = self::productKey($parentProductId);
+        $expectedChildProductsKeys = array_map(function ($childProduct) {
+            return self::productKey($childProduct->getEntityIds());
+        }, $childProducts);
 
         self::removeFromStreamX($expectedParentProductKey, ...$expectedChildProductsKeys);
 
@@ -48,18 +52,20 @@ class ProductVariantUpdateTest extends BaseDirectDbEntityUpdateTest {
 
             // then
             $this->assertExactDataIsPublished($expectedParentProductKey, 'edited-hoodie-product.json');
-            foreach ($visibleChildProducts as $childProductId => $childProductName) {
-                $publishedChildProduct = $this->downloadContentAtKey("default_product:$childProductId");
-                $this->assertStringContainsString('"id":' . $childProductId, $publishedChildProduct);
-                $this->assertStringContainsString('"name":"' . $childProductName . '"', $publishedChildProduct);
+            foreach ($visibleChildProducts as $childProduct) {
+                $entityIds = $childProduct->getEntityIds();
+                $publishedChildProduct = $this->downloadContentAtKey(self::productKey($entityIds));
+                $this->assertStringContainsString('"id":' . $entityIds->getEntityId(), $publishedChildProduct);
+                $this->assertStringContainsString('"name":"' . $childProduct->getName() . '"', $publishedChildProduct);
             }
-            foreach ($invisibleChildProducts as $childProductId => $childProductName) {
-                $this->assertDataIsNotPublished("default_product:$childProductId");
+            foreach ($invisibleChildProducts as $childProduct) {
+                $expectedNotPublishedKey = self::productKey($childProduct->getEntityIds());
+                $this->assertDataIsNotPublished($expectedNotPublishedKey);
             }
         } finally {
             self::$db->renameProduct($parentProductId, self::PARENT_PRODUCT_NAME);
             // restore default visibility of child products
-            self::$db->unsetProductsVisibleInStore(self::STORE_1_ID, ...array_keys($visibleChildProducts));
+            self::$db->unsetProductsVisibleInStore(self::STORE_1_ID, ...$visibleChildProductIds);
         }
     }
 
@@ -84,12 +90,13 @@ class ProductVariantUpdateTest extends BaseDirectDbEntityUpdateTest {
     private function testPublishingWhenVariantIsEdited(bool $expectingVariantToBePublished) {
         // given
         $childProductId = self::$db->getProductId(self::CHILD_PRODUCT_NAME);
+        $differentChildId = self::$db->getProductId('Chaz Kangeroo Hoodie-L-Orange');
         $parentProductId = self::$db->getProductId(self::PARENT_PRODUCT_NAME);
 
         // and
-        $expectedChildProductKey = "default_product:$childProductId";
-        $expectedParentProductKey = "default_product:$parentProductId";
-        $unexpectedChildProductKey = 'default_product:' . self::$db->getProductId('Chaz Kangeroo Hoodie-L-Orange'); // a different child of the same parent product
+        $expectedChildProductKey = self::productKey($childProductId);
+        $expectedParentProductKey = self::productKey($parentProductId);
+        $unexpectedChildProductKey = self::productKey($differentChildId);
 
         self::removeFromStreamX($expectedChildProductKey, $expectedParentProductKey, $unexpectedChildProductKey);
 
