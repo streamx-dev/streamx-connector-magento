@@ -105,27 +105,13 @@
       "id": 6,
       "name": "Watches",
       "slug": "watches-6",
-      "label": "Watches",
-      "subcategories": [],
-      "parent": {
-        "id": 3,
-        "name": "Gear",
-        "slug": "gear-3",
-        "label": "Gear"
-      }
+      "label": "Watches"
     },
     {
       "id": 37,
       "name": "Sale",
       "slug": "sale-37",
-      "label": "Sale",
-      "subcategories": [],
-      "parent": {
-        "id": 2,
-        "name": "Default Category",
-        "slug": "default-category-2",
-        "label": "Default Category"
-      }
+      "label": "Sale"
     }
   ],
   "gallery": [],

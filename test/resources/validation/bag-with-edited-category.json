@@ -87,27 +87,13 @@
       "id": 4,
       "name": "Bags",
       "slug": "bags-4",
-      "label": "Bags",
-      "subcategories": [],
-      "parent": {
-        "id": 3,
-        "name": "Gear",
-        "slug": "gear-3",
-        "label": "Gear"
-      }
+      "label": "Bags"
     },
     {
       "id": 14,
       "name": "Jackets",
       "slug": "jackets-14",
-      "label": "Jackets",
-      "subcategories": [],
-      "parent": {
-        "id": 12,
-        "name": "Tops",
-        "slug": "tops-12",
-        "label": "Tops"
-      }
+      "label": "Jackets"
     }
   ],
   "gallery": [

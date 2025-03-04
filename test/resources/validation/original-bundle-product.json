@@ -220,67 +220,13 @@
       "id": 3,
       "name": "Gear",
       "slug": "gear-3",
-      "label": "Gear",
-      "subcategories": [
-        {
-          "id": 4,
-          "name": "Bags",
-          "subcategories": [],
-          "slug": "bags-4",
-          "label": "Bags",
-          "parent": {
-            "id": 3,
-            "name": "Gear",
-            "slug": "gear-3",
-            "label": "Gear"
-          }
-        },
-        {
-          "id": 5,
-          "name": "Fitness Equipment",
-          "subcategories": [],
-          "slug": "fitness-equipment-5",
-          "label": "Fitness Equipment",
-          "parent": {
-            "id": 3,
-            "name": "Gear",
-            "slug": "gear-3",
-            "label": "Gear"
-          }
-        },
-        {
-          "id": 6,
-          "name": "Watches",
-          "subcategories": [],
-          "slug": "watches-6",
-          "label": "Watches",
-          "parent": {
-            "id": 3,
-            "name": "Gear",
-            "slug": "gear-3",
-            "label": "Gear"
-          }
-        }
-      ],
-      "parent": {
-        "id": 2,
-        "name": "Default Category",
-        "slug": "default-category-2",
-        "label": "Default Category"
-      }
+      "label": "Gear"
     },
     {
       "id": 5,
       "name": "Fitness Equipment",
       "slug": "fitness-equipment-5",
-      "label": "Fitness Equipment",
-      "subcategories": [],
-      "parent": {
-        "id": 3,
-        "name": "Gear",
-        "slug": "gear-3",
-        "label": "Gear"
-      }
+      "label": "Fitness Equipment"
     }
   ],
   "gallery": [

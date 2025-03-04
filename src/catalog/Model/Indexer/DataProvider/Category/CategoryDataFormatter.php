@@ -9,7 +9,6 @@ use StreamX\ConnectorCore\Api\DataProviderInterface;
 
 class CategoryDataFormatter implements DataProviderInterface
 {
-    // TODO convert to DTO class
     private const ID = 'id';
     private const NAME = 'name';
     private const LABEL = 'label';
@@ -33,13 +32,9 @@ class CategoryDataFormatter implements DataProviderInterface
 
     public function addData(array &$indexData, int $storeId): void
     {
-        $this->formatCategoriesAsTree($indexData, $storeId);
-    }
-
-    public function formatCategoriesAsTree(array &$categoriesData, int $storeId): void {
-        foreach ($categoriesData as &$categoryData) {
+        foreach ($indexData as &$categoryData) {
             $this->prepareCategory($categoryData);
-            $children = $this->childrenResourceModel->loadChildren($categoryData, $storeId);
+            $children = $this->childrenResourceModel->loadChildren($categoryData['path'], $storeId);
             $groupedChildrenById = $this->groupChildrenById($children);
             unset($children);
 
@@ -47,8 +42,8 @@ class CategoryDataFormatter implements DataProviderInterface
         }
 
         $allCategoriesMap = $this->getAllCategoriesMap($storeId);
-        $this->setParentCategory($categoriesData, $allCategoriesMap);
-        $this->removeUnnecessaryFieldsRecursively($categoriesData);
+        $this->setParentCategory($indexData, $allCategoriesMap);
+        $this->removeUnnecessaryFieldsRecursively($indexData);
     }
 
     private function removeUnnecessaryFieldsRecursively(array &$categories): void
