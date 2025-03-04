@@ -34,7 +34,7 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
     protected static int $secondWebsiteId;
     protected static int $secondWebsiteStoreId;
 
-    protected const DEFAULT_STORE_CODE = 'default';
+    protected const DEFAULT_STORE_CODE = 'default'; // this is store 1 code
     protected const STORE_2_CODE = 'store_2_view';
     protected const SECOND_WEBSITE_STORE_CODE = 'store_view_for_second_website';
 
