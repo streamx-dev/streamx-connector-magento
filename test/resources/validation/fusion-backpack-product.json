@@ -1,0 +1,111 @@
+{
+  "sku": "24-MB02",
+  "id": 6,
+  "lang": "en",
+  "attributes": [
+    {
+      "name": "small_image",
+      "label": "Small",
+      "values": [
+        {
+          "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/b\/mb02-gray-0.jpg",
+          "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/b\/mb02-gray-0.jpg"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "thumbnail",
+      "label": "Thumbnail",
+      "values": [
+        {
+          "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/b\/mb02-gray-0.jpg",
+          "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/b\/mb02-gray-0.jpg"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "url_key",
+      "label": "URL Key",
+      "values": [
+        {
+          "value": "fusion-backpack",
+          "label": "fusion-backpack"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "status",
+      "label": "Enable Product",
+      "values": [
+        {
+          "value": "Enabled",
+          "label": "Enabled"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "visibility",
+      "label": "Visibility",
+      "values": [
+        {
+          "value": "Catalog, Search",
+          "label": "Catalog, Search"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "tax_class_id",
+      "label": "Tax Class",
+      "values": [
+        {
+          "value": "Taxable Goods",
+          "label": "Taxable Goods"
+        }
+      ],
+      "isFacet": false
+    }
+  ],
+  "name": "Fusion Backpack",
+  "label": "Fusion Backpack",
+  "primaryImage": {
+    "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/b\/mb02-gray-0.jpg",
+    "alt": "Image"
+  },
+  "description": "<p>With the Fusion Backpack strapped on, every trek is an adventure - even a bus ride to work. That's partly because two large zippered compartments store everything you need, while a front zippered pocket and side mesh pouches are perfect for stashing those little extras, in case you change your mind and take the day off.<\/p>\n<ul>\n<li>Durable nylon construction.<\/li>\n<li>2 main zippered compartments.<\/li>\n<li>1 exterior zippered pocket.<\/li>\n<li>Mesh side pouches.<\/li>\n<li>Padded, adjustable straps.<\/li>\n<li>Top carry handle.<\/li>\n<li>Dimensions: 18\" x 10\" x 6\".<\/li>\n<\/ul>",
+  "price": {
+    "value": 59,
+    "discountedValue": 59
+  },
+  "slug": "fusion-backpack-6",
+  "categories": [
+    {
+      "id": 3,
+      "name": "Gear",
+      "slug": "gear-3",
+      "label": "Gear"
+    },
+    {
+      "id": 4,
+      "name": "Bags",
+      "slug": "bags-4",
+      "label": "Bags"
+    }
+  ],
+  "gallery": [
+    {
+      "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/b\/mb02-gray-0.jpg",
+      "alt": "Image"
+    },
+    {
+      "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/b\/mb02-blue-0.jpg",
+      "alt": "Image"
+    }
+  ],
+  "quantity": 100,
+  "variants": []
+}

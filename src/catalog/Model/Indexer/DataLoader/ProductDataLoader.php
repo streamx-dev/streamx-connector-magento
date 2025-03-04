@@ -36,7 +36,6 @@ class ProductDataLoader implements BasicDataLoader {
         $allParentsOfVariants = $this->resourceModel->retrieveParentsForVariants($productIds, $storeId);
         $allVariantsOrParents = $this->resourceModel->retrieveVariantsForParents($productIds, $storeId);
         $productIds = array_unique(array_merge($productIds, $allParentsOfVariants, $allVariantsOrParents));
-        $this->resourceModel->removeNotEligibleProducts($productIds, $storeId);
 
         // note: a simple product can only be a child of a single configurable product, but can be a child of multiple grouped or bundle products
         // TODO: verify what is published when a grouped product or its child is edited (expecting only parent with all children to be published)

@@ -168,7 +168,7 @@ class Product
         }
 
         $linkField = $this->productMetaData->getLinkField();
-        $connection = $this->resourceConnection->getConnection();
+        $connection = $this->getConnection();
 
         $selectProductIdsQueries = [];
         foreach (self::PRODUCT_ATTRIBUTE_TABLES as $table) {
@@ -256,41 +256,6 @@ class Product
         $this->eligibleProductSelectModifier->modify($select, $storeId);
 
         return array_map('intval', $this->getConnection()->fetchCol($select));
-    }
-
-    /**
-     * Removes not eligible product ids from the given array.
-     * Not eligible products are those that are:
-     *  - not available in the given website
-     *  - not enabled in the given store
-     *  - not visible in the given store
-     * @param int[] $productIds
-     * @param int $storeId
-     */
-    public function removeNotEligibleProducts(array &$productIds, int $storeId): void
-    {
-        $connection = $this->getConnection();
-        $entityTable = $this->productMetaData->getEntityTable();
-
-        $selectAllExistingProductIds = $connection->select()->from(['entity' => $entityTable], ['entity_id']);
-        $allExistingProductIds = self::fetchNumericCol($connection, $selectAllExistingProductIds);
-
-        $existingProductIdsToCheckForEligibility = array_intersect($productIds, $allExistingProductIds);
-        if (empty($existingProductIdsToCheckForEligibility)) {
-            return;
-        }
-
-        $selectAllEligibleProductIds = $this->prepareProductSelect(['entity_id'], $storeId);
-        $eligibleProductIds = self::fetchNumericCol($connection, $selectAllEligibleProductIds);
-
-        $productIds = array_intersect($productIds, $eligibleProductIds);
-    }
-
-    /**
-     * @return int[]
-     */
-    private static function fetchNumericCol(AdapterInterface $connection, Select $select): array {
-        return array_map('intval', $connection->fetchCol($select));
     }
 
     /**

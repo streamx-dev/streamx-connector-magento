@@ -137,18 +137,13 @@ class Category
         return $connection->fetchCol($select);
     }
 
-    private function getConnection(): AdapterInterface
-    {
-        return $this->resource->getConnection();
-    }
-
     public function getCategoriesBaseSelect(int $storeId): Select
     {
         $resource = $this->resource;
         $entityTable = $this->categoryMetaData->getEntityTable();
         $linkField = $this->categoryMetaData->getLinkField();
 
-        $select = $this->resource->getConnection()
+        $select = $this->getConnection()
             ->select()
             ->from(
                 ['entity' => $this->categoryMetaData->getEntityTable()], // alias for the catalog_category_entity table, to use in joins
@@ -181,37 +176,8 @@ class Category
         return $select;
     }
 
-    /**
-     * Removes not eligible category ids from the given array.
-     * Not eligible categories are those that are:
-     *  - not available in the given store
-     *  - not active in the given store
-     * @param int[] $categoryIds
-     * @param int $storeId
-     */
-    public function removeNotEligibleCategories(array &$categoryIds, int $storeId): void
+    private function getConnection(): AdapterInterface
     {
-        $connection = $this->getConnection();
-        $entityTable = $this->categoryMetaData->getEntityTable();
-
-        $selectCategoryIds = $connection->select()->from(['entity' => $entityTable], ['entity_id']);
-        $allExistingCategoryIds = self::fetchNumericCol($connection, $selectCategoryIds);
-
-        $categoryIdsToCheckForEligibility = array_intersect($categoryIds, $allExistingCategoryIds);
-        if (empty($categoryIdsToCheckForEligibility)) {
-            return;
-        }
-
-        $this->eligibleCategorySelectModifier->modify($selectCategoryIds, $storeId);
-        $eligibleCategoryIds = self::fetchNumericCol($connection, $selectCategoryIds);
-
-        $categoryIds = array_intersect($categoryIds, $eligibleCategoryIds);
-    }
-
-    /**
-     * @return int[]
-     */
-    private static function fetchNumericCol(AdapterInterface $connection, Select $select): array {
-        return array_map('intval', $connection->fetchCol($select));
+        return $this->resource->getConnection();
     }
 }

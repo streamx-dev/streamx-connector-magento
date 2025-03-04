@@ -26,7 +26,6 @@ class CategoryDataLoader implements BasicDataLoader {
         // Ensure to reindex also the parents category ids
         if (!empty($categoryIds)) {
             $categoryIds = $this->withParentIds($categoryIds);
-            $this->resourceModel->removeNotEligibleCategories($categoryIds, $storeId);
         }
 
         // 1. Publish edited and added categories
