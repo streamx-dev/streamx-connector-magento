@@ -33,9 +33,6 @@ class StreamxClient {
     }
 
     public function publish(array $entities, string $indexerName): void {
-        $entityCount = count($entities);
-        $this->logger->info("Start publishing $entityCount entities from $indexerName");
-
         $publishMessages = [];
         foreach ($entities as $entity) {
             $entityType = EntityType::fromEntityAndIndexerName($entity, $indexerName);
@@ -46,14 +43,10 @@ class StreamxClient {
                 ->build();
         }
 
-        $this->ingest($publishMessages);
-        $this->logger->info("Finished publishing $entityCount entities from $indexerName");
+        $this->ingest($publishMessages, "publishing", $indexerName);
     }
 
     public function unpublish(array $entityIds, string $indexerName): void {
-        $entityCount = count($entityIds);
-        $this->logger->info("Start unpublishing $entityCount entities");
-
         $unpublishMessages = [];
         foreach ($entityIds as $entityId) {
             $entityType = EntityType::fromIndexerName($indexerName);
@@ -63,8 +56,7 @@ class StreamxClient {
                 ->build();
         }
 
-        $this->ingest($unpublishMessages);
-        $this->logger->info("Finished unpublishing $entityCount entities");
+        $this->ingest($unpublishMessages, "unpublishing", $indexerName);
     }
 
     private function createStreamxKey(EntityType $entityType, int $entityId): string {
@@ -78,9 +70,10 @@ class StreamxClient {
     /**
      * @param Message[] $ingestionMessages
      */
-    private function ingest(array $ingestionMessages): void {
+    private function ingest(array $ingestionMessages, string $operationName, string $indexerName): void {
         $keys = array_column($ingestionMessages, 'key');
-        $this->logger->info("Ingesting entities with keys " . json_encode($keys));
+        $messagesCount = count($ingestionMessages);
+        $this->logger->info("Start $operationName $messagesCount entities from $indexerName with keys " . json_encode($keys));
 
         try {
             // TODO make sure this will never block. Best by turning off Pulsar container
@@ -94,6 +87,8 @@ class StreamxClient {
         } catch (Exception $e) {
             $this->logException('Ingestion exception', $e);
         }
+
+        $this->logger->info("Finished $operationName $messagesCount entities from $indexerName");
     }
 
     public function isStreamxAvailable(): bool {
