@@ -26,9 +26,9 @@ class CategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
             // then
             $this->assertExactDataIsPublished($expectedKey, 'added-category.json', [
                 // provide values for placeholders in the validation file
-                123456789 => $category->getEntityId(),
-                'CATEGORY_NAME' => 'The new Category',
-                'CATEGORY_SLUG' => "the-new-category-{$category->getEntityId()}"
+                '"id": ' . $category->getEntityId() => '"id": 123456789',
+                'The new Category' => 'CATEGORY_NAME',
+                "the-new-category-{$category->getEntityId()}" => 'CATEGORY_SLUG'
             ]);
         } finally {
             // and when

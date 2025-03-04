@@ -21,9 +21,9 @@ class CategoryAddAndDeleteTest extends BaseAppEntityUpdateTest {
         try {
             $this->assertExactDataIsPublished($expectedKey, 'added-category.json', [
                 // provide values for placeholders in the validation file
-                123456789 => $categoryId,
-                'CATEGORY_NAME' => 'The new Category',
-                'CATEGORY_SLUG' => "the-new-category-$categoryId"
+                '"id": ' . $categoryId => '"id": 123456789',
+                'The new Category' => 'CATEGORY_NAME',
+                "the-new-category-$categoryId" => 'CATEGORY_SLUG'
             ]);
         } finally {
             // and when

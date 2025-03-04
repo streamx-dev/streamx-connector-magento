@@ -41,9 +41,9 @@ class MultistoreCategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
             // then
             $this->assertExactDataIsPublished($expectedKeyForStore2, 'added-category.json', [
                 // provide values for placeholders in the validation file
-                123456789 => $category->getEntityId(),
-                'CATEGORY_NAME' => 'Category name in second store',
-                'CATEGORY_SLUG' => "category-name-in-second-store-{$category->getEntityId()}"
+                '"id": ' . $category->getEntityId() => '"id": 123456789',
+                'Category name in second store' => 'CATEGORY_NAME',
+                "category-name-in-second-store-{$category->getEntityId()}" => 'CATEGORY_SLUG'
             ]);
 
             // and
@@ -89,21 +89,21 @@ class MultistoreCategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
             // then
             $this->assertExactDataIsPublished($expectedKeyForStore1, 'added-category.json', [
                 // provide values for placeholders in the validation file
-                123456789 => $store1CategoryId,
-                'CATEGORY_NAME' => 'Bikes for first store',
-                'CATEGORY_SLUG' => "bikes-for-first-store-$store1CategoryId"
+                '"id": ' . $store1CategoryId => '"id": 123456789',
+                'Bikes for first store' => 'CATEGORY_NAME',
+                "bikes-for-first-store-$store1CategoryId" => 'CATEGORY_SLUG'
             ]);
             $this->assertDataIsNotPublished($unexpectedKeyForStore1);
 
             $this->assertExactDataIsPublished($expectedKeyForStore2, 'added-category.json', [
                 // provide values for placeholders in the validation file
-                123456789 => $store2CategoryId,
-                'CATEGORY_NAME' => 'Bikes for second store',
-                'CATEGORY_SLUG' => "bikes-for-second-store-$store2CategoryId",
+                '"id": ' . $store2CategoryId => '"id": 123456789',
+                'Bikes for second store' => 'CATEGORY_NAME',
+                "bikes-for-second-store-$store2CategoryId" => 'CATEGORY_SLUG',
                 // expect different parent category than default
-                '"id": 2,' => '"id": ' . $rootCategoryIdForStore2 . ',',
-                'Default Category' => 'Root category for second store',
-                'default-category-2' => 'root-category-for-second-store-' . $rootCategoryIdForStore2
+                '"id": ' . $rootCategoryIdForStore2 . ',' => '"id": 2,',
+                'Root category for second store' => 'Default Category',
+                'root-category-for-second-store-' . $rootCategoryIdForStore2 => 'default-category-2'
             ]);
             $this->assertDataIsNotPublished($unexpectedKeyForStore2);
         } finally {
