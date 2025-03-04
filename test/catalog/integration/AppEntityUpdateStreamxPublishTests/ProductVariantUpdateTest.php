@@ -112,15 +112,15 @@ class ProductVariantUpdateTest extends BaseAppEntityUpdateTest {
         try {
             if ($expectingVariantToBePublished) {
                 $this->assertExactDataIsPublished($expectedChildProductKey, 'original-hoodie-xl-orange-product.json', [
-                    '"' . self::CHILD_PRODUCT_NAME => '"' . $childProductModifiedName,
-                    '"' . SlugGenerator::slugify(self::CHILD_PRODUCT_NAME) => '"' . SlugGenerator::slugify($childProductModifiedName)
+                    '"' . $childProductModifiedName => '"' . self::CHILD_PRODUCT_NAME,
+                    '"' . SlugGenerator::slugify($childProductModifiedName) => '"' . SlugGenerator::slugify(self::CHILD_PRODUCT_NAME)
                 ]);
             } else {
                 $this->assertDataIsNotPublished($expectedChildProductKey);
             }
             $this->assertExactDataIsPublished($expectedParentProductKey, 'original-hoodie-product.json', [
-                '"' . self::CHILD_PRODUCT_NAME => '"' . $childProductModifiedName,
-                '"' . SlugGenerator::slugify(self::CHILD_PRODUCT_NAME) => '"' . SlugGenerator::slugify($childProductModifiedName)
+                '"' . $childProductModifiedName => '"' . self::CHILD_PRODUCT_NAME,
+                '"' . SlugGenerator::slugify($childProductModifiedName) => '"' . SlugGenerator::slugify(self::CHILD_PRODUCT_NAME)
             ]);
             $this->assertDataIsNotPublished($unexpectedChildProductKey);
         } finally {

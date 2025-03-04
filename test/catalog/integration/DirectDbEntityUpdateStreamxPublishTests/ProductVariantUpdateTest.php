@@ -112,15 +112,15 @@ class ProductVariantUpdateTest extends BaseDirectDbEntityUpdateTest {
             // note: $expectingVariantToBePublished is passed as a flag, because publishing a variant depends on its visibility setting
             if ($expectingVariantToBePublished) {
                 $this->assertExactDataIsPublished($expectedChildProductKey, 'original-hoodie-xl-orange-product.json', [
-                    '"' . self::CHILD_PRODUCT_NAME => '"' . $childProductModifiedName,
-                    '"' . SlugGenerator::slugify(self::CHILD_PRODUCT_NAME) => '"' . SlugGenerator::slugify($childProductModifiedName)
+                    '"' . $childProductModifiedName => '"' . self::CHILD_PRODUCT_NAME,
+                    '"' . SlugGenerator::slugify($childProductModifiedName) => '"' . SlugGenerator::slugify(self::CHILD_PRODUCT_NAME)
                 ]);
             } else {
                 $this->assertDataIsNotPublished($expectedChildProductKey);
             }
             $this->assertExactDataIsPublished($expectedParentProductKey, 'original-hoodie-product.json', [
-                '"' . self::CHILD_PRODUCT_NAME => '"' . $childProductModifiedName,
-                '"' . SlugGenerator::slugify(self::CHILD_PRODUCT_NAME) => '"' . SlugGenerator::slugify($childProductModifiedName)
+                '"' . $childProductModifiedName => '"' . self::CHILD_PRODUCT_NAME,
+                '"' . SlugGenerator::slugify($childProductModifiedName) => '"' . SlugGenerator::slugify(self::CHILD_PRODUCT_NAME)
             ]);
             $this->assertDataIsNotPublished($unexpectedChildProductKey);
         } finally {
