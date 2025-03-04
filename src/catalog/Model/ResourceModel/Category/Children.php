@@ -29,9 +29,9 @@ class Children
     /**
      * @throws Exception
      */
-    public function loadChildren(array $category, int $storeId): array
+    public function loadChildren(string $categoryPath, int $storeId): array
     {
-        $childIds = $this->getChildrenIds($category, $storeId);
+        $childIds = $this->getChildrenIds($categoryPath, $storeId);
         $select = Category::getCategoriesBaseSelect($this->resource, $this->categoryMetaData);
         $this->selectModifier->modifyAll($select, $storeId);
 
@@ -45,11 +45,11 @@ class Children
     /**
      * @throws Exception
      */
-    private function getChildrenIds(array $category, int $storeId): array
+    private function getChildrenIds(string $categoryPath, int $storeId): array
     {
         $connection = $this->getConnection();
 
-        $bind = ['c_path' => $category['path'] . '/%'];
+        $bind = ['c_path' => "$categoryPath/%"];
 
         $select = $this->getConnection()->select()->from(
             ['entity' => $this->categoryMetaData->getEntityTable()],
