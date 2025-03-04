@@ -56,8 +56,12 @@ class MultistoreProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
             self::SECOND_WEBSITE_STORE_CODE . '_product:60'
         ];
 
+        // and: test store-level attribute labels
+        $labelId = $this->addStoreLevelLabelForStyleBagsAttribute('style_bags', self::$store2Id, 'Overridden label for Style Bags');
+
         // and
         $this->removeFromStreamX(...$expectedPublishedKeys, ...$unexpectedPublishedKeys);
+        $this->addIndexedProductAttributes('style_bags');
 
         try {
             // when
@@ -65,13 +69,17 @@ class MultistoreProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
             // then
             $this->assertExactDataIsPublished(self::DEFAULT_STORE_CODE . '_product:1', 'original-bag-product.json');
-            $this->assertExactDataIsPublished(self::DEFAULT_STORE_CODE . '_product:4', 'wayfarer-bag-product.json');
+            $this->assertExactDataIsPublished(self::DEFAULT_STORE_CODE . '_product:4', 'wayfarer-bag-product.json',  [
+                '"label": "Style"' => '"label": "Style Bags"' // test database contains an overridden label for this attribute for default store (ID=1)
+            ]);
             $this->assertExactDataIsPublished(self::DEFAULT_STORE_CODE . '_product:60', 'original-hoodie-xl-gray-product.json');
             $this->assertExactDataIsPublished(self::DEFAULT_STORE_CODE . '_product:61', 'original-hoodie-xl-orange-product.json');
             $this->assertExactDataIsPublished(self::DEFAULT_STORE_CODE . '_product:62', 'original-hoodie-product.json');
 
             $this->assertExactDataIsPublished(self::STORE_2_CODE . '_product:1', 'original-bag-product.json');
-            $this->assertExactDataIsPublished(self::STORE_2_CODE . '_product:4', 'wayfarer-bag-product.json');
+            $this->assertExactDataIsPublished(self::STORE_2_CODE . '_product:4', 'wayfarer-bag-product.json', [
+                '"label": "Overridden label for Style Bags"' => '"label": "Style Bags"'
+            ]);
             $this->assertExactDataIsPublished(self::STORE_2_CODE . '_product:60', 'original-hoodie-xl-gray-product.json');
             $this->assertExactDataIsPublished(self::STORE_2_CODE . '_product:61', 'original-hoodie-xl-orange-product.json');
             $this->assertExactDataIsPublished(self::STORE_2_CODE . '_product:62', 'original-hoodie-product.json');
@@ -89,7 +97,21 @@ class MultistoreProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
             foreach ($testedStoreIds as $storeId) {
                 self::$db->unsetProductsVisibleInStore($storeId, ...$testedProductIds);
             }
+            $this->restoreDefaultIndexedProductAttributes();
+            $this->removeStoreLevelAttributeLabel($labelId);
         }
+    }
+
+    private function addStoreLevelLabelForStyleBagsAttribute(string $attributeCode, int $storeId, string $label): int {
+        $attributeId = self::$db->getProductAttributeId($attributeCode);
+        return self::$db->insert("
+            INSERT INTO eav_attribute_label (attribute_id, store_id, value)
+                                     VALUES ($attributeId, $storeId, '$label')
+        ");
+    }
+
+    private function removeStoreLevelAttributeLabel(int $id): void {
+        self::$db->execute("DELETE FROM eav_attribute_label WHERE attribute_label_id = $id");
     }
 
     /** @test */
