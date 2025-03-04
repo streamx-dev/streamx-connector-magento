@@ -9,13 +9,11 @@ use Psr\Log\LoggerInterface;
 use Streamx\Clients\Ingestion\Builders\StreamxClientBuilders;
 use Streamx\Clients\Ingestion\Publisher\Message;
 use Streamx\Clients\Ingestion\Publisher\Publisher;
-use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
-use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCore\Client\Model\Data;
 
 class StreamxClient {
 
-    private const STREAMX_TYPE_PROPERTY_NAME = 'streamx:type';
+    private const STREAMX_TYPE_PROPERTY_NAME = 'sx:type';
 
     private LoggerInterface $logger;
     private string $storeCode;
