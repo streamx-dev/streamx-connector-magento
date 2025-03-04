@@ -111,7 +111,7 @@ class MagentoMySqlQueryExecutor {
         $productNameAttributeId = $this->getProductNameAttributeId();
 
         $rows = $this->selectRows("
-            SELECT DISTINCT entity_id, value
+            SELECT DISTINCT $this->entityAttributeLinkField, value
               FROM catalog_product_entity_varchar
              WHERE attribute_id = $productNameAttributeId
                AND value LIKE '$productNamePrefix%'
