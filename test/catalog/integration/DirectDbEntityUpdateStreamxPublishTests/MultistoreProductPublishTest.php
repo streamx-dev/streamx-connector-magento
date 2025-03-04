@@ -11,7 +11,7 @@ use Magento\Catalog\Model\Product\Visibility;
  * @inheritdoc
  * @UsesProductIndexer
  */
-class MultistoreProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
+class MultistoreProductPublishTest extends BaseDirectDbEntityUpdateTest {
 
     /** @test */
     public function shouldPublishProductsFromWebsite() {

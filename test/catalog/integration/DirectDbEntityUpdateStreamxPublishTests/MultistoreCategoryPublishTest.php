@@ -8,7 +8,7 @@ use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
  * @inheritdoc
  * @UsesCategoryIndexer
  */
-class MultistoreCategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
+class MultistoreCategoryPublishTest extends BaseDirectDbEntityUpdateTest {
 
     /** @test */
     public function shouldPublishActiveCategories() {
