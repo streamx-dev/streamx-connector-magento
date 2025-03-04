@@ -134,30 +134,23 @@ class MultistoreCategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
     }
 
     private function insertMultistoreCategory(int $parentCategoryId, array $storeIdCategoryNameMap, array $storeIdCategoryStatusMap): EntityIds {
-        $defaultStoreId = self::DEFAULT_STORE_ID;
         $rootCategoryId = 1;
 
         $nameAttrId = self::attrId('name');
-        $displayModeAttrId = self::attrId('display_mode');
         $urlKeyAttrId = self::attrId('url_key');
         $isActiveAttrId = self::attrId('is_active');
-        $includeInMenuAttrId = self::attrId('include_in_menu');
 
         $category = self::$db->insertCategory($parentCategoryId, "$rootCategoryId/$parentCategoryId");
         $linkFieldId = $category->getLinkFieldId();
 
-        // 2. Set basic attributes
-        self::$db->insertVarcharCategoryAttribute($linkFieldId, $displayModeAttrId, $defaultStoreId, 'PRODUCTS');
-        self::$db->insertIntCategoryAttribute($linkFieldId, $includeInMenuAttrId, $defaultStoreId, 1);
-
-        // 3. Set default and store-scoped names for the category
+        // 2. Set default and store-scoped names for the category
         foreach ($storeIdCategoryNameMap as $storeId => $categoryName) {
             $categoryInternalName = strtolower(str_replace(' ', '_', $categoryName));
             self::$db->insertVarcharCategoryAttribute($linkFieldId, $nameAttrId, $storeId, $categoryName);
             self::$db->insertVarcharCategoryAttribute($linkFieldId, $urlKeyAttrId, $storeId, $categoryInternalName);
         }
 
-        // 4. Set default and store-scoped active statuses for the category
+        // 3. Set default and store-scoped active statuses for the category
         foreach ($storeIdCategoryStatusMap as $storeId => $isCategoryActive) {
             self::$db->insertIntCategoryAttribute($linkFieldId, $isActiveAttrId, $storeId, $isCategoryActive ? 1 : 0);
         }
@@ -172,20 +165,16 @@ class MultistoreCategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $categoryInternalName = strtolower(str_replace(' ', '_', $categoryName));
 
         $nameAttrId = self::attrId('name');
-        $displayModeAttrId = self::attrId('display_mode');
         $urlKeyAttrId = self::attrId('url_key');
         $isActiveAttrId = self::attrId('is_active');
-        $includeInMenuAttrId = self::attrId('include_in_menu');
 
         // 1. Create category
         $category = self::$db->insertCategory($rootCategoryId, $rootCategoryId);
         $linkFieldId = $category->getLinkFieldId();
 
         // 2. Set attributes
-        self::$db->insertVarcharCategoryAttribute($linkFieldId, $displayModeAttrId, $defaultStoreId, 'PRODUCTS');
         self::$db->insertVarcharCategoryAttribute($linkFieldId, $nameAttrId, $defaultStoreId, $categoryName);
         self::$db->insertVarcharCategoryAttribute($linkFieldId, $urlKeyAttrId, $defaultStoreId, $categoryInternalName);
-        self::$db->insertIntCategoryAttribute($linkFieldId, $includeInMenuAttrId, $defaultStoreId, 1);
         self::$db->insertIntCategoryAttribute($linkFieldId, $isActiveAttrId, $defaultStoreId, 1);
 
         return $category;

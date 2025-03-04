@@ -111,7 +111,7 @@ class MagentoMySqlQueryExecutor {
         $productNameAttributeId = $this->getProductNameAttributeId();
 
         $rows = $this->selectRows("
-            SELECT DISTINCT entity_id, value
+            SELECT DISTINCT $this->entityAttributeLinkField, value
               FROM catalog_product_entity_varchar
              WHERE attribute_id = $productNameAttributeId
                AND value LIKE '$productNamePrefix%'
@@ -274,6 +274,11 @@ class MagentoMySqlQueryExecutor {
                SET path = '$rootPath/$entityId'
              WHERE entity_id = {$entityIds->getEntityId()}
         ");
+
+        // insert basic attributes
+        self::insertVarcharCategoryAttribute($entityIds->getLinkFieldId(), self::getCategoryAttributeId('display_mode'), 0, 'PRODUCTS');
+        self::insertIntCategoryAttribute($entityIds->getLinkFieldId(), self::getCategoryAttributeId('include_in_menu'), 0, 1);
+
         return $entityIds;
     }
 

@@ -51,10 +51,8 @@ class CategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $linkFieldId = $category->getLinkFieldId();
 
         self::$db->insertVarcharCategoryAttribute($linkFieldId,  self::attrId('name'), $defaultStoreId, $categoryName);
-        self::$db->insertVarcharCategoryAttribute($linkFieldId, self::attrId('display_mode'), $defaultStoreId, 'PRODUCTS');
         self::$db->insertVarcharCategoryAttribute($linkFieldId, self::attrId('url_key'), $defaultStoreId, $categoryInternalName);
         self::$db->insertIntCategoryAttribute($linkFieldId, self::attrId('is_active'), $defaultStoreId, TRUE);
-        self::$db->insertIntCategoryAttribute($linkFieldId, self::attrId('include_in_menu'), $defaultStoreId, TRUE);
 
         return $category;
     }

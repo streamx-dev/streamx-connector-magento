@@ -2,24 +2,15 @@
 
 namespace StreamX\ConnectorCatalog\Model\Attributes;
 
+use StreamX\ConnectorCatalog\Model\Config\Source\Product\BaseProductAttributeSource;
 use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 
 abstract class BaseProductAttributes
 {
     protected CatalogConfig $catalogConfig;
-    private array $requiredAttributes;
 
-    public function __construct(CatalogConfig $catalogConfiguration, array $requiredAttributes) {
+    public function __construct(CatalogConfig $catalogConfiguration) {
         $this->catalogConfig = $catalogConfiguration;
-        $this->requiredAttributes = $requiredAttributes;
-    }
-
-    /**
-     * @return string[] of attribute codes that should always be exported
-     */
-    public function getRequiredAttributes(): array
-    {
-        return $this->requiredAttributes;
     }
 
     /**
@@ -36,6 +27,6 @@ abstract class BaseProductAttributes
 
         return empty($attributeCodes)
             ? []
-            : array_merge($attributeCodes, $this->getRequiredAttributes());
+            : array_merge($attributeCodes, BaseProductAttributeSource::ALWAYS_LOADED_ATTRIBUTES);
     }
 }
