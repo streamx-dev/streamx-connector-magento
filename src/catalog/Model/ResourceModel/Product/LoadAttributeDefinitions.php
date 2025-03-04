@@ -59,21 +59,16 @@ class LoadAttributeDefinitions
     private function loadAttributeDefinitions(int $storeId, string $columnToFilterBy, array $columnValues, int $fromId, ?int $limit): array
     {
         $connection = $this->resource->getConnection();
-        $select = $this->createAttributesSelect($connection, $fromId, $limit);
+        $select = $this->createAttributesSelect($connection, $storeId, $fromId, $limit);
         if (!empty($columnValues)) {
             $select->where("ea.$columnToFilterBy IN (?)", $columnValues);
         }
+
         $attributeRows = $connection->fetchAll($select);
-
-        foreach ($attributeRows as &$attributeRow) {
-            $attributeCode = $attributeRow['attribute_code'];
-            $attributeRow['options'] = $this->getOptions($attributeRow, $attributeCode, $storeId);
-        }
-
-        return $this->mapAttributeRowsToDtos($attributeRows);
+        return $this->mapAttributeRowsToDtosWithOptions($attributeRows, $storeId);
     }
 
-    private function createAttributesSelect(AdapterInterface $connection, int $fromId, ?int $limit): Select
+    private function createAttributesSelect(AdapterInterface $connection, int $storeId, int $fromId, ?int $limit): Select
     {
         return $connection->select()
             ->from(
@@ -81,12 +76,17 @@ class LoadAttributeDefinitions
                 ['attribute_code', 'frontend_input', 'source_model']
             )->columns([
                 'id' => 'attribute_id',
-                'frontend_label' => $connection->getIfNullSql('frontend_label', "''")
+                'default_frontend_label' => 'frontend_label'
             ])
             ->joinLeft(
                 ['cea' => $this->resource->getTableName('catalog_eav_attribute')],
                 'cea.attribute_id = ea.attribute_id',
                 ['is_facet' => new Zend_Db_Expr('CASE WHEN is_filterable = 1 THEN true ELSE false END')]
+            )
+            ->joinLeft(
+                ['eal' => $this->resource->getTableName('eav_attribute_label')],
+                "eal.attribute_id = ea.attribute_id AND eal.store_id = $storeId",
+                ['store_level_frontend_label' => 'value']
             )
             ->where("ea.attribute_id > $fromId")
             ->where('ea.entity_type_id = ?', $this->productConfig->getEntityTypeId())
@@ -120,19 +120,24 @@ class LoadAttributeDefinitions
     /**
      * @return AttributeDefinition[]
      */
-    private function mapAttributeRowsToDtos(array $attributeRows): array
+    private function mapAttributeRowsToDtosWithOptions(array $attributeRows, int $storeId): array
     {
-        return array_map(
-            function (array $attributeRow) {
-                return new AttributeDefinition(
-                    (int) $attributeRow['id'],
-                    $attributeRow['attribute_code'],
-                    $attributeRow['frontend_label'], // TODO: table eav_attribute_label contains store-level frontend labels
-                    (bool) $attributeRow['is_facet'],
-                    $attributeRow['options']
-                );
-            },
-            $attributeRows
-        );
+        $attributeDtos = [];
+
+        foreach ($attributeRows as $attributeRow) {
+            $attributeCode = $attributeRow['attribute_code'];
+            $label = $attributeRow['store_level_frontend_label'] ?? $attributeRow['default_frontend_label'] ?? '';
+            $options = $this->getOptions($attributeRow, $attributeCode, $storeId);
+
+            $attributeDtos[] = new AttributeDefinition(
+                (int)$attributeRow['id'],
+                $attributeCode,
+                $label,
+                (bool)$attributeRow['is_facet'],
+                $options
+            );
+        }
+
+        return $attributeDtos;
     }
 }
