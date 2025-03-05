@@ -3,36 +3,14 @@
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
+use Magento\Catalog\Model\Product\Visibility;
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 
 /**
  * @inheritdoc
- * @UsesProductIndexer
  */
-class MultistoreProductVariantPublishAndUnpublishTest extends BaseDirectDbEntityUpdateTest {
-
-    /**
-     * Unpublish configurable products scenarios:
-     * 1. flag is set to: skip invisible products
-     *   a) disable variant in store 2
-     *      -> the variant should be unpublished / trigger publishing parent without that variant
-     *   b) disable parent in store
-     *      -> the parent should be unpublished / trigger publishing visible variants
-     *   c) make variant invisible in store 2
-     *      -> the variant should be unpublished / trigger publishing parent with that variant
-     *   d) make parent invisible in store 2
-     *      -> the parent should be unpublished / trigger publishing visible variants
-     * 2. flag is set to: publish invisible products
-     *   a) disable variant in store 2
-     *      -> the variant should be unpublished / trigger publishing parent without that variant
-     *   b) disable parent in store
-     *      -> the parent should be unpublished / trigger publishing all variants
-     *   c) make variant invisible in store 2
-     *      -> the variant should be published / trigger publishing parent with that variant
-     *   d) make parent invisible in store 2
-     *      -> the parent should be published / trigger publishing all variants
-     */
+abstract class BaseMultistoreProductVariantIngestionTest extends BaseDirectDbEntityUpdateTest {
 
     private const PARENT_ID = 62;
     private const VARIANT_1_ID = 60;
@@ -46,9 +24,9 @@ class MultistoreProductVariantPublishAndUnpublishTest extends BaseDirectDbEntity
     private const VARIANT_1_JSON_FILE = 'original-hoodie-xl-gray-product.json';
     private const VARIANT_2_JSON_FILE = 'original-hoodie-xl-orange-product.json';
 
-    private static EntityIds $parent;
-    private static EntityIds $variant1;
-    private static EntityIds $variant2;
+    protected static EntityIds $parent;
+    protected static EntityIds $variant1;
+    protected static EntityIds $variant2;
 
     private static string $keyOfParentInStore1;
     private static string $keyOfVariant1InStore1;
@@ -94,6 +72,12 @@ class MultistoreProductVariantPublishAndUnpublishTest extends BaseDirectDbEntity
         $streamxClientForStore1->publish($publishProductsPayload, ProductProcessor::INDEXER_ID);
         $streamxClientForStore2->publish($publishProductsPayload, ProductProcessor::INDEXER_ID);
 
+        // verify all three products are published from both stores
+        $this->assertParentIsPublishedWithVariantsInPayload(self::$store1Id, [self::$variant1, self::$variant2]);
+        $this->assertParentIsPublishedWithVariantsInPayload(self::$store2Id, [self::$variant1, self::$variant2]);
+        $this->assertSeparatelyPublishedVariants(self::$store1Id, [self::$variant1, self::$variant2]);
+        $this->assertSeparatelyPublishedVariants(self::$store2Id, [self::$variant1, self::$variant2]);
+
         parent::setUp();
     }
 
@@ -120,29 +104,15 @@ class MultistoreProductVariantPublishAndUnpublishTest extends BaseDirectDbEntity
         );
     }
 
-    /** @test */
-    public function verifyIngestion_OnDisableVariant_WhenFlagSetToSkipInvisibleProducts() {
-        // given
-        self::$db->insertIntProductAttribute(self::$variant2, self::$statusAttributeId, self::$store2Id, Status::STATUS_DISABLED);
-
-        // when
-        $this->reindexMview();
-
-        // then
-        // - parent is still in store 1 and contains both variants
-        $this->assertParentIsPublishedWithVariantsInPayload(self::$store1Id, [self::$variant1, self::$variant2]);
-
-        // - parent is still in store 2 but now contains only variant 1
-        $this->assertParentIsPublishedWithVariantsInPayload(self::$store2Id, [self::$variant1]);
-
-        // - variant is still published in store 1, but editing variant 2 triggered reindexing it in all stores, and the variant is not visible in store 1 - so it was unpublished
-        $this->assertSeparatelyPublishedVariants(self::$store1Id, [self::$variant1]);
-
-        // - variant is still published in store 2, but since it was disabled in store 2 - it's unpublished
-        $this->assertSeparatelyPublishedVariants(self::$store2Id, [self::$variant1]);
+    protected function disableProductInStore2(EntityIds $product): void {
+        self::$db->insertIntProductAttribute($product, self::$statusAttributeId, self::$store2Id, Status::STATUS_DISABLED);
     }
 
-    private function assertParentIsPublishedWithVariantsInPayload(int $storeId, array $expectedVariantsInPayload): void {
+    protected function makeProductInvisibleInStore2(EntityIds $product): void {
+        self::$db->insertIntProductAttribute($product, self::$visibilityAttributeId, self::$store2Id, Visibility::VISIBILITY_NOT_VISIBLE);
+    }
+
+    protected function assertParentIsPublishedWithVariantsInPayload(int $storeId, array $expectedVariantsInPayload): void {
         if ($storeId == self::$store1Id) {
             $publishedParentProduct = $this->downloadContentAtKey(self::$keyOfParentInStore1);
         } else if ($storeId == self::$store2Id) {
@@ -156,7 +126,17 @@ class MultistoreProductVariantPublishAndUnpublishTest extends BaseDirectDbEntity
         $this->verifyJsonContainsNameOrNot($publishedParentProduct, self::VARIANT_2_NAME, $expectingVariant2InParentPayload);
     }
 
-    private function assertSeparatelyPublishedVariants(int $storeId, array $expectedPublishedVariants): void {
+    protected function assertParentIsNotPublished(int $storeId): void {
+        if ($storeId == self::$store1Id) {
+            $productKey = self::$keyOfParentInStore1;
+        } else if ($storeId == self::$store2Id) {
+            $productKey = self::$keyOfParentInStore2;
+        }
+
+        $this->assertDataIsNotPublished($productKey);
+    }
+
+    protected function assertSeparatelyPublishedVariants(int $storeId, array $expectedPublishedVariants): void {
         $expectingVariant1ToBePublished = in_array(self::$variant1, $expectedPublishedVariants);
         $expectingVariant2ToBePublished = in_array(self::$variant2, $expectedPublishedVariants);
 
@@ -170,6 +150,10 @@ class MultistoreProductVariantPublishAndUnpublishTest extends BaseDirectDbEntity
 
         $this->verifyPublishedWithNameInJsonOrNotPublished($variant1Key, self::VARIANT_1_NAME, $expectingVariant1ToBePublished);
         $this->verifyPublishedWithNameInJsonOrNotPublished($variant2Key, self::VARIANT_2_NAME, $expectingVariant2ToBePublished);
+    }
+
+    protected function assertNoSeparatelyPublishedVariants(int $storeId): void {
+        $this->assertSeparatelyPublishedVariants($storeId, []);
     }
 
     private function verifyJsonContainsNameOrNot(string $json, string $productName, bool $shouldContain): void {

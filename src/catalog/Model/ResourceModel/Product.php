@@ -196,11 +196,11 @@ class Product
 
     /**
      * @param int[] $productIds
-     * @return int[]
+     * @return int[] IDs of parents (configurable products) for all variants found in the input IDs list
      */
-    public function retrieveParentsForVariants(array $productIds, int $storeId): array
+    public function retrieveParentsForVariants(array $productIds): array
     {
-        /** The base query (for community DB version) is:
+        /** Query for community DB version:
          * SELECT DISTINCT entity.entity_id AS parentId
          *   FROM catalog_product_entity entity
          *   JOIN catalog_product_relation relation ON relation.parent_id = entity.entity_id
@@ -208,7 +208,7 @@ class Product
          *    AND relation.child_id IN ($productIds)
          *  ORDER BY entity.entity_id
          */
-        $linkFieldId = $this->productMetaData->getLinkField();
+        $linkField = $this->productMetaData->getLinkField();
         $productIdField = $this->productMetaData->getIdentifierField();
         $entityTable = $this->resourceConnection->getTableName($this->productMetaData->getEntityTable());
         $relationTable = $this->resourceConnection->getTableName('catalog_product_relation');
@@ -216,22 +216,20 @@ class Product
 
         $select = $this->getConnection()->select()
             ->from(['entity' => $entityTable], $productIdField)
-            ->join(['relation' => $relationTable], "relation.parent_id = entity.$linkFieldId", [])
+            ->join(['relation' => $relationTable], "relation.parent_id = entity.$linkField", [])
             ->where("entity.type_id = 'configurable'")
             ->where("relation.child_id IN($productIdsString)");
-
-        $this->eligibleProductSelectModifier->modify($select, $storeId);
 
         return array_map('intval', $this->getConnection()->fetchCol($select));
     }
 
     /**
      * @param int[] $productIds
-     * @return int[]
+     * @return int[] IDs of variants for all configurable products (parents) found in the input IDs list
      */
-    public function retrieveVariantsForParents(array $productIds, int $storeId): array
+    public function retrieveVariantsForParents(array $productIds): array
     {
-        /** The base query (for community DB version) is:
+        /** Query for community DB version:
          * SELECT DISTINCT entity.entity_id AS childId
          *   FROM catalog_product_entity entity
          *   JOIN catalog_product_relation relation ON relation.child_id = entity.entity_id
@@ -240,7 +238,7 @@ class Product
          *    AND relation.parent_id IN ($productIds)
          *  ORDER BY entity.entity_id
         */
-        $linkFieldId = $this->productMetaData->getLinkField();
+        $linkField = $this->productMetaData->getLinkField();
         $productIdField = $this->productMetaData->getIdentifierField();
         $entityTable = $this->resourceConnection->getTableName($this->productMetaData->getEntityTable());
         $relationTable = $this->resourceConnection->getTableName('catalog_product_relation');
@@ -248,12 +246,10 @@ class Product
 
         $select = $this->getConnection()->select()
             ->from(['entity' => $entityTable], $productIdField)
-            ->join(['relation' => $relationTable], "relation.child_id = entity.$linkFieldId", [])
-            ->join(['parent' => $entityTable], "parent.$linkFieldId = relation.parent_id", [])
+            ->join(['relation' => $relationTable], "relation.child_id = entity.$linkField", [])
+            ->join(['parent' => $entityTable], "parent.$linkField = relation.parent_id", [])
             ->where("parent.type_id = 'configurable'")
             ->where("relation.parent_id IN($productIdsString)");
-
-        $this->eligibleProductSelectModifier->modify($select, $storeId);
 
         return array_map('intval', $this->getConnection()->fetchCol($select));
     }
