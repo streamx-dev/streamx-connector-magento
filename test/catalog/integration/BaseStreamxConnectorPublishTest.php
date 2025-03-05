@@ -27,17 +27,17 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
 
     private const MAGENTO_REST_API_BASE_URL = 'https://magento.test:444/rest/all/V1';
 
-    protected const DEFAULT_WEBSITE_ID = 1;
-    protected const DEFAULT_STORE_ID = 0; // TODO: actually it's not am existing store, it's used in SQL rows to mean: "this row contains a default base value for all stores"
-    protected const STORE_1_ID = 1;
-    protected static int $store1Id = self::STORE_1_ID; // alias for readability
-    protected static int $store2Id;
-    protected static int $secondWebsiteId;
-    protected static int $secondWebsiteStoreId;
+    public const DEFAULT_STORE_ID = 0;
 
-    protected const DEFAULT_STORE_CODE = 'default'; // TODO: this is store 1 code
+    protected static int $website1Id = 1;
+    protected static int $store1Id = 1;
+    protected static int $store2Id;
+    protected static int $website2Id;
+    protected static int $website2StoreId;
+
+    protected const STORE_1_CODE = 'default';
     protected const STORE_2_CODE = 'store_2_view';
-    protected const SECOND_WEBSITE_STORE_CODE = 'store_view_for_second_website';
+    protected const WEBSITE_2_STORE_CODE = 'store_view_for_second_website';
 
     protected static bool $areTestsInitialized = false;
 
@@ -70,8 +70,8 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
         }
 
         self::$store2Id = self::$db->selectSingleValue("SELECT store_id FROM store WHERE code = '" . self::STORE_2_CODE . "'");
-        self::$secondWebsiteId = self::$db->selectSingleValue("SELECT website_id FROM store_website WHERE code = 'second_website'");
-        self::$secondWebsiteStoreId = self::$db->selectSingleValue("SELECT store_id FROM store WHERE code = '" . self::SECOND_WEBSITE_STORE_CODE . "'");
+        self::$website2Id = self::$db->selectSingleValue("SELECT website_id FROM store_website WHERE code = 'second_website'");
+        self::$website2StoreId = self::$db->selectSingleValue("SELECT store_id FROM store WHERE code = '" . self::WEBSITE_2_STORE_CODE . "'");
 
         if (self::$db->isEnterpriseMagento()) {
             self::disableGiftCardsCategory();
@@ -82,7 +82,7 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
         // disable a category that exists only in enterprise magento, to allow having common validation files for both versions
         $categoryId = self::$db->getCategoryId('Gift Cards');
         $isActiveAttributeId = self::$db->getCategoryAttributeId('is_active');
-        self::$db->insertIntCategoryAttribute($categoryId, $isActiveAttributeId, 0, 0);
+        self::$db->insertIntCategoryAttribute($categoryId, $isActiveAttributeId, 0);
     }
 
     public static function tearDownAfterClass(): void {
@@ -165,17 +165,17 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
         echo $ingestedKeys->formatted() . PHP_EOL;
     }
 
-    public static function productKey(EntityIds $productId, string $storeCode = self::DEFAULT_STORE_CODE): string {
+    public static function productKey(EntityIds $productId, string $storeCode = self::STORE_1_CODE): string {
         return self::productKeyFromEntityId($productId->getEntityId(), $storeCode);
     }
-    public static function productKeyFromEntityId(int $productEntityId, string $storeCode = self::DEFAULT_STORE_CODE): string {
+    public static function productKeyFromEntityId(int $productEntityId, string $storeCode = self::STORE_1_CODE): string {
         return self::expectedStreamxKey($productEntityId, 'product', $storeCode);
     }
 
-    public static function categoryKey(EntityIds $categoryId, string $storeCode = self::DEFAULT_STORE_CODE): string {
+    public static function categoryKey(EntityIds $categoryId, string $storeCode = self::STORE_1_CODE): string {
         return self::categoryKeyFromEntityId($categoryId->getEntityId(), $storeCode);
     }
-    public static function categoryKeyFromEntityId(int $categoryEntityId, string $storeCode = self::DEFAULT_STORE_CODE): string {
+    public static function categoryKeyFromEntityId(int $categoryEntityId, string $storeCode = self::STORE_1_CODE): string {
         return self::expectedStreamxKey($categoryEntityId, 'category', $storeCode);
     }
 
