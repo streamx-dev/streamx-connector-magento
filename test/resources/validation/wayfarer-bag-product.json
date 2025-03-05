@@ -37,6 +37,21 @@
       "isFacet": false
     },
     {
+      "name": "style_bags",
+      "label": "Style Bags",
+      "values": [
+        {
+          "value": "Messenger",
+          "label": "Messenger"
+        },
+        {
+          "value": "Laptop",
+          "label": "Laptop"
+        }
+      ],
+      "isFacet": true
+    },
+    {
       "name": "status",
       "label": "Enable Product",
       "values": [
