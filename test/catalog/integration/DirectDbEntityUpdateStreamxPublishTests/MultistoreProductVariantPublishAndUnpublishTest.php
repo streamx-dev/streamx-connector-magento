@@ -3,13 +3,8 @@
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
-use Magento\Catalog\Model\Product\Visibility;
-use Magento\Store\Api\Data\StoreInterface;
-use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
-use StreamX\ConnectorCore\Client\StreamxClient;
-use StreamX\ConnectorCore\Client\StreamxClientConfiguration;
 
 /**
  * @inheritdoc
@@ -39,17 +34,21 @@ class MultistoreProductVariantPublishAndUnpublishTest extends BaseDirectDbEntity
      *      -> the parent should be published / trigger publishing all variants
      */
 
+    private const PARENT_ID = 62;
+    private const VARIANT_1_ID = 60;
+    private const VARIANT_2_ID = 61;
+
+    private const PARENT_NAME = 'Chaz Kangeroo Hoodie';
+    private const VARIANT_1_NAME = 'Chaz Kangeroo Hoodie-XL-Gray';
+    private const VARIANT_2_NAME = 'Chaz Kangeroo Hoodie-XL-Orange';
+
+    private const PARENT_JSON_FILE = 'original-hoodie-product.json';
+    private const VARIANT_1_JSON_FILE = 'original-hoodie-xl-gray-product.json';
+    private const VARIANT_2_JSON_FILE = 'original-hoodie-xl-orange-product.json';
+
     private static EntityIds $parent;
     private static EntityIds $variant1;
     private static EntityIds $variant2;
-
-    private static string $parentName = 'Chaz Kangeroo Hoodie'; // ID 62
-    private static string $variant1Name = 'Chaz Kangeroo Hoodie-XL-Gray'; // ID 60
-    private static string $variant2Name = 'Chaz Kangeroo Hoodie-XL-Orange'; // ID 61
-
-    private static string $parentDefaultJsonFile = 'original-hoodie-product.json';
-    private static string $variant1DefaultJsonFile = 'original-hoodie-xl-gray-product.json';
-    private static string $variant2DefaultJsonFile = 'original-hoodie-xl-orange-product.json';
 
     private static string $keyOfParentInStore1;
     private static string $keyOfVariant1InStore1;
@@ -62,15 +61,12 @@ class MultistoreProductVariantPublishAndUnpublishTest extends BaseDirectDbEntity
     private static int $statusAttributeId;
     private static int $visibilityAttributeId;
 
-    private StreamxClient $streamxClientForStore1;
-    private StreamxClient $streamxClientForStore2;
-
     public static function setUpBeforeClass(): void {
         parent::setUpBeforeClass();
 
-        self::$parent = self::$db->getProductId(self::$parentName);
-        self::$variant1 = self::$db->getProductId(self::$variant1Name);
-        self::$variant2 = self::$db->getProductId(self::$variant2Name);
+        self::$parent = self::$db->getProductId(self::PARENT_NAME);
+        self::$variant1 = self::$db->getProductId(self::VARIANT_1_NAME);
+        self::$variant2 = self::$db->getProductId(self::VARIANT_2_NAME);
 
         self::$keyOfParentInStore1 = self::productKey(self::$parent, self::DEFAULT_STORE_CODE);
         self::$keyOfVariant1InStore1 = self::productKey(self::$variant1, self::DEFAULT_STORE_CODE);
@@ -85,25 +81,18 @@ class MultistoreProductVariantPublishAndUnpublishTest extends BaseDirectDbEntity
     }
 
     protected function setUp(): void {
-        // as initial state for every test - make all tested products published (so every test can verify unpublishing)
-        $this->streamxClientForStore1 = parent::createStreamxClient(self::STORE_1_ID, self::DEFAULT_STORE_CODE);
-        $this->streamxClientForStore2 = parent::createStreamxClient(self::$store2Id, self::STORE_2_CODE);
+        // prepare initial state for every test in this class: make all tested products published (so every test can verify if some are unpublished)
+        $streamxClientForStore1 = parent::createStreamxClient(self::$store1Id, self::DEFAULT_STORE_CODE);
+        $streamxClientForStore2 = parent::createStreamxClient(self::$store2Id, self::STORE_2_CODE);
 
-        $parentDefaultJson = $this->readJsonFileToArray(self::$parentDefaultJsonFile);
-        $variant1DefaultJson = $this->readJsonFileToArray(self::$variant1DefaultJsonFile);
-        $variant2DefaultJson = $this->readJsonFileToArray(self::$variant2DefaultJsonFile);
+        $publishProductsPayload = [
+            self::PARENT_ID => $this->readJsonFileToArray(self::PARENT_JSON_FILE),
+            self::VARIANT_1_ID => $this->readJsonFileToArray(self::VARIANT_1_JSON_FILE),
+            self::VARIANT_2_ID => $this->readJsonFileToArray(self::VARIANT_2_JSON_FILE)
+        ];
 
-        $this->streamxClientForStore1->publish([
-            62 => $parentDefaultJson,
-            60 => $variant1DefaultJson,
-            61 => $variant2DefaultJson
-        ], ProductProcessor::INDEXER_ID);
-
-        $this->streamxClientForStore2->publish([
-            62 => $parentDefaultJson,
-            60 => $variant1DefaultJson,
-            61 => $variant2DefaultJson
-        ], ProductProcessor::INDEXER_ID);
+        $streamxClientForStore1->publish($publishProductsPayload, ProductProcessor::INDEXER_ID);
+        $streamxClientForStore2->publish($publishProductsPayload, ProductProcessor::INDEXER_ID);
 
         parent::setUp();
     }
@@ -119,7 +108,6 @@ class MultistoreProductVariantPublishAndUnpublishTest extends BaseDirectDbEntity
         foreach ([self::$parent, self::$variant1, self::$variant2] as $product) {
             self::$db->deleteIntProductAttribute($product, self::$statusAttributeId, self::$store2Id);
             self::$db->deleteIntProductAttribute($product, self::$visibilityAttributeId, self::$store2Id);
-            self::$db->execute("UPDATE catalog_product_entity SET attribute_set_id = 10 WHERE entity_id = {$product->getEntityId()}");
         }
 
         // flush all changes
@@ -132,66 +120,56 @@ class MultistoreProductVariantPublishAndUnpublishTest extends BaseDirectDbEntity
         );
     }
 
-    private function dummyEditOfProduct(EntityIds $product): void {
-        self::$db->execute("UPDATE catalog_product_entity SET attribute_set_id = attribute_set_id + 1 WHERE entity_id = {$product->getEntityId()}");
-    }
-
     /** @test */
     public function verifyIngestion_OnDisableVariant_WhenFlagSetToSkipInvisibleProducts() {
-        // given: entry state is: all products are published.
+        // given
         self::$db->insertIntProductAttribute(self::$variant2, self::$statusAttributeId, self::$store2Id, Status::STATUS_DISABLED);
 
         // when
         $this->reindexMview();
 
-        // then: the variant should be unpublished, and trigger publishing parent without that variant in its variants list
-        $this->verifyPublishedProducts(
-            true, // parent is still in store 1
-            true, // and contains both variants
-            true,
-            true, // variant 1 is still in store 1
-            false, // editing variant 2 triggered reindexing it in all stores, and it's not visible in store 1. So - unpublished
+        // then
+        // - parent is still in store 1 and contains both variants
+        $this->assertParentIsPublishedWithVariantsInPayload(self::$store1Id, [self::$variant1, self::$variant2]);
 
-            true, // parent is still in store 2
-            true, // but now contains only variant 1
-            false,
-            true, // variant 1 is still in store 2
-            false // variant 2 was disabled in store 2
-        );
+        // - parent is still in store 2 but now contains only variant 1
+        $this->assertParentIsPublishedWithVariantsInPayload(self::$store2Id, [self::$variant1]);
+
+        // - variant is still published in store 1, but editing variant 2 triggered reindexing it in all stores, and the variant is not visible in store 1 - so it was unpublished
+        $this->assertSeparatelyPublishedVariants(self::$store1Id, [self::$variant1]);
+
+        // - variant is still published in store 2, but since it was disabled in store 2 - it's unpublished
+        $this->assertSeparatelyPublishedVariants(self::$store2Id, [self::$variant1]);
     }
 
-    private function verifyPublishedProducts(
-        bool $expectingParentToBePublishedInStore1,
-        bool $expectingVariant1ToBePresentInPayloadOfParentInStore1,
-        bool $expectingVariant2ToBePresentInPayloadOfParentInStore1,
-        bool $expectingVariant1ToBePublishedInStore1,
-        bool $expectingVariant2ToBePublishedInStore1,
-
-        bool $expectingParentToBePublishedInStore2,
-        bool $expectingVariant1ToBePresentInPayloadOfParentInStore2,
-        bool $expectingVariant2ToBePresentInPayloadOfParentInStore2,
-        bool $expectingVariant1ToBePublishedInStore2,
-        bool $expectingVariant2ToBePublishedInStore2
-    ): void {
-        if ($expectingParentToBePublishedInStore1) {
+    private function assertParentIsPublishedWithVariantsInPayload(int $storeId, array $expectedVariantsInPayload): void {
+        if ($storeId == self::$store1Id) {
             $publishedParentProduct = $this->downloadContentAtKey(self::$keyOfParentInStore1);
-            $this->verifyJsonContainsNameOrNot($publishedParentProduct, self::$variant1Name, $expectingVariant1ToBePresentInPayloadOfParentInStore1);
-            $this->verifyJsonContainsNameOrNot($publishedParentProduct, self::$variant2Name, $expectingVariant2ToBePresentInPayloadOfParentInStore1);
-        } else {
-            $this->assertDataIsNotPublished(self::$keyOfParentInStore1);
-        }
-        $this->verifyPublishedWithNameInJsonOrNotPublished(self::$keyOfVariant1InStore1, self::$variant1Name, $expectingVariant1ToBePublishedInStore1);
-        $this->verifyPublishedWithNameInJsonOrNotPublished(self::$keyOfVariant2InStore1, self::$variant2Name, $expectingVariant2ToBePublishedInStore1);
-
-        if ($expectingParentToBePublishedInStore2) {
+        } else if ($storeId == self::$store2Id) {
             $publishedParentProduct = $this->downloadContentAtKey(self::$keyOfParentInStore2);
-            $this->verifyJsonContainsNameOrNot($publishedParentProduct, self::$variant1Name, $expectingVariant1ToBePresentInPayloadOfParentInStore2);
-            $this->verifyJsonContainsNameOrNot($publishedParentProduct, self::$variant2Name, $expectingVariant2ToBePresentInPayloadOfParentInStore2);
-        } else {
-            $this->assertDataIsNotPublished(self::$keyOfParentInStore2);
         }
-        $this->verifyPublishedWithNameInJsonOrNotPublished(self::$keyOfVariant1InStore2, self::$variant1Name, $expectingVariant1ToBePublishedInStore2);
-        $this->verifyPublishedWithNameInJsonOrNotPublished(self::$keyOfVariant2InStore2, self::$variant2Name, $expectingVariant2ToBePublishedInStore2);
+
+        $expectingVariant1InParentPayload = in_array(self::$variant1, $expectedVariantsInPayload);
+        $this->verifyJsonContainsNameOrNot($publishedParentProduct, self::VARIANT_1_NAME, $expectingVariant1InParentPayload);
+
+        $expectingVariant2InParentPayload = in_array(self::$variant2, $expectedVariantsInPayload);
+        $this->verifyJsonContainsNameOrNot($publishedParentProduct, self::VARIANT_2_NAME, $expectingVariant2InParentPayload);
+    }
+
+    private function assertSeparatelyPublishedVariants(int $storeId, array $expectedPublishedVariants): void {
+        $expectingVariant1ToBePublished = in_array(self::$variant1, $expectedPublishedVariants);
+        $expectingVariant2ToBePublished = in_array(self::$variant2, $expectedPublishedVariants);
+
+        if ($storeId == self::STORE_1_ID) {
+            $variant1Key = self::$keyOfVariant1InStore1;
+            $variant2Key = self::$keyOfVariant2InStore1;
+        } else if ($storeId == self::$store2Id) {
+            $variant1Key = self::$keyOfVariant1InStore2;
+            $variant2Key = self::$keyOfVariant2InStore2;
+        }
+
+        $this->verifyPublishedWithNameInJsonOrNotPublished($variant1Key, self::VARIANT_1_NAME, $expectingVariant1ToBePublished);
+        $this->verifyPublishedWithNameInJsonOrNotPublished($variant2Key, self::VARIANT_2_NAME, $expectingVariant2ToBePublished);
     }
 
     private function verifyJsonContainsNameOrNot(string $json, string $productName, bool $shouldContain): void {

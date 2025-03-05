@@ -30,6 +30,7 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
     protected const DEFAULT_WEBSITE_ID = 1;
     protected const DEFAULT_STORE_ID = 0;
     protected const STORE_1_ID = 1;
+    protected static int $store1Id = self::STORE_1_ID; // alias for readability
     protected static int $store2Id;
     protected static int $secondWebsiteId;
     protected static int $secondWebsiteStoreId;
