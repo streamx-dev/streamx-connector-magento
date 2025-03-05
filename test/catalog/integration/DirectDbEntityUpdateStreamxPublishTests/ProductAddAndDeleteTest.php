@@ -34,11 +34,11 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
             // then
             $this->assertExactDataIsPublished($expectedKey, 'added-minimal-product.json', [
                 // provide values for placeholders in the validation file
-                'SKU' => $sku,
-                123456789 => $product->getEntityId(),
-                'PRODUCT_NAME' => 'The minimal product',
-                'PRODUCT_SLUG' => "the-minimal-product-{$product->getEntityId()}",
-                'VISIBILITY' => 'Catalog, Search'
+                $sku => 'SKU',
+                '"id": ' . $product->getEntityId() => '"id": 123456789',
+                'The minimal product' => 'PRODUCT_NAME',
+                "the-minimal-product-{$product->getEntityId()}" => 'PRODUCT_SLUG',
+                'Catalog, Search' => 'VISIBILITY'
             ]);
         } finally {
             // and when
@@ -72,14 +72,14 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
             // then
             $publishedJson = $this->assertExactDataIsPublished($expectedKey, 'added-watch-product.json', [
                 // mask variable parts (ids and generated sku)
-                '"id": [0-9]+' => '"id": 0',
-                '"sku": "[^"]+"' => '"sku": "[MASKED]"',
-                '"the-new-great-watch-[0-9]+"' => '"the-new-great-watch-0"',
-                '"option_id": "[0-9]+"' => '"option_id": "0"',
-                '"option_type_id": "[0-9]+"' => '"option_type_id": "0"',
+                '"id": [0-9]{4}' => '"id": 2659',
+                '"sku": "[^"]+"' => '"sku": "1736952738"',
+                '"the-new-great-watch-[0-9]+"' => '"the-new-great-watch-2659"',
+                '"option_id": "[0-9]+"' => '"option_id": "9"',
+                '"option_type_id": "[0-9]+"' => '"option_type_id": "7"',
                 // expect the indexed prices to be applied
-                '"value": ' . self::PRODUCT_PRICE => '"value": ' . self::INDEXED_PRICE,
-                '"discountedValue": ' . self::PRODUCT_PRICE => '"discountedValue": ' . self::DISCOUNTED_PRICE
+                '"value": ' . self::INDEXED_PRICE => '"value": ' . self::PRODUCT_PRICE,
+                '"discountedValue": ' . self::DISCOUNTED_PRICE => '"discountedValue": ' . self::PRODUCT_PRICE
             ]);
 
             // and
@@ -161,11 +161,11 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
                 $expectedSlug = str_replace([' ', 'W'], ['-', 'w'], $productName) . "-$productId";
                 $this->assertExactDataIsPublished("default_product:$productId", 'added-minimal-product.json', [
                     // provide values for placeholders in the validation file
-                    'SKU' => $skus[$i],
-                    123456789 => $productId,
-                    'PRODUCT_NAME' => $productName,
-                    'PRODUCT_SLUG' => $expectedSlug,
-                    'VISIBILITY' => 'Catalog, Search'
+                    $skus[$i] => 'SKU',
+                    '"id": ' . $productId => '"id": 123456789',
+                    $productName => 'PRODUCT_NAME',
+                    $expectedSlug => 'PRODUCT_SLUG',
+                    'Catalog, Search' => 'VISIBILITY'
                 ]);
             }
         } finally {

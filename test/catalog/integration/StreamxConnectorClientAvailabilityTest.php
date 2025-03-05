@@ -96,7 +96,7 @@ class StreamxConnectorClientAvailabilityTest extends BaseStreamxTest {
         // then
         for ($i = 0; $i < $entitiesToPublishInBatch; $i++) {
             $this->assertExactDataIsPublished(self::expectedStreamxProductKey($i), 'original-hoodie-product.json', [
-                62 => $i // 62 is the product ID in validation file
+                '^    "id": '. $i . ',' => '    "id": 62,' // 62 is the product ID in validation file
             ]);
         }
 
