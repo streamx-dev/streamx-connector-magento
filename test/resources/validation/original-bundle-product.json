@@ -100,39 +100,7 @@
       "type": "radio",
       "sku": "24-WG080",
       "title": "Sprite Stasis Ball",
-      "required": true,
-      "product_links": [
-        {
-          "id": 1,
-          "is_default": true,
-          "qty": 1,
-          "can_change_quantity": true,
-          "price": 0,
-          "price_type": null,
-          "position": 1,
-          "sku": "24-WG081-blue"
-        },
-        {
-          "id": 2,
-          "is_default": false,
-          "qty": 1,
-          "can_change_quantity": true,
-          "price": 0,
-          "price_type": null,
-          "position": 2,
-          "sku": "24-WG082-blue"
-        },
-        {
-          "id": 3,
-          "is_default": false,
-          "qty": 1,
-          "can_change_quantity": true,
-          "price": 0,
-          "price_type": null,
-          "position": 3,
-          "sku": "24-WG083-blue"
-        }
-      ]
+      "required": true
     },
     {
       "option_id": 2,
@@ -140,19 +108,7 @@
       "type": "radio",
       "sku": "24-WG080",
       "title": "Sprite Foam Yoga Brick",
-      "required": true,
-      "product_links": [
-        {
-          "id": 4,
-          "is_default": true,
-          "qty": 1,
-          "can_change_quantity": true,
-          "price": 0,
-          "price_type": null,
-          "position": 1,
-          "sku": "24-WG084"
-        }
-      ]
+      "required": true
     },
     {
       "option_id": 3,
@@ -160,39 +116,7 @@
       "type": "radio",
       "sku": "24-WG080",
       "title": "Sprite Yoga Strap",
-      "required": true,
-      "product_links": [
-        {
-          "id": 5,
-          "is_default": true,
-          "qty": 1,
-          "can_change_quantity": true,
-          "price": 0,
-          "price_type": null,
-          "position": 1,
-          "sku": "24-WG085"
-        },
-        {
-          "id": 6,
-          "is_default": false,
-          "qty": 1,
-          "can_change_quantity": true,
-          "price": 0,
-          "price_type": null,
-          "position": 2,
-          "sku": "24-WG086"
-        },
-        {
-          "id": 7,
-          "is_default": false,
-          "qty": 1,
-          "can_change_quantity": true,
-          "price": 0,
-          "price_type": null,
-          "position": 3,
-          "sku": "24-WG087"
-        }
-      ]
+      "required": true
     },
     {
       "option_id": 4,
@@ -200,19 +124,7 @@
       "type": "radio",
       "sku": "24-WG080",
       "title": "Sprite Foam Roller",
-      "required": true,
-      "product_links": [
-        {
-          "id": 8,
-          "is_default": true,
-          "qty": 1,
-          "can_change_quantity": true,
-          "price": 0,
-          "price_type": null,
-          "position": 1,
-          "sku": "24-WG088"
-        }
-      ]
+      "required": true
     }
   ],
   "categories": [
