@@ -3,12 +3,31 @@
 namespace StreamX\ConnectorCatalog\test\integration\utils;
 
 use PHPUnit\Framework\ExpectationFailedException;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 
 trait ValidationFileUtils  {
 
     public static function readValidationFileContent(string $validationFileName): string {
         $validationFilesDir = FileUtils::findFolder('resources/validation');
         return file_get_contents("$validationFilesDir/$validationFileName");
+    }
+
+    public static function readPathsOfAllValidationFiles(): array {
+        $validationFilesDir = FileUtils::findFolder('resources/validation');
+
+        $iterator = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($validationFilesDir, RecursiveDirectoryIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::SELF_FIRST
+        );
+
+        $result = [];
+        foreach ($iterator as $item) {
+            if ($item->isFile()) {
+                $result[] = $item->getPathname();
+            }
+        }
+        return $result;
     }
 
     public function verifySameJsonsOrThrow(string $expectedFormattedJson, string $actualJson, array $regexReplacements = []): void {

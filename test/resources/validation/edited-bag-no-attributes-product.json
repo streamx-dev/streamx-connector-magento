@@ -1,6 +1,6 @@
 {
   "sku": "24-MB01",
-  "id": 1,
+  "id": "1",
   "lang": "en",
   "attributes": [
     {
@@ -29,13 +29,13 @@
   "slug": "name-modified-for-testing-was-joust-duffle-bag-1",
   "categories": [
     {
-      "id": 3,
+      "id": "3",
       "name": "Gear",
       "slug": "gear-3",
       "label": "Gear"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Bags",
       "slug": "bags-4",
       "label": "Bags"
