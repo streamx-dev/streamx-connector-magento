@@ -3,6 +3,7 @@
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageReportGenerator;
+use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 
 /**
  * @inheritdoc
@@ -50,7 +51,7 @@ class ProductUpdateTest extends BaseAppEntityUpdateTest {
         $productId = self::$db->getProductId($productName);
 
         // and
-        $expectedKey = "default_product:$productId";
+        $expectedKey = self::productKey($productId);
         self::removeFromStreamX($expectedKey);
 
         // when
@@ -65,9 +66,9 @@ class ProductUpdateTest extends BaseAppEntityUpdateTest {
         }
     }
 
-    private function renameProduct(int $productId, string $newName): void {
+    private function renameProduct(EntityIds $productId, string $newName): void {
         $coverage = self::callMagentoPutEndpoint('product/rename', [
-            'productId' => $productId,
+            'productId' => $productId->getEntityId(),
             'newName' => $newName
         ]);
 

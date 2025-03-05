@@ -17,7 +17,7 @@ class CategoryAddAndDeleteTest extends BaseAppEntityUpdateTest {
         $categoryId = self::addCategory($categoryName);
 
         // then
-        $expectedKey = "default_category:$categoryId";
+        $expectedKey = self::categoryKeyFromEntityId($categoryId);
         try {
             $this->assertExactDataIsPublished($expectedKey, 'added-category.json', [
                 // provide values for placeholders in the validation file
