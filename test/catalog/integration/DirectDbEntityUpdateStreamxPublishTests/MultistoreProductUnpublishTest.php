@@ -20,9 +20,9 @@ class MultistoreProductUnpublishTest extends BaseDirectDbEntityUpdateTest {
         $visibilityAttributeId = self::$db->getProductAttributeId('visibility');
 
         // and: prepare expected keys
-        $keyForStore1 = self::productKey($product, self::DEFAULT_STORE_CODE);
+        $keyForStore1 = self::productKey($product, self::STORE_1_CODE);
         $keyForStore2 = self::productKey($product, self::STORE_2_CODE);
-        $keyForSecondWebsiteStore = self::productKey($product, self::SECOND_WEBSITE_STORE_CODE);
+        $keyForSecondWebsiteStore = self::productKey($product, self::WEBSITE_2_STORE_CODE);
         $this->removeFromStreamX($keyForStore1, $keyForStore2, $keyForSecondWebsiteStore);
 
         try {
@@ -34,9 +34,9 @@ class MultistoreProductUnpublishTest extends BaseDirectDbEntityUpdateTest {
             $this->assertAllPublished([$keyForStore1, $keyForStore2, $keyForSecondWebsiteStore], $validationFile);
 
             // when 2: disable the product for all stores (using different eligibility settings)
-            self::$db->insertIntProductAttribute($product, $statusAttributeId, self::STORE_1_ID, Status::STATUS_DISABLED);
-            self::$db->insertIntProductAttribute($product, $visibilityAttributeId, self::$store2Id, Visibility::VISIBILITY_NOT_VISIBLE);
-            self::$db->removeProductFromWebsite($product, self::$secondWebsiteId);
+            self::$db->insertIntProductAttribute($product, $statusAttributeId, Status::STATUS_DISABLED, self::$store1Id);
+            self::$db->insertIntProductAttribute($product, $visibilityAttributeId, Visibility::VISIBILITY_NOT_VISIBLE, self::$store2Id);
+            self::$db->removeProductFromWebsite($product, self::$website2Id);
 
             $this->reindexMview();
 
@@ -44,9 +44,9 @@ class MultistoreProductUnpublishTest extends BaseDirectDbEntityUpdateTest {
             $this->assertNonePublished($keyForStore1, $keyForStore2, $keyForSecondWebsiteStore);
 
             // when 3: enable the products for all stores
-            self::$db->deleteIntProductAttribute($product, $statusAttributeId, self::STORE_1_ID);
+            self::$db->deleteIntProductAttribute($product, $statusAttributeId, self::$store1Id);
             self::$db->deleteIntProductAttribute($product, $visibilityAttributeId, self::$store2Id);
-            self::$db->addProductToWebsite($product, self::$secondWebsiteId);
+            self::$db->addProductToWebsite($product, self::$website2Id);
             $this->reindexMview();
 
             // then
@@ -54,9 +54,9 @@ class MultistoreProductUnpublishTest extends BaseDirectDbEntityUpdateTest {
         } finally {
             // restore DB changes performed by the test, in case of any assertion failed
             self::$db->execute("UPDATE catalog_product_entity SET attribute_set_id = attribute_set_id - 1 WHERE entity_id = {$product->getEntityId()}");
-            self::$db->deleteIntProductAttribute($product, $statusAttributeId, self::STORE_1_ID);
+            self::$db->deleteIntProductAttribute($product, $statusAttributeId, self::$store1Id);
             self::$db->deleteIntProductAttribute($product, $visibilityAttributeId, self::$store2Id);
-            self::$db->addProductToWebsite($product, self::$secondWebsiteId);
+            self::$db->addProductToWebsite($product, self::$website2Id);
         }
     }
 

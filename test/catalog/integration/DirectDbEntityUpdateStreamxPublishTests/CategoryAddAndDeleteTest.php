@@ -44,15 +44,13 @@ class CategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $categoryInternalName = strtolower(str_replace(' ', '_', $categoryName));
         $rootCategoryId = 1;
         $parentCategoryId = 2;
-        $defaultStoreId = self::DEFAULT_STORE_ID;
-
         $category = self::$db->insertCategory($parentCategoryId, "$rootCategoryId/$parentCategoryId");
 
-        self::$db->insertVarcharCategoryAttribute($category,  self::attrId('name'), $defaultStoreId, $categoryName);
-        self::$db->insertVarcharCategoryAttribute($category, self::attrId('display_mode'), $defaultStoreId, 'PRODUCTS');
-        self::$db->insertVarcharCategoryAttribute($category, self::attrId('url_key'), $defaultStoreId, $categoryInternalName);
-        self::$db->insertIntCategoryAttribute($category, self::attrId('is_active'), $defaultStoreId, TRUE);
-        self::$db->insertIntCategoryAttribute($category, self::attrId('include_in_menu'), $defaultStoreId, TRUE);
+        self::$db->insertVarcharCategoryAttribute($category, self::attrId('name'), $categoryName);
+        self::$db->insertVarcharCategoryAttribute($category, self::attrId('display_mode'), 'PRODUCTS');
+        self::$db->insertVarcharCategoryAttribute($category, self::attrId('url_key'), $categoryInternalName);
+        self::$db->insertIntCategoryAttribute($category, self::attrId('is_active'), TRUE);
+        self::$db->insertIntCategoryAttribute($category, self::attrId('include_in_menu'), TRUE);
 
         return $category;
     }
