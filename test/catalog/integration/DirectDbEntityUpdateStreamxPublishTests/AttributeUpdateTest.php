@@ -37,7 +37,7 @@ class AttributeUpdateTest extends BaseDirectDbEntityUpdateTest {
         self::removeFromStreamX($expectedKey);
 
         // when
-        $this->setConfigurationValue($this->PRODUCT_ATTRIBUTES_PATH, 'sale,material');
+        $this->setIndexedProductAttributes('sale', 'material');
 
         $this->renameAttributeInDb($attributeId, $newDisplayName);
 
@@ -51,7 +51,7 @@ class AttributeUpdateTest extends BaseDirectDbEntityUpdateTest {
             try {
                 $this->renameAttributeInDb($attributeId, $oldDisplayName);
             } finally {
-                $this->restoreConfigurationValue($this->PRODUCT_ATTRIBUTES_PATH);
+                $this->restoreDefaultIndexedProductAttributes();
             }
         }
     }
