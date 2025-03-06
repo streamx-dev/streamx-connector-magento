@@ -94,11 +94,7 @@ class Product
                 $requiredColumns
             );
 
-        if ($filterByVisibility) {
-            $this->eligibleProductSelectModifier->modify($select, $storeId);
-        } else {
-            $this->eligibleProductSelectModifier->modifyWithIrrelevantVisibility($select, $storeId);
-        }
+        $this->eligibleProductSelectModifier->modify($select, $storeId, $filterByVisibility);
 
         return $select;
     }
@@ -191,7 +187,7 @@ class Product
             ->where("entity.$linkField IN(?)", new Zend_Db_Expr($selectProductIdsUnionQuery))
             ->order('entity_id');
 
-        $this->eligibleProductSelectModifier->modify($selectProductEntityIds, $storeId);
+        $this->eligibleProductSelectModifier->modify($selectProductEntityIds, $storeId, true);
 
         return $connection->fetchCol($selectProductEntityIds);
     }
@@ -222,7 +218,7 @@ class Product
             ->where("entity.type_id = 'configurable'")
             ->where("relation.child_id IN($productIdsString)");
 
-        $this->eligibleProductSelectModifier->modify($select, $storeId);
+        $this->eligibleProductSelectModifier->modify($select, $storeId, true);
 
         return array_map('intval', $this->getConnection()->fetchCol($select));
     }
@@ -255,7 +251,7 @@ class Product
             ->where("parent.type_id = 'configurable'")
             ->where("relation.parent_id IN($productIdsString)");
 
-        $this->eligibleProductSelectModifier->modify($select, $storeId);
+        $this->eligibleProductSelectModifier->modify($select, $storeId, true);
 
         return array_map('intval', $this->getConnection()->fetchCol($select));
     }

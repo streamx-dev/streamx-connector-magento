@@ -8,13 +8,12 @@ use Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory;
 use Magento\Framework\Model\AbstractModel;
 use Magento\Store\Model\StoreManagerInterface;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
-use StreamX\ConnectorCatalog\Model\ResourceModel\SelectModifierInterface;
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Select;
 use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 
-class EligibleProductSelectModifier implements SelectModifierInterface
+class EligibleProductSelectModifier
 {
     private ProductMetaData $productMetaData;
     private ResourceConnection $resourceConnection;
@@ -39,36 +38,32 @@ class EligibleProductSelectModifier implements SelectModifierInterface
         $this->loadAttributes($attributeCollectionFactory);
     }
 
-    public function modify(Select $select, int $storeId): void
+    public function modify(Select $select, int $storeId, bool $filterByVisibility): void
     {
-        $this->modifyByStatus($select, $storeId);
-        $this->modifyByVisibility($select, $storeId);
-        $this->modifyByWebsite($select, $storeId);
+        $this->addStatusCondition($select, $storeId);
+        if ($filterByVisibility) {
+            $this->addVisibilityCondition($select, $storeId);
+        }
+        $this->addWebsiteCondition($select, $storeId);
     }
 
-    public function modifyWithIrrelevantVisibility(Select $select, int $storeId): void
-    {
-        $this->modifyByStatus($select, $storeId);
-        $this->modifyByWebsite($select, $storeId);
-    }
-
-    private function modifyByStatus(Select $select, int $storeId): void
+    private function addStatusCondition(Select $select, int $storeId): void
     {
         $linkField = $this->productMetaData->getLinkField();
         $backendTable = $this->resourceConnection->getTableName($this->statusAttributeBackendTable);
 
         $select->joinLeft(
-            ['d' => $backendTable],
-            "d.attribute_id = $this->statusAttributeId AND d.store_id = 0 AND d.$linkField = entity.$linkField",
+            ['s' => $backendTable], // default status
+            "s.attribute_id = $this->statusAttributeId AND s.store_id = 0 AND s.$linkField = entity.$linkField",
             []
         )->joinLeft(
-            ['c' => $backendTable],
-            "c.attribute_id = $this->statusAttributeId AND c.store_id = $storeId AND c.$linkField = entity.$linkField",
+            ['ss' => $backendTable], // store level status
+            "ss.attribute_id = $this->statusAttributeId AND ss.store_id = $storeId AND ss.$linkField = entity.$linkField",
             []
-        )->where("CASE WHEN c.value_id > 0 THEN c.value = ? ELSE d.value = ? END", Status::STATUS_ENABLED);
+        )->where('CASE WHEN ss.value_id > 0 THEN ss.value = ? ELSE s.value = ? END', Status::STATUS_ENABLED);
     }
 
-    private function modifyByVisibility(Select $select, int $storeId): void
+    private function addVisibilityCondition(Select $select, int $storeId): void
     {
         if ($this->catalogConfig->shouldExportProductsNotVisibleIndividually()) {
             return;
@@ -78,17 +73,17 @@ class EligibleProductSelectModifier implements SelectModifierInterface
         $backendTable = $this->resourceConnection->getTableName($this->visibilityAttributeBackendTable);
 
         $select->joinLeft(
-            ['d2' => $backendTable],
-            "d2.attribute_id = $this->visibilityAttributeId AND d2.store_id = 0 AND d2.$linkField = entity.$linkField",
+            ['v' => $backendTable], // default visibility
+            "v.attribute_id = $this->visibilityAttributeId AND v.store_id = 0 AND v.$linkField = entity.$linkField",
             []
         )->joinLeft(
-            ['c2' => $backendTable],
-            "c2.attribute_id = $this->visibilityAttributeId AND c2.store_id = $storeId AND c2.$linkField = entity.$linkField",
+            ['sv' => $backendTable], // store level visibility
+            "sv.attribute_id = $this->visibilityAttributeId AND sv.store_id = $storeId AND sv.$linkField = entity.$linkField",
             []
-        )->where("CASE WHEN c2.value_id > 0 THEN c2.value <> ? ELSE d2.value <> ? END", Visibility::VISIBILITY_NOT_VISIBLE);
+        )->where('CASE WHEN sv.value_id > 0 THEN sv.value <> ? ELSE v.value <> ? END', Visibility::VISIBILITY_NOT_VISIBLE);
     }
 
-    private function modifyByWebsite(Select $select, int $storeId): void
+    private function addWebsiteCondition(Select $select, int $storeId): void
     {
         $websiteId = (int)$this->storeManager->getStore($storeId)->getWebsiteId();
         $tableName = $this->resourceConnection->getTableName('catalog_product_website');
