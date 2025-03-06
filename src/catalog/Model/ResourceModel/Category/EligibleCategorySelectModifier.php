@@ -7,11 +7,10 @@ use Magento\Catalog\Model\Category;
 use Magento\Catalog\Model\ResourceModel\Category\Attribute\CollectionFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use StreamX\ConnectorCatalog\Model\CategoryMetaData;
-use StreamX\ConnectorCatalog\Model\ResourceModel\SelectModifierInterface;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Select;
 
-class EligibleCategorySelectModifier implements SelectModifierInterface
+class EligibleCategorySelectModifier
 {
     private CategoryMetaData $categoryMetadata;
     private ResourceConnection $resourceConnection;
@@ -20,12 +19,12 @@ class EligibleCategorySelectModifier implements SelectModifierInterface
     private string $isActiveAttributeBackendTable;
 
     public function __construct(
-        CategoryMetaData $metadataPool,
+        CategoryMetaData $categoryMetaData,
         ResourceConnection $resourceConnection,
         StoreManagerInterface $storeManager,
         CollectionFactory $attributeCollectionFactory
     ) {
-        $this->categoryMetadata = $metadataPool;
+        $this->categoryMetadata = $categoryMetaData;
         $this->resourceConnection = $resourceConnection;
         $this->storeManager = $storeManager;
         $this->loadIsActiveAttribute($attributeCollectionFactory);
@@ -41,11 +40,11 @@ class EligibleCategorySelectModifier implements SelectModifierInterface
         $backendTable = $this->resourceConnection->getTableName($this->isActiveAttributeBackendTable);
 
         $select->joinLeft(
-            ['d' => $backendTable],
+            ['d' => $backendTable], // default is_active
             "d.attribute_id = $this->isActiveAttributeId AND d.store_id = 0 AND d.$linkField = entity.$linkField",
             []
         )->joinLeft(
-            ['c' => $backendTable],
+            ['c' => $backendTable], // store level is_active
             "c.attribute_id = $this->isActiveAttributeId AND c.store_id = $storeId AND c.$linkField = entity.$linkField",
             []
         )->where('CASE WHEN c.value_id > 0 THEN c.value = 1 ELSE d.value = 1 END');
