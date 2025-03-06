@@ -5,7 +5,7 @@ namespace StreamX\ConnectorCatalog\test\integration\utils;
 trait ConfigurationEditTraits {
 
     private string $CONFIGURATION_EDIT_ENDPOINT = 'configuration/edit';
-    public string $PRODUCT_ATTRIBUTES_PATH = 'streamx_connector_settings/catalog_settings/product_attributes';
+    private string $PRODUCT_ATTRIBUTES_PATH = 'streamx_connector_settings/catalog_settings/product_attributes';
     public string $EXPORT_PRODUCTS_NOT_VISIBLE_INDIVIDUALLY_PATH = 'streamx_connector_settings/catalog_settings/export_products_not_visible_individually';
 
     public function setConfigurationValues(array $pathValueMap): void {
@@ -28,6 +28,17 @@ trait ConfigurationEditTraits {
 
     public function restoreConfigurationValue(string $path): void {
         $this->restoreConfigurationValues([$path]);
+    }
+
+    protected function setIndexedProductAttributes(string ...$attributeCodes): void {
+        $this->setConfigurationValue($this->PRODUCT_ATTRIBUTES_PATH, implode(',', $attributeCodes));
+    }
+
+    protected function addIndexedProductAttributes(string ...$attributeCodes): void {
+        $attributes = explode(',', $this->readDefaultValue($this->PRODUCT_ATTRIBUTES_PATH));
+        array_push($attributes, ...$attributeCodes);
+        $attributes = array_unique($attributes);
+        $this->setConfigurationValue($this->PRODUCT_ATTRIBUTES_PATH, implode(',', $attributes));
     }
 
     protected function allowIndexingAllProductAttributes(): void {

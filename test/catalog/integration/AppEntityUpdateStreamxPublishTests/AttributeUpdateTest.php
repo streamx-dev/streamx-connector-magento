@@ -39,7 +39,7 @@ class AttributeUpdateTest extends BaseAppEntityUpdateTest {
         self::removeFromStreamX($expectedKey);
 
         // when
-        $this->setConfigurationValue($this->PRODUCT_ATTRIBUTES_PATH, 'sale,material');
+        $this->setIndexedProductAttributes('sale', 'material');
 
         self::renameAttribute($attributeCode, $newDisplayName);
 
@@ -51,7 +51,7 @@ class AttributeUpdateTest extends BaseAppEntityUpdateTest {
                 self::renameAttribute($attributeCode, $oldDisplayName);
                 $this->assertExactDataIsPublished($expectedKey, "original-ball-product.json");
             } finally {
-                $this->restoreConfigurationValue($this->PRODUCT_ATTRIBUTES_PATH);
+                $this->restoreDefaultIndexedProductAttributes();
             }
         }
     }
