@@ -52,11 +52,6 @@ class EligibleProductSelectModifier implements SelectModifierInterface
         $this->modifyByWebsite($select, $storeId);
     }
 
-    public function modifyNegate(Select $select, int $storeId): void
-    {
-        // TODO: Implement modifyNegate() method.
-    }
-
     private function modifyByStatus(Select $select, int $storeId): void
     {
         $linkField = $this->productMetaData->getLinkField();
