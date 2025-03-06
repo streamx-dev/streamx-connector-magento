@@ -32,8 +32,7 @@ class Category
      */
     public function getCategories(int $storeId, array $categoryIds = [], int $fromId = 0, int $limit = 1000): array
     {
-        $select = self::getCategoriesBaseSelect($this->resource, $this->categoryMetaData);
-        $this->eligibleCategorySelectModifier->modify($select, $storeId);
+        $select = $this->getCategoriesBaseSelect($storeId);
 
         if (!empty($categoryIds)) {
             $select->where("entity.entity_id IN (?)", $categoryIds);
@@ -138,25 +137,22 @@ class Category
         return $connection->fetchCol($select);
     }
 
-    private function getConnection(): AdapterInterface
+    public function getCategoriesBaseSelect(int $storeId): Select
     {
-        return $this->resource->getConnection();
-    }
+        $resource = $this->resource;
+        $entityTable = $this->categoryMetaData->getEntityTable();
+        $linkField = $this->categoryMetaData->getLinkField();
 
-    public static function getCategoriesBaseSelect(ResourceConnection $resource, CategoryMetaData $metaData): Select
-    {
-        $linkField = $metaData->getLinkField();
-
-        return $resource->getConnection()
+        $select = $this->getConnection()
             ->select()
             ->from(
-                ['entity' => $metaData->getEntityTable()], // alias for the catalog_category_entity table, to use in joins
+                ['entity' => $entityTable], // alias for the catalog_category_entity table, to use in joins
                 ['parent_id', 'path'] // columns to select
             )->columns( // select also entity_id column, but alias it to id
                 ['id' => 'entity_id']
             )->joinLeft( // join eav_entity_type table to read entity_type_id
                 ['e' => $resource->getTableName('eav_entity_type')],
-                "e.entity_table = '{$metaData->getEntityTable()}'",
+                "e.entity_table = '$entityTable'",
                 [] // don't include any columns in the query results
             )->joinLeft( // join eav_attribute table to read category name attribute definition
                 ['name_attr' => $resource->getTableName('eav_attribute')],
@@ -175,5 +171,13 @@ class Category
                 "category_url_key_attr.$linkField = entity.$linkField AND category_url_key_attr.attribute_id = url_key_attr.attribute_id",
                 ['url_key' => 'value'] // include attr value as "url_key" in the query results
             );
+
+        $this->eligibleCategorySelectModifier->modify($select, $storeId);
+        return $select;
+    }
+
+    private function getConnection(): AdapterInterface
+    {
+        return $this->resource->getConnection();
     }
 }

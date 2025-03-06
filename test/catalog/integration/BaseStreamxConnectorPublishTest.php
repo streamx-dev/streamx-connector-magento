@@ -28,13 +28,14 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
     private const MAGENTO_REST_API_BASE_URL = 'https://magento.test:444/rest/all/V1';
 
     protected const DEFAULT_WEBSITE_ID = 1;
-    protected const DEFAULT_STORE_ID = 0;
+    protected const DEFAULT_STORE_ID = 0; // TODO: actually it's not am existing store, it's used in SQL rows to mean: "this row contains a default base value for all stores"
     protected const STORE_1_ID = 1;
+    protected static int $store1Id = self::STORE_1_ID; // alias for readability
     protected static int $store2Id;
     protected static int $secondWebsiteId;
     protected static int $secondWebsiteStoreId;
 
-    protected const DEFAULT_STORE_CODE = 'default';
+    protected const DEFAULT_STORE_CODE = 'default'; // TODO: this is store 1 code
     protected const STORE_2_CODE = 'store_2_view';
     protected const SECOND_WEBSITE_STORE_CODE = 'store_view_for_second_website';
 

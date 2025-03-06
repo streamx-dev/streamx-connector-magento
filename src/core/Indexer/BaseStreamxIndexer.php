@@ -96,7 +96,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
         }
     }
 
-    public function ingestEntities(Traversable $entities, int $storeId, StreamxClient $client): void {
+    protected function ingestEntities(Traversable $entities, int $storeId, StreamxClient $client): void {
         $batchSize = $this->optimizationSettings->getBatchIndexingSize();
 
         foreach ((new Batch())->getItems($entities, $batchSize) as $entitiesBatch) {

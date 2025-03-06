@@ -273,10 +273,7 @@ class MagentoMySqlQueryExecutor {
         }
 
         // now product can be added to website
-        $this->execute("
-            INSERT INTO catalog_product_website (product_id, website_id) 
-                                         VALUES ({$entityIds->getEntityId()}, $websiteId)
-        ");
+        $this->addProductToWebsite($entityIds, $websiteId);
         return $entityIds;
     }
 
@@ -312,6 +309,21 @@ class MagentoMySqlQueryExecutor {
         self::insertIntCategoryAttribute($entityIds, self::getCategoryAttributeId('include_in_menu'), 0, 1);
 
         return $entityIds;
+    }
+
+    public function addProductToWebsite(EntityIds $product, int $websiteId): void {
+        $this->execute("
+            REPLACE INTO catalog_product_website (product_id, website_id)
+                                         VALUES ({$product->getEntityId()}, $websiteId)
+        ");
+    }
+
+    public function removeProductFromWebsite(EntityIds $product, int $websiteId): void {
+        $this->execute("
+            DELETE FROM catalog_product_website
+             WHERE product_id = {$product->getEntityId()}
+               AND website_id = $websiteId
+        ");
     }
 
     public function renameProduct(EntityIds $productId, string $newName): void {
@@ -363,6 +375,10 @@ class MagentoMySqlQueryExecutor {
 
     public function deleteIntProductAttribute(EntityIds $productId, int $attributeId, int $storeId): void {
         $this->deleteEntityAttribute('catalog_product_entity_int', $productId, $attributeId, $storeId);
+    }
+
+    public function deleteIntCategoryAttribute(EntityIds $categoryId, int $attributeId, int $storeId): void {
+        $this->deleteEntityAttribute('catalog_category_entity_int', $categoryId, $attributeId, $storeId);
     }
 
     private function deleteEntityAttribute(string $tableName, EntityIds $entityId, int $attributeId, int $storeId): void {
