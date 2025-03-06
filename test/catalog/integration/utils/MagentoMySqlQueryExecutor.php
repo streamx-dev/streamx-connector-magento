@@ -5,6 +5,7 @@ namespace StreamX\ConnectorCatalog\test\integration\utils;
 use Exception;
 use Magento\Catalog\Model\Product\Visibility;
 use mysqli;
+use StreamX\ConnectorCatalog\test\integration\BaseStreamxConnectorPublishTest;
 
 class MagentoMySqlQueryExecutor {
 
@@ -277,7 +278,7 @@ class MagentoMySqlQueryExecutor {
         return $entityIds;
     }
 
-    public function insertCategory(int $parentCategoryId, string $rootPath): EntityIds {
+    public function insertCategory(int $parentCategoryId, string $rootPath, string $name, bool $isActive): EntityIds {
         $attributeSetId = $this->getDefaultAttributeSetId('catalog_category_entity');
         $level = substr_count($rootPath, '/');
 
@@ -305,10 +306,20 @@ class MagentoMySqlQueryExecutor {
         ");
 
         // insert basic attributes
-        self::insertVarcharCategoryAttribute($entityIds, self::getCategoryAttributeId('display_mode'), 0, 'PRODUCTS');
-        self::insertIntCategoryAttribute($entityIds, self::getCategoryAttributeId('include_in_menu'), 0, 1);
+        self::insertVarcharCategoryAttribute($entityIds, self::getCategoryAttributeId('display_mode'), 'PRODUCTS');
+        self::insertIntCategoryAttribute($entityIds, self::getCategoryAttributeId('include_in_menu'), 1);
+        self::setCategoryNameAndStatus($entityIds, $name, $isActive);
 
         return $entityIds;
+    }
+
+    public function setCategoryNameAndStatus(EntityIds $category, string $name, bool $isActive, int $storeId = BaseStreamxConnectorPublishTest::DEFAULT_STORE_ID): void {
+        $urlKey = strtolower(str_replace(' ', '_', $name));
+        $activeStatus = $isActive ? 1 : 0;
+
+        self::insertVarcharCategoryAttribute($category, self::getCategoryAttributeId('name'), $name, $storeId);
+        self::insertVarcharCategoryAttribute($category, self::getCategoryAttributeId('url_key'), $urlKey, $storeId);
+        self::insertIntCategoryAttribute($category, self::getCategoryAttributeId('is_active'), $activeStatus, $storeId);
     }
 
     public function addProductToWebsite(EntityIds $product, int $websiteId): void {
@@ -346,27 +357,27 @@ class MagentoMySqlQueryExecutor {
         ");
     }
 
-    public function insertIntProductAttribute(EntityIds $productId, int $attributeId, int $storeId, $attributeValue): void {
-        $this->insertEntityAttribute('catalog_product_entity_int', $productId, $attributeId, $storeId, $attributeValue);
+    public function insertIntProductAttribute(EntityIds $productId, int $attributeId, $attributeValue, int $storeId = BaseStreamxConnectorPublishTest::DEFAULT_STORE_ID): void {
+        $this->insertEntityAttribute('catalog_product_entity_int', $productId, $attributeId, $attributeValue, $storeId);
     }
-    public function insertDecimalProductAttribute(EntityIds $productId, int $attributeId, int $storeId, $attributeValue): void {
-        $this->insertEntityAttribute('catalog_product_entity_decimal', $productId, $attributeId, $storeId, $attributeValue);
+    public function insertDecimalProductAttribute(EntityIds $productId, int $attributeId, $attributeValue, int $storeId = BaseStreamxConnectorPublishTest::DEFAULT_STORE_ID): void {
+        $this->insertEntityAttribute('catalog_product_entity_decimal', $productId, $attributeId, $attributeValue, $storeId);
     }
-    public function insertVarcharProductAttribute(EntityIds $productId, int $attributeId, int $storeId, $attributeValue): void {
-        $this->insertEntityAttribute('catalog_product_entity_varchar', $productId, $attributeId, $storeId, $attributeValue);
+    public function insertVarcharProductAttribute(EntityIds $productId, int $attributeId, $attributeValue, int $storeId = BaseStreamxConnectorPublishTest::DEFAULT_STORE_ID): void {
+        $this->insertEntityAttribute('catalog_product_entity_varchar', $productId, $attributeId, $attributeValue, $storeId);
     }
-    public function insertTextProductAttribute(EntityIds $productId, int $attributeId, int $storeId, $attributeValue): void {
-        $this->insertEntityAttribute('catalog_product_entity_text', $productId, $attributeId, $storeId, $attributeValue);
-    }
-
-    public function insertIntCategoryAttribute(EntityIds $categoryId, int $attributeId, int $storeId, $attributeValue): void {
-        $this->insertEntityAttribute('catalog_category_entity_int', $categoryId, $attributeId, $storeId, $attributeValue);
-    }
-    public function insertVarcharCategoryAttribute(EntityIds $categoryId, int $attributeId, int $storeId, $attributeValue): void {
-        $this->insertEntityAttribute('catalog_category_entity_varchar', $categoryId, $attributeId, $storeId, $attributeValue);
+    public function insertTextProductAttribute(EntityIds $productId, int $attributeId, $attributeValue, int $storeId = BaseStreamxConnectorPublishTest::DEFAULT_STORE_ID): void {
+        $this->insertEntityAttribute('catalog_product_entity_text', $productId, $attributeId, $attributeValue, $storeId);
     }
 
-    private function insertEntityAttribute(string $tableName, EntityIds $entityId, int $attributeId, int $storeId, $attributeValue): void {
+    public function insertIntCategoryAttribute(EntityIds $categoryId, int $attributeId, $attributeValue, int $storeId = BaseStreamxConnectorPublishTest::DEFAULT_STORE_ID): void {
+        $this->insertEntityAttribute('catalog_category_entity_int', $categoryId, $attributeId, $attributeValue, $storeId);
+    }
+    public function insertVarcharCategoryAttribute(EntityIds $categoryId, int $attributeId, $attributeValue, int $storeId = BaseStreamxConnectorPublishTest::DEFAULT_STORE_ID): void {
+        $this->insertEntityAttribute('catalog_category_entity_varchar', $categoryId, $attributeId, $attributeValue, $storeId);
+    }
+
+    private function insertEntityAttribute(string $tableName, EntityIds $entityId, int $attributeId, $attributeValue, int $storeId): void {
         $idColumn = $this->entityAttributeLinkField;
         $idValue = $entityId->getLinkFieldId();
         $this->execute("REPLACE INTO $tableName ($idColumn, attribute_id, store_id, value)
@@ -393,7 +404,7 @@ class MagentoMySqlQueryExecutor {
     public function setProductsVisibleInStore(int $storeId, EntityIds... $productIds): void {
         $visibilityAttributeId = self::getProductAttributeId('visibility');
         foreach ($productIds as $productId) {
-            self::insertIntProductAttribute($productId, $visibilityAttributeId, $storeId, Visibility::VISIBILITY_BOTH);
+            self::insertIntProductAttribute($productId, $visibilityAttributeId, Visibility::VISIBILITY_BOTH, $storeId);
         }
     }
 
