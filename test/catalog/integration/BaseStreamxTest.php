@@ -28,6 +28,7 @@ abstract class BaseStreamxTest extends TestCase {
     private const SLEEP_MICROS_BETWEEN_DATA_PUBLISH_CHECKS = 200_000;
 
     /**
+     * @param array $regexReplacements what to change in the actual StreamX response Json, to match the validation file
      * @return string the actually published data if assertion passes, or exception if assertion failed
      */
     protected function assertExactDataIsPublished(string $key, string $validationFileName, array $regexReplacements = []): ?string {

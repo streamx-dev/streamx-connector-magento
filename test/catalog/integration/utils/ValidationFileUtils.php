@@ -22,7 +22,8 @@ trait ValidationFileUtils  {
     private function verifySameJsons(string $expectedFormattedJson, string $actualJson, bool $throwOnAssertionError, array $regexReplacements = []): bool {
         $actualFormattedJson = JsonFormatter::formatJson($actualJson);
         try {
-            $expected = self::standardizeNewlines(self::replaceRegexes($expectedFormattedJson, $regexReplacements));
+            $expected = self::standardizeNewlines($expectedFormattedJson);
+            // allow adjusting actual json to match expected validation json
             $actual = self::standardizeNewlines(self::replaceRegexes($actualFormattedJson, $regexReplacements));
             $this->assertEquals($expected, $actual);
             return true;
@@ -40,7 +41,7 @@ trait ValidationFileUtils  {
 
     private function replaceRegexes(string $json, array $regexReplacements): string {
         foreach ($regexReplacements as $regex => $replacement) {
-            $json = preg_replace('/' . $regex . '/', $replacement, $json);
+            $json = preg_replace("/$regex/m", $replacement, $json);
         }
         return $json;
     }
