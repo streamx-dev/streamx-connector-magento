@@ -2,23 +2,35 @@
 
 namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 
+use StreamX\ConnectorCatalog\Model\Indexer\DataLoader\ProductDataLoader;
+use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Adapter\AdapterInterface;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
+use StreamX\ConnectorCore\Api\IndexersConfigInterface;
 use Zend_Db_Expr;
 
 class BundleOptionsData implements DataProviderInterface
 {
     private ResourceConnection $resource;
     private ProductMetaData $productMetaData;
+    private ProductDataLoader $productDataLoader;
+    /** @var DataProviderInterface[]  */
+    private array $productDataProviders;
 
     public function __construct(
         ProductMetaData $productMetaData,
-        ResourceConnection $resourceModel
+        ResourceConnection $resourceModel,
+        ProductDataLoader $productDataLoader,
+        IndexersConfigInterface $indexersConfig
     ) {
         $this->resource = $resourceModel;
         $this->productMetaData = $productMetaData;
+        $this->productDataLoader = $productDataLoader;
+        $this->productDataProviders = $indexersConfig
+            ->getByName(ProductProcessor::INDEXER_ID)
+            ->getDataProviders();
     }
 
     /**
@@ -36,6 +48,15 @@ class BundleOptionsData implements DataProviderInterface
         $productBundleOptions = $this->loadBundleOptions($products, $storeId);
 
         foreach ($productBundleOptions as $productId => $bundleOptions) {
+
+            $bundleProducts = iterator_to_array($this->productDataLoader->loadData($storeId, [$productId])); // TODO collect all ids to list and loadData for all in a single call
+            foreach ($this->productDataProviders as $dataProvider) {
+                if (get_class($dataProvider) === get_class()) {
+                    continue;
+                }
+                $dataProvider->addData($bundleProducts, $storeId);
+            }
+
             $indexData[$productId]['bundle_options'] = [];
 
             foreach ($bundleOptions as $option) {
