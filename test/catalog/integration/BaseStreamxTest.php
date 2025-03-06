@@ -2,10 +2,14 @@
 
 namespace StreamX\ConnectorCatalog\test\integration;
 
+use Magento\Store\Api\Data\StoreInterface;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 use Streamx\Clients\Ingestion\Builders\StreamxClientBuilders;
 use StreamX\ConnectorCatalog\test\integration\utils\JsonFormatter;
 use StreamX\ConnectorCatalog\test\integration\utils\ValidationFileUtils;
+use StreamX\ConnectorCore\Client\StreamxClient;
+use StreamX\ConnectorCore\Client\StreamxClientConfiguration;
 
 /**
  * Prerequisites to run these tests:
@@ -20,8 +24,8 @@ abstract class BaseStreamxTest extends TestCase {
     use ValidationFileUtils;
 
     protected const STREAMX_REST_INGESTION_URL = "http://localhost:8080";
-    protected const CHANNEL_SCHEMA_NAME = "dev.streamx.blueprints.data.DataIngestionMessage";
-    protected const CHANNEL_NAME = "data";
+    private const CHANNEL_SCHEMA_NAME = "dev.streamx.blueprints.data.DataIngestionMessage";
+    private const CHANNEL_NAME = "data";
 
     private const STREAMX_DELIVERY_SERVICE_BASE_URL = "http://localhost:8081";
     private const DATA_PUBLISH_TIMEOUT_SECONDS = 3;
@@ -111,5 +115,28 @@ abstract class BaseStreamxTest extends TestCase {
             return false;
         }
         return str_contains($headers[0], "200 OK");
+    }
+
+    protected function createStreamxClient(int $storeId, string $storeCode): StreamxClient {
+        return $this->createCustomStreamxClient($storeId, $storeCode, self::STREAMX_REST_INGESTION_URL);
+    }
+
+    protected function createCustomStreamxClient(int $storeId, string $storeCode, string $restIngestionUrl): StreamxClient {
+        $loggerMock = $this->createMock(LoggerInterface::class);
+        $loggerMock->method('error')->will($this->returnCallback(function ($arg) {
+            echo $arg; // redirect errors to test console
+        }));
+
+        $clientConfigurationMock = $this->createMock(StreamxClientConfiguration::class);
+        $clientConfigurationMock->method('getIngestionBaseUrl')->willReturn($restIngestionUrl);
+        $clientConfigurationMock->method('getChannelName')->willReturn(self::CHANNEL_NAME);
+        $clientConfigurationMock->method('getChannelSchemaName')->willReturn(self::CHANNEL_SCHEMA_NAME);
+        $clientConfigurationMock->method('getAuthToken')->willReturn(null);
+        $clientConfigurationMock->method('shouldDisableCertificateValidation')->willReturn(false);
+
+        $storeMock = $this->createMock(StoreInterface::class);
+        $storeMock->method('getId')->willReturn($storeId);
+        $storeMock->method('getCode')->willReturn($storeCode);
+        return new StreamxClient($loggerMock, $clientConfigurationMock, $storeMock);
     }
 }

@@ -54,7 +54,7 @@ class AttributesIndexer extends BaseStreamxIndexer
      * Override to instead of publishing attributes -> publish products that use those attributes
      * @param Traversable<AttributeDefinition> $attributeDefinitions
      */
-    public function ingestEntities(Traversable $attributeDefinitions, int $storeId, StreamxClient $client): void {
+    protected function ingestEntities(Traversable $attributeDefinitions, int $storeId, StreamxClient $client): void {
         $changedAttributeIds = [];
 
         /** @var $attributeDefinition AttributeDefinition */
@@ -74,7 +74,17 @@ class AttributesIndexer extends BaseStreamxIndexer
         }
 
         $this->logger->info("Detected the following products to re-publish due to attribute definition change: " . json_encode($productIds));
+
         $products = $this->productDataLoader->loadData($storeId, $productIds);
+        $products = $this->removeProductsThatWouldBeUnpublished($products);
         $this->productsIndexer->ingestEntities($products, $storeId, $client);
+    }
+
+    private function removeProductsThatWouldBeUnpublished(Traversable $products): Traversable {
+        foreach ($products as $id => $product) {
+            if (!empty($product)) {
+                yield $id => $product;
+            }
+        }
     }
 }

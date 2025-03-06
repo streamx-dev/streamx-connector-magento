@@ -26,12 +26,15 @@ class ProductDataLoader implements BasicDataLoader {
     public function loadData(int $storeId, array $productIds): Traversable {
         if (empty($productIds)) {
             $productIds = $this->resourceModel->getAllProductIds($storeId);
+            if (empty($productIds)) {
+                return []; // no products available for the store
+            }
         }
 
         $productIds = array_map('intval', $productIds);
 
-        $allParentsOfVariants = $this->resourceModel->retrieveParentsForVariants($productIds, $storeId);
-        $allVariantsOrParents = $this->resourceModel->retrieveVariantsForParents($productIds, $storeId);
+        $allParentsOfVariants = $this->resourceModel->retrieveParentsForVariants($productIds);
+        $allVariantsOrParents = $this->resourceModel->retrieveVariantsForParents($productIds);
         $productIds = array_unique(array_merge($productIds, $allParentsOfVariants, $allVariantsOrParents));
 
         // note: a simple product can only be a child of a single configurable product, but can be a child of multiple grouped or bundle products

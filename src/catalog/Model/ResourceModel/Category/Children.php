@@ -13,15 +13,18 @@ class Children
     private ResourceConnection $resource;
     private EligibleCategorySelectModifier $eligibleCategorySelectModifier;
     private CategoryMetaData $categoryMetaData;
+    private Category $category;
 
     public function __construct(
         EligibleCategorySelectModifier $eligibleCategorySelectModifier,
         ResourceConnection $resourceModel,
-        CategoryMetaData $categoryMetaData
+        CategoryMetaData $categoryMetaData,
+        Category $category
     ) {
         $this->resource = $resourceModel;
         $this->categoryMetaData = $categoryMetaData;
         $this->eligibleCategorySelectModifier = $eligibleCategorySelectModifier;
+        $this->category = $category;
     }
 
     /**
@@ -29,10 +32,9 @@ class Children
      */
     public function loadChildren(string $categoryPath, int $storeId): array
     {
-        $childIds = $this->getChildrenIds($categoryPath, $storeId);
-        $select = Category::getCategoriesBaseSelect($this->resource, $this->categoryMetaData);
-        $this->eligibleCategorySelectModifier->modify($select, $storeId);
+        $select = $this->category->getCategoriesBaseSelect($storeId);
 
+        $childIds = $this->getChildrenIds($categoryPath, $storeId);
         $select->where("entity.entity_id IN (?)", $childIds);
         $select->order('path asc');
         $select->order('position asc');

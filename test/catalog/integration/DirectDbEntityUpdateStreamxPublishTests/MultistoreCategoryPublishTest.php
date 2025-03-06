@@ -8,7 +8,7 @@ use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
  * @inheritdoc
  * @UsesCategoryIndexer
  */
-class MultistoreCategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
+class MultistoreCategoryPublishTest extends BaseDirectDbEntityUpdateTest {
 
     /** @test */
     public function shouldPublishActiveCategories() {
@@ -39,7 +39,6 @@ class MultistoreCategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
             $this->reindexMview();
 
             // then
-            // TODO investigate - this assertion sometimes fails
             $this->assertExactDataIsPublished($expectedKeyForStore2, 'added-category.json', [
                 // provide values for placeholders in the validation file
                 '"id": ' . $category->getEntityId() => '"id": 123456789',
