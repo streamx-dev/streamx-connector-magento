@@ -81,3 +81,12 @@ bin/composer require \
 bin/magento module:enable --all
 cd ..
 bash reload-magento-modules.sh
+
+# Import test products
+echo "Importing test products"
+curl -X PUT https://magento.test:444/rest/all/V1/products/import
+
+echo "Installation done. Next steps:"
+echo " - turn on your local StreamX instance"
+echo " - execute the 'add-rest-ingestion-to-magento-network.sh' script"
+echo " - run all tests to verify installation"
