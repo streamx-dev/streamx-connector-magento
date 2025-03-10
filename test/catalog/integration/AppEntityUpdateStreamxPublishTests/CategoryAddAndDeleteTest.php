@@ -14,7 +14,8 @@ class CategoryAddAndDeleteTest extends BaseAppEntityUpdateTest {
         $categoryName = 'The new Category';
 
         // when
-        $categoryId = self::addCategory($categoryName);
+        $parentCategoryId = 2;
+        $categoryId = self::addCategory($categoryName, $parentCategoryId);
 
         // then
         $expectedKey = self::categoryKeyFromEntityId($categoryId);
@@ -34,9 +35,10 @@ class CategoryAddAndDeleteTest extends BaseAppEntityUpdateTest {
         }
     }
 
-    private function addCategory(string $categoryName): int {
+    private function addCategory(string $categoryName, int $parentCategoryId): int {
         return (int) self::callMagentoPutEndpoint('category/add', [
-            'categoryName' => $categoryName
+            'categoryName' => $categoryName,
+            'parentCategoryId' => $parentCategoryId
         ]);
     }
 

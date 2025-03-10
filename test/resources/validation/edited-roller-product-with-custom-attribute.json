@@ -16,7 +16,7 @@
     },
     {
       "name": "the_new_attribute",
-      "label": "Display name of the_new_attribute",
+      "label": "The New Attribute",
       "values": [
         {
           "value": "the_new_attribute value for product 22",
