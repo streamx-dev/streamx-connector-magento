@@ -414,4 +414,12 @@ class MagentoMySqlQueryExecutor {
             self::deleteIntProductAttribute($productId, $visibilityAttributeId, $storeId);
         }
     }
+
+    public function productDummyUpdate(EntityIds $product): void {
+        $this->execute("UPDATE catalog_product_entity SET attribute_set_id = attribute_set_id + 1 WHERE entity_id = {$product->getEntityId()}");
+    }
+
+    public function revertProductDummyUpdate(EntityIds $product): void {
+        $this->execute("UPDATE catalog_product_entity SET attribute_set_id = attribute_set_id - 1 WHERE entity_id = {$product->getEntityId()}");
+    }
 }

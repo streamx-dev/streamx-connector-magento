@@ -14,6 +14,7 @@ class AttributeAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
     public function shouldPublishProductThatUsesAttributeAddedDirectlyInDatabaseToStreamx() {
         // given
         $attributeCode = 'the_new_attribute';
+        $attributeLabel = 'The New Attribute';
         $productId = self::$db->getProductId('Sprite Foam Roller');
 
         // and
@@ -21,8 +22,8 @@ class AttributeAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $this->removeFromStreamX($expectedKey);
 
         // when
-        $this->setIndexedProductAttributes('the_new_attribute');
-        $attributeId = $this->insertNewAttribute($attributeCode, $productId);
+        $this->setIndexedProductAttributes($attributeCode);
+        $attributeId = $this->insertNewAttribute($attributeCode, $attributeLabel, $productId);
 
         try {
             // and
@@ -49,12 +50,11 @@ class AttributeAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
      * Inserts new attribute to database along with adding it to the provided product
      * @return int ID of the inserted attribute
      */
-    private function insertNewAttribute(string $attributeCode, EntityIds $productId): int {
-        $attributeName = "Display name of $attributeCode";
+    private function insertNewAttribute(string $attributeCode, string $attributeLabel, EntityIds $productId): int {
         $entityTypeId = self::$db->getProductEntityTypeId();
         $attributeId = self::$db->insert("
             INSERT INTO eav_attribute (entity_type_id, attribute_code, frontend_label, backend_type, frontend_input, is_user_defined) VALUES
-                ($entityTypeId, '$attributeCode', '$attributeName', 'varchar', 'text', TRUE)
+                ($entityTypeId, '$attributeCode', '$attributeLabel', 'varchar', 'text', TRUE)
         ");
 
         self::$db->execute("
