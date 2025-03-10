@@ -71,6 +71,7 @@ class TestDataControllerImpl implements TestDataControllerInterface {
             throw new Exception($errorMessage);
         }
 
+        // TODO implement batching, maybe split the data to batches of max 100 products
         if ($import->importSource()) {
             $import->invalidateIndex();
         }
