@@ -85,4 +85,11 @@
     </resources>
   </route>
 
+  <route url="/V1/products/import" method="PUT">
+    <service class="StreamX\ConnectorTestTools\Api\TestDataControllerInterface" method="importTestProducts"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+
 </routes>
