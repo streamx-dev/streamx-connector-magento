@@ -44,7 +44,6 @@ class TestDataControllerImpl implements TestDataControllerInterface {
      */
     public function importTestProducts(): void {
         // TODO: Currently all products in the file have Furniture category. Replace with: first read categories from the products csv, and create them in Magento
-        // TODO: also first read all attributes from the products csv, and create them in Magento
         // TODO: disable downloading images for the products
         $this->entityAddController->addCategory(self::CATEGORY_TO_ADD);
 
@@ -55,9 +54,13 @@ class TestDataControllerImpl implements TestDataControllerInterface {
             'validation_strategy' => 'validation-stop-on-errors',
         ]);
 
-        $appDirectory = $this->directoryList->getPath(DirectoryList::APP);
-        $read = new Read($this->fileReadFactory, new File(), $appDirectory);
-        $csvSource = new Csv(self::PRODUCTS_CSV_FILE_PATH_RELATIVE_TO_APP_DIR, $read);
+        $appDirectoryPath = $this->directoryList->getPath(DirectoryList::APP);
+        $appDirectory = new Read($this->fileReadFactory, new File(), $appDirectoryPath);
+        $csvSource = new Csv(self::PRODUCTS_CSV_FILE_PATH_RELATIVE_TO_APP_DIR, $appDirectory);
+
+        $csvSource->rewind();
+        $this->insertAttributesToDatabase($csvSource);
+        $csvSource->rewind();
 
         if (!$import->validateSource($csvSource)) {
             $errors = $import->getErrorAggregator()->getAllErrors();
@@ -77,5 +80,35 @@ class TestDataControllerImpl implements TestDataControllerInterface {
         }
 
         $this->logger->info('Finished importing products from ' . self::PRODUCTS_CSV_FILE_PATH_RELATIVE_TO_APP_DIR);
+    }
+
+    private function insertAttributesToDatabase(Csv $csvFile): void {
+        $attributesColumnName = 'additional_attributes';
+        $attributeNamesAndValues = []; // key: attribute name, value: list of its values found across the whole csv file
+
+        while ($csvFile->valid()) {
+            $attributes = $csvFile->current()[$attributesColumnName]; // for example: a=b,c=d,e=f|g|h
+            $attributesList = explode(',', $attributes);
+            foreach ($attributesList as $attribute) {
+                $nameAndValues = explode('=', $attribute);
+                $name = $nameAndValues[0];
+                $values = explode('|', $nameAndValues[1]);
+                foreach ($values as $value) {
+                    $attributeNamesAndValues[$name][] = $value;
+                }
+            }
+            $csvFile->next();
+        }
+
+        foreach ($attributeNamesAndValues as $name => $values) {
+            $values = array_unique($values);
+            if (str_contains($name, '_facet_')) {
+                $this->entityAddController->addAttributeWithOptions($name, $values);
+            } else if (count($values) > 1) {
+                $this->entityAddController->addMultiValuedAttribute($name, $values);
+            } else {
+                $this->entityAddController->addTextAttribute($name);
+            }
+        }
     }
 }

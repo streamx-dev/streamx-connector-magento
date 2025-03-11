@@ -9,7 +9,7 @@ namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxP
 class TestDataControllerImplTest extends BaseDirectDbEntityUpdateTest {
 
     /** @test */
-    public function magentoShouldContainTestDataFromImportedCsvFile() {
+    public function magentoShouldContainAndPublishTestDataImportedFromCsvFile() {
         // given
         $product1 = self::$db->getProductId("Rivet Bristol Natural Edge Black Metal Side Table, Walnut");
         $product2 = self::$db->getProductId("LeatherSoft Kids/Youth Recliner with Armrest Storage, 5+ Age Group, Light Blue");
@@ -22,6 +22,7 @@ class TestDataControllerImplTest extends BaseDirectDbEntityUpdateTest {
         $this->removeFromStreamX($expectedKeyForProduct1, $expectedKeyForProduct2, $expectedKeyForProduct3);
 
         // when
+        $this->allowIndexingAllProductAttributes();
         self::$db->productDummyUpdate($product1, $product2, $product3);
         self::reindexMview();
 
@@ -32,6 +33,7 @@ class TestDataControllerImplTest extends BaseDirectDbEntityUpdateTest {
             $this->assertExactDataIsPublished($expectedKeyForProduct3, 'sofa-product.json', self::jsonReplacements(2051));
         } finally {
             self::$db->revertProductDummyUpdate($product1, $product2, $product3);
+            $this->restoreDefaultIndexedProductAttributes();
         }
     }
 

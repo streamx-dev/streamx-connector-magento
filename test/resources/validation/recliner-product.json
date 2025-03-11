@@ -48,6 +48,50 @@
       "isFacet": false
     },
     {
+      "name": "page_layout",
+      "label": "Layout",
+      "values": [
+        {
+          "value": "product-full-width",
+          "label": "product-full-width"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "image_label",
+      "label": "Image Label",
+      "values": [
+        {
+          "value": "LeatherSoft Kids\/Youth Recliner with Armrest Storage, 5+ Age Group, Light Blue",
+          "label": "LeatherSoft Kids\/Youth Recliner with Armrest Storage, 5+ Age Group, Light Blue"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "small_image_label",
+      "label": "Small Image Label",
+      "values": [
+        {
+          "value": "LeatherSoft Kids\/Youth Recliner with Armrest Storage, 5+ Age Group, Light Blue",
+          "label": "LeatherSoft Kids\/Youth Recliner with Armrest Storage, 5+ Age Group, Light Blue"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "thumbnail_label",
+      "label": "Thumbnail Label",
+      "values": [
+        {
+          "value": "LeatherSoft Kids\/Youth Recliner with Armrest Storage, 5+ Age Group, Light Blue",
+          "label": "LeatherSoft Kids\/Youth Recliner with Armrest Storage, 5+ Age Group, Light Blue"
+        }
+      ],
+      "isFacet": false
+    },
+    {
       "name": "url_key",
       "label": "URL Key",
       "values": [
@@ -59,12 +103,328 @@
       "isFacet": false
     },
     {
+      "name": "msrp_display_actual_price_type",
+      "label": "Display Actual Price",
+      "values": [
+        {
+          "value": "Use config",
+          "label": "Use config"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "gift_message_available",
+      "label": "Allow Gift Message",
+      "values": [
+        {
+          "value": "No",
+          "label": "No"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "is_returnable",
+      "label": "Enable RMA",
+      "values": [
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "short_description",
+      "label": "Short Description",
+      "values": [
+        {
+          "value": "LeatherSoft Kids\/Youth Recliner with Armrest Storage, 5+ Age Group, Light Blue",
+          "label": "LeatherSoft Kids\/Youth Recliner with Armrest Storage, 5+ Age Group, Light Blue"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "meta_keyword",
+      "label": "Meta Keywords",
+      "values": [
+        {
+          "value": "LeatherSoft Kids\/Youth Recliner with Armrest Storage, 5+ Age Group, Light Blue",
+          "label": "LeatherSoft Kids\/Youth Recliner with Armrest Storage, 5+ Age Group, Light Blue"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "sx_height",
+      "label": "Sx Height",
+      "values": [
+        {
+          "value": "27.6",
+          "label": "27.6"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "sx_length",
+      "label": "Sx Length",
+      "values": [
+        {
+          "value": "26.8",
+          "label": "26.8"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "sx_width",
+      "label": "Sx Width",
+      "values": [
+        {
+          "value": "27.6",
+          "label": "27.6"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "sx_weight",
+      "label": "Sx Weight",
+      "values": [
+        {
+          "value": "29.1",
+          "label": "29.1"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "sx_bullet_points",
+      "label": "Sx Bullet Points",
+      "values": [
+        {
+          "value": "Kid\u2019s\/youth reclining chair appropriate for ages 5 and up; 90 pound weight capacity",
+          "label": "Kid\u2019s\/youth reclining chair appropriate for ages 5 and up; 90 pound weight capacity"
+        },
+        {
+          "value": "Smooth LeatherSoft upholstery offers durability and comfort; wipe clean with a damp cloth",
+          "label": "Smooth LeatherSoft upholstery offers durability and comfort; wipe clean with a damp cloth"
+        },
+        {
+          "value": "CA117 fire retardant foam filling for children's safety; plush padding for extra comfort",
+          "label": "CA117 fire retardant foam filling for children's safety; plush padding for extra comfort"
+        },
+        {
+          "value": "Solid hardwood frame and raised plastic feet for enhanced sturdiness",
+          "label": "Solid hardwood frame and raised plastic feet for enhanced sturdiness"
+        },
+        {
+          "value": "Armrest storage compartment for books; video game controllers; remotes; and more",
+          "label": "Armrest storage compartment for books; video game controllers; remotes; and more"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "sx_keywords",
+      "label": "Sx Keywords",
+      "values": [
+        {
+          "value": "Ann",
+          "label": "Ann"
+        },
+        {
+          "value": "Viv",
+          "label": "Viv"
+        },
+        {
+          "value": "Relax",
+          "label": "Relax"
+        },
+        {
+          "value": "Glider",
+          "label": "Glider"
+        },
+        {
+          "value": "Ottomans",
+          "label": "Ottomans"
+        },
+        {
+          "value": "Rocker",
+          "label": "Rocker"
+        },
+        {
+          "value": "Furniture",
+          "label": "Furniture"
+        },
+        {
+          "value": "Playroom",
+          "label": "Playroom"
+        },
+        {
+          "value": "Seater",
+          "label": "Seater"
+        },
+        {
+          "value": "Nursery",
+          "label": "Nursery"
+        },
+        {
+          "value": "Throne",
+          "label": "Throne"
+        },
+        {
+          "value": "Ottoman",
+          "label": "Ottoman"
+        },
+        {
+          "value": "Chairs",
+          "label": "Chairs"
+        },
+        {
+          "value": "Boys",
+          "label": "Boys"
+        },
+        {
+          "value": "Gliders",
+          "label": "Gliders"
+        },
+        {
+          "value": "Toddlers",
+          "label": "Toddlers"
+        },
+        {
+          "value": "Room",
+          "label": "Room"
+        },
+        {
+          "value": "Gliding",
+          "label": "Gliding"
+        },
+        {
+          "value": "Marshmallow",
+          "label": "Marshmallow"
+        },
+        {
+          "value": "Bed",
+          "label": "Bed"
+        },
+        {
+          "value": "Gray",
+          "label": "Gray"
+        },
+        {
+          "value": "Mikayla",
+          "label": "Mikayla"
+        },
+        {
+          "value": "Small",
+          "label": "Small"
+        },
+        {
+          "value": "Living",
+          "label": "Living"
+        },
+        {
+          "value": "&",
+          "label": "&"
+        },
+        {
+          "value": "Kid",
+          "label": "Kid"
+        },
+        {
+          "value": "Da6942",
+          "label": "Da6942"
+        },
+        {
+          "value": "Baby",
+          "label": "Baby"
+        },
+        {
+          "value": "Couch",
+          "label": "Couch"
+        },
+        {
+          "value": "Registry",
+          "label": "Registry"
+        },
+        {
+          "value": "Girls",
+          "label": "Girls"
+        },
+        {
+          "value": "Kids",
+          "label": "Kids"
+        },
+        {
+          "value": "Pink",
+          "label": "Pink"
+        },
+        {
+          "value": "Rocking",
+          "label": "Rocking"
+        },
+        {
+          "value": "Nursing",
+          "label": "Nursing"
+        },
+        {
+          "value": "Recliners",
+          "label": "Recliners"
+        },
+        {
+          "value": "Couches",
+          "label": "Couches"
+        },
+        {
+          "value": "Rae",
+          "label": "Rae"
+        },
+        {
+          "value": "Swivel",
+          "label": "Swivel"
+        },
+        {
+          "value": "Linen",
+          "label": "Linen"
+        },
+        {
+          "value": "Marshmello",
+          "label": "Marshmello"
+        },
+        {
+          "value": "Dorel",
+          "label": "Dorel"
+        },
+        {
+          "value": "Arm",
+          "label": "Arm"
+        }
+      ],
+      "isFacet": false
+    },
+    {
       "name": "special_price",
       "label": "Special Price",
       "values": [
         {
           "value": "8.520000",
           "label": "8.520000"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "weight",
+      "label": "Weight",
+      "values": [
+        {
+          "value": "29.100000",
+          "label": "29.100000"
         }
       ],
       "isFacet": false
@@ -101,6 +461,50 @@
         }
       ],
       "isFacet": false
+    },
+    {
+      "name": "sx_facet_color",
+      "label": "Sx Facet Color",
+      "values": [
+        {
+          "value": "Blue",
+          "label": "Blue"
+        }
+      ],
+      "isFacet": true
+    },
+    {
+      "name": "sx_facet_brand",
+      "label": "Sx Facet Brand",
+      "values": [
+        {
+          "value": "AmazonBasics",
+          "label": "AmazonBasics"
+        }
+      ],
+      "isFacet": true
+    },
+    {
+      "name": "sx_facet_material",
+      "label": "Sx Facet Material",
+      "values": [
+        {
+          "value": "Leather",
+          "label": "Leather"
+        }
+      ],
+      "isFacet": true
+    },
+    {
+      "name": "sx_facet_type",
+      "label": "Sx Facet Type",
+      "values": [
+        {
+          "value": "Chair",
+          "label": "Chair"
+        }
+      ],
+      "isFacet": true
     }
   ],
   "name": "LeatherSoft Kids\/Youth Recliner with Armrest Storage, 5+ Age Group, Light Blue",
