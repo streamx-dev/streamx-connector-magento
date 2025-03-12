@@ -2,12 +2,10 @@
 
 namespace StreamX\ConnectorCatalog\test\integration;
 
-use Magento\Store\Api\Data\StoreInterface;
 use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\ValidationFileUtils;
 use StreamX\ConnectorCore\Client\StreamxClient;
-use StreamX\ConnectorCore\Client\StreamxClientConfiguration;
 
 class StreamxConnectorClientAvailabilityTest extends BaseStreamxTest {
 
@@ -117,17 +115,7 @@ class StreamxConnectorClientAvailabilityTest extends BaseStreamxTest {
     }
 
     private function createClient(string $restIngestionUrl): StreamxClient {
-        $clientConfigurationMock = $this->createMock(StreamxClientConfiguration::class);
-        $clientConfigurationMock->method('getIngestionBaseUrl')->willReturn($restIngestionUrl);
-        $clientConfigurationMock->method('getChannelName')->willReturn(parent::CHANNEL_NAME);
-        $clientConfigurationMock->method('getChannelSchemaName')->willReturn(parent::CHANNEL_SCHEMA_NAME);
-        $clientConfigurationMock->method('getAuthToken')->willReturn(null);
-        $clientConfigurationMock->method('shouldDisableCertificateValidation')->willReturn(false);
-
-        $storeMock = $this->createMock(StoreInterface::class);
-        $storeMock->method('getId')->willReturn(self::STORE_ID);
-        $storeMock->method('getCode')->willReturn(self::STORE_CODE);
-        return new StreamxClient($this->loggerMock, $clientConfigurationMock, $storeMock);
+        return parent::createCustomStreamxClient(self::STORE_ID, self::STORE_CODE, $restIngestionUrl);
     }
 
     private static function changedRestIngestionUrl(string $urlPartName, $newValue): string {
