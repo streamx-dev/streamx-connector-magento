@@ -5,7 +5,6 @@ namespace StreamX\ConnectorTestTools\Impl;
 use DateTime;
 use Exception;
 use InvalidArgumentException;
-
 use Magento\Catalog\Api\CategoryLinkRepositoryInterface;
 use Magento\Catalog\Api\CategoryRepositoryInterface;
 use Magento\Catalog\Api\Data\CategoryProductLinkInterfaceFactory;
@@ -17,7 +16,6 @@ use Magento\Catalog\Model\Product\Attribute\Source\Status;
 use Magento\Catalog\Model\Product\Type;
 use Magento\Catalog\Model\Product\Visibility;
 use Magento\Catalog\Model\ProductFactory;
-use Magento\Catalog\Model\ResourceModel\Category\CollectionFactory;
 use Magento\Catalog\Model\ResourceModel\Eav\AttributeFactory;
 use Magento\Eav\Api\AttributeRepositoryInterface;
 use Magento\Eav\Model\Config;
@@ -33,7 +31,6 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
     private CategoryFactory $categoryFactory;
     private EavSetupFactory $eavSetupFactory;
     private AttributeFactory $attributeFactory;
-    private CollectionFactory $categoryCollectionFactory;
     private ModuleDataSetupInterface $moduleDataSetup;
     private ProductRepositoryInterface $productRepository;
     private CategoryRepositoryInterface $categoryRepository;
@@ -47,7 +44,6 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
         CategoryFactory $categoryFactory,
         EavSetupFactory $eavSetupFactory,
         AttributeFactory $attributeFactory,
-        CollectionFactory $categoryCollectionFactory,
         ModuleDataSetupInterface $moduleDataSetup,
         ProductRepositoryInterface $productRepository,
         CategoryRepositoryInterface $categoryRepository,
@@ -60,7 +56,6 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
         $this->categoryFactory = $categoryFactory;
         $this->eavSetupFactory = $eavSetupFactory;
         $this->attributeFactory = $attributeFactory;
-        $this->categoryCollectionFactory = $categoryCollectionFactory;
         $this->moduleDataSetup = $moduleDataSetup;
         $this->productRepository = $productRepository;
         $this->categoryRepository = $categoryRepository;
@@ -155,15 +150,6 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
      */
     public function addCategory(string $categoryName): int {
         $parentCategoryId = 2;
-
-        // check if the category already exists
-        $categoryCollection = $this->categoryCollectionFactory->create()
-            ->addAttributeToFilter('name', $categoryName)
-            ->addAttributeToFilter('parent_id', $parentCategoryId);
-
-        if ($categoryCollection->getSize() > 0) {
-            return $categoryCollection->getFirstItem()->getId();
-        }
 
         try {
             $category = $this->categoryFactory->create()
