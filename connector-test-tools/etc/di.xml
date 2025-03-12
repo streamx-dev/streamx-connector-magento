@@ -26,8 +26,4 @@
       for="StreamX\ConnectorTestTools\Api\StoresControllerInterface"
       type="StreamX\ConnectorTestTools\Impl\StoresControllerImpl"/>
 
-    <preference
-      for="StreamX\ConnectorTestTools\Api\TestDataControllerInterface"
-      type="StreamX\ConnectorTestTools\Impl\TestDataControllerImpl"/>
-
 </config>
