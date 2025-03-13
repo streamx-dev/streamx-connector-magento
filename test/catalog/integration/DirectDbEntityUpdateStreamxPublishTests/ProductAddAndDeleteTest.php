@@ -5,6 +5,7 @@ namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxP
 use DateTime;
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
 use Magento\Catalog\Model\Product\Visibility;
+use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 
 /**
@@ -61,7 +62,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         ];
 
         // when
-        $this->allowIndexingAllProductAttributes();
+        ConfigurationEditUtils::allowIndexingAllProductAttributes();
         $product = $this->insertNewProduct($productName, $categoryIds);
         $expectedKey = self::productKey($product);
 
@@ -95,7 +96,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
                 // then
                 $this->assertDataIsUnpublished($expectedKey);
             } finally {
-                $this->restoreDefaultIndexedProductAttributes();
+                ConfigurationEditUtils::restoreDefaultIndexedProductAttributes();
             }
         }
     }
