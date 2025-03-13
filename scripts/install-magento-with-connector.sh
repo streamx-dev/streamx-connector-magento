@@ -32,8 +32,8 @@ sed -i '' 's/$DOMAIN/$DOMAIN:444/g' bin/setup-install
 # - 8080: ingestion port in StreamX and phpmyadmin port in Magento
 sed -i '' 's/8080:80/8090:80/g' compose.dev.yaml
 
-### Enable gathering code coverage
-echo -e "\nXDEBUG_MODE=coverage" >> env/phpfpm.env
+### Enable debugging
+printf "\nXDEBUG_MODE=debug" >> env/phpfpm.env
 
 ### Download source code and perform pre-installation.
 # Depending on your repo.magento.com permissions provided in auth.json file, available versions for the below command are: community and enterprise
@@ -53,10 +53,10 @@ bin/magento sampledata:deploy
 # Note: in future, when the connector is made publicly available - we will be just using `composer require streamx/magento-connector`.
 # For now, manually copy source code of the connector to Magento
 cd ..
-bash copy-connector-to-magento.sh
+bash scripts/copy-connector-to-magento.sh
 
 # For testing purposes, upload also the StreamX Connector Test Tools to Magento
-bash copy-connector-test-tools-to-magento.sh
+bash scripts/copy-connector-test-tools-to-magento.sh
 
 ### Install StreamX Connector to Magento
 cd magento
@@ -69,7 +69,7 @@ bin/composer config repositories.streamx-connector \
 bin/composer config repositories.streamx-collector-test-tools \
   path app/code/StreamX/ConnectorTestTools
 
-# Add the connector to Magento's composer.json file (along with a module that turns off Two Factor Auth for development purposes and extension for gathering code coverage)
+# Add the connector to Magento's composer.json file (along with a module that turns off Two Factor Auth for development purposes and extension for debugging or gathering code coverage)
 # Note: if the command asks you for a github access token - just press ENTER
 bin/composer require \
   "streamx/magento-connector" \
