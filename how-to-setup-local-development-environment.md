@@ -43,7 +43,7 @@ Ensure that Composer is installed on your system. If not, you can install it usi
  - replace <your_public_key> and <your_private_key> with the keys you generated earlier in step 1.
 
 # Setup Magento docker images along with StreamX Connector
-Execute the `install-magento-with-connector.sh` script.
+Execute `scripts/install-magento-with-connector.sh`
 
 Verify magento.test hostname is added to /etc/hosts as alias to 127.0.0.1
 
@@ -91,7 +91,7 @@ bin/start
 When developing changes in the StreamX Connector - there's no need to restart Magento. Upload and apply changes to Magento using:
 ```bash
 # cd to root directory of the project, and:
-bash copy-connector-to-magento-and-reload.sh
+bash scripts/copy-connector-to-magento-and-reload.sh
 ```
 
 ## Restart Magento:
@@ -113,7 +113,7 @@ If you host both StreamX and Magento on Docker containers - perform the followin
 
 To enable the connector to call the service by its hostname, add the `rest-ingestion` docker container to magento's network:
 ```bash
-bash add-rest-ingestion-to-magento-network.sh
+bash scripts/add-rest-ingestion-to-magento-network.sh
 ```
 
 ## Where to find logs
@@ -131,11 +131,21 @@ pecl install xdebug-3.1.5
 export XDEBUG_MODE=coverage
 ```
 
-3. Run tests with coverage and open results in web browser:
+3. Prepare Magento for collecting code coverage:
+```bash
+bash scripts/switch-magento-xdebug-to-coverage.sh
+```
+
+4. Run tests with coverage and open results in web browser:
 ```bash
 composer update # enough to execute this only once - will create the './vendor/bin/phpunit' directory
 ./vendor/bin/phpunit --coverage-text --coverage-html target/coverage-reports
 open target/coverage-reports/index.html
+```
+
+5. To switch Magento back to debug mode, execute:
+```bash
+bash scripts/switch-magento-xdebug-to-debug.sh
 ```
 
 ## Some useful magento commands (when using markshust/docker-magento)
