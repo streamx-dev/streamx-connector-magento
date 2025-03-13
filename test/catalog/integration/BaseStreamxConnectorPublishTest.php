@@ -3,16 +3,14 @@
 namespace StreamX\ConnectorCatalog\test\integration;
 
 use Exception;
-use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
 use ReflectionClass;
 use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
 use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests\BaseAppEntityUpdateTest;
 use StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests\BaseDirectDbEntityUpdateTest;
-use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditTraits;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
+use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoIndexerOperationsExecutor;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoLogFileUtils;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
@@ -22,10 +20,6 @@ use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
  *  Note: see StoresControllerImpl for additional stores and website created for these tests
  */
 abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
-
-    use ConfigurationEditTraits;
-
-    private const MAGENTO_REST_API_BASE_URL = 'https://magento.test:444/rest/all/V1';
 
     protected const DEFAULT_WEBSITE_ID = 1;
     protected const DEFAULT_STORE_ID = 0; // TODO: actually it's not am existing store, it's used in SQL rows to mean: "this row contains a default base value for all stores"
@@ -65,7 +59,7 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
         self::$db = new MagentoMySqlQueryExecutor();
         self::$indexerOperations = new MagentoIndexerOperationsExecutor();
 
-        if ("true" === self::callMagentoPutEndpoint('stores/setup')) {
+        if ("true" === MagentoEndpointsCaller::call('stores/setup')) {
             self::$indexerOperations->flushCache();
         }
 
@@ -136,22 +130,6 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
             return MagentoIndexerOperationsExecutor::UPDATE_BY_SCHEDULE_DISPLAY_NAME;
         }
         throw new Exception("Cannot detect desired indexer mode for $cls");
-    }
-
-    protected static function callMagentoPutEndpoint(string $relativeUrl, array $params = []): string {
-        $endpointUrl = self::MAGENTO_REST_API_BASE_URL . "/$relativeUrl?XDEBUG_SESSION_START=PHPSTORM";
-        $jsonBody = json_encode($params);
-        $headers = ['Content-Type' => 'application/json; charset=UTF-8'];
-
-        $request = new Request('PUT', $endpointUrl, $headers, $jsonBody);
-        $httpClient = new Client(['verify' => false]);
-        $response = $httpClient->sendRequest($request);
-        $responseBody = (string)$response->getBody();
-        if ($response->getStatusCode() !== 200) {
-            throw new Exception('Unexpected status code: ' . $response->getStatusCode());
-        }
-
-        return $responseBody;
     }
 
     protected function setUp(): void {

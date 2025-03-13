@@ -5,6 +5,7 @@ namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublis
 use StreamX\ConnectorCatalog\Model\SlugGenerator;
 use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageReportGenerator;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
+use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 
 /**
  * @inheritdoc
@@ -139,7 +140,7 @@ class ProductVariantUpdateTest extends BaseAppEntityUpdateTest {
     }
 
     private function renameProduct(EntityIds $productId, string $newName): void {
-        $coverage = self::callMagentoPutEndpoint('product/rename', [
+        $coverage = MagentoEndpointsCaller::call('product/rename', [
             'productId' => $productId->getEntityId(),
             'newName' => $newName
         ]);

@@ -2,6 +2,8 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
+use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
+
 /**
  * @inheritdoc
  * @UsesAttributeIndexer
@@ -37,7 +39,7 @@ class AttributeUpdateTest extends BaseDirectDbEntityUpdateTest {
         self::removeFromStreamX($expectedKey);
 
         // when
-        $this->setIndexedProductAttributes('sale', 'material');
+        ConfigurationEditUtils::setIndexedProductAttributes('sale', 'material');
 
         $this->renameAttributeInDb($attributeId, $newDisplayName);
 
@@ -51,7 +53,7 @@ class AttributeUpdateTest extends BaseDirectDbEntityUpdateTest {
             try {
                 $this->renameAttributeInDb($attributeId, $oldDisplayName);
             } finally {
-                $this->restoreDefaultIndexedProductAttributes();
+                ConfigurationEditUtils::restoreDefaultIndexedProductAttributes();
             }
         }
     }

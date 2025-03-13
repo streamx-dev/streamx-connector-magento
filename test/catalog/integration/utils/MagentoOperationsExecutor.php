@@ -3,20 +3,18 @@
 namespace StreamX\ConnectorCatalog\test\integration\utils;
 
 use DateTime;
-use function shell_exec;
 
 class MagentoOperationsExecutor {
 
-    private string $magentoFolder;
+    private static ?string $magentoFolder = null;
 
-    public function __construct() {
-        $this->magentoFolder = FileUtils::findFolder('magento');
-    }
-
-    public function executeCommand(string $command): ?string {
+    public static function executeCommand(string $command): ?string {
+        if (self::$magentoFolder === null) {
+            self::$magentoFolder = FileUtils::findFolder('magento');
+        }
         $startTime = new DateTime();
 
-        $cdCommand = 'cd ' . $this->magentoFolder;
+        $cdCommand = 'cd ' . self::$magentoFolder;
         $magentoCommand = "bin/magento $command";
         $result = shell_exec("$cdCommand && $magentoCommand");
 
@@ -25,5 +23,13 @@ class MagentoOperationsExecutor {
         echo $diff->format('%s.%F') . " seconds elapsed for $command\n";
 
         return $result;
+    }
+
+    public static function flushConfigCache(): void {
+        self::flushCache('config');
+    }
+
+    public static function flushCache(string $cacheType = ''): void {
+        self::executeCommand("cache:flush $cacheType");
     }
 }
