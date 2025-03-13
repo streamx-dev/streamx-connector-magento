@@ -1,0 +1,458 @@
+{
+  "sku": "B075X4QMW7",
+  "id": 2051,
+  "lang": "en",
+  "attributes": [
+    {
+      "name": "meta_title",
+      "label": "Meta Title",
+      "values": [
+        {
+          "value": "Rivet Eva Mid-Century Modern Tufted Velvet Down-Filled Sectional Sofa Couch, 87\"W, Navy",
+          "label": "Rivet Eva Mid-Century Modern Tufted Velvet Down-Filled Sectional Sofa Couch, 87\"W, Navy"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "meta_description",
+      "label": "Meta Description",
+      "values": [
+        {
+          "value": "Rivet Eva Mid-Century Modern Tufted Velvet Down-Filled Sectional Sofa Couch, 87\"W, Navy",
+          "label": "Rivet Eva Mid-Century Modern Tufted Velvet Down-Filled Sectional Sofa Couch, 87\"W, Navy"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "small_image",
+      "label": "Small",
+      "values": [
+        {
+          "value": "https:\/\/magento.test:444\/media\/catalog\/product\/8\/1\/generated_name.jpg",
+          "label": "https:\/\/magento.test:444\/media\/catalog\/product\/8\/1\/generated_name.jpg"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "thumbnail",
+      "label": "Thumbnail",
+      "values": [
+        {
+          "value": "https:\/\/magento.test:444\/media\/catalog\/product\/8\/1\/generated_name.jpg",
+          "label": "https:\/\/magento.test:444\/media\/catalog\/product\/8\/1\/generated_name.jpg"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "page_layout",
+      "label": "Layout",
+      "values": [
+        {
+          "value": "product-full-width",
+          "label": "product-full-width"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "image_label",
+      "label": "Image Label",
+      "values": [
+        {
+          "value": "Rivet Eva Mid-Century Modern Tufted Velvet Down-Filled Sectional Sofa Couch, 87\"W, Navy",
+          "label": "Rivet Eva Mid-Century Modern Tufted Velvet Down-Filled Sectional Sofa Couch, 87\"W, Navy"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "small_image_label",
+      "label": "Small Image Label",
+      "values": [
+        {
+          "value": "Rivet Eva Mid-Century Modern Tufted Velvet Down-Filled Sectional Sofa Couch, 87\"W, Navy",
+          "label": "Rivet Eva Mid-Century Modern Tufted Velvet Down-Filled Sectional Sofa Couch, 87\"W, Navy"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "thumbnail_label",
+      "label": "Thumbnail Label",
+      "values": [
+        {
+          "value": "Rivet Eva Mid-Century Modern Tufted Velvet Down-Filled Sectional Sofa Couch, 87\"W, Navy",
+          "label": "Rivet Eva Mid-Century Modern Tufted Velvet Down-Filled Sectional Sofa Couch, 87\"W, Navy"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "url_key",
+      "label": "URL Key",
+      "values": [
+        {
+          "value": "rivet-eva-mid-century-modern-tufted-velvet-down-filled-sectional-sofa-couch-87-w-navy-b075x4qmw7",
+          "label": "rivet-eva-mid-century-modern-tufted-velvet-down-filled-sectional-sofa-couch-87-w-navy-b075x4qmw7"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "msrp_display_actual_price_type",
+      "label": "Display Actual Price",
+      "values": [
+        {
+          "value": "Use config",
+          "label": "Use config"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "gift_message_available",
+      "label": "Allow Gift Message",
+      "values": [
+        {
+          "value": "No",
+          "label": "No"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "is_returnable",
+      "label": "Enable RMA",
+      "values": [
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "short_description",
+      "label": "Short Description",
+      "values": [
+        {
+          "value": "Rivet Eva Mid-Century Modern Tufted Velvet Down-Filled Sectional Sofa Couch, 87\"W, Navy",
+          "label": "Rivet Eva Mid-Century Modern Tufted Velvet Down-Filled Sectional Sofa Couch, 87\"W, Navy"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "meta_keyword",
+      "label": "Meta Keywords",
+      "values": [
+        {
+          "value": "Rivet Eva Mid-Century Modern Tufted Velvet Down-Filled Sectional Sofa Couch, 87\"W, Navy",
+          "label": "Rivet Eva Mid-Century Modern Tufted Velvet Down-Filled Sectional Sofa Couch, 87\"W, Navy"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "sx_height",
+      "label": "Sx Height",
+      "values": [
+        {
+          "value": "30.25",
+          "label": "30.25"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "sx_length",
+      "label": "Sx Length",
+      "values": [
+        {
+          "value": "35.25",
+          "label": "35.25"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "sx_width",
+      "label": "Sx Width",
+      "values": [
+        {
+          "value": "87.0",
+          "label": "87.0"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "sx_weight",
+      "label": "Sx Weight",
+      "values": [
+        {
+          "value": "182.38",
+          "label": "182.38"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "sx_bullet_points",
+      "label": "Sx Bullet Points",
+      "values": [
+        {
+          "value": "Bring stunning; Mid-century elegance to your living room with this hand-tufted sofa featuring luxurious velvet upholstery. The plush down-filled bench cushion is removable and reversible and is held in place by clips at the corners.",
+          "label": "Bring stunning; Mid-century elegance to your living room with this hand-tufted sofa featuring luxurious velvet upholstery. The plush down-filled bench cushion is removable and reversible and is held in place by clips at the corners."
+        },
+        {
+          "value": "87\"W x 35.25''D x 30.25''H",
+          "label": "87\"W x 35.25''D x 30.25''H"
+        },
+        {
+          "value": "Durable polyester velvet on hardwood frame and brushed brass legs",
+          "label": "Durable polyester velvet on hardwood frame and brushed brass legs"
+        },
+        {
+          "value": "Modern elegant style with reversible cushion to extend the life of the piece",
+          "label": "Modern elegant style with reversible cushion to extend the life of the piece"
+        },
+        {
+          "value": "Simple assembly in 15 minutes or less.  Vacuum or wipe with a soft; dry cloth.",
+          "label": "Simple assembly in 15 minutes or less.  Vacuum or wipe with a soft; dry cloth."
+        },
+        {
+          "value": "Free returns for 30 days. 1-year warranty.",
+          "label": "Free returns for 30 days. 1-year warranty."
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "sx_keywords",
+      "label": "Sx Keywords",
+      "values": [
+        {
+          "value": "Chair",
+          "label": "Chair"
+        },
+        {
+          "value": "Blue",
+          "label": "Blue"
+        },
+        {
+          "value": "Couch",
+          "label": "Couch"
+        },
+        {
+          "value": "Accent chair",
+          "label": "Accent chair"
+        },
+        {
+          "value": "Mid century",
+          "label": "Mid century"
+        },
+        {
+          "value": "Sectional couch",
+          "label": "Sectional couch"
+        },
+        {
+          "value": "Modern",
+          "label": "Modern"
+        },
+        {
+          "value": "Sofa",
+          "label": "Sofa"
+        },
+        {
+          "value": "Navy",
+          "label": "Navy"
+        },
+        {
+          "value": "Sleeper sofa",
+          "label": "Sleeper sofa"
+        },
+        {
+          "value": "Sofa sets for living room",
+          "label": "Sofa sets for living room"
+        },
+        {
+          "value": "Sofas",
+          "label": "Sofas"
+        },
+        {
+          "value": "Loveseat",
+          "label": "Loveseat"
+        },
+        {
+          "value": "Rivet",
+          "label": "Rivet"
+        },
+        {
+          "value": "Sectional sofa",
+          "label": "Sectional sofa"
+        },
+        {
+          "value": "Recliner chair",
+          "label": "Recliner chair"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "special_price",
+      "label": "Special Price",
+      "values": [
+        {
+          "value": "8.530000",
+          "label": "8.530000"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "weight",
+      "label": "Weight",
+      "values": [
+        {
+          "value": "182.380000",
+          "label": "182.380000"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "status",
+      "label": "Enable Product",
+      "values": [
+        {
+          "value": "Enabled",
+          "label": "Enabled"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "visibility",
+      "label": "Visibility",
+      "values": [
+        {
+          "value": "Catalog, Search",
+          "label": "Catalog, Search"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "tax_class_id",
+      "label": "Tax Class",
+      "values": [
+        {
+          "value": "Taxable Goods",
+          "label": "Taxable Goods"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "sx_facet_color",
+      "label": "Sx Facet Color",
+      "values": [
+        {
+          "value": "Blue",
+          "label": "Blue"
+        }
+      ],
+      "isFacet": true
+    },
+    {
+      "name": "sx_facet_brand",
+      "label": "Sx Facet Brand",
+      "values": [
+        {
+          "value": "Rivet",
+          "label": "Rivet"
+        }
+      ],
+      "isFacet": true
+    },
+    {
+      "name": "sx_facet_material",
+      "label": "Sx Facet Material",
+      "values": [
+        {
+          "value": "Velvet; Hardwood frame; Metal legs",
+          "label": "Velvet; Hardwood frame; Metal legs"
+        }
+      ],
+      "isFacet": true
+    },
+    {
+      "name": "sx_facet_type",
+      "label": "Sx Facet Type",
+      "values": [
+        {
+          "value": "Sofa",
+          "label": "Sofa"
+        }
+      ],
+      "isFacet": true
+    }
+  ],
+  "name": "Rivet Eva Mid-Century Modern Tufted Velvet Down-Filled Sectional Sofa Couch, 87\"W, Navy",
+  "label": "Rivet Eva Mid-Century Modern Tufted Velvet Down-Filled Sectional Sofa Couch, 87\"W, Navy",
+  "primaryImage": {
+    "url": "https:\/\/magento.test:444\/media\/catalog\/product\/8\/1\/generated_name.jpg",
+    "alt": "Rivet Eva Mid-Century Modern Tufted Velvet Down-Filled Sectional Sofa Couch"
+  },
+  "description": "Rivet Eva Mid-Century Modern Tufted Velvet Down-Filled Sectional Sofa Couch, 87\"W, Navy",
+  "price": {
+    "value": 10.03,
+    "discountedValue": 8.53
+  },
+  "slug": "rivet-eva-mid-century-modern-tufted-velvet-down-filled-sectional-sofa-couch-87w-navy-2051",
+  "categories": [
+    {
+      "id": 0,
+      "name": "Furniture",
+      "slug": "furniture-0",
+      "label": "Furniture"
+    },
+    {
+      "id": 0,
+      "name": "Living Room Furniture",
+      "slug": "living-room-furniture-0",
+      "label": "Living Room Furniture"
+    },
+    {
+      "id": 0,
+      "name": "Sofas & Couches",
+      "slug": "sofas-and-couches-0",
+      "label": "Sofas & Couches"
+    }
+  ],
+  "gallery": [
+    {
+      "url": "https:\/\/magento.test:444\/media\/catalog\/product\/8\/1\/generated_name.jpg",
+      "alt": "Rivet Eva Mid-Century Modern Tufted Velvet Down-Filled Sectional Sofa Couch"
+    },
+    {
+      "url": "https:\/\/magento.test:444\/media\/catalog\/product\/8\/1\/generated_name.jpg",
+      "alt": ""
+    },
+    {
+      "url": "https:\/\/magento.test:444\/media\/catalog\/product\/a\/1\/generated_name.jpg",
+      "alt": ""
+    },
+    {
+      "url": "https:\/\/magento.test:444\/media\/catalog\/product\/9\/1\/generated_name.jpg",
+      "alt": ""
+    }
+  ],
+  "quantity": 100,
+  "variants": []
+}

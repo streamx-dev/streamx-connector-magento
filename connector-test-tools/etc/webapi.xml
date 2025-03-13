@@ -14,7 +14,25 @@
     </resources>
   </route>
   <route url="/V1/attribute/add" method="PUT">
-    <service class="StreamX\ConnectorTestTools\Api\EntityAddControllerInterface" method="addAttribute"/>
+    <service class="StreamX\ConnectorTestTools\Api\EntityAddControllerInterface" method="addTextAttribute"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+  <route url="/V1/attribute/add-multivalued" method="PUT">
+    <service class="StreamX\ConnectorTestTools\Api\EntityAddControllerInterface" method="addMultiValuedAttribute"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+  <route url="/V1/attribute/add-with-options" method="PUT">
+    <service class="StreamX\ConnectorTestTools\Api\EntityAddControllerInterface" method="addAttributeWithOptions"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+  <route url="/V1/attribute/add-and-assign" method="PUT">
+    <service class="StreamX\ConnectorTestTools\Api\EntityAddControllerInterface" method="addAttributeAndAssignToProduct"/>
     <resources>
       <resource ref="anonymous"/>
     </resources>
@@ -80,6 +98,13 @@
 
   <route url="/V1/stores/setup" method="PUT">
     <service class="StreamX\ConnectorTestTools\Api\StoresControllerInterface" method="setUpStoresAndWebsites"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+
+  <route url="/V1/products/import" method="PUT">
+    <service class="StreamX\ConnectorTestTools\Api\TestDataControllerInterface" method="importTestProducts"/>
     <resources>
       <resource ref="anonymous"/>
     </resources>

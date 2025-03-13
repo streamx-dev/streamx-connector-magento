@@ -21,8 +21,8 @@ class AttributeAddAndDeleteTest extends BaseAppEntityUpdateTest {
         $this->removeFromStreamX($expectedKey);
 
         // when
-        $this->setIndexedProductAttributes('the_new_attribute');
-        $attributeId = self::addAttribute($attributeCode, $productId);
+        $this->setIndexedProductAttributes($attributeCode);
+        $attributeId = self::addAttributeAndAssignToProduct($attributeCode, $productId);
 
         try {
             // then
@@ -41,8 +41,8 @@ class AttributeAddAndDeleteTest extends BaseAppEntityUpdateTest {
         }
     }
 
-    private function addAttribute(string $attributeCode, EntityIds $productId): int {
-        return (int) self::callMagentoPutEndpoint('attribute/add', [
+    private function addAttributeAndAssignToProduct(string $attributeCode, EntityIds $productId): int {
+        return (int) self::callMagentoPutEndpoint('attribute/add-and-assign', [
             'attributeCode' => $attributeCode,
             'productId' => $productId->getEntityId()
         ]);
