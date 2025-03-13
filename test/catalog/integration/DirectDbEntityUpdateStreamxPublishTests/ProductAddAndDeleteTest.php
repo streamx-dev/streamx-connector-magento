@@ -108,21 +108,10 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
         // when
         $product = $this->insertNewProduct($productName, [$watchesCategoryId]);
-        $linkFieldId = $product->getLinkFieldId();
-
         $expectedKey = self::productKey($product);
 
-        // and: make the product not active:
-        $defaultStoreId = self::DEFAULT_STORE_ID;
-        $linkField = self::$db->getEntityAttributeLinkField();
-        self::$db->execute("
-            UPDATE catalog_product_entity_int
-               SET value = " . Status::STATUS_DISABLED . "
-             WHERE $linkField = $linkFieldId
-               AND attribute_id = " . self::attrId('status') . "
-               AND store_id = $defaultStoreId
-               AND value = " . Status::STATUS_ENABLED . "
-        ");
+        // and: make the product not active in default store:
+        self::$db->insertIntProductAttribute($product, self::attrId('status'), Status::STATUS_DISABLED, self::$store1Id);
 
         try {
             // and
@@ -183,14 +172,11 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
     }
 
     private function insertNewMinimalProduct(string $sku, string $productName): EntityIds {
-        $defaultStoreId = self::DEFAULT_STORE_ID;
-        $websiteId = self::DEFAULT_WEBSITE_ID;
+        $product = self::$db->insertProduct($sku, self::$website1Id);
 
-        $product = self::$db->insertProduct($sku, $websiteId);
-
-        self::$db->insertVarcharProductAttribute($product, self::attrId('name'), $defaultStoreId, $productName);
-        self::$db->insertIntProductAttribute($product, self::attrId('status'), $defaultStoreId, Status::STATUS_ENABLED);
-        self::$db->insertIntProductAttribute($product, self::attrId('visibility'), $defaultStoreId, Visibility::VISIBILITY_BOTH);
+        self::$db->insertVarcharProductAttribute($product, self::attrId('name'), $productName);
+        self::$db->insertIntProductAttribute($product, self::attrId('status'), Status::STATUS_ENABLED);
+        self::$db->insertIntProductAttribute($product, self::attrId('visibility'), Visibility::VISIBILITY_BOTH);
 
         return $product;
     }
@@ -199,10 +185,9 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $sku = (string) (new DateTime())->getTimestamp();
         $productInternalName = strtolower(str_replace(' ', '-', $productName));
 
-        $defaultStoreId = self::DEFAULT_STORE_ID;
         $stockId = 1;
         $quantity = 100;
-        $websiteId = self::DEFAULT_WEBSITE_ID;
+        $websiteId = self::$website1Id;
         $brownColorId = self::$db->getAttributeOptionId('color', 'Brown');
         $metalMaterialId = self::$db->getAttributeOptionId('material', 'Metal');
         $plasticMaterialId = self::$db->getAttributeOptionId('material', 'Plastic');
@@ -211,15 +196,15 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $product = self::$db->insertProduct($sku, $websiteId);
         $productId = $product->getEntityId();
 
-        self::$db->insertVarcharProductAttribute($product, self::attrId('name'), $defaultStoreId, $productName);
-        self::$db->insertVarcharProductAttribute($product, self::attrId('meta_title'), $defaultStoreId, $productName);
-        self::$db->insertVarcharProductAttribute($product, self::attrId('meta_description'), $defaultStoreId, $productName);
-        self::$db->insertVarcharProductAttribute($product, self::attrId('url_key'), $defaultStoreId, $productInternalName);
-        self::$db->insertTextProductAttribute($product, self::attrId('material'), $defaultStoreId, "$metalMaterialId,$plasticMaterialId,$leatherMaterialId");
-        self::$db->insertDecimalProductAttribute($product, self::attrId('price'), $defaultStoreId, self::PRODUCT_PRICE);
-        self::$db->insertIntProductAttribute($product, self::attrId('visibility'), $defaultStoreId, Visibility::VISIBILITY_BOTH);
-        self::$db->insertIntProductAttribute($product, self::attrId('status'), $defaultStoreId, Status::STATUS_ENABLED);
-        self::$db->insertIntProductAttribute($product, self::attrId('color'), $defaultStoreId, $brownColorId);
+        self::$db->insertVarcharProductAttribute($product, self::attrId('name'), $productName);
+        self::$db->insertVarcharProductAttribute($product, self::attrId('meta_title'), $productName);
+        self::$db->insertVarcharProductAttribute($product, self::attrId('meta_description'), $productName);
+        self::$db->insertVarcharProductAttribute($product, self::attrId('url_key'), $productInternalName);
+        self::$db->insertTextProductAttribute($product, self::attrId('material'), "$metalMaterialId,$plasticMaterialId,$leatherMaterialId");
+        self::$db->insertDecimalProductAttribute($product, self::attrId('price'), self::PRODUCT_PRICE);
+        self::$db->insertIntProductAttribute($product, self::attrId('visibility'), Visibility::VISIBILITY_BOTH);
+        self::$db->insertIntProductAttribute($product, self::attrId('status'), Status::STATUS_ENABLED);
+        self::$db->insertIntProductAttribute($product, self::attrId('color'), $brownColorId);
 
         foreach ($categoryIds as $categoryId) {
             self::$db->execute("
@@ -243,12 +228,13 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
                 ($productId, 0, $websiteId, " . self::INDEXED_PRICE . ", " . self::DISCOUNTED_PRICE . ")
         ");
 
-        $this->addProductOption($product, $defaultStoreId);
+        $this->addProductOption($product);
 
         return $product;
     }
 
-    private function addProductOption(EntityIds $product, int $storeId): void {
+    private function addProductOption(EntityIds $product): void {
+        $storeId = self::DEFAULT_STORE_ID;
         $productId = $product->getLinkFieldId();
         $optionId = self::$db->insert("INSERT INTO catalog_product_option (product_id, type, is_require, sort_order) VALUES ($productId, 'drop_down', 1, 0)");
         $optionTypeId = self::$db->insert("INSERT INTO catalog_product_option_type_value (option_id, sort_order) VALUES($optionId, 0)");

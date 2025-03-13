@@ -41,18 +41,9 @@ class CategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
     }
 
     private function insertNewCategory(string $categoryName): EntityIds {
-        $categoryInternalName = strtolower(str_replace(' ', '_', $categoryName));
         $rootCategoryId = 1;
         $parentCategoryId = 2;
-        $defaultStoreId = self::DEFAULT_STORE_ID;
-
-        $category = self::$db->insertCategory($parentCategoryId, "$rootCategoryId/$parentCategoryId");
-
-        self::$db->insertVarcharCategoryAttribute($category,  self::attrId('name'), $defaultStoreId, $categoryName);
-        self::$db->insertVarcharCategoryAttribute($category, self::attrId('url_key'), $defaultStoreId, $categoryInternalName);
-        self::$db->insertIntCategoryAttribute($category, self::attrId('is_active'), $defaultStoreId, TRUE);
-
-        return $category;
+        return self::$db->insertCategory($parentCategoryId, "$rootCategoryId/$parentCategoryId", $categoryName, true);
     }
 
     static function deleteCategory(EntityIds $categoryIds): void {
@@ -68,9 +59,5 @@ class CategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
                 'sequence_catalog_category' => 'sequence_value'
             ]);
         }
-    }
-
-    private static function attrId($attrCode): string {
-        return self::$db->getCategoryAttributeId($attrCode);
     }
 }

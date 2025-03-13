@@ -18,11 +18,8 @@ use StreamX\ConnectorTestTools\Api\StoresControllerInterface;
 class StoresControllerImpl implements StoresControllerInterface
 {
     private const STORE_2_CODE = 'store_2';
-    private const STORE_2_VIEW_CODE = 'store_2_view';
-
     private const SECOND_WEBSITE_CODE = 'second_website';
     private const STORE_CODE_FOR_SECOND_WEBSITE = 'store_for_second_website';
-    private const STORE_VIEW_CODE_FOR_SECOND_WEBSITE = 'store_view_for_second_website';
 
     private const PRODUCT_IDS_IN_SECOND_WEBSITE = [4, 5, 6, 61, 62]; // 4, 5, 6 are simple products. 61 is a variant of configurable product 62
 
@@ -67,9 +64,9 @@ class StoresControllerImpl implements StoresControllerInterface
         $defaultWebsite = array_values($this->storeManager->getWebsites())[0];
         $defaultStoreId = $this->storeManager->getStore('default')->getId();
 
-        $store2 = $this->createStore($defaultWebsite->getId(), self::STORE_2_CODE, self::STORE_2_VIEW_CODE);
+        $store2 = $this->createStore($defaultWebsite->getId(), self::STORE_2_CODE, self::STORE_2_CODE);
         $secondWebsite = $this->createWebsite(self::SECOND_WEBSITE_CODE);
-        $storeForSecondWebsite = $this->createStore($secondWebsite->getId(), self::STORE_CODE_FOR_SECOND_WEBSITE, self::STORE_VIEW_CODE_FOR_SECOND_WEBSITE);
+        $storeForSecondWebsite = $this->createStore($secondWebsite->getId(), self::STORE_CODE_FOR_SECOND_WEBSITE, self::STORE_CODE_FOR_SECOND_WEBSITE);
 
         // configure exported stores
         $this->setIndexedStoresForWebsite($defaultStoreId . ',' . $store2->getId(), $defaultWebsite);

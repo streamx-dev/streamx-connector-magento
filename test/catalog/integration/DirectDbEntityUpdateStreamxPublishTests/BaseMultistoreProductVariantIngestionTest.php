@@ -46,9 +46,9 @@ abstract class BaseMultistoreProductVariantIngestionTest extends BaseDirectDbEnt
         self::$variant1 = self::$db->getProductId(self::VARIANT_1_NAME);
         self::$variant2 = self::$db->getProductId(self::VARIANT_2_NAME);
 
-        self::$keyOfParentInStore1 = self::productKey(self::$parent, self::DEFAULT_STORE_CODE);
-        self::$keyOfVariant1InStore1 = self::productKey(self::$variant1, self::DEFAULT_STORE_CODE);
-        self::$keyOfVariant2InStore1 = self::productKey(self::$variant2, self::DEFAULT_STORE_CODE);
+        self::$keyOfParentInStore1 = self::productKey(self::$parent, self::STORE_1_CODE);
+        self::$keyOfVariant1InStore1 = self::productKey(self::$variant1, self::STORE_1_CODE);
+        self::$keyOfVariant2InStore1 = self::productKey(self::$variant2, self::STORE_1_CODE);
 
         self::$keyOfParentInStore2 = self::productKey(self::$parent, self::STORE_2_CODE);
         self::$keyOfVariant1InStore2 = self::productKey(self::$variant1, self::STORE_2_CODE);
@@ -60,7 +60,7 @@ abstract class BaseMultistoreProductVariantIngestionTest extends BaseDirectDbEnt
 
     protected function setUp(): void {
         // prepare initial state for every test in this class: make all tested products published (so every test can verify if some are unpublished)
-        $streamxClientForStore1 = parent::createStreamxClient(self::$store1Id, self::DEFAULT_STORE_CODE);
+        $streamxClientForStore1 = parent::createStreamxClient(self::$store1Id, self::STORE_1_CODE);
         $streamxClientForStore2 = parent::createStreamxClient(self::$store2Id, self::STORE_2_CODE);
 
         $publishProductsPayload = [
@@ -105,11 +105,11 @@ abstract class BaseMultistoreProductVariantIngestionTest extends BaseDirectDbEnt
     }
 
     protected function disableProductInStore2(EntityIds $product): void {
-        self::$db->insertIntProductAttribute($product, self::$statusAttributeId, self::$store2Id, Status::STATUS_DISABLED);
+        self::$db->insertIntProductAttribute($product, self::$statusAttributeId, Status::STATUS_DISABLED, self::$store2Id);
     }
 
     protected function makeProductInvisibleInStore2(EntityIds $product): void {
-        self::$db->insertIntProductAttribute($product, self::$visibilityAttributeId, self::$store2Id, Visibility::VISIBILITY_NOT_VISIBLE);
+        self::$db->insertIntProductAttribute($product, self::$visibilityAttributeId, Visibility::VISIBILITY_NOT_VISIBLE, self::$store2Id);
     }
 
     protected function assertParentIsPublishedWithVariantsInPayload(int $storeId, array $expectedVariantsInPayload): void {
@@ -140,7 +140,7 @@ abstract class BaseMultistoreProductVariantIngestionTest extends BaseDirectDbEnt
         $expectingVariant1ToBePublished = in_array(self::$variant1, $expectedPublishedVariants);
         $expectingVariant2ToBePublished = in_array(self::$variant2, $expectedPublishedVariants);
 
-        if ($storeId == self::STORE_1_ID) {
+        if ($storeId == self::$store1Id) {
             $variant1Key = self::$keyOfVariant1InStore1;
             $variant2Key = self::$keyOfVariant2InStore1;
         } else if ($storeId == self::$store2Id) {
