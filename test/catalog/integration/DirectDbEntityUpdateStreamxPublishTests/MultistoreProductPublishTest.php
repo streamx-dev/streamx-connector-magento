@@ -4,6 +4,7 @@ namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxP
 
 use DateTime;
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
+use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 use Magento\Catalog\Model\Product\Visibility;
 
@@ -61,7 +62,7 @@ class MultistoreProductPublishTest extends BaseDirectDbEntityUpdateTest {
 
         // and
         $this->removeFromStreamX(...$expectedPublishedKeys, ...$unexpectedPublishedKeys);
-        $this->addIndexedProductAttributes('style_bags');
+        ConfigurationEditUtils::addIndexedProductAttributes('style_bags');
 
         try {
             // when
@@ -97,7 +98,7 @@ class MultistoreProductPublishTest extends BaseDirectDbEntityUpdateTest {
             foreach ($testedStoreIds as $storeId) {
                 self::$db->unsetProductsVisibleInStore($storeId, ...$testedProductIds);
             }
-            $this->restoreDefaultIndexedProductAttributes();
+            ConfigurationEditUtils::restoreDefaultIndexedProductAttributes();
             $this->removeStoreLevelAttributeLabel($labelId);
         }
     }

@@ -35,4 +35,4 @@ It's designed to work with PHP Storm IDE.
    - observe code stopping at your breakpoints
 
 5. If you call Magento REST endpoints to trigger actions in your tests
-   (using the `BaseStreamxConnectorPublishTest`#`callMagentoPutEndpoint()` method) - breakpoints will be triggered automatically without the need to use a Web Browser.
+   (using the `MagentoEndpointsCaller::call` method) - breakpoints will be triggered automatically without the need to use a Web Browser.

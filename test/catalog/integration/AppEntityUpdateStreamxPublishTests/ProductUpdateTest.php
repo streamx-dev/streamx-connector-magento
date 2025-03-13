@@ -3,7 +3,9 @@
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageReportGenerator;
+use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
+use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 
 /**
  * @inheritdoc
@@ -18,11 +20,11 @@ class ProductUpdateTest extends BaseAppEntityUpdateTest {
 
     /** @test */
     public function shouldPublishSimpleProductEditedUsingMagentoApplicationToStreamxWithoutAttributes() {
-        $this->setIndexedProductAttributes('cost'); // index only an attr that bags don't have (so no attr expected in publish payload)
+        ConfigurationEditUtils::setIndexedProductAttributes('cost'); // index only an attr that bags don't have (so no attr expected in publish payload)
         try {
             $this->shouldPublishProductEditedUsingMagentoApplicationToStreamx('Joust Duffle Bag', 'bag-no-attributes');
         } finally {
-            $this->restoreDefaultIndexedProductAttributes();
+            ConfigurationEditUtils::restoreDefaultIndexedProductAttributes();
         }
     }
 
@@ -67,7 +69,7 @@ class ProductUpdateTest extends BaseAppEntityUpdateTest {
     }
 
     private function renameProduct(EntityIds $productId, string $newName): void {
-        $coverage = self::callMagentoPutEndpoint('product/rename', [
+        $coverage = MagentoEndpointsCaller::call('product/rename', [
             'productId' => $productId->getEntityId(),
             'newName' => $newName
         ]);

@@ -2,6 +2,8 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
+use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
+
 /**
  * @inheritdoc
  * @UsesProductIndexer
@@ -15,11 +17,11 @@ class ProductUpdateTest extends BaseDirectDbEntityUpdateTest {
 
     /** @test */
     public function shouldPublishSimpleProductEditedDirectlyInDatabaseToStreamxWithoutAttributes() {
-        $this->setIndexedProductAttributes('cost'); // index only an attr that bags don't have (so no attr expected in publish payload)
+        ConfigurationEditUtils::setIndexedProductAttributes('cost'); // index only an attr that bags don't have (so no attr expected in publish payload)
         try {
             $this->shouldPublishProductEditedDirectlyInDatabaseToStreamx('Joust Duffle Bag', 'bag-no-attributes');
         } finally {
-            $this->restoreDefaultIndexedProductAttributes();
+            ConfigurationEditUtils::restoreDefaultIndexedProductAttributes();
         }
     }
 

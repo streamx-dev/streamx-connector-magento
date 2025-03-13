@@ -2,6 +2,7 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
+use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 
 /**
@@ -21,7 +22,7 @@ class AttributeAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $this->removeFromStreamX($expectedKey);
 
         // when
-        $this->setIndexedProductAttributes('the_new_attribute');
+        ConfigurationEditUtils::setIndexedProductAttributes('the_new_attribute');
         $attributeId = $this->insertNewAttribute($attributeCode, $productId);
 
         try {
@@ -40,7 +41,7 @@ class AttributeAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
                 // note: we don't implement code to retrieve (and republish) product that used a deleted attribute, so the product is not republished, its last published version still has the custom attribute:
                 $this->assertExactDataIsPublished($expectedKey, 'edited-roller-product-with-custom-attribute.json');
             } finally {
-                $this->restoreDefaultIndexedProductAttributes();
+                ConfigurationEditUtils::restoreDefaultIndexedProductAttributes();
             }
         }
     }
