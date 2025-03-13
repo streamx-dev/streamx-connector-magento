@@ -43,22 +43,26 @@ class CategoryDataFormatter implements DataProviderInterface
 
         $allCategoriesMap = $this->getAllCategoriesMap($storeId);
         $this->setParentCategory($indexData, $allCategoriesMap);
-        $this->removeUnnecessaryFieldsRecursively($indexData);
+        $this->adjustFieldsRecursively($indexData);
     }
 
-    private function removeUnnecessaryFieldsRecursively(array &$categories): void
+    private function adjustFieldsRecursively(array &$categories): void
     {
         foreach ($categories as &$category) {
-            $this->removeUnnecessaryFields($category);
+            $this->adjustFields($category);
             if (isset($category[self::PARENT])) {
-                $this->removeUnnecessaryFields($category[self::PARENT]);
+                $this->adjustFields($category[self::PARENT]);
             }
-            $this->removeUnnecessaryFieldsRecursively($category[self::SUBCATEGORIES]);
+            $this->adjustFieldsRecursively($category[self::SUBCATEGORIES]);
         }
     }
 
-    private function removeUnnecessaryFields(array &$category): void
+    /**
+     * Adjusts the produced data to match the required schema
+     */
+    private function adjustFields(array &$category): void
     {
+        $category[self::ID] = (string)$category[self::ID];
         unset($category['url_key'], $category['path'], $category['parent_id']);
     }
 

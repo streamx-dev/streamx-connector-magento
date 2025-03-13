@@ -29,7 +29,7 @@ class ProductUpdateTest extends BaseAppEntityUpdateTest {
     /** @test */
     public function shouldPublishBundleProductEditedUsingMagentoApplicationToStreamx() {
         $regexReplacements = self::$db->isEnterpriseMagento() ? [ // in enterprise magento DB, ID of the bundle product is 46, not 45 as in community version
-            '"id": 46,' => '"id": 45,',
+            '"id": "46",' => '"id": "45",',
             '-46"' => '-45"'
         ] : [];
         $this->shouldPublishProductEditedUsingMagentoApplicationToStreamx('Sprite Yoga Companion Kit', 'bundle', $regexReplacements);
@@ -38,7 +38,7 @@ class ProductUpdateTest extends BaseAppEntityUpdateTest {
     /** @test */
     public function shouldPublishGroupedProductEditedUsingMagentoApplicationToStreamx() {
         $regexReplacements = self::$db->isEnterpriseMagento() ? [ // in enterprise magento DB, ID of the grouped product is 45, not 46 as in community version
-            '"id": 45,' => '"id": 46,',
+            '"id": "45",' => '"id": "46",',
             '-45"' => '-46"'
         ] : [];
         // TODO: the produced json doesn't contain information about the components that make up the grouped product

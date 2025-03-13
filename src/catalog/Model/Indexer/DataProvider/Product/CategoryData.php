@@ -52,7 +52,7 @@ class CategoryData implements DataProviderInterface
     private function adjustCategoriesFormat(array &$categories): void
     {
         foreach ($categories as &$category) {
-            $category['id'] = (int)$category['id'];
+            $category['id'] = (string) $category['id']; // string type required by SxModel
             $category['slug'] = $this->slugGenerator->compute($category);
             $category['label'] = $category['name'];
             unset(

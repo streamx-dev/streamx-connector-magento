@@ -1,6 +1,6 @@
 {
   "sku": "24-WG088",
-  "id": 22,
+  "id": "22",
   "lang": "en",
   "attributes": [
     {
@@ -40,13 +40,13 @@
   "slug": "sprite-foam-roller-22",
   "categories": [
     {
-      "id": 3,
+      "id": "3",
       "name": "Gear",
       "slug": "gear-3",
       "label": "Gear"
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "Fitness Equipment",
       "slug": "fitness-equipment-5",
       "label": "Fitness Equipment"
