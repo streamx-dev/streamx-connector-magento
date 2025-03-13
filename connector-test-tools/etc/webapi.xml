@@ -13,8 +13,8 @@
       <resource ref="anonymous"/>
     </resources>
   </route>
-  <route url="/V1/attribute/add" method="PUT">
-    <service class="StreamX\ConnectorTestTools\Api\EntityAddControllerInterface" method="addAttribute"/>
+  <route url="/V1/attribute/add-and-assign" method="PUT">
+    <service class="StreamX\ConnectorTestTools\Api\EntityAddControllerInterface" method="addAttributeAndAssignToProduct"/>
     <resources>
       <resource ref="anonymous"/>
     </resources>

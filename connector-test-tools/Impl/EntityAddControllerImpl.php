@@ -16,10 +16,12 @@ use Magento\Catalog\Model\Product\Attribute\Source\Status;
 use Magento\Catalog\Model\Product\Type;
 use Magento\Catalog\Model\Product\Visibility;
 use Magento\Catalog\Model\ProductFactory;
+use Magento\Catalog\Model\ResourceModel\Eav\Attribute;
 use Magento\Catalog\Model\ResourceModel\Eav\AttributeFactory;
 use Magento\Eav\Api\AttributeRepositoryInterface;
 use Magento\Eav\Model\Config;
 use Magento\Eav\Setup\EavSetupFactory;
+use Magento\Eav\Api\AttributeManagementInterface;
 use Magento\Framework\DB\Transaction;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use StreamX\ConnectorTestTools\Api\EntityAddControllerInterface;
@@ -34,6 +36,7 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
     private ModuleDataSetupInterface $moduleDataSetup;
     private ProductRepositoryInterface $productRepository;
     private CategoryRepositoryInterface $categoryRepository;
+    private AttributeManagementInterface $attributeManagement;
     private AttributeRepositoryInterface $attributeRepository;
     private CategoryLinkRepositoryInterface $categoryLinkRepository;
     private CategoryProductLinkInterfaceFactory $categoryProductLinkFactory;
@@ -47,6 +50,7 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
         ModuleDataSetupInterface $moduleDataSetup,
         ProductRepositoryInterface $productRepository,
         CategoryRepositoryInterface $categoryRepository,
+        AttributeManagementInterface $attributeManagement,
         AttributeRepositoryInterface $attributeRepository,
         CategoryLinkRepositoryInterface $categoryLinkRepository,
         CategoryProductLinkInterfaceFactory $categoryProductLinkFactory
@@ -59,6 +63,7 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
         $this->moduleDataSetup = $moduleDataSetup;
         $this->productRepository = $productRepository;
         $this->categoryRepository = $categoryRepository;
+        $this->attributeManagement = $attributeManagement;
         $this->attributeRepository = $attributeRepository;
         $this->categoryLinkRepository = $categoryLinkRepository;
         $this->categoryProductLinkFactory = $categoryProductLinkFactory;
@@ -148,9 +153,7 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
     /**
      * @inheritdoc
      */
-    public function addCategory(string $categoryName): int {
-        $parentCategoryId = 2;
-
+    public function addCategory(string $categoryName, int $parentCategoryId): int {
         try {
             $category = $this->categoryFactory->create()
                 ->setName($categoryName)
@@ -178,23 +181,9 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
     /**
      * @inheritdoc
      */
-    public function addAttribute(string $attributeCode, int $productId): int {
-        $displayName = "Display name of $attributeCode";
+    public function addAttributeAndAssignToProduct(string $attributeCode, int $productId): int {
         try {
-            $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
-            $entityTypeId = $eavSetup->getEntityTypeId(Product::ENTITY);
-
-            $attribute = $this->attributeFactory->create()
-                ->setAttributeCode($attributeCode)
-                ->setEntityTypeId($entityTypeId)
-                ->setBackendType('text')
-                ->setFrontendInput('textarea')
-                ->setDefaultFrontendLabel($displayName)
-                ->setIsUserDefined(true)
-                ->setIsVisible(true)
-                ->setIsVisibleOnFront(true)
-                ->setUsedInProductListing(true);
-
+            $attribute = $this->prepareNewTextAttribute($attributeCode);
             $product = $this->productFactory->create()->load($productId);
 
             $transaction = new Transaction();
@@ -202,6 +191,7 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
             $transaction->addObject($product);
             $transaction->addCommitCallback(function () use ($product, $attributeCode) {
                 $attributeValue = "$attributeCode value for product " . $product->getId();
+                $this->addAttributeToDefaultAttributeSet($attributeCode);
                 $this->addAttributeToProduct($product, $attributeCode, $attributeValue);
             });
             $transaction->save();
@@ -210,5 +200,36 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
         } catch (Exception $e) {
             throw new Exception("Error adding attribute $attributeCode: " . $e->getMessage(), -1, $e);
         }
+    }
+
+    private function prepareNewTextAttribute(string $attributeCode): Attribute {
+        $displayName = implode(' ', array_map('ucfirst', explode('_', $attributeCode))); // split by underscore, capitalize words and join with space
+        $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
+        $entityTypeId = $eavSetup->getEntityTypeId(Product::ENTITY);
+
+        return $this->attributeFactory->create()
+            ->setAttributeCode($attributeCode)
+            ->setEntityTypeId($entityTypeId)
+            ->setBackendType('text')
+            ->setFrontendInput('textarea')
+            ->setDefaultFrontendLabel($displayName)
+            ->setIsUserDefined(true)
+            ->setIsVisible(true)
+            ->setIsVisibleOnFront(true)
+            ->setIsFilterable(false)
+            ->setUsedInProductListing(true);
+    }
+
+    private function addAttributeToDefaultAttributeSet(string $attributeCode): void {
+        $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
+        $attributeSetId = $eavSetup->getAttributeSetId(Product::ENTITY, 'default');
+        $attributeGroupId = $eavSetup->getAttributeGroupId(Product::ENTITY, $attributeSetId, 'general');
+        $this->attributeManagement->assign(
+            Product::ENTITY,
+            $attributeSetId,
+            $attributeGroupId,
+            $attributeCode,
+            999 // Sort order
+        );
     }
 }
