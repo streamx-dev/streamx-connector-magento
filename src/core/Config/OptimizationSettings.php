@@ -32,6 +32,7 @@ class OptimizationSettings extends BaseConfigurationManager implements ObserverI
 
     // override method from ObserverInterface to validate user entered value for batch indexing size
     public function execute(Observer $observer): void {
+        // TODO this scenario is not covered by any test
         $batchSize = $this->getBatchIndexingSize();
         if ($batchSize < self::MIN_BATCH || $batchSize > self::MAX_BATCH) {
             $errorMessage = sprintf(
