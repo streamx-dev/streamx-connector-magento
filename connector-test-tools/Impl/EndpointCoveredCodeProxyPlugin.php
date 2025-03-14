@@ -26,17 +26,24 @@ class EndpointCoveredCodeProxyPlugin {
     }
 
     public function afterDispatch(Rest $subject, Response $response) {
-        $coverageDestinationFile = __DIR__ . '/coverage.txt';
+        $coverageFilesDir = self::getCoverageFilesDir();
+        $timestamp = floor(microtime(true) * 1000);
+        $coverageDestinationFile = "$coverageFilesDir/$timestamp.txt";
+
         if ($this->isCoverageMeasurementEnabled) {
             $coverage = xdebug_get_code_coverage();
             xdebug_stop_code_coverage();
             $serializedCoverage = json_encode($coverage);
             file_put_contents($coverageDestinationFile, $serializedCoverage);
-        } else {
-            if (file_exists($coverageDestinationFile)) {
-                unlink($coverageDestinationFile);
-            }
         }
         return $response;
+    }
+
+    private static function getCoverageFilesDir(): string {
+        $coverageFilesDir =__DIR__ . '/../coverage';
+        if (!is_dir($coverageFilesDir)) {
+            mkdir($coverageFilesDir, 0777, true);
+        }
+        return $coverageFilesDir;
     }
 }

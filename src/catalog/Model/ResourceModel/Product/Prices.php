@@ -68,6 +68,7 @@ class Prices
         $prices = $this->getConnection()->fetchAssoc($select);
 
         if ($this->settings->useCatalogRules()) {
+            // TODO this scenario is not covered by any test
             $catalogPrices = $this->getCatalogRulePrices($websiteId, $productIds);
 
             foreach ($catalogPrices as $productId => $finalPrice) {
