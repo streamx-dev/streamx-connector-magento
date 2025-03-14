@@ -3,7 +3,6 @@
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\Model\SlugGenerator;
-use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageReportGenerator;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 
 /**
@@ -139,13 +138,9 @@ class ProductVariantUpdateTest extends BaseAppEntityUpdateTest {
     }
 
     private function renameProduct(EntityIds $productId, string $newName): void {
-        $coverage = self::callMagentoPutEndpoint('product/rename', [
+        self::callMagentoPutEndpoint('product/rename', [
             'productId' => $productId->getEntityId(),
             'newName' => $newName
         ]);
-
-        if (getenv('GENERATE_CODE_COVERAGE_REPORT') === 'true') {
-            CodeCoverageReportGenerator::generateCodeCoverageReport($coverage, $this);
-        }
     }
 }

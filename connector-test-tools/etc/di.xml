@@ -26,4 +26,8 @@
       for="StreamX\ConnectorTestTools\Api\StoresControllerInterface"
       type="StreamX\ConnectorTestTools\Impl\StoresControllerImpl"/>
 
+    <type name="Magento\Webapi\Controller\Rest">
+        <plugin name="endpointProxyPlugin" type="StreamX\ConnectorTestTools\Impl\EndpointCoveredCodeProxyPlugin" />
+    </type>
+
 </config>

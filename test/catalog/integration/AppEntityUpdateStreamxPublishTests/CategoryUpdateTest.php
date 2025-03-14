@@ -2,7 +2,6 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
-use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageReportGenerator;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 
 /**
@@ -35,13 +34,9 @@ class CategoryUpdateTest extends BaseAppEntityUpdateTest {
     }
 
     private function renameCategory(EntityIds $categoryId, string $newName): void {
-        $coverage = self::callMagentoPutEndpoint('category/rename', [
+        self::callMagentoPutEndpoint('category/rename', [
             'categoryId' => $categoryId->getEntityId(),
             'newName' => $newName
         ]);
-
-        if (getenv('GENERATE_CODE_COVERAGE_REPORT') === 'true') {
-            CodeCoverageReportGenerator::generateCodeCoverageReport($coverage, $this);
-        }
     }
 }
