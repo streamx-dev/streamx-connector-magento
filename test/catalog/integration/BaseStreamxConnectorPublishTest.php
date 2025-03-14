@@ -11,6 +11,7 @@ use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests\BaseAppEntityUpdateTest;
 use StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests\BaseDirectDbEntityUpdateTest;
+use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageReportGenerator;
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditTraits;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoIndexerOperationsExecutor;
@@ -148,7 +149,7 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
         $response = $httpClient->sendRequest($request);
         $responseBody = (string)$response->getBody();
         if ($response->getStatusCode() !== 200) {
-            throw new Exception('Unexpected status code: ' . $response->getStatusCode());
+            throw new Exception("Unexpected status code: {$response->getStatusCode()}\n$responseBody");
         }
 
         return $responseBody;
@@ -163,6 +164,7 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
         $ingestedKeys = $this->logFileUtils->getPublishedAndUnpublishedKeys();
         echo 'Keys ingested during the test:' . PHP_EOL;
         echo $ingestedKeys->formatted() . PHP_EOL;
+        CodeCoverageReportGenerator::generateCodeCoverageReport($this);
     }
 
     public static function productKey(EntityIds $productId, string $storeCode = self::DEFAULT_STORE_CODE): string {
