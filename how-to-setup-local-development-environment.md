@@ -209,8 +209,6 @@ SET GLOBAL general_log = 'OFF';
  - integration tests then use that file to generate html coverage reports if you start them with `GENERATE_CODE_COVERAGE_REPORT=true` env variable added to your Run/Debug configuration for the tests
  - the coverage reports are generated to `target/coverage-reports` in the root directory of the project, with folder names corresponding to test names
  - open `index.html` of a report in your browser for a report in clickable / navigable form
- - TODO:
-   - it should be possible to measure summary coverage by merging code coverage data after running all tests
 
 ## Troubleshooting when integration tests are randomly not passing
 You can try those methods:

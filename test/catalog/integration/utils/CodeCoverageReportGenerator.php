@@ -18,24 +18,30 @@ final class CodeCoverageReportGenerator {
 
     private const STREAMX_CONNECTOR_ROOT_DIR_IN_MAGENTO_SERVER = '/var/www/html/app/code/StreamX/Connector';
 
-    public static function generateCodeCoverageReport(TestCase $caller): void {
+    public static function generateSingleTestCodeCoverageReport(TestCase $caller): void {
+        self::generateCodeCoverageReport($caller, false);
+    }
+
+    public static function generateSummaryCodeCoverageReport(TestCase $caller): void {
+        self::generateCodeCoverageReport($caller, true);
+    }
+
+    private static function generateCodeCoverageReport(TestCase $caller, bool $includeCoverageDataFromPreviousTests): void {
         if (getenv('GENERATE_CODE_COVERAGE_REPORT') !== 'true') {
             return;
         }
 
-        $localConnectorRootDir = FileUtils::findFolder('streamx-connector-magento');
-        $coverageFilePath = "$localConnectorRootDir/magento/src/app/code/StreamX/ConnectorTestTools/Impl/coverage.txt";
-        if (!file_exists($coverageFilePath)) {
+        $coverageFiles = self::getCoverageFiles($includeCoverageDataFromPreviousTests);
+        if (empty($coverageFiles)) {
             return;
         }
+        $summaryCoverageData = CodeCoverageDataMerger::merge($coverageFiles);
 
-        $coverage = file_get_contents($coverageFilePath);
-        if ($coverage === '[]') {
-            return;
-        }
+        $localConnectorRootDir = self::getLocalConnectorRootDir();
+        $coveredData = self::removeNonStreamxConnectorEntries($summaryCoverageData, $localConnectorRootDir);
 
         $testName = $caller->getName();
-        $coveredData = self::toCleanedUpCoverageArray($coverage, $testName, $localConnectorRootDir);
+        self::adjustCoverageData($coveredData, $testName);
         self::addMissingFilesAsUncovered($coveredData, $localConnectorRootDir);
 
         $uncoveredData = self::computeUncoveredData($coveredData);
@@ -44,10 +50,7 @@ final class CodeCoverageReportGenerator {
         self::writeAsHtmlReport($localConnectorRootDir, $caller, $codeCoverage);
     }
 
-    private static function toCleanedUpCoverageArray(string $coverage, string $testName, string $localConnectorRootDir): array {
-        $coverage = str_replace('\\/', '/', $coverage); // unescape escaped slashes
-        $coverage = self::changeFilePathsToLocalPaths($coverage, $localConnectorRootDir);
-        $coverageArray = json_decode($coverage, true);
+    private static function adjustCoverageData(array &$coverageArray, string $testName): void {
         foreach ($coverageArray as $file => &$coverageData) {
             foreach ($coverageData as $lineNumber => &$value) {
                 if ($value === 1) {
@@ -55,24 +58,22 @@ final class CodeCoverageReportGenerator {
                 }
             }
         }
-        return self::removeNonStreamxConnectorEntries($coverageArray, $localConnectorRootDir);
-    }
-
-    private static function changeFilePathsToLocalPaths(string $coverage, string $localConnectorRootDir): string {
-        return str_replace(
-            self::STREAMX_CONNECTOR_ROOT_DIR_IN_MAGENTO_SERVER,
-            $localConnectorRootDir,
-            $coverage
-        );
     }
 
     private static function removeNonStreamxConnectorEntries(array $coverageData, string $localConnectorRootDir): array {
+        $filteredCoverageData = [];
         foreach ($coverageData as $filePath => $value) {
-            if (!str_starts_with($filePath, "$localConnectorRootDir/src")) {
-                unset($coverageData[$filePath]);
+            $unescapedFilePath = str_replace('\\/', '/', $filePath);
+            if (str_starts_with($unescapedFilePath, self::STREAMX_CONNECTOR_ROOT_DIR_IN_MAGENTO_SERVER) && !str_contains($unescapedFilePath, 'ConnectorTestTools')) {
+                $localFilePath = str_replace(
+                    self::STREAMX_CONNECTOR_ROOT_DIR_IN_MAGENTO_SERVER,
+                    $localConnectorRootDir,
+                    $unescapedFilePath
+                );
+                $filteredCoverageData[$localFilePath] = $value;
             }
         }
-        return $coverageData;
+        return $filteredCoverageData;
     }
 
     // xdebug doesn't return any coverage info about files that were not executed at all
@@ -131,7 +132,55 @@ final class CodeCoverageReportGenerator {
             system("rm -rf " . escapeshellarg($dir));
         }
         mkdir($dir, 0777, true);
-        echo "Code coverage report directory created at $dir\n";
+        echo "Code coverage report directory created: $dir/index.html\n";
         return $dir;
+    }
+
+    private static function getCoverageFiles(bool $includeCoverageDataFromPreviousTests): array {
+        $localConnectorRootDir = self::getLocalConnectorRootDir();
+        $coverageFilesDirectory = self::getCoverageFilesDirectory($localConnectorRootDir);
+        $result = [];
+        if (is_dir($coverageFilesDirectory)) {
+            if ($includeCoverageDataFromPreviousTests) {
+                $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($coverageFilesDirectory));
+                foreach ($iterator as $path) {
+                    if ($path->isFile()) {
+                        $result[] = $path->getRealPath();
+                    }
+                }
+            } else {
+                foreach (scandir($coverageFilesDirectory) as $file) {
+                    $filePath = "$coverageFilesDirectory/$file";
+                    if (is_file($filePath)) {
+                        $result[] = $filePath;
+                    }
+                }
+            }
+        }
+        return $result;
+    }
+
+    public static function hideCoverageFilesFromPreviousTest(): void {
+        if (getenv('GENERATE_CODE_COVERAGE_REPORT') !== 'true') {
+            return;
+        }
+
+        $localConnectorRootDir = self::getLocalConnectorRootDir();
+        $coverageFilesDirectory = self::getCoverageFilesDirectory($localConnectorRootDir);
+        $previousFilesDirectory = "$coverageFilesDirectory/previous";
+        if (!is_dir($previousFilesDirectory)) {
+            mkdir($previousFilesDirectory, 0777, true);
+        }
+        foreach (self::getCoverageFiles(false) as $coverageFile) {
+            rename($coverageFile, $previousFilesDirectory . '/' . basename($coverageFile));
+        }
+    }
+
+    private static function getLocalConnectorRootDir(): string {
+        return FileUtils::findFolder('streamx-connector-magento');
+    }
+
+    private static function getCoverageFilesDirectory(string $localConnectorRootDir): string {
+        return "$localConnectorRootDir/magento/src/app/code/StreamX/ConnectorTestTools/coverage";
     }
 }
