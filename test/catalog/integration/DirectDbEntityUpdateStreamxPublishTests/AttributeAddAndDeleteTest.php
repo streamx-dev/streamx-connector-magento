@@ -12,7 +12,7 @@ use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 class AttributeAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
     /** @test */
-    public function shouldPublishProductThatUsesAttributeAddedDirectlyInDatabaseToStreamx() {
+    public function shouldPublishProductThatUsesAttributeAddedDirectlyInDatabase() {
         // given
         $attributeCode = 'the_new_attribute';
         $attributeLabel = 'The New Attribute';

@@ -11,22 +11,22 @@ use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
 class AttributeUpdateTest extends BaseDirectDbEntityUpdateTest {
 
     /** @test */
-    public function shouldPublishProductThatUsesSimpleAttributeEditedDirectlyInDatabaseToStreamx() {
-        $this->shouldPublishProductThatUsesAttributeEditedDirectlyInDatabaseToStreamx(
+    public function shouldPublishProductThatUsesSimpleAttributeEditedDirectlyInDatabase() {
+        $this->shouldPublishProductThatUsesAttributeEditedDirectlyInDatabase(
             'sale',
             'edited-sale-attr-ball-product.json'
         );
     }
 
     /** @test */
-    public function shouldPublishProductThatUsesAttributeWithOptionsEditedDirectlyInDatabaseToStreamx() {
-        $this->shouldPublishProductThatUsesAttributeEditedDirectlyInDatabaseToStreamx(
+    public function shouldPublishProductThatUsesAttributeWithOptionsEditedDirectlyInDatabase() {
+        $this->shouldPublishProductThatUsesAttributeEditedDirectlyInDatabase(
             'material',
             'edited-material-attr-ball-product.json'
         );
     }
 
-    private function shouldPublishProductThatUsesAttributeEditedDirectlyInDatabaseToStreamx(string $attributeCode, string $validationFile): void {
+    private function shouldPublishProductThatUsesAttributeEditedDirectlyInDatabase(string $attributeCode, string $validationFile): void {
         // given
         $attributeId = self::$db->getProductAttributeId($attributeCode);
 

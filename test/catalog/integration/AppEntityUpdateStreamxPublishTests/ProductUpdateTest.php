@@ -13,40 +13,40 @@ use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 class ProductUpdateTest extends BaseAppEntityUpdateTest {
 
     /** @test */
-    public function shouldPublishSimpleProductEditedUsingMagentoApplicationToStreamx() {
-        $this->shouldPublishProductEditedUsingMagentoApplicationToStreamx('Joust Duffle Bag', 'bag');
+    public function shouldPublishSimpleProductEditedUsingMagentoApplication() {
+        $this->shouldPublishProductEditedUsingMagentoApplication('Joust Duffle Bag', 'bag');
     }
 
     /** @test */
-    public function shouldPublishSimpleProductEditedUsingMagentoApplicationToStreamxWithoutAttributes() {
+    public function shouldPublishSimpleProductEditedUsingMagentoApplicationWithoutAttributes() {
         ConfigurationEditUtils::setIndexedProductAttributes('cost'); // index only an attr that bags don't have (so no attr expected in publish payload)
         try {
-            $this->shouldPublishProductEditedUsingMagentoApplicationToStreamx('Joust Duffle Bag', 'bag-no-attributes');
+            $this->shouldPublishProductEditedUsingMagentoApplication('Joust Duffle Bag', 'bag-no-attributes');
         } finally {
             ConfigurationEditUtils::restoreDefaultIndexedProductAttributes();
         }
     }
 
     /** @test */
-    public function shouldPublishBundleProductEditedUsingMagentoApplicationToStreamx() {
+    public function shouldPublishBundleProductEditedUsingMagentoApplication() {
         $regexReplacements = self::$db->isEnterpriseMagento() ? [ // in enterprise magento DB, ID of the bundle product is 46, not 45 as in community version
             '"id": "46",' => '"id": "45",',
             '-46"' => '-45"'
         ] : [];
-        $this->shouldPublishProductEditedUsingMagentoApplicationToStreamx('Sprite Yoga Companion Kit', 'bundle', $regexReplacements);
+        $this->shouldPublishProductEditedUsingMagentoApplication('Sprite Yoga Companion Kit', 'bundle', $regexReplacements);
     }
 
     /** @test */
-    public function shouldPublishGroupedProductEditedUsingMagentoApplicationToStreamx() {
+    public function shouldPublishGroupedProductEditedUsingMagentoApplication() {
         $regexReplacements = self::$db->isEnterpriseMagento() ? [ // in enterprise magento DB, ID of the grouped product is 45, not 46 as in community version
             '"id": "45",' => '"id": "46",',
             '-45"' => '-46"'
         ] : [];
         // TODO: the produced json doesn't contain information about the components that make up the grouped product
-        $this->shouldPublishProductEditedUsingMagentoApplicationToStreamx('Set of Sprite Yoga Straps', 'grouped', $regexReplacements);
+        $this->shouldPublishProductEditedUsingMagentoApplication('Set of Sprite Yoga Straps', 'grouped', $regexReplacements);
     }
 
-    private function shouldPublishProductEditedUsingMagentoApplicationToStreamx(string $productName, string $productNameInValidationFileName, array $regexReplacements = []): void {
+    private function shouldPublishProductEditedUsingMagentoApplication(string $productName, string $productNameInValidationFileName, array $regexReplacements = []): void {
         // given
         $productNewName = "Name modified for testing, was $productName";
         $productId = self::$db->getProductId($productName);

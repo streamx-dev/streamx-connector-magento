@@ -7,6 +7,7 @@ class ConfigurationEditUtils {
     private const CONFIGURATION_EDIT_ENDPOINT = 'configuration/edit';
     private const PRODUCT_ATTRIBUTES_PATH = 'streamx_connector_settings/catalog_settings/product_attributes';
     public const EXPORT_PRODUCTS_NOT_VISIBLE_INDIVIDUALLY_PATH = 'streamx_connector_settings/catalog_settings/export_products_not_visible_individually';
+    public const USE_CATALOG_PRICE_RULES_PATH = 'streamx_connector_settings/catalog_settings/use_catalog_price_rules';
 
     private function __construct() {
         // no instances
