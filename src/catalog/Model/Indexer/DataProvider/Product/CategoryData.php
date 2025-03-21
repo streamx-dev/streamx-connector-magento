@@ -33,7 +33,9 @@ class CategoryData implements DataProviderInterface
         $categoryData = $this->categoryResource->getCategories($storeId, $categoryIds);
 
         // 3. format each category
-        $this->adjustCategoriesFormat($categoryData);
+        foreach ($categoryData as &$categoryArray) {
+            $this->adjustCategoryFormat($categoryArray);
+        }
 
         // 4. add formatted categories data to products
         foreach ($indexData as $productId => &$productData) {
@@ -49,17 +51,27 @@ class CategoryData implements DataProviderInterface
         }
     }
 
-    private function adjustCategoriesFormat(array &$categories): void
+    private function adjustCategoryFormat(array &$category): void
     {
-        foreach ($categories as &$category) {
-            $category['id'] = (int)$category['id'];
-            $category['slug'] = $this->slugGenerator->compute($category);
-            $category['label'] = $category['name'];
-            unset(
-                $category['url_key'],
-                $category['path'],
-                $category['parent_id']
-            );
+        $category['id'] = (int)$category['id'];
+        $category['slug'] = $this->slugGenerator->compute($category);
+        $category['label'] = $category['name'];
+        unset(
+            $category['url_key'],
+            $category['path'],
+            $category['parent_id']
+        );
+
+        if (isset($category['parent'])) {
+            $this->adjustCategoryFormat($category['parent']);
+            $this->moveParentToBottom($category);
         }
+    }
+
+    private function moveParentToBottom(array &$category): void
+    {
+        $parent = $category['parent'];
+        unset($category['parent']);
+        $category['parent'] = $parent;
     }
 }

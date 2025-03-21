@@ -44,7 +44,7 @@ class AttributeAddAndDeleteTest extends BaseAppEntityUpdateTest {
     }
 
     private function addAttributeAndAssignToProduct(string $attributeCode, EntityIds $productId): int {
-        return (int) MagentoEndpointsCaller::callMagentoPutEndpoint('attribute/add-and-assign', [
+        return (int) MagentoEndpointsCaller::call('attribute/add-and-assign', [
             'attributeCode' => $attributeCode,
             'productId' => $productId->getEntityId()
         ]);

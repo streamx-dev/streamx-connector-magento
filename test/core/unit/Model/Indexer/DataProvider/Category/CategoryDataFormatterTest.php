@@ -4,7 +4,6 @@ namespace Model\Indexer\DataProvider\Category;
 
 use PHPUnit\Framework\TestCase;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Category\CategoryDataFormatter;
-use StreamX\ConnectorCatalog\Model\ResourceModel\Category;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category\Children;
 use StreamX\ConnectorCatalog\Model\SlugGenerator;
 use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
@@ -42,7 +41,6 @@ class CategoryDataFormatterTest extends TestCase
 
         // when
         $service = new CategoryDataFormatter(
-            $this->createMock(Category::class),
             $this->createMock(Children::class),
             $slugGenerator
         );

@@ -33,6 +33,7 @@ class Children
     public function loadChildren(string $categoryPath, int $storeId): array
     {
         $select = $this->category->getCategoriesBaseSelect($storeId);
+        $this->eligibleCategorySelectModifier->modify($select, $storeId);
 
         $childIds = $this->getChildrenIds($categoryPath, $storeId);
         $select->where("entity.entity_id IN (?)", $childIds);
