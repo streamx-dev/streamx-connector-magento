@@ -24,6 +24,8 @@ class MagentoMySqlQueryExecutor {
     private string $entityAttributeLinkField;
     private bool $isEnterpriseMagento;
 
+    private const DEFAULT_STORE_ID = BaseStreamxConnectorPublishTest::DEFAULT_STORE_ID;
+
     public function __construct() {
         $this->connection = new mysqli(self::SERVER_NAME, self::USER, self::PASSWORD, self::DB_NAME);
 
@@ -313,7 +315,7 @@ class MagentoMySqlQueryExecutor {
         return $entityIds;
     }
 
-    public function setCategoryNameAndStatus(EntityIds $category, string $name, bool $isActive, int $storeId = BaseStreamxConnectorPublishTest::DEFAULT_STORE_ID): void {
+    public function setCategoryNameAndStatus(EntityIds $category, string $name, bool $isActive, int $storeId = self::DEFAULT_STORE_ID): void {
         $urlKey = strtolower(str_replace(' ', '_', $name));
         $activeStatus = $isActive ? 1 : 0;
 
@@ -357,23 +359,37 @@ class MagentoMySqlQueryExecutor {
         ");
     }
 
-    public function insertIntProductAttribute(EntityIds $productId, int $attributeId, $attributeValue, int $storeId = BaseStreamxConnectorPublishTest::DEFAULT_STORE_ID): void {
+    public function getDecimalProductAttributeValue(EntityIds $productId, string $attributeCode, int $storeId = self::DEFAULT_STORE_ID): float {
+        $attributeId = $this->getProductAttributeId($attributeCode);
+        $linkField = $this->entityAttributeLinkField;
+
+        return $this->selectSingleValue("
+            SELECT attr.value
+              FROM catalog_product_entity product
+              JOIN catalog_product_entity_decimal attr ON attr.$linkField = product.$linkField
+             WHERE attr.attribute_id = $attributeId
+               AND attr.$linkField = {$productId->getLinkFieldId()}
+               AND attr.store_id = $storeId
+         ");
+    }
+
+    public function insertIntProductAttribute(EntityIds $productId, int $attributeId, $attributeValue, int $storeId = self::DEFAULT_STORE_ID): void {
         $this->insertEntityAttribute('catalog_product_entity_int', $productId, $attributeId, $attributeValue, $storeId);
     }
-    public function insertDecimalProductAttribute(EntityIds $productId, int $attributeId, $attributeValue, int $storeId = BaseStreamxConnectorPublishTest::DEFAULT_STORE_ID): void {
+    public function insertDecimalProductAttribute(EntityIds $productId, int $attributeId, $attributeValue, int $storeId = self::DEFAULT_STORE_ID): void {
         $this->insertEntityAttribute('catalog_product_entity_decimal', $productId, $attributeId, $attributeValue, $storeId);
     }
-    public function insertVarcharProductAttribute(EntityIds $productId, int $attributeId, $attributeValue, int $storeId = BaseStreamxConnectorPublishTest::DEFAULT_STORE_ID): void {
+    public function insertVarcharProductAttribute(EntityIds $productId, int $attributeId, $attributeValue, int $storeId = self::DEFAULT_STORE_ID): void {
         $this->insertEntityAttribute('catalog_product_entity_varchar', $productId, $attributeId, $attributeValue, $storeId);
     }
-    public function insertTextProductAttribute(EntityIds $productId, int $attributeId, $attributeValue, int $storeId = BaseStreamxConnectorPublishTest::DEFAULT_STORE_ID): void {
+    public function insertTextProductAttribute(EntityIds $productId, int $attributeId, $attributeValue, int $storeId = self::DEFAULT_STORE_ID): void {
         $this->insertEntityAttribute('catalog_product_entity_text', $productId, $attributeId, $attributeValue, $storeId);
     }
 
-    public function insertIntCategoryAttribute(EntityIds $categoryId, int $attributeId, $attributeValue, int $storeId = BaseStreamxConnectorPublishTest::DEFAULT_STORE_ID): void {
+    public function insertIntCategoryAttribute(EntityIds $categoryId, int $attributeId, $attributeValue, int $storeId = self::DEFAULT_STORE_ID): void {
         $this->insertEntityAttribute('catalog_category_entity_int', $categoryId, $attributeId, $attributeValue, $storeId);
     }
-    public function insertVarcharCategoryAttribute(EntityIds $categoryId, int $attributeId, $attributeValue, int $storeId = BaseStreamxConnectorPublishTest::DEFAULT_STORE_ID): void {
+    public function insertVarcharCategoryAttribute(EntityIds $categoryId, int $attributeId, $attributeValue, int $storeId = self::DEFAULT_STORE_ID): void {
         $this->insertEntityAttribute('catalog_category_entity_varchar', $categoryId, $attributeId, $attributeValue, $storeId);
     }
 

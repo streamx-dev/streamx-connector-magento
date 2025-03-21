@@ -12,7 +12,7 @@ use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 class ProductCategoryUpdateTest extends BaseAppEntityUpdateTest {
 
     /** @test */
-    public function shouldPublishProductCategoryEditedUsingMagentoApplicationToStreamx() {
+    public function shouldPublishProductCategoryEditedUsingMagentoApplication() {
         // given
         $productName = 'Joust Duffle Bag';
         $productId = self::$db->getProductId($productName);
