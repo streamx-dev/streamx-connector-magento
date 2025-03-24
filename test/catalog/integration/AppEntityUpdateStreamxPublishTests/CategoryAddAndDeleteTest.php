@@ -2,6 +2,8 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
+use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
+
 /**
  * @inheritdoc
  * @UsesCategoryIndexer
@@ -36,14 +38,14 @@ class CategoryAddAndDeleteTest extends BaseAppEntityUpdateTest {
     }
 
     private function addCategory(string $categoryName, int $parentCategoryId): int {
-        return (int) self::callMagentoPutEndpoint('category/add', [
+        return (int) MagentoEndpointsCaller::call('category/add', [
             'categoryName' => $categoryName,
             'parentCategoryId' => $parentCategoryId
         ]);
     }
 
     private function deleteCategory(int $categoryId): void {
-        self::callMagentoPutEndpoint('category/delete', [
+        MagentoEndpointsCaller::call('category/delete', [
             'categoryId' => $categoryId
         ]);
     }

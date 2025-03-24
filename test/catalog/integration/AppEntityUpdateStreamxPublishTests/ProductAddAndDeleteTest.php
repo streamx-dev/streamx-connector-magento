@@ -2,6 +2,9 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
+use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
+use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
+
 /**
  * @inheritdoc
  * @UsesProductIndexer
@@ -19,7 +22,7 @@ class ProductAddAndDeleteTest extends BaseAppEntityUpdateTest {
         ];
 
         // when
-        $this->allowIndexingAllProductAttributes();
+        ConfigurationEditUtils::allowIndexingAllProductAttributes();
         $productId = self::addProduct($productName, $categoryIds);
 
         // then
@@ -44,7 +47,7 @@ class ProductAddAndDeleteTest extends BaseAppEntityUpdateTest {
                 // then
                 $this->assertDataIsUnpublished($expectedKey);
             } finally {
-                $this->restoreDefaultIndexedProductAttributes();
+                ConfigurationEditUtils::restoreDefaultIndexedProductAttributes();
             }
         }
     }
@@ -54,14 +57,14 @@ class ProductAddAndDeleteTest extends BaseAppEntityUpdateTest {
             return $category->getEntityId();
         }, $categories);
 
-        return (int) self::callMagentoPutEndpoint('product/add', [
+        return (int) MagentoEndpointsCaller::call('product/add', [
             'productName' => $productName,
             'categoryIds' => $categoryIds
         ]);
     }
 
     private function deleteProduct(int $productId): void {
-        self::callMagentoPutEndpoint('product/delete', [
+        MagentoEndpointsCaller::call('product/delete', [
             'productId' => $productId
         ]);
     }

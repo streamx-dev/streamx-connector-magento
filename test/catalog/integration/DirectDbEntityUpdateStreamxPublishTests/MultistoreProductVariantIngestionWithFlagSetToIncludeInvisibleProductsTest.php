@@ -2,21 +2,22 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
+use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
+
 /**
  * @inheritdoc
  * @UsesProductIndexer
  */
 class MultistoreProductVariantIngestionWithFlagSetToIncludeInvisibleProductsTest extends BaseMultistoreProductVariantIngestionTest {
 
-    // TODO change to setUpBeforeClass, to execute configuration changes only before all tests, and restore only after all tests
-    protected function setUp(): void {
-        parent::setUp();
-        $this->setConfigurationValue($this->EXPORT_PRODUCTS_NOT_VISIBLE_INDIVIDUALLY_PATH, '1');
+    public static function setUpBeforeClass(): void {
+        parent::setUpBeforeClass();
+        ConfigurationEditUtils::setConfigurationValue(ConfigurationEditUtils::EXPORT_PRODUCTS_NOT_VISIBLE_INDIVIDUALLY_PATH, '1');
     }
 
-    protected function tearDown(): void {
-        $this->restoreConfigurationValue($this->EXPORT_PRODUCTS_NOT_VISIBLE_INDIVIDUALLY_PATH);
-        parent::tearDown();
+    public static function tearDownAfterClass(): void {
+        ConfigurationEditUtils::restoreConfigurationValue(ConfigurationEditUtils::EXPORT_PRODUCTS_NOT_VISIBLE_INDIVIDUALLY_PATH);
+        parent::tearDownAfterClass();
     }
 
     /** @test */

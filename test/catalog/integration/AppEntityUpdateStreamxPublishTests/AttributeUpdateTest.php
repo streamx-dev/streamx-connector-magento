@@ -3,6 +3,8 @@
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageReportGenerator;
+use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
+use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 
 /**
  * @inheritdoc
@@ -39,7 +41,7 @@ class AttributeUpdateTest extends BaseAppEntityUpdateTest {
         self::removeFromStreamX($expectedKey);
 
         // when
-        $this->setIndexedProductAttributes('sale', 'material');
+        ConfigurationEditUtils::setIndexedProductAttributes('sale', 'material');
 
         self::renameAttribute($attributeCode, $newDisplayName);
 
@@ -51,13 +53,13 @@ class AttributeUpdateTest extends BaseAppEntityUpdateTest {
                 self::renameAttribute($attributeCode, $oldDisplayName);
                 $this->assertExactDataIsPublished($expectedKey, "original-ball-product.json");
             } finally {
-                $this->restoreDefaultIndexedProductAttributes();
+                ConfigurationEditUtils::restoreDefaultIndexedProductAttributes();
             }
         }
     }
 
     private function renameAttribute(string $attributeCode, string $newName): void {
-        $coverage = self::callMagentoPutEndpoint('attribute/rename', [
+        $coverage = MagentoEndpointsCaller::call('attribute/rename', [
             'attributeCode' => $attributeCode,
             'newName' => $newName
         ]);

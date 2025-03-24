@@ -2,7 +2,9 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
+use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
+use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 
 /**
  * @inheritdoc
@@ -21,7 +23,7 @@ class AttributeAddAndDeleteTest extends BaseAppEntityUpdateTest {
         $this->removeFromStreamX($expectedKey);
 
         // when
-        $this->setIndexedProductAttributes($attributeCode);
+        ConfigurationEditUtils::setIndexedProductAttributes('the_new_attribute');
         $attributeId = self::addAttributeAndAssignToProduct($attributeCode, $productId);
 
         try {
@@ -36,20 +38,20 @@ class AttributeAddAndDeleteTest extends BaseAppEntityUpdateTest {
                 // note: we don't implement code to retrieve (and republish) product that used a deleted attribute, so the product is not republished, its last published version still has the custom attribute:
                 $this->assertExactDataIsPublished($expectedKey, 'edited-roller-product-with-custom-attribute.json');
             } finally {
-                $this->restoreDefaultIndexedProductAttributes();
+                ConfigurationEditUtils::restoreDefaultIndexedProductAttributes();
             }
         }
     }
 
     private function addAttributeAndAssignToProduct(string $attributeCode, EntityIds $productId): int {
-        return (int) self::callMagentoPutEndpoint('attribute/add-and-assign', [
+        return (int) MagentoEndpointsCaller::callMagentoPutEndpoint('attribute/add-and-assign', [
             'attributeCode' => $attributeCode,
             'productId' => $productId->getEntityId()
         ]);
     }
 
     private function deleteAttribute(int $attributeId): void {
-        self::callMagentoPutEndpoint('attribute/delete', [
+        MagentoEndpointsCaller::call('attribute/delete', [
             'attributeId' => $attributeId
         ]);
     }
