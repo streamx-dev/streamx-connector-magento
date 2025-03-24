@@ -25,7 +25,7 @@ class MultistoreProductPublishTest extends BaseDirectDbEntityUpdateTest {
             self::$db->getProductId('Chaz Kangeroo Hoodie-XL-Orange'), // ID 61
             self::$db->getProductId('Chaz Kangeroo Hoodie') // ID 62
         ];
-        $testedStoreIds = [self::STORE_1_ID, self::$store2Id, self::$secondWebsiteStoreId];
+        $testedStoreIds = [self::$store1Id, self::$store2Id, self::$website2StoreId];
 
         // when: perform any change of products - to trigger collecting their IDs by the mView feature. A good sample change is to make sure all are visible in the stores
         foreach ($testedStoreIds as $storeId) {
@@ -33,11 +33,11 @@ class MultistoreProductPublishTest extends BaseDirectDbEntityUpdateTest {
         }
 
         $expectedPublishedKeys = [
-            self::DEFAULT_STORE_CODE . '_product:1',
-            self::DEFAULT_STORE_CODE . '_product:4',
-            self::DEFAULT_STORE_CODE . '_product:60',
-            self::DEFAULT_STORE_CODE . '_product:61',
-            self::DEFAULT_STORE_CODE . '_product:62', // note: editing parent product is expected to trigger publishing also all its variants
+            self::STORE_1_CODE . '_product:1',
+            self::STORE_1_CODE . '_product:4',
+            self::STORE_1_CODE . '_product:60',
+            self::STORE_1_CODE . '_product:61',
+            self::STORE_1_CODE . '_product:62', // note: editing parent product is expected to trigger publishing also all its variants
 
             self::STORE_2_CODE . '_product:1',
             self::STORE_2_CODE . '_product:4',
@@ -45,15 +45,15 @@ class MultistoreProductPublishTest extends BaseDirectDbEntityUpdateTest {
             self::STORE_2_CODE . '_product:61',
             self::STORE_2_CODE . '_product:62',
 
-            self::SECOND_WEBSITE_STORE_CODE . '_product:4',
-            self::SECOND_WEBSITE_STORE_CODE . '_product:61',
-            self::SECOND_WEBSITE_STORE_CODE . '_product:62',
+            self::WEBSITE_2_STORE_CODE . '_product:4',
+            self::WEBSITE_2_STORE_CODE . '_product:61',
+            self::WEBSITE_2_STORE_CODE . '_product:62',
         ];
 
         $unexpectedPublishedKeys = [
-            self::SECOND_WEBSITE_STORE_CODE . '_product:1', // those products are not available in the second website
-            self::SECOND_WEBSITE_STORE_CODE . '_product:59',
-            self::SECOND_WEBSITE_STORE_CODE . '_product:60'
+            self::WEBSITE_2_STORE_CODE . '_product:1', // those products are not available in the second website
+            self::WEBSITE_2_STORE_CODE . '_product:59',
+            self::WEBSITE_2_STORE_CODE . '_product:60'
         ];
 
         // and: test store-level attribute labels
@@ -68,13 +68,13 @@ class MultistoreProductPublishTest extends BaseDirectDbEntityUpdateTest {
             $this->reindexMview();
 
             // then
-            $this->assertExactDataIsPublished(self::DEFAULT_STORE_CODE . '_product:1', 'original-bag-product.json');
-            $this->assertExactDataIsPublished(self::DEFAULT_STORE_CODE . '_product:4', 'wayfarer-bag-product.json',  [
+            $this->assertExactDataIsPublished(self::STORE_1_CODE . '_product:1', 'original-bag-product.json');
+            $this->assertExactDataIsPublished(self::STORE_1_CODE . '_product:4', 'wayfarer-bag-product.json',  [
                 '"label": "Style"' => '"label": "Style Bags"' // test database contains an overridden label for this attribute for default store (ID=1)
             ]);
-            $this->assertExactDataIsPublished(self::DEFAULT_STORE_CODE . '_product:60', 'original-hoodie-xl-gray-product.json');
-            $this->assertExactDataIsPublished(self::DEFAULT_STORE_CODE . '_product:61', 'original-hoodie-xl-orange-product.json');
-            $this->assertExactDataIsPublished(self::DEFAULT_STORE_CODE . '_product:62', 'original-hoodie-product.json');
+            $this->assertExactDataIsPublished(self::STORE_1_CODE . '_product:60', 'original-hoodie-xl-gray-product.json');
+            $this->assertExactDataIsPublished(self::STORE_1_CODE . '_product:61', 'original-hoodie-xl-orange-product.json');
+            $this->assertExactDataIsPublished(self::STORE_1_CODE . '_product:62', 'original-hoodie-product.json');
 
             $this->assertExactDataIsPublished(self::STORE_2_CODE . '_product:1', 'original-bag-product.json');
             $this->assertExactDataIsPublished(self::STORE_2_CODE . '_product:4', 'wayfarer-bag-product.json', [
@@ -84,9 +84,9 @@ class MultistoreProductPublishTest extends BaseDirectDbEntityUpdateTest {
             $this->assertExactDataIsPublished(self::STORE_2_CODE . '_product:61', 'original-hoodie-xl-orange-product.json');
             $this->assertExactDataIsPublished(self::STORE_2_CODE . '_product:62', 'original-hoodie-product.json');
 
-            $this->assertExactDataIsPublished(self::SECOND_WEBSITE_STORE_CODE . '_product:4', 'wayfarer-bag-product.json');
-            $this->assertExactDataIsPublished(self::SECOND_WEBSITE_STORE_CODE . '_product:61', 'original-hoodie-xl-orange-product.json');
-            $this->assertExactDataIsPublished(self::SECOND_WEBSITE_STORE_CODE . '_product:62', 'original-hoodie-product-in-second-website.json');
+            $this->assertExactDataIsPublished(self::WEBSITE_2_STORE_CODE . '_product:4', 'wayfarer-bag-product.json');
+            $this->assertExactDataIsPublished(self::WEBSITE_2_STORE_CODE . '_product:61', 'original-hoodie-xl-orange-product.json');
+            $this->assertExactDataIsPublished(self::WEBSITE_2_STORE_CODE . '_product:62', 'original-hoodie-product-in-second-website.json');
 
             // and
             foreach ($unexpectedPublishedKeys as $unexpectedPublishedKey) {
@@ -118,52 +118,24 @@ class MultistoreProductPublishTest extends BaseDirectDbEntityUpdateTest {
     public function shouldPublishEnabledAndVisibleProduct() {
         // given: insert two products, with different status/visibility settings
         $sku1 = (string) (new DateTime())->getTimestamp();
-        $product1 = $this->insertProduct(
-            $sku1,
-            [
-                self::DEFAULT_STORE_ID => 'Default name of Product A',
-                self::STORE_1_ID => 'Name of Product A in first store',
-                parent::$store2Id => 'Name of Product A in second store'
-            ],
-            [
-                self::DEFAULT_STORE_ID => Status::STATUS_ENABLED,
-                self::STORE_1_ID => Status::STATUS_DISABLED,
-                parent::$store2Id => Status::STATUS_ENABLED
-            ],
-            [
-                self::DEFAULT_STORE_ID => Visibility::VISIBILITY_NOT_VISIBLE, // enabled but not visible product - should not be exported
-                self::STORE_1_ID => Visibility::VISIBILITY_IN_CATALOG, // disabled but visible product - should not be exported
-                parent::$store2Id => Visibility::VISIBILITY_IN_SEARCH // enabled and visible product - should be exported
-            ]
-        );
+        $product1 = self::$db->insertProduct($sku1, self::$website1Id);
+        $this->setProductProperties($product1, 'Default name of Product A', Status::STATUS_ENABLED, Visibility::VISIBILITY_NOT_VISIBLE);
+        $this->setProductProperties($product1, 'Name of Product A in first store', Status::STATUS_DISABLED, Visibility::VISIBILITY_IN_CATALOG, self::$store1Id);
+        $this->setProductProperties($product1, 'Name of Product A in second store', Status::STATUS_ENABLED, Visibility::VISIBILITY_IN_SEARCH, self::$store2Id);
         $product1Id = $product1->getEntityId();
 
         $sku2 = $sku1.'2';
-        $product2 = $this->insertProduct(
-            $sku2,
-            [
-                self::DEFAULT_STORE_ID => 'Default name of Product B',
-                self::STORE_1_ID => 'Name of Product B in first store',
-                parent::$store2Id => 'Name of Product B in second store'
-            ],
-            [
-                self::DEFAULT_STORE_ID => Status::STATUS_ENABLED,
-                self::STORE_1_ID => Status::STATUS_ENABLED,
-                parent::$store2Id => Status::STATUS_DISABLED
-            ],
-            [
-                self::DEFAULT_STORE_ID => Visibility::VISIBILITY_BOTH, // enabled and visible product - should be exported
-                self::STORE_1_ID => Visibility::VISIBILITY_IN_CATALOG, // enabled and visible product - should be exported
-                parent::$store2Id => Visibility::VISIBILITY_NOT_VISIBLE // disabled and not visible product - should not be exported
-            ]
-        );
+        $product2 = self::$db->insertProduct($sku2, self::$website1Id);
+        $this->setProductProperties($product2, 'Default name of Product B', Status::STATUS_ENABLED, Visibility::VISIBILITY_BOTH);
+        $this->setProductProperties($product2, 'Name of Product B in first store', Status::STATUS_ENABLED, Visibility::VISIBILITY_IN_CATALOG, self::$store1Id);
+        $this->setProductProperties($product2, 'Name of Product B in second store', Status::STATUS_DISABLED, Visibility::VISIBILITY_NOT_VISIBLE, self::$store2Id);
         $product2Id = $product2->getEntityId();
 
         // and
         $expectedKeyForProduct1 = self::STORE_2_CODE . "_product:$product1Id";
-        $expectedKeyForProduct2 = self::DEFAULT_STORE_CODE . "_product:$product2Id";
+        $expectedKeyForProduct2 = self::STORE_1_CODE . "_product:$product2Id";
 
-        $unexpectedKeyForProduct1 = self::DEFAULT_STORE_CODE . "_product:$product1Id";
+        $unexpectedKeyForProduct1 = self::STORE_1_CODE . "_product:$product1Id";
         $unexpectedKeyForProduct2 = self::STORE_2_CODE . "_product:$product2Id";
 
         $this->removeFromStreamX($unexpectedKeyForProduct2, $expectedKeyForProduct2, $unexpectedKeyForProduct1, $expectedKeyForProduct1);
@@ -206,31 +178,14 @@ class MultistoreProductPublishTest extends BaseDirectDbEntityUpdateTest {
         }
     }
 
-    private function insertProduct(string $sku, array $storeIdProductNameMap, array $storeIdProductStatusMap, array $storeIdProductVisibilityMap): EntityIds {
-        $websiteId = self::DEFAULT_WEBSITE_ID;
+    private function setProductProperties(EntityIds $product, string $name, int $status, int $visibility, int $storeId = self::DEFAULT_STORE_ID): void {
         $nameAttrId = self::$db->getProductAttributeId('name');
         $statusAttrId = self::$db->getProductAttributeId('status');
         $visibilityAttrId = self::$db->getProductAttributeId('visibility');
 
-        // 1. Create product
-        $product = self::$db->insertProduct($sku, $websiteId);
-
-        // 2. Set default and store-scoped names for the product
-        foreach ($storeIdProductNameMap as $storeId => $productName) {
-            self::$db->insertVarcharProductAttribute($product, $nameAttrId, $storeId, $productName);
-        }
-
-        // 3. Set default and store-scoped statuses for the product
-        foreach ($storeIdProductStatusMap as $storeId => $productStatus) {
-            self::$db->insertIntProductAttribute($product, $statusAttrId, $storeId, $productStatus);
-        }
-
-        // 4. Set default and store-scoped visibilities for the product
-        foreach ($storeIdProductVisibilityMap as $storeId => $productVisibility) {
-            self::$db->insertIntProductAttribute($product, $visibilityAttrId, $storeId, $productVisibility);
-        }
-
-        return $product;
+        self::$db->insertVarcharProductAttribute($product, $nameAttrId, $name, $storeId);
+        self::$db->insertIntProductAttribute($product, $statusAttrId, $status, $storeId);
+        self::$db->insertIntProductAttribute($product, $visibilityAttrId, $visibility, $storeId);
     }
 
     private function deleteProduct(EntityIds $productIds): void {

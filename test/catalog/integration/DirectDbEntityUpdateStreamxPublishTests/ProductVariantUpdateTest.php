@@ -33,7 +33,7 @@ class ProductVariantUpdateTest extends BaseDirectDbEntityUpdateTest {
         $visibleChildProductIds = array_map(function ($product) {
             return $product->getEntityIds();
         }, $visibleChildProducts);
-        self::$db->setProductsVisibleInStore(self::STORE_1_ID, ...$visibleChildProductIds);
+        self::$db->setProductsVisibleInStore(self::$store1Id, ...$visibleChildProductIds);
 
         // and
         $expectedParentProductKey = self::productKey($parentProductId);
@@ -65,7 +65,7 @@ class ProductVariantUpdateTest extends BaseDirectDbEntityUpdateTest {
         } finally {
             self::$db->renameProduct($parentProductId, self::PARENT_PRODUCT_NAME);
             // restore default visibility of child products
-            self::$db->unsetProductsVisibleInStore(self::STORE_1_ID, ...$visibleChildProductIds);
+            self::$db->unsetProductsVisibleInStore(self::$store1Id, ...$visibleChildProductIds);
         }
     }
 
@@ -74,11 +74,11 @@ class ProductVariantUpdateTest extends BaseDirectDbEntityUpdateTest {
         $childProductId = self::$db->getProductId(self::CHILD_PRODUCT_NAME);
         try {
             // make the variant visible at store level, so it can be published
-            self::$db->setProductsVisibleInStore(self::STORE_1_ID, $childProductId);
+            self::$db->setProductsVisibleInStore(self::$store1Id, $childProductId);
             $this->testPublishingWhenVariantIsEdited(true);
         } finally {
             // restore no visibility for variant
-            self::$db->unsetProductsVisibleInStore(self::STORE_1_ID, $childProductId);
+            self::$db->unsetProductsVisibleInStore(self::$store1Id, $childProductId);
         }
     }
 

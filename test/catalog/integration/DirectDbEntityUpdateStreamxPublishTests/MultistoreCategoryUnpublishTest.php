@@ -16,7 +16,7 @@ class MultistoreCategoryUnpublishTest extends BaseDirectDbEntityUpdateTest {
         $isActiveAttributeId = self::$db->getCategoryAttributeId('is_active');
 
         // and: prepare expected keys
-        $keyForStore1 = self::categoryKey($category, self::DEFAULT_STORE_CODE);
+        $keyForStore1 = self::categoryKey($category, self::STORE_1_CODE);
         $keyForStore2 = self::categoryKey($category, self::STORE_2_CODE);
         $this->removeFromStreamX($keyForStore1, $keyForStore2);
 
@@ -30,7 +30,7 @@ class MultistoreCategoryUnpublishTest extends BaseDirectDbEntityUpdateTest {
             $this->assertExactDataIsPublished($keyForStore2, $validationFile);
 
             // when 2: disable the category for store 2
-            self::$db->insertIntCategoryAttribute($category, $isActiveAttributeId, self::$store2Id, 0);
+            self::$db->insertIntCategoryAttribute($category, $isActiveAttributeId, 0, self::$store2Id);
             $this->reindexMview();
 
             // then
