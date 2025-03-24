@@ -209,7 +209,7 @@ abstract class BaseAttributeData implements DataProviderInterface
 
     private function loadRequiredAttributesMap(array $attributeCodes, int $storeId): array
     {
-        $attributeDefinitions = $this->loadAttributeDefinitions->loadAttributeDefinitionsByCodes($attributeCodes, $storeId); // TODO consider merging loadAttributesData() with loadAttributeDefinitionsByCodes() to load both attribute data and definitions in a single call
+        $attributeDefinitions = $this->loadAttributeDefinitions->loadAttributeDefinitionsByCodes($attributeCodes, $storeId);
 
         $attributeDefinitionsMap = [];
         foreach ($attributeDefinitions as $attributeDefinition) {
