@@ -139,41 +139,53 @@ class Category
 
     public function getCategoriesBaseSelect(int $storeId): Select
     {
-        $resource = $this->resource;
         $entityTable = $this->categoryMetaData->getEntityTable();
-        $linkField = $this->categoryMetaData->getLinkField();
 
         $select = $this->getConnection()
             ->select()
-            ->from(
-                ['entity' => $entityTable], // alias for the catalog_category_entity table, to use in joins
-                ['parent_id', 'path'] // columns to select
-            )->columns( // select also entity_id column, but alias it to id
-                ['id' => 'entity_id']
-            )->joinLeft( // join eav_entity_type table to read entity_type_id
-                ['e' => $resource->getTableName('eav_entity_type')],
-                "e.entity_table = '$entityTable'",
-                [] // don't include any columns in the query results
-            )->joinLeft( // join eav_attribute table to read category name attribute definition
-                ['name_attr' => $resource->getTableName('eav_attribute')],
-                "name_attr.attribute_code = 'name' AND name_attr.entity_type_id = e.entity_type_id",
-                [] // don't include any columns in the query results
-            )->joinLeft( // join eav_attribute table to read category's url_key definition
-                ['url_key_attr' => $resource->getTableName('eav_attribute')],
-                "url_key_attr.attribute_code = 'url_key' AND url_key_attr.entity_type_id = e.entity_type_id",
-                [] // don't include any columns in the query results
-            )->joinLeft( // join catalog_category_entity_varchar table to read actual category name
-                ['category_name_attr' => $resource->getTableName('catalog_category_entity_varchar')],
-                "category_name_attr.$linkField = entity.$linkField AND category_name_attr.attribute_id = name_attr.attribute_id",
-                ['name' => 'value'] // include attr value as "name" in the query results
-            )->joinLeft( // join catalog_category_entity_varchar table to read actual category url_key
-                ['category_url_key_attr' => $resource->getTableName('catalog_category_entity_varchar')],
-                "category_url_key_attr.$linkField = entity.$linkField AND category_url_key_attr.attribute_id = url_key_attr.attribute_id",
-                ['url_key' => 'value'] // include attr value as "url_key" in the query results
-            );
+            ->from(['entity' => $entityTable], [
+                'parent_id',
+                'path',
+                'id' => 'entity_id'
+            ]);
+
+        // select category name (higher priority for store-level name)
+        $this->joinAttributesTable($select, 'name', 'name_attr');
+        $this->joinAttributeValuesTable($select, 'default_name', 'name_attr', 0);
+        $this->joinAttributeValuesTable($select, 'store_name', 'name_attr', $storeId);
+        $select->columns(['name' => 'COALESCE(store_name.value, default_name.value)']);
+
+        // select url key (higher priority for store-level key)
+        $this->joinAttributesTable($select, 'url_key', 'url_key_attr');
+        $this->joinAttributeValuesTable($select, 'default_url_key', 'url_key_attr', 0);
+        $this->joinAttributeValuesTable($select, 'store_url_key', 'url_key_attr', $storeId);
+        $select->columns(['url_key' => 'COALESCE(store_url_key.value, default_url_key.value)']);
 
         $this->eligibleCategorySelectModifier->modify($select, $storeId);
         return $select;
+    }
+
+    private function joinAttributesTable(Select $select, string $attributeCode, string $tableAlias): void
+    {
+        $entityTypeId = $this->categoryMetaData->getEntityTypeId();
+        $select->joinLeft(
+            [$tableAlias => $this->resource->getTableName('eav_attribute')],
+            "$tableAlias.attribute_code = '$attributeCode'
+                AND $tableAlias.entity_type_id = $entityTypeId",
+            []
+        );
+    }
+
+    private function joinAttributeValuesTable(Select $select, string $tableAlias, string $attributesTableAlias, int $storeId): void
+    {
+        $linkField = $this->categoryMetaData->getLinkField();
+        $select->joinLeft(
+            [$tableAlias => $this->resource->getTableName('catalog_category_entity_varchar')],
+            "$tableAlias.$linkField = entity.$linkField
+                AND $tableAlias.attribute_id = $attributesTableAlias.attribute_id
+                AND $tableAlias.store_id = $storeId",
+            []
+        );
     }
 
     private function getConnection(): AdapterInterface
