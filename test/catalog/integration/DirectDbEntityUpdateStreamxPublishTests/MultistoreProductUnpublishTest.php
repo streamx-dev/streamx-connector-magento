@@ -27,7 +27,7 @@ class MultistoreProductUnpublishTest extends BaseDirectDbEntityUpdateTest {
 
         try {
             // when 1: perform any change in the product, to trigger publishing it from all stores
-            self::$db->execute("UPDATE catalog_product_entity SET attribute_set_id = attribute_set_id + 1 WHERE entity_id = {$product->getEntityId()}");
+            self::$db->productDummyUpdate($product);
             $this->reindexMview();
 
             // then
@@ -53,7 +53,7 @@ class MultistoreProductUnpublishTest extends BaseDirectDbEntityUpdateTest {
             $this->assertAllPublished([$keyForStore1, $keyForStore2, $keyForSecondWebsiteStore], $validationFile);
         } finally {
             // restore DB changes performed by the test, in case of any assertion failed
-            self::$db->execute("UPDATE catalog_product_entity SET attribute_set_id = attribute_set_id - 1 WHERE entity_id = {$product->getEntityId()}");
+            self::$db->revertProductDummyUpdate($product);
             self::$db->deleteIntProductAttribute($product, $statusAttributeId, self::$store1Id);
             self::$db->deleteIntProductAttribute($product, $visibilityAttributeId, self::$store2Id);
             self::$db->addProductToWebsite($product, self::$website2Id);

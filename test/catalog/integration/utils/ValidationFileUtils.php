@@ -41,7 +41,7 @@ trait ValidationFileUtils  {
 
     private function replaceRegexes(string $json, array $regexReplacements): string {
         foreach ($regexReplacements as $regex => $replacement) {
-            $json = preg_replace("/$regex/m", $replacement, $json);
+            $json = preg_replace("|$regex|m", $replacement, $json);
         }
         return $json;
     }
