@@ -17,7 +17,7 @@ use StreamX\ConnectorCore\Client\StreamxClientConfiguration;
  * 2. StreamX Connector must be deployed to the Magento instance
  * 3. StreamX Connector must be enabled and configured in Magento (see how-to-setup-local-development-environment.md)
  * 4. StreamX must be running (test/resources/mesh.yaml as minimal mesh setup)
- * 5. The add-rest-ingestion-to-magento-network.sh script must be executed
+ * 5. scripts/add-rest-ingestion-to-magento-network.sh must be executed
  */
 abstract class BaseStreamxTest extends TestCase {
 

@@ -5,7 +5,7 @@ namespace StreamX\ConnectorTestTools\Impl;
 trait CoverageMeasurementTraits {
 
     protected function executeWithCoverageMeasurement(callable $customCode): string {
-        $xdebugMode = ini_get('xdebug.mode');
+        $xdebugMode = getenv('XDEBUG_MODE');
         $isCoverageMeasurementEnabled = str_contains($xdebugMode, 'coverage');
 
         if ($isCoverageMeasurementEnabled) {
