@@ -138,7 +138,7 @@ final class CodeCoverageReportGenerator {
             system("rm -rf " . escapeshellarg($dir));
         }
         mkdir($dir, 0777, true);
-        echo "Code coverage report directory created: $dir/index.html\n";
+        echo "Code coverage report created: $dir/index.html\n";
         return $dir;
     }
 
