@@ -34,4 +34,19 @@ final class FileUtils {
         $sourceFileAbsolutePath = "$projectRootDir/$sourceFilePathRelativeToProjectRootDir";
         return file_get_contents($sourceFileAbsolutePath);
     }
+
+    public static function readPropertiesFile(string $absolutePath): array {
+        $properties = [];
+
+        $file = fopen($absolutePath, "r");
+        while (($line = fgets($file)) !== false) {
+            if (str_contains($line, "=")) {
+                $keyAndValue = explode("=", $line);
+                $properties[trim($keyAndValue[0])] = trim($keyAndValue[1]);
+            }
+        }
+        fclose($file);
+
+        return $properties;
+    }
 }

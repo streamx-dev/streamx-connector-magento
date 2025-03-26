@@ -18,6 +18,12 @@ final class CodeCoverageReportGenerator {
 
     private const STREAMX_CONNECTOR_ROOT_DIR_IN_MAGENTO_SERVER = '/var/www/html/app/code/StreamX/Connector';
 
+    public static function isCoverageMeasurementEnabledOnMagentoServer(): bool {
+        $magentoFolder = FileUtils::findFolder('magento');
+        $properties = FileUtils::readPropertiesFile("$magentoFolder/env/phpfpm.env");
+        return array_key_exists('XDEBUG_MODE', $properties) && $properties['XDEBUG_MODE'] === 'coverage';
+    }
+
     public static function generateSingleTestCodeCoverageReport(TestCase $caller): void {
         self::generateCodeCoverageReport($caller, false);
     }
@@ -27,7 +33,7 @@ final class CodeCoverageReportGenerator {
     }
 
     private static function generateCodeCoverageReport(TestCase $caller, bool $includeCoverageDataFromPreviousTests): void {
-        if (getenv('GENERATE_CODE_COVERAGE_REPORT') !== 'true') {
+        if (!self::isCoverageMeasurementEnabledOnMagentoServer()) {
             return;
         }
 
@@ -161,7 +167,7 @@ final class CodeCoverageReportGenerator {
     }
 
     public static function hideCoverageFilesFromPreviousTest(): void {
-        if (getenv('GENERATE_CODE_COVERAGE_REPORT') !== 'true') {
+        if (!self::isCoverageMeasurementEnabledOnMagentoServer()) {
             return;
         }
 
