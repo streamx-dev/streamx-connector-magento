@@ -83,9 +83,9 @@ bin/composer require \
 # Enable all modules
 bin/magento module:enable --all
 cd ..
-bash reload-magento-modules.sh
+bash scripts/reload-magento-modules.sh
 
 echo "Installation done. Next steps:"
 echo " - turn on your local StreamX instance"
-echo " - execute the 'add-rest-ingestion-to-magento-network.sh' script"
+echo " - execute 'scripts/add-rest-ingestion-to-magento-network.sh'"
 echo " - run all tests to verify installation"

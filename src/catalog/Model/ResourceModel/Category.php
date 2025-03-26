@@ -33,6 +33,7 @@ class Category
     public function getCategories(int $storeId, array $categoryIds = [], int $fromId = 0, int $limit = 1000): array
     {
         $select = $this->getCategoriesBaseSelect($storeId);
+        $this->eligibleCategorySelectModifier->modify($select, $storeId);
 
         if (!empty($categoryIds)) {
             $select->where("entity.entity_id IN (?)", $categoryIds);
@@ -42,7 +43,58 @@ class Category
         $select->limit($limit);
         $select->order("entity.entity_id ASC");
 
-        return $this->getConnection()->fetchAll($select);
+        $categories = $this->getConnection()->fetchAll($select);
+        $this->addParents($categories, $storeId);
+
+        return $categories;
+    }
+
+    private function addParents(array &$categories, int $storeId): void
+    {
+        $allParentCategoryIds = $this->collectAllParentCategoryIds($categories);
+        if (empty($allParentCategoryIds)) {
+            return;
+        }
+
+        $parentCategoriesById = $this->loadCategoriesMapById($storeId, $allParentCategoryIds);
+
+        foreach ($categories as &$category) {
+            $categoryIds = explode('/', $category['path']);
+            array_pop($categoryIds); // remove own ID (last element of path)
+            $this->addParent($category, $categoryIds, $parentCategoriesById);
+        }
+    }
+
+    private function addParent(array &$category, array $categoryIds, array $categoriesById): void
+    {
+        if (!empty($categoryIds)) {
+            $category['parent'] = $categoriesById[array_pop($categoryIds)]; // last item in path is the direct parent ID
+            $this->addParent($category['parent'], $categoryIds, $categoriesById);
+        }
+    }
+
+    private function collectAllParentCategoryIds(array $categories): array
+    {
+        $allParentCategoryIds = [];
+        foreach ($categories as $category) {
+            $categoryIds = explode('/', $category['path']);
+            array_pop($categoryIds); // leave only parents
+            array_push($allParentCategoryIds, ...$categoryIds);
+        }
+        return array_unique($allParentCategoryIds);
+    }
+
+    private function loadCategoriesMapById(int $storeId, array $categoryIds): array
+    {
+        $select = $this->getCategoriesBaseSelect($storeId)
+            ->where("entity.entity_id IN (?)", $categoryIds);
+        $categories = $this->getConnection()->fetchAll($select);
+
+        $categoriesById = [];
+        foreach ($categories as $category) {
+            $categoriesById[$category['id']] = $category;
+        }
+        return $categoriesById;
     }
 
     /**
@@ -161,7 +213,6 @@ class Category
         $this->joinAttributeValuesTable($select, 'store_url_key', 'url_key_attr', $storeId);
         $select->columns(['url_key' => 'COALESCE(store_url_key.value, default_url_key.value)']);
 
-        $this->eligibleCategorySelectModifier->modify($select, $storeId);
         return $select;
     }
 

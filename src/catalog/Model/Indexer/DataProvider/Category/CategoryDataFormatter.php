@@ -2,11 +2,13 @@
 
 namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Category;
 
-use StreamX\ConnectorCatalog\Model\ResourceModel\Category as CategoryResource;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category\Children as CategoryChildrenResource;
 use StreamX\ConnectorCatalog\Model\SlugGenerator;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 
+/**
+ * Adds subcategories data and formats all as categories tree
+ */
 class CategoryDataFormatter implements DataProviderInterface
 {
     private const ID = 'id';
@@ -16,16 +18,13 @@ class CategoryDataFormatter implements DataProviderInterface
     private const SUBCATEGORIES = 'subcategories';
     private const PARENT = 'parent';
 
-    private CategoryResource $resourceModel;
     private CategoryChildrenResource $childrenResourceModel;
     private SlugGenerator $slugGenerator;
 
     public function __construct(
-        CategoryResource $resource,
         CategoryChildrenResource $childrenResource,
         SlugGenerator $slugGenerator
     ) {
-        $this->resourceModel = $resource;
         $this->childrenResourceModel = $childrenResource;
         $this->slugGenerator = $slugGenerator;
     }
@@ -34,44 +33,26 @@ class CategoryDataFormatter implements DataProviderInterface
     {
         foreach ($indexData as &$categoryData) {
             $this->prepareCategory($categoryData);
+
             $children = $this->childrenResourceModel->loadChildren($categoryData['path'], $storeId);
             $groupedChildrenById = $this->groupChildrenById($children);
-            unset($children);
-
             $this->addChildrenData($categoryData, $groupedChildrenById, $storeId);
-        }
 
-        $allCategoriesMap = $this->getAllCategoriesMap($storeId);
-        $this->setParentCategory($indexData, $allCategoriesMap);
-        $this->removeUnnecessaryFieldsRecursively($indexData);
-    }
-
-    private function removeUnnecessaryFieldsRecursively(array &$categories): void
-    {
-        foreach ($categories as &$category) {
-            $this->removeUnnecessaryFields($category);
-            if (isset($category[self::PARENT])) {
-                $this->removeUnnecessaryFields($category[self::PARENT]);
-            }
-            $this->removeUnnecessaryFieldsRecursively($category[self::SUBCATEGORIES]);
+            $this->removeUnnecessaryFields($categoryData);
         }
     }
 
     private function removeUnnecessaryFields(array &$category): void
     {
         unset($category['url_key'], $category['path'], $category['parent_id']);
-    }
-
-    private function setParentCategory(array &$categories, array $allCategoriesMap): void
-    {
-        foreach ($categories as &$category) {
-            $parentCategoryId = (int) $category['parent_id'];
-            if (isset($allCategoriesMap[$parentCategoryId])) { // root category may not be present in the results, so leave parent as null
-                $parentCategory = $allCategoriesMap[$parentCategoryId];
-                $this->prepareCategory($parentCategory);
-                $category[self::PARENT] = $parentCategory;
+        if (isset($category[self::PARENT])) {
+            $this->removeUnnecessaryFields($category[self::PARENT]);
+            $this->moveParentToBottom($category);
+        }
+        if (isset($category[self::SUBCATEGORIES])) {
+            foreach ($category[self::SUBCATEGORIES] as &$subcategory) {
+                unset($subcategory['url_key'], $subcategory['path'], $subcategory['parent_id']);
             }
-            $this->setParentCategory($category[self::SUBCATEGORIES], $allCategoriesMap);
         }
     }
 
@@ -121,21 +102,20 @@ class CategoryDataFormatter implements DataProviderInterface
         $categoryData[self::ID] = (int) $categoryData['id'];
         $categoryData[self::SLUG] = $this->computeSlug($categoryData);
         $categoryData[self::LABEL] = $categoryData[self::NAME];
+        if (isset($categoryData[self::PARENT])) {
+            $this->prepareCategory($categoryData[self::PARENT]);
+        }
+    }
+
+    private function moveParentToBottom(array &$categoryData): void
+    {
+        $parent = $categoryData[self::PARENT];
+        unset($categoryData[self::PARENT]);
+        $categoryData[self::PARENT] = $parent;
     }
 
     function computeSlug(array $categoryDTO): string
     {
         return $this->slugGenerator->compute($categoryDTO);
-    }
-
-    private function getAllCategoriesMap(int $storeId): array
-    {
-        $allCategories = $this->resourceModel->getCategories($storeId);
-
-        $allCategoriesMap = [];
-        foreach ($allCategories as $category) {
-            $allCategoriesMap[$category['id']] = $category;
-        }
-        return $allCategoriesMap;
     }
 }
