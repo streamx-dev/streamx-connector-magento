@@ -35,6 +35,9 @@ sed -i '' 's/8080:80/8090:80/g' compose.dev.yaml
 ### Enable debugging
 printf "\nXDEBUG_MODE=debug" >> env/phpfpm.env
 
+### Disable warnings about weak admin password in Magento UI
+sed -i '' 's/password123/P@SSw0rd123/g' env/magento.env
+
 ### Download source code and perform pre-installation.
 # Depending on your repo.magento.com permissions provided in auth.json file, available versions for the below command are: community and enterprise
 bin/download community 2.4.7-p3
