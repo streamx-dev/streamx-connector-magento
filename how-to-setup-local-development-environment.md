@@ -204,15 +204,13 @@ SET GLOBAL general_log = 'OFF';
 
 ## Measuring the Connector's code coverage on a running Magento PHP server
  - in PHP, coverage can be measured for a Http Request (all code executed by the code that handles the request is measured)
- - some of the test REST endpoints from `connector-test-tools` are enriched with measuring coverage measurement (you can add more)
- - coverage data (returned by `xdebug`) is originally an associative array, but the endpoints return it json-serialized to a string
- - integration tests generate coverage reports if you start them with `GENERATE_CODE_COVERAGE_REPORT=true` env variable added to your Run/Debug configuration for the tests
+ - test REST endpoints from `connector-test-tools` are enriched with measuring coverage measurement (if the env var `XDEBUG_MODE` on magento server is set to `coverage`)
+ - coverage data (returned by `xdebug`) is written to a file
+ - integration tests then use that file to generate html coverage reports if you start them with `GENERATE_CODE_COVERAGE_REPORT=true` env variable added to your Run/Debug configuration for the tests
  - the coverage reports are generated to `target/coverage-reports` in the root directory of the project, with folder names corresponding to test names
  - open `index.html` of a report in your browser for a report in clickable / navigable form
- - Known issues:
-   - in summary view, the reports display classes as 100% covered, but when you open any class, the coverage is correct (green areas mark the actual covered code)
  - TODO:
-   - it should be possible to measure summary view, by dumping raw results from each test, and then calling `$codeCoverage->append` on all of them
+   - it should be possible to measure summary coverage by merging code coverage data after running all tests
 
 ## Troubleshooting when integration tests are randomly not passing
 You can try those methods:

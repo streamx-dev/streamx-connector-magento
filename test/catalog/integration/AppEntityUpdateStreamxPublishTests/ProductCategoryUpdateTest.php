@@ -2,7 +2,6 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
-use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageReportGenerator;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 
@@ -48,14 +47,10 @@ class ProductCategoryUpdateTest extends BaseAppEntityUpdateTest {
     }
 
     private function changeProductCategory(EntityIds $productId, int $oldCategoryId, int $newCategoryId): void {
-        $coverage = MagentoEndpointsCaller::call('product/category/change', [
+        MagentoEndpointsCaller::call('product/category/change', [
             'productId' => $productId->getEntityId(),
             'oldCategoryId' => $oldCategoryId,
             'newCategoryId' => $newCategoryId
         ]);
-
-        if (getenv('GENERATE_CODE_COVERAGE_REPORT') === 'true') {
-            CodeCoverageReportGenerator::generateCodeCoverageReport($coverage, $this);
-        }
     }
 }
