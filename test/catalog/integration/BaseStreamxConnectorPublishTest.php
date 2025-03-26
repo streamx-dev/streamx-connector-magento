@@ -9,6 +9,7 @@ use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests\BaseAppEntityUpdateTest;
 use StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests\BaseDirectDbEntityUpdateTest;
+use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageReportGenerator;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoIndexerOperationsExecutor;
@@ -20,8 +21,6 @@ use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
  *  Note: see StoresControllerImpl for additional stores and website created for these tests
  */
 abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
-
-    private const MAGENTO_REST_API_BASE_URL = 'https://magento.test:444/rest/all/V1';
 
     public const DEFAULT_STORE_ID = 0;
 
@@ -143,6 +142,7 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
         $ingestedKeys = $this->logFileUtils->getPublishedAndUnpublishedKeys();
         echo 'Keys ingested during the test:' . PHP_EOL;
         echo $ingestedKeys->formatted() . PHP_EOL;
+        CodeCoverageReportGenerator::generateCodeCoverageReport($this);
     }
 
     public static function productKey(EntityIds $productId, string $storeCode = self::STORE_1_CODE): string {

@@ -3,7 +3,6 @@
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\test\integration\BaseStreamxConnectorPublishTest;
-use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageReportGenerator;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 
 /**
@@ -17,12 +16,8 @@ abstract class BaseDirectDbEntityUpdateTest extends BaseStreamxConnectorPublishT
     }
 
     protected function reindexMview(): void {
-        $coverage = MagentoEndpointsCaller::call('mview/reindex', [
+        MagentoEndpointsCaller::call('mview/reindex', [
             'indexerViewId' => $this->viewId()
         ]);
-
-        if (getenv('GENERATE_CODE_COVERAGE_REPORT') === 'true') {
-            CodeCoverageReportGenerator::generateCodeCoverageReport($coverage, $this);
-        }
     }
 }
