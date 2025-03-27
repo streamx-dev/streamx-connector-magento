@@ -38,22 +38,31 @@ class CategoryDataFormatter implements DataProviderInterface
             $groupedChildrenById = $this->groupChildrenById($children);
             $this->addChildrenData($categoryData, $groupedChildrenById, $storeId);
 
-            $this->removeUnnecessaryFields($categoryData);
+            $this->adjustFields($categoryData);
         }
     }
 
-    private function removeUnnecessaryFields(array &$category): void
+    /**
+     * Adjusts the produced data to match the required schema
+     */
+    private function adjustFields(array &$category): void
     {
-        unset($category['url_key'], $category['path'], $category['parent_id']);
+        self::removeUnnecessaryFieldsAndSetIdType($category);
         if (isset($category[self::PARENT])) {
-            $this->removeUnnecessaryFields($category[self::PARENT]);
+            $this->adjustFields($category[self::PARENT]);
             $this->moveParentToBottom($category);
         }
         if (isset($category[self::SUBCATEGORIES])) {
             foreach ($category[self::SUBCATEGORIES] as &$subcategory) {
-                unset($subcategory['url_key'], $subcategory['path'], $subcategory['parent_id']);
+                self::removeUnnecessaryFieldsAndSetIdType($subcategory);
             }
         }
+    }
+
+    private function removeUnnecessaryFieldsAndSetIdType(array &$category): void
+    {
+        $category[self::ID] = (string)$category[self::ID];
+        unset($category['url_key'], $category['path'], $category['parent_id']);
     }
 
     private function addChildrenData(array &$category, array $groupedChildren, int $storeId): void

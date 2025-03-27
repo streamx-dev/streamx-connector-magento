@@ -55,7 +55,7 @@ class ProductVariantUpdateTest extends BaseDirectDbEntityUpdateTest {
             foreach ($visibleChildProducts as $childProduct) {
                 $entityIds = $childProduct->getEntityIds();
                 $publishedChildProduct = $this->downloadContentAtKey(self::productKey($entityIds));
-                $this->assertStringContainsString('"id":' . $entityIds->getEntityId(), $publishedChildProduct);
+                $this->assertStringContainsString('"id":"' . $entityIds->getEntityId() . '"', $publishedChildProduct);
                 $this->assertStringContainsString('"name":"' . $childProduct->getName() . '"', $publishedChildProduct);
             }
             foreach ($invisibleChildProducts as $childProduct) {

@@ -1,6 +1,6 @@
 {
   "sku": "24-MB01",
-  "id": 1,
+  "id": "1",
   "lang": "en",
   "attributes": [
     {
@@ -29,17 +29,17 @@
   "slug": "name-modified-for-testing-was-joust-duffle-bag-1",
   "categories": [
     {
-      "id": 3,
+      "id": "3",
       "name": "Gear",
       "slug": "gear-3",
       "label": "Gear",
       "parent": {
-        "id": 2,
+        "id": "2",
         "name": "Default Category",
         "slug": "default-category-2",
         "label": "Default Category",
         "parent": {
-          "id": 1,
+          "id": "1",
           "name": "Root Catalog",
           "slug": "root-catalog-1",
           "label": "Root Catalog"
@@ -47,22 +47,22 @@
       }
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Bags",
       "slug": "bags-4",
       "label": "Bags",
       "parent": {
-        "id": 3,
+        "id": "3",
         "name": "Gear",
         "slug": "gear-3",
         "label": "Gear",
         "parent": {
-          "id": 2,
+          "id": "2",
           "name": "Default Category",
           "slug": "default-category-2",
           "label": "Default Category",
           "parent": {
-            "id": 1,
+            "id": "1",
             "name": "Root Catalog",
             "slug": "root-catalog-1",
             "label": "Root Catalog"

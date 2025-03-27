@@ -78,7 +78,7 @@ class StreamxConnectorClientAvailabilityTest extends BaseStreamxTest {
         $entities = [];
         for ($i = 0; $i < $entitiesToPublishInBatch; $i++) {
             $entities[] = $entity;
-            $entities[$i]['id'] = $i;
+            $entities[$i]['id'] = strval($i);
         }
 
         self::removeFromStreamX(...array_map(function ($id) {
@@ -94,7 +94,7 @@ class StreamxConnectorClientAvailabilityTest extends BaseStreamxTest {
         // then
         for ($i = 0; $i < $entitiesToPublishInBatch; $i++) {
             $this->assertExactDataIsPublished(self::expectedStreamxProductKey($i), 'original-hoodie-product.json', [
-                '^    "id": '. $i . ',' => '    "id": 62,' // 62 is the product ID in validation file
+                '^    "id": "'. $i . '",' => '    "id": "62",' // 62 is the product ID in validation file
             ]);
         }
 

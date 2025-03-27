@@ -1,6 +1,6 @@
 {
   "sku": "1736952738",
-  "id": 2659,
+  "id": "2659",
   "lang": "en",
   "attributes": [
     {
@@ -102,22 +102,22 @@
   "slug": "the-new-great-watch-2659",
   "categories": [
     {
-      "id": 6,
+      "id": "6",
       "name": "Watches",
       "slug": "watches-6",
       "label": "Watches",
       "parent": {
-        "id": 3,
+        "id": "3",
         "name": "Gear",
         "slug": "gear-3",
         "label": "Gear",
         "parent": {
-          "id": 2,
+          "id": "2",
           "name": "Default Category",
           "slug": "default-category-2",
           "label": "Default Category",
           "parent": {
-            "id": 1,
+            "id": "1",
             "name": "Root Catalog",
             "slug": "root-catalog-1",
             "label": "Root Catalog"
@@ -126,17 +126,17 @@
       }
     },
     {
-      "id": 37,
+      "id": "37",
       "name": "Sale",
       "slug": "sale-37",
       "label": "Sale",
       "parent": {
-        "id": 2,
+        "id": "2",
         "name": "Default Category",
         "slug": "default-category-2",
         "label": "Default Category",
         "parent": {
-          "id": 1,
+          "id": "1",
           "name": "Root Catalog",
           "slug": "root-catalog-1",
           "label": "Root Catalog"

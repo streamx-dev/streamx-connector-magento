@@ -1,25 +1,25 @@
 {
-  "id": 3,
+  "id": "3",
   "name": "Gear Articles",
   "slug": "gear-articles-3",
   "label": "Gear Articles",
   "subcategories": [
     {
-      "id": 4,
+      "id": "4",
       "name": "Bags",
       "subcategories": [],
       "slug": "bags-4",
       "label": "Bags"
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "Fitness Equipment",
       "subcategories": [],
       "slug": "fitness-equipment-5",
       "label": "Fitness Equipment"
     },
     {
-      "id": 6,
+      "id": "6",
       "name": "Watches",
       "subcategories": [],
       "slug": "watches-6",
@@ -27,12 +27,12 @@
     }
   ],
   "parent": {
-    "id": 2,
+    "id": "2",
     "name": "Default Category",
     "slug": "default-category-2",
     "label": "Default Category",
     "parent": {
-      "id": 1,
+      "id": "1",
       "name": "Root Catalog",
       "slug": "root-catalog-1",
       "label": "Root Catalog"

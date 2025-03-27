@@ -53,7 +53,7 @@ class CategoryData implements DataProviderInterface
 
     private function adjustCategoryFormat(array &$category): void
     {
-        $category['id'] = (int)$category['id'];
+        $category['id'] = (string)$category['id'];
         $category['slug'] = $this->slugGenerator->compute($category);
         $category['label'] = $category['name'];
         unset(

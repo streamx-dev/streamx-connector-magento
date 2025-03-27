@@ -5,8 +5,7 @@ namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 
 /**
- * Use this Data Provider to remove any data added or required by previous providers
- * that is not necessary in the final product to be published.
+ * Use this Data Provider as the last Data Provider, to adjust the produced data to match the required schema
  */
 class DataCleaner implements DataProviderInterface
 {
@@ -20,8 +19,18 @@ class DataCleaner implements DataProviderInterface
     /**
      * @inheritdoc
      */
-    public function addData(array &$indexData, int $storeId): void
-    {
+    public function addData(array &$indexData, int $storeId): void {
+        $this->changeFieldTypes($indexData);
+        $this->removeUnnecessaryFields($indexData);
+    }
+
+    private function changeFieldTypes(array &$indexData): void {
+        foreach ($indexData as &$product) {
+            $product['id'] = (string) $product['id'];
+        }
+    }
+
+    private function removeUnnecessaryFields(array &$indexData): void {
         foreach ($indexData as &$product) {
             foreach (static::FIELDS_TO_REMOVE as $field) {
                 unset($product[$field]);

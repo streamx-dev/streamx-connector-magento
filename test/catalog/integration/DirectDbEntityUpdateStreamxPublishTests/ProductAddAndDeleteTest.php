@@ -36,7 +36,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
             $this->assertExactDataIsPublished($expectedKey, 'added-minimal-product.json', [
                 // provide values for placeholders in the validation file
                 $sku => 'SKU',
-                '"id": ' . $product->getEntityId() => '"id": 123456789',
+                '"id": "' . $product->getEntityId() . '"' => '"id": "123456789"',
                 'The minimal product' => 'PRODUCT_NAME',
                 "the-minimal-product-{$product->getEntityId()}" => 'PRODUCT_SLUG',
                 'Catalog, Search' => 'VISIBILITY'
@@ -73,7 +73,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
             // then
             $publishedJson = $this->assertExactDataIsPublished($expectedKey, 'added-watch-product.json', [
                 // mask variable parts (ids and generated sku)
-                '"id": [0-9]{4}' => '"id": 2659',
+                '"id": "[0-9]{4}"' => '"id": "2659"',
                 '"sku": "[^"]+"' => '"sku": "1736952738"',
                 '"the-new-great-watch-[0-9]+"' => '"the-new-great-watch-2659"',
                 '"option_id": "[0-9]+"' => '"option_id": "9"',
@@ -152,7 +152,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
                 $this->assertExactDataIsPublished("default_product:$productId", 'added-minimal-product.json', [
                     // provide values for placeholders in the validation file
                     $skus[$i] => 'SKU',
-                    '"id": ' . $productId => '"id": 123456789',
+                    '"id": "' . $productId . '"' => '"id": "123456789"',
                     $productName => 'PRODUCT_NAME',
                     $expectedSlug => 'PRODUCT_SLUG',
                     'Catalog, Search' => 'VISIBILITY'
