@@ -38,15 +38,11 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
 
     protected static bool $areTestsInitialized = false;
 
-    protected static MagentoMySqlQueryExecutor $db;
-
     private static array $initialIndexerModes;
-    private static string $originalIndexerMode;
-    private static bool $indexModeNeedsRestoring;
-
     protected static string $testedIndexerName;
     private static string $testedIndexerMode;
 
+    protected static MagentoMySqlQueryExecutor $db;
     private MagentoLogFileUtils $logFileUtils;
 
     public static function setUpBeforeClass(): void {
@@ -100,19 +96,15 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
     }
 
     private static function setIndexerModeInMagento(): void {
-        self::$originalIndexerMode = self::$initialIndexerModes[self::$testedIndexerName];
-
-        if (self::$testedIndexerMode !== self::$originalIndexerMode) {
+        if (self::$testedIndexerMode !== self::$initialIndexerModes[self::$testedIndexerName]) {
             MagentoIndexerOperationsExecutor::setIndexerMode(self::$testedIndexerName, self::$testedIndexerMode);
-            self::$indexModeNeedsRestoring = true;
-        } else {
-            self::$indexModeNeedsRestoring = false;
         }
     }
 
     private static function restoreIndexerModeInMagento(): void {
-        if (self::$indexModeNeedsRestoring) {
-            MagentoIndexerOperationsExecutor::setIndexerMode(self::$testedIndexerName, self::$originalIndexerMode);
+        $initialIndexerMode = self::$initialIndexerModes[self::$testedIndexerName];
+        if (self::$testedIndexerMode !== $initialIndexerMode) {
+            MagentoIndexerOperationsExecutor::setIndexerMode(self::$testedIndexerName, $initialIndexerMode);
         }
     }
 
