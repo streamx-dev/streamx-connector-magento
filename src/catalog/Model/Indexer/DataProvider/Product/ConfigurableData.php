@@ -18,7 +18,7 @@ class ConfigurableData implements DataProviderInterface
         ConfigurableResource $configurableResource,
         ChildProductAttributeData $childProductAttributeDataProvider,
         MediaGalleryData $mediaGalleryDataProvider,
-        PriceData $priceData,
+        IndexedPricesProvider $indexedPricesProvider,
         QuantityData $quantityDataProvider,
         ChildProductDataCleaner $dataCleaner
     ) {
@@ -27,7 +27,7 @@ class ConfigurableData implements DataProviderInterface
         $this->dataProviders = [
             $childProductAttributeDataProvider,
             $mediaGalleryDataProvider,
-            $priceData,
+            $indexedPricesProvider,
             $quantityDataProvider,
             $dataCleaner
         ];
