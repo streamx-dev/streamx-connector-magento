@@ -19,6 +19,10 @@ class CatalogConfig extends BaseConfigurationReader
         return (bool)$this->getGlobalConfigValue('use_url_key_and_id_to_generate_slug');
     }
 
+    public function usePricesIndex(): bool {
+        return (bool)$this->getGlobalConfigValue('use_prices_index');
+    }
+
     public function useCatalogPriceRules(): bool {
         return (bool)$this->getGlobalConfigValue('use_catalog_price_rules');
     }

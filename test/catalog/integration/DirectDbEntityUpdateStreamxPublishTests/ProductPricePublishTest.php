@@ -31,11 +31,40 @@ class ProductPricePublishTest extends BaseDirectDbEntityUpdateTest {
 
             // then
             $publishedProduct = json_decode($this->downloadContentAtKey($expectedKey), true);
-            // TODO: change main impl so that the edited $newPrice is published instead of $defaultPrice:
+            $this->assertPrice($publishedProduct, $newPrice);
+            $this->assertDiscountedPrice($publishedProduct, $newPrice);
+        } finally {
+            $this->changePriceOfProduct($productId, $defaultPrice);
+        }
+    }
+
+    /** @test */
+    public function shouldPublishProductWithPriceEditedDirectlyInDatabase_WhenUsePricesIndex() {
+        // given
+        $productId = self::$db->getProductId('Joust Duffle Bag');
+        $defaultPrice = self::$db->getDecimalProductAttributeValue($productId, 'price');
+        $newPrice = $defaultPrice + 6;
+
+        // and
+        $expectedKey = self::productKey($productId);
+        self::removeFromStreamX($expectedKey);
+
+        // when
+        ConfigurationEditUtils::setConfigurationValue(ConfigurationEditUtils::USE_PRICES_INDEX_PATH, '1');
+        $this->changePriceOfProduct($productId, $newPrice);
+
+        try {
+            // and
+            $this->reindexMview();
+
+            // then
+            $publishedProduct = json_decode($this->downloadContentAtKey($expectedKey), true);
+            // TODO: change main impl so that the edited $newPrice is published instead of $defaultPrice also when using prices index
             $this->assertPrice($publishedProduct, $defaultPrice);
             $this->assertDiscountedPrice($publishedProduct, $defaultPrice);
         } finally {
             $this->changePriceOfProduct($productId, $defaultPrice);
+            ConfigurationEditUtils::restoreConfigurationValue(ConfigurationEditUtils::USE_PRICES_INDEX_PATH);
         }
     }
 
@@ -51,7 +80,10 @@ class ProductPricePublishTest extends BaseDirectDbEntityUpdateTest {
         self::removeFromStreamX($expectedKey);
 
         // when
-        ConfigurationEditUtils::setConfigurationValue(ConfigurationEditUtils::USE_CATALOG_PRICE_RULES_PATH, '1');
+        ConfigurationEditUtils::setConfigurationValues([
+            ConfigurationEditUtils::USE_PRICES_INDEX_PATH => '1',
+            ConfigurationEditUtils::USE_CATALOG_PRICE_RULES_PATH => '1'
+        ]);
         $this->insertCatalogRulePrice($productId, $catalogRulePrice, self::$website1Id);
         self::$db->productDummyUpdate($productId);
 
@@ -66,7 +98,10 @@ class ProductPricePublishTest extends BaseDirectDbEntityUpdateTest {
         } finally {
             self::$db->revertProductDummyUpdate($productId);
             $this->deleteCatalogRulePrice();
-            ConfigurationEditUtils::restoreConfigurationValue(ConfigurationEditUtils::USE_CATALOG_PRICE_RULES_PATH);
+            ConfigurationEditUtils::restoreConfigurationValues([
+                ConfigurationEditUtils::USE_PRICES_INDEX_PATH,
+                ConfigurationEditUtils::USE_CATALOG_PRICE_RULES_PATH,
+            ]);
         }
     }
 

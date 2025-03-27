@@ -5,16 +5,19 @@ namespace StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product;
 use Exception;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
+use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
-use StreamX\ConnectorCatalog\Model\ResourceModel\Product\Prices as Resource;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product\IndexedPrices as Resource;
 
-class PriceData implements DataProviderInterface
+class IndexedPricesProvider implements DataProviderInterface
 {
     private Resource $resourcePriceModel;
+    private CatalogConfig $catalogConfig;
 
-    public function __construct(Resource $resource)
+    public function __construct(Resource $resource, CatalogConfig $catalogConfig)
     {
         $this->resourcePriceModel = $resource;
+        $this->catalogConfig = $catalogConfig;
     }
 
     /**
@@ -24,6 +27,10 @@ class PriceData implements DataProviderInterface
      */
     public function addData(array &$indexData, int $storeId): void
     {
+        if (!$this->catalogConfig->usePricesIndex()) {
+            return;
+        }
+
         $productIds = array_keys($indexData);
         $priceData = $this->resourcePriceModel->loadPriceDataFromPriceIndex($storeId, $productIds);
 

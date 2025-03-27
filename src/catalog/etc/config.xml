@@ -10,6 +10,7 @@
                 <allowed_product_types>simple,configurable,bundle,grouped,virtual</allowed_product_types>
                 <product_attributes>status,visibility,small_image,thumbnail,meta_title,meta_description,price_type,special_price,special_from_date,special_to_date,tax_class_id</product_attributes>
                 <child_product_attributes>small_image,thumbnail,special_price,special_from_date,special_to_date</child_product_attributes>
+                <use_prices_index>0</use_prices_index>
                 <use_catalog_price_rules>0</use_catalog_price_rules>
             </catalog_settings>
         </streamx_connector_settings>

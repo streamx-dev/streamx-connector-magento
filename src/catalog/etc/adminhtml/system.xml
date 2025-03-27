@@ -44,10 +44,18 @@
                     <can_be_empty>1</can_be_empty>
                     <comment>Select which child (variant) product attributes should be exported. Some attributes will always be exported: name, image, price, url_key, media_gallery and attributes used for creating configurable children (like color, size, etc)</comment>
                 </field>
+                <field id="use_prices_index" type="select" translate="label comment" sortOrder="300" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Load indexed prices when publishing products</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If you set this option to No - prices will be loaded directly from the price attribute</comment>
+                </field>
                 <field id="use_catalog_price_rules" type="select" translate="label comment" sortOrder="350" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Apply catalog price rules when computing discounted prices</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>If you use Catalog Prices Rules, set this option to Yes</comment>
+                    <depends>
+                        <field id="streamx_connector_settings/catalog_settings/use_prices_index">1</field>
+                    </depends>
                 </field>
             </group>
         </section>
