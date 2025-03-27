@@ -35,6 +35,7 @@ class UpdateCategoryDataPlugin
         $categoryId = (int) $category->getId();
 
         if (!$category->isObjectNew() && $originalUrlKey !== $urlKey) {
+            // TODO this scenario is not covered by any test
             $categoryIds = $this->resourceModel->getAllSubCategories($categoryId);
         }
 

@@ -205,12 +205,11 @@ SET GLOBAL general_log = 'OFF';
 ## Measuring the Connector's code coverage on a running Magento PHP server
  - in PHP, coverage can be measured for a Http Request (all code executed by the code that handles the request is measured)
  - test REST endpoints from `connector-test-tools` are enriched with measuring coverage measurement (if the env var `XDEBUG_MODE` on magento server is set to `coverage`)
+ - you can set it to `coverage` by executing `scripts/switch-magento-xdebug-to-coverage.sh`
  - coverage data (returned by `xdebug`) is written to a file
- - integration tests then use that file to generate html coverage reports if you start them with `GENERATE_CODE_COVERAGE_REPORT=true` env variable added to your Run/Debug configuration for the tests
+ - integration tests then use that file to generate html coverage reports
  - the coverage reports are generated to `target/coverage-reports` in the root directory of the project, with folder names corresponding to test names
- - open `index.html` of a report in your browser for a report in clickable / navigable form
- - TODO:
-   - it should be possible to measure summary coverage by merging code coverage data after running all tests
+ - the path to `index.html` with coverage report is displayed in the console after a test finishes
 
 ## Troubleshooting when integration tests are randomly not passing
 You can try those methods:

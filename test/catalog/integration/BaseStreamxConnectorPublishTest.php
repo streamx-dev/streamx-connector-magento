@@ -136,13 +136,14 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
     protected function setUp(): void {
         echo "Starting {$this->getName()}\n";
         $this->logFileUtils = new MagentoLogFileUtils();
+        CodeCoverageReportGenerator::hideCoverageFilesFromPreviousTest();
     }
 
     protected function tearDown(): void {
         $ingestedKeys = $this->logFileUtils->getPublishedAndUnpublishedKeys();
         echo 'Keys ingested during the test:' . PHP_EOL;
         echo $ingestedKeys->formatted() . PHP_EOL;
-        CodeCoverageReportGenerator::generateCodeCoverageReport($this);
+        CodeCoverageReportGenerator::generateSingleTestCodeCoverageReport($this);
     }
 
     public static function productKey(EntityIds $productId, string $storeCode = self::STORE_1_CODE): string {
