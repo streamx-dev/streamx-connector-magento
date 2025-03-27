@@ -13,7 +13,7 @@ use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 class ProductCategoryUpdateTest extends BaseDirectDbEntityUpdateTest {
 
     /** @test */
-    public function shouldPublishProductCategoryEditedDirectlyInDatabaseToStreamx() {
+    public function shouldPublishProductCategoryEditedDirectlyInDatabase() {
         // given
         $productName = 'Joust Duffle Bag';
         $productId = self::$db->getProductId($productName);

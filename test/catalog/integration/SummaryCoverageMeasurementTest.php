@@ -4,6 +4,7 @@ namespace StreamX\ConnectorCatalog\test\integration;
 
 use PHPUnit\Framework\TestCase;
 use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageReportGenerator;
+use StreamX\ConnectorCatalog\test\integration\utils\FileUtils;
 
 class SummaryCoverageMeasurementTest extends TestCase {
 
@@ -21,8 +22,9 @@ class SummaryCoverageMeasurementTest extends TestCase {
         CodeCoverageReportGenerator::generateSummaryCodeCoverageReport($this);
 
         // then
-        $classNameAsSubPath = str_replace('\\', DIRECTORY_SEPARATOR, get_class($this));
-        $expectedReportFile = __DIR__ . "/../../../target/coverage-reports/$classNameAsSubPath/shouldMeasureSummaryCoverage/index.html";
+        $testClassNameWithSlashes = str_replace('\\', DIRECTORY_SEPARATOR, get_class($this));
+        $testName = $this->getName();
+        $expectedReportFile = FileUtils::findFolder('target/coverage-reports') . "/$testClassNameWithSlashes/$testName/index.html";
         $this->assertFileExists($expectedReportFile);
     }
 }

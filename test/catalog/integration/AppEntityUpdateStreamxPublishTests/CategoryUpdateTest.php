@@ -12,7 +12,7 @@ use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 class CategoryUpdateTest extends BaseAppEntityUpdateTest {
 
     /** @test */
-    public function shouldPublishCategoryEditedUsingMagentoApplicationToStreamx() {
+    public function shouldPublishCategoryEditedUsingMagentoApplication() {
         // given
         $categoryOldName = 'Gear';
         $categoryNewName = 'Gear Articles';

@@ -19,7 +19,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
     private const DISCOUNTED_PRICE = 330;
 
     /** @test */
-    public function shouldPublishMinimalProductAddedDirectlyInDatabaseToStreamx_AndUnpublishDeletedProduct() {
+    public function shouldPublishMinimalProductAddedDirectlyInDatabase_AndUnpublishDeletedProduct() {
         // given
         $productName = 'The minimal product';
         $sku = (string) (new DateTime())->getTimestamp();
@@ -52,7 +52,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
     }
 
     /** @test */
-    public function shouldPublishProductAddedDirectlyInDatabaseToStreamx_AndUnpublishDeletedProduct() {
+    public function shouldPublishProductAddedDirectlyInDatabase_AndUnpublishDeletedProduct() {
         // given
         $productName = 'The new great watch';
         $categoryIds = [
@@ -126,7 +126,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
     }
 
     /** @test */
-    public function shouldPublishMultipleProductsAddedDirectlyInDatabaseToStreamx_AndUnpublishDeletedProducts() {
+    public function shouldPublishMultipleProductsAddedDirectlyInDatabase_AndUnpublishDeletedProducts() {
         // given
         $productsCount = 200;
 

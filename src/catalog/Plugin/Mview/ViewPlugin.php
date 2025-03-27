@@ -18,7 +18,7 @@ class ViewPlugin
     // TODO review is this needed
     public function afterGetSubscriptions(ViewInterface $subject, array $result): array
     {
-        if ($this->catalogSettings->useCatalogRules() && $this->isStreamxProductIndexer($subject)) {
+        if ($this->catalogSettings->useCatalogPriceRules() && $this->isStreamxProductIndexer($subject)) {
             $result['catalogrule_product_price'] = [
                 'name' => 'catalogrule_product_price',
                 'column' => 'product_id',

@@ -12,22 +12,22 @@ use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 class AttributeUpdateTest extends BaseAppEntityUpdateTest {
 
     /** @test */
-    public function shouldPublishProductThatUsesSimpleAttributeEditedUsingMagentoApplicationToStreamx() {
-        $this->shouldPublishProductThatUsesAttributeEditedUsingMagentoApplicationToStreamx(
+    public function shouldPublishProductThatUsesSimpleAttributeEditedUsingMagentoApplication() {
+        $this->shouldPublishProductThatUsesAttributeEditedUsingMagentoApplication(
             'sale',
             'edited-sale-attr-ball-product.json'
         );
     }
 
     /** @test */
-    public function shouldPublishProductThatUsesAttributeWithOptionsEditedUsingMagentoApplicationToStreamx() {
-        $this->shouldPublishProductThatUsesAttributeEditedUsingMagentoApplicationToStreamx(
+    public function shouldPublishProductThatUsesAttributeWithOptionsEditedUsingMagentoApplication() {
+        $this->shouldPublishProductThatUsesAttributeEditedUsingMagentoApplication(
             'material',
             'edited-material-attr-ball-product.json'
         );
     }
 
-    private function shouldPublishProductThatUsesAttributeEditedUsingMagentoApplicationToStreamx(string $attributeCode, string $validationFile): void {
+    private function shouldPublishProductThatUsesAttributeEditedUsingMagentoApplication(string $attributeCode, string $validationFile): void {
         // given
         $attributeId = self::$db->getProductAttributeId($attributeCode);
 

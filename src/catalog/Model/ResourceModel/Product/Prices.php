@@ -3,9 +3,7 @@
 namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
 use Magento\Framework\App\ResourceConnection;
-use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Store\Api\Data\StoreInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\CatalogRule\Model\ResourceModel\Rule\Product\Price as CatalogRulePrice;
 
@@ -46,13 +44,13 @@ class Prices
     public function loadPriceDataFromPriceIndex(int $storeId, array $productIds): array
     {
         $entityIdField = $this->productMetaData->getIdentifierField();
-        $websiteId = (int)$this->getStore($storeId)->getWebsiteId();
+        $websiteId = (int)$this->storeManager->getStore($storeId)->getWebsiteId();
 
         // Only default customer Group ID (0) is supported now
         $customerGroupId = 0;
-        $priceIndexTableName = $this->getPriceIndexTableName($websiteId, $customerGroupId);
+        $priceIndexTableName = $this->priceTableResolver->resolve($websiteId, $customerGroupId);
 
-        $select = $this->getConnection()->select()
+        $select = $this->resource->getConnection()->select()
             ->from(
                 ['p' => $priceIndexTableName],
                 [
@@ -65,24 +63,23 @@ class Prices
             ->where('p.website_id = ?', $websiteId)
             ->where("p.$entityIdField IN (?)", $productIds);
 
-        $prices = $this->getConnection()->fetchAssoc($select);
+        $indexedPrices = $this->resource->getConnection()->fetchAssoc($select);
 
-        if ($this->settings->useCatalogRules()) {
-            // TODO this scenario is not covered by any test
+        if ($this->settings->useCatalogPriceRules()) {
             $catalogPrices = $this->getCatalogRulePrices($websiteId, $productIds);
 
-            foreach ($catalogPrices as $productId => $finalPrice) {
-                $priceIndexerPrice = $prices[$productId]['final_price'] ?? $finalPrice;
-                $prices[$productId]['final_price'] = min($finalPrice, $priceIndexerPrice);
+            foreach ($catalogPrices as $productId => $catalogPrice) {
+                $indexedPrice = $indexedPrices[$productId]['final_price'] ?? $catalogPrice;
+                $indexedPrices[$productId]['final_price'] = min($catalogPrice, $indexedPrice);
             }
         }
 
-        return $prices;
+        return $indexedPrices;
     }
 
     private function getCatalogRulePrices(int $websiteId, array $productsIds): array
     {
-        $connection = $this->getConnection();
+        $connection = $this->resource->getConnection();
         $select = $connection->select();
         $select->join(
             ['cpiw' => $this->catalogPriceResourceModel->getTable('catalog_product_index_website')],
@@ -109,21 +106,4 @@ class Prices
         return $connection->fetchPairs($select);
     }
 
-    private function getPriceIndexTableName(int $websiteId, int $customerGroupId): string
-    {
-        return $this->priceTableResolver->resolve($websiteId, $customerGroupId);
-    }
-
-    /**
-     * @throws NoSuchEntityException
-     */
-    private function getStore(int $storeId): StoreInterface
-    {
-        return $this->storeManager->getStore($storeId);
-    }
-
-    private function getConnection(): AdapterInterface
-    {
-        return $this->resource->getConnection();
-    }
 }

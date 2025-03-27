@@ -11,7 +11,7 @@ use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 class CategoryAddAndDeleteTest extends BaseAppEntityUpdateTest {
 
     /** @test */
-    public function shouldPublishCategoryAddedUsingMagentoApplicationToStreamx_AndUnpublishDeletedCategory() {
+    public function shouldPublishCategoryAddedUsingMagentoApplication_AndUnpublishDeletedCategory() {
         // given
         $categoryName = 'The new Category';
 

@@ -11,7 +11,7 @@ use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 class CategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
     /** @test */
-    public function shouldPublishCategoryAddedDirectlyInDatabaseToStreamx_AndUnpublishDeletedCategory() {
+    public function shouldPublishCategoryAddedDirectlyInDatabase_AndUnpublishDeletedCategory() {
         // given
         $categoryName = 'The new Category';
 

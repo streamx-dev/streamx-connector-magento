@@ -13,7 +13,7 @@ use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 class AttributeAddAndDeleteTest extends BaseAppEntityUpdateTest {
 
     /** @test */
-    public function shouldPublishProductThatUsesAttributeAddedUsingMagentoApplicationToStreamx() {
+    public function shouldPublishProductThatUsesAttributeAddedUsingMagentoApplication() {
         // given
         $attributeCode = 'the_new_attribute';
         $productId = self::$db->getProductId('Sprite Foam Roller');
