@@ -12,27 +12,18 @@ class MagentoIndexerOperationsExecutor extends MagentoOperationsExecutor {
         self::UPDATE_BY_SCHEDULE_DISPLAY_NAME => 'schedule'
     ];
 
-    private string $indexerName;
-
-    public function setIndexerName(string $indexerName) {
-        $this->indexerName = $indexerName;
-    }
-
     /**
      * @return string display name of the indexer mode
      */
-    public function getIndexerMode(): string {
-        $modeString = $this->executeIndexerCommand('show-mode'); // return value is in form: "Indexer Name:    Mode Display Name"
+    public static function getIndexerMode(string $indexerName): string {
+        $modeString = parent::executeCommand("indexer:show-mode $indexerName"); // return value is in form: "Indexer Name:    Mode Display Name"
         $parts = explode(':', $modeString);
         return trim($parts[1]);
     }
 
-    public function setIndexerMode(string $modeDisplayName): void {
+    public static function setIndexerMode(string $indexerName, string $modeDisplayName): void {
         $modeInternalName = self::INDEXER_MODE_NAME_MAPPINGS[$modeDisplayName];
-        $this->executeIndexerCommand("set-mode $modeInternalName");
+        parent::executeCommand("indexer:set-mode $modeInternalName $indexerName");
     }
 
-    private function executeIndexerCommand(string $indexerCommand): ?string {
-        return parent::executeCommand("indexer:$indexerCommand $this->indexerName");
-    }
 }
