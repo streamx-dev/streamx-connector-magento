@@ -7,22 +7,26 @@ use Magento\Catalog\Api\CategoryLinkManagementInterface;
 use Magento\Catalog\Api\CategoryRepositoryInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\Product;
+use Magento\Catalog\Model\ProductFactory;
 use Magento\Eav\Api\AttributeRepositoryInterface;
 use StreamX\ConnectorTestTools\Api\EntityEditControllerInterface;
 
-class EntityEditControllerImpl  implements EntityEditControllerInterface {
+class EntityEditControllerImpl implements EntityEditControllerInterface {
 
+    private ProductFactory $productFactory;
     private ProductRepositoryInterface $productRepository;
     private CategoryRepositoryInterface $categoryRepository;
     private AttributeRepositoryInterface $attributeRepository;
     private CategoryLinkManagementInterface $categoryLinkManagement;
 
     public function __construct(
+        ProductFactory $productFactory,
         ProductRepositoryInterface $productRepository,
         CategoryRepositoryInterface $categoryRepository,
         AttributeRepositoryInterface $attributeRepository,
         CategoryLinkManagementInterface $categoryLinkManagement
     ) {
+        $this->productFactory = $productFactory;
         $this->productRepository = $productRepository;
         $this->categoryRepository = $categoryRepository;
         $this->attributeRepository = $attributeRepository;
@@ -96,5 +100,14 @@ class EntityEditControllerImpl  implements EntityEditControllerInterface {
             $newCategoryIds[] = $newCategoryId;
         }
         return $newCategoryIds;
+    }
+
+    public function changeProductAttribute(int $productId, string $attributeCode, string $newValue): void {
+        $productModel = $this->productFactory->create()->load($productId);
+        $productModel->setData($attributeCode, $newValue);
+        $productModel->getResource()->saveAttribute($productModel, $attributeCode);
+
+        $productEntity = $this->productRepository->getById($productId);
+        $this->productRepository->save($productEntity);
     }
 }
