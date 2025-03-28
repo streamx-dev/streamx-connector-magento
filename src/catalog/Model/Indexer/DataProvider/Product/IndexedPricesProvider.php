@@ -32,16 +32,16 @@ class IndexedPricesProvider implements DataProviderInterface
         }
 
         $productIds = array_keys($indexData);
-        $priceData = $this->resourcePriceModel->loadPriceDataFromPriceIndex($storeId, $productIds);
+        $indexedPrices = $this->resourcePriceModel->loadPriceDataFromPriceIndex($storeId, $productIds);
 
-        foreach ($priceData as $productId => $priceDataRow) {
-            if (isset($priceDataRow['price'])) {
+        foreach ($indexedPrices as $productId => $indexedPrice) {
+            if (isset($indexedPrice['price'])) {
                 // note: if price was already set from value of price attribute - it will be overwritten by indexed price here, which takes precedence
-                $indexData[$productId]['price']['value'] = (float)$priceDataRow['price'];
+                $indexData[$productId]['price']['value'] = (float)$indexedPrice['price'];
             }
 
-            if (isset($priceDataRow['final_price'])) {
-                $indexData[$productId]['price']['discountedValue'] = (float)$priceDataRow['final_price'];
+            if (isset($indexedPrice['final_price'])) {
+                $indexData[$productId]['price']['discountedValue'] = (float)$indexedPrice['final_price'];
             }
         }
     }
