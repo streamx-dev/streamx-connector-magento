@@ -19,6 +19,10 @@
       type="StreamX\ConnectorTestTools\Impl\MviewReindexerImpl"/>
 
     <preference
+      for="StreamX\ConnectorTestTools\Api\PriceIndexerInterface"
+      type="StreamX\ConnectorTestTools\Impl\PriceIndexerImpl"/>
+
+    <preference
       for="StreamX\ConnectorTestTools\Api\ConfigurationEditControllerInterface"
       type="StreamX\ConnectorTestTools\Impl\ConfigurationEditControllerImpl"/>
 

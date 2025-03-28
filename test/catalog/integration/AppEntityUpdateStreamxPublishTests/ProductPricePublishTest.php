@@ -5,7 +5,6 @@ namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublis
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
-use StreamX\ConnectorCatalog\test\integration\utils\MagentoOperationsExecutor;
 
 /**
  * @inheritdoc
@@ -33,7 +32,7 @@ class ProductPricePublishTest extends BaseAppEntityUpdateTest {
             $this->assertPriceOfPublishedProduct($expectedKey, $defaultPrice);
 
             // and when: execute the indexer manually
-            MagentoOperationsExecutor::executeCommand('indexer:reindex catalog_product_price');
+            $this->runPricesIndexer($productId);
 
             // then: expecting the indexed price to be published, because running catalog_product_price indexer triggers execution of streamx_product_indexer
             $this->assertPriceOfPublishedProduct($expectedKey, $newPrice);
@@ -41,7 +40,7 @@ class ProductPricePublishTest extends BaseAppEntityUpdateTest {
             // restore all changes
             ConfigurationEditUtils::restoreConfigurationValue(ConfigurationEditUtils::USE_PRICES_INDEX_PATH);
             $this->changeProductPrice($productId, $defaultPrice);
-            MagentoOperationsExecutor::executeCommand('indexer:reindex catalog_product_price');
+            $this->runPricesIndexer($productId);
         }
     }
 
@@ -60,6 +59,13 @@ class ProductPricePublishTest extends BaseAppEntityUpdateTest {
             'productId' => $productId->getEntityId(),
             'attributeCode' => $attributeCode,
             'newValue' => $newValue
+        ]);
+    }
+
+    private function runPricesIndexer(EntityIds $productId): void {
+        // equivalent of running `bin/magento indexer:reindex catalog_product_price`, but optimized to be executed only for a single product
+        MagentoEndpointsCaller::call('price/reindex', [
+            'productId' => $productId->getEntityId()
         ]);
     }
 }
