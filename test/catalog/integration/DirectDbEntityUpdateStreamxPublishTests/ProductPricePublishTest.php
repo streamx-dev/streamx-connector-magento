@@ -57,8 +57,8 @@ class ProductPricePublishTest extends BaseDirectDbEntityUpdateTest {
             // and
             $this->reindexMview();
 
-            // then: expecting the old indexed price to be published, since the catalog_product_price Magento built-in indexer didn't run yet to update prices in catalog_product_index_price table
-            $this->assertPriceAndDiscountedPriceOfPublishedProduct($this->defaultPrice, $this->defaultPrice);
+            // then
+            $this->assertPriceAndDiscountedPriceOfPublishedProduct($newPrice, $newPrice);
         } finally {
             ConfigurationEditUtils::restoreConfigurationValue(ConfigurationEditUtils::USE_PRICES_INDEX_PATH);
         }

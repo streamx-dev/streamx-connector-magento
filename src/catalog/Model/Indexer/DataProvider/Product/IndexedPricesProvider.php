@@ -32,7 +32,7 @@ class IndexedPricesProvider implements DataProviderInterface
         }
 
         $productIds = array_keys($indexData);
-        $indexedPrices = $this->resourcePriceModel->loadPriceDataFromPriceIndex($storeId, $productIds);
+        $indexedPrices = $this->resourcePriceModel->loadIndexedPrices($storeId, $productIds);
 
         foreach ($indexedPrices as $productId => $indexedPrice) {
             if (isset($indexedPrice['price'])) {
