@@ -11,7 +11,7 @@ use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use StreamX\ConnectorCatalog\Model\Product\PriceTableResolverProxy;
 
-class Prices
+class IndexedPrices
 {
     private ResourceConnection $resource;
     private CatalogConfig $settings;

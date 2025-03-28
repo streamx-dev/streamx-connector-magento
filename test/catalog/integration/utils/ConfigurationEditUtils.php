@@ -7,6 +7,7 @@ class ConfigurationEditUtils {
     private const CONFIGURATION_EDIT_ENDPOINT = 'configuration/edit';
     private const PRODUCT_ATTRIBUTES_PATH = 'streamx_connector_settings/catalog_settings/product_attributes';
     public const EXPORT_PRODUCTS_NOT_VISIBLE_INDIVIDUALLY_PATH = 'streamx_connector_settings/catalog_settings/export_products_not_visible_individually';
+    public const USE_PRICES_INDEX_PATH = 'streamx_connector_settings/catalog_settings/use_prices_index';
     public const USE_CATALOG_PRICE_RULES_PATH = 'streamx_connector_settings/catalog_settings/use_catalog_price_rules';
 
     private function __construct() {
@@ -14,12 +15,24 @@ class ConfigurationEditUtils {
     }
 
     public static function setConfigurationValue(string $path, string $value): void {
-        self::callMagentoConfigurationEditEndpoint($path, $value);
+        self::setConfigurationValues([$path => $value]);
+    }
+
+    public static function setConfigurationValues(array $pathValueMap): void {
+        foreach ($pathValueMap as $path => $value) {
+            self::callMagentoConfigurationEditEndpoint($path, $value);
+        }
         MagentoOperationsExecutor::flushConfigCache();
     }
 
     public static function restoreConfigurationValue(string $path): void {
-        self::callMagentoConfigurationEditEndpoint($path, self::readDefaultValue($path));
+        self::restoreConfigurationValues([$path]);
+    }
+
+    public static function restoreConfigurationValues(array $paths): void {
+        foreach ($paths as $path) {
+            self::callMagentoConfigurationEditEndpoint($path, self::readDefaultValue($path));
+        }
         MagentoOperationsExecutor::flushConfigCache();
     }
 

@@ -44,6 +44,12 @@
       <resource ref="anonymous"/>
     </resources>
   </route>
+  <route url="/V1/product/attribute/change" method="PUT">
+    <service class="StreamX\ConnectorTestTools\Api\EntityEditControllerInterface" method="changeProductAttribute"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
 
   <route url="/V1/product/delete" method="PUT">
     <service class="StreamX\ConnectorTestTools\Api\EntityDeleteControllerInterface" method="deleteProduct"/>
@@ -66,6 +72,13 @@
 
   <route url="/V1/mview/reindex" method="PUT">
     <service class="StreamX\ConnectorTestTools\Api\MviewReindexerInterface" method="reindexMview"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+
+  <route url="/V1/price/reindex" method="PUT">
+    <service class="StreamX\ConnectorTestTools\Api\PriceIndexerInterface" method="reindexPrice"/>
     <resources>
       <resource ref="anonymous"/>
     </resources>

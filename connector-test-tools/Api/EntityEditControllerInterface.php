@@ -42,4 +42,13 @@ interface EntityEditControllerInterface {
      * @throws Exception
      */
     public function changeProductCategory(int $productId, int $oldCategoryId, int $newCategoryId): void;
+
+    /**
+     * Changes value of the given attribute of a product
+     * @param int $productId ID of the product to be changed
+     * @param string $attributeCode Code of the attribute
+     * @param string $newValue New value of the attribute to be set
+     * @return void
+     */
+    public function changeProductAttribute(int $productId, string $attributeCode, string $newValue): void;
 }

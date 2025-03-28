@@ -360,13 +360,17 @@ class MagentoMySqlQueryExecutor {
     }
 
     public function getDecimalProductAttributeValue(EntityIds $productId, string $attributeCode, int $storeId = self::DEFAULT_STORE_ID): float {
+        return $this->getProductAttributeValue('catalog_product_entity_decimal', $productId, $attributeCode, $storeId);
+    }
+
+    private function getProductAttributeValue(string $tableName, EntityIds $productId, string $attributeCode, int $storeId = self::DEFAULT_STORE_ID) {
         $attributeId = $this->getProductAttributeId($attributeCode);
         $linkField = $this->entityAttributeLinkField;
 
         return $this->selectSingleValue("
             SELECT attr.value
               FROM catalog_product_entity product
-              JOIN catalog_product_entity_decimal attr ON attr.$linkField = product.$linkField
+              JOIN $tableName attr ON attr.$linkField = product.$linkField
              WHERE attr.attribute_id = $attributeId
                AND attr.$linkField = {$productId->getLinkFieldId()}
                AND attr.store_id = $storeId
