@@ -9,7 +9,7 @@ namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxP
 class CategoryUpdateTest extends BaseDirectDbEntityUpdateTest {
 
     /** @test */
-    public function shouldPublishCategoryEditedDirectlyInDatabaseToStreamx() {
+    public function shouldPublishCategoryEditedDirectlyInDatabase() {
         // given
         $categoryOldName = 'Gear';
         $categoryNewName = 'Gear Articles';

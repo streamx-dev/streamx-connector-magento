@@ -12,7 +12,7 @@ use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 class ProductAddAndDeleteTest extends BaseAppEntityUpdateTest {
 
     /** @test */
-    public function shouldPublishProductAddedUsingMagentoApplicationToStreamx_AndUnpublishDeletedProduct() {
+    public function shouldPublishProductAddedUsingMagentoApplication_AndUnpublishDeletedProduct() {
         // given
         $productName = 'The new great watch';
         $categoryIds = [
