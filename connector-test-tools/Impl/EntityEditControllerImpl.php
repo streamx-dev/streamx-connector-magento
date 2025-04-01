@@ -102,6 +102,9 @@ class EntityEditControllerImpl implements EntityEditControllerInterface {
         return $newCategoryIds;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function changeProductAttribute(int $productId, string $attributeCode, string $newValue): void {
         $productModel = $this->productFactory->create()->load($productId);
         $productModel->setData($attributeCode, $newValue);
