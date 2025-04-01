@@ -19,9 +19,8 @@ class AttributeSavePlugin
     }
 
     /**
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * Executed when Magento UI Admin selects multiple products in the Products Table and performs a mass update of their attributes
      */
-    // TODO review this code, add tests
     public function afterExecute(Save $subject, Redirect $result): Redirect
     {
         $productIds = $this->attributeHelper->getProductIds();
