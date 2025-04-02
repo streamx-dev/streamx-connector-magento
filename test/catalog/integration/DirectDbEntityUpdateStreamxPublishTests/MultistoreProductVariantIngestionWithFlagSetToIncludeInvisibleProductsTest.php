@@ -3,6 +3,7 @@
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
+use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationKeyPaths;
 
 /**
  * @inheritdoc
@@ -12,11 +13,11 @@ class MultistoreProductVariantIngestionWithFlagSetToIncludeInvisibleProductsTest
 
     public static function setUpBeforeClass(): void {
         parent::setUpBeforeClass();
-        ConfigurationEditUtils::setConfigurationValue(ConfigurationEditUtils::EXPORT_PRODUCTS_NOT_VISIBLE_INDIVIDUALLY_PATH, '1');
+        ConfigurationEditUtils::setConfigurationValue(ConfigurationKeyPaths::EXPORT_PRODUCTS_NOT_VISIBLE_INDIVIDUALLY, '1');
     }
 
     public static function tearDownAfterClass(): void {
-        ConfigurationEditUtils::restoreConfigurationValue(ConfigurationEditUtils::EXPORT_PRODUCTS_NOT_VISIBLE_INDIVIDUALLY_PATH);
+        ConfigurationEditUtils::restoreConfigurationValue(ConfigurationKeyPaths::EXPORT_PRODUCTS_NOT_VISIBLE_INDIVIDUALLY);
         parent::tearDownAfterClass();
     }
 

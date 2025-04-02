@@ -3,6 +3,7 @@
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
+use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationKeyPaths;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 
@@ -24,7 +25,7 @@ class ProductPricePublishTest extends BaseAppEntityUpdateTest {
         self::removeFromStreamX($expectedKey);
 
         // when
-        ConfigurationEditUtils::setConfigurationValue(ConfigurationEditUtils::USE_PRICES_INDEX_PATH, '1');
+        ConfigurationEditUtils::setConfigurationValue(ConfigurationKeyPaths::USE_PRICES_INDEX, '1');
         $this->changeProductPrice($productId, $newPrice);
 
         try {
@@ -38,7 +39,7 @@ class ProductPricePublishTest extends BaseAppEntityUpdateTest {
             $this->assertPriceOfPublishedProduct($expectedKey, $newPrice);
         } finally {
             // restore all changes
-            ConfigurationEditUtils::restoreConfigurationValue(ConfigurationEditUtils::USE_PRICES_INDEX_PATH);
+            ConfigurationEditUtils::restoreConfigurationValue(ConfigurationKeyPaths::USE_PRICES_INDEX);
             $this->changeProductPrice($productId, $defaultPrice);
             $this->runPricesIndexer($productId);
         }
