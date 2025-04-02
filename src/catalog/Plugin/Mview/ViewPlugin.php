@@ -15,12 +15,9 @@ class ViewPlugin
         $this->catalogSettings = $catalogSettings;
     }
 
-    // TODO review is this needed
     public function afterGetSubscriptions(ViewInterface $subject, array $result): array
     {
-        // TODO: originally, useCatalogPriceRules could be set to true also when usePricesIndex was false.
-        //  Now, useCatalogPriceRules can be set to true only if also usePricesIndex is true, otherwise it can be only false.
-        //  Analyse if it is OK
+        // if useCatalogPriceRules is true -> add catalogrule_product_price table to tables that streamx_product_indexer subscribes on in mView mode
         if ($this->catalogSettings->useCatalogPriceRules() && $this->isStreamxProductIndexer($subject)) {
             $result['catalogrule_product_price'] = [
                 'name' => 'catalogrule_product_price',
