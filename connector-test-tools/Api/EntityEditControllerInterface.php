@@ -51,4 +51,13 @@ interface EntityEditControllerInterface {
      * @return void
      */
     public function changeProductAttribute(int $productId, string $attributeCode, string $newValue): void;
+
+    /**
+     * Changes value of the given attribute of a category
+     * @param int $categoryId ID of the category to be changed
+     * @param string $attributeCode Code of the attribute
+     * @param string $newValue New value of the attribute to be set
+     * @return void
+     */
+    public function changeCategoryAttribute(int $categoryId, string $attributeCode, string $newValue): void;
 }

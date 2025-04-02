@@ -377,6 +377,24 @@ class MagentoMySqlQueryExecutor {
          ");
     }
 
+    public function getVarcharCategoryAttributeValue(EntityIds $categoryId, string $attributeCode, int $storeId = self::DEFAULT_STORE_ID): string {
+        return $this->getCategoryAttributeValue('catalog_category_entity_varchar', $categoryId, $attributeCode, $storeId);
+    }
+
+    private function getCategoryAttributeValue(string $tableName, EntityIds $categoryId, string $attributeCode, int $storeId = self::DEFAULT_STORE_ID) {
+        $attributeId = $this->getCategoryAttributeId($attributeCode);
+        $linkField = $this->entityAttributeLinkField;
+
+        return $this->selectSingleValue("
+            SELECT attr.value
+              FROM catalog_category_entity category
+              JOIN $tableName attr ON attr.$linkField = category.$linkField
+             WHERE attr.attribute_id = $attributeId
+               AND attr.$linkField = {$categoryId->getLinkFieldId()}
+               AND attr.store_id = $storeId
+         ");
+    }
+
     public function insertIntProductAttribute(EntityIds $productId, int $attributeId, $attributeValue, int $storeId = self::DEFAULT_STORE_ID): void {
         $this->insertEntityAttribute('catalog_product_entity_int', $productId, $attributeId, $attributeValue, $storeId);
     }
