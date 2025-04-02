@@ -108,7 +108,7 @@ abstract class BaseStreamxTest extends TestCase {
         }
     }
 
-    private function isCurrentlyPublished(string $key): bool {
+    protected function isCurrentlyPublished(string $key): bool {
         $url = self::STREAMX_DELIVERY_SERVICE_BASE_URL . '/' . $key;
         $headers = @get_headers($url);
         if ($headers === false) {

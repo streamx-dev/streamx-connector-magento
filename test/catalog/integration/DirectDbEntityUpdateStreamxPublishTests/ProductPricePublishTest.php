@@ -3,6 +3,7 @@
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
+use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationKeyPaths;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 
 /**
@@ -50,7 +51,7 @@ class ProductPricePublishTest extends BaseDirectDbEntityUpdateTest {
         $newPrice = $this->defaultPrice + 6;
 
         // when
-        ConfigurationEditUtils::setConfigurationValue(ConfigurationEditUtils::USE_PRICES_INDEX_PATH, '1');
+        ConfigurationEditUtils::setConfigurationValue(ConfigurationKeyPaths::USE_PRICES_INDEX, '1');
         $this->changeProductPrice($newPrice);
 
         try {
@@ -60,7 +61,7 @@ class ProductPricePublishTest extends BaseDirectDbEntityUpdateTest {
             // then: expecting the old indexed price to be published, since the catalog_product_price Magento built-in indexer didn't run yet to update prices in catalog_product_index_price table
             $this->assertPriceAndDiscountedPriceOfPublishedProduct($this->defaultPrice, $this->defaultPrice);
         } finally {
-            ConfigurationEditUtils::restoreConfigurationValue(ConfigurationEditUtils::USE_PRICES_INDEX_PATH);
+            ConfigurationEditUtils::restoreConfigurationValue(ConfigurationKeyPaths::USE_PRICES_INDEX);
         }
     }
 
@@ -71,8 +72,8 @@ class ProductPricePublishTest extends BaseDirectDbEntityUpdateTest {
 
         // when
         ConfigurationEditUtils::setConfigurationValues([
-            ConfigurationEditUtils::USE_PRICES_INDEX_PATH => '1',
-            ConfigurationEditUtils::USE_CATALOG_PRICE_RULES_PATH => '1'
+            ConfigurationKeyPaths::USE_PRICES_INDEX => '1',
+            ConfigurationKeyPaths::USE_CATALOG_PRICE_RULES => '1'
         ]);
         $this->insertCatalogRulePrice($this->productId, $catalogRulePrice, self::$website1Id);
         self::$db->productDummyUpdate($this->productId);
@@ -87,8 +88,8 @@ class ProductPricePublishTest extends BaseDirectDbEntityUpdateTest {
             self::$db->revertProductDummyUpdate($this->productId);
             $this->deleteCatalogRulePrice();
             ConfigurationEditUtils::restoreConfigurationValues([
-                ConfigurationEditUtils::USE_PRICES_INDEX_PATH,
-                ConfigurationEditUtils::USE_CATALOG_PRICE_RULES_PATH,
+                ConfigurationKeyPaths::USE_PRICES_INDEX,
+                ConfigurationKeyPaths::USE_CATALOG_PRICE_RULES,
             ]);
         }
     }

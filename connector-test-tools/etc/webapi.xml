@@ -50,6 +50,12 @@
       <resource ref="anonymous"/>
     </resources>
   </route>
+  <route url="/V1/category/attribute/change" method="PUT">
+    <service class="StreamX\ConnectorTestTools\Api\EntityEditControllerInterface" method="changeCategoryAttribute"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
   <route url="/V1/category/product/add" method="PUT">
     <service class="StreamX\ConnectorTestTools\Api\EntityEditControllerInterface" method="addProductToCategory"/>
     <resources>
