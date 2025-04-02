@@ -30,7 +30,7 @@ class ProductAddAndDeleteTest extends BaseAppEntityUpdateTest {
         try {
             $publishedJson = $this->assertExactDataIsPublished($expectedKey, 'added-watch-product-without-custom-options.json', [
                 // mask variable parts (ids and generated sku)
-                '"id": "[0-9]{4}"' => '"id": "2659"',
+                '"id": "[0-9]{4,5}"' => '"id": "2659"',
                 '"sku": "[^"]+"' => '"sku": "1736952738"',
                 '"the-new-great-watch-[0-9]+"' => '"the-new-great-watch-2659"'
             ]);
