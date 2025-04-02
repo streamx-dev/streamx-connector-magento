@@ -6,6 +6,7 @@ use Exception;
 use Magento\Catalog\Api\CategoryLinkManagementInterface;
 use Magento\Catalog\Api\CategoryRepositoryInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
+use Magento\Catalog\Model\CategoryFactory;
 use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\ProductFactory;
 use Magento\Eav\Api\AttributeRepositoryInterface;
@@ -14,6 +15,7 @@ use StreamX\ConnectorTestTools\Api\EntityEditControllerInterface;
 class EntityEditControllerImpl implements EntityEditControllerInterface {
 
     private ProductFactory $productFactory;
+    private CategoryFactory $categoryFactory;
     private ProductRepositoryInterface $productRepository;
     private CategoryRepositoryInterface $categoryRepository;
     private AttributeRepositoryInterface $attributeRepository;
@@ -21,12 +23,14 @@ class EntityEditControllerImpl implements EntityEditControllerInterface {
 
     public function __construct(
         ProductFactory $productFactory,
+        CategoryFactory $categoryFactory,
         ProductRepositoryInterface $productRepository,
         CategoryRepositoryInterface $categoryRepository,
         AttributeRepositoryInterface $attributeRepository,
         CategoryLinkManagementInterface $categoryLinkManagement
     ) {
         $this->productFactory = $productFactory;
+        $this->categoryFactory = $categoryFactory;
         $this->productRepository = $productRepository;
         $this->categoryRepository = $categoryRepository;
         $this->attributeRepository = $attributeRepository;
@@ -112,5 +116,48 @@ class EntityEditControllerImpl implements EntityEditControllerInterface {
 
         $productEntity = $this->productRepository->getById($productId);
         $this->productRepository->save($productEntity);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function addProductToCategory(int $categoryId, int $productId): void {
+        $postedProducts = $this->loadAssignedProducts($categoryId);
+        if (!array_key_exists($productId, $postedProducts)) {
+            $postedProducts[$productId] = 1 + max(array_values($postedProducts));
+        }
+        $this->setProductsInCategory($categoryId, $postedProducts);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function removeProductFromCategory(int $categoryId, int $productId): void {
+        $postedProducts = $this->loadAssignedProducts($categoryId);
+        if (array_key_exists($productId, $postedProducts)) {
+            unset($postedProducts[$productId]);
+        }
+        $this->setProductsInCategory($categoryId, $postedProducts);
+    }
+
+    /**
+     * @return array: key = product ID, value = position in the category
+     */
+    private function loadAssignedProducts(int $categoryId): array {
+        $assignedProducts = $this->categoryLinkManagement->getAssignedProducts($categoryId);
+        $resultMap = [];
+        foreach ($assignedProducts as $assignedProduct) {
+            $sku = $assignedProduct->getSku();
+            $productId = $this->productRepository->get($sku)->getId();
+            $resultMap[$productId] = $assignedProduct->getPosition();
+        }
+        return $resultMap;
+    }
+
+    private function setProductsInCategory(int $categoryId, array $postedProducts): void {
+        $this->categoryFactory->create()
+            ->load($categoryId)
+            ->setPostedProducts($postedProducts)
+            ->save();
     }
 }

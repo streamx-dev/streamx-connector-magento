@@ -50,6 +50,18 @@
       <resource ref="anonymous"/>
     </resources>
   </route>
+  <route url="/V1/category/product/add" method="PUT">
+    <service class="StreamX\ConnectorTestTools\Api\EntityEditControllerInterface" method="addProductToCategory"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+  <route url="/V1/category/product/remove" method="PUT">
+    <service class="StreamX\ConnectorTestTools\Api\EntityEditControllerInterface" method="removeProductFromCategory"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
 
   <route url="/V1/product/delete" method="PUT">
     <service class="StreamX\ConnectorTestTools\Api\EntityDeleteControllerInterface" method="deleteProduct"/>
