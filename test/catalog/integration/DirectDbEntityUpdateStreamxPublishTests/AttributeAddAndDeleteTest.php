@@ -8,6 +8,7 @@ use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 /**
  * @inheritdoc
  * @UsesAttributeIndexer
+ * @UsesProductIndexer
  */
 class AttributeAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
@@ -31,7 +32,7 @@ class AttributeAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
             $this->reindexMview();
 
             // then
-            $this->assertExactDataIsPublished($expectedKey, 'edited-roller-product-with-custom-attribute.json');
+            $this->assertExactDataIsPublished($expectedKey, 'edited-roller-product.json');
         } finally {
             try {
                 // and when
@@ -39,8 +40,7 @@ class AttributeAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
                 $this->reindexMview();
 
                 // then
-                // note: we don't implement code to retrieve (and republish) product that used a deleted attribute, so the product is not republished, its last published version still has the custom attribute:
-                $this->assertExactDataIsPublished($expectedKey, 'edited-roller-product-with-custom-attribute.json');
+                $this->assertExactDataIsPublished($expectedKey, 'original-roller-product.json');
             } finally {
                 ConfigurationEditUtils::restoreDefaultIndexedProductAttributes();
             }
