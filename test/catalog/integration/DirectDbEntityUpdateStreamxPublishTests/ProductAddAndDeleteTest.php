@@ -214,17 +214,13 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
             ");
         }
 
-        self::$db->execute("
+        self::$db->executeQueries("
             INSERT INTO cataloginventory_stock_item (product_id, stock_id, qty, is_in_stock, is_qty_decimal, manage_stock) VALUES
                 ($productId, $stockId, $quantity, TRUE, FALSE, TRUE)
-        ");
-
-        self::$db->execute("
+        ", "
             INSERT INTO cataloginventory_stock_status (product_id, website_id, stock_id, qty, stock_status) VALUES
                 ($productId, $websiteId, $stockId, $quantity, 1)
-        ");
-
-        self::$db->execute("
+        ", "
             INSERT INTO catalog_product_index_price (entity_id, customer_group_id, website_id, price, final_price) VALUES
                 ($productId, 0, $websiteId, " . self::INDEXED_PRICE . ", " . self::DISCOUNTED_PRICE . ")
         ");
@@ -240,11 +236,12 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $optionId = self::$db->insert("INSERT INTO catalog_product_option (product_id, type, is_require, sort_order) VALUES ($productId, 'drop_down', 1, 0)");
         $optionTypeId = self::$db->insert("INSERT INTO catalog_product_option_type_value (option_id, sort_order) VALUES($optionId, 0)");
 
-        self::$db->execute("INSERT INTO catalog_product_option_title (option_id, store_id, title) VALUES ($optionId, $storeId, 'Size')");
-        self::$db->execute("INSERT INTO catalog_product_option_type_title (option_type_id, store_id, title) VALUES ($optionTypeId, $storeId, 'The size')");
-
-        self::$db->execute("INSERT INTO catalog_product_option_price (option_id, store_id, price, price_type) VALUES ($optionId, $storeId, 1.23, 'fixed')");
-        self::$db->execute("INSERT INTO catalog_product_option_type_price (option_type_id, store_id, price, price_type) VALUES ($optionTypeId, $storeId, 9.87, 'fixed')");
+        self::$db->executeQueries(
+            "INSERT INTO catalog_product_option_title (option_id, store_id, title) VALUES ($optionId, $storeId, 'Size')",
+            "INSERT INTO catalog_product_option_type_title (option_type_id, store_id, title) VALUES ($optionTypeId, $storeId, 'The size')",
+            "INSERT INTO catalog_product_option_price (option_id, store_id, price, price_type) VALUES ($optionId, $storeId, 1.23, 'fixed')",
+            "INSERT INTO catalog_product_option_type_price (option_type_id, store_id, price, price_type) VALUES ($optionTypeId, $storeId, 9.87, 'fixed')"
+        );
     }
 
     private function deleteProduct(EntityIds $productIds): void {
