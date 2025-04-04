@@ -60,7 +60,7 @@ class AttributesIndexer extends BaseStreamxIndexer
         /** @var $attributeDefinition AttributeDefinition */
         foreach ($attributeDefinitions as $attributeDefinition) {
             if ($attributeDefinition === null) {
-                // a deleted attribute. Currently, no way of collecting products that used it before
+                // a deleted attribute. Reindexing products that used it is handled in UpdateAttributeDataPlugin
                 continue;
             }
             $this->logger->info("Definition of attribute '{$attributeDefinition->getCode()}' has changed");
