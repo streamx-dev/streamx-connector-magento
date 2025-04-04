@@ -28,15 +28,15 @@ class AttributeAddAndDeleteTest extends BaseAppEntityUpdateTest {
 
         try {
             // then
-            $this->assertExactDataIsPublished($expectedKey, 'edited-roller-product-with-custom-attribute.json');
+            $this->assertExactDataIsPublished($expectedKey, 'edited-roller-product.json');
         } finally {
             try {
                 // and when
                 self::deleteAttribute($attributeId);
 
                 // then
-                // note: we don't implement code to retrieve (and republish) product that used a deleted attribute, so the product is not republished, its last published version still has the custom attribute:
-                $this->assertExactDataIsPublished($expectedKey, 'edited-roller-product-with-custom-attribute.json');
+                // TODO: we don't implement code to retrieve (and republish) product that used a deleted attribute, so the product is not republished, its last published version still has the custom attribute:
+                $this->assertExactDataIsPublished($expectedKey, 'edited-roller-product.json');
             } finally {
                 ConfigurationEditUtils::restoreDefaultIndexedProductAttributes();
             }
