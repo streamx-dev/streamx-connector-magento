@@ -60,4 +60,20 @@ interface EntityEditControllerInterface {
      * @return void
      */
     public function changeCategoryAttribute(int $categoryId, string $attributeCode, string $newValue): void;
+
+    /**
+     * Adds the given product to the category
+     * @param int $categoryId ID of the category to be changed
+     * @param int $productId ID of the product to be added to category
+     * @return void
+     */
+    public function addProductToCategory(int $categoryId, int $productId): void;
+
+    /**
+     * Removes the given product from the category
+     * @param int $categoryId ID of the category to be changed
+     * @param int $productId ID of the product to be removed from category
+     * @return void
+     */
+    public function removeProductFromCategory(int $categoryId, int $productId): void;
 }
