@@ -70,6 +70,13 @@
     </resources>
   </route>
 
+  <route url="/V1/product/purchase" method="PUT">
+    <service class="StreamX\ConnectorTestTools\Api\ProductPurchaseControllerInterface" method="purchaseProduct"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+
   <route url="/V1/mview/reindex" method="PUT">
     <service class="StreamX\ConnectorTestTools\Api\MviewReindexerInterface" method="reindexMview"/>
     <resources>

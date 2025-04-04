@@ -22,14 +22,4 @@
     <type name="Magento\Catalog\Controller\Adminhtml\Product\Action\Attribute\Save">
         <plugin name="attribute_save_plugin" type="StreamX\ConnectorCatalog\Plugin\Controller\Catalog\Adminhtml\Product\Action\AttributeSavePlugin"/>
     </type>
-
-    <type name="Magento\CatalogInventory\Model\ResourceModel\QtyCounterInterface">
-        <plugin name="register_products" type="StreamX\ConnectorCatalog\Plugin\Indexer\CatalogInventory\QtyCorrectPlugin"/>
-    </type>
-    <type name="Magento\CatalogInventory\Observer\RevertQuoteInventoryObserver">
-        <plugin name="revert_quote_plugin" type="StreamX\ConnectorCatalog\Plugin\Indexer\CatalogInventory\RevertQuoteInventoryObserverPlugin"/>
-    </type>
-    <type name="Magento\CatalogInventory\Observer\ReindexQuoteInventoryObserver">
-        <plugin name="reindex_quote_plugin" type="StreamX\ConnectorCatalog\Plugin\Indexer\CatalogInventory\ReindexQuoteInventoryObserverPlugin"/>
-    </type>
 </config>

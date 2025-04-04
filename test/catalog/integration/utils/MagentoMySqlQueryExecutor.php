@@ -113,6 +113,12 @@ class MagentoMySqlQueryExecutor {
         }
     }
 
+    public function executeQueries(string... $queries): void {
+        foreach ($queries as $query) {
+            $this->execute($query);
+        }
+    }
+
     public function deleteById(int $id, array $tableNameAndIdColumnList): void {
         foreach ($tableNameAndIdColumnList as $tableName => $idColumn) {
             $this->execute("DELETE FROM $tableName WHERE $idColumn = $id");
