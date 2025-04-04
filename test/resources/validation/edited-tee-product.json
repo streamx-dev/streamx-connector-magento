@@ -1,0 +1,1494 @@
+{
+  "sku": "MS08",
+  "id": "622",
+  "lang": "en",
+  "attributes": [
+    {
+      "name": "small_image",
+      "label": "Small",
+      "values": [
+        {
+          "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg",
+          "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "thumbnail",
+      "label": "Thumbnail",
+      "values": [
+        {
+          "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg",
+          "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "url_key",
+      "label": "URL Key",
+      "values": [
+        {
+          "value": "strike-endurance-tee",
+          "label": "strike-endurance-tee"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "status",
+      "label": "Enable Product",
+      "values": [
+        {
+          "value": "Enabled",
+          "label": "Enabled"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "visibility",
+      "label": "Visibility",
+      "values": [
+        {
+          "value": "Catalog, Search",
+          "label": "Catalog, Search"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "tax_class_id",
+      "label": "Tax Class",
+      "values": [
+        {
+          "value": "Taxable Goods",
+          "label": "Taxable Goods"
+        }
+      ],
+      "isFacet": false
+    }
+  ],
+  "name": "Strike Endurance Tee",
+  "label": "Strike Endurance Tee",
+  "primaryImage": {
+    "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg",
+    "alt": ""
+  },
+  "description": "<p>While grit and purpose keep you going, it helps to have a little extra comfort, too. Our Strike Long-Sleeve Endurance Tee helps ensures a photo-ready finish with advanced sweat-wicking technology for a cool, dry feel.<\/p>\n<p>&bull; Loose fit. <br \/>&bull; Ribbed cuffs\/collar. <br \/>&bull; Machine wash\/dry.<\/p>",
+  "price": {
+    "value": 39,
+    "discountedValue": 39
+  },
+  "slug": "strike-endurance-tee-622",
+  "categories": [
+    {
+      "id": "4",
+      "name": "Bags",
+      "slug": "bags-4",
+      "label": "Bags",
+      "parent": {
+        "id": "3",
+        "name": "Gear",
+        "slug": "gear-3",
+        "label": "Gear",
+        "parent": {
+          "id": "2",
+          "name": "Default Category",
+          "slug": "default-category-2",
+          "label": "Default Category",
+          "parent": {
+            "id": "1",
+            "name": "Root Catalog",
+            "slug": "root-catalog-1",
+            "label": "Root Catalog"
+          }
+        }
+      }
+    },
+    {
+      "id": "16",
+      "name": "Tees",
+      "slug": "tees-16",
+      "label": "Tees",
+      "parent": {
+        "id": "12",
+        "name": "Tops",
+        "slug": "tops-12",
+        "label": "Tops",
+        "parent": {
+          "id": "11",
+          "name": "Men",
+          "slug": "men-11",
+          "label": "Men",
+          "parent": {
+            "id": "2",
+            "name": "Default Category",
+            "slug": "default-category-2",
+            "label": "Default Category",
+            "parent": {
+              "id": "1",
+              "name": "Root Catalog",
+              "slug": "root-catalog-1",
+              "label": "Root Catalog"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "gallery": [
+    {
+      "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg",
+      "alt": ""
+    },
+    {
+      "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_back_1.jpg",
+      "alt": ""
+    }
+  ],
+  "quantity": 0,
+  "variants": [
+    {
+      "sku": "MS08-XS-Black",
+      "id": "607",
+      "attributes": [
+        {
+          "name": "small_image",
+          "label": "Small",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg",
+              "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "thumbnail",
+          "label": "Thumbnail",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg",
+              "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "url_key",
+          "label": "URL Key",
+          "values": [
+            {
+              "value": "strike-endurance-tee-xs-black",
+              "label": "strike-endurance-tee-xs-black"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "color",
+          "label": "Color",
+          "values": [
+            {
+              "value": "Black",
+              "label": "Black",
+              "swatch": {
+                "type": "color",
+                "value": "#000000"
+              }
+            }
+          ],
+          "isFacet": true
+        },
+        {
+          "name": "size",
+          "label": "Size",
+          "values": [
+            {
+              "value": "XS",
+              "label": "XS",
+              "swatch": {
+                "type": "textual",
+                "value": "XS"
+              }
+            }
+          ],
+          "isFacet": true
+        }
+      ],
+      "name": "Strike Endurance Tee-XS-Black",
+      "label": "Strike Endurance Tee-XS-Black",
+      "primaryImage": {
+        "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg",
+        "alt": ""
+      },
+      "description": "<p>While grit and purpose keep you going, it helps to have a little extra comfort, too. Our Strike Long-Sleeve Endurance Tee helps ensures a photo-ready finish with advanced sweat-wicking technology for a cool, dry feel.<\/p>\n<p>&bull; Loose fit. <br \/>&bull; Ribbed cuffs\/collar. <br \/>&bull; Machine wash\/dry.<\/p>",
+      "price": {
+        "value": 39,
+        "discountedValue": 39
+      },
+      "slug": "strike-endurance-tee-xs-black-607",
+      "gallery": [
+        {
+          "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg",
+          "alt": ""
+        },
+        {
+          "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_back_1.jpg",
+          "alt": ""
+        }
+      ],
+      "quantity": 100
+    },
+    {
+      "sku": "MS08-XS-Blue",
+      "id": "608",
+      "attributes": [
+        {
+          "name": "small_image",
+          "label": "Small",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-blue_main_1.jpg",
+              "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-blue_main_1.jpg"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "thumbnail",
+          "label": "Thumbnail",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-blue_main_1.jpg",
+              "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-blue_main_1.jpg"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "url_key",
+          "label": "URL Key",
+          "values": [
+            {
+              "value": "strike-endurance-tee-xs-blue",
+              "label": "strike-endurance-tee-xs-blue"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "color",
+          "label": "Color",
+          "values": [
+            {
+              "value": "Blue",
+              "label": "Blue",
+              "swatch": {
+                "type": "color",
+                "value": "#1857f7"
+              }
+            }
+          ],
+          "isFacet": true
+        },
+        {
+          "name": "size",
+          "label": "Size",
+          "values": [
+            {
+              "value": "XS",
+              "label": "XS",
+              "swatch": {
+                "type": "textual",
+                "value": "XS"
+              }
+            }
+          ],
+          "isFacet": true
+        }
+      ],
+      "name": "Strike Endurance Tee-XS-Blue",
+      "label": "Strike Endurance Tee-XS-Blue",
+      "primaryImage": {
+        "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-blue_main_1.jpg",
+        "alt": ""
+      },
+      "description": "<p>While grit and purpose keep you going, it helps to have a little extra comfort, too. Our Strike Long-Sleeve Endurance Tee helps ensures a photo-ready finish with advanced sweat-wicking technology for a cool, dry feel.<\/p>\n<p>&bull; Loose fit. <br \/>&bull; Ribbed cuffs\/collar. <br \/>&bull; Machine wash\/dry.<\/p>",
+      "price": {
+        "value": 39,
+        "discountedValue": 39
+      },
+      "slug": "strike-endurance-tee-xs-blue-608",
+      "gallery": [
+        {
+          "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-blue_main_1.jpg",
+          "alt": ""
+        }
+      ],
+      "quantity": 100
+    },
+    {
+      "sku": "MS08-XS-Red",
+      "id": "609",
+      "attributes": [
+        {
+          "name": "small_image",
+          "label": "Small",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-red_main_1.jpg",
+              "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-red_main_1.jpg"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "thumbnail",
+          "label": "Thumbnail",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-red_main_1.jpg",
+              "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-red_main_1.jpg"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "url_key",
+          "label": "URL Key",
+          "values": [
+            {
+              "value": "strike-endurance-tee-xs-red",
+              "label": "strike-endurance-tee-xs-red"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "color",
+          "label": "Color",
+          "values": [
+            {
+              "value": "Red",
+              "label": "Red",
+              "swatch": {
+                "type": "color",
+                "value": "#ff0000"
+              }
+            }
+          ],
+          "isFacet": true
+        },
+        {
+          "name": "size",
+          "label": "Size",
+          "values": [
+            {
+              "value": "XS",
+              "label": "XS",
+              "swatch": {
+                "type": "textual",
+                "value": "XS"
+              }
+            }
+          ],
+          "isFacet": true
+        }
+      ],
+      "name": "Strike Endurance Tee-XS-Red",
+      "label": "Strike Endurance Tee-XS-Red",
+      "primaryImage": {
+        "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-red_main_1.jpg",
+        "alt": ""
+      },
+      "description": "<p>While grit and purpose keep you going, it helps to have a little extra comfort, too. Our Strike Long-Sleeve Endurance Tee helps ensures a photo-ready finish with advanced sweat-wicking technology for a cool, dry feel.<\/p>\n<p>&bull; Loose fit. <br \/>&bull; Ribbed cuffs\/collar. <br \/>&bull; Machine wash\/dry.<\/p>",
+      "price": {
+        "value": 39,
+        "discountedValue": 39
+      },
+      "slug": "strike-endurance-tee-xs-red-609",
+      "gallery": [
+        {
+          "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-red_main_1.jpg",
+          "alt": ""
+        }
+      ],
+      "quantity": 100
+    },
+    {
+      "sku": "MS08-S-Black",
+      "id": "610",
+      "attributes": [
+        {
+          "name": "small_image",
+          "label": "Small",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg",
+              "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "thumbnail",
+          "label": "Thumbnail",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg",
+              "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "url_key",
+          "label": "URL Key",
+          "values": [
+            {
+              "value": "strike-endurance-tee-s-black",
+              "label": "strike-endurance-tee-s-black"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "color",
+          "label": "Color",
+          "values": [
+            {
+              "value": "Black",
+              "label": "Black",
+              "swatch": {
+                "type": "color",
+                "value": "#000000"
+              }
+            }
+          ],
+          "isFacet": true
+        },
+        {
+          "name": "size",
+          "label": "Size",
+          "values": [
+            {
+              "value": "S",
+              "label": "S",
+              "swatch": {
+                "type": "textual",
+                "value": "S"
+              }
+            }
+          ],
+          "isFacet": true
+        }
+      ],
+      "name": "Strike Endurance Tee-S-Black",
+      "label": "Strike Endurance Tee-S-Black",
+      "primaryImage": {
+        "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg",
+        "alt": ""
+      },
+      "description": "<p>While grit and purpose keep you going, it helps to have a little extra comfort, too. Our Strike Long-Sleeve Endurance Tee helps ensures a photo-ready finish with advanced sweat-wicking technology for a cool, dry feel.<\/p>\n<p>&bull; Loose fit. <br \/>&bull; Ribbed cuffs\/collar. <br \/>&bull; Machine wash\/dry.<\/p>",
+      "price": {
+        "value": 39,
+        "discountedValue": 39
+      },
+      "slug": "strike-endurance-tee-s-black-610",
+      "gallery": [
+        {
+          "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg",
+          "alt": ""
+        },
+        {
+          "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_back_1.jpg",
+          "alt": ""
+        }
+      ],
+      "quantity": 100
+    },
+    {
+      "sku": "MS08-S-Blue",
+      "id": "611",
+      "attributes": [
+        {
+          "name": "small_image",
+          "label": "Small",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-blue_main_1.jpg",
+              "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-blue_main_1.jpg"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "thumbnail",
+          "label": "Thumbnail",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-blue_main_1.jpg",
+              "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-blue_main_1.jpg"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "url_key",
+          "label": "URL Key",
+          "values": [
+            {
+              "value": "strike-endurance-tee-s-blue",
+              "label": "strike-endurance-tee-s-blue"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "color",
+          "label": "Color",
+          "values": [
+            {
+              "value": "Blue",
+              "label": "Blue",
+              "swatch": {
+                "type": "color",
+                "value": "#1857f7"
+              }
+            }
+          ],
+          "isFacet": true
+        },
+        {
+          "name": "size",
+          "label": "Size",
+          "values": [
+            {
+              "value": "S",
+              "label": "S",
+              "swatch": {
+                "type": "textual",
+                "value": "S"
+              }
+            }
+          ],
+          "isFacet": true
+        }
+      ],
+      "name": "Strike Endurance Tee-S-Blue",
+      "label": "Strike Endurance Tee-S-Blue",
+      "primaryImage": {
+        "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-blue_main_1.jpg",
+        "alt": ""
+      },
+      "description": "<p>While grit and purpose keep you going, it helps to have a little extra comfort, too. Our Strike Long-Sleeve Endurance Tee helps ensures a photo-ready finish with advanced sweat-wicking technology for a cool, dry feel.<\/p>\n<p>&bull; Loose fit. <br \/>&bull; Ribbed cuffs\/collar. <br \/>&bull; Machine wash\/dry.<\/p>",
+      "price": {
+        "value": 39,
+        "discountedValue": 39
+      },
+      "slug": "strike-endurance-tee-s-blue-611",
+      "gallery": [
+        {
+          "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-blue_main_1.jpg",
+          "alt": ""
+        }
+      ],
+      "quantity": 100
+    },
+    {
+      "sku": "MS08-S-Red",
+      "id": "612",
+      "attributes": [
+        {
+          "name": "small_image",
+          "label": "Small",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-red_main_1.jpg",
+              "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-red_main_1.jpg"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "thumbnail",
+          "label": "Thumbnail",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-red_main_1.jpg",
+              "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-red_main_1.jpg"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "url_key",
+          "label": "URL Key",
+          "values": [
+            {
+              "value": "strike-endurance-tee-s-red",
+              "label": "strike-endurance-tee-s-red"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "color",
+          "label": "Color",
+          "values": [
+            {
+              "value": "Red",
+              "label": "Red",
+              "swatch": {
+                "type": "color",
+                "value": "#ff0000"
+              }
+            }
+          ],
+          "isFacet": true
+        },
+        {
+          "name": "size",
+          "label": "Size",
+          "values": [
+            {
+              "value": "S",
+              "label": "S",
+              "swatch": {
+                "type": "textual",
+                "value": "S"
+              }
+            }
+          ],
+          "isFacet": true
+        }
+      ],
+      "name": "Strike Endurance Tee-S-Red",
+      "label": "Strike Endurance Tee-S-Red",
+      "primaryImage": {
+        "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-red_main_1.jpg",
+        "alt": ""
+      },
+      "description": "<p>While grit and purpose keep you going, it helps to have a little extra comfort, too. Our Strike Long-Sleeve Endurance Tee helps ensures a photo-ready finish with advanced sweat-wicking technology for a cool, dry feel.<\/p>\n<p>&bull; Loose fit. <br \/>&bull; Ribbed cuffs\/collar. <br \/>&bull; Machine wash\/dry.<\/p>",
+      "price": {
+        "value": 39,
+        "discountedValue": 39
+      },
+      "slug": "strike-endurance-tee-s-red-612",
+      "gallery": [
+        {
+          "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-red_main_1.jpg",
+          "alt": ""
+        }
+      ],
+      "quantity": 100
+    },
+    {
+      "sku": "MS08-M-Black",
+      "id": "613",
+      "attributes": [
+        {
+          "name": "small_image",
+          "label": "Small",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg",
+              "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "thumbnail",
+          "label": "Thumbnail",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg",
+              "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "url_key",
+          "label": "URL Key",
+          "values": [
+            {
+              "value": "strike-endurance-tee-m-black",
+              "label": "strike-endurance-tee-m-black"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "color",
+          "label": "Color",
+          "values": [
+            {
+              "value": "Black",
+              "label": "Black",
+              "swatch": {
+                "type": "color",
+                "value": "#000000"
+              }
+            }
+          ],
+          "isFacet": true
+        },
+        {
+          "name": "size",
+          "label": "Size",
+          "values": [
+            {
+              "value": "M",
+              "label": "M",
+              "swatch": {
+                "type": "textual",
+                "value": "M"
+              }
+            }
+          ],
+          "isFacet": true
+        }
+      ],
+      "name": "Strike Endurance Tee-M-Black",
+      "label": "Strike Endurance Tee-M-Black",
+      "primaryImage": {
+        "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg",
+        "alt": ""
+      },
+      "description": "<p>While grit and purpose keep you going, it helps to have a little extra comfort, too. Our Strike Long-Sleeve Endurance Tee helps ensures a photo-ready finish with advanced sweat-wicking technology for a cool, dry feel.<\/p>\n<p>&bull; Loose fit. <br \/>&bull; Ribbed cuffs\/collar. <br \/>&bull; Machine wash\/dry.<\/p>",
+      "price": {
+        "value": 39,
+        "discountedValue": 39
+      },
+      "slug": "strike-endurance-tee-m-black-613",
+      "gallery": [
+        {
+          "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg",
+          "alt": ""
+        },
+        {
+          "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_back_1.jpg",
+          "alt": ""
+        }
+      ],
+      "quantity": 100
+    },
+    {
+      "sku": "MS08-M-Blue",
+      "id": "614",
+      "attributes": [
+        {
+          "name": "small_image",
+          "label": "Small",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-blue_main_1.jpg",
+              "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-blue_main_1.jpg"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "thumbnail",
+          "label": "Thumbnail",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-blue_main_1.jpg",
+              "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-blue_main_1.jpg"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "url_key",
+          "label": "URL Key",
+          "values": [
+            {
+              "value": "strike-endurance-tee-m-blue",
+              "label": "strike-endurance-tee-m-blue"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "color",
+          "label": "Color",
+          "values": [
+            {
+              "value": "Blue",
+              "label": "Blue",
+              "swatch": {
+                "type": "color",
+                "value": "#1857f7"
+              }
+            }
+          ],
+          "isFacet": true
+        },
+        {
+          "name": "size",
+          "label": "Size",
+          "values": [
+            {
+              "value": "M",
+              "label": "M",
+              "swatch": {
+                "type": "textual",
+                "value": "M"
+              }
+            }
+          ],
+          "isFacet": true
+        }
+      ],
+      "name": "Strike Endurance Tee-M-Blue",
+      "label": "Strike Endurance Tee-M-Blue",
+      "primaryImage": {
+        "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-blue_main_1.jpg",
+        "alt": ""
+      },
+      "description": "<p>While grit and purpose keep you going, it helps to have a little extra comfort, too. Our Strike Long-Sleeve Endurance Tee helps ensures a photo-ready finish with advanced sweat-wicking technology for a cool, dry feel.<\/p>\n<p>&bull; Loose fit. <br \/>&bull; Ribbed cuffs\/collar. <br \/>&bull; Machine wash\/dry.<\/p>",
+      "price": {
+        "value": 39,
+        "discountedValue": 39
+      },
+      "slug": "strike-endurance-tee-m-blue-614",
+      "gallery": [
+        {
+          "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-blue_main_1.jpg",
+          "alt": ""
+        }
+      ],
+      "quantity": 100
+    },
+    {
+      "sku": "MS08-M-Red",
+      "id": "615",
+      "attributes": [
+        {
+          "name": "small_image",
+          "label": "Small",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-red_main_1.jpg",
+              "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-red_main_1.jpg"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "thumbnail",
+          "label": "Thumbnail",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-red_main_1.jpg",
+              "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-red_main_1.jpg"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "url_key",
+          "label": "URL Key",
+          "values": [
+            {
+              "value": "strike-endurance-tee-m-red",
+              "label": "strike-endurance-tee-m-red"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "color",
+          "label": "Color",
+          "values": [
+            {
+              "value": "Red",
+              "label": "Red",
+              "swatch": {
+                "type": "color",
+                "value": "#ff0000"
+              }
+            }
+          ],
+          "isFacet": true
+        },
+        {
+          "name": "size",
+          "label": "Size",
+          "values": [
+            {
+              "value": "M",
+              "label": "M",
+              "swatch": {
+                "type": "textual",
+                "value": "M"
+              }
+            }
+          ],
+          "isFacet": true
+        }
+      ],
+      "name": "Strike Endurance Tee-M-Red",
+      "label": "Strike Endurance Tee-M-Red",
+      "primaryImage": {
+        "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-red_main_1.jpg",
+        "alt": ""
+      },
+      "description": "<p>While grit and purpose keep you going, it helps to have a little extra comfort, too. Our Strike Long-Sleeve Endurance Tee helps ensures a photo-ready finish with advanced sweat-wicking technology for a cool, dry feel.<\/p>\n<p>&bull; Loose fit. <br \/>&bull; Ribbed cuffs\/collar. <br \/>&bull; Machine wash\/dry.<\/p>",
+      "price": {
+        "value": 39,
+        "discountedValue": 39
+      },
+      "slug": "strike-endurance-tee-m-red-615",
+      "gallery": [
+        {
+          "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-red_main_1.jpg",
+          "alt": ""
+        }
+      ],
+      "quantity": 100
+    },
+    {
+      "sku": "MS08-L-Black",
+      "id": "616",
+      "attributes": [
+        {
+          "name": "small_image",
+          "label": "Small",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg",
+              "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "thumbnail",
+          "label": "Thumbnail",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg",
+              "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "url_key",
+          "label": "URL Key",
+          "values": [
+            {
+              "value": "strike-endurance-tee-l-black",
+              "label": "strike-endurance-tee-l-black"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "color",
+          "label": "Color",
+          "values": [
+            {
+              "value": "Black",
+              "label": "Black",
+              "swatch": {
+                "type": "color",
+                "value": "#000000"
+              }
+            }
+          ],
+          "isFacet": true
+        },
+        {
+          "name": "size",
+          "label": "Size",
+          "values": [
+            {
+              "value": "L",
+              "label": "L",
+              "swatch": {
+                "type": "textual",
+                "value": "L"
+              }
+            }
+          ],
+          "isFacet": true
+        }
+      ],
+      "name": "Strike Endurance Tee-L-Black",
+      "label": "Strike Endurance Tee-L-Black",
+      "primaryImage": {
+        "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg",
+        "alt": ""
+      },
+      "description": "<p>While grit and purpose keep you going, it helps to have a little extra comfort, too. Our Strike Long-Sleeve Endurance Tee helps ensures a photo-ready finish with advanced sweat-wicking technology for a cool, dry feel.<\/p>\n<p>&bull; Loose fit. <br \/>&bull; Ribbed cuffs\/collar. <br \/>&bull; Machine wash\/dry.<\/p>",
+      "price": {
+        "value": 39,
+        "discountedValue": 39
+      },
+      "slug": "strike-endurance-tee-l-black-616",
+      "gallery": [
+        {
+          "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg",
+          "alt": ""
+        },
+        {
+          "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_back_1.jpg",
+          "alt": ""
+        }
+      ],
+      "quantity": 100
+    },
+    {
+      "sku": "MS08-L-Blue",
+      "id": "617",
+      "attributes": [
+        {
+          "name": "small_image",
+          "label": "Small",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-blue_main_1.jpg",
+              "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-blue_main_1.jpg"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "thumbnail",
+          "label": "Thumbnail",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-blue_main_1.jpg",
+              "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-blue_main_1.jpg"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "url_key",
+          "label": "URL Key",
+          "values": [
+            {
+              "value": "strike-endurance-tee-l-blue",
+              "label": "strike-endurance-tee-l-blue"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "color",
+          "label": "Color",
+          "values": [
+            {
+              "value": "Blue",
+              "label": "Blue",
+              "swatch": {
+                "type": "color",
+                "value": "#1857f7"
+              }
+            }
+          ],
+          "isFacet": true
+        },
+        {
+          "name": "size",
+          "label": "Size",
+          "values": [
+            {
+              "value": "L",
+              "label": "L",
+              "swatch": {
+                "type": "textual",
+                "value": "L"
+              }
+            }
+          ],
+          "isFacet": true
+        }
+      ],
+      "name": "Strike Endurance Tee-L-Blue",
+      "label": "Strike Endurance Tee-L-Blue",
+      "primaryImage": {
+        "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-blue_main_1.jpg",
+        "alt": ""
+      },
+      "description": "<p>While grit and purpose keep you going, it helps to have a little extra comfort, too. Our Strike Long-Sleeve Endurance Tee helps ensures a photo-ready finish with advanced sweat-wicking technology for a cool, dry feel.<\/p>\n<p>&bull; Loose fit. <br \/>&bull; Ribbed cuffs\/collar. <br \/>&bull; Machine wash\/dry.<\/p>",
+      "price": {
+        "value": 39,
+        "discountedValue": 39
+      },
+      "slug": "strike-endurance-tee-l-blue-617",
+      "gallery": [
+        {
+          "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-blue_main_1.jpg",
+          "alt": ""
+        }
+      ],
+      "quantity": 100
+    },
+    {
+      "sku": "MS08-L-Red",
+      "id": "618",
+      "attributes": [
+        {
+          "name": "small_image",
+          "label": "Small",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-red_main_1.jpg",
+              "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-red_main_1.jpg"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "thumbnail",
+          "label": "Thumbnail",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-red_main_1.jpg",
+              "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-red_main_1.jpg"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "url_key",
+          "label": "URL Key",
+          "values": [
+            {
+              "value": "strike-endurance-tee-l-red",
+              "label": "strike-endurance-tee-l-red"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "color",
+          "label": "Color",
+          "values": [
+            {
+              "value": "Red",
+              "label": "Red",
+              "swatch": {
+                "type": "color",
+                "value": "#ff0000"
+              }
+            }
+          ],
+          "isFacet": true
+        },
+        {
+          "name": "size",
+          "label": "Size",
+          "values": [
+            {
+              "value": "L",
+              "label": "L",
+              "swatch": {
+                "type": "textual",
+                "value": "L"
+              }
+            }
+          ],
+          "isFacet": true
+        }
+      ],
+      "name": "Strike Endurance Tee-L-Red",
+      "label": "Strike Endurance Tee-L-Red",
+      "primaryImage": {
+        "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-red_main_1.jpg",
+        "alt": ""
+      },
+      "description": "<p>While grit and purpose keep you going, it helps to have a little extra comfort, too. Our Strike Long-Sleeve Endurance Tee helps ensures a photo-ready finish with advanced sweat-wicking technology for a cool, dry feel.<\/p>\n<p>&bull; Loose fit. <br \/>&bull; Ribbed cuffs\/collar. <br \/>&bull; Machine wash\/dry.<\/p>",
+      "price": {
+        "value": 39,
+        "discountedValue": 39
+      },
+      "slug": "strike-endurance-tee-l-red-618",
+      "gallery": [
+        {
+          "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-red_main_1.jpg",
+          "alt": ""
+        }
+      ],
+      "quantity": 100
+    },
+    {
+      "sku": "MS08-XL-Black",
+      "id": "619",
+      "attributes": [
+        {
+          "name": "small_image",
+          "label": "Small",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg",
+              "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "thumbnail",
+          "label": "Thumbnail",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg",
+              "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "url_key",
+          "label": "URL Key",
+          "values": [
+            {
+              "value": "strike-endurance-tee-xl-black",
+              "label": "strike-endurance-tee-xl-black"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "color",
+          "label": "Color",
+          "values": [
+            {
+              "value": "Black",
+              "label": "Black",
+              "swatch": {
+                "type": "color",
+                "value": "#000000"
+              }
+            }
+          ],
+          "isFacet": true
+        },
+        {
+          "name": "size",
+          "label": "Size",
+          "values": [
+            {
+              "value": "XL",
+              "label": "XL",
+              "swatch": {
+                "type": "textual",
+                "value": "XL"
+              }
+            }
+          ],
+          "isFacet": true
+        }
+      ],
+      "name": "Strike Endurance Tee-XL-Black",
+      "label": "Strike Endurance Tee-XL-Black",
+      "primaryImage": {
+        "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg",
+        "alt": ""
+      },
+      "description": "<p>While grit and purpose keep you going, it helps to have a little extra comfort, too. Our Strike Long-Sleeve Endurance Tee helps ensures a photo-ready finish with advanced sweat-wicking technology for a cool, dry feel.<\/p>\n<p>&bull; Loose fit. <br \/>&bull; Ribbed cuffs\/collar. <br \/>&bull; Machine wash\/dry.<\/p>",
+      "price": {
+        "value": 39,
+        "discountedValue": 39
+      },
+      "slug": "strike-endurance-tee-xl-black-619",
+      "gallery": [
+        {
+          "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_main_1.jpg",
+          "alt": ""
+        },
+        {
+          "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-black_back_1.jpg",
+          "alt": ""
+        }
+      ],
+      "quantity": 100
+    },
+    {
+      "sku": "MS08-XL-Blue",
+      "id": "620",
+      "attributes": [
+        {
+          "name": "small_image",
+          "label": "Small",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-blue_main_1.jpg",
+              "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-blue_main_1.jpg"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "thumbnail",
+          "label": "Thumbnail",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-blue_main_1.jpg",
+              "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-blue_main_1.jpg"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "url_key",
+          "label": "URL Key",
+          "values": [
+            {
+              "value": "strike-endurance-tee-xl-blue",
+              "label": "strike-endurance-tee-xl-blue"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "color",
+          "label": "Color",
+          "values": [
+            {
+              "value": "Blue",
+              "label": "Blue",
+              "swatch": {
+                "type": "color",
+                "value": "#1857f7"
+              }
+            }
+          ],
+          "isFacet": true
+        },
+        {
+          "name": "size",
+          "label": "Size",
+          "values": [
+            {
+              "value": "XL",
+              "label": "XL",
+              "swatch": {
+                "type": "textual",
+                "value": "XL"
+              }
+            }
+          ],
+          "isFacet": true
+        }
+      ],
+      "name": "Strike Endurance Tee-XL-Blue",
+      "label": "Strike Endurance Tee-XL-Blue",
+      "primaryImage": {
+        "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-blue_main_1.jpg",
+        "alt": ""
+      },
+      "description": "<p>While grit and purpose keep you going, it helps to have a little extra comfort, too. Our Strike Long-Sleeve Endurance Tee helps ensures a photo-ready finish with advanced sweat-wicking technology for a cool, dry feel.<\/p>\n<p>&bull; Loose fit. <br \/>&bull; Ribbed cuffs\/collar. <br \/>&bull; Machine wash\/dry.<\/p>",
+      "price": {
+        "value": 39,
+        "discountedValue": 39
+      },
+      "slug": "strike-endurance-tee-xl-blue-620",
+      "gallery": [
+        {
+          "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-blue_main_1.jpg",
+          "alt": ""
+        }
+      ],
+      "quantity": 100
+    },
+    {
+      "sku": "MS08-XL-Red",
+      "id": "621",
+      "attributes": [
+        {
+          "name": "small_image",
+          "label": "Small",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-red_main_1.jpg",
+              "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-red_main_1.jpg"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "thumbnail",
+          "label": "Thumbnail",
+          "values": [
+            {
+              "value": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-red_main_1.jpg",
+              "label": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-red_main_1.jpg"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "url_key",
+          "label": "URL Key",
+          "values": [
+            {
+              "value": "strike-endurance-tee-xl-red",
+              "label": "strike-endurance-tee-xl-red"
+            }
+          ],
+          "isFacet": false
+        },
+        {
+          "name": "color",
+          "label": "Color",
+          "values": [
+            {
+              "value": "Red",
+              "label": "Red",
+              "swatch": {
+                "type": "color",
+                "value": "#ff0000"
+              }
+            }
+          ],
+          "isFacet": true
+        },
+        {
+          "name": "size",
+          "label": "Size",
+          "values": [
+            {
+              "value": "XL",
+              "label": "XL",
+              "swatch": {
+                "type": "textual",
+                "value": "XL"
+              }
+            }
+          ],
+          "isFacet": true
+        }
+      ],
+      "name": "Strike Endurance Tee-XL-Red",
+      "label": "Strike Endurance Tee-XL-Red",
+      "primaryImage": {
+        "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-red_main_1.jpg",
+        "alt": ""
+      },
+      "description": "<p>While grit and purpose keep you going, it helps to have a little extra comfort, too. Our Strike Long-Sleeve Endurance Tee helps ensures a photo-ready finish with advanced sweat-wicking technology for a cool, dry feel.<\/p>\n<p>&bull; Loose fit. <br \/>&bull; Ribbed cuffs\/collar. <br \/>&bull; Machine wash\/dry.<\/p>",
+      "price": {
+        "value": 39,
+        "discountedValue": 39
+      },
+      "slug": "strike-endurance-tee-xl-red-621",
+      "gallery": [
+        {
+          "url": "https:\/\/magento.test:444\/media\/catalog\/product\/m\/s\/ms08-red_main_1.jpg",
+          "alt": ""
+        }
+      ],
+      "quantity": 100
+    }
+  ]
+}
