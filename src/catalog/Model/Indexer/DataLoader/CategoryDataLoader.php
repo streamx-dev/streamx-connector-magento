@@ -23,10 +23,9 @@ class CategoryDataLoader implements BasicDataLoader {
     public function loadData(int $storeId, array $categoryIds): Traversable {
         $lastCategoryId = 0;
 
-        // Ensure to reindex also the parents category ids
+        // Ensure to reindex also all the parents categories (including grandparents etc.)
         if (!empty($categoryIds)) {
-            // TODO: do we need to publish also parent category? Or should we also publish all grand+parents?
-            $categoryIds = $this->withParentIds($categoryIds);
+            $this->addParentIds($categoryIds);
         }
 
         // 1. Publish edited and added categories
@@ -48,8 +47,8 @@ class CategoryDataLoader implements BasicDataLoader {
         }
     }
 
-    private function withParentIds(array $categoryIds): array {
+    private function addParentIds(array &$categoryIds): void {
         $parentIds = $this->resourceModel->getParentIds($categoryIds);
-        return array_unique(array_merge($categoryIds, $parentIds));
+        $categoryIds = array_unique(array_merge($categoryIds, $parentIds));
     }
 }
