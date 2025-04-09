@@ -16,9 +16,7 @@ It's designed to work with PHP Storm IDE.
      - if no such path is available to be selected in the window - as a workaround add the mapping manually:
      - open `.idea/workspace.xml` file in a text editor (the file may be hidden)
      - below the existing mappping: `<mapping local-root="$PROJECT_DIR$/src" remote-root="/var/www/html/app/code/StreamX/Connector/src" />`
-     - add mappings:
-       - `<mapping local-root="$PROJECT_DIR$/magento/src" remote-root="/var/www/html" />`
-       - `<mapping local-root="$PROJECT_DIR$/vendor" remote-root="/var/www/html/vendor" />`
+     - add mapping: `<mapping local-root="$PROJECT_DIR$/magento/src" remote-root="/var/www/html" />`
 
 3. Prepare your browser to become a tool to trigger Connector PHP code to stop at breakpoints:
    - install https://addons.mozilla.org/en-US/firefox/addon/xdebug-helper-for-firefox and configure it to use `PHPSTORM` as the IDE Key. Enable it.
