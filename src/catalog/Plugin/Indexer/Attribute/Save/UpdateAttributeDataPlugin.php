@@ -2,38 +2,71 @@
 
 namespace StreamX\ConnectorCatalog\Plugin\Indexer\Attribute\Save;
 
+use Magento\Catalog\Model\ResourceModel\Eav\Attribute;
+use Magento\Store\Model\Store;
 use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
-use Magento\Catalog\Model\ResourceModel\Eav\Attribute;
+use StreamX\ConnectorCatalog\Model\ResourceModel\Product as ProductModel;
+use StreamX\ConnectorCore\Indexer\IndexableStoresProvider;
 
-class UpdateAttributeDataPlugin
-{
+class UpdateAttributeDataPlugin {
+
     private AttributeProcessor $attributeProcessor;
     private ProductProcessor $productProcessor;
+    private ProductModel $productModel;
+    private IndexableStoresProvider $indexableStoresProvider;
+    private array $productIdsToReindexByAttributeId = [];
 
     public function __construct(
-        ProductProcessor $processor,
-        AttributeProcessor $attributeProcessor
+        AttributeProcessor $attributeProcessor,
+        ProductProcessor $productProcessor,
+        ProductModel $productModel,
+        IndexableStoresProvider $indexableStoresProvider
     ) {
-        $this->productProcessor = $processor;
         $this->attributeProcessor = $attributeProcessor;
+        $this->productProcessor = $productProcessor;
+        $this->productModel = $productModel;
+        $this->indexableStoresProvider = $indexableStoresProvider;
     }
 
-    public function afterAfterSave(Attribute $attribute): Attribute
-    {
+    /**
+     * Called after attribute was added or deleted: reindex the attribute
+     */
+    public function afterAfterSave(Attribute $attribute): Attribute {
         $this->attributeProcessor->reindexRow($attribute->getId());
-
         return $attribute;
     }
 
     /**
-     * After deleting attribute we should update all products
+     * Called just before attribute is deleted, but it still exists: collect IDs of products that still use it
      */
-    public function afterAfterDeleteCommit(Attribute $attribute, Attribute $result): Attribute
-    {
-        $this->attributeProcessor->reindexRow($attribute->getId());
-        $this->productProcessor->markIndexerAsInvalid();
+    public function beforeDelete(Attribute $attribute): Attribute {
+        $attributeId = $attribute->getId();
 
-        return $result;
+        $productIdsToReindex = [];
+        foreach ($this->indexableStoresProvider->getStores() as $store) {
+            $storeId = (int)$store->getId();
+            array_push($productIdsToReindex, ...$this->productModel->loadIdsOfProductsThatUseAttributes([$attributeId], $storeId));
+        }
+        if (!empty($productIdsToReindex)) {
+            $this->productIdsToReindexByAttributeId[$attributeId] = array_unique($productIdsToReindex);
+        }
+        return $attribute;
+    }
+
+    /**
+     * Called after attribute was deleted: reindex the attribute, and reindex all products that were using it
+     */
+    public function afterAfterDeleteCommit(Attribute $attribute): Attribute {
+        $attributeId = $attribute->getId();
+        $this->attributeProcessor->reindexRow($attributeId);
+
+        $productIdsToReindex = $this->productIdsToReindexByAttributeId[$attributeId] ?? null;
+        if ($productIdsToReindex) {
+            $this->productProcessor->reindexList($productIdsToReindex);
+            unset($this->productIdsToReindexByAttributeId[$attributeId]);
+        }
+
+        return $attribute;
     }
 }

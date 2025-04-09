@@ -19,7 +19,7 @@ class EndpointCoveredCodeProxyPlugin {
     }
 
     public function beforeDispatch(Rest $subject, RequestInterface $request): void {
-        $this->logger->info("Handling REST API execution at {$request->getUri()}");
+        $this->logger->info("Handling REST API {$request->getMethod()} at {$request->getUri()}");
         if ($this->isCoverageMeasurementEnabled) {
             xdebug_start_code_coverage();
         }
