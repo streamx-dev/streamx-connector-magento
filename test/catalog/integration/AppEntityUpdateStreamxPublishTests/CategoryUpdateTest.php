@@ -34,7 +34,7 @@ class CategoryUpdateTest extends BaseAppEntityUpdateTest {
             $this->assertExactDataIsPublished($editedCategoryKey, 'edited-gear-category.json');
 
             // and
-            $this->assertTrue($this->isCurrentlyPublished($parentCategoryKey)); // TODO: do we need to re-publish parent when a category is edited?
+            $this->assertTrue($this->isCurrentlyPublished($parentCategoryKey));
         } finally {
             self::renameCategory($categoryId, $defaultName);
             $this->assertExactDataIsPublished($editedCategoryKey, 'original-gear-category.json');
@@ -74,7 +74,7 @@ class CategoryUpdateTest extends BaseAppEntityUpdateTest {
             ]);
 
             // and: expect parent and subcategories to also be published, with the new slug of the edited category in their child or parent category data
-            $this->assertStringContainsString('"slug":"super-gear-3"', $this->downloadContentAtKey($parentCategoryKey)); // TODO: do we need to re-publish parent when a category is edited?
+            $this->assertStringContainsString('"slug":"super-gear-3"', $this->downloadContentAtKey($parentCategoryKey));
             $this->assertStringContainsString('"slug":"super-gear-3"', $this->downloadContentAtKey($subcategory1Key));
             $this->assertStringContainsString('"slug":"super-gear-3"', $this->downloadContentAtKey($subcategory2Key));
             $this->assertStringContainsString('"slug":"super-gear-3"', $this->downloadContentAtKey($subcategory3Key));
@@ -82,6 +82,43 @@ class CategoryUpdateTest extends BaseAppEntityUpdateTest {
             self::changeUrlKeyOfCategory($categoryId, $defaultUrlKey);
             ConfigurationEditUtils::restoreConfigurationValue(ConfigurationKeyPaths::USE_URL_KEY_AND_ID_TO_GENERATE_SLUG);
             $this->assertExactDataIsPublished($editedCategoryKey, 'original-gear-category.json');
+        }
+    }
+
+    /** @test */
+    public function shouldPublishAllParentsOfEditedCategory_OnSeparatePublishKeys() {
+        // given
+        $categoryName = 'Tees';
+        $changedName = 'The Tees';
+        $categoryId = self::$db->getCategoryId($categoryName);
+
+        // and
+        $editedCategoryKey = self::categoryKey($categoryId);
+        $expectedParentCategoryKey = self::categoryKey(self::$db->getCategoryId('Tops'));
+        $expectedGrandParentCategoryKey = self::categoryKey(self::$db->getCategoryId('Men'));
+        $expectedGrandGrandParentCategoryKey = self::categoryKey(self::$db->getCategoryId('Default Category'));
+        $expectedGrandGrandGrandParentCategoryKey = self::categoryKey(self::$db->getCategoryId('Root Catalog'));
+
+        self::removeFromStreamX(
+            $editedCategoryKey,
+            $expectedParentCategoryKey,
+            $expectedGrandParentCategoryKey,
+            $expectedGrandGrandParentCategoryKey,
+            $expectedGrandGrandGrandParentCategoryKey
+        );
+
+        // when
+        self::renameCategory($categoryId, $changedName);
+
+        try {
+            $this->assertExactDataIsPublished($editedCategoryKey, 'edited-tees-category.json');
+            $this->assertExactDataIsPublished($expectedParentCategoryKey, 'original-tops-category.json');
+            $this->assertExactDataIsPublished($expectedGrandParentCategoryKey, 'original-men-category.json');
+            $this->assertExactDataIsPublished($expectedGrandGrandParentCategoryKey, 'original-default-category.json');
+            $this->assertDataIsNotPublished($expectedGrandGrandGrandParentCategoryKey); // the root category is not published - by design
+        } finally {
+            self::renameCategory($categoryId, $categoryName);
+            $this->assertExactDataIsPublished($editedCategoryKey, 'original-tees-category.json');
         }
     }
 
