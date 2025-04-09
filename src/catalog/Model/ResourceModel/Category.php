@@ -136,6 +136,7 @@ class Category
     }
 
     /**
+     * Returns set of IDs of all parent categories (parent, grandparent etc.) for each of the input categories
      * @throws Exception
      */
     public function getParentIds(array $categoryIds): array

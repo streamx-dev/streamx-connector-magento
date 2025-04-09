@@ -139,6 +139,7 @@ class MagentoMySqlQueryExecutor {
               JOIN catalog_category_entity_varchar attr ON attr.$linkField = cat.$linkField
              WHERE attribute_id = $categoryNameAttributeId
                AND value = '$categoryName'
+             ORDER BY cat.entity_id
         ");
     }
 
