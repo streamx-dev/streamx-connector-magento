@@ -8,6 +8,7 @@ use mysqli;
 use StreamX\ConnectorCatalog\test\integration\BaseStreamxConnectorPublishTest;
 
 class MagentoMySqlQueryExecutor {
+    use MagentoMySqlAttributesHelper;
 
     private const SERVER_NAME = "127.0.0.1";
 
@@ -176,35 +177,35 @@ class MagentoMySqlQueryExecutor {
         ");
     }
 
-    public function getProductAttributeId(string $attributeCode): string {
+    public function getProductAttributeId(string $attributeCode): int {
         $productEntityTypeId = $this->getProductEntityTypeId();
         return $this->getAttributeId($attributeCode, $productEntityTypeId);
     }
 
-    public function getCategoryAttributeId(string $attributeCode): string {
+    public function getCategoryAttributeId(string $attributeCode): int {
         $categoryEntityTypeId = $this->getCategoryEntityTypeId();
         return $this->getAttributeId($attributeCode, $categoryEntityTypeId);
     }
 
-    public function getProductNameAttributeId(): string {
+    public function getProductNameAttributeId(): int {
         $productEntityTypeId = $this->getProductEntityTypeId();
         return $this->getNameAttributeId($productEntityTypeId);
     }
 
-    public function getCategoryNameAttributeId(): string {
+    public function getCategoryNameAttributeId(): int {
         $categoryEntityTypeId = $this->getCategoryEntityTypeId();
         return $this->getNameAttributeId($categoryEntityTypeId);
     }
 
-    public function getProductEntityTypeId(): string {
+    public function getProductEntityTypeId(): int {
         return $this->getEntityTypeId('catalog_product_entity');
     }
 
-    public function getCategoryEntityTypeId(): string {
+    public function getCategoryEntityTypeId(): int {
         return $this->getEntityTypeId('catalog_category_entity');
     }
 
-    private function getEntityTypeId(string $table): string {
+    private function getEntityTypeId(string $table): int {
         return $this->selectSingleValue("
             SELECT entity_type_id
               FROM eav_entity_type
@@ -212,11 +213,11 @@ class MagentoMySqlQueryExecutor {
         ");
     }
 
-    public function getNameAttributeId(int $entityTypeId): string {
+    public function getNameAttributeId(int $entityTypeId): int {
         return $this->getAttributeId('name', $entityTypeId);
     }
 
-    public function getAttributeId(string $attributeCode, int $entityTypeId): string {
+    public function getAttributeId(string $attributeCode, int $entityTypeId): int {
         return $this->selectSingleValue("
             SELECT attribute_id
               FROM eav_attribute
@@ -362,68 +363,6 @@ class MagentoMySqlQueryExecutor {
                SET value = '$newName'
              WHERE attribute_id = $categoryNameAttributeId
                AND $this->entityAttributeLinkField = {$categoryId->getLinkFieldId()}
-        ");
-    }
-
-    public function getDecimalProductAttributeValue(EntityIds $productId, string $attributeCode, int $storeId = self::DEFAULT_STORE_ID): float {
-        return $this->getProductAttributeValue('catalog_product_entity_decimal', $productId, $attributeCode, $storeId);
-    }
-
-    private function getProductAttributeValue(string $tableName, EntityIds $productId, string $attributeCode, int $storeId = self::DEFAULT_STORE_ID) {
-        $attributeId = $this->getProductAttributeId($attributeCode);
-        $linkField = $this->entityAttributeLinkField;
-
-        return $this->selectSingleValue("
-            SELECT attr.value
-              FROM catalog_product_entity product
-              JOIN $tableName attr ON attr.$linkField = product.$linkField
-             WHERE attr.attribute_id = $attributeId
-               AND attr.$linkField = {$productId->getLinkFieldId()}
-               AND attr.store_id = $storeId
-         ");
-    }
-
-    public function insertIntProductAttribute(EntityIds $productId, int $attributeId, $attributeValue, int $storeId = self::DEFAULT_STORE_ID): void {
-        $this->insertEntityAttribute('catalog_product_entity_int', $productId, $attributeId, $attributeValue, $storeId);
-    }
-    public function insertDecimalProductAttribute(EntityIds $productId, int $attributeId, $attributeValue, int $storeId = self::DEFAULT_STORE_ID): void {
-        $this->insertEntityAttribute('catalog_product_entity_decimal', $productId, $attributeId, $attributeValue, $storeId);
-    }
-    public function insertVarcharProductAttribute(EntityIds $productId, int $attributeId, $attributeValue, int $storeId = self::DEFAULT_STORE_ID): void {
-        $this->insertEntityAttribute('catalog_product_entity_varchar', $productId, $attributeId, $attributeValue, $storeId);
-    }
-    public function insertTextProductAttribute(EntityIds $productId, int $attributeId, $attributeValue, int $storeId = self::DEFAULT_STORE_ID): void {
-        $this->insertEntityAttribute('catalog_product_entity_text', $productId, $attributeId, $attributeValue, $storeId);
-    }
-
-    public function insertIntCategoryAttribute(EntityIds $categoryId, int $attributeId, $attributeValue, int $storeId = self::DEFAULT_STORE_ID): void {
-        $this->insertEntityAttribute('catalog_category_entity_int', $categoryId, $attributeId, $attributeValue, $storeId);
-    }
-    public function insertVarcharCategoryAttribute(EntityIds $categoryId, int $attributeId, $attributeValue, int $storeId = self::DEFAULT_STORE_ID): void {
-        $this->insertEntityAttribute('catalog_category_entity_varchar', $categoryId, $attributeId, $attributeValue, $storeId);
-    }
-
-    private function insertEntityAttribute(string $tableName, EntityIds $entityId, int $attributeId, $attributeValue, int $storeId): void {
-        $idColumn = $this->entityAttributeLinkField;
-        $idValue = $entityId->getLinkFieldId();
-        $this->execute("REPLACE INTO $tableName ($idColumn, attribute_id, store_id, value)
-                                               VALUES ($idValue, $attributeId, $storeId, '$attributeValue')");
-    }
-
-    public function deleteIntProductAttribute(EntityIds $productId, int $attributeId, int $storeId): void {
-        $this->deleteEntityAttribute('catalog_product_entity_int', $productId, $attributeId, $storeId);
-    }
-
-    public function deleteIntCategoryAttribute(EntityIds $categoryId, int $attributeId, int $storeId): void {
-        $this->deleteEntityAttribute('catalog_category_entity_int', $categoryId, $attributeId, $storeId);
-    }
-
-    private function deleteEntityAttribute(string $tableName, EntityIds $entityId, int $attributeId, int $storeId): void {
-        $this->execute("
-            DELETE FROM $tableName
-             WHERE $this->entityAttributeLinkField = {$entityId->getLinkFieldId()}
-               AND attribute_id = $attributeId
-               AND store_id = $storeId
         ");
     }
 
