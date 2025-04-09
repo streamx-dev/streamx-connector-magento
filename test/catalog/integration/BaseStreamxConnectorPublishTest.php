@@ -39,8 +39,10 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
     protected static bool $areTestsInitialized = false;
 
     private static array $initialIndexerModes;
-    protected static string $testedIndexerName;
+
+    // every test operates on one or more indexes which share the same mode
     private static string $testedIndexerMode;
+    protected static array $testedIndexerNames;
 
     protected static MagentoMySqlQueryExecutor $db;
     private MagentoLogFileUtils $logFileUtils;
@@ -96,36 +98,41 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
     }
 
     private static function setIndexerModeInMagento(): void {
-        if (self::$testedIndexerMode !== self::$initialIndexerModes[self::$testedIndexerName]) {
-            MagentoIndexerOperationsExecutor::setIndexerMode(self::$testedIndexerName, self::$testedIndexerMode);
+        foreach (self::$testedIndexerNames as $testedIndexerName) {
+            if (self::$testedIndexerMode !== self::$initialIndexerModes[$testedIndexerName]) {
+                MagentoIndexerOperationsExecutor::setIndexerMode($testedIndexerName, self::$testedIndexerMode);
+            }
         }
     }
 
     private static function restoreIndexerModeInMagento(): void {
-        $initialIndexerMode = self::$initialIndexerModes[self::$testedIndexerName];
-        if (self::$testedIndexerMode !== $initialIndexerMode) {
-            MagentoIndexerOperationsExecutor::setIndexerMode(self::$testedIndexerName, $initialIndexerMode);
+        foreach (self::$testedIndexerNames as $testedIndexerName) {
+            $initialIndexerMode = self::$initialIndexerModes[$testedIndexerName];
+            if (self::$testedIndexerMode !== $initialIndexerMode) {
+                MagentoIndexerOperationsExecutor::setIndexerMode($testedIndexerName, $initialIndexerMode);
+            }
         }
     }
 
     private static function loadDesiredIndexerSettings(): void {
         $cls = new ReflectionClass(static::class);
-        self::$testedIndexerName = self::getTestedIndexerName($cls);
+        self::$testedIndexerNames = self::getTestedIndexerNames($cls);
         self::$testedIndexerMode = self::getTestedIndexerMode($cls);
     }
 
-    private static function getTestedIndexerName(ReflectionClass $cls): string {
+    private static function getTestedIndexerNames(ReflectionClass $cls): array {
+        $indexerNames = [];
         $docComment = $cls->getDocComment();
         if (str_contains($docComment, '@UsesProductIndexer')) {
-            return ProductProcessor::INDEXER_ID;
+            $indexerNames[] = ProductProcessor::INDEXER_ID;
         }
         if (str_contains($docComment, '@UsesCategoryIndexer')) {
-            return CategoryProcessor::INDEXER_ID;
+            $indexerNames[] = CategoryProcessor::INDEXER_ID;
         }
         if (str_contains($docComment, '@UsesAttributeIndexer')) {
-            return AttributeProcessor::INDEXER_ID;
+            $indexerNames[] = AttributeProcessor::INDEXER_ID;
         }
-        throw new Exception("Cannot detect indexer to use for $cls");
+        return $indexerNames;
     }
 
     private static function getTestedIndexerMode(ReflectionClass $cls): string {
