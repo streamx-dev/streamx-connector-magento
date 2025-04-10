@@ -8,9 +8,12 @@ use Psr\Log\LoggerInterface;
 use Streamx\Clients\Ingestion\Builders\StreamxClientBuilders;
 use StreamX\ConnectorCatalog\test\integration\utils\JsonFormatter;
 use StreamX\ConnectorCatalog\test\integration\utils\ValidationFileUtils;
+use StreamX\ConnectorCore\Client\RabbitMQ\RabbitMqConfiguration;
+use StreamX\ConnectorCore\Client\RabbitMQ\RabbitMqIngestionRequestsSender;
 use StreamX\ConnectorCore\Client\StreamxAvailabilityChecker;
 use StreamX\ConnectorCore\Client\StreamxClient;
 use StreamX\ConnectorCore\Client\StreamxClientConfiguration;
+use StreamX\ConnectorCore\Client\StreamxIngestor;
 
 /**
  * Prerequisites to run these tests:
@@ -18,6 +21,7 @@ use StreamX\ConnectorCore\Client\StreamxClientConfiguration;
  * 2. StreamX Connector must be deployed to the Magento instance
  * 3. StreamX must be running (test/resources/mesh.yaml as minimal mesh setup)
  * 4. scripts/add-rest-ingestion-to-magento-network.sh must be executed
+ * 5. To use RabbitMQ - bin/magento streamx:consumer:start must be executed and the command running
  */
 abstract class BaseStreamxTest extends TestCase {
 
@@ -30,6 +34,12 @@ abstract class BaseStreamxTest extends TestCase {
     private const STREAMX_DELIVERY_SERVICE_BASE_URL = "http://localhost:8081";
     private const DATA_PUBLISH_TIMEOUT_SECONDS = 3;
     private const SLEEP_MICROS_BETWEEN_DATA_PUBLISH_CHECKS = 200_000;
+
+    // port, user and password are taken from magento/env/rabbitmq.env file
+    private const RABBIT_MQ_HOST = 'localhost';
+    private const RABBIT_MQ_PORT = 5672;
+    private const RABBIT_MQ_USER = 'magento';
+    private const RABBIT_MQ_PASSWORD = 'magento';
 
     /**
      * @param array $regexReplacements what to change in the actual StreamX response Json, to match the validation file
@@ -118,23 +128,21 @@ abstract class BaseStreamxTest extends TestCase {
     }
 
     protected function createStreamxClient(int $storeId, string $storeCode): StreamxClient {
-        return $this->createCustomStreamxClient($storeId, $storeCode, self::STREAMX_REST_INGESTION_URL);
-    }
-
-    protected function createCustomStreamxClient(int $storeId, string $storeCode, string $restIngestionUrl): StreamxClient {
         $loggerMock = $this->createLoggerMock();
-        $clientConfigurationMock = $this->createClientConfigurationMock($restIngestionUrl);
+        $storeMock = $this->createStoreMock($storeId, $storeCode);
 
-        $storeMock = $this->createMock(StoreInterface::class);
-        $storeMock->method('getId')->willReturn($storeId);
-        $storeMock->method('getCode')->willReturn($storeCode);
-        return new StreamxClient($loggerMock, $clientConfigurationMock, $storeMock);
+        $rabbitMqConfigurationMock = $this->createRabbitMqConfigurationMock();
+        $rabbitMqSender = new RabbitMqIngestionRequestsSender($rabbitMqConfigurationMock, $loggerMock);
+
+        $clientConfigurationMock = $this->createClientConfigurationMock(self::STREAMX_REST_INGESTION_URL);
+        $streamxIngestor = new StreamxIngestor($loggerMock, $clientConfigurationMock);
+
+        return new StreamxClient($loggerMock, $storeMock, $rabbitMqConfigurationMock, $rabbitMqSender, $streamxIngestor);
     }
 
     protected function createStreamxAvailabilityChecker(int $storeId, string $restIngestionUrl): StreamxAvailabilityChecker {
         $loggerMock = $this->createLoggerMock();
         $clientConfigurationMock = $this->createClientConfigurationMock($restIngestionUrl);
-
         return new StreamxAvailabilityChecker($loggerMock, $clientConfigurationMock, $storeId);
     }
 
@@ -144,6 +152,22 @@ abstract class BaseStreamxTest extends TestCase {
             echo $arg; // redirect errors to test console
         }));
         return $loggerMock;
+    }
+
+    private function createStoreMock(int $storeId, string $storeCode): StoreInterface {
+        $storeMock = $this->createMock(StoreInterface::class);
+        $storeMock->method('getId')->willReturn($storeId);
+        $storeMock->method('getCode')->willReturn($storeCode);
+        return $storeMock;
+    }
+
+    private function createRabbitMqConfigurationMock(): RabbitMqConfiguration {
+        $rabbitMqConfigurationMock = $this->createMock(RabbitMqConfiguration::class);
+        $rabbitMqConfigurationMock->method('getHost')->willReturn(self::RABBIT_MQ_HOST);
+        $rabbitMqConfigurationMock->method('getPort')->willReturn(self::RABBIT_MQ_PORT);
+        $rabbitMqConfigurationMock->method('getUser')->willReturn(self::RABBIT_MQ_USER);
+        $rabbitMqConfigurationMock->method('getPassword')->willReturn(self::RABBIT_MQ_PASSWORD);
+        return $rabbitMqConfigurationMock;
     }
 
     private function createClientConfigurationMock(string $restIngestionUrl): StreamxClientConfiguration {

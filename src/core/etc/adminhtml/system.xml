@@ -54,6 +54,46 @@
                 </field>
             </group>
 
+            <group id="rabbit_mq" translate="label" type="text" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Rabbit MQ Settings</label>
+                <depends>
+                    <field id="streamx_connector_settings/general_settings/enable">1</field>
+                </depends>
+                <field id="enable" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable Rabbit MQ</label>
+                    <comment>
+                        Choose Yes to publish data to StreamX via Rabbit MQ queue.
+                        Requires manual start of the consumer by executing "bin/magento streamx:consumer:start"
+                    </comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="host" translate="label comment" type="text" sortOrder="2" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Host</label>
+                    <depends>
+                        <field id="streamx_connector_settings/rabbit_mq/enable">1</field>
+                    </depends>
+                </field>
+                <field id="port" translate="label comment" type="text" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Port</label>
+                    <depends>
+                        <field id="streamx_connector_settings/rabbit_mq/enable">1</field>
+                    </depends>
+                    <validate>validate-number</validate>
+                </field>
+                <field id="user" translate="label comment" type="text" sortOrder="4" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>User</label>
+                    <depends>
+                        <field id="streamx_connector_settings/rabbit_mq/enable">1</field>
+                    </depends>
+                </field>
+                <field id="password" translate="label comment" type="text" sortOrder="5" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Password</label>
+                    <depends>
+                        <field id="streamx_connector_settings/rabbit_mq/enable">1</field>
+                    </depends>
+                </field>
+            </group>
+
             <group id="optimization_settings" translate="label" type="text" sortOrder="350" showInDefault="1" showInWebsite="0" showInStore="0">
                 <label>Optimization Settings</label>
                 <depends>

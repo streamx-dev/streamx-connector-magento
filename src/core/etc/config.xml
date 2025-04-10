@@ -12,6 +12,13 @@
                 <channel_schema_name>dev.streamx.blueprints.data.DataIngestionMessage</channel_schema_name>
                 <disable_certificate_validation>0</disable_certificate_validation>
             </streamx_client>
+            <rabbit_mq>
+                <enable>0</enable>
+                <host>rabbitmq</host>
+                <port>5672</port>
+                <user>magento</user>
+                <password>magento</password>
+            </rabbit_mq>
             <optimization_settings>
                 <should_perform_streamx_availability_check>1</should_perform_streamx_availability_check>
                 <batch_indexing_size>100</batch_indexing_size>
