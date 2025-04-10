@@ -5,6 +5,7 @@ namespace StreamX\ConnectorCore\Indexer;
 use Magento\Framework\Indexer\SaveHandler\Batch;
 use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCore\Api\BasicDataLoader;
+use StreamX\ConnectorCore\Client\StreamxAvailabilityChecker;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
 use StreamX\ConnectorCore\Index\IndexerDefinition;
 use StreamX\ConnectorCore\Client\StreamxClient;
@@ -83,14 +84,17 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
         foreach ($this->indexableStoresProvider->getStores() as $store) {
             $storeId = (int) $store->getId();
 
-            $client = new StreamxClient($this->logger, $this->clientConfiguration, $store);
-            if ($this->optimizationSettings->shouldPerformStreamxAvailabilityCheck() && !$client->isStreamxAvailable()) {
-                $this->logger->info("Cannot reindex $this->indexerName for store $storeId - StreamX is not available");
-                continue;
+            if ($this->optimizationSettings->shouldPerformStreamxAvailabilityCheck()) {
+                $availabilityChecker = new StreamxAvailabilityChecker($this->logger, $this->clientConfiguration, $storeId);
+                if (!$availabilityChecker->isStreamxAvailable()) {
+                    $this->logger->info("Cannot reindex $this->indexerName for store $storeId - StreamX is not available");
+                    continue;
+                }
             }
 
             $this->logger->info("Start indexing $this->indexerName for store $storeId");
             $entities = $this->entityDataLoader->loadData($storeId, $ids);
+            $client = new StreamxClient($this->logger, $this->clientConfiguration, $store);
             $this->ingestEntities($entities, $storeId, $client);
             $this->logger->info("Finished indexing $this->indexerName for store $storeId");
         }
