@@ -6,8 +6,8 @@ use Exception;
 use Magento\Store\Api\Data\StoreInterface;
 use Psr\Log\LoggerInterface;
 use Streamx\Clients\Ingestion\Publisher\Message;
-use Streamx\Clients\Ingestion\Publisher\Publisher;
 use StreamX\ConnectorCore\Client\Model\Data;
+use StreamX\ConnectorCore\Client\RabbitMQ\RabbitMqIngestionRequestsSender;
 use StreamX\ConnectorCore\Traits\ExceptionLogger;
 
 class StreamxClient {
@@ -16,18 +16,19 @@ class StreamxClient {
     private const STREAMX_TYPE_PROPERTY_NAME = 'sx:type';
 
     private LoggerInterface $logger;
+    private int $storeId;
     private string $storeCode;
-    private Publisher $dataIngestor;
+    private RabbitMqIngestionRequestsSender $rabbitMqSender;
 
     public function __construct(
         LoggerInterface $logger,
-        StreamxClientConfiguration $configuration,
-        StoreInterface $store
+        StoreInterface $store,
+        RabbitMqIngestionRequestsSender $rabbitMqSender
     ) {
         $this->logger = $logger;
+        $this->storeId = (int) $store->getId();
         $this->storeCode = $store->getCode();
-        $storeId = (int) $store->getId();
-        $this->dataIngestor = StreamxPublisherFactory::createStreamxPublisher($configuration, $storeId, true);
+        $this->rabbitMqSender = $rabbitMqSender;
     }
 
     public function publish(array $entities, string $indexerName): void {
@@ -41,7 +42,7 @@ class StreamxClient {
                 ->build();
         }
 
-        $this->ingest($publishMessages, "publishing", $indexerName);
+        $this->ingest($publishMessages, Message::PUBLISH_ACTION, $indexerName);
     }
 
     public function unpublish(array $entityIds, string $indexerName): void {
@@ -54,7 +55,7 @@ class StreamxClient {
                 ->build();
         }
 
-        $this->ingest($unpublishMessages, "unpublishing", $indexerName);
+        $this->ingest($unpublishMessages, Message::UNPUBLISH_ACTION, $indexerName);
     }
 
     private function createStreamxKey(EntityType $entityType, string $entityId): string {
@@ -68,24 +69,18 @@ class StreamxClient {
     /**
      * @param Message[] $ingestionMessages
      */
-    private function ingest(array $ingestionMessages, string $operationName, string $indexerName): void {
+    private function ingest(array $ingestionMessages, string $action, string $indexerName): void {
         $keys = array_column($ingestionMessages, 'key');
         $messagesCount = count($ingestionMessages);
-        $this->logger->info("Start $operationName $messagesCount entities from $indexerName with keys " . json_encode($keys));
+        $this->logger->info("Start sending to RabbitMQ $messagesCount $action entities from $indexerName with keys " . json_encode($keys));
 
         try {
-            // TODO make sure this will never block. Best by turning off Pulsar container. Migrate to RabbitMQ to handle ingestion asynchronously (and receive NAK/ACK based retry features)
-            $messageStatuses = $this->dataIngestor->sendMulti($ingestionMessages);
-
-            foreach ($messageStatuses as $messageStatus) {
-                if ($messageStatus->getSuccess() === null) {
-                    $this->logger->error('Ingestion failure: ' . json_encode($messageStatus->getFailure()));
-                }
-            }
+            $this->rabbitMqSender->send($ingestionMessages, $this->storeId);
         } catch (Exception $e) {
-            $this->logExceptionAsError('Ingestion exception', $e);
+            $this->logExceptionAsError('RabbitMQ sending exception', $e);
+            // TODO: implement re-sender? store failed payloads on disk and periodically attempt to rabbitMqSender->send them?
         }
 
-        $this->logger->info("Finished $operationName $messagesCount entities from $indexerName");
+        $this->logger->info("Finished sending to RabbitMQ $messagesCount $action entities from $indexerName");
     }
 }
