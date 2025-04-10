@@ -15,6 +15,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Set Git identity
+        run: |
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+
       - name: Bump version and amend commit
         run: |
           CURRENT_VERSION=$(grep '"version":' composer.json | cut -d '"' -f 4)
@@ -22,11 +27,6 @@ jobs:
           sed -i 's/"version": "'"$CURRENT_VERSION"'"/"version": "'"$NEW_VERSION"'"/g' composer.json
           git add composer.json
           git commit --amend --no-edit
-
-      - name: Set Git identity
-        run: |
-          git config --global user.name "${{ github.actor }}"
-          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
 
       - name: Push changes
         uses: ad-m/github-push-action@master
