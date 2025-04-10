@@ -4,6 +4,7 @@ namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublis
 
 use StreamX\ConnectorCatalog\Model\SlugGenerator;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
+use StreamX\ConnectorCatalog\test\integration\utils\EntityIdsAndName;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 
 /**
@@ -32,14 +33,14 @@ class ProductVariantUpdateTest extends BaseAppEntityUpdateTest {
                 $invisibleChildProducts[] = $childProduct;
             }
         }
-        $visibleChildProductIds = array_map(function ($product) {
+        $visibleChildProductIds = array_map(function (EntityIdsAndName $product) {
             return $product->getEntityIds();
         }, $visibleChildProducts);
         self::$db->setProductsVisibleInStore(self::$store1Id, ...$visibleChildProductIds);
 
         // and
         $expectedParentProductKey = self::productKey($parentProductId);
-        $expectedChildProductsKeys = array_map(function ($childProduct) {
+        $expectedChildProductsKeys = array_map(function (EntityIdsAndName $childProduct) {
             return self::productKey($childProduct->getEntityIds());
         }, $childProducts);
 

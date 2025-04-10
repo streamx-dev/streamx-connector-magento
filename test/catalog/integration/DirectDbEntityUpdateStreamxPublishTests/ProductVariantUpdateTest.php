@@ -3,6 +3,7 @@
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\Model\SlugGenerator;
+use StreamX\ConnectorCatalog\test\integration\utils\EntityIdsAndName;
 
 /**
  * @inheritdoc
@@ -30,14 +31,14 @@ class ProductVariantUpdateTest extends BaseDirectDbEntityUpdateTest {
                 $invisibleChildProducts[] = $childProduct;
             }
         }
-        $visibleChildProductIds = array_map(function ($product) {
+        $visibleChildProductIds = array_map(function (EntityIdsAndName $product) {
             return $product->getEntityIds();
         }, $visibleChildProducts);
         self::$db->setProductsVisibleInStore(self::$store1Id, ...$visibleChildProductIds);
 
         // and
         $expectedParentProductKey = self::productKey($parentProductId);
-        $expectedChildProductsKeys = array_map(function ($childProduct) {
+        $expectedChildProductsKeys = array_map(function (EntityIdsAndName $childProduct) {
             return self::productKey($childProduct->getEntityIds());
         }, $childProducts);
 

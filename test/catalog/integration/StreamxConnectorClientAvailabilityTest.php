@@ -81,7 +81,7 @@ class StreamxConnectorClientAvailabilityTest extends BaseStreamxTest {
             $entities[$i]['id'] = strval($i);
         }
 
-        self::removeFromStreamX(...array_map(function ($id) {
+        self::removeFromStreamX(...array_map(function (int $id) {
             return self::expectedStreamxProductKey($id);
         }, array_keys($entities)));
 
