@@ -36,7 +36,7 @@ class StreamxConnectorClientLoadTest extends BaseStreamxTest {
         }, array_keys($entities)));
 
         // when: publish batch as the Connector would do
-        $client = $this->createClient(parent::STREAMX_REST_INGESTION_URL);
+        $client = $this->createClient();
         $client->publish($entities, ProductProcessor::INDEXER_ID);
 
         // then
@@ -47,7 +47,7 @@ class StreamxConnectorClientLoadTest extends BaseStreamxTest {
         }
 
         // and when: unpublish
-        $client = $this->createClient(parent::STREAMX_REST_INGESTION_URL);
+        $client = $this->createClient();
         $client->unpublish(array_column($entities, 'id'), ProductProcessor::INDEXER_ID);
 
         // then
@@ -60,7 +60,7 @@ class StreamxConnectorClientLoadTest extends BaseStreamxTest {
         return BaseStreamxConnectorPublishTest::productKeyFromEntityId($productId, self::STORE_CODE);
     }
 
-    private function createClient(string $restIngestionUrl): StreamxClient {
-        return parent::createCustomStreamxClient(self::STORE_ID, self::STORE_CODE, $restIngestionUrl);
+    private function createClient(): StreamxClient {
+        return parent::createStreamxClient(self::STORE_ID, self::STORE_CODE);
     }
 }
