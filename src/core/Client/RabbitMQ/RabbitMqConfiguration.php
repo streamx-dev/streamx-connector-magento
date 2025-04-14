@@ -27,7 +27,7 @@ class RabbitMqConfiguration extends BaseConfigurationReader {
         return (string)$this->getGlobalConfigValue('user');
     }
 
-    public function getPassword(): ?string {
-        return $this->getGlobalConfigValue('password');
+    public function getPassword(): string {
+        return (string)$this->getGlobalConfigValue('password');
     }
 }

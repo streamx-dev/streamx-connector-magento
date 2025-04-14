@@ -50,16 +50,27 @@ class RabbitMqIngestionRequestsConsumer extends BaseRabbitMqIngestionRequestsSer
 
     private function consumeMessage(AMQPMessage $message): void {
         $this->logger->info("Consuming message from {$this->getQueueName()}");
+        $messageBody = $message->getBody();
+
         try {
-            $ingestionRequest = IngestionRequest::fromJson($message->getBody());
-            if ($this->sendToStreamX($ingestionRequest)) {
-                $message->ack();
-            } else {
-                $message->nack(true); // TODO verify if the message will actually be redelivered automatically
-            }
+            $ingestionRequest = IngestionRequest::fromJson($messageBody);
         } catch (Exception $e) {
-            $this->logExceptionAsError("Error processing message with body {$message->getBody()}", $e);
-            $message->nack(true); // TODO verify if the message will actually be redelivered automatically
+            $this->logExceptionAsError("Error deserializing IngestionRequest from the following RabbitMQ message, giving up\n$messageBody", $e);
+            $message->nack(false); // remove the message from queue, since it's broken there is no use re-queueing it
+            return;
+        }
+
+        try {
+            $success = $this->sendToStreamX($ingestionRequest);
+        } catch (Exception $e) {
+            $this->logExceptionAsError("Error sending the following message to StreamX, re-queueing\n$messageBody", $e);
+            $message->nack(true); // keep the message on queue and keep resending it until it's delivered to StreamX
+            return;
+        }
+
+        if (!$success) {
+            $this->logger->error("Error response from StreamX to the following message, giving up\n$messageBody");
+            $message->nack(false); // remove the message from queue, since StreamX will probably not accept it in next attempts, so there is no use re-queueing it
         }
     }
 
