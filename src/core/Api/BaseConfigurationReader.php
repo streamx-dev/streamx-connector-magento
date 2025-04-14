@@ -17,7 +17,7 @@ abstract class BaseConfigurationReader {
         $this->configXmlNodePath = self::BASE_CONFIG_XML_NODE . '/' . $configXmlNode;
     }
 
-    public static function splitCommaSeparatedValueToArray(?string $commaSeparatedValue): array {
+    protected static function splitCommaSeparatedValueToArray(?string $commaSeparatedValue): array {
         return null === $commaSeparatedValue || '' === $commaSeparatedValue
             ? []
             : explode(',', $commaSeparatedValue);
@@ -26,7 +26,7 @@ abstract class BaseConfigurationReader {
     /**
      * @return mixed|null
      */
-    public function getGlobalConfigValue(string $configField) {
+    protected function getGlobalConfigValue(string $configField) {
         $path = $this->getConfigFieldFullPath($configField);
         return $this->scopeConfig->getValue($path);
     }
@@ -34,7 +34,7 @@ abstract class BaseConfigurationReader {
     /**
      * @return mixed|null
      */
-    public function getWebsiteLevelConfigValue(string $configField, int $websiteId) {
+    protected function getWebsiteLevelConfigValue(string $configField, int $websiteId) {
         $path = $this->getConfigFieldFullPath($configField);
         return $this->scopeConfig->getValue($path, ScopeInterface::SCOPE_WEBSITE, $websiteId);
     }
@@ -42,7 +42,7 @@ abstract class BaseConfigurationReader {
     /**
      * @return mixed|null
      */
-    public function getStoreLevelConfigValue(string $configField, int $storeId) {
+    protected function getStoreLevelConfigValue(string $configField, int $storeId) {
         $path = $this->getConfigFieldFullPath($configField);
         return $this->scopeConfig->getValue($path, ScopeInterface::SCOPE_STORE, $storeId);
     }
