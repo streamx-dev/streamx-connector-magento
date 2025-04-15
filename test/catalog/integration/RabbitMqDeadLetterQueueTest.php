@@ -2,60 +2,68 @@
 
 namespace StreamX\ConnectorCatalog\test\integration;
 
+use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 use PHPUnit\Framework\AssertionFailedError;
-use PHPUnit\Framework\TestCase;
 use RuntimeException;
+use StreamX\ConnectorCore\Client\RabbitMQ\BaseRabbitMqIngestionRequestsService as Rabbit;
 
-class RabbitMqDeadLetterQueueTest extends TestCase {
+class RabbitMqDeadLetterQueueTest extends BaseStreamxTest {
+
+    protected function setUp(): void {
+        self::clearQueues();
+    }
+
+    protected function tearDown(): void {
+        self::clearQueues();
+    }
 
     /** @test */
-    public function shouldPutInvalidMessageToDeadLetterQueue() {
+    public function shouldRedirectInvalidMessageToDeadLetterQueue() {
         // given
-        $this->purgeMessages('ingestion-requests');
-        $this->purgeMessages('ingestion-requests-dlq');
         $rabbitMqMessage = new AMQPMessage('This is not an Ingestion Request JSON');
 
         // when
-        $this->sendMessage($rabbitMqMessage);
+        self::sendMessage($rabbitMqMessage);
 
         // then
-        $this->waitUntil(function() {
-            $this->assertMessagesCount('ingestion-requests', 0);
-            $this->assertMessagesCount('ingestion-requests-dlq', 1);
+        self::waitUntil(function () {
+            self::assertMessagesCount(Rabbit::queueName, 0);
+            self::assertMessagesCount(Rabbit::dlqQueueName, 1);
         });
     }
 
-    private function sendMessage(AMQPMessage $message): void {
-        // TODO deduplicate, use constants, transform to integration test
-        $connection = new AMQPStreamConnection('localhost', 5672, 'magento', 'magento');
-        $channel = $connection->channel();
-        $channel->basic_publish($message, 'streamx', 'ingestion-requests.*');
-        $connection->close();
+    private static function sendMessage(AMQPMessage $message): void {
+        self::doWithChannel(function (AMQPChannel $channel) use ($message) {
+            $channel->basic_publish($message, Rabbit::exchange, Rabbit::routingKey);
+        });
     }
 
-    private function purgeMessages(string $queue): void {
-        $connection = new AMQPStreamConnection('localhost', 5672, 'magento', 'magento');
-        $channel = $connection->channel();
-        $channel->queue_purge($queue);
-        $connection->close();
+    private static function assertMessagesCount(string $queue, int $expectedCount): void {
+        self::doWithChannel(function (AMQPChannel $channel) use ($queue, $expectedCount) {
+            $queueInfo = $channel->queue_declare(
+                $queue,
+                true, // passive = true: just check, don't create
+                true,
+                false,
+                false
+            );
+            $messageCount = $queueInfo[1];
+
+            self::assertEquals($expectedCount, $messageCount);
+        });
     }
 
-    private function assertMessagesCount(string $queue, int $expectedCount): void {
-        $connection = new AMQPStreamConnection('localhost', 5672, 'magento', 'magento');
-        $channel = $connection->channel();
-
-        list($queue, $messageCount, $consumerCount) = $channel->queue_declare(
-            $queue,
-            true,   // passive = true: just check, don't create
-            true,   // durable
-            false,  // exclusive
-            false   // auto-delete
+    private static function doWithChannel(callable $function): void {
+        $connection = new AMQPStreamConnection(
+            BaseStreamxTest::RABBIT_MQ_HOST,
+            BaseStreamxTest::RABBIT_MQ_PORT,
+            BaseStreamxTest::RABBIT_MQ_USER,
+            BaseStreamxTest::RABBIT_MQ_PASSWORD
         );
-
-        $this->assertEquals($expectedCount, $messageCount);
-        $channel->close();
+        $channel = $connection->channel();
+        $function($channel);
         $connection->close();
     }
 
@@ -73,11 +81,19 @@ class RabbitMqDeadLetterQueueTest extends TestCase {
             }
         }
 
-        // If we ran out of time, rethrow last exception
+        // if we ran out of time, rethrow last exception
         if ($lastException !== null) {
             throw $lastException;
         }
 
         throw new RuntimeException("waitUntil timed out but no assertion was triggered");
     }
+
+    private static function clearQueues(): void {
+        self::doWithChannel(function (AMQPChannel $channel) {
+            $channel->queue_purge(Rabbit::queueName);
+            $channel->queue_purge(Rabbit::dlqQueueName);
+        });
+    }
+
 }

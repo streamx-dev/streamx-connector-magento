@@ -10,6 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Usage: bin/magento streamx:consumer:start
  */
+// TODO add it to cron
 class RabbitMqIngestionRequestsConsumerStartCommand extends Command {
 
     public const COMMAND_NAME = 'streamx:consumer:start';
@@ -25,8 +26,26 @@ class RabbitMqIngestionRequestsConsumerStartCommand extends Command {
         parent::configure();
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output) {
-        $output->writeln('Starting ' . get_class($this->consumer) . ' to listen for messages and consume them indefinitely');
-        $this->consumer->startConsumingMessages();
+    protected function execute(InputInterface $input, OutputInterface $output): int {
+        if (!$this->isCommandRunning()) {
+            $output->writeln('Starting ' . get_class($this->consumer) . ' to listen for messages and consume them indefinitely');
+            $this->consumer->startConsumingMessages();
+        }
+        return 0;
+    }
+
+    private static function isCommandRunning(): bool {
+        exec("ps aux | grep " . self::COMMAND_NAME, $output);
+
+        $foundProcesses = 0;
+        foreach ($output as $line) {
+            if (str_contains($line, 'bin/magento ' . self::COMMAND_NAME)) {
+                $foundProcesses++;
+                if ($foundProcesses > 1) { // one more than the current call
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

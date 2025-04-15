@@ -40,7 +40,7 @@ class RabbitMqIngestionRequestsConsumer extends BaseRabbitMqIngestionRequestsSer
         };
 
         // start the consumer for consuming messages from the queue
-        $this->channel->basic_consume($this->getQueueName(), '', false, false, false, false, $consumeMessageFunction);
+        $this->channel->basic_consume(parent::queueName, '', false, false, false, false, $consumeMessageFunction);
 
         // keep the channel ready to consume messages indefinitely
         while ($this->channel->is_consuming()) {
@@ -49,7 +49,7 @@ class RabbitMqIngestionRequestsConsumer extends BaseRabbitMqIngestionRequestsSer
     }
 
     private function consumeMessage(AMQPMessage $message): void {
-        $this->logger->info("Consuming message from {$this->getQueueName()}");
+        $this->logger->info('Consuming message from ' . parent::queueName);
         $messageBody = $message->getBody();
 
         try {

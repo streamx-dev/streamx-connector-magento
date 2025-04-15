@@ -87,5 +87,6 @@ bash scripts/reload-magento-modules.sh
 
 echo "Installation done. Next steps:"
 echo " - turn on your local StreamX instance"
-echo " - execute 'scripts/add-rest-ingestion-to-magento-network.sh'"
+echo " - execute 'bash scripts/add-rest-ingestion-to-magento-network.sh'"
+echo " - execute 'bin/magento streamx:consumer:start'"
 echo " - run all tests to verify installation"

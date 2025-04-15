@@ -11,13 +11,13 @@ abstract class BaseRabbitMqIngestionRequestsService {
 
     private static bool $isQueueInitialized = false;
 
-    private string $exchange;
-    private string $queueName;
-    private string $routingKey;
+    public const exchange = 'streamx';
+    public const queueName = 'ingestion-requests';
+    public const routingKey = "ingestion-requests.*";
 
-    private string $dlqExchange;
-    private string $dlqQueueName;
-    private string $dlqRoutingKey;
+    public const dlqExchange = 'streamx-dlq';
+    public const dlqQueueName = 'ingestion-requests-dlq';
+    public const dlqRoutingKey = "ingestion-requests-dlq-key";
 
     private string $host;
     private int $port;
@@ -25,22 +25,10 @@ abstract class BaseRabbitMqIngestionRequestsService {
     private string $password;
 
     protected function __construct(RabbitMqConfiguration $configuration) {
-        $this->exchange = 'streamx';
-        $this->queueName = 'ingestion-requests';
-        $this->routingKey = "$this->queueName.*";
-
-        $this->dlqExchange = 'streamx-dlq';
-        $this->dlqQueueName = 'ingestion-requests-dlq';
-        $this->dlqRoutingKey = "$this->dlqQueueName-key";
-
         $this->host = $configuration->getHost();
         $this->port = $configuration->getPort();
         $this->user = $configuration->getUser();
         $this->password = $configuration->getPassword();
-    }
-
-    protected function getQueueName(): string {
-        return $this->queueName;
     }
 
     protected function newConnection(): AMQPStreamConnection {
@@ -60,24 +48,24 @@ abstract class BaseRabbitMqIngestionRequestsService {
         $connection = $this->newConnection();
         $channel = $connection->channel();
         $this->initializeQueues($channel);
-        $channel->basic_publish($message, $this->exchange, $this->routingKey);
+        $channel->basic_publish($message, self::exchange, self::routingKey);
         $connection->close();
     }
 
     private function initializeQueues(AMQPChannel $channel): void {
         if (!self::$isQueueInitialized) {
             // create Dead Letter Queue (for nack'ed messages)
-            $channel->exchange_declare($this->dlqExchange, 'direct', false, true, false);
-            $channel->queue_declare($this->dlqQueueName, false, true, false, false);
-            $channel->queue_bind($this->dlqQueueName, $this->dlqExchange, $this->dlqRoutingKey);
+            $channel->exchange_declare(self::dlqExchange, 'direct', false, true, false);
+            $channel->queue_declare(self::dlqQueueName, false, true, false, false);
+            $channel->queue_bind(self::dlqQueueName, self::dlqExchange, self::dlqRoutingKey);
 
             // create the main queue
-            $channel->exchange_declare($this->exchange, 'topic', false, true, false);
-            $channel->queue_declare($this->queueName, false, true, false, false, false, [
-                'x-dead-letter-exchange'    => ['S', $this->dlqExchange],
-                'x-dead-letter-routing-key' => ['S', $this->dlqRoutingKey]
+            $channel->exchange_declare(self::exchange, 'topic', false, true, false);
+            $channel->queue_declare(self::queueName, false, true, false, false, false, [
+                'x-dead-letter-exchange'    => ['S', self::dlqExchange],
+                'x-dead-letter-routing-key' => ['S', self::dlqRoutingKey]
             ]);
-            $channel->queue_bind($this->queueName, $this->exchange, $this->routingKey);
+            $channel->queue_bind(self::queueName, self::exchange, self::routingKey);
 
             self::$isQueueInitialized = true;
         }

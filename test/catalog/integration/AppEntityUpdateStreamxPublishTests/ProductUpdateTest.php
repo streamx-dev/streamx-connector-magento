@@ -18,6 +18,16 @@ class ProductUpdateTest extends BaseAppEntityUpdateTest {
     }
 
     /** @test */
+    public function shouldPublishSimpleProductEditedUsingMagentoApplication_WhenRabbitMqIsDisabled() {
+        ConfigurationEditUtils::setConfigurationValue(ConfigurationEditUtils::ENABLE_RABBIT_MQ, '0');
+        try {
+            $this->shouldPublishProductEditedUsingMagentoApplication('Joust Duffle Bag', 'bag');
+        } finally {
+            ConfigurationEditUtils::setConfigurationValue(ConfigurationEditUtils::ENABLE_RABBIT_MQ, '1');
+        }
+    }
+
+    /** @test */
     public function shouldPublishSimpleProductEditedUsingMagentoApplicationWithoutAttributes() {
         ConfigurationEditUtils::setIndexedProductAttributes('cost'); // index only an attr that bags don't have (so no attr expected in publish payload)
         try {

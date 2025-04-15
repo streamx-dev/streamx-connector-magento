@@ -36,10 +36,10 @@ abstract class BaseStreamxTest extends TestCase {
     private const SLEEP_MICROS_BETWEEN_DATA_PUBLISH_CHECKS = 200_000;
 
     // port, user and password are taken from magento/env/rabbitmq.env file
-    private const RABBIT_MQ_HOST = 'localhost';
-    private const RABBIT_MQ_PORT = 5672;
-    private const RABBIT_MQ_USER = 'magento';
-    private const RABBIT_MQ_PASSWORD = 'magento';
+    protected const RABBIT_MQ_HOST = 'localhost';
+    protected const RABBIT_MQ_PORT = 5672;
+    protected const RABBIT_MQ_USER = 'magento';
+    protected const RABBIT_MQ_PASSWORD = 'magento';
 
     /**
      * @param array $regexReplacements what to change in the actual StreamX response Json, to match the validation file
