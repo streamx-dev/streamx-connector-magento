@@ -42,7 +42,7 @@ class ProductPricePublishTest extends BaseDirectDbEntityUpdateTest {
         $this->reindexMview();
 
         // then
-        $this->assertPriceAndDiscountedPriceOfPublishedProduct($newPrice, $newPrice);
+        $this->assertExactDataIsPublished($this->expectedKey, "edited-bag-product-with-prices-$newPrice-and-$newPrice.json");
     }
 
     /** @test */
@@ -59,7 +59,7 @@ class ProductPricePublishTest extends BaseDirectDbEntityUpdateTest {
             $this->reindexMview();
 
             // then: expecting the old indexed price to be published, since the catalog_product_price Magento built-in indexer didn't run yet to update prices in catalog_product_index_price table
-            $this->assertPriceAndDiscountedPriceOfPublishedProduct($this->defaultPrice, $this->defaultPrice);
+            $this->assertExactDataIsPublished($this->expectedKey, 'original-bag-product.json');
         } finally {
             ConfigurationEditUtils::restoreConfigurationValue(ConfigurationKeyPaths::USE_PRICES_INDEX);
         }
@@ -81,19 +81,13 @@ class ProductPricePublishTest extends BaseDirectDbEntityUpdateTest {
             $this->reindexMview();
 
             // then: expecting the catalog rule price to be published as discounted price
-            $this->assertPriceAndDiscountedPriceOfPublishedProduct($this->defaultPrice, $catalogRulePrice);
+            $this->assertExactDataIsPublished($this->expectedKey, "edited-bag-product-with-prices-$this->defaultPrice-and-$catalogRulePrice.json");
         } finally {
             self::$db->revertProductDummyUpdate($this->productId);
             $this->deleteCatalogRulePrice();
             ConfigurationEditUtils::restoreConfigurationValue(ConfigurationKeyPaths::USE_PRICES_INDEX);
             ConfigurationEditUtils::restoreConfigurationValue(ConfigurationKeyPaths::USE_CATALOG_PRICE_RULES);
         }
-    }
-
-    private function assertPriceAndDiscountedPriceOfPublishedProduct(float $expectedPrice, float $expectedDiscountedPrice): void {
-        $publishedProduct = json_decode($this->downloadContentAtKey($this->expectedKey), true);
-        $this->assertEquals($expectedPrice, $publishedProduct['price']['value']);
-        $this->assertEquals($expectedDiscountedPrice, $publishedProduct['price']['discountedValue']);
     }
 
     private function changeProductPrice(float $newPrice): void {

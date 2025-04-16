@@ -4,7 +4,6 @@ namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublis
 
 use StreamX\ConnectorCatalog\Model\SlugGenerator;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
-use StreamX\ConnectorCatalog\test\integration\utils\EntityIdsAndName;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 
 /**
@@ -14,37 +13,30 @@ use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 class ProductVariantUpdateTest extends BaseAppEntityUpdateTest {
 
     private const PARENT_PRODUCT_NAME = 'Chaz Kangeroo Hoodie';
-    private const CHILD_PRODUCT_NAME = 'Chaz Kangeroo Hoodie-XL-Orange';
 
     /** @test */
     public function shouldPublishParentProductAndVisibleVariants_WhenParentIsEditedUsingMagentoApplication() {
         // given
         $parentProductId = self::$db->getProductId(self::PARENT_PRODUCT_NAME);
 
-        $childProducts = self::$db->getProductIdsAndNamesList(self::PARENT_PRODUCT_NAME . '-');
-        $this->assertCount(15, $childProducts);
+        // take first 4 variant products, and group them to visible and invisible products
+        $visibleChildProduct1 = self::$db->getProductId('Chaz Kangeroo Hoodie-XS-Black');
+        $visibleChildProduct2 = self::$db->getProductId('Chaz Kangeroo Hoodie-XS-Gray');
+        $invisibleChildProduct1 = self::$db->getProductId('Chaz Kangeroo Hoodie-XS-Orange');
+        $invisibleChildProduct2 = self::$db->getProductId('Chaz Kangeroo Hoodie-S-Black');
+        self::$db->setProductsVisibleInStore(self::$store1Id, $visibleChildProduct1, $visibleChildProduct2); // by default variants are not visible in store
 
-        // and: make some of the child products visible
-        foreach ($childProducts as $childProduct) {
-            $entityIds = $childProduct->getEntityIds();
-            if ($entityIds->getLinkFieldId() %2 == 0) {
-                $visibleChildProducts[] = $childProduct;
-            } else {
-                $invisibleChildProducts[] = $childProduct;
-            }
-        }
-        $visibleChildProductIds = array_map(function (EntityIdsAndName $product) {
-            return $product->getEntityIds();
-        }, $visibleChildProducts);
-        self::$db->setProductsVisibleInStore(self::$store1Id, ...$visibleChildProductIds);
-
-        // and
+        // remove from StreamX, if published before
         $expectedParentProductKey = self::productKey($parentProductId);
-        $expectedChildProductsKeys = array_map(function (EntityIdsAndName $childProduct) {
-            return self::productKey($childProduct->getEntityIds());
-        }, $childProducts);
+        $visibleChildProduct1Key = self::productKey($visibleChildProduct1);
+        $visibleChildProduct2Key = self::productKey($visibleChildProduct2);
+        $invisibleChildProduct1Key = self::productKey($invisibleChildProduct1);
+        $invisibleChildProduct2Key = self::productKey($invisibleChildProduct2);
 
-        self::removeFromStreamX($expectedParentProductKey, ...$expectedChildProductsKeys);
+        self::removeFromStreamX($expectedParentProductKey,
+            $visibleChildProduct1Key, $visibleChildProduct2Key,
+            $invisibleChildProduct1Key, $invisibleChildProduct2Key
+        );
 
         // when
         self::renameProduct($parentProductId, "Name modified for testing, was " . self::PARENT_PRODUCT_NAME);
@@ -52,30 +44,24 @@ class ProductVariantUpdateTest extends BaseAppEntityUpdateTest {
         // then
         try {
             $this->assertExactDataIsPublished($expectedParentProductKey, 'edited-hoodie-product.json');
-            foreach ($visibleChildProducts as $childProduct) {
-                $entityIds = $childProduct->getEntityIds();
-                $publishedChildProduct = $this->downloadContentAtKey(self::productKey($entityIds));
-                $this->assertStringContainsString('"id":"' . $entityIds->getEntityId() . '"', $publishedChildProduct);
-                $this->assertStringContainsString('"name":"' . $childProduct->getName() . '"', $publishedChildProduct);
-            }
-            foreach ($invisibleChildProducts as $childProduct) {
-                $expectedNotPublishedKey = self::productKey($childProduct->getEntityIds());
-                $this->assertDataIsNotPublished($expectedNotPublishedKey);
-            }
+            $this->assertExactDataIsPublished($visibleChildProduct1Key, 'original-hoodie-xs-black-product.json');
+            $this->assertExactDataIsPublished($visibleChildProduct2Key, 'original-hoodie-xs-gray-product.json');
+            $this->assertDataIsNotPublished($invisibleChildProduct1Key);
+            $this->assertDataIsNotPublished($invisibleChildProduct2Key);
         } finally {
             self::renameProduct($parentProductId, self::PARENT_PRODUCT_NAME);
             try {
                 $this->assertExactDataIsPublished($expectedParentProductKey, 'original-hoodie-product.json');
             } finally {
                 // restore default visibility of child products
-                self::$db->unsetProductsVisibleInStore(self::$store1Id, ...$visibleChildProductIds);
+                self::$db->unsetProductsVisibleInStore(self::$store1Id, $visibleChildProduct1, $visibleChildProduct2);
             }
         }
     }
 
     /** @test */
     public function shouldPublishVisibleVariantAndParentProduct_WhenVariantIsEditedUsingMagentoApplication() {
-        $childProductId = self::$db->getProductId(self::CHILD_PRODUCT_NAME);
+        $childProductId = self::$db->getProductId('Chaz Kangeroo Hoodie-XL-Orange');
         try {
             // make the variant visible at store level, so it can be published
             self::$db->setProductsVisibleInStore(self::$store1Id, $childProductId);
@@ -93,19 +79,22 @@ class ProductVariantUpdateTest extends BaseAppEntityUpdateTest {
 
     private function testPublishingWhenVariantIsEdited(bool $expectingVariantToBePublished) {
         // given
-        $childProductId = self::$db->getProductId(self::CHILD_PRODUCT_NAME);
-        $differentChildId = self::$db->getProductId('Chaz Kangeroo Hoodie-L-Orange');
+        $childProductName = 'Chaz Kangeroo Hoodie-XL-Orange';
+        $differentChildProductName = 'Chaz Kangeroo Hoodie-L-Orange';
+
+        $childProductId = self::$db->getProductId($childProductName);
+        $differentChildProductId = self::$db->getProductId($differentChildProductName);
         $parentProductId = self::$db->getProductId(self::PARENT_PRODUCT_NAME);
 
         // and
         $expectedChildProductKey = self::productKey($childProductId);
         $expectedParentProductKey = self::productKey($parentProductId);
-        $unexpectedChildProductKey = self::productKey($differentChildId);
+        $unexpectedChildProductKey = self::productKey($differentChildProductId);
 
         self::removeFromStreamX($expectedChildProductKey, $expectedParentProductKey, $unexpectedChildProductKey);
 
         // when
-        $childProductModifiedName = "Name modified for testing, was " . self::CHILD_PRODUCT_NAME;
+        $childProductModifiedName = "Name modified for testing, was $childProductName";
         self::renameProduct($childProductId, $childProductModifiedName);
 
         // then: expecting both products to be published (with modified name of the child product in both payloads). Other child should not be published
@@ -113,20 +102,20 @@ class ProductVariantUpdateTest extends BaseAppEntityUpdateTest {
         try {
             if ($expectingVariantToBePublished) {
                 $this->assertExactDataIsPublished($expectedChildProductKey, 'original-hoodie-xl-orange-product.json', [
-                    '"' . $childProductModifiedName => '"' . self::CHILD_PRODUCT_NAME,
-                    '"' . SlugGenerator::slugify($childProductModifiedName) => '"' . SlugGenerator::slugify(self::CHILD_PRODUCT_NAME)
+                    '"' . $childProductModifiedName => '"' . $childProductName,
+                    '"' . SlugGenerator::slugify($childProductModifiedName) => '"' . SlugGenerator::slugify($childProductName)
                 ]);
             } else {
                 $this->assertDataIsNotPublished($expectedChildProductKey);
             }
             $this->assertExactDataIsPublished($expectedParentProductKey, 'original-hoodie-product.json', [
-                '"' . $childProductModifiedName => '"' . self::CHILD_PRODUCT_NAME,
-                '"' . SlugGenerator::slugify($childProductModifiedName) => '"' . SlugGenerator::slugify(self::CHILD_PRODUCT_NAME)
+                '"' . $childProductModifiedName => '"' . $childProductName,
+                '"' . SlugGenerator::slugify($childProductModifiedName) => '"' . SlugGenerator::slugify($childProductName)
             ]);
             $this->assertDataIsNotPublished($unexpectedChildProductKey);
         } finally {
             // when: restore product name
-            self::renameProduct($childProductId, self::CHILD_PRODUCT_NAME);
+            self::renameProduct($childProductId, $childProductName);
 
             // then: expecting both products to be published (with original name of the child product in both payloads)
             if ($expectingVariantToBePublished) {

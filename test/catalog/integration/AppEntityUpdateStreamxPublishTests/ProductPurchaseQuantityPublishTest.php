@@ -28,8 +28,7 @@ class ProductPurchaseQuantityPublishTest extends BaseAppEntityUpdateTest {
         $this->purchaseProduct($productId, $quantityToPurchase);
 
         try {
-            $publishedProduct = $this->downloadContentAtKey($expectedKey);
-            $this->assertStringContainsString('"quantity":97', $publishedProduct);
+            $this->assertExactDataIsPublished($expectedKey, 'edited-quantity-bag-product.json');
         } finally {
             self::setQuantity($productId, $defaultQuantity);
         }

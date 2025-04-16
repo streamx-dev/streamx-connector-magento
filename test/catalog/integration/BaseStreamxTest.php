@@ -62,21 +62,6 @@ abstract class BaseStreamxTest extends TestCase {
         return $response;
     }
 
-    protected function downloadContentAtKey(string $key): string {
-        $url = self::STREAMX_DELIVERY_SERVICE_BASE_URL . '/' . $key;
-
-        $startTime = time();
-        while (time() - $startTime < self::DATA_PUBLISH_TIMEOUT_SECONDS) {
-            $response = @file_get_contents($url);
-            if ($response !== false) {
-                return $response;
-            }
-            usleep(self::SLEEP_MICROS_BETWEEN_DATA_PUBLISH_CHECKS);
-        }
-
-        $this->fail("$url: not found");
-    }
-
     protected function assertDataIsUnpublished(string $key): void {
         $url = self::STREAMX_DELIVERY_SERVICE_BASE_URL . '/' . $key;
 

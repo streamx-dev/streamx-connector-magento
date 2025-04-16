@@ -1,0 +1,264 @@
+{
+  "id": "2",
+  "name": "Default Category",
+  "slug": "default-category-2",
+  "label": "Default Category",
+  "subcategories": [
+    {
+      "id": "11",
+      "name": "Men",
+      "subcategories": [
+        {
+          "parent_id": "11",
+          "path": "1\/2\/11\/12",
+          "id": 12,
+          "name": "Tops",
+          "url_key": "tops-men",
+          "subcategories": [
+            {
+              "parent_id": "12",
+              "path": "1\/2\/11\/12\/14",
+              "id": 14,
+              "name": "Jackets",
+              "url_key": "jackets-men",
+              "subcategories": [],
+              "slug": "jackets-men-14",
+              "label": "Jackets"
+            },
+            {
+              "parent_id": "12",
+              "path": "1\/2\/11\/12\/15",
+              "id": 15,
+              "name": "Hoodies & Sweatshirts",
+              "url_key": "hoodies-and-sweatshirts-men",
+              "subcategories": [],
+              "slug": "hoodies-and-sweatshirts-men-15",
+              "label": "Hoodies & Sweatshirts"
+            },
+            {
+              "parent_id": "12",
+              "path": "1\/2\/11\/12\/16",
+              "id": 16,
+              "name": "Tees",
+              "url_key": "tees-men",
+              "subcategories": [],
+              "slug": "tees-men-16",
+              "label": "Tees"
+            },
+            {
+              "parent_id": "12",
+              "path": "1\/2\/11\/12\/17",
+              "id": 17,
+              "name": "Tanks",
+              "url_key": "tanks-men",
+              "subcategories": [],
+              "slug": "tanks-men-17",
+              "label": "Tanks"
+            }
+          ],
+          "slug": "tops-men-12",
+          "label": "Tops"
+        },
+        {
+          "parent_id": "11",
+          "path": "1\/2\/11\/13",
+          "id": 13,
+          "name": "Bottoms",
+          "url_key": "bottoms-men",
+          "subcategories": [
+            {
+              "parent_id": "13",
+              "path": "1\/2\/11\/13\/18",
+              "id": 18,
+              "name": "Pants",
+              "url_key": "pants-men",
+              "subcategories": [],
+              "slug": "pants-men-18",
+              "label": "Pants"
+            },
+            {
+              "parent_id": "13",
+              "path": "1\/2\/11\/13\/19",
+              "id": 19,
+              "name": "Shorts",
+              "url_key": "shorts-men",
+              "subcategories": [],
+              "slug": "shorts-men-19",
+              "label": "Shorts"
+            }
+          ],
+          "slug": "bottoms-men-13",
+          "label": "Bottoms"
+        }
+      ],
+      "slug": "men-11",
+      "label": "Men"
+    },
+    {
+      "id": "20",
+      "name": "Women",
+      "subcategories": [
+        {
+          "parent_id": "20",
+          "path": "1\/2\/20\/21",
+          "id": 21,
+          "name": "Tops",
+          "url_key": "tops-women",
+          "subcategories": [
+            {
+              "parent_id": "21",
+              "path": "1\/2\/20\/21\/23",
+              "id": 23,
+              "name": "Jackets",
+              "url_key": "jackets-women",
+              "subcategories": [],
+              "slug": "jackets-women-23",
+              "label": "Jackets"
+            },
+            {
+              "parent_id": "21",
+              "path": "1\/2\/20\/21\/24",
+              "id": 24,
+              "name": "Hoodies & Sweatshirts",
+              "url_key": "hoodies-and-sweatshirts-women",
+              "subcategories": [],
+              "slug": "hoodies-and-sweatshirts-women-24",
+              "label": "Hoodies & Sweatshirts"
+            },
+            {
+              "parent_id": "21",
+              "path": "1\/2\/20\/21\/25",
+              "id": 25,
+              "name": "Tees",
+              "url_key": "tees-women",
+              "subcategories": [],
+              "slug": "tees-women-25",
+              "label": "Tees"
+            },
+            {
+              "parent_id": "21",
+              "path": "1\/2\/20\/21\/26",
+              "id": 26,
+              "name": "Bras & Tanks",
+              "url_key": "tanks-women",
+              "subcategories": [],
+              "slug": "tanks-women-26",
+              "label": "Bras & Tanks"
+            }
+          ],
+          "slug": "tops-women-21",
+          "label": "Tops"
+        },
+        {
+          "parent_id": "20",
+          "path": "1\/2\/20\/22",
+          "id": 22,
+          "name": "Bottoms",
+          "url_key": "bottoms-women",
+          "subcategories": [
+            {
+              "parent_id": "22",
+              "path": "1\/2\/20\/22\/27",
+              "id": 27,
+              "name": "Pants",
+              "url_key": "pants-women",
+              "subcategories": [],
+              "slug": "pants-women-27",
+              "label": "Pants"
+            },
+            {
+              "parent_id": "22",
+              "path": "1\/2\/20\/22\/28",
+              "id": 28,
+              "name": "Shorts",
+              "url_key": "shorts-women",
+              "subcategories": [],
+              "slug": "shorts-women-28",
+              "label": "Shorts"
+            }
+          ],
+          "slug": "bottoms-women-22",
+          "label": "Bottoms"
+        }
+      ],
+      "slug": "women-20",
+      "label": "Women"
+    },
+    {
+      "id": "3",
+      "name": "Gear",
+      "subcategories": [
+        {
+          "parent_id": "3",
+          "path": "1\/2\/3\/4",
+          "id": 4,
+          "name": "Bags",
+          "url_key": "bags",
+          "subcategories": [],
+          "slug": "bags-4",
+          "label": "Bags"
+        },
+        {
+          "parent_id": "3",
+          "path": "1\/2\/3\/5",
+          "id": 5,
+          "name": "Fitness Equipment",
+          "url_key": "fitness-equipment",
+          "subcategories": [],
+          "slug": "fitness-equipment-5",
+          "label": "Fitness Equipment"
+        },
+        {
+          "parent_id": "3",
+          "path": "1\/2\/3\/6",
+          "id": 6,
+          "name": "Watches",
+          "url_key": "watches",
+          "subcategories": [],
+          "slug": "watches-6",
+          "label": "Watches"
+        }
+      ],
+      "slug": "gear-3",
+      "label": "Gear"
+    },
+    {
+      "id": "37",
+      "name": "Sale",
+      "subcategories": [],
+      "slug": "sale-37",
+      "label": "Sale"
+    },
+    {
+      "id": "38",
+      "name": "What's New",
+      "subcategories": [],
+      "slug": "what-is-new-38",
+      "label": "What's New"
+    },
+    {
+      "id": "9",
+      "name": "Training",
+      "subcategories": [
+        {
+          "parent_id": "9",
+          "path": "1\/2\/9\/10",
+          "id": 10,
+          "name": "Video Download",
+          "url_key": "training-video",
+          "subcategories": [],
+          "slug": "training-video-10",
+          "label": "Video Download"
+        }
+      ],
+      "slug": "training-9",
+      "label": "Training"
+    }
+  ],
+  "parent": {
+    "id": "1",
+    "name": "Root Catalog",
+    "slug": "root-catalog-1",
+    "label": "Root Catalog"
+  }
+}

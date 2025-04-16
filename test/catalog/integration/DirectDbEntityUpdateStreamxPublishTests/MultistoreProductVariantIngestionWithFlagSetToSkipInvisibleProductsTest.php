@@ -18,10 +18,10 @@ class MultistoreProductVariantIngestionWithFlagSetToSkipInvisibleProductsTest ex
 
         // then
         // - parent is still in store 1 and contains both variants
-        $this->assertParentIsPublishedWithVariantsInPayload(self::$store1Id, [self::$variant1, self::$variant2]);
+        $this->assertParentIsPublishedWithAllVariantsInPayload(self::$store1Id);
 
         // - parent is still in store 2 but now contains only variant 1
-        $this->assertParentIsPublishedWithVariantsInPayload(self::$store2Id, [self::$variant1]);
+        $this->assertParentIsPublishedWithoutVariant2InPayload(self::$store2Id);
 
         // - variant is still published in store 1, but editing variant 2 triggered reindexing it in all stores, and the variant is not visible in store 1 - so it was unpublished
         $this->assertSeparatelyPublishedVariants(self::$store1Id, [self::$variant1]);
@@ -40,7 +40,7 @@ class MultistoreProductVariantIngestionWithFlagSetToSkipInvisibleProductsTest ex
 
         // then
         // - parent is still in store 1 and contains both variants
-        $this->assertParentIsPublishedWithVariantsInPayload(self::$store1Id, [self::$variant1, self::$variant2]);
+        $this->assertParentIsPublishedWithAllVariantsInPayload(self::$store1Id);
 
         // - parent is unpublished from store 2
         $this->assertParentIsNotPublished(self::$store2Id);
@@ -62,10 +62,10 @@ class MultistoreProductVariantIngestionWithFlagSetToSkipInvisibleProductsTest ex
 
         // then
         // - parent is still in store 1 and contains both variants
-        $this->assertParentIsPublishedWithVariantsInPayload(self::$store1Id, [self::$variant1, self::$variant2]);
+        $this->assertParentIsPublishedWithAllVariantsInPayload(self::$store1Id);
 
         // - parent is still in store 2 and contains both variants (invisible variants are always published in the parent's payload)
-        $this->assertParentIsPublishedWithVariantsInPayload(self::$store2Id, [self::$variant1, self::$variant2]);
+        $this->assertParentIsPublishedWithAllVariantsInPayload(self::$store2Id);
 
         // - variant is still published in store 1, but editing variant 2 triggered reindexing it in all stores, and the variant is not visible in store 1 - so it was unpublished
         $this->assertSeparatelyPublishedVariants(self::$store1Id, [self::$variant1]);
@@ -84,7 +84,7 @@ class MultistoreProductVariantIngestionWithFlagSetToSkipInvisibleProductsTest ex
 
         // then
         // - parent is still in store 1 and contains both variants
-        $this->assertParentIsPublishedWithVariantsInPayload(self::$store1Id, [self::$variant1, self::$variant2]);
+        $this->assertParentIsPublishedWithAllVariantsInPayload(self::$store1Id);
 
         // - parent is unpublished from store 2
         $this->assertParentIsNotPublished(self::$store2Id);

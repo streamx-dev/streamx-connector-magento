@@ -89,16 +89,6 @@ class MagentoMySqlQueryExecutor {
         );
     }
 
-    public function selectRows(string $selectQuery): array {
-        $result = $this->connection->query($selectQuery);
-        $values = [];
-        while ($row = $result->fetch_row()) {
-            $values[] = array_values($row);
-        }
-        $result->close();
-        return $values;
-    }
-
     /**
      * @return int last inserted ID
      * @throws Exception
@@ -137,31 +127,6 @@ class MagentoMySqlQueryExecutor {
              WHERE attribute_id = $productNameAttributeId
                AND value = '$productName'
         ");
-    }
-
-    /**
-     * @return EntityIdsAndName[]
-     */
-    public function getProductIdsAndNamesList(string $productNamePrefix): array {
-        $productNameAttributeId = $this->getProductNameAttributeId();
-        $linkField = $this->entityAttributeLinkField;
-
-        $rows = $this->selectRows("
-            SELECT DISTINCT prod.entity_id, prod.$linkField, attr.value
-              FROM catalog_product_entity prod
-              JOIN catalog_product_entity_varchar attr ON attr.$linkField = prod.$linkField
-             WHERE attribute_id = $productNameAttributeId
-               AND value LIKE '$productNamePrefix%'
-        ");
-
-        $result = [];
-        foreach ($rows as $row) {
-            $result[] = new EntityIdsAndName(
-                new EntityIds($row[0], $row[1]),
-                $row[2]
-            );
-        }
-        return $result;
     }
 
     public function getCategoryId(string $categoryName): EntityIds {
