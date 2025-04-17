@@ -2,12 +2,11 @@
 
 namespace StreamX\ConnectorCatalog\test\integration;
 
-use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\ValidationFileUtils;
 use StreamX\ConnectorCore\Client\StreamxClient;
 
-class StreamxConnectorClientAvailabilityTest extends BaseStreamxTest {
+class StreamxConnectorClientLoadTest extends BaseStreamxTest {
 
     use ValidationFileUtils;
 
@@ -16,55 +15,6 @@ class StreamxConnectorClientAvailabilityTest extends BaseStreamxTest {
 
     private const NOT_EXISTING_HOST = 'c793qwh0uqw3fg94ow';
     private const WRONG_INGESTION_PORT = 1234;
-
-    private LoggerInterface $loggerMock;
-
-    protected function setUp(): void {
-        $this->setupLoggerMock();
-    }
-
-    private function setupLoggerMock(): void {
-        $this->loggerMock = $this->createMock(LoggerInterface::class);
-        $this->loggerMock->method('error')->will($this->returnCallback(function ($arg) {
-            echo $arg; // redirect errors to test console
-        }));
-    }
-
-    /** @test */
-    public function clientShouldBeAvailable() {
-        // given
-        $restIngestionUrl = parent::STREAMX_REST_INGESTION_URL;
-
-        // when
-        $client = $this->createClient($restIngestionUrl);
-
-        // then
-        $this->assertTrue($client->isStreamxAvailable());
-    }
-
-    /** @test */
-    public function clientShouldNotBeAvailable_WhenNotExistingHost() {
-        // given
-        $restIngestionUrl = self::changedRestIngestionUrl('host', self::NOT_EXISTING_HOST);
-
-        // when
-        $client = $this->createClient($restIngestionUrl);
-
-        // then
-        $this->assertFalse($client->isStreamxAvailable());
-    }
-
-    /** @test */
-    public function clientShouldNotBeAvailable_WhenWrongPort() {
-        // given
-        $restIngestionUrl = self::changedRestIngestionUrl('port', self::WRONG_INGESTION_PORT);
-
-        // when
-        $client = $this->createClient($restIngestionUrl);
-
-        // then
-        $this->assertFalse($client->isStreamxAvailable());
-    }
 
     /** @test */
     public function shouldPublishBigBatchesOfProductsWithoutErrors() {
@@ -87,9 +37,7 @@ class StreamxConnectorClientAvailabilityTest extends BaseStreamxTest {
 
         // when: publish batch as the Connector would do
         $client = $this->createClient(parent::STREAMX_REST_INGESTION_URL);
-        if ($client->isStreamxAvailable()) {
-            $client->publish($entities, ProductProcessor::INDEXER_ID);
-        }
+        $client->publish($entities, ProductProcessor::INDEXER_ID);
 
         // then
         for ($i = 0; $i < $entitiesToPublishInBatch; $i++) {
@@ -100,9 +48,7 @@ class StreamxConnectorClientAvailabilityTest extends BaseStreamxTest {
 
         // and when: unpublish
         $client = $this->createClient(parent::STREAMX_REST_INGESTION_URL);
-        if ($client->isStreamxAvailable()) {
-            $client->unpublish(array_column($entities, 'id'), ProductProcessor::INDEXER_ID);
-        }
+        $client->unpublish(array_column($entities, 'id'), ProductProcessor::INDEXER_ID);
 
         // then
         for ($i = 0; $i < $entitiesToPublishInBatch; $i++) {
@@ -116,11 +62,5 @@ class StreamxConnectorClientAvailabilityTest extends BaseStreamxTest {
 
     private function createClient(string $restIngestionUrl): StreamxClient {
         return parent::createCustomStreamxClient(self::STORE_ID, self::STORE_CODE, $restIngestionUrl);
-    }
-
-    private static function changedRestIngestionUrl(string $urlPartName, $newValue): string {
-        $parsedUrl = parse_url(parent::STREAMX_REST_INGESTION_URL);
-        $oldValue = $parsedUrl[$urlPartName];
-        return str_replace($oldValue, $newValue, parent::STREAMX_REST_INGESTION_URL);
     }
 }
