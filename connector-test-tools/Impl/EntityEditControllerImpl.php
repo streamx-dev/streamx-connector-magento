@@ -8,13 +8,11 @@ use Magento\Catalog\Api\CategoryRepositoryInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\CategoryFactory;
 use Magento\Catalog\Model\Product;
-use Magento\Catalog\Model\ProductFactory;
 use Magento\Eav\Api\AttributeRepositoryInterface;
 use StreamX\ConnectorTestTools\Api\EntityEditControllerInterface;
 
 class EntityEditControllerImpl implements EntityEditControllerInterface {
 
-    private ProductFactory $productFactory;
     private CategoryFactory $categoryFactory;
     private ProductRepositoryInterface $productRepository;
     private CategoryRepositoryInterface $categoryRepository;
@@ -22,14 +20,12 @@ class EntityEditControllerImpl implements EntityEditControllerInterface {
     private CategoryLinkManagementInterface $categoryLinkManagement;
 
     public function __construct(
-        ProductFactory $productFactory,
         CategoryFactory $categoryFactory,
         ProductRepositoryInterface $productRepository,
         CategoryRepositoryInterface $categoryRepository,
         AttributeRepositoryInterface $attributeRepository,
         CategoryLinkManagementInterface $categoryLinkManagement
     ) {
-        $this->productFactory = $productFactory;
         $this->categoryFactory = $categoryFactory;
         $this->productRepository = $productRepository;
         $this->categoryRepository = $categoryRepository;
@@ -110,12 +106,18 @@ class EntityEditControllerImpl implements EntityEditControllerInterface {
      * @inheritdoc
      */
     public function changeProductAttribute(int $productId, string $attributeCode, string $newValue): void {
-        $productModel = $this->productFactory->create()->load($productId);
-        $productModel->setData($attributeCode, $newValue);
-        $productModel->getResource()->saveAttribute($productModel, $attributeCode);
+        $this->productRepository->getById($productId)
+            ->setData($attributeCode, $newValue)
+            ->save();
+    }
 
-        $productEntity = $this->productRepository->getById($productId);
-        $this->productRepository->save($productEntity);
+    /**
+     * @inheritdoc
+     */
+    public function changeCategoryAttribute(int $categoryId, string $attributeCode, string $newValue): void {
+        $this->categoryRepository->get($categoryId)
+            ->setData($attributeCode, $newValue)
+            ->save();
     }
 
     /**
