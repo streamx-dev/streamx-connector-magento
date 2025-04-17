@@ -12,10 +12,10 @@ use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 abstract class BaseDirectDbEntityUpdateTest extends BaseStreamxConnectorPublishTest {
 
     protected function reindexMview(): void {
-        foreach (self::$testedIndexerNames as $testedIndexerName) {
+        foreach (self::$testedIndexerIds as $testedIndexerId) {
             MagentoEndpointsCaller::call('mview/reindex', [
                 // note: assuming that every indexer in the indexer.xml file shares its ID with its view ID
-                'indexerViewId' => $testedIndexerName
+                'indexerViewId' => $testedIndexerId
             ]);
         }
     }

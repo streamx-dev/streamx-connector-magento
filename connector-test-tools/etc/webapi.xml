@@ -123,4 +123,18 @@
     </resources>
   </route>
 
+  <route url="/V1/indexer/mode/get" method="PUT">
+    <service class="StreamX\ConnectorTestTools\Api\IndexerManagementInterface" method="getIndexerMode"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+
+  <route url="/V1/indexer/mode/set" method="PUT">
+    <service class="StreamX\ConnectorTestTools\Api\IndexerManagementInterface" method="setIndexerMode"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+
 </routes>

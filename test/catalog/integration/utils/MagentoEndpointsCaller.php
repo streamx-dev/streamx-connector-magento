@@ -22,9 +22,13 @@ class MagentoEndpointsCaller {
         $request = new Request('PUT', $endpointUrl, $headers, $jsonBody);
         $httpClient = new Client(['verify' => false]);
         $response = $httpClient->sendRequest($request);
-        $responseBody = (string)$response->getBody();
         if ($response->getStatusCode() !== 200) {
             throw new Exception('Unexpected status code: ' . $response->getStatusCode());
+        }
+
+        $responseBody = (string) $response->getBody();
+        if ($responseBody !== '[]') { // response is not void
+            $responseBody = json_decode($responseBody);
         }
 
         return $responseBody;
