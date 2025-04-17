@@ -27,6 +27,7 @@ class StoresControllerImpl implements StoresControllerInterface {
     private const PRODUCT_IDS_IN_SECOND_WEBSITE = [4, 5, 6, 61, 62]; // 4, 5, 6 are simple products. 61 is a variant of configurable product 62
 
     private const CONNECTOR_ENABLE_CONFIG_KEY = 'streamx_connector_settings/general_settings/enable';
+    private const RABBIT_MQ_ENABLE_CONFIG_KEY = 'streamx_connector_settings/rabbit_mq/enable';
     private const ALLOWED_STORES_CONFIG_KEY = 'streamx_connector_settings/general_settings/allowed_stores';
 
     private WebsiteFactory $websiteFactory;
@@ -67,6 +68,9 @@ class StoresControllerImpl implements StoresControllerInterface {
     public function setUpStoresAndWebsites(): void {
         // make sure StreamX Connector is turned on
         $this->setGlobalLevelConfigValue(self::CONNECTOR_ENABLE_CONFIG_KEY, 1);
+
+        // make sure RabbitMQ is enabled.
+        $this->setGlobalLevelConfigValue(self::RABBIT_MQ_ENABLE_CONFIG_KEY, 1);
 
         $defaultWebsite = array_values($this->storeManager->getWebsites())[0];
         $defaultStoreId = $this->storeManager->getStore('default')->getId();

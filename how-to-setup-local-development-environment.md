@@ -223,5 +223,6 @@ You can try those methods:
  - try `cd magento && bin/restart phpfpm`
  - remember to copy connector code to Magento and run `bin/magento setup:di:compile`, to make sure current code is used on the server
  - make sure StreamX is running
+ - make sure `streamx:consumer:start` command is running
  - StreamX's `pulsar` container tends to terminate when high system load - restart StreamX (along with adding its containers to magento network afterward)
  - if the `pulsar` container stops again or tests take unusual long time - it may be the time to do `sudo pkill docker` and then restart existing magento containers and start new fresh StreamX (removing its old containers)
