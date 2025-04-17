@@ -11,6 +11,10 @@ class GeneralConfig extends BaseConfigurationReader
         parent::__construct($scopeConfig, 'general_settings');
     }
 
+    public function isEnabled(): bool {
+        return (bool)$this->getGlobalConfigValue('enable');
+    }
+
     /**
      * @return int[]
      */
@@ -19,9 +23,5 @@ class GeneralConfig extends BaseConfigurationReader
             $this->getWebsiteLevelConfigValue('allowed_stores', $websiteId)
         );
         return array_map('intval', $storeIds);
-    }
-
-    public function isEnabled(): bool {
-        return (bool)$this->getGlobalConfigValue('enable');
     }
 }

@@ -2,11 +2,8 @@
 
 namespace StreamX\ConnectorCatalog\test\integration;
 
-use Psr\Log\LoggerInterface;
-use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\ValidationFileUtils;
 use StreamX\ConnectorCore\Client\StreamxAvailabilityChecker;
-use StreamX\ConnectorCore\Client\StreamxClient;
 
 class StreamxAvailabilityCheckerTest extends BaseStreamxTest {
 

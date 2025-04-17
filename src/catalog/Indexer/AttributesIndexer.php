@@ -9,11 +9,12 @@ use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
 use StreamX\ConnectorCatalog\Model\Indexer\DataLoader\ProductDataLoader;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 use StreamX\ConnectorCore\Api\IndexersConfigInterface;
+use StreamX\ConnectorCore\Client\StreamxAvailabilityCheckerFactory;
+use StreamX\ConnectorCore\Client\StreamxClientFactory;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
 use StreamX\ConnectorCore\Indexer\BaseStreamxIndexer;
 use StreamX\ConnectorCore\Indexer\IndexableStoresProvider;
 use StreamX\ConnectorCore\Client\StreamxClient;
-use StreamX\ConnectorCore\Client\StreamxClientConfiguration;
 use StreamX\ConnectorCore\System\GeneralConfig;
 use Traversable;
 
@@ -30,7 +31,8 @@ class AttributesIndexer extends BaseStreamxIndexer
         AttributeDataLoader $dataLoader,
         LoggerInterface $logger,
         OptimizationSettings $optimizationSettings,
-        StreamxClientConfiguration $clientConfiguration,
+        StreamxClientFactory $streamxClientFactory,
+        StreamxAvailabilityCheckerFactory $streamxAvailabilityCheckerFactory,
         IndexersConfigInterface $indexersConfig,
         Product $productModel,
         ProductsIndexer $productsIndexer,
@@ -42,7 +44,8 @@ class AttributesIndexer extends BaseStreamxIndexer
             $dataLoader,
             $logger,
             $optimizationSettings,
-            $clientConfiguration,
+            $streamxClientFactory,
+            $streamxAvailabilityCheckerFactory,
             $indexersConfig->getByName(AttributeProcessor::INDEXER_ID)
         );
         $this->productModel = $productModel;

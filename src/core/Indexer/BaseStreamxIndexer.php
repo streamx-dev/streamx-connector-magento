@@ -5,11 +5,11 @@ namespace StreamX\ConnectorCore\Indexer;
 use Magento\Framework\Indexer\SaveHandler\Batch;
 use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCore\Api\BasicDataLoader;
-use StreamX\ConnectorCore\Client\StreamxAvailabilityChecker;
+use StreamX\ConnectorCore\Client\StreamxAvailabilityCheckerFactory;
+use StreamX\ConnectorCore\Client\StreamxClient;
+use StreamX\ConnectorCore\Client\StreamxClientFactory;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
 use StreamX\ConnectorCore\Index\IndexerDefinition;
-use StreamX\ConnectorCore\Client\StreamxClient;
-use StreamX\ConnectorCore\Client\StreamxClientConfiguration;
 use StreamX\ConnectorCore\System\GeneralConfig;
 use Traversable;
 
@@ -20,7 +20,8 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
     private BasicDataLoader $entityDataLoader;
     protected LoggerInterface $logger;
     private OptimizationSettings $optimizationSettings;
-    private StreamxClientConfiguration $clientConfiguration;
+    private StreamxClientFactory $streamxClientFactory;
+    private StreamxAvailabilityCheckerFactory $streamxAvailabilityCheckerFactory;
     private IndexerDefinition $indexerDefinition;
     private string $indexerName;
 
@@ -30,7 +31,8 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
         BasicDataLoader $entityDataLoader,
         LoggerInterface $logger,
         OptimizationSettings $optimizationSettings,
-        StreamxClientConfiguration $clientConfiguration,
+        StreamxClientFactory $streamxClientFactory,
+        StreamxAvailabilityCheckerFactory $streamxAvailabilityCheckerFactory,
         IndexerDefinition $indexerDefinition
     ) {
         $this->connectorConfig = $connectorConfig;
@@ -38,7 +40,8 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
         $this->entityDataLoader = $entityDataLoader;
         $this->logger = $logger;
         $this->optimizationSettings = $optimizationSettings;
-        $this->clientConfiguration = $clientConfiguration;
+        $this->streamxClientFactory = $streamxClientFactory;
+        $this->streamxAvailabilityCheckerFactory = $streamxAvailabilityCheckerFactory;
         $this->indexerDefinition = $indexerDefinition;
         $this->indexerName = $indexerDefinition->getName();
     }
@@ -85,7 +88,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
             $storeId = (int) $store->getId();
 
             if ($this->optimizationSettings->shouldPerformStreamxAvailabilityCheck()) {
-                $availabilityChecker = new StreamxAvailabilityChecker($this->logger, $this->clientConfiguration, $storeId);
+                $availabilityChecker = $this->streamxAvailabilityCheckerFactory->create(['storeId' => $storeId]);
                 if (!$availabilityChecker->isStreamxAvailable()) {
                     $this->logger->info("Cannot reindex $this->indexerName for store $storeId - StreamX is not available");
                     continue;
@@ -94,7 +97,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
 
             $this->logger->info("Start indexing $this->indexerName for store $storeId");
             $entities = $this->entityDataLoader->loadData($storeId, $ids);
-            $client = new StreamxClient($this->logger, $this->clientConfiguration, $store);
+            $client = $this->streamxClientFactory->create(['store' => $store]);
             $this->ingestEntities($entities, $storeId, $client);
             $this->logger->info("Finished indexing $this->indexerName for store $storeId");
         }

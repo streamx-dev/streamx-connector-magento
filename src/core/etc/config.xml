@@ -3,15 +3,15 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
         <streamx_connector_settings>
+            <general_settings>
+                <enable>0</enable>
+            </general_settings>
             <streamx_client>
                 <ingestion_base_url>http://rest-ingestion:8080</ingestion_base_url>
                 <channel_name>data</channel_name>
                 <channel_schema_name>dev.streamx.blueprints.data.DataIngestionMessage</channel_schema_name>
                 <disable_certificate_validation>0</disable_certificate_validation>
             </streamx_client>
-            <general_settings>
-                <enable>0</enable>
-            </general_settings>
             <optimization_settings>
                 <should_perform_streamx_availability_check>1</should_perform_streamx_availability_check>
                 <batch_indexing_size>100</batch_indexing_size>
