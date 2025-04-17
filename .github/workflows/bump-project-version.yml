@@ -1,9 +1,9 @@
 name: Bump project version in composer.json file on every merge to main
 
-on:
-  push:
-    branches:
-      - main
+on: [workflow_dispatch] # run on demand only, until issues fixed. TODO: when issues are fixed - replace with the below push/branches/main
+#  push:
+#    branches:
+#      - main
 
 jobs:
   version-bump:
