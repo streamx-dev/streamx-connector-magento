@@ -8,6 +8,7 @@ class ConfigurationKeyPaths {
     public const USE_PRICES_INDEX = 'streamx_connector_settings/catalog_settings/use_prices_index';
     public const USE_CATALOG_PRICE_RULES = 'streamx_connector_settings/catalog_settings/use_catalog_price_rules';
     public const USE_URL_KEY_AND_ID_TO_GENERATE_SLUG ='streamx_connector_settings/catalog_settings/use_url_key_and_id_to_generate_slug';
+    public const ENABLE_RABBIT_MQ = 'streamx_connector_settings/rabbit_mq/enable';
 }
 
 class ConfigurationEditUtils {
@@ -46,7 +47,11 @@ class ConfigurationEditUtils {
     }
 
     private static function readDefaultValue(string $configurationFieldPath): string {
-        $defaultValuesFileContent = FileUtils::readSourceFileContent('src/catalog/etc/config.xml');
+        $defaultValuesFileContent = FileUtils::readSourceFileContent(
+            str_contains($configurationFieldPath, 'catalog_settings')
+                ? 'src/catalog/etc/config.xml'
+                : 'src/core/etc/config.xml'
+        );
         $xmlDoc = simplexml_load_string($defaultValuesFileContent);
         return (string)$xmlDoc->xpath("//$configurationFieldPath")[0];
     }

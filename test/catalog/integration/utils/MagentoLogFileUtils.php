@@ -25,7 +25,7 @@ class MagentoLogFileUtils  {
         $newLogLines = $this->readNewLogFileLines();
         $result = new IngestedKeys();
         foreach ($newLogLines as $line) {
-            if (str_contains($line, 'keys')) {
+            if (str_contains($line, 'with keys')) {
                 $this->parseKeys($line, $result);
             }
         }
@@ -46,7 +46,7 @@ class MagentoLogFileUtils  {
     }
 
     private function parseKeys(string $line, IngestedKeys $result): void {
-        $keysStartIndex = strpos($line, 'keys [') + 6;
+        $keysStartIndex = strpos($line, 'with keys [') + strlen('with keys [');
         $keysEndIndex = strpos($line, '] [] []');
         $keys = explode(',', substr($line, $keysStartIndex, $keysEndIndex - $keysStartIndex));
         if (str_contains($line, 'unpublish')) {
