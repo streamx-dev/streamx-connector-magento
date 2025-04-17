@@ -2,6 +2,8 @@
 
 namespace StreamX\ConnectorTestTools\Impl;
 
+use Magento\Framework\App\Cache\Frontend\Pool;
+use Magento\Framework\App\Cache\TypeListInterface;
 use Magento\Framework\App\Config\Storage\WriterInterface;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Store\Api\Data\WebsiteInterface;
@@ -32,6 +34,8 @@ class StoresControllerImpl implements StoresControllerInterface
     private StoreManagerInterface $storeManager;
     private WriterInterface $writer;
     private ResourceConnection $connection;
+    private TypeListInterface $typeList;
+    private Pool $frontendPool;
 
     public function __construct(
         WebsiteFactory $websiteFactory,
@@ -39,7 +43,9 @@ class StoresControllerImpl implements StoresControllerInterface
         StoreFactory $storeFactory,
         StoreManagerInterface $storeManager,
         WriterInterface $writer,
-        ResourceConnection $connection
+        ResourceConnection $connection,
+        TypeListInterface $typeList,
+        Pool $frontendPool
     ) {
         $this->websiteFactory = $websiteFactory;
         $this->groupFactory = $groupFactory;
@@ -47,18 +53,20 @@ class StoresControllerImpl implements StoresControllerInterface
         $this->storeManager = $storeManager;
         $this->writer = $writer;
         $this->connection = $connection;
+        $this->typeList = $typeList;
+        $this->frontendPool = $frontendPool;
     }
 
     /**
      * @inheritdoc
      */
-    public function setUpStoresAndWebsites(): bool {
+    public function setUpStoresAndWebsites(): void {
         // make sure StreamX Connector is turned on
         $this->setGlobalLevelConfigValue(self::CONNECTOR_ENABLE_CONFIG_KEY, 1);
 
         if (count($this->storeManager->getWebsites()) == 2) {
             // assuming all is already set up
-            return false;
+            return;
         }
 
         $defaultWebsite = array_values($this->storeManager->getWebsites())[0];
@@ -69,8 +77,8 @@ class StoresControllerImpl implements StoresControllerInterface
         $storeForSecondWebsite = $this->createStore($secondWebsite->getId(), self::STORE_CODE_FOR_SECOND_WEBSITE, self::STORE_CODE_FOR_SECOND_WEBSITE);
 
         // configure exported stores
-        $this->setIndexedStoresForWebsite($defaultStoreId . ',' . $store2->getId(), $defaultWebsite);
-        $this->setIndexedStoresForWebsite($storeForSecondWebsite->getId(), $secondWebsite);
+        $this->setIndexedStoresForWebsite($defaultWebsite, $defaultStoreId, $store2->getId());
+        $this->setIndexedStoresForWebsite($secondWebsite, $storeForSecondWebsite->getId());
 
         // add products to the new website
         foreach (self::PRODUCT_IDS_IN_SECOND_WEBSITE as $productId) {
@@ -80,7 +88,7 @@ class StoresControllerImpl implements StoresControllerInterface
             ]);
         }
 
-        return true;
+        $this->cleanAndFlushCache();
     }
 
     private function createStore(int $websiteId, string $storeCode, string $viewCode): Store {
@@ -119,10 +127,10 @@ class StoresControllerImpl implements StoresControllerInterface
         return strtoupper($code);
     }
 
-    private function setIndexedStoresForWebsite(string $value, WebsiteInterface $website): void {
+    private function setIndexedStoresForWebsite(WebsiteInterface $website, string... $storeIds): void {
         $this->writer->save(
             self::ALLOWED_STORES_CONFIG_KEY,
-            $value,
+            implode(',', $storeIds),
             ScopeInterface::SCOPE_WEBSITES,
             $website->getId()
         );
@@ -130,5 +138,14 @@ class StoresControllerImpl implements StoresControllerInterface
 
     private function setGlobalLevelConfigValue(string $key, string $value): void {
         $this->writer->save($key, $value);
+    }
+
+    private function cleanAndFlushCache(): void {
+        foreach ($this->typeList->getTypes() as $type => $cache) {
+            $this->typeList->cleanType($type);
+        }
+        foreach ($this->frontendPool as $cacheFrontend) {
+            $cacheFrontend->getBackend()->clean();
+        }
     }
 }

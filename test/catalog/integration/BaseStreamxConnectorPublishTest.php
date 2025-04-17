@@ -57,11 +57,9 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
     }
 
     public static function initializeTests(): void {
-        self::$db = new MagentoMySqlQueryExecutor();
+        MagentoEndpointsCaller::call('stores/setup');
 
-        if ("true" === MagentoEndpointsCaller::call('stores/setup')) {
-            MagentoOperationsExecutor::flushCache();
-        }
+        self::$db = new MagentoMySqlQueryExecutor();
         self::loadInitialIndexerModes();
         self::loadStoreAndWebsiteIds();
 

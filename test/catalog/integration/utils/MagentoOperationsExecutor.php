@@ -24,12 +24,4 @@ class MagentoOperationsExecutor {
 
         return $result;
     }
-
-    public static function flushConfigCache(): void {
-        self::flushCache('config');
-    }
-
-    public static function flushCache(string $cacheType = ''): void {
-        self::executeCommand("cache:flush $cacheType");
-    }
 }

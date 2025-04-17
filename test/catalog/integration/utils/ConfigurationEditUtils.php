@@ -19,25 +19,11 @@ class ConfigurationEditUtils {
     }
 
     public static function setConfigurationValue(string $path, string $value): void {
-        self::setConfigurationValues([$path => $value]);
-    }
-
-    public static function setConfigurationValues(array $pathValueMap): void {
-        foreach ($pathValueMap as $path => $value) {
-            self::callMagentoConfigurationEditEndpoint($path, $value);
-        }
-        MagentoOperationsExecutor::flushConfigCache();
+        ConfigurationEditUtils::callMagentoConfigurationEditEndpoint($path, $value);
     }
 
     public static function restoreConfigurationValue(string $path): void {
-        self::restoreConfigurationValues([$path]);
-    }
-
-    public static function restoreConfigurationValues(array $paths): void {
-        foreach ($paths as $path) {
-            self::callMagentoConfigurationEditEndpoint($path, self::readDefaultValue($path));
-        }
-        MagentoOperationsExecutor::flushConfigCache();
+        self::setConfigurationValue($path, ConfigurationEditUtils::readDefaultValue($path));
     }
 
     public static function setIndexedProductAttributes(string ...$attributeCodes): void {
