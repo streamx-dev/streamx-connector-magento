@@ -3,6 +3,7 @@
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
+use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationKeyPaths;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 
@@ -15,6 +16,16 @@ class ProductUpdateTest extends BaseAppEntityUpdateTest {
     /** @test */
     public function shouldPublishSimpleProductEditedUsingMagentoApplication() {
         $this->shouldPublishProductEditedUsingMagentoApplication('Joust Duffle Bag', 'bag');
+    }
+
+    /** @test */
+    public function shouldPublishSimpleProductEditedUsingMagentoApplication_WhenRabbitMqIsDisabled() {
+        ConfigurationEditUtils::setConfigurationValue(ConfigurationKeyPaths::ENABLE_RABBIT_MQ, '0');
+        try {
+            $this->shouldPublishProductEditedUsingMagentoApplication('Joust Duffle Bag', 'bag');
+        } finally {
+            ConfigurationEditUtils::setConfigurationValue(ConfigurationKeyPaths::ENABLE_RABBIT_MQ, '1');
+        }
     }
 
     /** @test */
