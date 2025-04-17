@@ -71,10 +71,8 @@ class ProductPricePublishTest extends BaseDirectDbEntityUpdateTest {
         $catalogRulePrice = $this->defaultPrice - 5;
 
         // when
-        ConfigurationEditUtils::setConfigurationValues([
-            ConfigurationKeyPaths::USE_PRICES_INDEX => '1',
-            ConfigurationKeyPaths::USE_CATALOG_PRICE_RULES => '1'
-        ]);
+        ConfigurationEditUtils::setConfigurationValue(ConfigurationKeyPaths::USE_PRICES_INDEX, '1');
+        ConfigurationEditUtils::setConfigurationValue(ConfigurationKeyPaths::USE_CATALOG_PRICE_RULES, '1');
         $this->insertCatalogRulePrice($this->productId, $catalogRulePrice, self::$website1Id);
         self::$db->productDummyUpdate($this->productId);
 
@@ -87,10 +85,8 @@ class ProductPricePublishTest extends BaseDirectDbEntityUpdateTest {
         } finally {
             self::$db->revertProductDummyUpdate($this->productId);
             $this->deleteCatalogRulePrice();
-            ConfigurationEditUtils::restoreConfigurationValues([
-                ConfigurationKeyPaths::USE_PRICES_INDEX,
-                ConfigurationKeyPaths::USE_CATALOG_PRICE_RULES,
-            ]);
+            ConfigurationEditUtils::restoreConfigurationValue(ConfigurationKeyPaths::USE_PRICES_INDEX);
+            ConfigurationEditUtils::restoreConfigurationValue(ConfigurationKeyPaths::USE_CATALOG_PRICE_RULES);
         }
     }
 
