@@ -67,22 +67,30 @@ class CategoryUpdateTest extends BaseAppEntityUpdateTest {
         ConfigurationEditUtils::setConfigurationValue(ConfigurationKeyPaths::USE_URL_KEY_AND_ID_TO_GENERATE_SLUG, '1');
         self::changeUrlKeyOfCategory($categoryId, $changedUrlKey);
 
+        // and
+        $originalSlug = 'gear-3';
+        $expectedSlug = 'super-gear-3';
+
         try {
             // then
-            $this->assertExactDataIsPublished($editedCategoryKey, 'original-gear-category.json', [
-                '"slug": "super-gear-3"' => '"slug": "gear-3"'
-            ]);
+            $this->assertDataWithChangedSlugIsPublished($editedCategoryKey, 'original-gear-category.json', $originalSlug, $expectedSlug);
 
             // and: expect parent and subcategories to also be published, with the new slug of the edited category in their child or parent category data
-            $this->assertStringContainsString('"slug":"super-gear-3"', $this->downloadContentAtKey($parentCategoryKey)); // TODO: do we need to re-publish parent when a category is edited?
-            $this->assertStringContainsString('"slug":"super-gear-3"', $this->downloadContentAtKey($subcategory1Key));
-            $this->assertStringContainsString('"slug":"super-gear-3"', $this->downloadContentAtKey($subcategory2Key));
-            $this->assertStringContainsString('"slug":"super-gear-3"', $this->downloadContentAtKey($subcategory3Key));
+            $this->assertDataWithChangedSlugIsPublished($parentCategoryKey, 'original-default-category.json', $originalSlug, $expectedSlug); // TODO: do we need to re-publish parent when a category is edited?
+            $this->assertDataWithChangedSlugIsPublished($subcategory1Key, 'original-bags-category.json', $originalSlug, $expectedSlug);
+            $this->assertDataWithChangedSlugIsPublished($subcategory2Key, 'original-fitness-category.json', $originalSlug, $expectedSlug);
+            $this->assertDataWithChangedSlugIsPublished($subcategory3Key, 'original-watches-category.json', $originalSlug, $expectedSlug);
         } finally {
             self::changeUrlKeyOfCategory($categoryId, $defaultUrlKey);
             ConfigurationEditUtils::restoreConfigurationValue(ConfigurationKeyPaths::USE_URL_KEY_AND_ID_TO_GENERATE_SLUG);
             $this->assertExactDataIsPublished($editedCategoryKey, 'original-gear-category.json');
         }
+    }
+
+    private function assertDataWithChangedSlugIsPublished(string $key, string $validationFile, string $originalSlug, string $expectedSlug): void {
+        $this->assertExactDataIsPublished($key, $validationFile, [
+            '"slug": "' . $expectedSlug . '"' => '"slug": "' . $originalSlug . '"'
+        ]);
     }
 
     /** @test */

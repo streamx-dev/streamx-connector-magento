@@ -31,10 +31,10 @@ class MultistoreProductVariantIngestionWithFlagSetToIncludeInvisibleProductsTest
 
         // then
         // - parent is still in store 1 and contains both variants
-        $this->assertParentIsPublishedWithVariantsInPayload(self::$store1Id, [self::$variant1, self::$variant2]);
+        $this->assertParentIsPublishedWithAllVariantsInPayload(self::$store1Id);
 
         // - parent is still in store 2 but now contains only variant 1, since variant 2 was disabled
-        $this->assertParentIsPublishedWithVariantsInPayload(self::$store2Id, [self::$variant1]);
+        $this->assertParentIsPublishedWithoutVariant2InPayload(self::$store2Id);
 
         // - both variants are still published in store 1
         $this->assertSeparatelyPublishedVariants(self::$store1Id, [self::$variant1, self::$variant2]);
@@ -53,7 +53,7 @@ class MultistoreProductVariantIngestionWithFlagSetToIncludeInvisibleProductsTest
 
         // then
         // - parent is still in store 1 and contains both variants
-        $this->assertParentIsPublishedWithVariantsInPayload(self::$store1Id, [self::$variant1, self::$variant2]);
+        $this->assertParentIsPublishedWithAllVariantsInPayload(self::$store1Id);
 
         // - parent is unpublished from store 2
         $this->assertParentIsNotPublished(self::$store2Id);
@@ -73,10 +73,10 @@ class MultistoreProductVariantIngestionWithFlagSetToIncludeInvisibleProductsTest
 
         // then
         // - parent is still in store 1 and contains both variants
-        $this->assertParentIsPublishedWithVariantsInPayload(self::$store1Id, [self::$variant1, self::$variant2]);
+        $this->assertParentIsPublishedWithAllVariantsInPayload(self::$store1Id);
 
         // - parent is still in store 2 and contains both variants (invisible variants are always published in the parent's payload)
-        $this->assertParentIsPublishedWithVariantsInPayload(self::$store2Id, [self::$variant1, self::$variant2]);
+        $this->assertParentIsPublishedWithAllVariantsInPayload(self::$store2Id);
 
         // - both variants are still in both stores, due to the flag to export also invisible products is turned on
         $this->assertSeparatelyPublishedVariants(self::$store1Id, [self::$variant1, self::$variant2]);
@@ -93,8 +93,8 @@ class MultistoreProductVariantIngestionWithFlagSetToIncludeInvisibleProductsTest
 
         // then
         // - parent is still in both stores, due to the flag to export also invisible products is turned on
-        $this->assertParentIsPublishedWithVariantsInPayload(self::$store1Id, [self::$variant1, self::$variant2]);
-        $this->assertParentIsPublishedWithVariantsInPayload(self::$store2Id, [self::$variant1, self::$variant2]);
+        $this->assertParentIsPublishedWithAllVariantsInPayload(self::$store1Id);
+        $this->assertParentIsPublishedWithAllVariantsInPayload(self::$store2Id);
 
         // - both variants are still in both stores, due to the flag to export also invisible products is turned on
         $this->assertSeparatelyPublishedVariants(self::$store1Id, [self::$variant1, self::$variant2]);

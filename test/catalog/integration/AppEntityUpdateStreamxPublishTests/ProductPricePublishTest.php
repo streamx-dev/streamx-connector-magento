@@ -30,36 +30,27 @@ class ProductPricePublishTest extends BaseAppEntityUpdateTest {
 
         try {
             // then: expecting the old indexed price to be published, since the catalog_product_price built-in indexer didn't run yet to update prices in catalog_product_index_price table
-            $this->assertPriceOfPublishedProduct($expectedKey, $defaultPrice);
+            $this->assertExactDataIsPublished($expectedKey, 'original-bag-product.json');
 
             // and when: execute the indexer manually
             $this->runPricesIndexer($productId);
 
             // then: expecting the indexed price to be published, because running catalog_product_price indexer triggers execution of streamx_product_indexer
-            $this->assertPriceOfPublishedProduct($expectedKey, $newPrice);
+            $this->assertExactDataIsPublished($expectedKey, "edited-bag-product-with-prices-$newPrice-and-$newPrice.json");
         } finally {
             // restore all changes
             ConfigurationEditUtils::restoreConfigurationValue(ConfigurationKeyPaths::USE_PRICES_INDEX);
             $this->changeProductPrice($productId, $defaultPrice);
             $this->runPricesIndexer($productId);
+            $this->assertExactDataIsPublished($expectedKey, 'original-bag-product.json');
         }
     }
 
-    private function assertPriceOfPublishedProduct(string $expectedKey, float $expectedPrice): void {
-        $publishedProduct = json_decode($this->downloadContentAtKey($expectedKey), true);
-        $this->assertEquals($expectedPrice, $publishedProduct['price']['value']);
-        $this->assertEquals($expectedPrice, $publishedProduct['price']['discountedValue']);
-    }
-
     private function changeProductPrice(EntityIds $productId, float $newPrice): void {
-        $this->changeProductAttributeValue($productId, 'price', $newPrice);
-    }
-
-    private function changeProductAttributeValue(EntityIds $productId, string $attributeCode, string $newValue): void {
         MagentoEndpointsCaller::call('product/attribute/change', [
             'productId' => $productId->getEntityId(),
-            'attributeCode' => $attributeCode,
-            'newValue' => $newValue
+            'attributeCode' => 'price',
+            'newValue' => $newPrice
         ]);
     }
 

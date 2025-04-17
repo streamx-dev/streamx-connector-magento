@@ -20,9 +20,10 @@ abstract class BaseMultistoreProductVariantIngestionTest extends BaseDirectDbEnt
     private const VARIANT_1_NAME = 'Chaz Kangeroo Hoodie-XL-Gray';
     private const VARIANT_2_NAME = 'Chaz Kangeroo Hoodie-XL-Orange';
 
-    private const PARENT_JSON_FILE = 'original-hoodie-product.json';
+    private const PARENT_JSON_FILE_WITH_ALL_VARIANTS = 'original-hoodie-product.json';
     private const VARIANT_1_JSON_FILE = 'original-hoodie-xl-gray-product.json';
     private const VARIANT_2_JSON_FILE = 'original-hoodie-xl-orange-product.json';
+    private const PARENT_JSON_FILE_WITHOUT_VARIANT_2 = 'original-hoodie-product-without-xl-orange-variant.json';
 
     protected static EntityIds $parent;
     protected static EntityIds $variant1;
@@ -35,6 +36,10 @@ abstract class BaseMultistoreProductVariantIngestionTest extends BaseDirectDbEnt
     private static string $keyOfParentInStore2;
     private static string $keyOfVariant1InStore2;
     private static string $keyOfVariant2InStore2;
+
+    private static array $parentKeyByStoreIdMap;
+    private static array $variant1KeyByStoreIdMap;
+    private static array $variant2KeyByStoreIdMap;
 
     private static int $statusAttributeId;
     private static int $visibilityAttributeId;
@@ -54,6 +59,21 @@ abstract class BaseMultistoreProductVariantIngestionTest extends BaseDirectDbEnt
         self::$keyOfVariant1InStore2 = self::productKey(self::$variant1, self::STORE_2_CODE);
         self::$keyOfVariant2InStore2 = self::productKey(self::$variant2, self::STORE_2_CODE);
 
+        self::$parentKeyByStoreIdMap = [
+            self::$store1Id => self::$keyOfParentInStore1,
+            self::$store2Id => self::$keyOfParentInStore2
+        ];
+
+        self::$variant1KeyByStoreIdMap = [
+            self::$store1Id => self::$keyOfVariant1InStore1,
+            self::$store2Id => self::$keyOfVariant1InStore2
+        ];
+
+        self::$variant2KeyByStoreIdMap = [
+            self::$store1Id => self::$keyOfVariant2InStore1,
+            self::$store2Id => self::$keyOfVariant2InStore2
+        ];
+
         self::$visibilityAttributeId = self::$db->getProductAttributeId('visibility');
         self::$statusAttributeId = self::$db->getProductAttributeId('status');
     }
@@ -64,7 +84,7 @@ abstract class BaseMultistoreProductVariantIngestionTest extends BaseDirectDbEnt
         $streamxClientForStore2 = parent::createStreamxClient(self::$store2Id, self::STORE_2_CODE);
 
         $publishProductsPayload = [
-            self::PARENT_ID => $this->readJsonFileToArray(self::PARENT_JSON_FILE),
+            self::PARENT_ID => $this->readJsonFileToArray(self::PARENT_JSON_FILE_WITH_ALL_VARIANTS),
             self::VARIANT_1_ID => $this->readJsonFileToArray(self::VARIANT_1_JSON_FILE),
             self::VARIANT_2_ID => $this->readJsonFileToArray(self::VARIANT_2_JSON_FILE)
         ];
@@ -73,8 +93,8 @@ abstract class BaseMultistoreProductVariantIngestionTest extends BaseDirectDbEnt
         $streamxClientForStore2->publish($publishProductsPayload, ProductProcessor::INDEXER_ID);
 
         // verify all three products are published from both stores
-        $this->assertParentIsPublishedWithVariantsInPayload(self::$store1Id, [self::$variant1, self::$variant2]);
-        $this->assertParentIsPublishedWithVariantsInPayload(self::$store2Id, [self::$variant1, self::$variant2]);
+        $this->assertParentIsPublishedWithAllVariantsInPayload(self::$store1Id);
+        $this->assertParentIsPublishedWithAllVariantsInPayload(self::$store2Id);
         $this->assertSeparatelyPublishedVariants(self::$store1Id, [self::$variant1, self::$variant2]);
         $this->assertSeparatelyPublishedVariants(self::$store2Id, [self::$variant1, self::$variant2]);
 
@@ -112,27 +132,18 @@ abstract class BaseMultistoreProductVariantIngestionTest extends BaseDirectDbEnt
         self::$db->insertIntProductAttribute($product, self::$visibilityAttributeId, Visibility::VISIBILITY_NOT_VISIBLE, self::$store2Id);
     }
 
-    protected function assertParentIsPublishedWithVariantsInPayload(int $storeId, array $expectedVariantsInPayload): void {
-        if ($storeId == self::$store1Id) {
-            $publishedParentProduct = $this->downloadContentAtKey(self::$keyOfParentInStore1);
-        } else if ($storeId == self::$store2Id) {
-            $publishedParentProduct = $this->downloadContentAtKey(self::$keyOfParentInStore2);
-        }
+    protected function assertParentIsPublishedWithAllVariantsInPayload(int $storeId): void {
+        $key = self::$parentKeyByStoreIdMap[$storeId];
+        $this->assertDataIsPublished($key, self::PARENT_JSON_FILE_WITH_ALL_VARIANTS);
+    }
 
-        $expectingVariant1InParentPayload = in_array(self::$variant1, $expectedVariantsInPayload);
-        $this->verifyJsonContainsNameOrNot($publishedParentProduct, self::VARIANT_1_NAME, $expectingVariant1InParentPayload);
-
-        $expectingVariant2InParentPayload = in_array(self::$variant2, $expectedVariantsInPayload);
-        $this->verifyJsonContainsNameOrNot($publishedParentProduct, self::VARIANT_2_NAME, $expectingVariant2InParentPayload);
+    protected function assertParentIsPublishedWithoutVariant2InPayload(int $storeId): void {
+        $key = self::$parentKeyByStoreIdMap[$storeId];
+        $this->assertDataIsPublished($key, self::PARENT_JSON_FILE_WITHOUT_VARIANT_2);
     }
 
     protected function assertParentIsNotPublished(int $storeId): void {
-        if ($storeId == self::$store1Id) {
-            $productKey = self::$keyOfParentInStore1;
-        } else if ($storeId == self::$store2Id) {
-            $productKey = self::$keyOfParentInStore2;
-        }
-
+        $productKey = self::$parentKeyByStoreIdMap[$storeId];
         $this->assertDataIsNotPublished($productKey);
     }
 
@@ -140,42 +151,30 @@ abstract class BaseMultistoreProductVariantIngestionTest extends BaseDirectDbEnt
         $expectingVariant1ToBePublished = in_array(self::$variant1, $expectedPublishedVariants);
         $expectingVariant2ToBePublished = in_array(self::$variant2, $expectedPublishedVariants);
 
-        if ($storeId == self::$store1Id) {
-            $variant1Key = self::$keyOfVariant1InStore1;
-            $variant2Key = self::$keyOfVariant2InStore1;
-        } else if ($storeId == self::$store2Id) {
-            $variant1Key = self::$keyOfVariant1InStore2;
-            $variant2Key = self::$keyOfVariant2InStore2;
+        $variant1Key = self::$variant1KeyByStoreIdMap[$storeId];
+        $variant2Key = self::$variant2KeyByStoreIdMap[$storeId];
+
+        if ($expectingVariant1ToBePublished) {
+            $this->assertDataIsPublished($variant1Key, self::VARIANT_1_JSON_FILE);
+        } else {
+            $this->assertDataIsNotPublished($variant1Key);
         }
 
-        $this->verifyPublishedWithNameInJsonOrNotPublished($variant1Key, self::VARIANT_1_NAME, $expectingVariant1ToBePublished);
-        $this->verifyPublishedWithNameInJsonOrNotPublished($variant2Key, self::VARIANT_2_NAME, $expectingVariant2ToBePublished);
+        if ($expectingVariant2ToBePublished) {
+            $this->assertDataIsPublished($variant2Key, self::VARIANT_2_JSON_FILE);
+        } else {
+            $this->assertDataIsNotPublished($variant2Key);
+        }
+    }
+
+    private function assertDataIsPublished(string $key, string $validationFileName) {
+        // the tests switch visibility of products, so normalize this here
+        $this->assertExactDataIsPublished($key, $validationFileName, [
+            'Not Visible Individually' => 'Catalog, Search'
+        ]);
     }
 
     protected function assertNoSeparatelyPublishedVariants(int $storeId): void {
         $this->assertSeparatelyPublishedVariants($storeId, []);
-    }
-
-    private function verifyJsonContainsNameOrNot(string $json, string $productName, bool $shouldContain): void {
-        $pattern = '/"name": ?"[^"]*"/';
-        preg_match_all($pattern, $json, $matches);
-        $names = $matches[0]; // array of names
-
-        $tokenToSearch = '"name":"' . $productName . '"';
-
-        if ($shouldContain) {
-            $this->assertContains($tokenToSearch, $names);
-        } else {
-            $this->assertNotContains($tokenToSearch, $names);
-        }
-    }
-
-    private function verifyPublishedWithNameInJsonOrNotPublished(string $key, string $productName, bool $shouldBePublished): void {
-        if ($shouldBePublished) {
-            $json = $this->downloadContentAtKey($key);
-            $this->verifyJsonContainsNameOrNot($json, $productName, true);
-        } else {
-            $this->assertDataIsNotPublished($key);
-        }
     }
 }
