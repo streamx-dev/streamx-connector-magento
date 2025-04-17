@@ -3,6 +3,7 @@
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
+use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 
 /**
@@ -53,7 +54,7 @@ class ProductAddAndDeleteTest extends BaseAppEntityUpdateTest {
     }
 
     private function addProduct(string $productName, array $categories): int {
-        $categoryIds = array_map(function ($category) {
+        $categoryIds = array_map(function (EntityIds $category) {
             return $category->getEntityId();
         }, $categories);
 

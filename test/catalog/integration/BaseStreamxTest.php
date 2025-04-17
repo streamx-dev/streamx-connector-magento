@@ -15,9 +15,8 @@ use StreamX\ConnectorCore\Client\StreamxClientConfiguration;
  * Prerequisites to run these tests:
  * 1. markshust/docker-magento images must be running
  * 2. StreamX Connector must be deployed to the Magento instance
- * 3. StreamX Connector must be enabled and configured in Magento (see how-to-setup-local-development-environment.md)
- * 4. StreamX must be running (test/resources/mesh.yaml as minimal mesh setup)
- * 5. scripts/add-rest-ingestion-to-magento-network.sh must be executed
+ * 3. StreamX must be running (test/resources/mesh.yaml as minimal mesh setup)
+ * 4. scripts/add-rest-ingestion-to-magento-network.sh must be executed
  */
 abstract class BaseStreamxTest extends TestCase {
 
