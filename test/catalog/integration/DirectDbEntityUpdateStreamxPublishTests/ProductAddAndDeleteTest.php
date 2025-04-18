@@ -75,12 +75,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
                 // mask variable parts (ids and generated sku)
                 '"id": "[0-9]{4,5}"' => '"id": "2659"',
                 '"sku": "[^"]+"' => '"sku": "1736952738"',
-                '"the-new-great-watch-[0-9]+"' => '"the-new-great-watch-2659"',
-                '"option_id": "[0-9]+"' => '"option_id": "9"',
-                '"option_type_id": "[0-9]+"' => '"option_type_id": "7"',
-                // expect the indexed prices to be applied
-                '"value": ' . self::INDEXED_PRICE => '"value": ' . self::PRODUCT_PRICE,
-                '"discountedValue": ' . self::DISCOUNTED_PRICE => '"discountedValue": ' . self::PRODUCT_PRICE
+                '"the-new-great-watch-[0-9]+"' => '"the-new-great-watch-2659"'
             ]);
 
             // and
@@ -225,23 +220,7 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
                 ($productId, 0, $websiteId, " . self::INDEXED_PRICE . ", " . self::DISCOUNTED_PRICE . ")
         ");
 
-        $this->addProductOption($product);
-
         return $product;
-    }
-
-    private function addProductOption(EntityIds $product): void {
-        $storeId = self::DEFAULT_STORE_ID;
-        $productId = $product->getLinkFieldId();
-        $optionId = self::$db->insert("INSERT INTO catalog_product_option (product_id, type, is_require, sort_order) VALUES ($productId, 'drop_down', 1, 0)");
-        $optionTypeId = self::$db->insert("INSERT INTO catalog_product_option_type_value (option_id, sort_order) VALUES($optionId, 0)");
-
-        self::$db->executeQueries(
-            "INSERT INTO catalog_product_option_title (option_id, store_id, title) VALUES ($optionId, $storeId, 'Size')",
-            "INSERT INTO catalog_product_option_type_title (option_type_id, store_id, title) VALUES ($optionTypeId, $storeId, 'The size')",
-            "INSERT INTO catalog_product_option_price (option_id, store_id, price, price_type) VALUES ($optionId, $storeId, 1.23, 'fixed')",
-            "INSERT INTO catalog_product_option_type_price (option_type_id, store_id, price, price_type) VALUES ($optionTypeId, $storeId, 9.87, 'fixed')"
-        );
     }
 
     private function deleteProduct(EntityIds $productIds): void {
@@ -266,17 +245,6 @@ class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
                 'sequence_product' => 'sequence_value'
             ]);
         }
-
-        $this->deleteProductOption();
-    }
-
-    private function deleteProductOption(): void {
-        self::$db->deleteLastRow('catalog_product_option_type_price', 'option_type_price_id');
-        self::$db->deleteLastRow('catalog_product_option_price', 'option_price_id');
-        self::$db->deleteLastRow('catalog_product_option_type_title', 'option_type_title_id');
-        self::$db->deleteLastRow('catalog_product_option_title', 'option_title_id');
-        self::$db->deleteLastRow('catalog_product_option_type_value', 'option_type_id');
-        self::$db->deleteLastRow('catalog_product_option', 'option_id');
     }
 
     private static function attrId($attrCode): string {

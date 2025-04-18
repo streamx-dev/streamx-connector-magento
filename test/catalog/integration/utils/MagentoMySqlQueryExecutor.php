@@ -220,14 +220,6 @@ class MagentoMySqlQueryExecutor {
         ");
     }
 
-    public function deleteLastRow(string $table, string $idColumn): void {
-        $this->execute("
-            DELETE FROM $table
-             ORDER BY $idColumn DESC
-             LIMIT 1
-        ");
-    }
-
     public function insertProduct(string $sku, int $websiteId): EntityIds {
         $attributeSetId = $this->getDefaultAttributeSetId('catalog_product_entity');
 
