@@ -7,6 +7,15 @@
         <arguments>
             <argument name="sensitive" xsi:type="array">
                 <item name="streamx_connector_settings/streamx_client/auth_token" xsi:type="string">1</item>
+                <item name="streamx_connector_settings/rabbit_mq/password" xsi:type="string">1</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="start_consumer" xsi:type="object">StreamX\ConnectorCore\Console\Command\RabbitMqIngestionRequestsConsumerStartCommand</item>
             </argument>
         </arguments>
     </type>

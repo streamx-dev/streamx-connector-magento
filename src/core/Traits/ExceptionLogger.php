@@ -2,11 +2,11 @@
 
 namespace StreamX\ConnectorCore\Traits;
 
-use Exception;
+use Throwable;
 
 trait ExceptionLogger {
 
-    public function logExceptionAsError(string $customMessage, Exception $e): void {
+    public function logExceptionAsError(string $customMessage, Throwable $e): void {
         $this->logger->error(
             "$customMessage: {$e->getMessage()}",
             [

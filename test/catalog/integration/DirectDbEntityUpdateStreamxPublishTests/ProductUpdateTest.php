@@ -3,6 +3,7 @@
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
+use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationKeyPaths;
 
 /**
  * @inheritdoc
@@ -13,6 +14,16 @@ class ProductUpdateTest extends BaseDirectDbEntityUpdateTest {
     /** @test */
     public function shouldPublishSimpleProductEditedDirectlyInDatabase() {
         $this->shouldPublishProductEditedDirectlyInDatabase('Joust Duffle Bag', 'bag');
+    }
+
+    /** @test */
+    public function shouldPublishSimpleProductEditedDirectlyInDatabase_WhenRabbitMqIsDisabled() {
+        ConfigurationEditUtils::setConfigurationValue(ConfigurationKeyPaths::ENABLE_RABBIT_MQ, '0');
+        try {
+            $this->shouldPublishProductEditedDirectlyInDatabase('Joust Duffle Bag', 'bag');
+        } finally {
+            ConfigurationEditUtils::setConfigurationValue(ConfigurationKeyPaths::ENABLE_RABBIT_MQ, '1');
+        }
     }
 
     /** @test */

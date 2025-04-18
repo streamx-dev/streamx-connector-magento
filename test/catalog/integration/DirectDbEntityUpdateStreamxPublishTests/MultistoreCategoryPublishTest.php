@@ -105,6 +105,7 @@ class MultistoreCategoryPublishTest extends BaseDirectDbEntityUpdateTest {
                 $this->reindexMview();
 
                 // then
+                // TODO failed once when using RabbitMQ
                 $this->assertDataIsUnpublished($expectedKeyForStore1);
                 $this->assertDataIsUnpublished($expectedKeyForStore2);
             } finally {

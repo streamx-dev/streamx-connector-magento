@@ -11,5 +11,8 @@
     <job name="streamx_attribute_indexer_cron" instance="StreamX\ConnectorCatalog\Cron\MView\StreamxIndexerMviewProcessor" method="reindexAttributeMview">
       <schedule>*/5 * * * *</schedule> <!-- Every 5 minutes -->
     </job>
+    <job name="streamx_rabbitmq_consumer_cron" instance="StreamX\ConnectorCore\Client\RabbitMQ\RabbitMqIngestionRequestsConsumerStartCommandRunner" method="runAsync">
+      <schedule>*/1 * * * *</schedule> <!-- Every minute -->
+    </job>
   </group>
 </config>
