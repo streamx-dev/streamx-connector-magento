@@ -10,7 +10,7 @@ use RuntimeException;
 use Streamx\Clients\Ingestion\Publisher\Message;
 use StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests\BaseAppEntityUpdateTest;
 use StreamX\ConnectorCore\Client\Model\Data;
-use StreamX\ConnectorCore\Client\RabbitMQ\BaseRabbitMqIngestionRequestsService as Rabbit;
+use StreamX\ConnectorCore\Client\RabbitMQ\RabbitMqManager;
 use StreamX\ConnectorCore\Client\RabbitMQ\IngestionRequest;
 use StreamX\ConnectorCore\Client\RabbitMQ\RabbitMqIngestionRequestsSender;
 
@@ -32,7 +32,7 @@ class RabbitMqIntegrationTest extends BaseAppEntityUpdateTest {
     private function createRabbitMqSender(): RabbitMqIngestionRequestsSender {
         $rabbitMqConfiguration = parent::createRabbitMqConfigurationMock();
         $logger = parent::createLoggerMock();
-        return new RabbitMqIngestionRequestsSender($rabbitMqConfiguration, $logger);
+        return new RabbitMqIngestionRequestsSender($logger, $rabbitMqConfiguration);
     }
 
     /** @test */
@@ -40,8 +40,8 @@ class RabbitMqIntegrationTest extends BaseAppEntityUpdateTest {
         // given
         $productJson = self::readValidationFileContent('original-bag-product.json');
         $validIngestionMessage = Message::newPublishMessage(self::ingestionKey, new Data($productJson))->build();
-        $messagesCountBefore = self::getMessagesCount(Rabbit::QUEUE_NAME);
-        $dlqMessagesCountBefore = self::getMessagesCount(Rabbit::DLQ_QUEUE_NAME);
+        $messagesCountBefore = self::getMessagesCount(RabbitMqManager::QUEUE_NAME);
+        $dlqMessagesCountBefore = self::getMessagesCount(RabbitMqManager::DLQ_QUEUE_NAME);
 
         // when
         $this->rabbitMqSender->send(new IngestionRequest([$validIngestionMessage], parent::$store1Id));
@@ -50,8 +50,8 @@ class RabbitMqIntegrationTest extends BaseAppEntityUpdateTest {
         parent::assertExactDataIsPublished(self::ingestionKey, 'original-bag-product.json');
 
         // and: expecting none of the new messages to remain on queues
-        self::assertMessagesCount(Rabbit::QUEUE_NAME, $messagesCountBefore);
-        self::assertMessagesCount(Rabbit::DLQ_QUEUE_NAME, $dlqMessagesCountBefore);
+        self::assertMessagesCount(RabbitMqManager::QUEUE_NAME, $messagesCountBefore);
+        self::assertMessagesCount(RabbitMqManager::DLQ_QUEUE_NAME, $dlqMessagesCountBefore);
     }
 
     /** @test */
@@ -64,8 +64,8 @@ class RabbitMqIntegrationTest extends BaseAppEntityUpdateTest {
             (object)[],
             new Data(self::readValidationFileContent('original-bag-product.json'))
         );
-        $messagesCountBefore = self::getMessagesCount(Rabbit::QUEUE_NAME);
-        $dlqMessagesCountBefore = self::getMessagesCount(Rabbit::DLQ_QUEUE_NAME);
+        $messagesCountBefore = self::getMessagesCount(RabbitMqManager::QUEUE_NAME);
+        $dlqMessagesCountBefore = self::getMessagesCount(RabbitMqManager::DLQ_QUEUE_NAME);
 
         // when
         $this->rabbitMqSender->send(new IngestionRequest([$invalidIngestionMessage], parent::$store1Id));
@@ -74,12 +74,12 @@ class RabbitMqIntegrationTest extends BaseAppEntityUpdateTest {
         parent::assertDataIsNotPublished(self::ingestionKey);
 
         // and: expecting the message to land on the Dead Letter Queue
-        self::assertMessagesCount(Rabbit::QUEUE_NAME, $messagesCountBefore);
-        self::assertMessagesCount(Rabbit::DLQ_QUEUE_NAME, 1 + $dlqMessagesCountBefore);
+        self::assertMessagesCount(RabbitMqManager::QUEUE_NAME, $messagesCountBefore);
+        self::assertMessagesCount(RabbitMqManager::DLQ_QUEUE_NAME, 1 + $dlqMessagesCountBefore);
 
         // cleanup - remove the DLQ message from queue
         $this->removeMessageByContentPartValidatingIngestionKeys(
-            Rabbit::DLQ_QUEUE_NAME,
+            RabbitMqManager::DLQ_QUEUE_NAME,
             'unsupported-action',
             '["' . self::ingestionKey . '"]'
         );
@@ -89,19 +89,19 @@ class RabbitMqIntegrationTest extends BaseAppEntityUpdateTest {
     public function invalidMessage_ShouldBeRedirectedToDeadLetterQueue() {
         // given
         $rabbitMqMessage = new AMQPMessage('This is not an Ingestion Request JSON');
-        $messagesCountBefore = self::getMessagesCount(Rabbit::QUEUE_NAME);
-        $dlqMessagesCountBefore = self::getMessagesCount(Rabbit::DLQ_QUEUE_NAME);
+        $messagesCountBefore = self::getMessagesCount(RabbitMqManager::QUEUE_NAME);
+        $dlqMessagesCountBefore = self::getMessagesCount(RabbitMqManager::DLQ_QUEUE_NAME);
 
         // when
         self::sendMessage($rabbitMqMessage);
 
         // then: expecting the message to land on the Dead Letter Queue
-        self::assertMessagesCount(Rabbit::QUEUE_NAME, $messagesCountBefore);
-        self::assertMessagesCount(Rabbit::DLQ_QUEUE_NAME, 1 + $dlqMessagesCountBefore);
+        self::assertMessagesCount(RabbitMqManager::QUEUE_NAME, $messagesCountBefore);
+        self::assertMessagesCount(RabbitMqManager::DLQ_QUEUE_NAME, 1 + $dlqMessagesCountBefore);
 
         // cleanup - remove the DLQ message from queue
         $this->removeMessageByContentPartValidatingIngestionKeys(
-            Rabbit::DLQ_QUEUE_NAME,
+            RabbitMqManager::DLQ_QUEUE_NAME,
             'This is not an Ingestion Request JSON',
             'undefined'
         );
@@ -109,7 +109,7 @@ class RabbitMqIntegrationTest extends BaseAppEntityUpdateTest {
 
     private static function sendMessage(AMQPMessage $message): void {
         self::doWithChannel(function (AMQPChannel $channel) use ($message) {
-            $channel->basic_publish($message, Rabbit::EXCHANGE, Rabbit::ROUTING_KEY);
+            $channel->basic_publish($message, RabbitMqManager::EXCHANGE, RabbitMqManager::ROUTING_KEY);
         });
     }
 
@@ -151,7 +151,7 @@ class RabbitMqIntegrationTest extends BaseAppEntityUpdateTest {
     }
 
     private function verifyIngestionKeysHeaderIsCopied(AMQPMessage $message, string $expectedIngestionKeysHeader): void {
-        $ingestionKeys = Rabbit::readIngestionKeys($message);
+        $ingestionKeys = RabbitMqManager::readIngestionKeys($message);
         $this->assertEquals($expectedIngestionKeysHeader, $ingestionKeys);
     }
 

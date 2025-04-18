@@ -17,11 +17,8 @@ use StreamX\ConnectorCore\Client\StreamxIngestor;
 
 /**
  * Prerequisites to run these tests:
- * 1. markshust/docker-magento images must be running
- * 2. StreamX Connector must be deployed to the Magento instance
- * 3. StreamX must be running (test/resources/mesh.yaml as minimal mesh setup)
- * 4. scripts/add-rest-ingestion-to-magento-network.sh must be executed
- * 5. To use RabbitMQ - bin/magento streamx:consumer:start must be executed and the command running
+ * 1. The 'scripts/install-magento-with-connector.sh' has completed successfully and markshust/docker-magento images are running
+ * 2. You have performed the additional manual steps listed at the end of the command's output
  */
 abstract class BaseStreamxTest extends TestCase {
 
@@ -117,7 +114,7 @@ abstract class BaseStreamxTest extends TestCase {
         $storeMock = $this->createStoreMock($storeId, $storeCode);
 
         $rabbitMqConfigurationMock = $this->createRabbitMqConfigurationMock();
-        $rabbitMqSender = new RabbitMqIngestionRequestsSender($rabbitMqConfigurationMock, $loggerMock);
+        $rabbitMqSender = new RabbitMqIngestionRequestsSender($loggerMock, $rabbitMqConfigurationMock);
 
         $clientConfigurationMock = $this->createClientConfigurationMock(self::STREAMX_REST_INGESTION_URL);
         $streamxIngestor = new StreamxIngestor($loggerMock, $clientConfigurationMock);

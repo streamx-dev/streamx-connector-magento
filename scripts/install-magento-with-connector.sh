@@ -85,9 +85,7 @@ bin/magento module:enable --all
 cd ..
 bash scripts/reload-magento-modules.sh
 
-echo "Installation done. Next steps:"
-echo " - turn on your local StreamX instance"
-echo " - execute 'bash scripts/add-rest-ingestion-to-magento-network.sh'"
-echo " - enable Rabbit MQ in the Connector settings page in Magento"
-echo " - execute 'bin/magento streamx:consumer:start'"
-echo " - run all tests to verify installation"
+echo "Installation done. Additional required manual steps:"
+echo " - start your local StreamX instance (using test/resources/mesh.yaml as minimal mesh setup)"
+echo " - when it's up, execute 'bash scripts/add-rest-ingestion-to-magento-network.sh' (in a separate terminal tab)"
+echo " - then, execute 'bin/magento streamx:consumer:start' (in a separate terminal tab)"

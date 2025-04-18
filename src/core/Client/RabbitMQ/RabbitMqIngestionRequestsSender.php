@@ -8,13 +8,14 @@ use Streamx\Clients\Ingestion\Publisher\Message;
 /**
  * Sends Ingestion Requests to Rabbit MQ queue
  */
-class RabbitMqIngestionRequestsSender extends BaseRabbitMqIngestionRequestsService {
+class RabbitMqIngestionRequestsSender {
 
     private LoggerInterface $logger;
+    private RabbitMqConfiguration $rabbitMqConfiguration;
 
-    public function __construct(RabbitMqConfiguration $rabbitMqConfiguration, LoggerInterface $logger) {
-        parent::__construct($rabbitMqConfiguration);
+    public function __construct(LoggerInterface $logger, RabbitMqConfiguration $rabbitMqConfiguration) {
         $this->logger = $logger;
+        $this->rabbitMqConfiguration = $rabbitMqConfiguration;
     }
 
     public function send(IngestionRequest $ingestionRequest) {
@@ -26,8 +27,8 @@ class RabbitMqIngestionRequestsSender extends BaseRabbitMqIngestionRequestsServi
         $this->logger->info("Sending $messagesCount messages with ingestion keys $ingestionKeys to RabbitMQ for store $storeId");
 
         $rabbitMqMessageBody = $ingestionRequest->toJson();
-        $rabbitMqMessage = parent::createRabbitMqMessage($rabbitMqMessageBody, $ingestionKeys);
-        parent::sendMessage($rabbitMqMessage);
+        $rabbitMqMessage = RabbitMqManager::createRabbitMqMessage($rabbitMqMessageBody, $ingestionKeys);
+        RabbitMqManager::sendMessage($this->rabbitMqConfiguration, $rabbitMqMessage);
     }
 
     /**

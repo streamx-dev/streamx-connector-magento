@@ -61,10 +61,7 @@
                 </depends>
                 <field id="enable" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Enable Rabbit MQ</label>
-                    <comment>
-                        Choose Yes to publish data to StreamX via Rabbit MQ queue.
-                        Requires manual start of the consumer by executing "bin/magento streamx:consumer:start"
-                    </comment>
+                    <comment>Choose Yes to publish data to StreamX via Rabbit MQ queue</comment>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
                 <field id="host" translate="label comment" type="text" sortOrder="2" showInDefault="1" showInWebsite="0" showInStore="0">

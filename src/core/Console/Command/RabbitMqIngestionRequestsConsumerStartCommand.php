@@ -3,6 +3,7 @@
 namespace StreamX\ConnectorCore\Console\Command;
 
 use Magento\Framework\Lock\LockManagerInterface;
+use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCore\Client\RabbitMQ\RabbitMqIngestionRequestsConsumer;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -11,61 +12,69 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Usage: bin/magento streamx:consumer:start
  */
-// TODO: automate starting this command
-//  - add it to src/catalog/etc/crontab.xml
-//  - launch it async to not block the cron execution
 class RabbitMqIngestionRequestsConsumerStartCommand extends Command {
 
     public const COMMAND_NAME = 'streamx:consumer:start';
+    private LoggerInterface $logger;
     private RabbitMqIngestionRequestsConsumer $consumer;
     private LockManagerInterface $lockManager;
 
     public function __construct(
+        LoggerInterface $logger,
         RabbitMqIngestionRequestsConsumer $consumer,
         LockManagerInterface $lockManager
     ) {
+        $this->logger = $logger;
         $this->consumer = $consumer;
         $this->lockManager = $lockManager;
         parent::__construct();
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function configure() {
         $this->setName(self::COMMAND_NAME);
         parent::configure();
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int {
-        $this->startConsumer($output);
+        $loggerWrapper = new OutputInterfaceLoggerWrapper($output, $this->logger);
+        $this->startConsumer($loggerWrapper);
         return Command::SUCCESS;
     }
 
-    private function startConsumer(OutputInterface $output): void {
+    private function startConsumer(OutputInterfaceLoggerWrapper $loggerWrapper): void {
         $consumerClassName = get_class($this->consumer);
-        if (!$this->lockManager->lock(self::COMMAND_NAME, 1)) {
-            $output->writeln("Previous instance of $consumerClassName is still running, exiting.");
-            return;
+        if ($this->lockManager->lock(self::COMMAND_NAME, 1)) {
+            $loggerWrapper->info("Starting $consumerClassName to listen for messages and consume them indefinitely");
+            $this->consumer->start($loggerWrapper);
+        } else {
+            $loggerWrapper->info("Previous instance of $consumerClassName is still running");
         }
-
-        $output->writeln("Starting $consumerClassName to listen for messages and consume them indefinitely");
-        $this->consumer->start($output);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function run(InputInterface $input, OutputInterface $output): int {
-        $this->configureCtrlCExit($output);
+        $this->configureCtrlCExit();
         $exitCode = parent::run($input, $output);
-        $this->onExit($output);
+        $this->onExit();
         return $exitCode;
     }
 
-    private function onExit(OutputInterface $output): void {
+    private function onExit(): void {
         $this->lockManager->unlock(self::COMMAND_NAME);
-        $output->writeln('Command exited');
     }
 
-    private function configureCtrlCExit(OutputInterface $output): void {
+    private function configureCtrlCExit(): void {
         pcntl_async_signals(true);
-        pcntl_signal(SIGINT, function () use ($output) {
-            $this->onExit($output);
+        pcntl_signal(SIGINT, function() {
+            $this->onExit();
             exit(0);
         });
     }
