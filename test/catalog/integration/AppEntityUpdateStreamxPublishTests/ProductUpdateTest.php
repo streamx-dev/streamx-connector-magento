@@ -42,7 +42,6 @@ class ProductUpdateTest extends BaseAppEntityUpdateTest {
             '"id": "45",' => '"id": "46",',
             '-45"' => '-46"'
         ] : [];
-        // TODO: the produced json doesn't contain information about the components that make up the grouped product
         $this->shouldPublishProductEditedUsingMagentoApplication('Set of Sprite Yoga Straps', 'grouped', $regexReplacements);
     }
 

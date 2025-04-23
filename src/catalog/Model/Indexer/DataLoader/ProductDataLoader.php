@@ -39,7 +39,6 @@ class ProductDataLoader implements BasicDataLoader {
         $productIds = array_unique(array_merge($productIds, $allParentsOfVariants, $allVariantsOrParents));
 
         // note: a simple product can only be a child of a single configurable product, but can be a child of multiple grouped or bundle products
-        // TODO: verify what is published when a grouped product or its child is edited (expecting only parent with all children to be published)
         // TODO: verify what is published when a  bundle product or its child is edited (expecting only parent with all children to be published)
 
         // 1. Publish edited and added products
