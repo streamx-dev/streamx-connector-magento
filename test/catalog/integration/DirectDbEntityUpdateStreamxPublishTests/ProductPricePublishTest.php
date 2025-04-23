@@ -73,7 +73,7 @@ class ProductPricePublishTest extends BaseDirectDbEntityUpdateTest {
         // when
         ConfigurationEditUtils::setConfigurationValue(ConfigurationKeyPaths::USE_PRICES_INDEX, '1');
         ConfigurationEditUtils::setConfigurationValue(ConfigurationKeyPaths::USE_CATALOG_PRICE_RULES, '1');
-        $this->insertCatalogRulePrice($this->productId, $catalogRulePrice, self::$website1Id);
+        $ruleId = $this->insertCatalogRulePrice($this->productId, $catalogRulePrice, self::$website1Id);
         self::$db->productDummyUpdate($this->productId);
 
         try {
@@ -84,7 +84,7 @@ class ProductPricePublishTest extends BaseDirectDbEntityUpdateTest {
             $this->assertExactDataIsPublished($this->expectedKey, "edited-bag-product-with-prices-$this->defaultPrice-and-$catalogRulePrice.json");
         } finally {
             self::$db->revertProductDummyUpdate($this->productId);
-            $this->deleteCatalogRulePrice();
+            $this->deleteCatalogRulePrice($ruleId);
             ConfigurationEditUtils::restoreConfigurationValue(ConfigurationKeyPaths::USE_PRICES_INDEX);
             ConfigurationEditUtils::restoreConfigurationValue(ConfigurationKeyPaths::USE_CATALOG_PRICE_RULES);
         }
@@ -99,16 +99,16 @@ class ProductPricePublishTest extends BaseDirectDbEntityUpdateTest {
         $this->changeProductPrice($this->defaultPrice);
     }
 
-    private function insertCatalogRulePrice(EntityIds $productId, float $catalogRulePrice, int $websiteId): void {
+    private function insertCatalogRulePrice(EntityIds $productId, float $catalogRulePrice, int $websiteId): int {
         $ruleDate = self::$db->selectSingleValue("SELECT website_date FROM catalog_product_index_website WHERE website_id = $websiteId");
         $productEntityId = $productId->getEntityId();
-        self::$db->insert("
+        return self::$db->insert("
             INSERT INTO catalogrule_product_price(rule_date, customer_group_id, product_id, rule_price, website_id)
                                            VALUES('$ruleDate', 0, $productEntityId, $catalogRulePrice, $websiteId)
         ");
     }
 
-    private function deleteCatalogRulePrice(): void {
-        self::$db->deleteLastRow('catalogrule_product_price', 'rule_product_price_id');
+    private function deleteCatalogRulePrice(int $id): void {
+        self::$db->deleteById($id, ['catalogrule_product_price' => 'rule_product_price_id']);
     }
 }

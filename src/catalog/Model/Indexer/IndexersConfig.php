@@ -7,7 +7,6 @@ use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Category\CategoryDataFor
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\BundleOptionsData;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\CategoryData;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\ConfigurableData;
-use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\CustomOptions;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\DataCleaner;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\LangData;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\MediaGalleryData;
@@ -36,8 +35,6 @@ class IndexersConfig implements IndexersConfigInterface
                 $dataProviderFactory->get(MediaGalleryData::class),
                 $dataProviderFactory->get(QuantityData::class),
                 $dataProviderFactory->get(ConfigurableData::class),
-                // TODO review the provider; trim data produced by it only what we need
-                $dataProviderFactory->get(CustomOptions::class),
                 $dataProviderFactory->get(DataCleaner::class),
             ]),
             new IndexerDefinition(CategoryProcessor::INDEXER_ID, [
