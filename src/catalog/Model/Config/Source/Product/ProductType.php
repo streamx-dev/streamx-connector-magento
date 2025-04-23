@@ -9,9 +9,10 @@ class ProductType implements OptionSourceInterface
 {
     private ConfigInterface $config;
     private array $types = [];
-    private const UNSUPPORTED_TYPES = [
-        'downloadable',
-        'bundle'
+    private const SUPPORTED_TYPES = [
+        'simple',
+        'configurable',
+        'grouped'
     ];
 
     public function __construct(ConfigInterface $config)
@@ -50,10 +51,10 @@ class ProductType implements OptionSourceInterface
         $productTypes = $this->config->getAll();
 
         foreach ($productTypes as $productTypeKey => $productTypeConfig) {
-            if (in_array($productTypeConfig['name'], self::UNSUPPORTED_TYPES)) {
-                unset($productTypes[$productTypeKey]);
-            } else {
+            if (in_array($productTypeConfig['name'], self::SUPPORTED_TYPES)) {
                 $productTypes[$productTypeKey]['label'] = __($productTypeConfig['label']);
+            } else {
+                unset($productTypes[$productTypeKey]);
             }
         }
 
