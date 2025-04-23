@@ -40,7 +40,6 @@ class ProductUpdateTest extends BaseDirectDbEntityUpdateTest {
             '"id": "45",' => '"id": "46",',
             '-45"' => '-46"'
         ] : [];
-        // TODO: the produced json doesn't contain information about the components that make up the grouped product
         $this->shouldPublishProductEditedDirectlyInDatabase('Set of Sprite Yoga Straps', 'grouped', $regexReplacements);
     }
 

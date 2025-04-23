@@ -45,7 +45,6 @@ class EntityType {
                 // TODO: bundle products will be refactored, the above condition may become different
                 return self::productEntityType('bundle');
             }
-            // TODO: for grouped products, currently the produced json doesn't contain information about the components that make up the grouped product - so we can't currently detect a "grouped product"
             if (!empty($entity['variants'])) {
                 return self::productEntityType('master');
             }
