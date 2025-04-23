@@ -2,6 +2,7 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
+use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
@@ -25,15 +26,6 @@ class ProductUpdateTest extends BaseAppEntityUpdateTest {
         } finally {
             ConfigurationEditUtils::restoreDefaultIndexedProductAttributes();
         }
-    }
-
-    /** @test */
-    public function shouldPublishBundleProductEditedUsingMagentoApplication() {
-        $regexReplacements = self::$db->isEnterpriseMagento() ? [ // in enterprise magento DB, ID of the bundle product is 46, not 45 as in community version
-            '"id": "46",' => '"id": "45",',
-            '-46"' => '-45"'
-        ] : [];
-        $this->shouldPublishProductEditedUsingMagentoApplication('Sprite Yoga Companion Kit', 'bundle', $regexReplacements);
     }
 
     /** @test */
@@ -63,6 +55,38 @@ class ProductUpdateTest extends BaseAppEntityUpdateTest {
         } finally {
             self::renameProduct($productId, $productName);
             $this->assertExactDataIsPublished($expectedKey, "original-$productNameInValidationFileName-product.json", $regexReplacements);
+        }
+    }
+
+    /** @test */
+    public function shouldNotPublishBundleProduct() {
+        // given: publish some dummy data directly at the product key, to later on verify that editing the product doesn't result in publishing it via indexer
+        $productName = 'Sprite Yoga Companion Kit';
+        $productId = self::$db->getProductId($productName);
+
+        // and
+        $productToPublish = ['id' => (string) $productId->getEntityId()];
+        $streamxClient = parent::createStreamxClient(self::$store1Id, self::STORE_1_CODE);
+        $streamxClient->publish([$productToPublish], ProductProcessor::INDEXER_ID);
+
+        // verify published
+        $expectedKey = self::productKey($productId);
+        $regexReplacements = self::$db->isEnterpriseMagento() ? [ '46' => '45' ] : []; // in enterprise magento DB, ID of the bundle product is 46, not 45 as in community version
+        $this->assertExactDataIsPublished($expectedKey, "dummy-bundle-product.json", $regexReplacements);
+
+        // when
+        $productNewName = "Name modified for testing, was $productName";
+        self::renameProduct($productId, $productNewName);
+
+        try {
+            // then: due to bundle products being not available in configuration - their IDs are treated as not existing by the indexer, so are unpublished
+            $this->assertDataIsUnpublished($expectedKey);
+        } finally {
+            // and when: restore original name
+            self::renameProduct($productId, $productName);
+
+            // then: still nothing is published at the key
+            $this->assertDataIsNotPublished($expectedKey);
         }
     }
 
