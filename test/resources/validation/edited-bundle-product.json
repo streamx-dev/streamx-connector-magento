@@ -93,40 +93,6 @@
     "discountedValue": 0
   },
   "slug": "name-modified-for-testing-was-sprite-yoga-companion-kit-45",
-  "bundle_options": [
-    {
-      "option_id": 1,
-      "position": 1,
-      "type": "radio",
-      "sku": "24-WG080",
-      "title": "Sprite Stasis Ball",
-      "required": true
-    },
-    {
-      "option_id": 2,
-      "position": 2,
-      "type": "radio",
-      "sku": "24-WG080",
-      "title": "Sprite Foam Yoga Brick",
-      "required": true
-    },
-    {
-      "option_id": 3,
-      "position": 3,
-      "type": "radio",
-      "sku": "24-WG080",
-      "title": "Sprite Yoga Strap",
-      "required": true
-    },
-    {
-      "option_id": 4,
-      "position": 4,
-      "type": "radio",
-      "sku": "24-WG080",
-      "title": "Sprite Foam Roller",
-      "required": true
-    }
-  ],
   "categories": [
     {
       "id": "3",
