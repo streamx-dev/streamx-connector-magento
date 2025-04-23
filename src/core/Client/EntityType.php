@@ -39,28 +39,28 @@ class EntityType {
         return new EntityType(self::CATEGORY, self::CATEGORY);
     }
 
-    public static function fromEntityAndIndexerName(array $entity, string $indexerName): self {
-        if ($indexerName == ProductProcessor::INDEXER_ID) {
+    public static function fromEntityAndIndexerId(array $entity, string $indexerId): self {
+        if ($indexerId == ProductProcessor::INDEXER_ID) {
             if (!empty($entity['variants'])) {
                 return self::productEntityType('master');
             }
 
             return self::productEntityType('simple');
         }
-        if ($indexerName == CategoryProcessor::INDEXER_ID) {
+        if ($indexerId == CategoryProcessor::INDEXER_ID) {
             return self::categoryEntityType();
         }
-        throw new Exception("Received data from unexpected indexer: $indexerName");
+        throw new Exception("Received data from unexpected indexer: $indexerId");
     }
 
-    public static function fromIndexerName(string $indexerName): self {
-        if ($indexerName == ProductProcessor::INDEXER_ID) {
+    public static function fromIndexerId(string $indexerId): self {
+        if ($indexerId == ProductProcessor::INDEXER_ID) {
             return self::productEntityType();
         }
-        if ($indexerName == CategoryProcessor::INDEXER_ID) {
+        if ($indexerId == CategoryProcessor::INDEXER_ID) {
             return self::categoryEntityType();
         }
-        throw new Exception("Received data from unexpected indexer: $indexerName");
+        throw new Exception("Received data from unexpected indexer: $indexerId");
     }
 
 }

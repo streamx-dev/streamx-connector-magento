@@ -33,7 +33,7 @@ class ProductsIndexer extends BaseStreamxIndexer
             $optimizationSettings,
             $streamxClientFactory,
             $streamxAvailabilityCheckerFactory,
-            $indexersConfig->getByName(ProductProcessor::INDEXER_ID)
+            $indexersConfig->getById(ProductProcessor::INDEXER_ID)
         );
     }
 }

@@ -46,7 +46,7 @@ class AttributesIndexer extends BaseStreamxIndexer
             $optimizationSettings,
             $streamxClientFactory,
             $streamxAvailabilityCheckerFactory,
-            $indexersConfig->getByName(AttributeProcessor::INDEXER_ID)
+            $indexersConfig->getById(AttributeProcessor::INDEXER_ID)
         );
         $this->productModel = $productModel;
         $this->productsIndexer = $productsIndexer;

@@ -33,7 +33,7 @@ class CategoriesIndexer extends BaseStreamxIndexer
             $optimizationSettings,
             $streamxClientFactory,
             $streamxAvailabilityCheckerFactory,
-            $indexersConfig->getByName(CategoryProcessor::INDEXER_ID)
+            $indexersConfig->getById(CategoryProcessor::INDEXER_ID)
         );
     }
 }
