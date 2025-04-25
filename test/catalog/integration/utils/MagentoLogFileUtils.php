@@ -17,6 +17,10 @@ class MagentoLogFileUtils  {
         $this->logFileSize = filesize($this->logFilePath);
     }
 
+    public function appendLine(string $message): void {
+        file_put_contents($this->logFilePath, "$message\n", FILE_APPEND);
+    }
+
     public function getPublishedAndUnpublishedKeys(): IngestedKeys {
         $newLogLines = $this->readNewLogFileLines();
         $result = new IngestedKeys();

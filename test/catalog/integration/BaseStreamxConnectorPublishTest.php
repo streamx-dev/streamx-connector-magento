@@ -58,8 +58,6 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
     }
 
     public static function initializeTests(): void {
-        MagentoEndpointsCaller::call('stores/setup');
-
         self::$db = new MagentoMySqlQueryExecutor();
         self::loadInitialIndexerModes();
         self::loadStoreAndWebsiteIds();
@@ -67,6 +65,7 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
         if (self::$db->isEnterpriseMagento()) {
             self::disableGiftCardsCategory();
         }
+        self::assignTaxClassIdToTestProduct();
     }
 
     private static function loadInitialIndexerModes(): void {
@@ -90,6 +89,11 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
         $categoryId = self::$db->getCategoryId('Gift Cards');
         $isActiveAttributeId = self::$db->getCategoryAttributeId('is_active');
         self::$db->insertIntCategoryAttribute($categoryId, $isActiveAttributeId, 0);
+    }
+
+    private static function assignTaxClassIdToTestProduct() {
+        // product with ID=1 is used by many tests, but, unlike other products, it initially doesn't have a Tax Class assigned. Fix that:
+        self::$db->insertIntProductAttribute(new EntityIds(1, 1), self::$db->getProductAttributeId('tax_class_id'), 2);
     }
 
     public static function tearDownAfterClass(): void {
@@ -159,12 +163,13 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
     }
 
     protected function setUp(): void {
-        echo "Starting {$this->getName()}\n";
         $this->logFileUtils = new MagentoLogFileUtils();
+        $this->logFileUtils->appendLine('Starting test ' . get_class($this) . '.' . $this->getName());
         CodeCoverageReportGenerator::hideCoverageFilesFromPreviousTest();
     }
 
     protected function tearDown(): void {
+        $this->logFileUtils->appendLine('Finished test ' . get_class($this) . '.' . $this->getName() . ' with result ' . $this->getStatus());
         $ingestedKeys = $this->logFileUtils->getPublishedAndUnpublishedKeys();
         echo 'Keys ingested during the test:' . PHP_EOL;
         echo $ingestedKeys->formatted() . PHP_EOL;

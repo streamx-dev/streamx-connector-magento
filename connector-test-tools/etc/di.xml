@@ -39,7 +39,8 @@
       type="StreamX\ConnectorTestTools\Impl\IndexerManagementImpl"/>
 
     <type name="Magento\Webapi\Controller\Rest">
-        <plugin name="endpointProxyPlugin" type="StreamX\ConnectorTestTools\Impl\EndpointCoveredCodeProxyPlugin" />
+        <plugin name="codeCoveragePlugin" type="StreamX\ConnectorTestTools\Impl\EndpointCodeCoveragePlugin" />
+        <plugin name="exceptionPlugin" type="StreamX\ConnectorTestTools\Impl\EndpointExceptionPlugin" />
     </type>
 
 </config>

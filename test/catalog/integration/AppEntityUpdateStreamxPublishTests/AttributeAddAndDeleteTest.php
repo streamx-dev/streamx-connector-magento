@@ -8,7 +8,7 @@ use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 
 /**
  * @inheritdoc
- * @UsesAttributeIndexer
+ * @UsesProductIndexer
  */
 class AttributeAddAndDeleteTest extends BaseAppEntityUpdateTest {
 

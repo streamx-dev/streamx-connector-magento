@@ -134,8 +134,4 @@ class MultistoreCategoryPublishTest extends BaseDirectDbEntityUpdateTest {
     private function deleteCategory(EntityIds $categoryIds): void {
         CategoryAddAndDeleteTest::deleteCategory($categoryIds);
     }
-
-    private static function attrId($attrCode): string {
-        return self::$db->getCategoryAttributeId($attrCode);
-    }
 }

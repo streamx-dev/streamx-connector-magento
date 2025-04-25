@@ -18,7 +18,6 @@ use Magento\Catalog\Model\Product\Visibility;
 use Magento\Catalog\Model\ProductFactory;
 use Magento\Catalog\Model\ResourceModel\Eav\Attribute;
 use Magento\Catalog\Model\ResourceModel\Eav\AttributeFactory;
-use Magento\Eav\Api\AttributeRepositoryInterface;
 use Magento\Eav\Model\Config;
 use Magento\Eav\Setup\EavSetupFactory;
 use Magento\Eav\Api\AttributeManagementInterface;
@@ -37,7 +36,6 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
     private ProductRepositoryInterface $productRepository;
     private CategoryRepositoryInterface $categoryRepository;
     private AttributeManagementInterface $attributeManagement;
-    private AttributeRepositoryInterface $attributeRepository;
     private CategoryLinkRepositoryInterface $categoryLinkRepository;
     private CategoryProductLinkInterfaceFactory $categoryProductLinkFactory;
 
@@ -51,7 +49,6 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
         ProductRepositoryInterface $productRepository,
         CategoryRepositoryInterface $categoryRepository,
         AttributeManagementInterface $attributeManagement,
-        AttributeRepositoryInterface $attributeRepository,
         CategoryLinkRepositoryInterface $categoryLinkRepository,
         CategoryProductLinkInterfaceFactory $categoryProductLinkFactory
     ) {
@@ -64,7 +61,6 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
         $this->productRepository = $productRepository;
         $this->categoryRepository = $categoryRepository;
         $this->attributeManagement = $attributeManagement;
-        $this->attributeRepository = $attributeRepository;
         $this->categoryLinkRepository = $categoryLinkRepository;
         $this->categoryProductLinkFactory = $categoryProductLinkFactory;
     }
@@ -160,22 +156,10 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
                 ->setParentId($parentCategoryId)
                 ->setIsActive(true);
 
-            $savedCategory = $this->categoryRepository->save($category);
-            $categoryId = $savedCategory->getId();
-            $this->setCategoryPath($categoryId, $parentCategoryId);
-            return $categoryId;
+            return $this->categoryRepository->save($category)->getId();
         } catch (Exception $e) {
             throw new Exception("Error adding category $categoryName: " . $e->getMessage(), -1, $e);
         }
-    }
-
-    /**
-     * @throws Exception
-     */
-    private function setCategoryPath(int $categoryId, int $parentCategoryId): void {
-        $category = $this->categoryRepository->get($categoryId);
-        $category->setPath("$parentCategoryId/$categoryId");
-        $this->categoryRepository->save($category);
     }
 
     /**
@@ -183,26 +167,21 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
      */
     public function addAttributeAndAssignToProduct(string $attributeCode, int $productId): int {
         try {
-            $attribute = $this->prepareNewTextAttribute($attributeCode);
+            $attribute = $this->addNewTextAttribute($attributeCode);
+            $this->addAttributeToDefaultAttributeSet($attribute);
+
             $product = $this->productFactory->create()->load($productId);
+            $attributeValue = "$attributeCode value for product " . $product->getId();
+            $this->addAttributeToProduct($product, $attributeCode, $attributeValue);
+            $product->save();
 
-            $transaction = new Transaction();
-            $transaction->addObject($attribute);
-            $transaction->addObject($product);
-            $transaction->addCommitCallback(function () use ($product, $attributeCode) {
-                $attributeValue = "$attributeCode value for product " . $product->getId();
-                $this->addAttributeToDefaultAttributeSet($attributeCode);
-                $this->addAttributeToProduct($product, $attributeCode, $attributeValue);
-            });
-            $transaction->save();
-
-            return $this->attributeRepository->get(Product::ENTITY, $attributeCode)->getAttributeId();
+            return $attribute->getAttributeId();
         } catch (Exception $e) {
             throw new Exception("Error adding attribute $attributeCode: " . $e->getMessage(), -1, $e);
         }
     }
 
-    private function prepareNewTextAttribute(string $attributeCode): Attribute {
+    private function addNewTextAttribute(string $attributeCode): Attribute {
         $displayName = implode(' ', array_map('ucfirst', explode('_', $attributeCode))); // split by underscore, capitalize words and join with space
         $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
         $entityTypeId = $eavSetup->getEntityTypeId(Product::ENTITY);
@@ -217,10 +196,11 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
             ->setIsVisible(true)
             ->setIsVisibleOnFront(true)
             ->setIsFilterable(false)
-            ->setUsedInProductListing(true);
+            ->setUsedInProductListing(true)
+            ->save();
     }
 
-    private function addAttributeToDefaultAttributeSet(string $attributeCode): void {
+    private function addAttributeToDefaultAttributeSet(Attribute $attribute): void {
         $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
         $attributeSetId = $eavSetup->getAttributeSetId(Product::ENTITY, 'default');
         $attributeGroupId = $eavSetup->getAttributeGroupId(Product::ENTITY, $attributeSetId, 'general');
@@ -228,7 +208,7 @@ class EntityAddControllerImpl implements EntityAddControllerInterface {
             Product::ENTITY,
             $attributeSetId,
             $attributeGroupId,
-            $attributeCode,
+            $attribute->getAttributeCode(),
             999 // Sort order
         );
     }
