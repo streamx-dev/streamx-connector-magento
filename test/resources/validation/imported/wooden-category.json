@@ -1,0 +1,33 @@
+{
+  "id": "10001",
+  "name": "Wooden",
+  "slug": "wooden-10001",
+  "label": "Wooden",
+  "subcategories": [
+    {
+      "id": "10002",
+      "name": "Tables",
+      "subcategories": [],
+      "slug": "tables-10002",
+      "label": "Tables"
+    }
+  ],
+  "parent": {
+    "id": "10000",
+    "name": "Furniture",
+    "slug": "furniture-10000",
+    "label": "Furniture",
+    "parent": {
+      "id": "2",
+      "name": "Default Category",
+      "slug": "default-category-2",
+      "label": "Default Category",
+      "parent": {
+        "id": "1",
+        "name": "Root Catalog",
+        "slug": "root-catalog-1",
+        "label": "Root Catalog"
+      }
+    }
+  }
+}

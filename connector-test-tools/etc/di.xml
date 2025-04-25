@@ -38,6 +38,10 @@
       for="StreamX\ConnectorTestTools\Api\IndexerManagementInterface"
       type="StreamX\ConnectorTestTools\Impl\IndexerManagementImpl"/>
 
+    <preference
+      for="StreamX\ConnectorTestTools\Api\ProductImportControllerInterface"
+      type="StreamX\ConnectorTestTools\Impl\ProductImportControllerImpl"/>
+
     <type name="Magento\Webapi\Controller\Rest">
         <plugin name="endpointProxyPlugin" type="StreamX\ConnectorTestTools\Impl\EndpointCoveredCodeProxyPlugin" />
     </type>
