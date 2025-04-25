@@ -2,11 +2,12 @@
 
 namespace StreamX\ConnectorTestTools\Impl;
 
-use Magento\Framework\App\Cache\Frontend\Pool;
-use Magento\Framework\App\Cache\TypeListInterface;
+use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Framework\App\Config\Storage\WriterInterface;
-use Magento\Framework\App\ResourceConnection;
 use Magento\Store\Api\Data\WebsiteInterface;
+use Magento\Store\Api\GroupRepositoryInterface;
+use Magento\Store\Api\StoreRepositoryInterface;
+use Magento\Store\Api\WebsiteRepositoryInterface;
 use Magento\Store\Model\Group;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\Store;
@@ -17,8 +18,8 @@ use Magento\Store\Model\GroupFactory;
 use Magento\Store\Model\StoreFactory;
 use StreamX\ConnectorTestTools\Api\StoresControllerInterface;
 
-class StoresControllerImpl implements StoresControllerInterface
-{
+class StoresControllerImpl implements StoresControllerInterface {
+
     private const STORE_2_CODE = 'store_2';
     private const SECOND_WEBSITE_CODE = 'second_website';
     private const STORE_CODE_FOR_SECOND_WEBSITE = 'store_for_second_website';
@@ -31,30 +32,33 @@ class StoresControllerImpl implements StoresControllerInterface
     private WebsiteFactory $websiteFactory;
     private GroupFactory $groupFactory;
     private StoreFactory $storeFactory;
+    private WebsiteRepositoryInterface $websiteRepository;
+    private GroupRepositoryInterface $groupRepository;
+    private StoreRepositoryInterface $storeRepository;
     private StoreManagerInterface $storeManager;
     private WriterInterface $writer;
-    private ResourceConnection $connection;
-    private TypeListInterface $typeList;
-    private Pool $frontendPool;
+    private ProductRepositoryInterface $productRepository;
 
     public function __construct(
         WebsiteFactory $websiteFactory,
         GroupFactory $groupFactory,
         StoreFactory $storeFactory,
+        WebsiteRepositoryInterface $websiteRepository,
+        GroupRepositoryInterface $groupRepository,
+        StoreRepositoryInterface $storeRepository,
         StoreManagerInterface $storeManager,
         WriterInterface $writer,
-        ResourceConnection $connection,
-        TypeListInterface $typeList,
-        Pool $frontendPool
+        ProductRepositoryInterface $productRepository
     ) {
         $this->websiteFactory = $websiteFactory;
         $this->groupFactory = $groupFactory;
         $this->storeFactory = $storeFactory;
+        $this->websiteRepository = $websiteRepository;
+        $this->groupRepository = $groupRepository;
+        $this->storeRepository = $storeRepository;
         $this->storeManager = $storeManager;
         $this->writer = $writer;
-        $this->connection = $connection;
-        $this->typeList = $typeList;
-        $this->frontendPool = $frontendPool;
+        $this->productRepository = $productRepository;
     }
 
     /**
@@ -64,50 +68,56 @@ class StoresControllerImpl implements StoresControllerInterface
         // make sure StreamX Connector is turned on
         $this->setGlobalLevelConfigValue(self::CONNECTOR_ENABLE_CONFIG_KEY, 1);
 
-        if (count($this->storeManager->getWebsites()) == 2) {
-            // assuming all is already set up
-            return;
-        }
-
         $defaultWebsite = array_values($this->storeManager->getWebsites())[0];
         $defaultStoreId = $this->storeManager->getStore('default')->getId();
 
-        $store2 = $this->createStore($defaultWebsite->getId(), self::STORE_2_CODE, self::STORE_2_CODE);
-        $secondWebsite = $this->createWebsite(self::SECOND_WEBSITE_CODE);
-        $storeForSecondWebsite = $this->createStore($secondWebsite->getId(), self::STORE_CODE_FOR_SECOND_WEBSITE, self::STORE_CODE_FOR_SECOND_WEBSITE);
+        $store2 = $this->getOrCreateStore($defaultWebsite->getId(), self::STORE_2_CODE, self::STORE_2_CODE);
+        $secondWebsite = $this->getOrCreateWebsite(self::SECOND_WEBSITE_CODE);
+        $storeForSecondWebsite = $this->getOrCreateStore($secondWebsite->getId(), self::STORE_CODE_FOR_SECOND_WEBSITE, self::STORE_CODE_FOR_SECOND_WEBSITE);
 
         // configure exported stores
         $this->setIndexedStoresForWebsite($defaultWebsite, $defaultStoreId, $store2->getId());
         $this->setIndexedStoresForWebsite($secondWebsite, $storeForSecondWebsite->getId());
 
         // add products to the new website
+        $secondWebsiteId = $secondWebsite->getId();
         foreach (self::PRODUCT_IDS_IN_SECOND_WEBSITE as $productId) {
-            $this->connection->getConnection()->insert('catalog_product_website', [
-                'product_id' => $productId,
-                'website_id' => $secondWebsite->getId(),
-            ]);
+            $product = $this->productRepository->getById($productId);
+            $websiteIds = array_unique(array_merge($product->getWebsiteIds(), [$secondWebsiteId]));
+            $product->setWebsiteIds($websiteIds);
+            $this->productRepository->save($product);
         }
-
-        $this->cleanAndFlushCache();
     }
 
-    private function createStore(int $websiteId, string $storeCode, string $viewCode): Store {
-        $store = $this->createStoreGroup($websiteId, $storeCode);
+    private function getOrCreateStore(int $websiteId, string $storeCode, string $viewCode): Store {
+        foreach ($this->storeRepository->getList() as $store) {
+            if ($store->getCode() == $storeCode) {
+                return $this->storeFactory->create()->load($store->getId());
+            }
+        }
+
+        $storeGroup = $this->getOrCreateStoreGroup($websiteId, $storeCode);
 
         $storeView = $this->storeFactory->create()
             ->setCode($viewCode)
             ->setWebsiteId($websiteId)
-            ->setStoreGroupId($store->getId())
+            ->setStoreGroupId($storeGroup->getId())
             ->setName(self::codeToName($viewCode))
             ->setIsActive(true)
             ->save();
 
-        $store->setDefaultStoreId($storeView->getId())->save();
+        $storeGroup->setDefaultStoreId($storeView->getId())->save();
 
         return $storeView;
     }
 
-    private function createStoreGroup(int $websiteId, string $code): Group {
+    private function getOrCreateStoreGroup(int $websiteId, string $code): Group {
+        foreach ($this->groupRepository->getList() as $group) {
+            if ($group->getCode() == $code) {
+                return $this->groupFactory->create()->load($group->getId());
+            }
+        }
+
         return $this->groupFactory->create()
             ->setWebsiteId($websiteId)
             ->setCode($code)
@@ -116,7 +126,13 @@ class StoresControllerImpl implements StoresControllerInterface
             ->save();
     }
 
-    private function createWebsite(string $code): Website {
+    private function getOrCreateWebsite(string $code): Website {
+        foreach ($this->websiteRepository->getList() as $website) {
+            if ($website->getCode() == $code) {
+                return $this->websiteFactory->create()->load($website->getId());
+            }
+        }
+
         return $this->websiteFactory->create()
             ->setCode($code)
             ->setName(self::codeToName($code))
@@ -138,14 +154,5 @@ class StoresControllerImpl implements StoresControllerInterface
 
     private function setGlobalLevelConfigValue(string $key, string $value): void {
         $this->writer->save($key, $value);
-    }
-
-    private function cleanAndFlushCache(): void {
-        foreach ($this->typeList->getTypes() as $type => $cache) {
-            $this->typeList->cleanType($type);
-        }
-        foreach ($this->frontendPool as $cacheFrontend) {
-            $cacheFrontend->getBackend()->clean();
-        }
     }
 }
