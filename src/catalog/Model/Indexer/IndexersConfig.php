@@ -4,7 +4,6 @@ namespace StreamX\ConnectorCatalog\Model\Indexer;
 
 use Exception;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Category\CategoryDataFormatter;
-use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\BundleOptionsData;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\CategoryData;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\ConfigurableData;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\DataCleaner;
@@ -28,8 +27,6 @@ class IndexersConfig implements IndexersConfigInterface
             new IndexerDefinition(ProductProcessor::INDEXER_ID, [
                 $dataProviderFactory->get(LangData::class),
                 $dataProviderFactory->get(ProductAttributeData::class),
-                // TODO review the provider; trim data produced by it only what we need
-                $dataProviderFactory->get(BundleOptionsData::class),
                 $dataProviderFactory->get(CategoryData::class),
                 $dataProviderFactory->get(IndexedPricesProvider::class),
                 $dataProviderFactory->get(MediaGalleryData::class),

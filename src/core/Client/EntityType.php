@@ -41,10 +41,6 @@ class EntityType {
 
     public static function fromEntityAndIndexerName(array $entity, string $indexerName): self {
         if ($indexerName == ProductProcessor::INDEXER_ID) {
-            if (isset($entity['bundle_options'])) {
-                // TODO: bundle products will be refactored, the above condition may become different
-                return self::productEntityType('bundle');
-            }
             if (!empty($entity['variants'])) {
                 return self::productEntityType('master');
             }

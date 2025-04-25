@@ -10,7 +10,8 @@ class ProductType implements OptionSourceInterface
     private ConfigInterface $config;
     private array $types = [];
     private const UNSUPPORTED_TYPES = [
-        'downloadable'
+        'downloadable',
+        'bundle'
     ];
 
     public function __construct(ConfigInterface $config)
