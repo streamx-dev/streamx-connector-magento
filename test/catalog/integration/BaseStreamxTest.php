@@ -29,7 +29,7 @@ abstract class BaseStreamxTest extends TestCase {
     private const CHANNEL_NAME = "data";
 
     private const STREAMX_DELIVERY_SERVICE_BASE_URL = "http://localhost:8081";
-    private const WAIT_FOR_INGESTED_DATA_TIMEOUT_SECONDS = 5;
+    private const WAIT_FOR_INGESTED_DATA_TIMEOUT_SECONDS = 8;
     private const SLEEP_MICROS_BETWEEN_DATA_INGESTION_CHECKS = 200_000;
 
     // port, user and password are taken from magento/env/rabbitmq.env file

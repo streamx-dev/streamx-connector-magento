@@ -70,7 +70,6 @@ class StoresControllerImpl implements StoresControllerInterface {
         $this->setGlobalLevelConfigValue(self::CONNECTOR_ENABLE_CONFIG_KEY, 1);
 
         // make sure RabbitMQ is enabled.
-        // when running tests, please execute "bin/magento streamx:consumer:start" manually, since in Rest Api endpoint context there is no access to php binary
         $this->setGlobalLevelConfigValue(self::RABBIT_MQ_ENABLE_CONFIG_KEY, 1);
 
         $defaultWebsite = array_values($this->storeManager->getWebsites())[0];

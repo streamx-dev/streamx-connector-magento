@@ -29,7 +29,8 @@ class StreamxIngestor {
      */
     public function send(array $ingestionMessages, int $storeId): bool {
         $keys = array_column($ingestionMessages, 'key');
-        $this->logger->info("Executing IngestionRequest for store $storeId with keys " . json_encode($keys));
+        $action = implode(', ', array_unique(array_column($ingestionMessages, 'action')));
+        $this->logger->info("Executing IngestionRequest for store $storeId with action $action and keys " . json_encode($keys));
 
         $streamxPublisher = $this->getOrCreateStreamxPublisher($storeId);
         $messageStatuses = $streamxPublisher->sendMulti($ingestionMessages);
