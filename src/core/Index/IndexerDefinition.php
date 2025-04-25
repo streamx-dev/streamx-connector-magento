@@ -6,18 +6,18 @@ use StreamX\ConnectorCore\Api\DataProviderInterface;
 
 class IndexerDefinition
 {
-    private string $name;
+    private string $indexerId;
 
     /** @var DataProviderInterface[] */
     private array $dataProviders;
 
-    public function __construct(string $name, array $dataProviders) {
-        $this->name = $name;
+    public function __construct(string $indexerId, DataProviderInterface... $dataProviders) {
+        $this->indexerId = $indexerId;
         $this->dataProviders = $dataProviders;
     }
 
-    public function getName(): string {
-        return $this->name;
+    public function getIndexerId(): string {
+        return $this->indexerId;
     }
 
     /**

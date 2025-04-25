@@ -30,10 +30,10 @@ class StreamxClient {
         $this->dataIngestor = StreamxPublisherFactory::createStreamxPublisher($configuration, $storeId, true);
     }
 
-    public function publish(array $entities, string $indexerName): void {
+    public function publish(array $entities, string $indexerId): void {
         $publishMessages = [];
         foreach ($entities as $entity) {
-            $entityType = EntityType::fromEntityAndIndexerName($entity, $indexerName);
+            $entityType = EntityType::fromEntityAndIndexerId($entity, $indexerId);
             $key = $this->createStreamxKey($entityType, $entity['id']);
             $payload = new Data(json_encode($entity));
             $publishMessages[] = Message::newPublishMessage($key, $payload)
@@ -41,20 +41,20 @@ class StreamxClient {
                 ->build();
         }
 
-        $this->ingest($publishMessages, "publishing", $indexerName);
+        $this->ingest($publishMessages, "publishing", $indexerId);
     }
 
-    public function unpublish(array $entityIds, string $indexerName): void {
+    public function unpublish(array $entityIds, string $indexerId): void {
         $unpublishMessages = [];
         foreach ($entityIds as $entityId) {
-            $entityType = EntityType::fromIndexerName($indexerName);
+            $entityType = EntityType::fromIndexerId($indexerId);
             $key = $this->createStreamxKey($entityType, (string) $entityId);
             $unpublishMessages[] = Message::newUnpublishMessage($key)
                 ->withProperty(self::STREAMX_TYPE_PROPERTY_NAME, $entityType->getFullyQualifiedName())
                 ->build();
         }
 
-        $this->ingest($unpublishMessages, "unpublishing", $indexerName);
+        $this->ingest($unpublishMessages, "unpublishing", $indexerId);
     }
 
     private function createStreamxKey(EntityType $entityType, string $entityId): string {
@@ -68,10 +68,10 @@ class StreamxClient {
     /**
      * @param Message[] $ingestionMessages
      */
-    private function ingest(array $ingestionMessages, string $operationName, string $indexerName): void {
+    private function ingest(array $ingestionMessages, string $operationName, string $indexerId): void {
         $keys = array_column($ingestionMessages, 'key');
         $messagesCount = count($ingestionMessages);
-        $this->logger->info("Start $operationName $messagesCount entities from $indexerName with keys " . json_encode($keys));
+        $this->logger->info("Start $operationName $messagesCount entities from $indexerId with keys " . json_encode($keys));
 
         try {
             // TODO make sure this will never block. Best by turning off Pulsar container. Migrate to RabbitMQ to handle ingestion asynchronously (and receive NAK/ACK based retry features)
@@ -86,6 +86,6 @@ class StreamxClient {
             $this->logExceptionAsError('Ingestion exception', $e);
         }
 
-        $this->logger->info("Finished $operationName $messagesCount entities from $indexerName");
+        $this->logger->info("Finished $operationName $messagesCount entities from $indexerId");
     }
 }

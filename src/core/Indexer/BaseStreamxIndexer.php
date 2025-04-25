@@ -23,7 +23,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
     private StreamxClientFactory $streamxClientFactory;
     private StreamxAvailabilityCheckerFactory $streamxAvailabilityCheckerFactory;
     private IndexerDefinition $indexerDefinition;
-    private string $indexerName;
+    private string $indexerId;
 
     public function __construct(
         GeneralConfig $connectorConfig,
@@ -43,7 +43,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
         $this->streamxClientFactory = $streamxClientFactory;
         $this->streamxAvailabilityCheckerFactory = $streamxAvailabilityCheckerFactory;
         $this->indexerDefinition = $indexerDefinition;
-        $this->indexerName = $indexerDefinition->getName();
+        $this->indexerId = $indexerDefinition->getIndexerId();
     }
 
     /**
@@ -80,7 +80,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
 
     private function loadAndIngestEntities(array $ids): void {
         if (!$this->connectorConfig->isEnabled()) {
-            $this->logger->info("StreamX Connector is disabled, skipping indexing $this->indexerName");
+            $this->logger->info("StreamX Connector is disabled, skipping indexing $this->indexerId");
             return;
         }
 
@@ -90,16 +90,16 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
             if ($this->optimizationSettings->shouldPerformStreamxAvailabilityCheck()) {
                 $availabilityChecker = $this->streamxAvailabilityCheckerFactory->create(['storeId' => $storeId]);
                 if (!$availabilityChecker->isStreamxAvailable()) {
-                    $this->logger->info("Cannot reindex $this->indexerName for store $storeId - StreamX is not available");
+                    $this->logger->info("Cannot reindex $this->indexerId for store $storeId - StreamX is not available");
                     continue;
                 }
             }
 
-            $this->logger->info("Start indexing $this->indexerName for store $storeId");
+            $this->logger->info("Start indexing $this->indexerId for store $storeId");
             $entities = $this->entityDataLoader->loadData($storeId, $ids);
             $client = $this->streamxClientFactory->create(['store' => $store]);
             $this->ingestEntities($entities, $storeId, $client);
-            $this->logger->info("Finished indexing $this->indexerName for store $storeId");
+            $this->logger->info("Finished indexing $this->indexerId for store $storeId");
         }
     }
 
@@ -124,11 +124,11 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
 
         if (!empty($entitiesToPublish)) {
             $this->addData($entitiesToPublish, $storeId);
-            $client->publish(array_values($entitiesToPublish), $this->indexerDefinition->getName());
+            $client->publish(array_values($entitiesToPublish), $this->indexerDefinition->getIndexerId());
         }
 
         if (!empty($idsToUnpublish)) {
-            $client->unpublish($idsToUnpublish, $this->indexerDefinition->getName());
+            $client->unpublish($idsToUnpublish, $this->indexerDefinition->getIndexerId());
         }
     }
 
