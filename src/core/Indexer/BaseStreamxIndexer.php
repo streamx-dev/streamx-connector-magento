@@ -2,19 +2,23 @@
 
 namespace StreamX\ConnectorCore\Indexer;
 
+use Exception;
 use Magento\Framework\Indexer\SaveHandler\Batch;
 use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCore\Api\BasicDataLoader;
+use StreamX\ConnectorCore\Api\DataProviderInterface;
 use StreamX\ConnectorCore\Client\StreamxAvailabilityCheckerFactory;
 use StreamX\ConnectorCore\Client\StreamxClient;
 use StreamX\ConnectorCore\Client\StreamxClientFactory;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
 use StreamX\ConnectorCore\Index\IndexerDefinition;
 use StreamX\ConnectorCore\System\GeneralConfig;
+use StreamX\ConnectorCore\Traits\ExceptionLogger;
 use Traversable;
 
-abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionInterface, \Magento\Framework\Mview\ActionInterface
-{
+abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionInterface, \Magento\Framework\Mview\ActionInterface {
+    use ExceptionLogger;
+
     private GeneralConfig $connectorConfig;
     private IndexableStoresProvider $indexableStoresProvider;
     private BasicDataLoader $entityDataLoader;
@@ -22,7 +26,10 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
     private OptimizationSettings $optimizationSettings;
     private StreamxClientFactory $streamxClientFactory;
     private StreamxAvailabilityCheckerFactory $streamxAvailabilityCheckerFactory;
-    private IndexerDefinition $indexerDefinition;
+    /**
+     * @var DataProviderInterface[]
+     */
+    private array $dataProviders;
     private string $indexerId;
 
     public function __construct(
@@ -42,39 +49,35 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
         $this->optimizationSettings = $optimizationSettings;
         $this->streamxClientFactory = $streamxClientFactory;
         $this->streamxAvailabilityCheckerFactory = $streamxAvailabilityCheckerFactory;
-        $this->indexerDefinition = $indexerDefinition;
+        $this->dataProviders = $indexerDefinition->getDataProviders();
         $this->indexerId = $indexerDefinition->getIndexerId();
     }
 
     /**
      * @inheritdoc
      */
-    public function executeRow($id)
-    {
+    public function executeRow($id) {
         $this->loadAndIngestEntities([$id]);
     }
 
     /**
      * @inheritdoc
      */
-    public function execute($ids)
-    {
+    public function execute($ids) {
         $this->loadAndIngestEntities($ids);
     }
 
     /**
      * @inheritdoc
      */
-    public function executeList(array $ids)
-    {
+    public function executeList(array $ids) {
         $this->loadAndIngestEntities($ids);
     }
 
     /**
      * @inheritdoc
      */
-    public function executeFull()
-    {
+    public function executeFull() {
         $this->loadAndIngestEntities([]);
     }
 
@@ -123,18 +126,32 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
         }
 
         if (!empty($entitiesToPublish)) {
-            $this->addData($entitiesToPublish, $storeId);
-            $client->publish(array_values($entitiesToPublish), $this->indexerDefinition->getIndexerId());
+            $this->addDataAndPublish($entitiesToPublish, $storeId, $client);
         }
 
         if (!empty($idsToUnpublish)) {
-            $client->unpublish($idsToUnpublish, $this->indexerDefinition->getIndexerId());
+            $this->unpublish($idsToUnpublish, $client);
         }
     }
 
-    private function addData(array &$entities, int $storeId): void {
-        foreach ($this->indexerDefinition->getDataProviders() as $dataProvider) {
-            $dataProvider->addData($entities, $storeId);
+    private function addDataAndPublish(array $entities, int $storeId, StreamxClient $client): void {
+        try {
+            foreach ($this->dataProviders as $dataProvider) {
+                $dataProvider->addData($entities, $storeId);
+            }
+        } catch (Exception $e) {
+            $entityIds = array_column($entities, 'id');
+            $this->logExceptionAsError(
+                'Error while adding data to entities, cannot publish. Keys of entities in batch: ' . implode(', ', $entityIds),
+                $e
+            );
+            return;
         }
+
+        $client->publish(array_values($entities), $this->indexerId);
+    }
+
+    private function unpublish(array $idsToUnpublish, StreamxClient $client): void {
+        $client->unpublish($idsToUnpublish, $this->indexerId);
     }
 }
