@@ -7,9 +7,10 @@ use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
 
 /**
  * @inheritdoc
- * @UsesProductIndexer
  */
 class ProductUpdateTest extends BaseDirectDbEntityUpdateTest {
+
+    const INDEXER_IDS = [ProductProcessor::INDEXER_ID];
 
     /** @test */
     public function shouldPublishSimpleProductEditedDirectlyInDatabase() {

@@ -2,13 +2,15 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
+use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
 
 /**
  * @inheritdoc
- * @UsesAttributeIndexer
  */
 class AttributeUpdateTest extends BaseDirectDbEntityUpdateTest {
+
+    const INDEXER_IDS = [AttributeProcessor::INDEXER_ID];
 
     /** @test */
     public function shouldPublishProductThatUsesSimpleAttributeEditedDirectlyInDatabase() {

@@ -3,17 +3,18 @@
 namespace StreamX\ConnectorCatalog\test\integration;
 
 use Magento\ImportExport\Model\Import;
-use StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests\BaseDirectDbEntityUpdateTest;
+use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
+use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 use StreamX\ConnectorCatalog\test\integration\utils\FileUtils;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 
 /**
  * @inheritdoc
- * @UsesCategoryIndexer
- * @UsesProductIndexer
  */
 abstract class BaseProductImportTest extends BaseStreamxConnectorPublishTest {
+
+    const INDEXER_IDS = [CategoryProcessor::INDEXER_ID, ProductProcessor::INDEXER_ID];
 
     private const PRODUCT_PRICE = '10.01';
     private const EDITED_PRODUCT_PRICE = '10.02';

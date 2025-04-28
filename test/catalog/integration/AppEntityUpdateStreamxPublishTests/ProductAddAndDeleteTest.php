@@ -2,15 +2,17 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
+use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 
 /**
  * @inheritdoc
- * @UsesProductIndexer
  */
 class ProductAddAndDeleteTest extends BaseAppEntityUpdateTest {
+
+    const INDEXER_IDS = [ProductProcessor::INDEXER_ID];
 
     /** @test */
     public function shouldPublishProductAddedUsingMagentoApplication_AndUnpublishDeletedProduct() {

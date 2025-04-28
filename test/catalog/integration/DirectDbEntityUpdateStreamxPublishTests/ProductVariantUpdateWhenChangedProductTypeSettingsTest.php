@@ -2,14 +2,16 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
+use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationKeyPaths;
 
 /**
  * @inheritdoc
- * @UsesProductIndexer
  */
 class ProductVariantUpdateWhenChangedProductTypeSettingsTest extends BaseDirectDbEntityUpdateTest {
+
+    const INDEXER_IDS = [ProductProcessor::INDEXER_ID];
 
     private const PARENT_PRODUCT_NAME = 'Chaz Kangeroo Hoodie';
     private const CHILD_PRODUCT_NAME = 'Chaz Kangeroo Hoodie-XS-Black';

@@ -2,6 +2,7 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
+use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationKeyPaths;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
@@ -9,9 +10,10 @@ use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 
 /**
  * @inheritdoc
- * @UsesCategoryIndexer
  */
 class CategoryUpdateTest extends BaseAppEntityUpdateTest {
+
+    const INDEXER_IDS = [CategoryProcessor::INDEXER_ID];
 
     /** @test */
     public function shouldPublishCategoryRenamedUsingMagentoApplication() {

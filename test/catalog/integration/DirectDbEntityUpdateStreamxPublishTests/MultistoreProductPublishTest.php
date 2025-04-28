@@ -4,15 +4,17 @@ namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxP
 
 use DateTime;
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
+use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 use Magento\Catalog\Model\Product\Visibility;
 
 /**
  * @inheritdoc
- * @UsesProductIndexer
  */
 class MultistoreProductPublishTest extends BaseDirectDbEntityUpdateTest {
+
+    const INDEXER_IDS = [ProductProcessor::INDEXER_ID];
 
     /** @test */
     public function shouldPublishProductsFromWebsite() {

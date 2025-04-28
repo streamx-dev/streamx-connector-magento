@@ -5,14 +5,16 @@ namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxP
 use DateTime;
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
 use Magento\Catalog\Model\Product\Visibility;
+use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 
 /**
  * @inheritdoc
- * @UsesProductIndexer
  */
 class ProductAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
+
+    const INDEXER_IDS = [ProductProcessor::INDEXER_ID];
 
     private const PRODUCT_PRICE = 350;
     private const INDEXED_PRICE = 370;

@@ -2,13 +2,15 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
+use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\Model\SlugGenerator;
 
 /**
  * @inheritdoc
- * @UsesProductIndexer
  */
 class ProductVariantUpdateTest extends BaseDirectDbEntityUpdateTest {
+
+    const INDEXER_IDS = [ProductProcessor::INDEXER_ID];
 
     private const PARENT_PRODUCT_NAME = 'Chaz Kangeroo Hoodie';
 

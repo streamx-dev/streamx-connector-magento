@@ -2,15 +2,17 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
+use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
+use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 
 /**
  * @inheritdoc
- * @UsesAttributeIndexer
- * @UsesProductIndexer
  */
 class AttributeAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
+
+    const INDEXER_IDS = [AttributeProcessor::INDEXER_ID, ProductProcessor::INDEXER_ID];
 
     /** @test */
     public function shouldPublishProductThatUsesAttributeAddedDirectlyInDatabase() {
