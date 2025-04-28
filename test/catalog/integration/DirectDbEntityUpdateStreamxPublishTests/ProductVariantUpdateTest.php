@@ -57,7 +57,7 @@ class ProductVariantUpdateTest extends BaseDirectDbEntityUpdateTest {
     }
 
     /** @test */
-    public function shouldPublishVisibleVariantAndParentProduct_WhenVariantIsEditedUsingDirectlyInDatabase() {
+    public function shouldPublishVisibleVariantAndParentProduct_WhenVariantIsEditedDirectlyInDatabase() {
         $childProductId = self::$db->getProductId('Chaz Kangeroo Hoodie-XL-Orange');
         try {
             // make the variant visible at store level, so it can be published
@@ -70,7 +70,7 @@ class ProductVariantUpdateTest extends BaseDirectDbEntityUpdateTest {
     }
 
     /** @test */
-    public function shouldNotPublishInvisibleVariant_ButPublishParentProduct_WhenVariantIsEditedUsingDirectlyInDatabase() {
+    public function shouldNotPublishInvisibleVariant_ButPublishParentProduct_WhenVariantIsEditedDirectlyInDatabase() {
         $this->testPublishingWhenVariantIsEdited(false);
     }
 
