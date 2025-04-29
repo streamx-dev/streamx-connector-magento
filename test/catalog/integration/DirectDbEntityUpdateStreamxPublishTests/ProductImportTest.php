@@ -6,9 +6,10 @@ use StreamX\ConnectorCatalog\test\integration\BaseProductImportTest;
 
 /**
  * @inheritdoc
- * @UpdateByScheduleIndexerMode
  */
 class ProductImportTest extends BaseProductImportTest {
+
+    const INDEXER_MODE = parent::UPDATE_BY_SCHEDULE;
 
     protected function importProducts(string $csvContent, string $behavior): void {
         parent::importProducts($csvContent, $behavior);

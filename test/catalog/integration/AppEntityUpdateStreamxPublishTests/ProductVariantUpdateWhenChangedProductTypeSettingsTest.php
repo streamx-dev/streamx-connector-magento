@@ -2,6 +2,7 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
+use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationKeyPaths;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
@@ -9,9 +10,10 @@ use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 
 /**
  * @inheritdoc
- * @UsesProductIndexer
  */
 class ProductVariantUpdateWhenChangedProductTypeSettingsTest extends BaseAppEntityUpdateTest {
+
+    const INDEXER_IDS = [ProductProcessor::INDEXER_ID];
 
     private const PARENT_PRODUCT_NAME = 'Chaz Kangeroo Hoodie';
     private const CHILD_PRODUCT_NAME = 'Chaz Kangeroo Hoodie-XS-Black';

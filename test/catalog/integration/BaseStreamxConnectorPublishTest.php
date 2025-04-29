@@ -2,8 +2,7 @@
 
 namespace StreamX\ConnectorCatalog\test\integration;
 
-use Exception;
-use ReflectionClass;
+use PHPUnit\Framework\TestCase;
 use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
 use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
@@ -19,6 +18,13 @@ use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
  */
 abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
 
+    const UPDATE_ON_SAVE = 'update-on-save';
+    const UPDATE_BY_SCHEDULE = 'update-by-schedule';
+
+    // every test operates on one or more indexes which share the same mode (UPDATE_ON_SAVE or UPDATE_BY_SCHEDULE)
+    const INDEXER_MODE = '';
+    const INDEXER_IDS = [];
+
     public const DEFAULT_STORE_ID = 0;
 
     protected static int $website1Id = 1;
@@ -32,16 +38,8 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
     protected const WEBSITE_2_CODE = 'second_website';
     protected const WEBSITE_2_STORE_CODE = 'store_for_second_website';
 
-    private const UPDATE_ON_SAVE_INDEXER_MODE = 'update-on-save';
-    private const UPDATE_BY_SCHEDULE_INDEXER_MODE = 'update-by-schedule';
-
     protected static bool $areTestsInitialized = false;
-
     private static array $initialIndexerModes;
-
-    // every test operates on one or more indexes which share the same mode
-    private static string $testedIndexerMode;
-    protected static array $testedIndexerIds;
 
     protected static MagentoMySqlQueryExecutor $db;
     private MagentoLogFileUtils $logFileUtils;
@@ -51,7 +49,8 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
             self::initializeTests();
             self::$areTestsInitialized = true;
         }
-        self::loadDesiredIndexerSettings();
+        TestCase::assertNotEmpty(static::INDEXER_MODE);
+        TestCase::assertNotEmpty(static::INDEXER_IDS);
         self::setIndexerModeInMagento();
     }
 
@@ -95,17 +94,17 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
     }
 
     private static function setIndexerModeInMagento(): void {
-        foreach (self::$testedIndexerIds as $testedIndexerId) {
-            if (self::$testedIndexerMode !== self::$initialIndexerModes[$testedIndexerId]) {
-                self::setIndexerMode($testedIndexerId, self::$testedIndexerMode);
+        foreach (static::INDEXER_IDS as $testedIndexerId) {
+            if (static::INDEXER_MODE !== self::$initialIndexerModes[$testedIndexerId]) {
+                self::setIndexerMode($testedIndexerId, static::INDEXER_MODE);
             }
         }
     }
 
     private static function restoreIndexerModeInMagento(): void {
-        foreach (self::$testedIndexerIds as $testedIndexerId) {
+        foreach (static::INDEXER_IDS as $testedIndexerId) {
             $initialIndexerMode = self::$initialIndexerModes[$testedIndexerId];
-            if (self::$testedIndexerMode !== $initialIndexerMode) {
+            if (static::INDEXER_MODE !== $initialIndexerMode) {
                 self::setIndexerMode($testedIndexerId, $initialIndexerMode);
             }
         }
@@ -124,50 +123,8 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
         ]);
     }
 
-    private static function loadDesiredIndexerSettings(): void {
-        $cls = new ReflectionClass(static::class);
-        self::$testedIndexerIds = self::getTestedIndexerIds($cls);
-        self::$testedIndexerMode = self::getTestedIndexerMode($cls);
-    }
-
-    private static function getTestedIndexerIds(ReflectionClass $cls): array {
-        $indexerIds = [];
-        $docComment = $cls->getDocComment();
-        if (str_contains($docComment, '@UsesProductIndexer')) {
-            $indexerIds[] = ProductProcessor::INDEXER_ID;
-        }
-        if (str_contains($docComment, '@UsesCategoryIndexer')) {
-            $indexerIds[] = CategoryProcessor::INDEXER_ID;
-        }
-        if (str_contains($docComment, '@UsesAttributeIndexer')) {
-            $indexerIds[] = AttributeProcessor::INDEXER_ID;
-        }
-        $parentClass = $cls->getParentClass();
-        if ($parentClass) {
-            array_push($indexerIds, ...self::getTestedIndexerIds($parentClass)); // add inherited annotations
-            $indexerIds = array_unique($indexerIds);
-        }
-        return $indexerIds;
-    }
-
-    private static function getTestedIndexerMode(ReflectionClass $cls): string {
-        $docComment = $cls->getDocComment();
-        if (str_contains($docComment, '@UpdateOnSaveIndexerMode')) {
-            return self::UPDATE_ON_SAVE_INDEXER_MODE;
-        }
-        if (str_contains($docComment, '@UpdateByScheduleIndexerMode')) {
-            // Magento creates triggers to save db-level changes only when the scheduler is in the below mode:
-            return self::UPDATE_BY_SCHEDULE_INDEXER_MODE;
-        }
-        $parentClass = $cls->getParentClass();
-        if ($parentClass) {
-            return self::getTestedIndexerMode($parentClass); // search for the annotations in parent class
-        }
-        throw new Exception("Cannot detect desired indexer mode for $cls");
-    }
-
     public static function reindexMview(): void {
-        foreach (self::$testedIndexerIds as $testedIndexerId) {
+        foreach (static::INDEXER_IDS as $testedIndexerId) {
             MagentoEndpointsCaller::call('mview/reindex', [
                 // note: assuming that every indexer in the indexer.xml file shares its ID with its view ID
                 'indexerViewId' => $testedIndexerId

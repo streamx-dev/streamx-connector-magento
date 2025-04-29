@@ -2,11 +2,14 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
+use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
+
 /**
  * @inheritdoc
- * @UsesCategoryIndexer
  */
 class MultistoreCategoryUnpublishTest extends BaseDirectDbEntityUpdateTest {
+
+    const INDEXER_IDS = [CategoryProcessor::INDEXER_ID];
 
     /** @test */
     public function shouldUnpublishCategoryFromStore2_WhenCategorySwitchedToNotActiveInStore2() {

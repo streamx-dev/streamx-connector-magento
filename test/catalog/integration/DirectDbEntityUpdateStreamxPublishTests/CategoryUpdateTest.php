@@ -2,11 +2,14 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
+use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
+
 /**
  * @inheritdoc
- * @UsesCategoryIndexer
  */
 class CategoryUpdateTest extends BaseDirectDbEntityUpdateTest {
+
+    const INDEXER_IDS = [CategoryProcessor::INDEXER_ID];
 
     /** @test */
     public function shouldPublishCategoryEditedDirectlyInDatabase() {

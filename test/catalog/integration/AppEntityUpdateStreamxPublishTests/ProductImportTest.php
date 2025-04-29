@@ -6,8 +6,7 @@ use StreamX\ConnectorCatalog\test\integration\BaseProductImportTest;
 
 /**
  * @inheritdoc
- * @UpdateOnSaveIndexerMode
  */
 class ProductImportTest extends BaseProductImportTest {
-
+    const INDEXER_MODE = parent::UPDATE_ON_SAVE;
 }

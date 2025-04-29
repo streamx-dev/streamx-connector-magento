@@ -6,8 +6,7 @@ use StreamX\ConnectorCatalog\test\integration\BaseStreamxConnectorPublishTest;
 
 /**
  * @inheritdoc
- * @UpdateByScheduleIndexerMode
  */
 abstract class BaseDirectDbEntityUpdateTest extends BaseStreamxConnectorPublishTest {
-
+    const INDEXER_MODE = parent::UPDATE_BY_SCHEDULE;
 }

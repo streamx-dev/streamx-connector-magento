@@ -4,7 +4,6 @@ namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxP
 
 /**
  * @inheritdoc
- * @UsesProductIndexer
  */
 class MultistoreProductVariantIngestionWithFlagSetToSkipInvisibleProductsTest extends BaseMultistoreProductVariantIngestionTest {
 

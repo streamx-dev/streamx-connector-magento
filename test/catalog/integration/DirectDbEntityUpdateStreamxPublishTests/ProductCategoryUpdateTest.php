@@ -2,15 +2,17 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
+use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 
 /**
  * @inheritdoc
- * @UsesProductIndexer
  * note 1: no mview based indexer is implemented directly for Product-Category mappings
  * note 2: it is currently implemented via product indexer's mview
  */
 class ProductCategoryUpdateTest extends BaseDirectDbEntityUpdateTest {
+
+    const INDEXER_IDS = [ProductProcessor::INDEXER_ID];
 
     /** @test */
     public function shouldPublishProductCategoryEditedDirectlyInDatabase() {

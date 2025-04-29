@@ -2,13 +2,15 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
+use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 
 /**
  * @inheritdoc
- * @UsesCategoryIndexer
  */
 class CategoryAddAndDeleteTest extends BaseAppEntityUpdateTest {
+
+    const INDEXER_IDS = [CategoryProcessor::INDEXER_ID];
 
     /** @test */
     public function shouldPublishCategoryAddedUsingMagentoApplication_AndUnpublishDeletedCategory() {

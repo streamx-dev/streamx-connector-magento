@@ -7,7 +7,6 @@ use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationKeyPaths;
 
 /**
  * @inheritdoc
- * @UsesProductIndexer
  */
 class MultistoreProductVariantIngestionWithFlagSetToIncludeInvisibleProductsTest extends BaseMultistoreProductVariantIngestionTest {
 

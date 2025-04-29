@@ -9,9 +9,10 @@ use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 
 /**
  * @inheritdoc
- * @UsesProductIndexer
  */
 class ProductUpdateTest extends BaseAppEntityUpdateTest {
+
+    const INDEXER_IDS = [ProductProcessor::INDEXER_ID];
 
     /** @test */
     public function shouldPublishSimpleProductEditedUsingMagentoApplication() {

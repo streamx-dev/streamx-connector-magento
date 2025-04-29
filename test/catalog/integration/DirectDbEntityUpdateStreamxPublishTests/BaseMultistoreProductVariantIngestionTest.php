@@ -12,6 +12,8 @@ use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
  */
 abstract class BaseMultistoreProductVariantIngestionTest extends BaseDirectDbEntityUpdateTest {
 
+    const INDEXER_IDS = [ProductProcessor::INDEXER_ID];
+
     private const PARENT_ID = 62;
     private const VARIANT_1_ID = 60;
     private const VARIANT_2_ID = 61;
