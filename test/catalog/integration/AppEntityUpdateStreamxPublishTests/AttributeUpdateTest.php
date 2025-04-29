@@ -59,6 +59,33 @@ class AttributeUpdateTest extends BaseAppEntityUpdateTest {
         }
     }
 
+    /** @test */
+    public function shouldNotPublishProduct_WhenItsNotIndexedAttribute_WasEditedUsingMagentoApplication(): void {
+        // given
+        $attributeCode = 'tax_class_id';
+        $attributeId = self::$db->getProductAttributeId($attributeCode);
+        $oldDisplayName = self::$db->getAttributeDisplayName($attributeId);
+        $newDisplayName = "Name modified for testing, was $oldDisplayName";
+
+        // and
+        $productId = self::$db->getProductId('Joust Duffle Bag');
+        $expectedKey = self::productKey($productId);
+        self::removeFromStreamX($expectedKey);
+
+        try {
+            // when
+            ConfigurationEditUtils::unsetIndexedProductAttribute($attributeCode);
+            $this->renameAttribute($attributeId, $newDisplayName);
+
+            // then
+            usleep(200_000);
+            $this->assertDataIsNotPublished($expectedKey);
+        } finally {
+            $this->renameAttribute($attributeId, $oldDisplayName);
+            ConfigurationEditUtils::restoreDefaultIndexedProductAttributes();
+        }
+    }
+
     private function renameAttribute(string $attributeCode, string $newName): void {
         MagentoEndpointsCaller::call('attribute/rename', [
             'attributeCode' => $attributeCode,

@@ -152,13 +152,21 @@ class Product
         $select->where('entity.type_id IN (?)', $types);
     }
 
+    public function loadIdsOfProductsThatUseAttributes(array $attributeIds, int $storeId, array $productAttributeTables = self::PRODUCT_ATTRIBUTE_TABLES): array {
+        return $this->internalLoadIdsOfProductsThatUseAttributes($attributeIds, $storeId, false, $productAttributeTables);
+    }
+
+    public function loadIdsOfChildProductsThatUseAttributes(array $attributeIds, int $storeId, array $productAttributeTables = self::PRODUCT_ATTRIBUTE_TABLES): array {
+        return $this->internalLoadIdsOfProductsThatUseAttributes($attributeIds, $storeId, true, $productAttributeTables);
+    }
+
     /**
      * @param int[] $attributeIds
+     * @param bool $loadVariants if true, returns only IDs of variant (child) products. If false - returns only IDs that are not variant (child) products
      * @return int[]
      * @throws Zend_Db_Select_Exception
      */
-    public function loadIdsOfProductsThatUseAttributes(array $attributeIds, int $storeId): array
-    {
+    private function internalLoadIdsOfProductsThatUseAttributes(array $attributeIds, int $storeId, bool $loadVariants): array {
         if (empty($attributeIds)) {
             return [];
         }
@@ -183,6 +191,12 @@ class Product
             ->from(['entity' => $this->productMetaData->getEntityTable()], ['entity_id'])
             ->distinct()
             ->where("entity.$linkField IN(?)", new Zend_Db_Expr($selectProductIdsUnionQuery))
+            // filter by is product a variant or not:
+            ->joinLeft(['relation' => 'catalog_product_relation'], 'relation.child_id = entity.entity_id', [])
+            ->joinLeft(['parent' => 'catalog_product_entity'], 'relation.parent_id = parent.entity_id', ['parent.type_id'])
+            ->where($loadVariants
+                ? "parent.type_id = 'configurable'"
+                : "parent.type_id is null OR parent.type_id <> 'configurable'")
             ->order('entity_id');
 
         $this->eligibleProductSelectModifier->modify($selectProductEntityIds, $storeId, true);

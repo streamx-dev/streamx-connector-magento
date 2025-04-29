@@ -15,7 +15,16 @@ class AttributeAddAndDeleteTest extends BaseAppEntityUpdateTest {
     const INDEXER_IDS = [ProductIndexer::INDEXER_ID];
 
     /** @test */
-    public function shouldPublishProductThatUsesAttributeAddedUsingMagentoApplication() {
+    public function shouldPublishProductThatUsesAttributeAddedUsingMagentoApplication_AndUnpublishAtAttributeDeletion() {
+        $this->verifyProductIngestionOnAddAndDeleteAttribute(false);
+    }
+
+    /** @test */
+    public function shouldPublishProductThatUsesAttributeAddedUsingMagentoApplication_AndNotUnpublishWhenTheAttributeIsNotIndexed() {
+        $this->verifyProductIngestionOnAddAndDeleteAttribute(true);
+    }
+
+    private function verifyProductIngestionOnAddAndDeleteAttribute(bool $unsetIndexingAttributeBeforeDeletingAttribute) {
         // given
         $attributeCode = 'the_new_attribute';
         $productId = self::$db->getProductId('Sprite Foam Roller');
@@ -25,7 +34,7 @@ class AttributeAddAndDeleteTest extends BaseAppEntityUpdateTest {
         $this->removeFromStreamX($expectedKey);
 
         // when
-        ConfigurationEditUtils::setIndexedProductAttributes('the_new_attribute');
+        ConfigurationEditUtils::addIndexedProductAttributes($attributeCode);
         $attributeId = self::addAttributeAndAssignToProduct($attributeCode, $productId);
 
         try {
@@ -34,10 +43,20 @@ class AttributeAddAndDeleteTest extends BaseAppEntityUpdateTest {
         } finally {
             try {
                 // and when
+                if ($unsetIndexingAttributeBeforeDeletingAttribute) {
+                    ConfigurationEditUtils::unsetIndexedProductAttribute($attributeCode);
+                }
                 self::deleteAttribute($attributeId);
 
                 // then
-                $this->assertExactDataIsPublished($expectedKey, 'original-roller-product.json');
+                if ($unsetIndexingAttributeBeforeDeletingAttribute) {
+                    // expecting the product republish to not be triggered when an unindexed attribute is deleted
+                    usleep(200_000);
+                    $this->assertExactDataIsPublished($expectedKey, 'edited-roller-product.json');
+                } else {
+                    // expecting the product to be republished (and without the delete attribute in payload)
+                    $this->assertExactDataIsPublished($expectedKey, 'original-roller-product.json');
+                }
             } finally {
                 ConfigurationEditUtils::restoreDefaultIndexedProductAttributes();
             }

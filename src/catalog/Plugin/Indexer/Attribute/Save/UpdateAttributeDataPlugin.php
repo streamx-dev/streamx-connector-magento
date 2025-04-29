@@ -3,9 +3,9 @@
 namespace StreamX\ConnectorCatalog\Plugin\Indexer\Attribute\Save;
 
 use Magento\Catalog\Model\ResourceModel\Eav\Attribute;
-use Magento\Store\Model\Store;
 use StreamX\ConnectorCatalog\Indexer\AttributeIndexer;
 use StreamX\ConnectorCatalog\Indexer\ProductIndexer;
+use StreamX\ConnectorCatalog\Model\Attribute\IndexableAttributesFilter;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product as ProductModel;
 use StreamX\ConnectorCore\Indexer\IndexedStoresProvider;
 
@@ -14,6 +14,7 @@ class UpdateAttributeDataPlugin {
     private AttributeIndexer $attributeIndexer;
     private ProductIndexer $productIndexer;
     private ProductModel $productModel;
+    private IndexableAttributesFilter $indexableAttributesFilter;
     private IndexedStoresProvider $indexedStoresProvider;
     private array $productIdsToReindexByAttributeId = [];
 
@@ -21,11 +22,13 @@ class UpdateAttributeDataPlugin {
         AttributeIndexer $attributeIndexer,
         ProductIndexer $productIndexer,
         ProductModel $productModel,
+        IndexableAttributesFilter $indexableAttributesFilter,
         IndexedStoresProvider $indexedStoresProvider
     ) {
         $this->attributeIndexer = $attributeIndexer;
         $this->productIndexer = $productIndexer;
         $this->productModel = $productModel;
+        $this->indexableAttributesFilter = $indexableAttributesFilter;
         $this->indexedStoresProvider = $indexedStoresProvider;
     }
 
@@ -50,14 +53,29 @@ class UpdateAttributeDataPlugin {
         $attributeId = $attribute->getId();
 
         $productIdsToReindex = [];
+        $childProductIdsToReindex = [];
         foreach ($this->indexedStoresProvider->getStores() as $store) {
             $storeId = (int)$store->getId();
-            array_push($productIdsToReindex, ...$this->productModel->loadIdsOfProductsThatUseAttributes([$attributeId], $storeId));
+            $this->addProductsThatUseAttribute($attribute, $storeId, $productIdsToReindex);
+            $this->addChildProductsThatUseAttribute($attribute, $storeId, $childProductIdsToReindex);
         }
-        if (!empty($productIdsToReindex)) {
-            $this->productIdsToReindexByAttributeId[$attributeId] = array_unique($productIdsToReindex);
-        }
+        $this->productIdsToReindexByAttributeId[$attributeId] = array_unique(array_merge($productIdsToReindex, $childProductIdsToReindex));
+
         return $attribute;
+    }
+
+    private function addProductsThatUseAttribute(Attribute $attribute, int $storeId, array &$productIdsToReindex): void {
+        if ($this->indexableAttributesFilter->isIndexableProductAttribute($attribute->getAttributeCode(), $storeId)) {
+            $productsThatUseAttribute = $this->productModel->loadIdsOfProductsThatUseAttributes([$attribute->getId()], $storeId);
+            array_push($productIdsToReindex, ...$productsThatUseAttribute);
+        }
+    }
+
+    private function addChildProductsThatUseAttribute(Attribute $attribute, int $storeId, array &$productIdsToReindex): void {
+        if ($this->indexableAttributesFilter->isIndexableChildProductAttribute($attribute->getAttributeCode(), $storeId)) {
+            $productsThatUseAttribute = $this->productModel->loadIdsOfChildProductsThatUseAttributes([$attribute->getId()], $storeId);
+            array_push($productIdsToReindex, ...$productsThatUseAttribute);
+        }
     }
 
     /**
@@ -71,8 +89,8 @@ class UpdateAttributeDataPlugin {
 
         $attributeId = $attribute->getId();
 
-        $productIdsToReindex = $this->productIdsToReindexByAttributeId[$attributeId] ?? null;
-        if ($productIdsToReindex) {
+        $productIdsToReindex = $this->productIdsToReindexByAttributeId[$attributeId] ?? [];
+        if (!empty($productIdsToReindex)) {
             $this->productIndexer->reindexList($productIdsToReindex, false, false);
             unset($this->productIdsToReindexByAttributeId[$attributeId]);
         }

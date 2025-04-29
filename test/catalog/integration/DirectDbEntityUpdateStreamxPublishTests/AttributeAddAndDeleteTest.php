@@ -15,7 +15,7 @@ class AttributeAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
     const INDEXER_IDS = [AttributeIndexer::INDEXER_ID, ProductIndexer::INDEXER_ID];
 
     /** @test */
-    public function shouldPublishProductThatUsesAttributeAddedDirectlyInDatabase() {
+    public function shouldPublishProductThatUsesAttributeAddedDirectlyInDatabase_AndUnpublishAtAttributeDeletion() {
         // given
         $attributeCode = 'the_new_attribute';
         $attributeLabel = 'The New Attribute';
@@ -26,8 +26,8 @@ class AttributeAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
         $this->removeFromStreamX($expectedKey);
 
         // when
-        ConfigurationEditUtils::setIndexedProductAttributes('the_new_attribute');
-        $attributeId = $this->insertNewAttribute($attributeCode, $attributeLabel, $productId);
+        ConfigurationEditUtils::addIndexedProductAttributes($attributeCode);
+        $attributeId = $this->addAttributeAndAssignToProduct($attributeCode, $attributeLabel, $productId);
 
         try {
             // and
@@ -50,10 +50,9 @@ class AttributeAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
     }
 
     /**
-     * Inserts new attribute to database along with adding it to the provided product
      * @return int ID of the inserted attribute
      */
-    private function insertNewAttribute(string $attributeCode, string $attributeLabel, EntityIds $productId): int {
+    private function addAttributeAndAssignToProduct(string $attributeCode, string $attributeLabel, EntityIds $productId): int {
         $entityTypeId = self::$db->getProductEntityTypeId();
         $attributeId = self::$db->insert("
             INSERT INTO eav_attribute (entity_type_id, attribute_code, frontend_label, backend_type, frontend_input, is_user_defined) VALUES
