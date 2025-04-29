@@ -10,8 +10,8 @@ use StreamX\ConnectorCatalog\test\integration\BaseProductImportTest;
  */
 class ProductImportTest extends BaseProductImportTest {
 
-    protected function importProduct(string $csvContent, string $behavior): void {
-        parent::importProduct($csvContent, $behavior);
+    protected function importProducts(string $csvContent, string $behavior): void {
+        parent::importProducts($csvContent, $behavior);
         self::reindexMview();
     }
 }

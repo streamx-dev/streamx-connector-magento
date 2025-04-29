@@ -1,59 +1,15 @@
 {
-  "sku": "B072ZLCB3M",
+  "sku": "X072ZLCB3M",
   "id": "12345",
   "lang": "en",
   "attributes": [
-    {
-      "name": "meta_title",
-      "label": "Meta Title",
-      "values": [
-        {
-          "value": "Rivet Table",
-          "label": "Rivet Table"
-        }
-      ],
-      "isFacet": false
-    },
-    {
-      "name": "meta_description",
-      "label": "Meta Description",
-      "values": [
-        {
-          "value": "Rivet Table",
-          "label": "Rivet Table"
-        }
-      ],
-      "isFacet": false
-    },
-    {
-      "name": "thumbnail",
-      "label": "Thumbnail",
-      "values": [
-        {
-          "value": "https:\/\/magento.test:444\/media\/catalog\/product\/8\/1\/RANDOM.jpg",
-          "label": "https:\/\/magento.test:444\/media\/catalog\/product\/8\/1\/RANDOM.jpg"
-        }
-      ],
-      "isFacet": false
-    },
     {
       "name": "url_key",
       "label": "URL Key",
       "values": [
         {
-          "value": "rivet-table-b072zlcb3m",
-          "label": "rivet-table-b072zlcb3m"
-        }
-      ],
-      "isFacet": false
-    },
-    {
-      "name": "special_price",
-      "label": "Special Price",
-      "values": [
-        {
-          "value": "8.510000",
-          "label": "8.510000"
+          "value": "rivet-brown-table-x072zlcb3m",
+          "label": "rivet-brown-table-x072zlcb3m"
         }
       ],
       "isFacet": false
@@ -92,14 +48,13 @@
       "isFacet": false
     }
   ],
-  "name": "Rivet Table",
-  "label": "Rivet Table",
-  "description": "Rivet Table",
+  "name": "Rivet Brown Table",
+  "label": "Rivet Brown Table",
   "price": {
     "value": 10.01,
     "discountedValue": 10.01
   },
-  "slug": "rivet-table-12345",
+  "slug": "rivet-brown-table-12345",
   "categories": [
     {
       "id": "10002",
@@ -132,12 +87,7 @@
       }
     }
   ],
-  "gallery": [
-    {
-      "url": "https:\/\/magento.test:444\/media\/catalog\/product\/8\/1\/RANDOM.jpg",
-      "alt": "Rivet Table"
-    }
-  ],
+  "gallery": [],
   "quantity": 100,
   "variants": []
 }
