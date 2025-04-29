@@ -2,20 +2,20 @@
 
 namespace StreamX\ConnectorCatalog\Plugin\Controller\Catalog\Adminhtml\Product\Action;
 
-use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use Magento\Backend\Model\View\Result\Redirect;
 use Magento\Catalog\Controller\Adminhtml\Product\Action\Attribute\Save;
 use Magento\Catalog\Helper\Product\Edit\Action\Attribute;
+use StreamX\ConnectorCatalog\Indexer\ProductIndexer;
 
 class AttributeSavePlugin
 {
     private Attribute $attributeHelper;
-    private ProductProcessor $processor;
+    private ProductIndexer $indexer;
 
-    public function __construct(Attribute $attributeHelper, ProductProcessor $processor)
+    public function __construct(Attribute $attributeHelper, ProductIndexer $indexer)
     {
         $this->attributeHelper = $attributeHelper;
-        $this->processor = $processor;
+        $this->indexer = $indexer;
     }
 
     /**
@@ -25,7 +25,7 @@ class AttributeSavePlugin
     {
         $productIds = $this->attributeHelper->getProductIds();
 
-        $this->processor->reindexList($productIds);
+        $this->indexer->reindexList($productIds);
 
         return $result;
     }

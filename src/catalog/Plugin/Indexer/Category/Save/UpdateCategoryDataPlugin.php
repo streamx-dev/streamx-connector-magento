@@ -2,8 +2,8 @@
 
 namespace StreamX\ConnectorCatalog\Plugin\Indexer\Category\Save;
 
-use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
-use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
+use StreamX\ConnectorCatalog\Indexer\CategoryIndexer;
+use StreamX\ConnectorCatalog\Indexer\ProductIndexer;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category as CategoryResourceModel;
 
 use Magento\Catalog\Model\Category;
@@ -11,17 +11,17 @@ use Magento\Catalog\Model\Category;
 class UpdateCategoryDataPlugin
 {
     private CategoryResourceModel $resourceModel;
-    private CategoryProcessor $categoryProcessor;
-    private ProductProcessor $productProcessor;
+    private CategoryIndexer $categoryIndexer;
+    private ProductIndexer $productIndexer;
 
     public function __construct(
         CategoryResourceModel $resourceModel,
-        CategoryProcessor $categoryProcessor,
-        ProductProcessor $productProcessor
+        CategoryIndexer $categoryIndexer,
+        ProductIndexer $productIndexer
     ) {
         $this->resourceModel = $resourceModel;
-        $this->categoryProcessor = $categoryProcessor;
-        $this->productProcessor = $productProcessor;
+        $this->categoryIndexer = $categoryIndexer;
+        $this->productIndexer = $productIndexer;
     }
 
     /**
@@ -40,17 +40,17 @@ class UpdateCategoryDataPlugin
 
         $categoryIds[] = $categoryId;
 
-        $this->categoryProcessor->reindexList($categoryIds);
+        $this->categoryIndexer->reindexList($categoryIds);
         $this->reindexAffectedProducts($category);
     }
 
     private function reindexAffectedProducts(Category $category): void{
-        if (!$this->productProcessor->isIndexerScheduled()) {
+        if (!$this->productIndexer->isIndexerScheduled()) {
             $isChangedProductList = $category->getData('is_changed_product_list');
 
             if ($isChangedProductList) {
                 // happens when admin edits a category adding or removing items in "Products in Category" list
-                $this->productProcessor->reindexList($category->getAffectedProductIds());
+                $this->productIndexer->reindexList($category->getAffectedProductIds());
             }
         }
     }

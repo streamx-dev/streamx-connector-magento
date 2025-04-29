@@ -5,7 +5,7 @@ namespace StreamX\ConnectorCatalog\Plugin\Indexer\Product\Import;
 use Magento\CatalogImportExport\Model\Import\Product;
 use Magento\Framework\App\ResourceConnection;
 use Psr\Log\LoggerInterface;
-use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
+use StreamX\ConnectorCatalog\Indexer\ProductIndexer;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 
 /**
@@ -19,24 +19,24 @@ use StreamX\ConnectorCatalog\Model\ProductMetaData;
 class ProductImportPlugin {
 
     private LoggerInterface $logger;
-    private ProductProcessor $productProcessor;
+    private ProductIndexer $productIndexer;
     private ResourceConnection $resource;
     private ProductMetaData $productMetaData;
 
     public function __construct(
         LoggerInterface    $logger,
-        ProductProcessor   $productProcessor,
+        ProductIndexer     $productIndexer,
         ResourceConnection $resource,
         ProductMetaData    $productMetaData
     ) {
         $this->logger = $logger;
-        $this->productProcessor = $productProcessor;
+        $this->productIndexer = $productIndexer;
         $this->resource = $resource;
         $this->productMetaData = $productMetaData;
     }
 
     public function afterImportData(Product $subject, bool $result): bool {
-        if ($this->productProcessor->isIndexerScheduled()) {
+        if ($this->productIndexer->isIndexerScheduled()) {
             // do nothing if the indexer is currently in Update By Schedule mode - mView should collect the product IDs into streamx_product_indexer_cl table
             return $result;
         }
@@ -62,7 +62,7 @@ class ProductImportPlugin {
         }
 
         $this->logger->info('Reindexing imported products, IDs: ' . json_encode($productIds));
-        $this->productProcessor->reindexList($productIds);
+        $this->productIndexer->reindexList($productIds);
 
         return $result;
     }

@@ -2,7 +2,7 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests;
 
-use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
+use StreamX\ConnectorCatalog\Indexer\CategoryIndexer;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 
 /**
@@ -10,7 +10,7 @@ use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
  */
 class CategoryAddAndDeleteTest extends BaseDirectDbEntityUpdateTest {
 
-    const INDEXER_IDS = [CategoryProcessor::INDEXER_ID];
+    const INDEXER_IDS = [CategoryIndexer::INDEXER_ID];
 
     /** @test */
     public function shouldPublishCategoryAddedDirectlyInDatabase_AndUnpublishDeletedCategory() {

@@ -16,9 +16,9 @@ The below instructions are for troubleshooting the products indexer.
     private function updateViewManually(ViewInterface $mView, string $indexerViewId): void {
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $indexers = [
-            AttributeProcessor::INDEXER_ID => $objectManager->get(\StreamX\ConnectorCatalog\Model\Indexer\Attribute::class),
-            CategoryProcessor::INDEXER_ID => $objectManager->get(\StreamX\ConnectorCatalog\Model\Indexer\Category::class),
-            ProductProcessor::INDEXER_ID => $objectManager->get(\StreamX\ConnectorCatalog\Model\Indexer\Product::class)
+            AttributeIndexer::INDEXER_ID => $objectManager->get(\StreamX\ConnectorCatalog\Model\Indexer\Attribute::class),
+            CategoryIndexer::INDEXER_ID => $objectManager->get(\StreamX\ConnectorCatalog\Model\Indexer\Category::class),
+            ProductIndexer::INDEXER_ID => $objectManager->get(\StreamX\ConnectorCatalog\Model\Indexer\Product::class)
         ];
         $indexer = $indexers[$indexerViewId];
 
