@@ -22,7 +22,7 @@
               "name": "Jackets",
               "url_key": "jackets-men",
               "subcategories": [],
-              "slug": "jackets-14",
+              "slug": "jackets-men-14",
               "label": "Jackets"
             },
             {
@@ -32,18 +32,18 @@
               "name": "Hoodies & Sweatshirts",
               "url_key": "hoodies-and-sweatshirts-men",
               "subcategories": [],
-              "slug": "hoodies-and-sweatshirts-15",
+              "slug": "hoodies-and-sweatshirts-men-15",
               "label": "Hoodies & Sweatshirts"
             },
             {
               "parent_id": "12",
               "path": "1\/2\/11\/12\/16",
               "id": 16,
-              "name": "The Tees",
+              "name": "Tees",
               "url_key": "tees-men",
               "subcategories": [],
-              "slug": "the-tees-16",
-              "label": "The Tees"
+              "slug": "tees-men-16",
+              "label": "Tees"
             },
             {
               "parent_id": "12",
@@ -52,11 +52,11 @@
               "name": "Tanks",
               "url_key": "tanks-men",
               "subcategories": [],
-              "slug": "tanks-17",
+              "slug": "tanks-men-17",
               "label": "Tanks"
             }
           ],
-          "slug": "tops-12",
+          "slug": "tops-men-12",
           "label": "Tops"
         },
         {
@@ -73,7 +73,7 @@
               "name": "Pants",
               "url_key": "pants-men",
               "subcategories": [],
-              "slug": "pants-18",
+              "slug": "pants-men-18",
               "label": "Pants"
             },
             {
@@ -83,11 +83,11 @@
               "name": "Shorts",
               "url_key": "shorts-men",
               "subcategories": [],
-              "slug": "shorts-19",
+              "slug": "shorts-men-19",
               "label": "Shorts"
             }
           ],
-          "slug": "bottoms-13",
+          "slug": "bottoms-men-13",
           "label": "Bottoms"
         }
       ],
@@ -112,7 +112,7 @@
               "name": "Jackets",
               "url_key": "jackets-women",
               "subcategories": [],
-              "slug": "jackets-23",
+              "slug": "jackets-women-23",
               "label": "Jackets"
             },
             {
@@ -122,7 +122,7 @@
               "name": "Hoodies & Sweatshirts",
               "url_key": "hoodies-and-sweatshirts-women",
               "subcategories": [],
-              "slug": "hoodies-and-sweatshirts-24",
+              "slug": "hoodies-and-sweatshirts-women-24",
               "label": "Hoodies & Sweatshirts"
             },
             {
@@ -132,7 +132,7 @@
               "name": "Tees",
               "url_key": "tees-women",
               "subcategories": [],
-              "slug": "tees-25",
+              "slug": "tees-women-25",
               "label": "Tees"
             },
             {
@@ -142,11 +142,11 @@
               "name": "Bras & Tanks",
               "url_key": "tanks-women",
               "subcategories": [],
-              "slug": "bras-and-tanks-26",
+              "slug": "tanks-women-26",
               "label": "Bras & Tanks"
             }
           ],
-          "slug": "tops-21",
+          "slug": "tops-women-21",
           "label": "Tops"
         },
         {
@@ -163,7 +163,7 @@
               "name": "Pants",
               "url_key": "pants-women",
               "subcategories": [],
-              "slug": "pants-27",
+              "slug": "pants-women-27",
               "label": "Pants"
             },
             {
@@ -173,11 +173,11 @@
               "name": "Shorts",
               "url_key": "shorts-women",
               "subcategories": [],
-              "slug": "shorts-28",
+              "slug": "shorts-women-28",
               "label": "Shorts"
             }
           ],
-          "slug": "bottoms-22",
+          "slug": "bottoms-women-22",
           "label": "Bottoms"
         }
       ],
@@ -233,7 +233,7 @@
       "id": "38",
       "name": "What's New",
       "subcategories": [],
-      "slug": "whats-new-38",
+      "slug": "what-is-new-38",
       "label": "What's New"
     },
     {
@@ -247,7 +247,7 @@
           "name": "Video Download",
           "url_key": "training-video",
           "subcategories": [],
-          "slug": "video-download-10",
+          "slug": "training-video-10",
           "label": "Video Download"
         }
       ],
