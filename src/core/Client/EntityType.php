@@ -3,8 +3,8 @@
 namespace StreamX\ConnectorCore\Client;
 
 use Exception;
-use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
-use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
+use StreamX\ConnectorCatalog\Indexer\CategoryIndexer;
+use StreamX\ConnectorCatalog\Indexer\ProductIndexer;
 
 class EntityType {
 
@@ -40,24 +40,24 @@ class EntityType {
     }
 
     public static function fromEntityAndIndexerId(array $entity, string $indexerId): self {
-        if ($indexerId == ProductProcessor::INDEXER_ID) {
+        if ($indexerId == ProductIndexer::INDEXER_ID) {
             if (!empty($entity['variants'])) {
                 return self::productEntityType('master');
             }
 
             return self::productEntityType('simple');
         }
-        if ($indexerId == CategoryProcessor::INDEXER_ID) {
+        if ($indexerId == CategoryIndexer::INDEXER_ID) {
             return self::categoryEntityType();
         }
         throw new Exception("Received data from unexpected indexer: $indexerId");
     }
 
     public static function fromIndexerId(string $indexerId): self {
-        if ($indexerId == ProductProcessor::INDEXER_ID) {
+        if ($indexerId == ProductIndexer::INDEXER_ID) {
             return self::productEntityType();
         }
-        if ($indexerId == CategoryProcessor::INDEXER_ID) {
+        if ($indexerId == CategoryIndexer::INDEXER_ID) {
             return self::categoryEntityType();
         }
         throw new Exception("Received data from unexpected indexer: $indexerId");

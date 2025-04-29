@@ -2,10 +2,10 @@
 
 namespace StreamX\ConnectorCatalog\Indexer;
 
+use Magento\Framework\Indexer\IndexerRegistry;
 use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCatalog\Model\Attributes\AttributeDefinition;
 use StreamX\ConnectorCatalog\Model\Indexer\DataLoader\AttributeDataLoader;
-use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
 use StreamX\ConnectorCatalog\Model\Indexer\DataLoader\ProductDataLoader;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 use StreamX\ConnectorCore\Api\IndexersConfigInterface;
@@ -19,10 +19,12 @@ use StreamX\ConnectorCore\System\GeneralConfig;
 use Traversable;
 
 // TODO implement checking if only relevant attribute properties have changed to trigger publishing products
-class AttributesIndexer extends BaseStreamxIndexer
-{
+class AttributeIndexer extends BaseStreamxIndexer {
+
+    public const INDEXER_ID = 'streamx_attribute_indexer';
+
     private Product $productModel;
-    private ProductsIndexer $productsIndexer;
+    private ProductIndexer $productsIndexer;
     private ProductDataLoader $productDataLoader;
 
     public function __construct(
@@ -33,9 +35,10 @@ class AttributesIndexer extends BaseStreamxIndexer
         OptimizationSettings $optimizationSettings,
         StreamxClientFactory $streamxClientFactory,
         StreamxAvailabilityCheckerFactory $streamxAvailabilityCheckerFactory,
+        IndexerRegistry $indexerRegistry,
         IndexersConfigInterface $indexersConfig,
         Product $productModel,
-        ProductsIndexer $productsIndexer,
+        ProductIndexer $productsIndexer,
         ProductDataLoader $productDataLoader
     ) {
         parent::__construct(
@@ -46,7 +49,8 @@ class AttributesIndexer extends BaseStreamxIndexer
             $optimizationSettings,
             $streamxClientFactory,
             $streamxAvailabilityCheckerFactory,
-            $indexersConfig->getById(AttributeProcessor::INDEXER_ID)
+            $indexerRegistry,
+            $indexersConfig
         );
         $this->productModel = $productModel;
         $this->productsIndexer = $productsIndexer;

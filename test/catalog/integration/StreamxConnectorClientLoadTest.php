@@ -2,7 +2,7 @@
 
 namespace StreamX\ConnectorCatalog\test\integration;
 
-use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
+use StreamX\ConnectorCatalog\Indexer\ProductIndexer;
 use StreamX\ConnectorCatalog\test\integration\utils\ValidationFileUtils;
 use StreamX\ConnectorCore\Client\StreamxClient;
 
@@ -37,7 +37,7 @@ class StreamxConnectorClientLoadTest extends BaseStreamxTest {
 
         // when: publish batch as the Connector would do
         $client = $this->createClient();
-        $client->publish($entities, ProductProcessor::INDEXER_ID);
+        $client->publish($entities, ProductIndexer::INDEXER_ID);
 
         // then
         for ($i = 0; $i < $entitiesToPublishInBatch; $i++) {
@@ -48,7 +48,7 @@ class StreamxConnectorClientLoadTest extends BaseStreamxTest {
 
         // and when: unpublish
         $client = $this->createClient();
-        $client->unpublish(array_column($entities, 'id'), ProductProcessor::INDEXER_ID);
+        $client->unpublish(array_column($entities, 'id'), ProductIndexer::INDEXER_ID);
 
         // then
         for ($i = 0; $i < $entitiesToPublishInBatch; $i++) {

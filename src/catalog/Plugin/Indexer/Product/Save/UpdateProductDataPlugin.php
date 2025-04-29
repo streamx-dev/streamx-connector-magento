@@ -2,16 +2,16 @@
 
 namespace StreamX\ConnectorCatalog\Plugin\Indexer\Product\Save;
 
-use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use Magento\Catalog\Model\Product;
+use StreamX\ConnectorCatalog\Indexer\ProductIndexer;
 
 class UpdateProductDataPlugin
 {
-    private ProductProcessor $productProcessor;
+    private ProductIndexer $productIndexer;
 
-    public function __construct(ProductProcessor $processor)
+    public function __construct(ProductIndexer $indexer)
     {
-        $this->productProcessor = $processor;
+        $this->productIndexer = $indexer;
     }
 
     /**
@@ -19,6 +19,6 @@ class UpdateProductDataPlugin
      */
     public function afterReindex(Product $product): void
     {
-        $this->productProcessor->reindexRow($product->getId());
+        $this->productIndexer->reindexRow($product->getId());
     }
 }

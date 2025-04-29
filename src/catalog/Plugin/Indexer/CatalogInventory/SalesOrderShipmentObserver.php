@@ -6,16 +6,16 @@ use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Sales\Model\Order\Shipment;
 use Psr\Log\LoggerInterface;
-use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
+use StreamX\ConnectorCatalog\Indexer\ProductIndexer;
 
 class SalesOrderShipmentObserver implements ObserverInterface
 {
     private LoggerInterface $logger;
-    private ProductProcessor $productProcessor;
+    private ProductIndexer $productIndexer;
 
-    public function __construct(LoggerInterface $logger, ProductProcessor $processor) {
+    public function __construct(LoggerInterface $logger, ProductIndexer $indexer) {
         $this->logger = $logger;
-        $this->productProcessor = $processor;
+        $this->productIndexer = $indexer;
     }
 
     public function execute(Observer $observer) {
@@ -30,6 +30,6 @@ class SalesOrderShipmentObserver implements ObserverInterface
         }
 
         $this->logger->info('Reindexing shipped products: ' . json_encode($productIds));
-        $this->productProcessor->reindexList($productIds);
+        $this->productIndexer->reindexList($productIds);
     }
 }

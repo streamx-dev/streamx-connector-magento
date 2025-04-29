@@ -4,27 +4,27 @@ namespace StreamX\ConnectorCatalog\Plugin\Indexer\Attribute\Save;
 
 use Magento\Catalog\Model\ResourceModel\Eav\Attribute;
 use Magento\Store\Model\Store;
-use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
-use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
+use StreamX\ConnectorCatalog\Indexer\AttributeIndexer;
+use StreamX\ConnectorCatalog\Indexer\ProductIndexer;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product as ProductModel;
 use StreamX\ConnectorCore\Indexer\IndexedStoresProvider;
 
 class UpdateAttributeDataPlugin {
 
-    private AttributeProcessor $attributeProcessor;
-    private ProductProcessor $productProcessor;
+    private AttributeIndexer $attributeIndexer;
+    private ProductIndexer $productIndexer;
     private ProductModel $productModel;
     private IndexedStoresProvider $indexedStoresProvider;
     private array $productIdsToReindexByAttributeId = [];
 
     public function __construct(
-        AttributeProcessor $attributeProcessor,
-        ProductProcessor $productProcessor,
+        AttributeIndexer $attributeIndexer,
+        ProductIndexer $productIndexer,
         ProductModel $productModel,
         IndexedStoresProvider $indexedStoresProvider
     ) {
-        $this->attributeProcessor = $attributeProcessor;
-        $this->productProcessor = $productProcessor;
+        $this->attributeIndexer = $attributeIndexer;
+        $this->productIndexer = $productIndexer;
         $this->productModel = $productModel;
         $this->indexedStoresProvider = $indexedStoresProvider;
     }
@@ -33,7 +33,7 @@ class UpdateAttributeDataPlugin {
      * Called after attribute was added or deleted: reindex the attribute
      */
     public function afterAfterSave(Attribute $attribute): Attribute {
-        $this->attributeProcessor->reindexRow($attribute->getId());
+        $this->attributeIndexer->reindexRow($attribute->getId());
         return $attribute;
     }
 
@@ -59,11 +59,11 @@ class UpdateAttributeDataPlugin {
      */
     public function afterAfterDeleteCommit(Attribute $attribute): Attribute {
         $attributeId = $attribute->getId();
-        $this->attributeProcessor->reindexRow($attributeId);
+        $this->attributeIndexer->reindexRow($attributeId);
 
         $productIdsToReindex = $this->productIdsToReindexByAttributeId[$attributeId] ?? null;
         if ($productIdsToReindex) {
-            $this->productProcessor->reindexList($productIdsToReindex);
+            $this->productIndexer->reindexList($productIdsToReindex);
             unset($this->productIdsToReindexByAttributeId[$attributeId]);
         }
 

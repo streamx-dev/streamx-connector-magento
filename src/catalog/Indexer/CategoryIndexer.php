@@ -2,9 +2,9 @@
 
 namespace StreamX\ConnectorCatalog\Indexer;
 
+use Magento\Framework\Indexer\IndexerRegistry;
 use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCatalog\Model\Indexer\DataLoader\CategoryDataLoader;
-use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
 use StreamX\ConnectorCore\Api\IndexersConfigInterface;
 use StreamX\ConnectorCore\Client\StreamxAvailabilityCheckerFactory;
 use StreamX\ConnectorCore\Client\StreamxClientFactory;
@@ -13,8 +13,10 @@ use StreamX\ConnectorCore\Indexer\BaseStreamxIndexer;
 use StreamX\ConnectorCore\Indexer\IndexedStoresProvider;
 use StreamX\ConnectorCore\System\GeneralConfig;
 
-class CategoriesIndexer extends BaseStreamxIndexer
-{
+class CategoryIndexer extends BaseStreamxIndexer {
+
+    public const INDEXER_ID = 'streamx_category_indexer';
+
     public function __construct(
         GeneralConfig $connectorConfig,
         IndexedStoresProvider $indexedStoresProvider,
@@ -23,6 +25,7 @@ class CategoriesIndexer extends BaseStreamxIndexer
         OptimizationSettings $optimizationSettings,
         StreamxClientFactory $streamxClientFactory,
         StreamxAvailabilityCheckerFactory $streamxAvailabilityCheckerFactory,
+        IndexerRegistry $indexerRegistry,
         IndexersConfigInterface $indexersConfig
     ) {
         parent::__construct(
@@ -33,7 +36,8 @@ class CategoriesIndexer extends BaseStreamxIndexer
             $optimizationSettings,
             $streamxClientFactory,
             $streamxAvailabilityCheckerFactory,
-            $indexersConfig->getById(CategoryProcessor::INDEXER_ID)
+            $indexerRegistry,
+            $indexersConfig
         );
     }
 }
