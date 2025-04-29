@@ -137,4 +137,11 @@
     </resources>
   </route>
 
+  <route url="/V1/products/import" method="PUT">
+    <service class="StreamX\ConnectorTestTools\Api\ProductImportControllerInterface" method="importProducts"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+
 </routes>

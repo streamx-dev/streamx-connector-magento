@@ -1,0 +1,93 @@
+{
+  "sku": "Z072ZLCB3M",
+  "id": "12345",
+  "lang": "en",
+  "attributes": [
+    {
+      "name": "url_key",
+      "label": "URL Key",
+      "values": [
+        {
+          "value": "rivet-yellow-table-z072zlcb3m",
+          "label": "rivet-yellow-table-z072zlcb3m"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "status",
+      "label": "Enable Product",
+      "values": [
+        {
+          "value": "Enabled",
+          "label": "Enabled"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "visibility",
+      "label": "Visibility",
+      "values": [
+        {
+          "value": "Catalog, Search",
+          "label": "Catalog, Search"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "tax_class_id",
+      "label": "Tax Class",
+      "values": [
+        {
+          "value": "Taxable Goods",
+          "label": "Taxable Goods"
+        }
+      ],
+      "isFacet": false
+    }
+  ],
+  "name": "Rivet Yellow Table",
+  "label": "Rivet Yellow Table",
+  "price": {
+    "value": 10.03,
+    "discountedValue": 10.03
+  },
+  "slug": "rivet-yellow-table-12345",
+  "categories": [
+    {
+      "id": "10002",
+      "name": "Tables",
+      "slug": "tables-10002",
+      "label": "Tables",
+      "parent": {
+        "id": "10001",
+        "name": "Wooden",
+        "slug": "wooden-10001",
+        "label": "Wooden",
+        "parent": {
+          "id": "10000",
+          "name": "Furniture",
+          "slug": "furniture-10000",
+          "label": "Furniture",
+          "parent": {
+            "id": "2",
+            "name": "Default Category",
+            "slug": "default-category-2",
+            "label": "Default Category",
+            "parent": {
+              "id": "1",
+              "name": "Root Catalog",
+              "slug": "root-catalog-1",
+              "label": "Root Catalog"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "gallery": [],
+  "quantity": 102,
+  "variants": []
+}

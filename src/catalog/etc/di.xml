@@ -22,4 +22,8 @@
     <type name="Magento\Catalog\Controller\Adminhtml\Product\Action\Attribute\Save">
         <plugin name="attribute_save_plugin" type="StreamX\ConnectorCatalog\Plugin\Controller\Catalog\Adminhtml\Product\Action\AttributeSavePlugin"/>
     </type>
+
+    <type name="Magento\CatalogImportExport\Model\Import\Product">
+        <plugin name="category_update_plugin" type="StreamX\ConnectorCatalog\Plugin\Indexer\Product\Import\ProductImportPlugin"/>
+    </type>
 </config>

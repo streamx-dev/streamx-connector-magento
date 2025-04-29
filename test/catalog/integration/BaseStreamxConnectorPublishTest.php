@@ -7,8 +7,6 @@ use ReflectionClass;
 use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
 use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
-use StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests\BaseAppEntityUpdateTest;
-use StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxPublishTests\BaseDirectDbEntityUpdateTest;
 use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageReportGenerator;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
@@ -144,18 +142,37 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
         if (str_contains($docComment, '@UsesAttributeIndexer')) {
             $indexerIds[] = AttributeProcessor::INDEXER_ID;
         }
+        $parentClass = $cls->getParentClass();
+        if ($parentClass) {
+            array_push($indexerIds, ...self::getTestedIndexerIds($parentClass)); // add inherited annotations
+            $indexerIds = array_unique($indexerIds);
+        }
         return $indexerIds;
     }
 
     private static function getTestedIndexerMode(ReflectionClass $cls): string {
-        if ($cls->isSubclassOf(BaseAppEntityUpdateTest::class)) {
+        $docComment = $cls->getDocComment();
+        if (str_contains($docComment, '@UpdateOnSaveIndexerMode')) {
             return self::UPDATE_ON_SAVE_INDEXER_MODE;
         }
-        if ($cls->isSubclassOf(BaseDirectDbEntityUpdateTest::class)) {
+        if (str_contains($docComment, '@UpdateByScheduleIndexerMode')) {
             // Magento creates triggers to save db-level changes only when the scheduler is in the below mode:
             return self::UPDATE_BY_SCHEDULE_INDEXER_MODE;
         }
+        $parentClass = $cls->getParentClass();
+        if ($parentClass) {
+            return self::getTestedIndexerMode($parentClass); // search for the annotations in parent class
+        }
         throw new Exception("Cannot detect desired indexer mode for $cls");
+    }
+
+    public static function reindexMview(): void {
+        foreach (self::$testedIndexerIds as $testedIndexerId) {
+            MagentoEndpointsCaller::call('mview/reindex', [
+                // note: assuming that every indexer in the indexer.xml file shares its ID with its view ID
+                'indexerViewId' => $testedIndexerId
+            ]);
+        }
     }
 
     protected function setUp(): void {

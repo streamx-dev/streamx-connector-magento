@@ -3,4 +3,7 @@
   <event name="sales_order_shipment_save_after">
     <observer name="sales_order_shipment_observer" instance="StreamX\ConnectorCatalog\Plugin\Indexer\CatalogInventory\SalesOrderShipmentObserver" />
   </event>
+  <event name="catalog_product_import_bunch_delete_after">
+    <observer name="product_deleted_via_import_observer" instance="StreamX\ConnectorCatalog\Plugin\Indexer\Product\Import\ProductDeletedViaImportObserver" />
+  </event>
 </config>
