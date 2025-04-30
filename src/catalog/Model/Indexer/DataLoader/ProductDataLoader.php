@@ -3,6 +3,7 @@
 namespace StreamX\ConnectorCatalog\Model\Indexer\DataLoader;
 
 use Exception;
+use Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product as ResourceModel;
@@ -12,9 +13,11 @@ use Traversable;
 class ProductDataLoader implements BasicDataLoader {
 
     private ResourceModel $resourceModel;
+    private Configurable $configurable;
 
-    public function __construct(ResourceModel $resourceModel) {
+    public function __construct(ResourceModel $resourceModel, Configurable $configurable) {
         $this->resourceModel = $resourceModel;
+        $this->configurable = $configurable;
     }
 
     /**
@@ -34,9 +37,13 @@ class ProductDataLoader implements BasicDataLoader {
 
         $productIds = array_map('intval', $productIds);
 
-        $allParentsOfVariants = $this->resourceModel->retrieveParentsForVariants($productIds);
-        $allVariantsOrParents = $this->resourceModel->retrieveVariantsForParents($productIds);
-        $productIds = array_unique(array_merge($productIds, $allParentsOfVariants, $allVariantsOrParents));
+        $allParentsOfVariants = $this->configurable->getParentIdsByChild($productIds);
+        $allVariantsOfParents = $this->configurable->getChildrenIds($productIds);
+        $productIds = array_unique(array_merge(
+            $productIds,
+            array_map('intval', $allParentsOfVariants),
+            array_map('intval', array_merge(...$allVariantsOfParents))
+        ));
 
         // 1. Publish edited and added products
         $publishedProductIds = [];

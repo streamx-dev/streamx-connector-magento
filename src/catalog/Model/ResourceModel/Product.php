@@ -191,66 +191,6 @@ class Product
     }
 
     /**
-     * @param int[] $productIds
-     * @return int[] IDs of parents (configurable products) for all variants found in the input IDs list
-     */
-    public function retrieveParentsForVariants(array $productIds): array
-    {
-        /** Query for community DB version:
-         * SELECT DISTINCT entity.entity_id AS parentId
-         *   FROM catalog_product_entity entity
-         *   JOIN catalog_product_relation relation ON relation.parent_id = entity.entity_id
-         *  WHERE entity.type_id = 'configurable'
-         *    AND relation.child_id IN ($productIds)
-         *  ORDER BY entity.entity_id
-         */
-        $linkField = $this->productMetaData->getLinkField();
-        $productIdField = $this->productMetaData->getIdentifierField();
-        $entityTable = $this->resourceConnection->getTableName($this->productMetaData->getEntityTable());
-        $relationTable = $this->resourceConnection->getTableName('catalog_product_relation');
-        $productIdsString = implode(',', $productIds);
-
-        $select = $this->getConnection()->select()
-            ->from(['entity' => $entityTable], $productIdField)
-            ->join(['relation' => $relationTable], "relation.parent_id = entity.$linkField", [])
-            ->where("entity.type_id = 'configurable'")
-            ->where("relation.child_id IN($productIdsString)");
-
-        return array_map('intval', $this->getConnection()->fetchCol($select));
-    }
-
-    /**
-     * @param int[] $productIds
-     * @return int[] IDs of variants for all configurable products (parents) found in the input IDs list
-     */
-    public function retrieveVariantsForParents(array $productIds): array
-    {
-        /** Query for community DB version:
-         * SELECT DISTINCT entity.entity_id AS childId
-         *   FROM catalog_product_entity entity
-         *   JOIN catalog_product_relation relation ON relation.child_id = entity.entity_id
-         *   JOIN catalog_product_entity parent ON parent.entity_id = relation.parent_id
-         *  WHERE parent.type_id = 'configurable'
-         *    AND relation.parent_id IN ($productIds)
-         *  ORDER BY entity.entity_id
-        */
-        $linkField = $this->productMetaData->getLinkField();
-        $productIdField = $this->productMetaData->getIdentifierField();
-        $entityTable = $this->resourceConnection->getTableName($this->productMetaData->getEntityTable());
-        $relationTable = $this->resourceConnection->getTableName('catalog_product_relation');
-        $productIdsString = implode(',', $productIds);
-
-        $select = $this->getConnection()->select()
-            ->from(['entity' => $entityTable], $productIdField)
-            ->join(['relation' => $relationTable], "relation.child_id = entity.$linkField", [])
-            ->join(['parent' => $entityTable], "parent.$linkField = relation.parent_id", [])
-            ->where("parent.type_id = 'configurable'")
-            ->where("relation.parent_id IN($productIdsString)");
-
-        return array_map('intval', $this->getConnection()->fetchCol($select));
-    }
-
-    /**
      * Get list of attribute ids used to create configurable products
      */
     public function getConfigurableAttributeIds(): array
