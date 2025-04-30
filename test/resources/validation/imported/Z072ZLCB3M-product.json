@@ -51,8 +51,8 @@
   "name": "Rivet Yellow Table",
   "label": "Rivet Yellow Table",
   "price": {
-    "value": 10.03,
-    "discountedValue": 10.03
+    "value": 12,
+    "discountedValue": 12
   },
   "slug": "rivet-yellow-table-12345",
   "categories": [
