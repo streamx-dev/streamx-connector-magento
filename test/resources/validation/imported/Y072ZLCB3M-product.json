@@ -51,8 +51,8 @@
   "name": "Rivet Black Table",
   "label": "Rivet Black Table",
   "price": {
-    "value": 10.02,
-    "discountedValue": 10.02
+    "value": 11,
+    "discountedValue": 11
   },
   "slug": "rivet-black-table-12345",
   "categories": [

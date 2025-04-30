@@ -5,21 +5,20 @@ namespace StreamX\ConnectorTestTools\Impl;
 use Magento\Framework\Webapi\Rest\Response;
 use Magento\Webapi\Controller\Rest;
 use Magento\Framework\App\RequestInterface;
-use Psr\Log\LoggerInterface;
 
-class EndpointCoveredCodeProxyPlugin {
+/**
+ * Starts measuring code coverage before executing endpoint and saves collected coverage to a file when execution ends
+ */
+class EndpointCodeCoveragePlugin {
 
-    private LoggerInterface $logger;
     private bool $isCoverageMeasurementEnabled;
 
-    public function __construct(LoggerInterface $logger) {
-        $this->logger = $logger;
+    public function __construct() {
         $xdebugMode = getenv('XDEBUG_MODE');
         $this->isCoverageMeasurementEnabled = str_contains($xdebugMode, 'coverage');
     }
 
     public function beforeDispatch(Rest $subject, RequestInterface $request): void {
-        $this->logger->info("Handling REST API {$request->getMethod()} at {$request->getUri()}");
         if ($this->isCoverageMeasurementEnabled) {
             xdebug_start_code_coverage();
         }

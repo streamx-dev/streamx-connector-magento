@@ -1,4 +1,4 @@
 attribute_set_code,categories,name,price,product_type,product_websites,qty,sku,url_key,visibility,website_id
-Default,Default Category/Furniture/Wooden/Tables,Rivet Brown Table,10.01,simple,base,100,X072ZLCB3M,rivet-brown-table-x072zlcb3m,"Catalog, Search",0
-Default,Default Category/Furniture/Wooden/Tables,Rivet Black Table,10.02,simple,base,101,Y072ZLCB3M,rivet-black-table-y072zlcb3m,"Catalog, Search",0
-Default,Default Category/Furniture/Wooden/Tables,Rivet Yellow Table,10.03,simple,base,102,Z072ZLCB3M,rivet-yellow-table-z072zlcb3m,"Catalog, Search",0
+Default,Default Category/Furniture/Wooden/Tables,Rivet Brown Table,10,simple,base,100,X072ZLCB3M,rivet-brown-table-x072zlcb3m,"Catalog, Search",0
+Default,Default Category/Furniture/Wooden/Tables,Rivet Black Table,11,simple,base,101,Y072ZLCB3M,rivet-black-table-y072zlcb3m,"Catalog, Search",0
+Default,Default Category/Furniture/Wooden/Tables,Rivet Yellow Table,12,simple,base,102,Z072ZLCB3M,rivet-yellow-table-z072zlcb3m,"Catalog, Search",0

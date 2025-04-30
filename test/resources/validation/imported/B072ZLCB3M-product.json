@@ -96,8 +96,8 @@
   "label": "Rivet Table",
   "description": "Rivet Table",
   "price": {
-    "value": 10.01,
-    "discountedValue": 10.01
+    "value": 10,
+    "discountedValue": 10
   },
   "slug": "rivet-table-12345",
   "categories": [

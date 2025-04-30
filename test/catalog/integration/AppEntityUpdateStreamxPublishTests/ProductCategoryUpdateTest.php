@@ -40,7 +40,6 @@ class ProductCategoryUpdateTest extends BaseAppEntityUpdateTest {
 
         // then
         try {
-            // TODO: when the test is executed for the first time, the actual Json may be missing the "tax_class_id" attribute
             $this->assertExactDataIsPublished($expectedKey, 'bag-with-edited-category.json');
         } finally {
             self::changeProductCategory($productId, $newCategoryId, $oldCategoryId);

@@ -40,7 +40,7 @@ sed -i '' 's/password123/P@SSw0rd123/g' env/magento.env
 
 ### Download source code and perform pre-installation.
 # Depending on your repo.magento.com permissions provided in auth.json file, available versions for the below command are: community and enterprise
-bin/download community 2.4.7-p3
+bin/download community 2.4.8
 
 ### Install the magento docker machinery
 bin/setup magento.test
@@ -48,6 +48,9 @@ bin/setup magento.test
 ### Apply base urls into magento config database (by default both base urls are https://magento.test/)
 bin/magento setup:store-config:set --base-url=https://magento.test:444/
 bin/magento setup:store-config:set --base-url-secure=https://magento.test:444/
+
+### Increase Admin IU session timeout from 15 minutes to 24 hours, to avoid frequent redirects to login page
+bin/magento config:set admin/security/session_lifetime 86400
 
 ### Install sample data
 bin/magento sampledata:deploy
@@ -85,7 +88,12 @@ bin/magento module:enable --all
 cd ..
 bash scripts/reload-magento-modules.sh
 
-echo "Installation done. Next steps:"
-echo " - turn on your local StreamX instance"
-echo " - execute 'scripts/add-rest-ingestion-to-magento-network.sh'"
-echo " - run all tests to verify installation"
+cat <<EOF
+  Installation done. Additional required manual steps:
+   - start your local StreamX instance (using test/resources/mesh.yaml as minimal mesh setup)
+   - when it's up, execute: bash scripts/add-rest-ingestion-to-magento-network.sh
+   - configure the connector and set up stores by calling: curl -X PUT https://magento.test:444/rest/all/V1/stores/setup
+   - open a new terminal window and execute: cd magento
+   - execute: bin/magento cache:flush
+   - run all tests to verify installation
+EOF

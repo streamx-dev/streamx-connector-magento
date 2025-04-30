@@ -28,8 +28,8 @@ abstract class BaseStreamxTest extends TestCase {
     private const CHANNEL_NAME = "data";
 
     private const STREAMX_DELIVERY_SERVICE_BASE_URL = "http://localhost:8081";
-    private const DATA_PUBLISH_TIMEOUT_SECONDS = 3;
-    private const SLEEP_MICROS_BETWEEN_DATA_PUBLISH_CHECKS = 200_000;
+    private const WAIT_FOR_INGESTED_DATA_TIMEOUT_SECONDS = 3;
+    private const SLEEP_MICROS_BETWEEN_DATA_INGESTION_CHECKS = 200_000;
 
     /**
      * @param array $regexReplacements what to change in the actual StreamX response Json, to match the validation file
@@ -43,14 +43,14 @@ abstract class BaseStreamxTest extends TestCase {
 
         $startTime = time();
         $response = null;
-        while (time() - $startTime < self::DATA_PUBLISH_TIMEOUT_SECONDS) {
+        while (time() - $startTime < self::WAIT_FOR_INGESTED_DATA_TIMEOUT_SECONDS) {
             $response = @file_get_contents($url);
             if ($response !== false) {
                 if ($this->verifySameJsonsSilently($expectedFormattedJson, $response, $regexReplacements)) {
                     return $response;
                 }
             }
-            usleep(self::SLEEP_MICROS_BETWEEN_DATA_PUBLISH_CHECKS);
+            usleep(self::SLEEP_MICROS_BETWEEN_DATA_INGESTION_CHECKS);
         }
 
         if ($response !== false) {
@@ -66,13 +66,13 @@ abstract class BaseStreamxTest extends TestCase {
         $url = self::STREAMX_DELIVERY_SERVICE_BASE_URL . '/' . $key;
 
         $startTime = time();
-        while (time() - $startTime < self::DATA_PUBLISH_TIMEOUT_SECONDS) {
+        while (time() - $startTime < self::WAIT_FOR_INGESTED_DATA_TIMEOUT_SECONDS) {
             $response = @file_get_contents($url);
             if (empty($response)) {
                 $this->assertTrue(true); // needed to work around the "This test did not perform any assertions" warning
                 return;
             }
-            usleep(self::SLEEP_MICROS_BETWEEN_DATA_PUBLISH_CHECKS);
+            usleep(self::SLEEP_MICROS_BETWEEN_DATA_INGESTION_CHECKS);
         }
 
         $this->fail("$url: exists");

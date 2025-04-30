@@ -51,8 +51,8 @@
   "name": "Rivet Brown Table",
   "label": "Rivet Brown Table",
   "price": {
-    "value": 10.01,
-    "discountedValue": 10.01
+    "value": 10,
+    "discountedValue": 10
   },
   "slug": "rivet-brown-table-12345",
   "categories": [

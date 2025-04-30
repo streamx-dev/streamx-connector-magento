@@ -5,7 +5,6 @@ namespace StreamX\ConnectorCatalog\test\integration;
 use Magento\ImportExport\Model\Import;
 use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
-use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 use StreamX\ConnectorCatalog\test\integration\utils\FileUtils;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 
@@ -16,16 +15,16 @@ abstract class BaseProductImportTest extends BaseStreamxConnectorPublishTest {
 
     const INDEXER_IDS = [CategoryProcessor::INDEXER_ID, ProductProcessor::INDEXER_ID];
 
-    private const PRODUCT_PRICE = '10.01';
-    private const EDITED_PRODUCT_PRICE = '10.02';
+    private const PRODUCT_PRICE = '10';
+    private const EDITED_PRODUCT_PRICE = '11';
 
     private const FURNITURE_CATEGORY_JSON_FILE = 'imported/furniture-category.json';
     private const WOODEN_CATEGORY_JSON_FILE = 'imported/wooden-category.json';
     private const TABLES_CATEGORY_JSON_FILE = 'imported/tables-category.json';
 
-    private EntityIds $furnitureCategoryId;
-    private EntityIds $woodenCategoryId;
-    private EntityIds $tablesCategoryId;
+    private int $furnitureCategoryId;
+    private int $woodenCategoryId;
+    private int $tablesCategoryId;
 
     /** @test */
     public function shouldPublishProductAndCategoriesFromImportFile_AndUnpublishDeletedProduct() {
@@ -38,12 +37,12 @@ abstract class BaseProductImportTest extends BaseStreamxConnectorPublishTest {
 
         // then
         // a) First, assert the category tree is created
-        $this->furnitureCategoryId = self::$db->getCategoryId('Furniture');
-        $this->woodenCategoryId = self::$db->getCategoryId('Wooden');
-        $this->tablesCategoryId = self::$db->getCategoryId('Tables');
-        self::assertCategoryIsPublished(self::categoryKey($this->furnitureCategoryId), self::FURNITURE_CATEGORY_JSON_FILE);
-        self::assertCategoryIsPublished(self::categoryKey($this->woodenCategoryId), self::WOODEN_CATEGORY_JSON_FILE);
-        self::assertCategoryIsPublished(self::categoryKey($this->tablesCategoryId), self::TABLES_CATEGORY_JSON_FILE);
+        $this->furnitureCategoryId = self::$db->getCategoryId('Furniture')->getEntityId();
+        $this->woodenCategoryId = self::$db->getCategoryId('Wooden')->getEntityId();
+        $this->tablesCategoryId = self::$db->getCategoryId('Tables')->getEntityId();
+        self::assertCategoryIsPublished($this->furnitureCategoryId, self::FURNITURE_CATEGORY_JSON_FILE);
+        self::assertCategoryIsPublished($this->woodenCategoryId, self::WOODEN_CATEGORY_JSON_FILE);
+        self::assertCategoryIsPublished($this->tablesCategoryId, self::TABLES_CATEGORY_JSON_FILE);
 
         // b) Then, assert the product is created
         $expectedId = self::getMaxProductId();
@@ -83,9 +82,9 @@ abstract class BaseProductImportTest extends BaseStreamxConnectorPublishTest {
 
         // when: admin imports the file to Magento
         $this->importProducts($csvContent, Import::BEHAVIOR_ADD_UPDATE);
-        $this->furnitureCategoryId = self::$db->getCategoryId('Furniture');
-        $this->woodenCategoryId = self::$db->getCategoryId('Wooden');
-        $this->tablesCategoryId = self::$db->getCategoryId('Tables');
+        $this->furnitureCategoryId = self::$db->getCategoryId('Furniture')->getEntityId();
+        $this->woodenCategoryId = self::$db->getCategoryId('Wooden')->getEntityId();
+        $this->tablesCategoryId = self::$db->getCategoryId('Tables')->getEntityId();
 
         // then: assert all products are created
         $expectedId1 = self::getMaxProductId() - 2;
@@ -117,29 +116,48 @@ abstract class BaseProductImportTest extends BaseStreamxConnectorPublishTest {
         ]);
     }
 
-    private function assertCategoryIsPublished(string $key, string $jsonFile): void {
-        self::assertExactDataIsPublished($key, $jsonFile, [
-            $this->furnitureCategoryId->getEntityId() => '10000',
-            $this->woodenCategoryId->getEntityId() => '10001',
-            $this->tablesCategoryId->getEntityId() => '10002'
-        ]);
+    private function assertCategoryIsPublished(int $categoryId, string $jsonFile): void {
+        $key = self::categoryKeyFromEntityId($categoryId);
+        self::assertExactDataIsPublished($key, $jsonFile, $this->getCategoryIdReplacements());
     }
 
     private function assertProductIsPublished(string $key, string $jsonFile, string $expectedPrice = self::PRODUCT_PRICE): void {
-        $expectedId = explode(':', $key)[1];
-        self::assertExactDataIsPublished($key, $jsonFile, [
-            $expectedId => '12345',
-            "/[a-z0-9_]+\\.jpg" => '/RANDOM.jpg',
-            $expectedPrice => self::PRODUCT_PRICE,
-            $this->furnitureCategoryId->getEntityId() => '10000',
-            $this->woodenCategoryId->getEntityId() => '10001',
-            $this->tablesCategoryId->getEntityId() => '10002'
-        ]);
+        $actualId = explode(':', $key)[1];
+        $regexReplacements = $this->getCategoryIdReplacements();
+        self::addIdReplacement($regexReplacements, $actualId, 12345);
+        $regexReplacements["/[a-z0-9_]+\\.jpg"] = '/RANDOM.jpg';
+        $regexReplacements[$expectedPrice] = self::PRODUCT_PRICE;
+        self::assertExactDataIsPublished($key, $jsonFile, $regexReplacements);
     }
 
-    private function deleteCategory(EntityIds $categoryId): void {
+    private function getCategoryIdReplacements(): array {
+        $regexReplacements = [
+            // replace IDs in category paths
+            // TODO: remove those three, paths should not be part of category Json
+            '/' . $this->furnitureCategoryId => '/10000',
+            '/' . $this->woodenCategoryId => '/10001',
+            '/' . $this->tablesCategoryId => '/10002'
+        ];
+
+        // TODO: remove those three, id should always be a string, not an int
+        $regexReplacements['"id": ' . $this->furnitureCategoryId] = '"id": ' . 10000;
+        $regexReplacements['"id": ' . $this->woodenCategoryId] = '"id": ' . 10001;
+        $regexReplacements['"id": ' . $this->tablesCategoryId] = '"id": ' . 10002;
+
+        self::addIdReplacement($regexReplacements, $this->furnitureCategoryId, 10000);
+        self::addIdReplacement($regexReplacements, $this->woodenCategoryId, 10001);
+        self::addIdReplacement($regexReplacements, $this->tablesCategoryId, 10002);
+        return $regexReplacements;
+    }
+
+    private static function addIdReplacement(array &$regexReplacements, int $actualId, int $idInValidationFile): void {
+        $regexReplacements['"' . $actualId . '"'] = '"' . $idInValidationFile . '"'; // whole "id" field
+        $regexReplacements['-' . $actualId . '"'] = '-' . $idInValidationFile . '"'; // end of -id" field in slugs
+    }
+
+    private function deleteCategory(int $categoryId): void {
         MagentoEndpointsCaller::call('category/delete', [
-            'categoryId' => $categoryId->getEntityId()
+            'categoryId' => $categoryId
         ]);
     }
 
