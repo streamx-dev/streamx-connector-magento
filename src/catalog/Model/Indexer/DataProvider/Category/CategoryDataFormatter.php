@@ -54,7 +54,7 @@ class CategoryDataFormatter implements DataProviderInterface
         }
         if (isset($category[self::SUBCATEGORIES])) {
             foreach ($category[self::SUBCATEGORIES] as &$subcategory) {
-                self::removeUnnecessaryFieldsAndSetIdType($subcategory);
+                self::adjustFields($subcategory);
             }
         }
     }
@@ -69,20 +69,19 @@ class CategoryDataFormatter implements DataProviderInterface
     {
         $categoryId = $category[self::ID];
         $childrenData = $this->plotTree($groupedChildren, $categoryId, $storeId);
-
         $category[self::SUBCATEGORIES] = $childrenData;
     }
 
     private function groupChildrenById(array $children): array
     {
-        $sortChildrenById = [];
+        $childrenById = [];
 
         foreach ($children as $cat) {
-            $sortChildrenById[$cat['id']] = $cat;
-            $sortChildrenById[$cat['id']][self::SUBCATEGORIES] = [];
+            $childrenById[$cat['id']] = $cat;
+            $childrenById[$cat['id']][self::SUBCATEGORIES] = [];
         }
 
-        return $sortChildrenById;
+        return $childrenById;
     }
 
     private function plotTree(array $categories, int $rootId, int $storeId): array
@@ -103,7 +102,7 @@ class CategoryDataFormatter implements DataProviderInterface
             }
         }
 
-        return empty($categoryTree) ? [] : $categoryTree;
+        return $categoryTree;
     }
 
     private function prepareCategory(array &$categoryData): void

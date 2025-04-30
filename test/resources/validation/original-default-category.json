@@ -9,48 +9,33 @@
       "name": "Men",
       "subcategories": [
         {
-          "parent_id": "11",
-          "path": "1\/2\/11\/12",
-          "id": 12,
+          "id": "12",
           "name": "Tops",
-          "url_key": "tops-men",
           "subcategories": [
             {
-              "parent_id": "12",
-              "path": "1\/2\/11\/12\/14",
-              "id": 14,
+              "id": "14",
               "name": "Jackets",
-              "url_key": "jackets-men",
               "subcategories": [],
               "slug": "jackets-14",
               "label": "Jackets"
             },
             {
-              "parent_id": "12",
-              "path": "1\/2\/11\/12\/15",
-              "id": 15,
+              "id": "15",
               "name": "Hoodies & Sweatshirts",
-              "url_key": "hoodies-and-sweatshirts-men",
               "subcategories": [],
               "slug": "hoodies-and-sweatshirts-15",
               "label": "Hoodies & Sweatshirts"
             },
             {
-              "parent_id": "12",
-              "path": "1\/2\/11\/12\/16",
-              "id": 16,
+              "id": "16",
               "name": "The Tees",
-              "url_key": "tees-men",
               "subcategories": [],
               "slug": "the-tees-16",
               "label": "The Tees"
             },
             {
-              "parent_id": "12",
-              "path": "1\/2\/11\/12\/17",
-              "id": 17,
+              "id": "17",
               "name": "Tanks",
-              "url_key": "tanks-men",
               "subcategories": [],
               "slug": "tanks-17",
               "label": "Tanks"
@@ -60,28 +45,19 @@
           "label": "Tops"
         },
         {
-          "parent_id": "11",
-          "path": "1\/2\/11\/13",
-          "id": 13,
+          "id": "13",
           "name": "Bottoms",
-          "url_key": "bottoms-men",
           "subcategories": [
             {
-              "parent_id": "13",
-              "path": "1\/2\/11\/13\/18",
-              "id": 18,
+              "id": "18",
               "name": "Pants",
-              "url_key": "pants-men",
               "subcategories": [],
               "slug": "pants-18",
               "label": "Pants"
             },
             {
-              "parent_id": "13",
-              "path": "1\/2\/11\/13\/19",
-              "id": 19,
+              "id": "19",
               "name": "Shorts",
-              "url_key": "shorts-men",
               "subcategories": [],
               "slug": "shorts-19",
               "label": "Shorts"
@@ -99,48 +75,33 @@
       "name": "Women",
       "subcategories": [
         {
-          "parent_id": "20",
-          "path": "1\/2\/20\/21",
-          "id": 21,
+          "id": "21",
           "name": "Tops",
-          "url_key": "tops-women",
           "subcategories": [
             {
-              "parent_id": "21",
-              "path": "1\/2\/20\/21\/23",
-              "id": 23,
+              "id": "23",
               "name": "Jackets",
-              "url_key": "jackets-women",
               "subcategories": [],
               "slug": "jackets-23",
               "label": "Jackets"
             },
             {
-              "parent_id": "21",
-              "path": "1\/2\/20\/21\/24",
-              "id": 24,
+              "id": "24",
               "name": "Hoodies & Sweatshirts",
-              "url_key": "hoodies-and-sweatshirts-women",
               "subcategories": [],
               "slug": "hoodies-and-sweatshirts-24",
               "label": "Hoodies & Sweatshirts"
             },
             {
-              "parent_id": "21",
-              "path": "1\/2\/20\/21\/25",
-              "id": 25,
+              "id": "25",
               "name": "Tees",
-              "url_key": "tees-women",
               "subcategories": [],
               "slug": "tees-25",
               "label": "Tees"
             },
             {
-              "parent_id": "21",
-              "path": "1\/2\/20\/21\/26",
-              "id": 26,
+              "id": "26",
               "name": "Bras & Tanks",
-              "url_key": "tanks-women",
               "subcategories": [],
               "slug": "bras-and-tanks-26",
               "label": "Bras & Tanks"
@@ -150,28 +111,19 @@
           "label": "Tops"
         },
         {
-          "parent_id": "20",
-          "path": "1\/2\/20\/22",
-          "id": 22,
+          "id": "22",
           "name": "Bottoms",
-          "url_key": "bottoms-women",
           "subcategories": [
             {
-              "parent_id": "22",
-              "path": "1\/2\/20\/22\/27",
-              "id": 27,
+              "id": "27",
               "name": "Pants",
-              "url_key": "pants-women",
               "subcategories": [],
               "slug": "pants-27",
               "label": "Pants"
             },
             {
-              "parent_id": "22",
-              "path": "1\/2\/20\/22\/28",
-              "id": 28,
+              "id": "28",
               "name": "Shorts",
-              "url_key": "shorts-women",
               "subcategories": [],
               "slug": "shorts-28",
               "label": "Shorts"
@@ -189,31 +141,22 @@
       "name": "Gear",
       "subcategories": [
         {
-          "parent_id": "3",
-          "path": "1\/2\/3\/4",
-          "id": 4,
+          "id": "4",
           "name": "Bags",
-          "url_key": "bags",
           "subcategories": [],
           "slug": "bags-4",
           "label": "Bags"
         },
         {
-          "parent_id": "3",
-          "path": "1\/2\/3\/5",
-          "id": 5,
+          "id": "5",
           "name": "Fitness Equipment",
-          "url_key": "fitness-equipment",
           "subcategories": [],
           "slug": "fitness-equipment-5",
           "label": "Fitness Equipment"
         },
         {
-          "parent_id": "3",
-          "path": "1\/2\/3\/6",
-          "id": 6,
+          "id": "6",
           "name": "Watches",
-          "url_key": "watches",
           "subcategories": [],
           "slug": "watches-6",
           "label": "Watches"
@@ -241,11 +184,8 @@
       "name": "Training",
       "subcategories": [
         {
-          "parent_id": "9",
-          "path": "1\/2\/9\/10",
-          "id": 10,
+          "id": "10",
           "name": "Video Download",
-          "url_key": "training-video",
           "subcategories": [],
           "slug": "video-download-10",
           "label": "Video Download"
