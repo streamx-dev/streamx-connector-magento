@@ -9,11 +9,8 @@
       "name": "Wooden",
       "subcategories": [
         {
-          "parent_id": "10001",
-          "path": "1\/2\/10000\/10001\/10002",
-          "id": 10002,
+          "id": "10002",
           "name": "Tables",
-          "url_key": "tables",
           "subcategories": [],
           "slug": "tables-10002",
           "label": "Tables"

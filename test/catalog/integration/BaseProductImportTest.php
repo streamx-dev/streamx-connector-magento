@@ -131,19 +131,7 @@ abstract class BaseProductImportTest extends BaseStreamxConnectorPublishTest {
     }
 
     private function getCategoryIdReplacements(): array {
-        $regexReplacements = [
-            // replace IDs in category paths
-            // TODO: remove those three, paths should not be part of category Json
-            '/' . $this->furnitureCategoryId => '/10000',
-            '/' . $this->woodenCategoryId => '/10001',
-            '/' . $this->tablesCategoryId => '/10002'
-        ];
-
-        // TODO: remove those three, id should always be a string, not an int
-        $regexReplacements['"id": ' . $this->furnitureCategoryId] = '"id": ' . 10000;
-        $regexReplacements['"id": ' . $this->woodenCategoryId] = '"id": ' . 10001;
-        $regexReplacements['"id": ' . $this->tablesCategoryId] = '"id": ' . 10002;
-
+        $regexReplacements = [];
         self::addIdReplacement($regexReplacements, $this->furnitureCategoryId, 10000);
         self::addIdReplacement($regexReplacements, $this->woodenCategoryId, 10001);
         self::addIdReplacement($regexReplacements, $this->tablesCategoryId, 10002);
