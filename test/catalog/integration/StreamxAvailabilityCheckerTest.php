@@ -52,7 +52,9 @@ class StreamxAvailabilityCheckerTest extends BaseStreamxTest {
     }
 
     private function createChecker(string $restIngestionUrl): StreamxAvailabilityChecker {
-        return parent::createStreamxAvailabilityChecker(self::STORE_ID, $restIngestionUrl);
+        $loggerMock = $this->createLoggerMock();
+        $clientConfigurationMock = $this->createClientConfigurationMock($restIngestionUrl);
+        return new StreamxAvailabilityChecker($loggerMock, $clientConfigurationMock, self::STORE_ID);
     }
 
     private static function changedRestIngestionUrl(string $urlPartName, $newValue): string {

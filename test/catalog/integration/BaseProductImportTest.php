@@ -2,11 +2,13 @@
 
 namespace StreamX\ConnectorCatalog\test\integration;
 
+use Exception;
 use Magento\ImportExport\Model\Import;
 use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\FileUtils;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
+use StreamX\ConnectorCatalog\test\integration\utils\ValidationFileUtils;
 
 /**
  * @inheritdoc
@@ -17,6 +19,11 @@ abstract class BaseProductImportTest extends BaseStreamxConnectorPublishTest {
 
     private const PRODUCT_PRICE = '10';
     private const EDITED_PRODUCT_PRICE = '11';
+
+    private const B072ZLCB3M_PRODUCT_JSON_FILE = 'imported/B072ZLCB3M-product.json';
+    private const X072ZLCB3M_PRODUCT_JSON_FILE = 'imported/X072ZLCB3M-product.json';
+    private const Y072ZLCB3M_PRODUCT_JSON_FILE = 'imported/Y072ZLCB3M-product.json';
+    private const Z072ZLCB3M_PRODUCT_JSON_FILE = 'imported/Z072ZLCB3M-product.json';
 
     private const FURNITURE_CATEGORY_JSON_FILE = 'imported/furniture-category.json';
     private const WOODEN_CATEGORY_JSON_FILE = 'imported/wooden-category.json';
@@ -30,7 +37,7 @@ abstract class BaseProductImportTest extends BaseStreamxConnectorPublishTest {
     public function shouldPublishProductAndCategoriesFromImportFile_AndUnpublishDeletedProduct() {
         // given
         $csvContent = self::readTestResourceFile('product_import.csv');
-        $validationFile = 'imported/B072ZLCB3M-product.json';
+        $validationFile = self::B072ZLCB3M_PRODUCT_JSON_FILE;
 
         // when 1: admin imports the file to Magento
         $this->importProducts($csvContent, Import::BEHAVIOR_ADD_UPDATE);
@@ -70,9 +77,6 @@ abstract class BaseProductImportTest extends BaseStreamxConnectorPublishTest {
 
         // then
         self::assertDataIsUnpublished($newExpectedKey);
-
-        // cleanup: deleting a product via Admin's Product Import feature never deletes any categories along with deleted products - so do it manually
-        self::deleteCategory($this->furnitureCategoryId); // should delete also the two subcategories
     }
 
     /** @test */
@@ -93,9 +97,9 @@ abstract class BaseProductImportTest extends BaseStreamxConnectorPublishTest {
         $expectedKey1 = self::productKeyFromEntityId($expectedId1);
         $expectedKey2 = self::productKeyFromEntityId($expectedId2);
         $expectedKey3 = self::productKeyFromEntityId($expectedId3);
-        self::assertProductIsPublished($expectedKey1, 'imported/X072ZLCB3M-product.json');
-        self::assertProductIsPublished($expectedKey2, 'imported/Y072ZLCB3M-product.json');
-        self::assertProductIsPublished($expectedKey3, 'imported/Z072ZLCB3M-product.json');
+        self::assertProductIsPublished($expectedKey1, self::X072ZLCB3M_PRODUCT_JSON_FILE);
+        self::assertProductIsPublished($expectedKey2, self::Y072ZLCB3M_PRODUCT_JSON_FILE);
+        self::assertProductIsPublished($expectedKey3, self::Z072ZLCB3M_PRODUCT_JSON_FILE);
 
         // when 2: admin wants to delete the products via the Import feature
         $this->importProducts($csvContent, Import::BEHAVIOR_DELETE);
@@ -104,9 +108,37 @@ abstract class BaseProductImportTest extends BaseStreamxConnectorPublishTest {
         self::assertDataIsUnpublished($expectedKey1);
         self::assertDataIsUnpublished($expectedKey2);
         self::assertDataIsUnpublished($expectedKey3);
+    }
 
-        // cleanup: deleting a product via Admin's Product Import feature never deletes any categories along with deleted products - so do it manually
-        self::deleteCategory($this->furnitureCategoryId); // should delete also the two subcategories
+    protected function tearDown(): void {
+        self::deleteCategories();
+        self::deleteProducts();
+        parent::tearDown();
+    }
+
+    private static function deleteCategories(): void {
+        try {
+            $categoryId = self::$db->getCategoryId('Furniture');
+            MagentoEndpointsCaller::call('category/delete', [
+                'categoryId' => $categoryId->getEntityId() // should delete also nested subcategories
+            ]);
+        } catch (Exception $ignored) {
+            // the test could have failed before creating the category
+        }
+    }
+
+    private static function deleteProducts(): void {
+        foreach ([self::B072ZLCB3M_PRODUCT_JSON_FILE, self::X072ZLCB3M_PRODUCT_JSON_FILE, self::Y072ZLCB3M_PRODUCT_JSON_FILE, self::Z072ZLCB3M_PRODUCT_JSON_FILE] as $productJsonFile) {
+            $sku = json_decode(ValidationFileUtils::readValidationFileContent($productJsonFile), true)['sku'];
+            try {
+                $productId = self::getProductIdBySku($sku);
+                MagentoEndpointsCaller::call('product/delete', [
+                    'productId' => $productId
+                ]);
+            } catch (Exception $ignored) {
+                // the test could have failed before creating the product, or have deleted it on its own
+            }
+        }
     }
 
     protected function importProducts(string $csvContent, string $behavior): void {
@@ -143,12 +175,6 @@ abstract class BaseProductImportTest extends BaseStreamxConnectorPublishTest {
         $regexReplacements['-' . $actualId . '"'] = '-' . $idInValidationFile . '"'; // end of -id" field in slugs
     }
 
-    private function deleteCategory(int $categoryId): void {
-        MagentoEndpointsCaller::call('category/delete', [
-            'categoryId' => $categoryId
-        ]);
-    }
-
     private static function readTestResourceFile(string $name): string {
         $folder = FileUtils::findFolder('test/resources');
         $csvFilePath = "$folder/$name";
@@ -157,5 +183,9 @@ abstract class BaseProductImportTest extends BaseStreamxConnectorPublishTest {
 
     private static function getMaxProductId(): int {
         return self::$db->selectSingleValue('SELECT MAX(entity_id) FROM catalog_product_entity');
+    }
+
+    private static function getProductIdBySku(string $sku): int {
+        return self::$db->selectSingleValue("SELECT entity_id FROM catalog_product_entity WHERE sku = '$sku'");
     }
 }

@@ -6,8 +6,10 @@ use Exception;
 use Magento\Store\Api\Data\StoreInterface;
 use Psr\Log\LoggerInterface;
 use Streamx\Clients\Ingestion\Publisher\Message;
-use Streamx\Clients\Ingestion\Publisher\Publisher;
 use StreamX\ConnectorCore\Client\Model\Data;
+use StreamX\ConnectorCore\Client\RabbitMQ\IngestionRequest;
+use StreamX\ConnectorCore\Client\RabbitMQ\RabbitMqConfiguration;
+use StreamX\ConnectorCore\Client\RabbitMQ\RabbitMqIngestionRequestsSender;
 use StreamX\ConnectorCore\Traits\ExceptionLogger;
 
 class StreamxClient {
@@ -16,18 +18,25 @@ class StreamxClient {
     private const STREAMX_TYPE_PROPERTY_NAME = 'sx:type';
 
     private LoggerInterface $logger;
+    private int $storeId;
     private string $storeCode;
-    private Publisher $dataIngestor;
+    private RabbitMqConfiguration $rabbitMqConfiguration;
+    private RabbitMqIngestionRequestsSender $rabbitMqSender;
+    private StreamxIngestor $streamxIngestor;
 
     public function __construct(
         LoggerInterface $logger,
-        StreamxClientConfiguration $configuration,
-        StoreInterface $store
+        StoreInterface $store,
+        RabbitMqConfiguration $rabbitMqConfiguration,
+        RabbitMqIngestionRequestsSender $rabbitMqSender,
+        StreamxIngestor $streamxIngestor
     ) {
         $this->logger = $logger;
+        $this->storeId = (int) $store->getId();
         $this->storeCode = $store->getCode();
-        $storeId = (int) $store->getId();
-        $this->dataIngestor = StreamxPublisherFactory::createStreamxPublisher($configuration, $storeId, true);
+        $this->rabbitMqConfiguration = $rabbitMqConfiguration;
+        $this->rabbitMqSender = $rabbitMqSender;
+        $this->streamxIngestor = $streamxIngestor;
     }
 
     public function publish(array $entities, string $indexerId): void {
@@ -41,7 +50,7 @@ class StreamxClient {
                 ->build();
         }
 
-        $this->ingest($publishMessages, "publishing", $indexerId);
+        $this->ingest($publishMessages, Message::PUBLISH_ACTION, $indexerId);
     }
 
     public function unpublish(array $entityIds, string $indexerId): void {
@@ -54,7 +63,7 @@ class StreamxClient {
                 ->build();
         }
 
-        $this->ingest($unpublishMessages, "unpublishing", $indexerId);
+        $this->ingest($unpublishMessages, Message::UNPUBLISH_ACTION, $indexerId);
     }
 
     private function createStreamxKey(EntityType $entityType, string $entityId): string {
@@ -68,24 +77,21 @@ class StreamxClient {
     /**
      * @param Message[] $ingestionMessages
      */
-    private function ingest(array $ingestionMessages, string $operationName, string $indexerId): void {
+    private function ingest(array $ingestionMessages, string $action, string $indexerId): void {
         $keys = array_column($ingestionMessages, 'key');
         $messagesCount = count($ingestionMessages);
-        $this->logger->info("Start $operationName $messagesCount entities from $indexerId with keys " . json_encode($keys));
+        $this->logger->info("Start sending $messagesCount $action entities from $indexerId with keys " . json_encode($keys));
 
         try {
-            // TODO make sure this will never block. Best by turning off Pulsar container. Migrate to RabbitMQ to handle ingestion asynchronously (and receive NAK/ACK based retry features)
-            $messageStatuses = $this->dataIngestor->sendMulti($ingestionMessages);
-
-            foreach ($messageStatuses as $messageStatus) {
-                if ($messageStatus->getSuccess() === null) {
-                    $this->logger->error('Ingestion failure: ' . json_encode($messageStatus->getFailure()));
-                }
+            if ($this->rabbitMqConfiguration->isEnabled()) {
+                $this->rabbitMqSender->send(new IngestionRequest($ingestionMessages, $this->storeId));
+            } else {
+                $this->streamxIngestor->send($ingestionMessages, $this->storeId);
             }
         } catch (Exception $e) {
-            $this->logExceptionAsError('Ingestion exception', $e);
+            $this->logExceptionAsError('Message sending exception', $e);
         }
 
-        $this->logger->info("Finished $operationName $messagesCount entities from $indexerId");
+        $this->logger->info("Finished sending $messagesCount $action entities from $indexerId");
     }
 }

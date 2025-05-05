@@ -95,5 +95,6 @@ cat <<EOF
    - configure the connector and set up stores by calling: curl -X PUT https://magento.test:444/rest/all/V1/stores/setup
    - open a new terminal window and execute: cd magento
    - execute: bin/magento cache:flush
+   - execute: bin/magento streamx:consumer:start
    - run all tests to verify installation
 EOF

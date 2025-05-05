@@ -1,7 +1,7 @@
 {
   "name": "streamx/magento-connector",
   "description": "Magento connector for StreamX - a Digital Experience Data Mesh.",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "type": "magento2-component",
   "license": "Apache-2.0",
   "keywords": [
@@ -23,12 +23,15 @@
     "magento/module-backend": ">=100.2.0",
     "magento/module-catalog": ">=102.0.0",
     "magento/magento-composer-installer": "*",
-    "ext-json": "*"
+    "ext-json": "*",
+    "ext-pcntl": "*",
+    "php-amqplib/rabbitmq-bundle": "^2.17"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.5",
     "ext-mysqli": "*",
-    "ext-simplexml": "*"
+    "ext-simplexml": "*",
+    "ext-curl": "*"
   },
   "autoload": {
     "files": [
