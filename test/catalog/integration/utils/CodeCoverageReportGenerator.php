@@ -70,7 +70,7 @@ final class CodeCoverageReportGenerator {
         $filteredCoverageData = [];
         foreach ($coverageData as $filePath => $value) {
             $unescapedFilePath = str_replace('\\/', '/', $filePath);
-            if (str_starts_with($unescapedFilePath, self::STREAMX_CONNECTOR_ROOT_DIR_IN_MAGENTO_SERVER) && !str_contains($unescapedFilePath, 'ConnectorTestTools')) {
+            if (str_starts_with($unescapedFilePath, self::STREAMX_CONNECTOR_ROOT_DIR_IN_MAGENTO_SERVER) && !str_contains($unescapedFilePath, 'ConnectorTestEndpoints')) {
                 $localFilePath = str_replace(
                     self::STREAMX_CONNECTOR_ROOT_DIR_IN_MAGENTO_SERVER,
                     $localConnectorRootDir,
@@ -187,6 +187,6 @@ final class CodeCoverageReportGenerator {
     }
 
     private static function getCoverageFilesDirectory(string $localConnectorRootDir): string {
-        return "$localConnectorRootDir/magento/src/app/code/StreamX/ConnectorTestTools/coverage";
+        return "$localConnectorRootDir/magento/src/app/code/StreamX/ConnectorTestEndpoints/coverage";
     }
 }

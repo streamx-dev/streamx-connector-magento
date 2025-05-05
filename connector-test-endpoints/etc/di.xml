@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <preference
+      for="StreamX\ConnectorTestEndpoints\Api\EntityAddControllerInterface"
+      type="StreamX\ConnectorTestEndpoints\Impl\EntityAddControllerImpl"/>
+
+    <preference
+      for="StreamX\ConnectorTestEndpoints\Api\EntityEditControllerInterface"
+      type="StreamX\ConnectorTestEndpoints\Impl\EntityEditControllerImpl"/>
+
+    <preference
+      for="StreamX\ConnectorTestEndpoints\Api\EntityDeleteControllerInterface"
+      type="StreamX\ConnectorTestEndpoints\Impl\EntityDeleteControllerImpl"/>
+
+    <preference
+      for="StreamX\ConnectorTestEndpoints\Api\MviewReindexerInterface"
+      type="StreamX\ConnectorTestEndpoints\Impl\MviewReindexerImpl"/>
+
+    <preference
+      for="StreamX\ConnectorTestEndpoints\Api\PriceIndexerInterface"
+      type="StreamX\ConnectorTestEndpoints\Impl\PriceIndexerImpl"/>
+
+    <preference
+      for="StreamX\ConnectorTestEndpoints\Api\ConfigurationEditControllerInterface"
+      type="StreamX\ConnectorTestEndpoints\Impl\ConfigurationEditControllerImpl"/>
+
+    <preference
+      for="StreamX\ConnectorTestEndpoints\Api\StoresControllerInterface"
+      type="StreamX\ConnectorTestEndpoints\Impl\StoresControllerImpl"/>
+
+    <preference
+      for="StreamX\ConnectorTestEndpoints\Api\ProductPurchaseControllerInterface"
+      type="StreamX\ConnectorTestEndpoints\Impl\ProductPurchaseControllerImpl"/>
+
+    <preference
+      for="StreamX\ConnectorTestEndpoints\Api\IndexerManagementInterface"
+      type="StreamX\ConnectorTestEndpoints\Impl\IndexerManagementImpl"/>
+
+    <preference
+      for="StreamX\ConnectorTestEndpoints\Api\ProductImportControllerInterface"
+      type="StreamX\ConnectorTestEndpoints\Impl\ProductImportControllerImpl"/>
+
+    <type name="Magento\Webapi\Controller\Rest">
+        <plugin name="codeCoveragePlugin" type="StreamX\ConnectorTestEndpoints\Impl\EndpointCodeCoveragePlugin" />
+        <plugin name="exceptionPlugin" type="StreamX\ConnectorTestEndpoints\Impl\EndpointExceptionPlugin" />
+    </type>
+
+</config>

@@ -2,7 +2,7 @@
 set -e # exit on 1st error
 
 ### PREREQUISITES:
-# - Composer authentication to download Magento images is configured - see README.md
+# - Composer authentication to download Magento images is configured - see ../how-to-setup-local-development-environment.md
 
 ## Remove previous instance, if exists
 if [ -d "magento" ]; then
@@ -55,31 +55,21 @@ bin/magento config:set admin/security/session_lifetime 86400
 ### Install sample data
 bin/magento sampledata:deploy
 
-### Upload StreamX Connector to Magento
-# Note: in future, when the connector is made publicly available - we will be just using `composer require streamx/magento-connector`.
-# For now, manually copy source code of the connector to Magento
+### Upload StreamX Connector and Connector Test Tools to Magento
 cd ..
 bash scripts/copy-connector-to-magento.sh
+bash scripts/copy-connector-test-endpoints-to-magento.sh
 
-# For testing purposes, upload also the StreamX Connector Test Tools to Magento
-bash scripts/copy-connector-test-tools-to-magento.sh
-
-### Install StreamX Connector to Magento
+# Configure Magento to consider the uploaded connector source code as local repositories
 cd magento
+bin/composer config repositories.streamx-connector                 path  app/code/StreamX/Connector
+bin/composer config repositories.streamx-connector-test-endpoints  path  app/code/StreamX/ConnectorTestEndpoints
 
-# Point Magento to search for the connector source code in its directory
-bin/composer config repositories.streamx-connector \
-  path app/code/StreamX/Connector
-
-# For testing purposes, register also the connector test tools module
-bin/composer config repositories.streamx-collector-test-tools \
-  path app/code/StreamX/ConnectorTestTools
-
-# Add the connector to Magento's composer.json file (along with a module that turns off Two Factor Auth for development purposes and extension for debugging or gathering code coverage)
+# Install the connector (along with a module that turns off Two Factor Auth for development purposes and an extension for debugging or gathering code coverage)
 # Note: if the command asks you for a github access token - just press ENTER
 bin/composer require \
   "streamx/magento-connector" \
-  "streamx/magento-connector-test-tools" \
+  "streamx/magento-connector-test-endpoints" \
   "markshust/magento2-module-disabletwofactorauth" \
   "ext-xdebug"
 
