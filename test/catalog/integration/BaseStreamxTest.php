@@ -123,12 +123,6 @@ abstract class BaseStreamxTest extends TestCase {
         return new StreamxClient($loggerMock, $storeMock, $rabbitMqConfigurationMock, $rabbitMqSender, $streamxIngestor);
     }
 
-    protected function createStreamxAvailabilityChecker(int $storeId, string $restIngestionUrl): StreamxAvailabilityChecker {
-        $loggerMock = $this->createLoggerMock();
-        $clientConfigurationMock = $this->createClientConfigurationMock($restIngestionUrl);
-        return new StreamxAvailabilityChecker($loggerMock, $clientConfigurationMock, $storeId);
-    }
-
     protected function createLoggerMock(): LoggerInterface {
         $loggerMock = $this->createMock(LoggerInterface::class);
         $loggerMock->method('error')->will($this->returnCallback(function ($arg) {
@@ -154,7 +148,7 @@ abstract class BaseStreamxTest extends TestCase {
         return $rabbitMqConfigurationMock;
     }
 
-    private function createClientConfigurationMock(string $restIngestionUrl): StreamxClientConfiguration {
+    protected function createClientConfigurationMock(string $restIngestionUrl): StreamxClientConfiguration {
         $clientConfigurationMock = $this->createMock(StreamxClientConfiguration::class);
         $clientConfigurationMock->method('getIngestionBaseUrl')->willReturn($restIngestionUrl);
         $clientConfigurationMock->method('getChannelName')->willReturn(self::CHANNEL_NAME);
