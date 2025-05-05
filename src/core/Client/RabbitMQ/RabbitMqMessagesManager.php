@@ -15,11 +15,12 @@ class RabbitMqMessagesManager {
     }
 
     public static function doWithChannel(RabbitMqConfiguration $rabbitMqConfiguration, callable $function) {
+        $connectionSettings = $rabbitMqConfiguration->getConnectionSettings();
         $connection = new AMQPStreamConnection(
-            $rabbitMqConfiguration->getHost(),
-            $rabbitMqConfiguration->getPort(),
-            $rabbitMqConfiguration->getUser(),
-            $rabbitMqConfiguration->getPassword()
+            $connectionSettings->getHost(),
+            $connectionSettings->getPort(),
+            $connectionSettings->getUser(),
+            $connectionSettings->getPassword()
         );
         $channel = $connection->channel();
         RabbitMqQueuesManager::ensureQueuesCreated($channel);

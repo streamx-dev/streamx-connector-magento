@@ -9,8 +9,8 @@ use Streamx\Clients\Ingestion\Builders\StreamxClientBuilders;
 use StreamX\ConnectorCatalog\test\integration\utils\JsonFormatter;
 use StreamX\ConnectorCatalog\test\integration\utils\ValidationFileUtils;
 use StreamX\ConnectorCore\Client\RabbitMQ\RabbitMqConfiguration;
+use StreamX\ConnectorCore\Client\RabbitMQ\RabbitMqConnectionSettings;
 use StreamX\ConnectorCore\Client\RabbitMQ\RabbitMqIngestionRequestsSender;
-use StreamX\ConnectorCore\Client\StreamxAvailabilityChecker;
 use StreamX\ConnectorCore\Client\StreamxClient;
 use StreamX\ConnectorCore\Client\StreamxClientConfiguration;
 use StreamX\ConnectorCore\Client\StreamxIngestor;
@@ -141,10 +141,12 @@ abstract class BaseStreamxTest extends TestCase {
     protected function createRabbitMqConfigurationMock(): RabbitMqConfiguration {
         $rabbitMqConfigurationMock = $this->createMock(RabbitMqConfiguration::class);
         $rabbitMqConfigurationMock->method('isEnabled')->willReturn(true);
-        $rabbitMqConfigurationMock->method('getHost')->willReturn(self::RABBIT_MQ_HOST);
-        $rabbitMqConfigurationMock->method('getPort')->willReturn(self::RABBIT_MQ_PORT);
-        $rabbitMqConfigurationMock->method('getUser')->willReturn(self::RABBIT_MQ_USER);
-        $rabbitMqConfigurationMock->method('getPassword')->willReturn(self::RABBIT_MQ_PASSWORD);
+        $rabbitMqConfigurationMock->method('getConnectionSettings')->willReturn(new RabbitMqConnectionSettings(
+            self::RABBIT_MQ_HOST,
+            self::RABBIT_MQ_PORT,
+            self::RABBIT_MQ_USER,
+            self::RABBIT_MQ_PASSWORD
+        ));
         return $rabbitMqConfigurationMock;
     }
 

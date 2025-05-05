@@ -4,6 +4,7 @@ namespace StreamX\ConnectorCore\Client\RabbitMQ;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\ResourceConnection;
+use Magento\Framework\DB\Adapter\AdapterInterface;
 use StreamX\ConnectorCore\Api\BaseConfigurationReader;
 
 /**
@@ -21,31 +22,23 @@ class RabbitMqConfiguration extends BaseConfigurationReader {
     }
 
     public function isEnabled(): bool {
-        return (bool) $this->getGlobalConfigValue('enable');
+        $connection = $this->resource->getConnection();
+        return (bool) $this->readConfigValueFromDb('enable', $connection);
     }
 
-    public function getHost(): string {
-        return (string)$this->getGlobalConfigValue('host');
+    public function getConnectionSettings(): RabbitMqConnectionSettings {
+        $connection = $this->resource->getConnection();
+        return new RabbitMqConnectionSettings(
+            (string) $this->readConfigValueFromDb('host', $connection),
+            (int) $this->readConfigValueFromDb('port', $connection),
+            (string) $this->readConfigValueFromDb('user', $connection),
+            (string) $this->readConfigValueFromDb('password', $connection)
+        );
     }
 
-    public function getPort(): int {
-        return (int)$this->getGlobalConfigValue('port');
-    }
-
-    public function getUser(): string {
-        return (string)$this->getGlobalConfigValue('user');
-    }
-
-    public function getPassword(): string {
-        return (string)$this->getGlobalConfigValue('password');
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function getGlobalConfigValue(string $configField) {
+    private function readConfigValueFromDb(string $configField, AdapterInterface $connection) {
         $path = parent::getConfigFieldFullPath($configField);
-        $value = $this->resource->getConnection()->fetchOne('
+        $value = $connection->fetchOne('
             SELECT value
               FROM core_config_data
              WHERE path = ?
