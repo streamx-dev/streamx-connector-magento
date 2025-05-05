@@ -4,8 +4,8 @@ namespace StreamX\ConnectorCatalog\test\integration;
 
 use Exception;
 use Magento\ImportExport\Model\Import;
-use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
-use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
+use StreamX\ConnectorCatalog\Indexer\CategoryIndexer;
+use StreamX\ConnectorCatalog\Indexer\ProductIndexer;
 use StreamX\ConnectorCatalog\test\integration\utils\FileUtils;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 use StreamX\ConnectorCatalog\test\integration\utils\ValidationFileUtils;
@@ -15,7 +15,7 @@ use StreamX\ConnectorCatalog\test\integration\utils\ValidationFileUtils;
  */
 abstract class BaseProductImportTest extends BaseStreamxConnectorPublishTest {
 
-    const INDEXER_IDS = [CategoryProcessor::INDEXER_ID, ProductProcessor::INDEXER_ID];
+    const INDEXER_IDS = [CategoryIndexer::INDEXER_ID, ProductIndexer::INDEXER_ID];
 
     private const PRODUCT_PRICE = '10';
     private const EDITED_PRODUCT_PRICE = '11';

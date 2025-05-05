@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Mview/etc/mview.xsd">
-    <view id="streamx_product_indexer" class="StreamX\ConnectorCatalog\Indexer\ProductsIndexer" group="indexer">
+    <view id="streamx_product_indexer" class="StreamX\ConnectorCatalog\Indexer\ProductIndexer" group="indexer">
         <subscriptions>
             <!-- note: the attribute tables don't contain entity_id columns in enterprise version (there are present in community version), but Magento assures backwards compatibility internally -->
             <table name="catalog_product_entity_datetime" entity_column="entity_id" />
@@ -18,7 +18,7 @@
         </subscriptions>
     </view>
 
-    <view id="streamx_category_indexer" class="StreamX\ConnectorCatalog\Indexer\CategoriesIndexer" group="indexer">
+    <view id="streamx_category_indexer" class="StreamX\ConnectorCatalog\Indexer\CategoryIndexer" group="indexer">
         <subscriptions>
             <table name="catalog_category_entity" entity_column="entity_id" />
             <table name="catalog_category_entity_decimal" entity_column="entity_id" />
@@ -29,7 +29,7 @@
         </subscriptions>
     </view>
 
-    <view id="streamx_attribute_indexer" class="StreamX\ConnectorCatalog\Indexer\AttributesIndexer" group="indexer">
+    <view id="streamx_attribute_indexer" class="StreamX\ConnectorCatalog\Indexer\AttributeIndexer" group="indexer">
         <subscriptions>
             <table name="eav_attribute" entity_column="attribute_id" />
             <table name="catalog_eav_attribute" entity_column="attribute_id" />

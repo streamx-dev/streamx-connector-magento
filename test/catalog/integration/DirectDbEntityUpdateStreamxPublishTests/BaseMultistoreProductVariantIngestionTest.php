@@ -4,7 +4,7 @@ namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxP
 
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
 use Magento\Catalog\Model\Product\Visibility;
-use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
+use StreamX\ConnectorCatalog\Indexer\ProductIndexer;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 
 /**
@@ -12,7 +12,7 @@ use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
  */
 abstract class BaseMultistoreProductVariantIngestionTest extends BaseDirectDbEntityUpdateTest {
 
-    const INDEXER_IDS = [ProductProcessor::INDEXER_ID];
+    const INDEXER_IDS = [ProductIndexer::INDEXER_ID];
 
     private const PARENT_ID = 62;
     private const VARIANT_1_ID = 60;
@@ -86,8 +86,8 @@ abstract class BaseMultistoreProductVariantIngestionTest extends BaseDirectDbEnt
             self::VARIANT_2_ID => $this->readJsonFileToArray(self::VARIANT_2_JSON_FILE)
         ];
 
-        $streamxClientForStore1->publish($publishProductsPayload, ProductProcessor::INDEXER_ID);
-        $streamxClientForStore2->publish($publishProductsPayload, ProductProcessor::INDEXER_ID);
+        $streamxClientForStore1->publish($publishProductsPayload, ProductIndexer::INDEXER_ID);
+        $streamxClientForStore2->publish($publishProductsPayload, ProductIndexer::INDEXER_ID);
 
         // wait until all three products are published from both stores
         $this->assertParentIsPublishedWithAllVariantsInPayload(self::$keyOfParentInStore1);

@@ -8,7 +8,7 @@ use PhpAmqpLib\Message\AMQPMessage;
 use PHPUnit\Framework\AssertionFailedError;
 use RuntimeException;
 use Streamx\Clients\Ingestion\Publisher\Message;
-use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
+use StreamX\ConnectorCatalog\Indexer\ProductIndexer;
 use StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests\BaseAppEntityUpdateTest;
 use StreamX\ConnectorCore\Client\Model\Data;
 use StreamX\ConnectorCore\Client\RabbitMQ\IngestionRequest;
@@ -20,7 +20,7 @@ use StreamX\ConnectorCore\Client\RabbitMQ\RabbitMqQueuesManager;
  */
 class RabbitMqIntegrationTest extends BaseAppEntityUpdateTest {
 
-    const INDEXER_IDS = [ProductProcessor::INDEXER_ID];
+    const INDEXER_IDS = [ProductIndexer::INDEXER_ID];
 
     private string $retryQueue1;
     private string $retryQueue2;

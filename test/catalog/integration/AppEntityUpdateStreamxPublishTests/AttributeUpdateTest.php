@@ -2,7 +2,7 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
-use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
+use StreamX\ConnectorCatalog\Indexer\AttributeIndexer;
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 
@@ -11,7 +11,7 @@ use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
  */
 class AttributeUpdateTest extends BaseAppEntityUpdateTest {
 
-    const INDEXER_IDS = [AttributeProcessor::INDEXER_ID];
+    const INDEXER_IDS = [AttributeIndexer::INDEXER_ID];
 
     /** @test */
     public function shouldPublishProductThatUsesSimpleAttributeEditedUsingMagentoApplication() {

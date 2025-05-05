@@ -3,6 +3,9 @@
 namespace StreamX\ConnectorCatalog\Model\Indexer;
 
 use Exception;
+use StreamX\ConnectorCatalog\Indexer\AttributeIndexer;
+use StreamX\ConnectorCatalog\Indexer\CategoryIndexer;
+use StreamX\ConnectorCatalog\Indexer\ProductIndexer;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Category\CategoryDataFormatter;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\CategoryData;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\ConfigurableData;
@@ -33,7 +36,7 @@ class IndexersConfig implements IndexersConfigInterface {
         CategoryDataFormatter $categoryDataFormatter
     ) {
         $this->productIndexerDefinition = new IndexerDefinition(
-            ProductProcessor::INDEXER_ID,
+            ProductIndexer::INDEXER_ID,
             $langData,
             $productAttributeData,
             $categoryData,
@@ -44,21 +47,21 @@ class IndexersConfig implements IndexersConfigInterface {
             $dataCleaner
         );
         $this->categoryIndexerDefinition = new IndexerDefinition(
-            CategoryProcessor::INDEXER_ID,
+            CategoryIndexer::INDEXER_ID,
             $categoryDataFormatter
         );
         $this->attributeIndexerDefinition = new IndexerDefinition(
-            AttributeProcessor::INDEXER_ID
+            AttributeIndexer::INDEXER_ID
         );
     }
 
     public function getById(string $indexerId): IndexerDefinition {
         switch ($indexerId) {
-            case ProductProcessor::INDEXER_ID:
+            case ProductIndexer::INDEXER_ID:
                 return $this->productIndexerDefinition;
-            case CategoryProcessor::INDEXER_ID:
+            case CategoryIndexer::INDEXER_ID:
                 return $this->categoryIndexerDefinition;
-            case AttributeProcessor::INDEXER_ID:
+            case AttributeIndexer::INDEXER_ID:
                 return $this->attributeIndexerDefinition;
         }
         throw new Exception("Indexer $indexerId not found");

@@ -2,7 +2,7 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
-use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
+use StreamX\ConnectorCatalog\Indexer\ProductIndexer;
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationKeyPaths;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
@@ -13,7 +13,7 @@ use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
  */
 class ProductUpdateTest extends BaseAppEntityUpdateTest {
 
-    const INDEXER_IDS = [ProductProcessor::INDEXER_ID];
+    const INDEXER_IDS = [ProductIndexer::INDEXER_ID];
 
     /** @test */
     public function shouldPublishSimpleProductEditedUsingMagentoApplication() {
@@ -79,7 +79,7 @@ class ProductUpdateTest extends BaseAppEntityUpdateTest {
         // and
         $productToPublish = ['id' => (string) $productId->getEntityId()];
         $streamxClient = parent::createStreamxClient(self::$store1Id, self::STORE_1_CODE);
-        $streamxClient->publish([$productToPublish], ProductProcessor::INDEXER_ID);
+        $streamxClient->publish([$productToPublish], ProductIndexer::INDEXER_ID);
 
         // verify published
         $expectedKey = self::productKey($productId);

@@ -6,9 +6,9 @@ use Exception;
 use Magento\Framework\Indexer\IndexerRegistry;
 use Magento\Framework\Mview\ViewInterface;
 use Psr\Log\LoggerInterface;
-use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
-use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
-use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
+use StreamX\ConnectorCatalog\Indexer\AttributeIndexer;
+use StreamX\ConnectorCatalog\Indexer\CategoryIndexer;
+use StreamX\ConnectorCatalog\Indexer\ProductIndexer;
 
 class StreamxIndexerMviewProcessor {
 
@@ -23,15 +23,15 @@ class StreamxIndexerMviewProcessor {
     }
 
     public function reindexProductMview(): void {
-        $this->reindexMview(ProductProcessor::INDEXER_ID);
+        $this->reindexMview(ProductIndexer::INDEXER_ID);
     }
 
     public function reindexCategoryMview(): void {
-        $this->reindexMview(CategoryProcessor::INDEXER_ID);
+        $this->reindexMview(CategoryIndexer::INDEXER_ID);
     }
 
     public function reindexAttributeMview(): void {
-        $this->reindexMview(AttributeProcessor::INDEXER_ID);
+        $this->reindexMview(AttributeIndexer::INDEXER_ID);
     }
 
     /**
