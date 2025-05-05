@@ -204,7 +204,7 @@ SET GLOBAL general_log = 'OFF';
 
 ## Measuring the Connector's code coverage on a running Magento PHP server
  - in PHP, coverage can be measured for a Http Request (all code executed by the code that handles the request is measured)
- - test REST endpoints from `connector-test-tools` are enriched with measuring coverage measurement (if the env var `XDEBUG_MODE` on magento server is set to `coverage`)
+ - test REST endpoints from `connector-test-endpoints` are enriched with measuring coverage measurement (if the env var `XDEBUG_MODE` on magento server is set to `coverage`)
  - you can set it to `coverage` by executing `scripts/switch-magento-xdebug-to-coverage.sh`
  - coverage data (returned by `xdebug`) is written to a file
  - integration tests then use that file to generate html coverage reports

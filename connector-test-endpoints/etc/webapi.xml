@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+
+  <route url="/V1/product/add" method="PUT">
+    <service class="StreamX\ConnectorTestEndpoints\Api\EntityAddControllerInterface" method="addProduct"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+  <route url="/V1/category/add" method="PUT">
+    <service class="StreamX\ConnectorTestEndpoints\Api\EntityAddControllerInterface" method="addCategory"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+  <route url="/V1/attribute/add-and-assign" method="PUT">
+    <service class="StreamX\ConnectorTestEndpoints\Api\EntityAddControllerInterface" method="addAttributeAndAssignToProduct"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+
+  <route url="/V1/product/rename" method="PUT">
+    <service class="StreamX\ConnectorTestEndpoints\Api\EntityEditControllerInterface" method="renameProduct"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+  <route url="/V1/category/rename" method="PUT">
+    <service class="StreamX\ConnectorTestEndpoints\Api\EntityEditControllerInterface" method="renameCategory"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+  <route url="/V1/attribute/rename" method="PUT">
+    <service class="StreamX\ConnectorTestEndpoints\Api\EntityEditControllerInterface" method="renameAttribute"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+  <route url="/V1/product/category/change" method="PUT">
+    <service class="StreamX\ConnectorTestEndpoints\Api\EntityEditControllerInterface" method="changeProductCategory"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+  <route url="/V1/product/attribute/change" method="PUT">
+    <service class="StreamX\ConnectorTestEndpoints\Api\EntityEditControllerInterface" method="changeProductAttribute"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+  <route url="/V1/category/attribute/change" method="PUT">
+    <service class="StreamX\ConnectorTestEndpoints\Api\EntityEditControllerInterface" method="changeCategoryAttribute"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+  <route url="/V1/category/product/add" method="PUT">
+    <service class="StreamX\ConnectorTestEndpoints\Api\EntityEditControllerInterface" method="addProductToCategory"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+  <route url="/V1/category/product/remove" method="PUT">
+    <service class="StreamX\ConnectorTestEndpoints\Api\EntityEditControllerInterface" method="removeProductFromCategory"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+
+  <route url="/V1/product/delete" method="PUT">
+    <service class="StreamX\ConnectorTestEndpoints\Api\EntityDeleteControllerInterface" method="deleteProduct"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+  <route url="/V1/category/delete" method="PUT">
+    <service class="StreamX\ConnectorTestEndpoints\Api\EntityDeleteControllerInterface" method="deleteCategory"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+  <route url="/V1/attribute/delete" method="PUT">
+    <service class="StreamX\ConnectorTestEndpoints\Api\EntityDeleteControllerInterface" method="deleteAttribute"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+
+  <route url="/V1/product/purchase" method="PUT">
+    <service class="StreamX\ConnectorTestEndpoints\Api\ProductPurchaseControllerInterface" method="purchaseProduct"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+
+  <route url="/V1/mview/reindex" method="PUT">
+    <service class="StreamX\ConnectorTestEndpoints\Api\MviewReindexerInterface" method="reindexMview"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+
+  <route url="/V1/price/reindex" method="PUT">
+    <service class="StreamX\ConnectorTestEndpoints\Api\PriceIndexerInterface" method="reindexPrice"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+
+  <route url="/V1/configuration/edit" method="PUT">
+    <service class="StreamX\ConnectorTestEndpoints\Api\ConfigurationEditControllerInterface" method="setConfigurationValue"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+
+  <route url="/V1/stores/setup" method="PUT">
+    <service class="StreamX\ConnectorTestEndpoints\Api\StoresControllerInterface" method="setUpStoresAndWebsites"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+
+  <route url="/V1/indexer/mode/get" method="PUT">
+    <service class="StreamX\ConnectorTestEndpoints\Api\IndexerManagementInterface" method="getIndexerMode"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+
+  <route url="/V1/indexer/mode/set" method="PUT">
+    <service class="StreamX\ConnectorTestEndpoints\Api\IndexerManagementInterface" method="setIndexerMode"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+
+  <route url="/V1/products/import" method="PUT">
+    <service class="StreamX\ConnectorTestEndpoints\Api\ProductImportControllerInterface" method="importProducts"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+
+</routes>
