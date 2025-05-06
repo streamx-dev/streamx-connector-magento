@@ -14,6 +14,9 @@ class AttributeDataLoader implements BasicDataLoader {
         $this->loadAttributeDefinitions = $loadAttributeDefinitions;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function loadData(int $storeId, array $attributeIds): Traversable {
         $lastAttributeId = 0;
 
