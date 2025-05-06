@@ -79,13 +79,13 @@ class AttributesIndexer extends BaseStreamxIndexer
         $this->logger->info("Detected the following products to re-publish due to attribute definition change: " . json_encode($productIds));
 
         $products = $this->productDataLoader->loadData($storeId, $productIds);
-        $products = $this->removeProductsThatWouldBeUnpublished($products);
+        $products = $this->filterProductsToPublish($products);
         $this->productsIndexer->ingestEntities($products, $storeId, $client);
     }
 
-    private function removeProductsThatWouldBeUnpublished(Traversable $products): Traversable {
+    private function filterProductsToPublish(Traversable $products): Traversable {
         foreach ($products as $id => $product) {
-            if (!empty($product)) {
+            if ($product) {
                 yield $id => $product;
             }
         }
