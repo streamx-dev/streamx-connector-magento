@@ -32,12 +32,10 @@ class LoadOptions
     public function getOptions(string $attributeCode, int $storeId): array
     {
         $attribute = $this->loadAttributes->getAttributeByCode($attributeCode);
-        $attribute->setStoreId($storeId);
-
-        $key = $attribute->getId() . '_' . $attribute->getStoreId();
+        $key = $attribute->getId() . '_' . $storeId;
 
         if (!isset($this->optionsByAttribute[$key])) {
-            $this->optionsByAttribute[$key] = $this->loadOptions($attribute);
+            $this->optionsByAttribute[$key] = $this->loadOptions($attribute, $storeId);
         }
 
         return $this->optionsByAttribute[$key];
@@ -46,20 +44,18 @@ class LoadOptions
     /**
      * @return AttributeOptionDefinition[]
      */
-    private function loadOptions(\Magento\Catalog\Model\ResourceModel\Eav\Attribute $attribute): array
+    private function loadOptions(\Magento\Catalog\Model\ResourceModel\Eav\Attribute $attribute, int $storeId): array
     {
         if ($this->useSourceModel($attribute)) {
             $source = $attribute->getSource();
-            return array_map(function ($option) {
-                return new AttributeOptionDefinition(
-                    (int)$option['value'],
-                    (string)$option['label'],
-                    null
-                );
-            }, $source->getAllOptions());
+            return array_map(fn($option) => new AttributeOptionDefinition(
+                (int)$option['value'],
+                (string)$option['label'],
+                null
+            ), $source->getAllOptions());
         } else {
             $loadSwatches = $this->isVisualSwatch($attribute);
-            $optionCollection = $this->getOptionCollection($attribute, $loadSwatches);
+            $optionCollection = $this->getOptionCollection($attribute, $storeId, $loadSwatches);
             return AttributeOptionDefinitionParser::parseToArray($optionCollection, $loadSwatches);
         }
     }
@@ -75,10 +71,9 @@ class LoadOptions
         return false;
     }
 
-    private function getOptionCollection(Attribute $attribute, bool $loadSwatches): OptionCollection
+    private function getOptionCollection(Attribute $attribute, int $storeId, bool $loadSwatches): OptionCollection
     {
         $attributeId = $attribute->getAttributeId();
-        $storeId = $attribute->getStoreId();
 
         /** @var OptionCollection $options */
         $options = $this->collectionFactory->create();
