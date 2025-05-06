@@ -118,10 +118,10 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
         $entitiesToPublish = [];
         $idsToUnpublish = [];
         foreach ($entities as $id => $entity) {
-            if (empty($entity)) {
-                $idsToUnpublish[] = $id;
-            } else {
+            if ($entity) {
                 $entitiesToPublish[$id] = $entity;
+            } else {
+                $idsToUnpublish[] = $id;
             }
         }
 

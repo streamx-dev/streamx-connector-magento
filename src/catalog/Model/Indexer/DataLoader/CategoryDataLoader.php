@@ -17,6 +17,7 @@ class CategoryDataLoader implements BasicDataLoader {
     }
 
     /**
+     * @inheritdoc
      * @throws Exception
      * @throws NoSuchEntityException
      */
@@ -43,7 +44,7 @@ class CategoryDataLoader implements BasicDataLoader {
         // 2. Unpublish deleted categories
         $idsOfCategoriesToUnpublish = array_diff($categoryIds, $publishedCategoryIds);
         foreach ($idsOfCategoriesToUnpublish as $categoryId) {
-            yield $categoryId => [];
+            yield $categoryId => null;
         }
     }
 
