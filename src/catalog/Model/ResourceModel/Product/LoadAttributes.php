@@ -5,6 +5,7 @@ namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 use Magento\Catalog\Model\ResourceModel\Product\Attribute\Collection;
 use Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory as AttributeCollectionFactory;
 use Magento\Catalog\Model\ResourceModel\Eav\Attribute;
+use Magento\Framework\DataObject;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Serialize\Serializer\Json;
 
@@ -98,7 +99,7 @@ class LoadAttributes
         }
     }
 
-    private function setSwatchInputType(Attribute $attribute): void
+    private function setSwatchInputType(DataObject $attribute): void
     {
         $additionalData = (string)$attribute->getData('additional_data');
 
