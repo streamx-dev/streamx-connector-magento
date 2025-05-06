@@ -6,10 +6,7 @@ use Magento\Store\Api\Data\StoreInterface;
 use StreamX\ConnectorCore\System\GeneralConfig;
 use Magento\Store\Model\StoreManagerInterface;
 
-/**
- * Responsible for getting stores allowed to reindex
- */
-class IndexableStoresProvider
+class IndexedStoresProvider
 {
     private StoreManagerInterface $storeManager;
     private GeneralConfig $generalSettings;
@@ -27,19 +24,19 @@ class IndexableStoresProvider
      */
     public function getStores(): array
     {
-        $allowedStores = [];
+        $indexedStores = [];
 
         $allStores = $this->storeManager->getStores();
         foreach ($allStores as $store) {
             $storeId = (int)$store->getId();
             $websiteId = (int)$store->getWebsiteId();
 
-            $storeIdsAllowedForWebsite = $this->generalSettings->getStoresToIndex($websiteId);
-            if (in_array($storeId, $storeIdsAllowedForWebsite)) {
-                $allowedStores[] = $store;
+            $indexedStoresForWebsite = $this->generalSettings->getIndexedStores($websiteId);
+            if (in_array($storeId, $indexedStoresForWebsite)) {
+                $indexedStores[] = $store;
             }
         }
 
-        return $allowedStores;
+        return $indexedStores;
     }
 }

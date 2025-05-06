@@ -20,7 +20,7 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
                 <field id="allowed_stores" translate="label comment" type="multiselect" sortOrder="31" showInDefault="0" showInWebsite="1" showInStore="0">
-                    <label>List of stores to reindex</label>
+                    <label>List of stores to index</label>
                     <source_model>StreamX\ConnectorCore\Model\Config\Source\Store</source_model>
                     <depends>
                         <field id="enable">1</field>

@@ -28,7 +28,7 @@ class StoresControllerImpl implements StoresControllerInterface {
 
     private const CONNECTOR_ENABLE_CONFIG_KEY = 'streamx_connector_settings/general_settings/enable';
     private const RABBIT_MQ_ENABLE_CONFIG_KEY = 'streamx_connector_settings/rabbit_mq/enable';
-    private const ALLOWED_STORES_CONFIG_KEY = 'streamx_connector_settings/general_settings/allowed_stores';
+    private const INDEXED_STORES_CONFIG_KEY = 'streamx_connector_settings/general_settings/allowed_stores';
 
     private WebsiteFactory $websiteFactory;
     private GroupFactory $groupFactory;
@@ -149,7 +149,7 @@ class StoresControllerImpl implements StoresControllerInterface {
 
     private function setIndexedStoresForWebsite(WebsiteInterface $website, string... $storeIds): void {
         $this->writer->save(
-            self::ALLOWED_STORES_CONFIG_KEY,
+            self::INDEXED_STORES_CONFIG_KEY,
             implode(',', $storeIds),
             ScopeInterface::SCOPE_WEBSITES,
             $website->getId()
