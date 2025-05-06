@@ -10,14 +10,14 @@ use StreamX\ConnectorCore\Client\StreamxAvailabilityCheckerFactory;
 use StreamX\ConnectorCore\Client\StreamxClientFactory;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
 use StreamX\ConnectorCore\Indexer\BaseStreamxIndexer;
-use StreamX\ConnectorCore\Indexer\IndexableStoresProvider;
+use StreamX\ConnectorCore\Indexer\IndexedStoresProvider;
 use StreamX\ConnectorCore\System\GeneralConfig;
 
 class CategoriesIndexer extends BaseStreamxIndexer
 {
     public function __construct(
         GeneralConfig $connectorConfig,
-        IndexableStoresProvider $indexableStoresProvider,
+        IndexedStoresProvider $indexedStoresProvider,
         CategoryDataLoader $dataLoader,
         LoggerInterface $logger,
         OptimizationSettings $optimizationSettings,
@@ -27,7 +27,7 @@ class CategoriesIndexer extends BaseStreamxIndexer
     ) {
         parent::__construct(
             $connectorConfig,
-            $indexableStoresProvider,
+            $indexedStoresProvider,
             $dataLoader,
             $logger,
             $optimizationSettings,

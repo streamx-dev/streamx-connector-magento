@@ -7,26 +7,26 @@ use Magento\Store\Model\Store;
 use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product as ProductModel;
-use StreamX\ConnectorCore\Indexer\IndexableStoresProvider;
+use StreamX\ConnectorCore\Indexer\IndexedStoresProvider;
 
 class UpdateAttributeDataPlugin {
 
     private AttributeProcessor $attributeProcessor;
     private ProductProcessor $productProcessor;
     private ProductModel $productModel;
-    private IndexableStoresProvider $indexableStoresProvider;
+    private IndexedStoresProvider $indexedStoresProvider;
     private array $productIdsToReindexByAttributeId = [];
 
     public function __construct(
         AttributeProcessor $attributeProcessor,
         ProductProcessor $productProcessor,
         ProductModel $productModel,
-        IndexableStoresProvider $indexableStoresProvider
+        IndexedStoresProvider $indexedStoresProvider
     ) {
         $this->attributeProcessor = $attributeProcessor;
         $this->productProcessor = $productProcessor;
         $this->productModel = $productModel;
-        $this->indexableStoresProvider = $indexableStoresProvider;
+        $this->indexedStoresProvider = $indexedStoresProvider;
     }
 
     /**
@@ -44,7 +44,7 @@ class UpdateAttributeDataPlugin {
         $attributeId = $attribute->getId();
 
         $productIdsToReindex = [];
-        foreach ($this->indexableStoresProvider->getStores() as $store) {
+        foreach ($this->indexedStoresProvider->getStores() as $store) {
             $storeId = (int)$store->getId();
             array_push($productIdsToReindex, ...$this->productModel->loadIdsOfProductsThatUseAttributes([$attributeId], $storeId));
         }
