@@ -2,7 +2,7 @@
 
 namespace StreamX\ConnectorCatalog\test\integration;
 
-use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
+use StreamX\ConnectorCatalog\Indexer\ProductIndexer;
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationKeyPaths;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
@@ -10,7 +10,7 @@ use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 class FullReindexTest extends BaseStreamxConnectorPublishTest {
 
     const INDEXER_MODE = parent::UPDATE_ON_SAVE;
-    const INDEXER_IDS = [ProductProcessor::INDEXER_ID];
+    const INDEXER_IDS = [ProductIndexer::INDEXER_ID];
 
     /** @test */
     public function shouldReindexAllProducts() {
@@ -54,7 +54,7 @@ class FullReindexTest extends BaseStreamxConnectorPublishTest {
 
     private function runProductsIndexer(): void {
         MagentoEndpointsCaller::call('indexer/run', [
-            'indexerId' => ProductProcessor::INDEXER_ID,
+            'indexerId' => ProductIndexer::INDEXER_ID,
             'entityIds' => [] // trigger full reindexing by not passing any IDs
         ]);
     }

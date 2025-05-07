@@ -2,8 +2,6 @@
 
 namespace StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
-use Exception;
-use Magento\Framework\DB\Adapter\AdapterInterface;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 
@@ -20,22 +18,15 @@ class Configurable
     private ProductMetaData $productMetaData;
 
     /**
-     * Array of the ids of configurable products from $productCollection
+     * All simple products for the configurable products found in products passed by the setProducts function
+     * Key: simple product id, value: array with keys: sku, entity_id, parent_ids (array with key: zero based index, value: parent product id)
      */
-    private ?array $configurableProductIds = null;
+    private array $simpleProducts = [];
 
     /**
-     * All associated simple products from configurables in $configurableProductIds
+     * Key: attribute id, value: attribute code
      */
-    private ?array $simpleProducts = null;
-
-    /**
-     * Array keys are the configurable product ids,
-     * Values: super_product_attribute_id, attribute_id, position
-     */
-    private ?array $configurableProductAttributes = null;
-    private ?array $configurableAttributeCodes = null;
-    private ?array $productsData = null;
+    private array $configurableAttributeCodes = [];
 
     public function __construct(
         LoadAttributes $loadAttributes,
@@ -51,145 +42,109 @@ class Configurable
         $this->dbHelper = $dbHelper;
     }
 
-    public function clear(): void
+    public function setProducts(array $products, int $storeId): void
     {
-        $this->productsData = null;
-        $this->configurableAttributeCodes = null;
-        $this->configurableProductAttributes = null;
-        $this->simpleProducts = null;
-        $this->configurableProductIds = null;
-    }
-
-    public function setProducts(array $products): void
-    {
-        $this->productsData = $products;
+        $configurableProductIds = $this->loadConfigurableProductIds($products);
+        $configurableProductAttributes = $this->getConfigurableAttributesForProductsFromResource($configurableProductIds);
+        $this->configurableAttributeCodes = $this->loadConfigurableAttributeCodes($configurableProductAttributes);
+        $this->simpleProducts = $this->loadSimpleProducts($configurableProductIds, $storeId);
     }
 
     /**
-     * Load all configurable attributes used in the current product collection.
+     * @return array Key: configurable product id, value: attribute_ids (comma separated)
      */
-    private function getConfigurableProductAttributes(): array
+    private function getConfigurableAttributesForProductsFromResource(array $configurableProductIds): array
     {
-        if (!$this->configurableProductAttributes) {
-            $productIds = $this->getParentIds();
-            $attributes = $this->getConfigurableAttributesForProductsFromResource($productIds);
-            $this->configurableProductAttributes = $attributes;
-        }
+        $parentIds = array_keys($configurableProductIds);
 
-        return $this->configurableProductAttributes;
-    }
-
-    private function getConfigurableAttributesForProductsFromResource(array $productIds): array
-    {
-        $select = $this->getConnection()->select()
+        $connection = $this->resource->getConnection();
+        $select = $connection->select()
             ->from(
                 $this->resource->getTableName('catalog_product_super_attribute'),
-                [
-                    'product_id',
-                    'product_super_attribute_id',
-                ]
+                [ 'product_id' ]
             )
             ->group('product_id')
-            ->where('product_id IN (?)', $productIds);
+            ->where('product_id IN (?)', $parentIds);
         $this->dbHelper->addGroupConcatColumn($select, 'attribute_ids', 'attribute_id');
 
-        return $this->getConnection()->fetchAssoc($select);
+        return $connection->fetchPairs($select);
     }
 
-    /**
-     * @return string[] array of all configurable attribute codes in the current collection.
-     * @throws Exception
-     */
-    public function getConfigurableAttributeCodes(): array
+    private function loadConfigurableAttributeCodes(array $configurableProductAttributes): array
     {
-        if ($this->configurableAttributeCodes === null) {
-            $this->configurableAttributeCodes = [];
+        $configurableAttributeCodes = [];
 
-            foreach ($this->getConfigurableProductAttributes() as $configurableAttribute) {
-                $attributeIds = array_map(
-                    'intval',
-                    explode(',', $configurableAttribute['attribute_ids'])
-                );
+        foreach ($configurableProductAttributes as $configurableProductId => $configurableAttributeIds) {
+            $attributeIds = array_map(
+                'intval',
+                explode(',', $configurableAttributeIds)
+            );
 
-                foreach ($attributeIds as $attributeId) {
-                    if ($attributeId && !isset($this->configurableAttributeCodes[$attributeId])) {
-                        $attributeModel = $this->loadAttributes->getAttributeById($attributeId);
-                        $this->configurableAttributeCodes[$attributeId] = $attributeModel->getAttributeCode();
-                    }
-                }
+            foreach ($attributeIds as $attributeId) {
+                $attributeModel = $this->loadAttributes->getAttributeById($attributeId);
+                $configurableAttributeCodes[$attributeId] = $attributeModel->getAttributeCode();
             }
         }
 
+        return $configurableAttributeCodes;
+    }
+
+    public function getConfigurableAttributeCodes(): array {
         return array_values($this->configurableAttributeCodes);
     }
 
     /**
-     * Return array of ids of configurable products in the current product collection
+     * Filters the products array to return array with key: configurable product link field, value: its entity id
      */
-    private function getConfigurableProductIds(): array
+    private function loadConfigurableProductIds(array $products): array
     {
-        if (null === $this->configurableProductIds) {
-            $linkField = $this->productMetaData->getLinkField();
-            $entityField = $this->productMetaData->getIdentifierField();
+        $linkField = $this->productMetaData->getLinkField();
+        $entityField = $this->productMetaData->getIdentifierField();
 
-            $this->configurableProductIds = [];
-            $products = $this->productsData;
-
-            foreach ($products as $product) {
-                if ($product['type_id'] == ConfigurableType::TYPE_CODE) {
-                    $entityId = $product[$entityField];
-                    $linkId = $product[$linkField];
-                    $this->configurableProductIds[$linkId] = $entityId;
-                }
+        $configurableProductIds = [];
+        foreach ($products as $product) {
+            if ($product['type_id'] == ConfigurableType::TYPE_CODE) {
+                $entityId = $product[$entityField];
+                $linkId = $product[$linkField];
+                $configurableProductIds[$linkId] = $entityId;
             }
         }
 
-        return $this->configurableProductIds;
-    }
-
-    private function getParentIds(): array
-    {
-        $productIds = $this->getConfigurableProductIds();
-
-        return array_keys($productIds);
+        return $configurableProductIds;
     }
 
     /**
-     * Return all associated simple products for the configurable products in
-     * the current product collection.
+     * Return all associated simple products for the given configurable products
      */
-    public function getSimpleProducts(int $storeId): ?array
+    private function loadSimpleProducts(array $configurableProductIds, int $storeId): array
     {
-        if (null === $this->simpleProducts) {
-            $parentIds = $this->getParentIds();
-            $childrenProducts = $this->productResource->loadChildrenProducts($parentIds, $storeId);
+        $allParentIds = array_keys($configurableProductIds);
+        $childrenProducts = $this->productResource->loadChildrenProducts($allParentIds, $storeId);
 
-            /** @var array $product */
-            foreach ($childrenProducts as $product) {
-                $simpleId = $product['entity_id'];
-                $parentIds = explode(',', $product['parent_ids']);
-                $parentIds = $this->mapLinkFieldToEntityId($parentIds);
-                $product['parent_ids'] = $parentIds;
-                $this->simpleProducts[$simpleId] = $product;
-            }
+        $simpleProducts = [];
+        foreach ($childrenProducts as $product) {
+            $simpleId = $product['entity_id'];
+            $parentIds = explode(',', $product['parent_ids']);
+            $parentIds = $this->mapLinkFieldToEntityId($parentIds, $configurableProductIds);
+            $product['parent_ids'] = $parentIds;
+            $simpleProducts[$simpleId] = $product;
         }
 
+        return $simpleProducts;
+    }
+
+    public function getSimpleProducts(): array {
         return $this->simpleProducts;
     }
 
-    private function mapLinkFieldToEntityId(array $linkIds): array
+    private function mapLinkFieldToEntityId(array $linkIds, array $configurableProductIds): array
     {
         $productIds = [];
 
         foreach ($linkIds as $id) {
-            $productIds[] = $this->configurableProductIds[$id];
+            $productIds[] = $configurableProductIds[$id];
         }
 
         return $productIds;
-    }
-
-    private function getConnection(): AdapterInterface
-    {
-        return $this->resource->getConnection();
     }
 }

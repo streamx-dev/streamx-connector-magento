@@ -38,9 +38,8 @@ class ConfigurableData implements DataProviderInterface
      */
     public function addData(array &$indexData, int $storeId): void
     {
-        $this->configurableResource->clear();
-        $this->configurableResource->setProducts($indexData);
-        $this->addBasicChildVariantsInfo($indexData, $storeId);
+        $this->configurableResource->setProducts($indexData, $storeId);
+        $this->addBasicChildVariantsInfo($indexData);
 
         $configurableChildrenAttributes = $this->configurableResource->getConfigurableAttributeCodes();
         $this->childProductAttributeDataProvider->setAdditionalAttributesToIndex($configurableChildrenAttributes);
@@ -52,8 +51,6 @@ class ConfigurableData implements DataProviderInterface
                 $product['variants'] = [];
             }
         }
-
-        $this->configurableResource->clear();
     }
 
     private function addDataFromProviders(array &$childProducts, int $storeId): void {
@@ -70,11 +67,11 @@ class ConfigurableData implements DataProviderInterface
     /**
      * @throws Exception
      */
-    private function addBasicChildVariantsInfo(array &$indexData, int $storeId): void
+    private function addBasicChildVariantsInfo(array &$indexData): void
     {
-        $allChildren = $this->configurableResource->getSimpleProducts($storeId);
+        $allChildren = $this->configurableResource->getSimpleProducts();
 
-        if (null === $allChildren) {
+        if (empty($allChildren)) {
             return;
         }
 
