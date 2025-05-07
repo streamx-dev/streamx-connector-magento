@@ -3,6 +3,8 @@
 namespace StreamX\ConnectorCatalog\Model;
 
 use Magento\Catalog\Api\Data\ProductInterface;
+use Magento\Catalog\Model\Product;
+use Magento\Eav\Model\Config;
 use Magento\Framework\EntityManager\MetadataPool;
 
 class ProductMetaData {
@@ -10,14 +12,14 @@ class ProductMetaData {
     private string $entityTable;
     private string $identifierField;
     private string $linkField;
-    private string $eavEntityType;
+    private int $entityTypeId;
 
-    public function __construct(MetadataPool $metadataPool) {
+    public function __construct(MetadataPool $metadataPool, Config $eavConfig) {
         $productMetaData = $metadataPool->getMetadata(ProductInterface::class);
         $this->entityTable = $productMetaData->getEntityTable();
         $this->identifierField = $productMetaData->getIdentifierField();
         $this->linkField = $productMetaData->getLinkField();
-        $this->eavEntityType = $productMetaData->getEavEntityType();
+        $this->entityTypeId = (int) $eavConfig->getEntityType(Product::ENTITY)->getId();
     }
 
     public function getEntityTable(): string {
@@ -32,7 +34,7 @@ class ProductMetaData {
         return $this->linkField;
     }
 
-    public function getEavEntityType(): string {
-        return $this->eavEntityType;
+    public function getEntityTypeId(): int {
+        return $this->entityTypeId;
     }
 }
