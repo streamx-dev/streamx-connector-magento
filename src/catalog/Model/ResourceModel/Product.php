@@ -119,13 +119,13 @@ class Product
     public function loadChildrenProducts(array $parentIds, int $storeId): array
     {
         $linkField = $this->productMetaData->getLinkField();
-        $entityId = $this->productMetaData->getIdentifierField();
+        $entityIdField = $this->productMetaData->getIdentifierField();
         $columns = [
             'sku',
-            $entityId,
+            $entityIdField,
         ];
 
-        if ($linkField !== $entityId) {
+        if ($linkField !== $entityIdField) {
             $columns[] = $linkField;
         }
 

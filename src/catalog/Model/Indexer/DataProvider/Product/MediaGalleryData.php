@@ -33,12 +33,11 @@ class MediaGalleryData implements DataProviderInterface
         $linkField = $this->productMetaData->getLinkField();
         $linkFieldIds = array_column($indexData, $linkField);
 
-        $gallerySet = $this->resourceModel->loadGallerySet($linkFieldIds, $storeId);
-
         foreach ($indexData as &$productData) {
             $productData['gallery'] = [];
         }
 
+        $gallerySet = $this->resourceModel->loadGallerySet($linkFieldIds, $storeId);
         foreach ($gallerySet as $mediaImage) {
             $linkFieldId  = $mediaImage['row_id'];
             $entityId = $this->rowIdToEntityId[$linkFieldId] ?? $linkFieldId;

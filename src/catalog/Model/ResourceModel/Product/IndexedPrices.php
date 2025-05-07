@@ -11,8 +11,13 @@ use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use StreamX\ConnectorCatalog\Model\Product\PriceTableResolverProxy;
 
+/**
+ * Only default customer Group ID (0) is supported now
+ */
 class IndexedPrices
 {
+    private const DEFAULT_CUSTOMER_GROUP_ID = 0;
+
     private ResourceConnection $resource;
     private CatalogConfig $settings;
     private StoreManagerInterface $storeManager;
@@ -37,8 +42,6 @@ class IndexedPrices
     }
 
     /**
-     * Only default customer Group ID (0) is supported now
-     *
      * @throws NoSuchEntityException
      */
     public function loadPriceDataFromPriceIndex(int $storeId, array $productIds): array
@@ -46,9 +49,7 @@ class IndexedPrices
         $entityIdField = $this->productMetaData->getIdentifierField();
         $websiteId = (int)$this->storeManager->getStore($storeId)->getWebsiteId();
 
-        // Only default customer Group ID (0) is supported now
-        $customerGroupId = 0;
-        $priceIndexTableName = $this->priceTableResolver->resolve($websiteId, $customerGroupId);
+        $priceIndexTableName = $this->priceTableResolver->resolve($websiteId, self::DEFAULT_CUSTOMER_GROUP_ID);
 
         $select = $this->resource->getConnection()->select()
             ->from(
@@ -59,18 +60,21 @@ class IndexedPrices
                     'final_price',
                 ]
             )
-            ->where('p.customer_group_id = ?', $customerGroupId)
+            ->where('p.customer_group_id = ?', self::DEFAULT_CUSTOMER_GROUP_ID)
             ->where('p.website_id = ?', $websiteId)
             ->where("p.$entityIdField IN (?)", $productIds);
 
         $indexedPrices = $this->resource->getConnection()->fetchAssoc($select);
 
         if ($this->settings->useCatalogPriceRules()) {
-            $catalogPrices = $this->getCatalogRulePrices($websiteId, $productIds);
+            $catalogRulePrices = $this->getCatalogRulePrices($websiteId, $productIds);
 
-            foreach ($catalogPrices as $productId => $catalogPrice) {
-                $indexedPrice = $indexedPrices[$productId]['final_price'] ?? $catalogPrice;
-                $indexedPrices[$productId]['final_price'] = min($catalogPrice, $indexedPrice);
+            foreach ($catalogRulePrices as $productId => $catalogRulePrice) {
+                if (isset($indexedPrices[$productId]['final_price'])) {
+                    $indexedPrices[$productId]['final_price'] = min($indexedPrices[$productId]['final_price'], $catalogRulePrice);
+                } else {
+                    $indexedPrices[$productId]['final_price'] = $catalogRulePrice;
+                }
             }
         }
 
@@ -93,10 +97,8 @@ class IndexedPrices
             []
         );
 
-        // Only default customer Group ID (0) is supported now
-        $customerGroupId = 0;
         $select->where('cpp.product_id IN (?)', $productsIds);
-        $select->where('cpp.customer_group_id = ?', $customerGroupId);
+        $select->where('cpp.customer_group_id = ?', self::DEFAULT_CUSTOMER_GROUP_ID);
         $select->where('cpp.website_id = ?', $websiteId);
         $select->columns([
             'product_id' => 'cpp.product_id',
