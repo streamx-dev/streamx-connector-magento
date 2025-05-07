@@ -60,18 +60,22 @@ class ProductProcessor extends AbstractProcessor
      */
     private function hasToReindex(): bool
     {
-        $hasToRun = true;
         $dependentIndexerIds = $this->dependencyInfoProvider->getIndexerIdsToRunBefore($this->getIndexerId());
 
-        foreach ($dependentIndexerIds as $indexerId) {
-            $dependentIndexer = $this->indexerRegistry->get($indexerId);
+        // TODO: verify if the below condition is always safe:
+        //   if any of the indexers to run before is in Update On Save mode -> our products indexer will not be executed
+        return $this->areAllIndexersInUpdateByScheduleMode($dependentIndexerIds);
+    }
 
-            if (!$dependentIndexer->isScheduled()) {
-                $hasToRun = false;
-                break;
+    private function areAllIndexersInUpdateByScheduleMode(array $indexerIds): bool
+    {
+        foreach ($indexerIds as $indexerId) {
+            $indexer = $this->indexerRegistry->get($indexerId);
+            if (!$indexer->isScheduled()) {
+                return false;
             }
         }
 
-        return $hasToRun;
+        return true;
     }
 }
