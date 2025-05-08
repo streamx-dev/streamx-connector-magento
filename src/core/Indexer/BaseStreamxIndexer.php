@@ -8,6 +8,7 @@ use Magento\Store\Api\Data\StoreInterface;
 use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCore\Api\BasicDataLoader;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
+use StreamX\ConnectorCore\Client\RabbitMQ\RabbitMqConfiguration;
 use StreamX\ConnectorCore\Client\StreamxAvailabilityChecker;
 use StreamX\ConnectorCore\Client\StreamxClient;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
@@ -26,6 +27,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
     private OptimizationSettings $optimizationSettings;
     private StreamxClient $streamxClient;
     private StreamxAvailabilityChecker $streamxAvailabilityChecker;
+    private RabbitMqConfiguration $rabbitMqConfiguration;
     /**
      * @var DataProviderInterface[]
      */
@@ -40,6 +42,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
         OptimizationSettings $optimizationSettings,
         StreamxClient $streamxClient,
         StreamxAvailabilityChecker $streamxAvailabilityChecker,
+        RabbitMqConfiguration $rabbitMqConfiguration,
         IndexerDefinition $indexerDefinition
     ) {
         $this->connectorConfig = $connectorConfig;
@@ -49,6 +52,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
         $this->optimizationSettings = $optimizationSettings;
         $this->streamxClient = $streamxClient;
         $this->streamxAvailabilityChecker = $streamxAvailabilityChecker;
+        $this->rabbitMqConfiguration = $rabbitMqConfiguration;
         $this->dataProviders = $indexerDefinition->getDataProviders();
         $this->indexerId = $indexerDefinition->getIndexerId();
     }
@@ -87,7 +91,10 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
             return;
         }
 
-        $shouldPerformStreamxAvailabilityCheck = $this->optimizationSettings->shouldPerformStreamxAvailabilityCheck();
+        $shouldPerformStreamxAvailabilityCheck =
+            $this->optimizationSettings->shouldPerformStreamxAvailabilityCheck()
+            &&
+            !$this->rabbitMqConfiguration->isEnabled(); // if RabbitMQ is enabled - we don't need to check for StreamX availability, and allow waiting for it to become available using retry queues
 
         foreach ($this->indexedStoresProvider->getStores() as $store) {
             $storeId = (int) $store->getId();

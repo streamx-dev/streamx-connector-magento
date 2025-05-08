@@ -6,6 +6,7 @@ use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCatalog\Model\Indexer\DataLoader\ProductDataLoader;
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCore\Api\IndexersConfigInterface;
+use StreamX\ConnectorCore\Client\RabbitMQ\RabbitMqConfiguration;
 use StreamX\ConnectorCore\Client\StreamxAvailabilityChecker;
 use StreamX\ConnectorCore\Client\StreamxClient;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
@@ -23,6 +24,7 @@ class ProductsIndexer extends BaseStreamxIndexer
         OptimizationSettings $optimizationSettings,
         StreamxClient $streamxClient,
         StreamxAvailabilityChecker $streamxAvailabilityChecker,
+        RabbitMqConfiguration $rabbitMqConfiguration,
         IndexersConfigInterface $indexersConfig
     ) {
         parent::__construct(
@@ -33,6 +35,7 @@ class ProductsIndexer extends BaseStreamxIndexer
             $optimizationSettings,
             $streamxClient,
             $streamxAvailabilityChecker,
+            $rabbitMqConfiguration,
             $indexersConfig->getById(ProductProcessor::INDEXER_ID)
         );
     }
