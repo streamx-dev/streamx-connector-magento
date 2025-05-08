@@ -8,23 +8,35 @@ use Streamx\Clients\Ingestion\Publisher\Publisher;
 
 class StreamxPublisherFactory {
 
-    private function __construct() {
-        // no instances
+    private StreamxClientConfiguration $clientConfiguration;
+    private array $streamxPublishersCache = []; // key: storeId_streamFlag
+
+    public function __construct(StreamxClientConfiguration $clientConfiguration) {
+        $this->clientConfiguration = $clientConfiguration;
     }
 
-    public static function createStreamxPublisher(StreamxClientConfiguration $configuration, int $storeId, bool $stream): Publisher {
+    public function getOrCreateStreamxPublisher(int $storeId, bool $streamFlag): Publisher {
+        $cacheKey = sprintf('%s_%s', $storeId, $streamFlag ? 'true' : 'false');
+        if (!isset($this->streamxPublishersCache[$cacheKey])) {
+            $this->streamxPublishersCache[$cacheKey] = self::createStreamxPublisher($this->clientConfiguration, $storeId, $streamFlag);
+        }
+        return $this->streamxPublishersCache[$cacheKey];
+    }
+
+    private function createStreamxPublisher(StreamxClientConfiguration $configuration, int $storeId, bool $streamFlag): Publisher {
         $httpClient = new GuzzleHttpClient([
             'connect_timeout' => 1, // maximum time (in seconds) to establish the connection
             'timeout' => 5, // maximum time (in seconds) to wait for response
             'verify' => !$configuration->shouldDisableCertificateValidation($storeId),
-            'stream' => $stream
+            'stream' => $streamFlag
         ]);
 
         $ingestionClientBuilder = StreamxClientBuilders::create($configuration->getIngestionBaseUrl($storeId))
             ->setHttpClient($httpClient);
 
-        if ($configuration->getAuthToken($storeId)) {
-            $ingestionClientBuilder->setAuthToken($configuration->getAuthToken($storeId));
+        $authToken = $configuration->getAuthToken($storeId);
+        if ($authToken) {
+            $ingestionClientBuilder->setAuthToken($authToken);
         }
 
         return $ingestionClientBuilder->build()->newPublisher(

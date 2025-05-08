@@ -9,7 +9,7 @@ use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
 use StreamX\ConnectorCatalog\Model\Indexer\DataLoader\ProductDataLoader;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product;
 use StreamX\ConnectorCore\Api\IndexersConfigInterface;
-use StreamX\ConnectorCore\Client\StreamxAvailabilityCheckerFactory;
+use StreamX\ConnectorCore\Client\StreamxAvailabilityChecker;
 use StreamX\ConnectorCore\Client\StreamxClientFactory;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
 use StreamX\ConnectorCore\Indexer\BaseStreamxIndexer;
@@ -32,7 +32,7 @@ class AttributesIndexer extends BaseStreamxIndexer
         LoggerInterface $logger,
         OptimizationSettings $optimizationSettings,
         StreamxClientFactory $streamxClientFactory,
-        StreamxAvailabilityCheckerFactory $streamxAvailabilityCheckerFactory,
+        StreamxAvailabilityChecker $streamxAvailabilityChecker,
         IndexersConfigInterface $indexersConfig,
         Product $productModel,
         ProductsIndexer $productsIndexer,
@@ -45,7 +45,7 @@ class AttributesIndexer extends BaseStreamxIndexer
             $logger,
             $optimizationSettings,
             $streamxClientFactory,
-            $streamxAvailabilityCheckerFactory,
+            $streamxAvailabilityChecker,
             $indexersConfig->getById(AttributeProcessor::INDEXER_ID)
         );
         $this->productModel = $productModel;
