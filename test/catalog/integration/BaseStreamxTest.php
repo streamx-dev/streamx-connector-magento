@@ -14,6 +14,7 @@ use StreamX\ConnectorCore\Client\RabbitMQ\RabbitMqIngestionRequestsSender;
 use StreamX\ConnectorCore\Client\StreamxClient;
 use StreamX\ConnectorCore\Client\StreamxClientConfiguration;
 use StreamX\ConnectorCore\Client\StreamxIngestor;
+use StreamX\ConnectorCore\Client\StreamxPublisherFactory;
 
 /**
  * Prerequisites to run these tests:
@@ -118,7 +119,8 @@ abstract class BaseStreamxTest extends TestCase {
         $rabbitMqSender = new RabbitMqIngestionRequestsSender($loggerMock, $rabbitMqConfigurationMock);
 
         $clientConfigurationMock = $this->createClientConfigurationMock(self::STREAMX_REST_INGESTION_URL);
-        $streamxIngestor = new StreamxIngestor($loggerMock, $clientConfigurationMock);
+        $streamxPublisherFactory = new StreamxPublisherFactory($clientConfigurationMock);
+        $streamxIngestor = new StreamxIngestor($loggerMock, $streamxPublisherFactory);
 
         return new StreamxClient($loggerMock, $storeMock, $rabbitMqConfigurationMock, $rabbitMqSender, $streamxIngestor);
     }
