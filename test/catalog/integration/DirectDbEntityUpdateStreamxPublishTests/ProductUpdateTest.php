@@ -78,8 +78,9 @@ class ProductUpdateTest extends BaseDirectDbEntityUpdateTest {
 
         // and
         $productToPublish = ['id' => (string) $productId->getEntityId()];
-        $streamxClient = parent::createStreamxClient(self::$store1Id, self::STORE_1_CODE);
-        $streamxClient->publish([$productToPublish], ProductIndexer::INDEXER_ID);
+        $streamxClient = parent::createStreamxClient();
+        $store = parent::createStoreMock(self::$store1Id, self::STORE_1_CODE);
+        $streamxClient->publish([$productToPublish], ProductIndexer::INDEXER_ID, $store);
 
         // verify published
         $expectedKey = self::productKey($productId);

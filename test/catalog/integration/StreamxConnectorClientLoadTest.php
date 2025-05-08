@@ -4,7 +4,6 @@ namespace StreamX\ConnectorCatalog\test\integration;
 
 use StreamX\ConnectorCatalog\Indexer\ProductIndexer;
 use StreamX\ConnectorCatalog\test\integration\utils\ValidationFileUtils;
-use StreamX\ConnectorCore\Client\StreamxClient;
 
 class StreamxConnectorClientLoadTest extends BaseStreamxTest {
 
@@ -36,8 +35,9 @@ class StreamxConnectorClientLoadTest extends BaseStreamxTest {
         }, array_keys($entities)));
 
         // when: publish batch as the Connector would do
-        $client = $this->createClient();
-        $client->publish($entities, ProductIndexer::INDEXER_ID);
+        $client = parent::createStreamxClient();
+        $store = parent::createStoreMock(self::STORE_ID, self::STORE_CODE);
+        $client->publish($entities, ProductIndexer::INDEXER_ID, $store);
 
         // then
         for ($i = 0; $i < $entitiesToPublishInBatch; $i++) {
@@ -47,8 +47,7 @@ class StreamxConnectorClientLoadTest extends BaseStreamxTest {
         }
 
         // and when: unpublish
-        $client = $this->createClient();
-        $client->unpublish(array_column($entities, 'id'), ProductIndexer::INDEXER_ID);
+        $client->unpublish(array_column($entities, 'id'), ProductIndexer::INDEXER_ID, $store);
 
         // then
         for ($i = 0; $i < $entitiesToPublishInBatch; $i++) {
@@ -58,9 +57,5 @@ class StreamxConnectorClientLoadTest extends BaseStreamxTest {
 
     private static function expectedStreamxProductKey(int $productId): string {
         return BaseStreamxConnectorPublishTest::productKeyFromEntityId($productId, self::STORE_CODE);
-    }
-
-    private function createClient(): StreamxClient {
-        return parent::createStreamxClient(self::STORE_ID, self::STORE_CODE);
     }
 }
