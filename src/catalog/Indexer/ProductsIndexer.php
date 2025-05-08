@@ -7,7 +7,7 @@ use StreamX\ConnectorCatalog\Model\Indexer\DataLoader\ProductDataLoader;
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCore\Api\IndexersConfigInterface;
 use StreamX\ConnectorCore\Client\StreamxAvailabilityChecker;
-use StreamX\ConnectorCore\Client\StreamxClientFactory;
+use StreamX\ConnectorCore\Client\StreamxClient;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
 use StreamX\ConnectorCore\Indexer\BaseStreamxIndexer;
 use StreamX\ConnectorCore\Indexer\IndexedStoresProvider;
@@ -21,7 +21,7 @@ class ProductsIndexer extends BaseStreamxIndexer
         ProductDataLoader $dataLoader,
         LoggerInterface $logger,
         OptimizationSettings $optimizationSettings,
-        StreamxClientFactory $streamxClientFactory,
+        StreamxClient $streamxClient,
         StreamxAvailabilityChecker $streamxAvailabilityChecker,
         IndexersConfigInterface $indexersConfig
     ) {
@@ -31,7 +31,7 @@ class ProductsIndexer extends BaseStreamxIndexer
             $dataLoader,
             $logger,
             $optimizationSettings,
-            $streamxClientFactory,
+            $streamxClient,
             $streamxAvailabilityChecker,
             $indexersConfig->getById(ProductProcessor::INDEXER_ID)
         );

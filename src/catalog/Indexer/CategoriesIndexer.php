@@ -7,7 +7,7 @@ use StreamX\ConnectorCatalog\Model\Indexer\DataLoader\CategoryDataLoader;
 use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
 use StreamX\ConnectorCore\Api\IndexersConfigInterface;
 use StreamX\ConnectorCore\Client\StreamxAvailabilityChecker;
-use StreamX\ConnectorCore\Client\StreamxClientFactory;
+use StreamX\ConnectorCore\Client\StreamxClient;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
 use StreamX\ConnectorCore\Indexer\BaseStreamxIndexer;
 use StreamX\ConnectorCore\Indexer\IndexedStoresProvider;
@@ -21,7 +21,7 @@ class CategoriesIndexer extends BaseStreamxIndexer
         CategoryDataLoader $dataLoader,
         LoggerInterface $logger,
         OptimizationSettings $optimizationSettings,
-        StreamxClientFactory $streamxClientFactory,
+        StreamxClient $streamxClient,
         StreamxAvailabilityChecker $streamxAvailabilityChecker,
         IndexersConfigInterface $indexersConfig
     ) {
@@ -31,7 +31,7 @@ class CategoriesIndexer extends BaseStreamxIndexer
             $dataLoader,
             $logger,
             $optimizationSettings,
-            $streamxClientFactory,
+            $streamxClient,
             $streamxAvailabilityChecker,
             $indexersConfig->getById(CategoryProcessor::INDEXER_ID)
         );

@@ -4,12 +4,12 @@ namespace StreamX\ConnectorCore\Indexer;
 
 use Exception;
 use Magento\Framework\Indexer\SaveHandler\Batch;
+use Magento\Store\Api\Data\StoreInterface;
 use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCore\Api\BasicDataLoader;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 use StreamX\ConnectorCore\Client\StreamxAvailabilityChecker;
 use StreamX\ConnectorCore\Client\StreamxClient;
-use StreamX\ConnectorCore\Client\StreamxClientFactory;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
 use StreamX\ConnectorCore\Index\IndexerDefinition;
 use StreamX\ConnectorCore\System\GeneralConfig;
@@ -24,7 +24,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
     private BasicDataLoader $entityDataLoader;
     protected LoggerInterface $logger;
     private OptimizationSettings $optimizationSettings;
-    private StreamxClientFactory $streamxClientFactory;
+    private StreamxClient $streamxClient;
     private StreamxAvailabilityChecker $streamxAvailabilityChecker;
     /**
      * @var DataProviderInterface[]
@@ -38,7 +38,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
         BasicDataLoader $entityDataLoader,
         LoggerInterface $logger,
         OptimizationSettings $optimizationSettings,
-        StreamxClientFactory $streamxClientFactory,
+        StreamxClient $streamxClient,
         StreamxAvailabilityChecker $streamxAvailabilityChecker,
         IndexerDefinition $indexerDefinition
     ) {
@@ -47,7 +47,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
         $this->entityDataLoader = $entityDataLoader;
         $this->logger = $logger;
         $this->optimizationSettings = $optimizationSettings;
-        $this->streamxClientFactory = $streamxClientFactory;
+        $this->streamxClient = $streamxClient;
         $this->streamxAvailabilityChecker = $streamxAvailabilityChecker;
         $this->dataProviders = $indexerDefinition->getDataProviders();
         $this->indexerId = $indexerDefinition->getIndexerId();
@@ -99,21 +99,20 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
 
             $this->logger->info("Start indexing $this->indexerId for store $storeId");
             $entities = $this->entityDataLoader->loadData($storeId, $ids);
-            $client = $this->streamxClientFactory->create(['store' => $store]);
-            $this->ingestEntities($entities, $storeId, $client);
+            $this->ingestEntities($entities, $store);
             $this->logger->info("Finished indexing $this->indexerId for store $storeId");
         }
     }
 
-    protected function ingestEntities(Traversable $entities, int $storeId, StreamxClient $client): void {
+    protected function ingestEntities(Traversable $entities, StoreInterface $store): void {
         $batchSize = $this->optimizationSettings->getBatchIndexingSize();
 
         foreach ((new Batch())->getItems($entities, $batchSize) as $entitiesBatch) {
-            $this->processEntitiesBatch($entitiesBatch, $storeId, $client);
+            $this->processEntitiesBatch($entitiesBatch, $store);
         }
     }
 
-    private function processEntitiesBatch(array $entities, int $storeId, StreamxClient $client): void {
+    private function processEntitiesBatch(array $entities, StoreInterface $store): void {
         $entitiesToPublish = [];
         $idsToUnpublish = [];
         foreach ($entities as $id => $entity) {
@@ -125,15 +124,16 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
         }
 
         if (!empty($entitiesToPublish)) {
-            $this->addDataAndPublish($entitiesToPublish, $storeId, $client);
+            $this->addDataAndPublish($entitiesToPublish, $store);
         }
 
         if (!empty($idsToUnpublish)) {
-            $this->unpublish($idsToUnpublish, $client);
+            $this->unpublish($idsToUnpublish, $store);
         }
     }
 
-    private function addDataAndPublish(array $entities, int $storeId, StreamxClient $client): void {
+    private function addDataAndPublish(array $entities, StoreInterface $store): void {
+        $storeId = (int) $store->getId();
         try {
             foreach ($this->dataProviders as $dataProvider) {
                 $dataProvider->addData($entities, $storeId);
@@ -147,10 +147,10 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
             return;
         }
 
-        $client->publish(array_values($entities), $this->indexerId);
+        $this->streamxClient->publish(array_values($entities), $this->indexerId, $store);
     }
 
-    private function unpublish(array $idsToUnpublish, StreamxClient $client): void {
-        $client->unpublish($idsToUnpublish, $this->indexerId);
+    private function unpublish(array $idsToUnpublish, StoreInterface $store): void {
+        $this->streamxClient->unpublish($idsToUnpublish, $this->indexerId, $store);
     }
 }

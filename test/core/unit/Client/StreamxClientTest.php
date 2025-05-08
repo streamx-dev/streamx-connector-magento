@@ -15,18 +15,18 @@ use StreamX\ConnectorCore\Client\StreamxIngestor;
 
 class StreamxClientTest extends TestCase {
 
+    private StoreInterface $storeMock;
     private StreamxClient $clientSpy;
 
     public function setUp(): void {
-        $storeMock = $this->createMock(StoreInterface::class);
-        $storeMock->method('getId')->willReturn(5);
-        $storeMock->method('getCode')->willReturn('store_5');
+        $this->storeMock = $this->createMock(StoreInterface::class);
+        $this->storeMock->method('getId')->willReturn(5);
+        $this->storeMock->method('getCode')->willReturn('store_5');
 
         $this->clientSpy = $this
             ->getMockBuilder(StreamxClient::class)
             ->setConstructorArgs([
                 $this->createMock(LoggerInterface::class),
-                $storeMock,
                 $this->createMock(RabbitMqConfiguration::class),
                 $this->createMock(RabbitMqIngestionRequestsSender::class),
                 $this->createMock(StreamxIngestor::class)
@@ -105,12 +105,12 @@ class StreamxClientTest extends TestCase {
 
     private function publishAndVerifyIngestionMessage(array $entityToIngest, string $sourceIndexerId, string $expectedKey, string $expectedSxType, string $expectedPayload) {
         $this->setupIngestionMessageVerification($sourceIndexerId, 'publish', $expectedKey, $expectedSxType, $expectedPayload);
-        $this->clientSpy->publish([$entityToIngest], $sourceIndexerId);
+        $this->clientSpy->publish([$entityToIngest], $sourceIndexerId, $this->storeMock);
     }
 
     private function unpublishAndVerifyIngestionMessage(int $productId, string $sourceIndexerId, string $expectedKey, string $expectedSxType) {
         $this->setupIngestionMessageVerification($sourceIndexerId, 'unpublish', $expectedKey, $expectedSxType, null);
-        $this->clientSpy->unpublish([$productId], $sourceIndexerId);
+        $this->clientSpy->unpublish([$productId], $sourceIndexerId, $this->storeMock);
     }
 
     private function setupIngestionMessageVerification(string $sourceIndexerId, string $expectedAction, string $expectedKey, string $expectedSxType, ?string $expectedPayload) {
