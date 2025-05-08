@@ -77,7 +77,7 @@ class StreamxClient {
     /**
      * @param Message[] $ingestionMessages
      */
-    private function ingest(array $ingestionMessages, string $action, string $indexerId): void {
+    protected function ingest(array $ingestionMessages, string $action, string $indexerId): void {
         $keys = array_column($ingestionMessages, 'key');
         $messagesCount = count($ingestionMessages);
         $this->logger->info("Start sending $messagesCount $action entities from $indexerId with keys " . json_encode($keys));

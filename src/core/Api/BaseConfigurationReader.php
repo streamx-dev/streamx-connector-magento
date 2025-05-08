@@ -18,7 +18,7 @@ abstract class BaseConfigurationReader {
     }
 
     protected static function splitCommaSeparatedValueToArray(?string $commaSeparatedValue): array {
-        return null === $commaSeparatedValue || '' === $commaSeparatedValue
+        return $commaSeparatedValue === null || $commaSeparatedValue === ''
             ? []
             : explode(',', $commaSeparatedValue);
     }
