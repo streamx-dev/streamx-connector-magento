@@ -10,23 +10,23 @@ use StreamX\ConnectorCatalog\Model\Attributes\AttributeOptionDefinition;
 use StreamX\ConnectorCatalog\Model\Attribute\LoadOptions;
 use StreamX\ConnectorCatalog\Model\Attributes\AttributeOptionSwatchDefinition;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\SpecialAttributes;
-use StreamX\ConnectorCatalog\Model\ResourceModel\ProductConfig;
+use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use Zend_Db_Expr;
 
 class LoadAttributeDefinitions
 {
     private ResourceConnection $resource;
     private LoadOptions $loadOptions;
-    private ProductConfig $productConfig;
+    private ProductMetaData $productMetaData;
 
     public function __construct(
         ResourceConnection $resource,
         LoadOptions $loadOptions,
-        ProductConfig $productConfig
+        ProductMetaData $productMetaData
     ) {
         $this->resource = $resource;
         $this->loadOptions = $loadOptions;
-        $this->productConfig = $productConfig;
+        $this->productMetaData = $productMetaData;
     }
 
     /**
@@ -89,7 +89,7 @@ class LoadAttributeDefinitions
                 ['store_level_frontend_label' => 'value']
             )
             ->where("ea.attribute_id > $fromId")
-            ->where('ea.entity_type_id = ?', $this->productConfig->getEntityTypeId())
+            ->where('ea.entity_type_id = ?', $this->productMetaData->getEntityTypeId())
             ->limit($limit)
             ->order('ea.attribute_id');
     }
