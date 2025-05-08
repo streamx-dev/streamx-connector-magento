@@ -4,7 +4,6 @@ namespace StreamX\ConnectorCore\Api;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\Config\Storage\WriterInterface;
-use Magento\Store\Model\ScopeInterface;
 
 abstract class BaseConfigurationManager extends BaseConfigurationReader {
 

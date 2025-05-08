@@ -6,7 +6,6 @@ use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Wire\AMQPTable;
 use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
-use StreamX\ConnectorCatalog\test\integration\BaseStreamxTest;
 
 class RabbitMqMessagesManager {
 

@@ -2,7 +2,6 @@
 
 namespace StreamX\ConnectorCore\Client;
 
-use Exception;
 use Psr\Log\LoggerInterface;
 use Streamx\Clients\Ingestion\Exceptions\StreamxClientException;
 use Streamx\Clients\Ingestion\Impl\MessageStatus;
