@@ -3,7 +3,6 @@
 namespace StreamX\ConnectorCatalog\Plugin\Indexer\Attribute\Save;
 
 use Magento\Catalog\Model\ResourceModel\Eav\Attribute;
-use Magento\Store\Model\Store;
 use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product as ProductModel;

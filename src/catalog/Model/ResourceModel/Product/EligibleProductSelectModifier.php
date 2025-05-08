@@ -40,14 +40,14 @@ class EligibleProductSelectModifier
 
     public function modify(Select $select, int $storeId, bool $filterByVisibility): void
     {
-        $this->addStatusCondition($select, $storeId);
+        $this->addStatusEnabledCondition($select, $storeId);
         if ($filterByVisibility) {
-            $this->addVisibilityCondition($select, $storeId);
+            $this->addProductVisibleCondition($select, $storeId);
         }
-        $this->addWebsiteCondition($select, $storeId);
+        $this->addProductInWebsiteCondition($select, $storeId);
     }
 
-    private function addStatusCondition(Select $select, int $storeId): void
+    private function addStatusEnabledCondition(Select $select, int $storeId): void
     {
         $linkField = $this->productMetaData->getLinkField();
         $backendTable = $this->resourceConnection->getTableName($this->statusAttributeBackendTable);
@@ -63,7 +63,7 @@ class EligibleProductSelectModifier
         )->where('CASE WHEN ss.value_id > 0 THEN ss.value = ? ELSE s.value = ? END', Status::STATUS_ENABLED);
     }
 
-    private function addVisibilityCondition(Select $select, int $storeId): void
+    private function addProductVisibleCondition(Select $select, int $storeId): void
     {
         if ($this->catalogConfig->shouldExportProductsNotVisibleIndividually()) {
             return;
@@ -83,7 +83,7 @@ class EligibleProductSelectModifier
         )->where('CASE WHEN sv.value_id > 0 THEN sv.value <> ? ELSE v.value <> ? END', Visibility::VISIBILITY_NOT_VISIBLE);
     }
 
-    private function addWebsiteCondition(Select $select, int $storeId): void
+    private function addProductInWebsiteCondition(Select $select, int $storeId): void
     {
         $websiteId = (int)$this->storeManager->getStore($storeId)->getWebsiteId();
         $tableName = $this->resourceConnection->getTableName('catalog_product_website');

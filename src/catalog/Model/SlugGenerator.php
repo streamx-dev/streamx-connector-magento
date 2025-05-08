@@ -27,7 +27,7 @@ class SlugGenerator
         }
 
         if ($this->settings->useUrlKeyAndIdToGenerateSlug() && !empty($urlKey)) {
-            return self::slugify("$urlKey-$id");
+            return "$urlKey-$id";
         }
 
         return self::slugify("$name-$id");

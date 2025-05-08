@@ -128,9 +128,10 @@ abstract class BaseAttributeData implements DataProviderInterface
         return [
             'name' => $attributeDefinition->getCode(),
             'label' => $attributeDefinition->getValue(),
-            'values' => array_map(function ($attributeValue) use ($attributeDefinition) {
-                return $this->formatAttributeValueAsArray($attributeDefinition, $attributeValue);
-            }, $attributeValues),
+            'values' => array_map(
+                fn ($attributeValue) => $this->formatAttributeValueAsArray($attributeDefinition, $attributeValue),
+                $attributeValues
+            ),
             'isFacet' => $attributeDefinition->isFacet()
         ];
     }

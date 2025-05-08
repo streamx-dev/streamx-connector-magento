@@ -12,7 +12,6 @@ use Magento\Eav\Model\Entity\Attribute as EntityAttribute;
 use Magento\Framework\DB\Select;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Store\Model\Store;
-use Zend_Db_Select;
 
 class Gallery
 {
@@ -59,8 +58,7 @@ class Gallery
         $attributeId = $this->getMediaGalleryAttributeId();
         $connection = $this->getConnection();
 
-        $mainTableAlias = 'main';
-        $positionCheckSql = $this->getConnection()->getCheckSql(
+        $positionCheckSql = $connection->getCheckSql(
             'value.position IS NULL',
             'default_value.position',
             'value.position'
@@ -69,7 +67,7 @@ class Gallery
         // Select gallery images for product
         return $connection->select()
             ->from(
-                [$mainTableAlias => $this->resource->getTableName(GalleryResource::GALLERY_TABLE)],
+                ['main' => $this->resource->getTableName(GalleryResource::GALLERY_TABLE)],
                 [
                     'value_id',
                     'media_type',
@@ -77,7 +75,7 @@ class Gallery
                 ]
             )->joinInner(
                 ['entity' => $this->resource->getTableName(GalleryResource::GALLERY_VALUE_TO_ENTITY_TABLE)],
-                $mainTableAlias . '.value_id = entity.value_id',
+                'main.value_id = entity.value_id',
                 []
             )
             ->joinLeft(
@@ -85,9 +83,9 @@ class Gallery
                 implode(
                     ' AND ',
                     [
-                        $mainTableAlias . '.value_id = value.value_id',
-                        $this->getConnection()->quoteInto('value.store_id = ?', $storeId),
-                        'value.' . $linkField . ' = entity.' . $linkField,
+                        'main.value_id = value.value_id',
+                        $connection->quoteInto('value.store_id = ?', $storeId),
+                        "value.$linkField = entity.$linkField",
                     ]
                 ),
                 []
@@ -97,25 +95,25 @@ class Gallery
                 implode(
                     ' AND ',
                     [
-                        $mainTableAlias . '.value_id = default_value.value_id',
-                        $this->getConnection()->quoteInto('default_value.store_id = ?', Store::DEFAULT_STORE_ID),
-                        'default_value.' . $linkField . ' = entity.' . $linkField,
+                        'main.value_id = default_value.value_id',
+                        $connection->quoteInto('default_value.store_id = ?', Store::DEFAULT_STORE_ID),
+                        "default_value.$linkField = entity.$linkField",
                     ]
                 ),
                 []
             )
             ->columns([
-                'row_id' => 'entity.'.$linkField,
-                'label' => $this->getConnection()->getIfNullSql('`value`.`label`', '`default_value`.`label`'),
-                'position' => $this->getConnection()->getIfNullSql('`value`.`position`', '`default_value`.`position`'),
+                'row_id' => "entity.$linkField",
+                'label' => $connection->getIfNullSql('value.label', 'default_value.label'),
+                'position' => $connection->getIfNullSql('value.position', 'default_value.position'),
                 'label_default' => 'default_value.label',
                 'position_default' => 'default_value.position',
             ])
             ->where('main.attribute_id = ?', $attributeId)
-            ->where('entity.' . $linkField . ' IN (?)', $linkFieldIds)
+            ->where("entity.$linkField IN (?)", $linkFieldIds)
             ->where('default_value.disabled is NULL or default_value.disabled != 1')
             ->where('value.disabled is NULL or value.disabled != 1')
-            ->order($positionCheckSql . ' ' . Zend_Db_Select::SQL_ASC);
+            ->order("$positionCheckSql ASC");
     }
 
     private function getConnection(): AdapterInterface
