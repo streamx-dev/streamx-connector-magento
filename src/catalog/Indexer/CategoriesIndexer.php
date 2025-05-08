@@ -6,7 +6,7 @@ use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCatalog\Model\Indexer\DataLoader\CategoryDataLoader;
 use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
 use StreamX\ConnectorCore\Api\IndexersConfigInterface;
-use StreamX\ConnectorCore\Client\StreamxAvailabilityCheckerFactory;
+use StreamX\ConnectorCore\Client\StreamxAvailabilityChecker;
 use StreamX\ConnectorCore\Client\StreamxClientFactory;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
 use StreamX\ConnectorCore\Indexer\BaseStreamxIndexer;
@@ -22,7 +22,7 @@ class CategoriesIndexer extends BaseStreamxIndexer
         LoggerInterface $logger,
         OptimizationSettings $optimizationSettings,
         StreamxClientFactory $streamxClientFactory,
-        StreamxAvailabilityCheckerFactory $streamxAvailabilityCheckerFactory,
+        StreamxAvailabilityChecker $streamxAvailabilityChecker,
         IndexersConfigInterface $indexersConfig
     ) {
         parent::__construct(
@@ -32,7 +32,7 @@ class CategoriesIndexer extends BaseStreamxIndexer
             $logger,
             $optimizationSettings,
             $streamxClientFactory,
-            $streamxAvailabilityCheckerFactory,
+            $streamxAvailabilityChecker,
             $indexersConfig->getById(CategoryProcessor::INDEXER_ID)
         );
     }
