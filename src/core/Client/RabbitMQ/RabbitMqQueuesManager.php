@@ -2,10 +2,7 @@
 
 namespace StreamX\ConnectorCore\Client\RabbitMQ;
 
-use PhpAmqpLib\Message\AMQPMessage;
-use PhpAmqpLib\Wire\AMQPTable;
 use PhpAmqpLib\Channel\AMQPChannel;
-use PhpAmqpLib\Connection\AMQPStreamConnection;
 
 /**
  * Declares main queue for Ingestion Requests, and retry queues for retrying processing failed messages. <br />

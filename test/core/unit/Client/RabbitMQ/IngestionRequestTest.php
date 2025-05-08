@@ -1,6 +1,6 @@
 <?php
 
-namespace StreamX\ConnectorCore\test\Client\RabbitMQ;
+namespace StreamX\ConnectorCore\test\unit\Client\RabbitMQ;
 
 use PHPUnit\Framework\TestCase;
 use Streamx\Clients\Ingestion\Publisher\Message;
