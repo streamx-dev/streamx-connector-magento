@@ -2,7 +2,6 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
-use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
 use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
