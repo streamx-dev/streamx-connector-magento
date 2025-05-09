@@ -28,7 +28,7 @@ class StoresControllerImpl implements StoresControllerInterface {
 
     private const CONNECTOR_ENABLE_CONFIG_KEY = 'streamx_connector_settings/general_settings/enable';
     private const RABBIT_MQ_ENABLE_CONFIG_KEY = 'streamx_connector_settings/rabbit_mq/enable';
-    private const INDEXED_STORES_CONFIG_KEY = 'streamx_connector_settings/general_settings/allowed_stores';
+    private const INDEXED_STORES_CONFIG_KEY = 'streamx_connector_settings/general_settings/indexed_stores';
 
     private WebsiteFactory $websiteFactory;
     private GroupFactory $groupFactory;

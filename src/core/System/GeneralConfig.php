@@ -20,7 +20,7 @@ class GeneralConfig extends BaseConfigurationReader
      */
     public function getIndexedStores(int $websiteId): array {
         $storeIds = parent::splitCommaSeparatedValueToArray(
-            $this->getWebsiteLevelConfigValue('allowed_stores', $websiteId)
+            $this->getWebsiteLevelConfigValue('indexed_stores', $websiteId)
         );
         return array_map('intval', $storeIds);
     }

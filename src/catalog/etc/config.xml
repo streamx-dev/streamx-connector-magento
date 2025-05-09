@@ -4,8 +4,7 @@
     <default>
         <streamx_connector_settings>
             <catalog_settings>
-                <use_url_key_to_generate_slug>0</use_url_key_to_generate_slug>
-                <use_url_key_and_id_to_generate_slug>0</use_url_key_and_id_to_generate_slug>
+                <slug_generation_strategy>0</slug_generation_strategy>
                 <export_products_not_visible_individually>0</export_products_not_visible_individually>
                 <allowed_product_types>simple,configurable,grouped</allowed_product_types>
                 <product_attributes>status,visibility,small_image,thumbnail,meta_title,meta_description,price_type,special_price,special_from_date,special_to_date,tax_class_id</product_attributes>

@@ -3,6 +3,7 @@
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\Indexer\CategoryIndexer;
+use StreamX\ConnectorCatalog\Model\Config\Source\SlugOptionsSource;
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationKeyPaths;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
@@ -66,7 +67,7 @@ class CategoryUpdateTest extends BaseAppEntityUpdateTest {
         self::removeFromStreamX($editedCategoryKey, $parentCategoryKey, $subcategory1Key, $subcategory2Key, $subcategory3Key);
 
         // when
-        ConfigurationEditUtils::setConfigurationValue(ConfigurationKeyPaths::USE_URL_KEY_AND_ID_TO_GENERATE_SLUG, '1');
+        ConfigurationEditUtils::setConfigurationValue(ConfigurationKeyPaths::SLUG_GENERATION_STRATEGY, SlugOptionsSource::URL_KEY_AND_ID);
         self::changeUrlKeyOfCategory($categoryId, $changedUrlKey);
 
         // and
@@ -84,7 +85,7 @@ class CategoryUpdateTest extends BaseAppEntityUpdateTest {
             $this->assertDataWithChangedSlugIsPublished($subcategory3Key, 'original-watches-category.json', $originalSlug, $expectedSlug);
         } finally {
             self::changeUrlKeyOfCategory($categoryId, $defaultUrlKey);
-            ConfigurationEditUtils::restoreConfigurationValue(ConfigurationKeyPaths::USE_URL_KEY_AND_ID_TO_GENERATE_SLUG);
+            ConfigurationEditUtils::restoreConfigurationValue(ConfigurationKeyPaths::SLUG_GENERATION_STRATEGY);
             $this->assertExactDataIsPublished($editedCategoryKey, 'original-gear-category.json');
         }
     }
