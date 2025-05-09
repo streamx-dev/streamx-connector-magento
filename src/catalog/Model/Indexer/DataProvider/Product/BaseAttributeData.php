@@ -194,9 +194,23 @@ abstract class BaseAttributeData implements DataProviderInterface
 
     function applySlug(array &$productData): void
     {
-        $slug = $this->slugGenerator->compute($productData);
-        $productData['slug'] = $slug;
-        $productData['url_key'] = $slug;
+        $productData['slug'] = $this->slugGenerator->compute(
+            $productData['id'],
+            $productData['name'],
+            $this->getUrlKey($productData)
+        );
+    }
+
+    private function getUrlKey(array $productData): ?string
+    {
+        $attributes = $productData['attributes'] ?? [];
+        foreach ($attributes as $attribute) {
+            if ($attribute['name'] === 'url_key') {
+                $values = $attribute['values'];
+                return !empty($values) ? $values[0]['value'] : null;
+            }
+        }
+        return null;
     }
 
     private function collectAttributeCodes(array $attributesData): array

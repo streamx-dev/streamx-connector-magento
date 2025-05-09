@@ -3,6 +3,7 @@
 namespace StreamX\ConnectorCore\test\unit\Model\Indexer\DataProvider\Category;
 
 use PHPUnit\Framework\TestCase;
+use StreamX\ConnectorCatalog\Model\Config\Source\SlugOptionsSource;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Category\CategoryDataFormatter;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Category\Children;
 use StreamX\ConnectorCatalog\Model\SlugGenerator;
@@ -13,22 +14,19 @@ class CategoryDataFormatterTest extends TestCase
     /** @test */
     public function shouldComputeSlug() {
         // test all possible combinations
-        $this->assertComputeSlug(false, false, null, 'bags-4');
-        $this->assertComputeSlug(false, false, 'abc', 'bags-4');
-        $this->assertComputeSlug(false, true, null, 'bags-4');
-        $this->assertComputeSlug(false, true, 'abc', 'abc-4');
-        $this->assertComputeSlug(true, false, null, 'bags-4');
-        $this->assertComputeSlug(true, false, 'abc', 'abc');
-        $this->assertComputeSlug(true, true, null, 'bags-4');
-        $this->assertComputeSlug(true, true, 'abc', 'abc');
+        $this->assertComputeSlug(SlugOptionsSource::NAME_AND_ID, null, 'bags-4');
+        $this->assertComputeSlug(SlugOptionsSource::NAME_AND_ID, 'abc', 'bags-4');
+        $this->assertComputeSlug(SlugOptionsSource::URL_KEY_AND_ID, null, 'bags-4');
+        $this->assertComputeSlug(SlugOptionsSource::URL_KEY_AND_ID, 'abc', 'abc-4');
+        $this->assertComputeSlug(SlugOptionsSource::URL_KEY, null, 'bags-4');
+        $this->assertComputeSlug(SlugOptionsSource::URL_KEY, 'abc', 'abc');
     }
 
-    private function assertComputeSlug(bool $useUrlKey, bool $useUrlKeyAndId, ?string $urlKey, string $expectedSlug): void
+    private function assertComputeSlug(int $slugGenerationStrategy, ?string $urlKey, string $expectedSlug): void
     {
         // given
         $catalogConfigMock = $this->createMock(CatalogConfig::class);
-        $catalogConfigMock->method('useUrlKeyToGenerateSlug')->willReturn($useUrlKey);
-        $catalogConfigMock->method('useUrlKeyAndIdToGenerateSlug')->willReturn($useUrlKeyAndId);
+        $catalogConfigMock->method('slugGenerationStrategy')->willReturn($slugGenerationStrategy);
 
         $slugGenerator = new SlugGenerator($catalogConfigMock);
 

@@ -11,12 +11,8 @@ class CatalogConfig extends BaseConfigurationReader
         parent::__construct($scopeConfig, 'catalog_settings');
     }
 
-    public function useUrlKeyToGenerateSlug(): bool {
-        return (bool)$this->getGlobalConfigValue('use_url_key_to_generate_slug');
-    }
-
-    public function useUrlKeyAndIdToGenerateSlug(): bool {
-        return (bool)$this->getGlobalConfigValue('use_url_key_and_id_to_generate_slug');
+    public function slugGenerationStrategy(): int {
+        return (int)$this->getGlobalConfigValue('slug_generation_strategy');
     }
 
     public function usePricesIndex(): bool {
