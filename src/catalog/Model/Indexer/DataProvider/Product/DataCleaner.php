@@ -12,8 +12,7 @@ class DataCleaner implements DataProviderInterface
     protected const FIELDS_TO_REMOVE = [
         'entity_id',
         'row_id',
-        'type_id',
-        'url_key'
+        'type_id'
     ];
 
     /**

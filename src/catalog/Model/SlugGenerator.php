@@ -2,6 +2,7 @@
 
 namespace StreamX\ConnectorCatalog\Model;
 
+use StreamX\ConnectorCatalog\Model\Config\Source\SlugOptionsSource;
 use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 
 class SlugGenerator
@@ -13,24 +14,21 @@ class SlugGenerator
         $this->settings = $configSettings;
     }
 
-    /**
-     * @param array $entity Product or Category. Must contain 'id' and 'name' fields, may contain 'url_key' field
-     */
-    public function compute(array $entity): string
+    public function compute(int $id, string $name, ?string $urlKey): string
     {
-        $id = $entity['id'];
-        $name = $entity['name'];
-        $urlKey = $entity['url_key'] ?? '';
-
-        if ($this->settings->useUrlKeyToGenerateSlug() && !empty($urlKey)) {
-            return $urlKey;
+        $slugGenerationStrategy = $this->settings->slugGenerationStrategy();
+        if (empty($urlKey)) {
+            $slugGenerationStrategy = SlugOptionsSource::NAME_AND_ID;
         }
 
-        if ($this->settings->useUrlKeyAndIdToGenerateSlug() && !empty($urlKey)) {
-            return "$urlKey-$id";
+        switch ($slugGenerationStrategy) {
+            case SlugOptionsSource::URL_KEY:
+                return $urlKey;
+            case SlugOptionsSource::URL_KEY_AND_ID:
+                return "$urlKey-$id";
+            default:
+                return self::slugify("$name-$id");
         }
-
-        return self::slugify("$name-$id");
     }
 
     public static function slugify(string $text): string

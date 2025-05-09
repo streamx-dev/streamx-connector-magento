@@ -124,6 +124,10 @@ class CategoryDataFormatter implements DataProviderInterface
 
     function computeSlug(array $categoryDTO): string
     {
-        return $this->slugGenerator->compute($categoryDTO);
+        return $this->slugGenerator->compute(
+            $categoryDTO[self::ID],
+            $categoryDTO[self::NAME],
+            $categoryDTO['url_key'] ?? null
+        );
     }
 }

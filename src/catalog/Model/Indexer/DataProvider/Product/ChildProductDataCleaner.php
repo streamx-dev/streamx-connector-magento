@@ -8,7 +8,6 @@ class ChildProductDataCleaner extends DataCleaner
         'entity_id',
         'row_id',
         'type_id',
-        'url_key',
         'parent_id',
         'parent_ids'
     ];
