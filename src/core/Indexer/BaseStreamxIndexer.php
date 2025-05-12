@@ -5,13 +5,11 @@ namespace StreamX\ConnectorCore\Indexer;
 use Exception;
 use Magento\Framework\Indexer\AbstractProcessor;
 use Magento\Framework\Indexer\ActionInterface as IndexerAction;
-use Magento\Framework\Indexer\IndexerRegistry;
 use Magento\Framework\Indexer\SaveHandler\Batch;
 use Magento\Framework\Mview\ActionInterface as MViewAction;
 use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCore\Api\BasicDataLoader;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
-use StreamX\ConnectorCore\Api\IndexersConfigInterface;
 use StreamX\ConnectorCore\Client\StreamxAvailabilityCheckerFactory;
 use StreamX\ConnectorCore\Client\StreamxClient;
 use StreamX\ConnectorCore\Client\StreamxClientFactory;
@@ -38,25 +36,18 @@ abstract class BaseStreamxIndexer extends AbstractProcessor implements IndexerAc
     private string $indexerId;
 
     public function __construct(
-        GeneralConfig $connectorConfig,
-        IndexedStoresProvider $indexedStoresProvider,
-        BasicDataLoader $entityDataLoader,
-        LoggerInterface $logger,
-        OptimizationSettings $optimizationSettings,
-        StreamxClientFactory $streamxClientFactory,
-        StreamxAvailabilityCheckerFactory $streamxAvailabilityCheckerFactory,
-        IndexerRegistry $indexerRegistry,
-        IndexersConfigInterface $indexersConfig
+        StreamxIndexerServices $indexerServices,
+        BasicDataLoader $entityDataLoader
     ) {
-        parent::__construct($indexerRegistry);
-        $this->connectorConfig = $connectorConfig;
-        $this->indexedStoresProvider = $indexedStoresProvider;
+        parent::__construct($indexerServices->getIndexerRegistry());
+        $this->connectorConfig = $indexerServices->getConnectorConfig();
+        $this->indexedStoresProvider = $indexerServices->getIndexedStoresProvider();
         $this->entityDataLoader = $entityDataLoader;
-        $this->logger = $logger;
-        $this->optimizationSettings = $optimizationSettings;
-        $this->streamxClientFactory = $streamxClientFactory;
-        $this->streamxAvailabilityCheckerFactory = $streamxAvailabilityCheckerFactory;
-        $indexerDefinition = $indexersConfig->getById(static::INDEXER_ID);
+        $this->logger = $indexerServices->getLogger();
+        $this->optimizationSettings = $indexerServices->getOptimizationSettings();
+        $this->streamxClientFactory = $indexerServices->getStreamxClientFactory();
+        $this->streamxAvailabilityCheckerFactory = $indexerServices->getStreamxAvailabilityCheckerFactory();
+        $indexerDefinition = $indexerServices->getIndexersConfig()->getById(static::INDEXER_ID);
         $this->dataProviders = $indexerDefinition->getDataProviders();
         $this->indexerId = $indexerDefinition->getIndexerId();
     }

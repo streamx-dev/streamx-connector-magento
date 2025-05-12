@@ -2,20 +2,13 @@
 
 namespace StreamX\ConnectorCatalog\Indexer;
 
-use Magento\Framework\Indexer\IndexerRegistry;
-use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCatalog\Model\Attributes\AttributeDefinition;
 use StreamX\ConnectorCatalog\Model\Indexer\DataLoader\AttributeDataLoader;
 use StreamX\ConnectorCatalog\Model\Indexer\DataLoader\ProductDataLoader;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product;
-use StreamX\ConnectorCore\Api\IndexersConfigInterface;
-use StreamX\ConnectorCore\Client\StreamxAvailabilityCheckerFactory;
-use StreamX\ConnectorCore\Client\StreamxClientFactory;
-use StreamX\ConnectorCore\Config\OptimizationSettings;
-use StreamX\ConnectorCore\Indexer\BaseStreamxIndexer;
-use StreamX\ConnectorCore\Indexer\IndexedStoresProvider;
 use StreamX\ConnectorCore\Client\StreamxClient;
-use StreamX\ConnectorCore\System\GeneralConfig;
+use StreamX\ConnectorCore\Indexer\BaseStreamxIndexer;
+use StreamX\ConnectorCore\Indexer\StreamxIndexerServices;
 use Traversable;
 
 // TODO implement checking if only relevant attribute properties have changed to trigger publishing products
@@ -28,30 +21,13 @@ class AttributeIndexer extends BaseStreamxIndexer {
     private ProductDataLoader $productDataLoader;
 
     public function __construct(
-        GeneralConfig $connectorConfig,
-        IndexedStoresProvider $indexedStoresProvider,
+        StreamxIndexerServices $indexerServices,
         AttributeDataLoader $dataLoader,
-        LoggerInterface $logger,
-        OptimizationSettings $optimizationSettings,
-        StreamxClientFactory $streamxClientFactory,
-        StreamxAvailabilityCheckerFactory $streamxAvailabilityCheckerFactory,
-        IndexerRegistry $indexerRegistry,
-        IndexersConfigInterface $indexersConfig,
         Product $productModel,
         ProductIndexer $productsIndexer,
         ProductDataLoader $productDataLoader
     ) {
-        parent::__construct(
-            $connectorConfig,
-            $indexedStoresProvider,
-            $dataLoader,
-            $logger,
-            $optimizationSettings,
-            $streamxClientFactory,
-            $streamxAvailabilityCheckerFactory,
-            $indexerRegistry,
-            $indexersConfig
-        );
+        parent::__construct($indexerServices, $dataLoader);
         $this->productModel = $productModel;
         $this->productsIndexer = $productsIndexer;
         $this->productDataLoader = $productDataLoader;
