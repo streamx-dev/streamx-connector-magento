@@ -38,9 +38,15 @@ class UpdateAttributeDataPlugin {
     }
 
     /**
-     * Called just before attribute is deleted, but it still exists: collect IDs of products that still use it
+     * Called just before attribute is deleted, but it still exists: collect IDs of products that still use it.
+     * When the delete operation is committed - reindex products that used this attribute (see afterAfterDeleteCommit)
      */
     public function beforeDelete(Attribute $attribute): Attribute {
+        if ($this->productIndexer->isIndexerScheduled()) {
+            // let the MView feature detect which products to reindex due to one of their attributes being deleted
+            return $attribute;
+        }
+
         $attributeId = $attribute->getId();
 
         $productIdsToReindex = [];
@@ -55,11 +61,15 @@ class UpdateAttributeDataPlugin {
     }
 
     /**
-     * Called after attribute was deleted: reindex the attribute, and reindex all products that were using it
+     * Called after attribute was deleted: reindex all products that were using it
      */
     public function afterAfterDeleteCommit(Attribute $attribute): Attribute {
+        if ($this->productIndexer->isIndexerScheduled()) {
+            // in such case, product-attribute relation rows will be deleted from database, and IDs of the affected products will be collected by the MView feature. Products indexer will be executed according to schedule
+            return $attribute;
+        }
+
         $attributeId = $attribute->getId();
-        $this->attributeIndexer->reindexRow($attributeId);
 
         $productIdsToReindex = $this->productIdsToReindexByAttributeId[$attributeId] ?? null;
         if ($productIdsToReindex) {
