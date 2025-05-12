@@ -20,7 +20,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
     use ExceptionLogger;
 
     private GeneralConfig $connectorConfig;
-    private IndexableStoresProvider $indexableStoresProvider;
+    private IndexedStoresProvider $indexedStoresProvider;
     private BasicDataLoader $entityDataLoader;
     protected LoggerInterface $logger;
     private OptimizationSettings $optimizationSettings;
@@ -34,7 +34,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
 
     public function __construct(
         GeneralConfig $connectorConfig,
-        IndexableStoresProvider $indexableStoresProvider,
+        IndexedStoresProvider $indexedStoresProvider,
         BasicDataLoader $entityDataLoader,
         LoggerInterface $logger,
         OptimizationSettings $optimizationSettings,
@@ -43,7 +43,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
         IndexerDefinition $indexerDefinition
     ) {
         $this->connectorConfig = $connectorConfig;
-        $this->indexableStoresProvider = $indexableStoresProvider;
+        $this->indexedStoresProvider = $indexedStoresProvider;
         $this->entityDataLoader = $entityDataLoader;
         $this->logger = $logger;
         $this->optimizationSettings = $optimizationSettings;
@@ -87,7 +87,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
             return;
         }
 
-        foreach ($this->indexableStoresProvider->getStores() as $store) {
+        foreach ($this->indexedStoresProvider->getStores() as $store) {
             $storeId = (int) $store->getId();
 
             if ($this->optimizationSettings->shouldPerformStreamxAvailabilityCheck()) {

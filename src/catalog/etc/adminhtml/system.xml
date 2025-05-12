@@ -35,14 +35,14 @@
                     <source_model>StreamX\ConnectorCatalog\Model\Config\Source\Product\ProductAttributeSource</source_model>
                     <backend_model>StreamX\ConnectorCatalog\Model\Config\Backend\Attributes</backend_model>
                     <can_be_empty>1</can_be_empty>
-                    <comment>Select which product attributes should be exported. Some attributes will always be exported: name, image, description, price, url_key, media_gallery</comment>
+                    <comment>Select which product attributes should be exported. Some attributes will always be exported: name, image, description, price, url_key, media_gallery. Empty selection will cause exporting all attributes</comment>
                 </field>
                 <field id="child_product_attributes" translate="label comment" type="multiselect" sortOrder="103" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Configurable children product attributes to export</label>
                     <source_model>StreamX\ConnectorCatalog\Model\Config\Source\Product\ChildProductAttributeSource</source_model>
                     <backend_model>StreamX\ConnectorCatalog\Model\Config\Backend\Attributes</backend_model>
                     <can_be_empty>1</can_be_empty>
-                    <comment>Select which child (variant) product attributes should be exported. Some attributes will always be exported: name, image, price, url_key, media_gallery and attributes used for creating configurable children (like color, size, etc)</comment>
+                    <comment>Select which child (variant) product attributes should be exported. Some attributes will always be exported: name, image, description, price, url_key, media_gallery and attributes used for creating configurable children (like color, size, etc.). Empty selection will cause exporting all attributes</comment>
                 </field>
                 <field id="use_prices_index" type="select" translate="label comment" sortOrder="300" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Load indexed prices when publishing products</label>
