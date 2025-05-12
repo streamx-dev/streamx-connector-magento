@@ -3,6 +3,7 @@
 namespace StreamX\ConnectorCatalog\Model;
 
 use Magento\Catalog\Api\Data\CategoryInterface;
+use Magento\Catalog\Model\Category;
 use Magento\Eav\Model\Config;
 use Magento\Framework\EntityManager\MetadataPool;
 
@@ -18,7 +19,7 @@ class CategoryMetaData {
         $this->entityTable = $categoryMetaData->getEntityTable();
         $this->entityIdField = $categoryMetaData->getIdentifierField();
         $this->linkField = $categoryMetaData->getLinkField();
-        $this->entityTypeId = (int) $eavConfig->getEntityType('catalog_category')->getId();
+        $this->entityTypeId = (int) $eavConfig->getEntityType(Category::ENTITY)->getId();
     }
 
     public function getEntityTable(): string {
