@@ -42,4 +42,11 @@ class IndexerManagementImpl implements IndexerManagementInterface {
             throw new InvalidArgumentException("Invalid mode '$mode'");
         }
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function runIndexer(string $indexerId, array $entityIds): void {
+        $this->indexerRegistry->get($indexerId)->reindexList($entityIds);
+    }
 }

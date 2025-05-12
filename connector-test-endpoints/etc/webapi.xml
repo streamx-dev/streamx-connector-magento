@@ -137,6 +137,13 @@
     </resources>
   </route>
 
+  <route url="/V1/indexer/run" method="PUT">
+    <service class="StreamX\ConnectorTestTools\Api\IndexerManagementInterface" method="runIndexer"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+
   <route url="/V1/products/import" method="PUT">
     <service class="StreamX\ConnectorTestEndpoints\Api\ProductImportControllerInterface" method="importProducts"/>
     <resources>

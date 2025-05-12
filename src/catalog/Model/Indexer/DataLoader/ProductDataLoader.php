@@ -28,7 +28,6 @@ class ProductDataLoader implements BasicDataLoader {
      */
     public function loadData(int $storeId, array $productIds): Traversable {
         if (empty($productIds)) {
-            // TODO this scenario is not covered by any test
             $productIds = $this->resourceModel->getAllProductIds($storeId);
             if (empty($productIds)) {
                 return []; // no products available for the store
