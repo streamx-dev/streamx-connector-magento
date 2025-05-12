@@ -4,14 +4,14 @@ namespace StreamX\ConnectorCatalog\test\integration\DirectDbEntityUpdateStreamxP
 
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
 use Magento\Catalog\Model\Product\Visibility;
-use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
+use StreamX\ConnectorCatalog\Indexer\ProductIndexer;
 
 /**
  * @inheritdoc
  */
 class MultistoreProductUnpublishTest extends BaseDirectDbEntityUpdateTest {
 
-    const INDEXER_IDS = [ProductProcessor::INDEXER_ID];
+    const INDEXER_IDS = [ProductIndexer::INDEXER_ID];
 
     /** @test */
     public function shouldUnpublishProductFromStore_WhenProductSwitchedToNotEligibleInThatStore() {

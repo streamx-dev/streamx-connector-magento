@@ -3,9 +3,9 @@
 namespace StreamX\ConnectorCatalog\test\integration;
 
 use PHPUnit\Framework\TestCase;
-use StreamX\ConnectorCatalog\Model\Indexer\AttributeProcessor;
-use StreamX\ConnectorCatalog\Model\Indexer\CategoryProcessor;
-use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
+use StreamX\ConnectorCatalog\Indexer\AttributeIndexer;
+use StreamX\ConnectorCatalog\Indexer\CategoryIndexer;
+use StreamX\ConnectorCatalog\Indexer\ProductIndexer;
 use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageReportGenerator;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
@@ -66,7 +66,7 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
     }
 
     private static function loadInitialIndexerModes(): void {
-        foreach ([ProductProcessor::INDEXER_ID, CategoryProcessor::INDEXER_ID, AttributeProcessor::INDEXER_ID] as $indexerId) {
+        foreach ([ProductIndexer::INDEXER_ID, CategoryIndexer::INDEXER_ID, AttributeIndexer::INDEXER_ID] as $indexerId) {
             self::$initialIndexerModes[$indexerId] = self::getIndexerMode($indexerId);
         }
     }

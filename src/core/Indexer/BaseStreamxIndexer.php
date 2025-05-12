@@ -3,20 +3,25 @@
 namespace StreamX\ConnectorCore\Indexer;
 
 use Exception;
+use Magento\Framework\Indexer\AbstractProcessor;
+use Magento\Framework\Indexer\ActionInterface as IndexerAction;
+use Magento\Framework\Indexer\IndexerRegistry;
 use Magento\Framework\Indexer\SaveHandler\Batch;
+use Magento\Framework\Mview\ActionInterface as MViewAction;
 use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCore\Api\BasicDataLoader;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
+use StreamX\ConnectorCore\Api\IndexersConfigInterface;
 use StreamX\ConnectorCore\Client\StreamxAvailabilityCheckerFactory;
 use StreamX\ConnectorCore\Client\StreamxClient;
 use StreamX\ConnectorCore\Client\StreamxClientFactory;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
-use StreamX\ConnectorCore\Index\IndexerDefinition;
 use StreamX\ConnectorCore\System\GeneralConfig;
 use StreamX\ConnectorCore\Traits\ExceptionLogger;
 use Traversable;
 
-abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionInterface, \Magento\Framework\Mview\ActionInterface {
+abstract class BaseStreamxIndexer extends AbstractProcessor implements IndexerAction, MViewAction {
+
     use ExceptionLogger;
 
     private GeneralConfig $connectorConfig;
@@ -40,8 +45,10 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
         OptimizationSettings $optimizationSettings,
         StreamxClientFactory $streamxClientFactory,
         StreamxAvailabilityCheckerFactory $streamxAvailabilityCheckerFactory,
-        IndexerDefinition $indexerDefinition
+        IndexerRegistry $indexerRegistry,
+        IndexersConfigInterface $indexersConfig
     ) {
+        parent::__construct($indexerRegistry);
         $this->connectorConfig = $connectorConfig;
         $this->indexedStoresProvider = $indexedStoresProvider;
         $this->entityDataLoader = $entityDataLoader;
@@ -49,6 +56,7 @@ abstract class BaseStreamxIndexer implements \Magento\Framework\Indexer\ActionIn
         $this->optimizationSettings = $optimizationSettings;
         $this->streamxClientFactory = $streamxClientFactory;
         $this->streamxAvailabilityCheckerFactory = $streamxAvailabilityCheckerFactory;
+        $indexerDefinition = $indexersConfig->getById(static::INDEXER_ID);
         $this->dataProviders = $indexerDefinition->getDataProviders();
         $this->indexerId = $indexerDefinition->getIndexerId();
     }

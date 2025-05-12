@@ -2,7 +2,7 @@
 
 namespace StreamX\ConnectorCatalog\Plugin\Mview;
 
-use StreamX\ConnectorCatalog\Model\Indexer\ProductProcessor;
+use StreamX\ConnectorCatalog\Indexer\ProductIndexer;
 use StreamX\ConnectorCatalog\Model\SystemConfig\CatalogConfig;
 use Magento\Framework\Mview\ViewInterface;
 
@@ -31,6 +31,6 @@ class ViewPlugin
 
     private function isStreamxProductIndexer(ViewInterface $subject): bool
     {
-        return ProductProcessor::INDEXER_ID === $subject->getId();
+        return ProductIndexer::INDEXER_ID === $subject->getId();
     }
 }
