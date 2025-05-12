@@ -138,7 +138,7 @@
   </route>
 
   <route url="/V1/indexer/run" method="PUT">
-    <service class="StreamX\ConnectorTestTools\Api\IndexerManagementInterface" method="runIndexer"/>
+    <service class="StreamX\ConnectorTestEndpoints\Api\IndexerManagementInterface" method="runIndexer"/>
     <resources>
       <resource ref="anonymous"/>
     </resources>
