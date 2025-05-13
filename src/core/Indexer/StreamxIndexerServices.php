@@ -5,6 +5,7 @@ namespace StreamX\ConnectorCore\Indexer;
 use Magento\Framework\Indexer\IndexerRegistry;
 use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCore\Api\IndexersConfigInterface;
+use StreamX\ConnectorCore\Client\RabbitMQ\RabbitMqConfiguration;
 use StreamX\ConnectorCore\Client\StreamxAvailabilityChecker;
 use StreamX\ConnectorCore\Client\StreamxClient;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
@@ -18,6 +19,7 @@ class StreamxIndexerServices {
     private OptimizationSettings $optimizationSettings;
     private StreamxClient $streamxClient;
     private StreamxAvailabilityChecker $streamxAvailabilityChecker;
+    private RabbitMqConfiguration $rabbitMqConfiguration;
     private IndexerRegistry $indexerRegistry;
     private IndexersConfigInterface $indexersConfig;
 
@@ -28,6 +30,7 @@ class StreamxIndexerServices {
         OptimizationSettings $optimizationSettings,
         StreamxClient $streamxClient,
         StreamxAvailabilityChecker $streamxAvailabilityChecker,
+        RabbitMqConfiguration $rabbitMqConfiguration,
         IndexerRegistry $indexerRegistry,
         IndexersConfigInterface $indexersConfig
     ) {
@@ -37,6 +40,7 @@ class StreamxIndexerServices {
         $this->optimizationSettings = $optimizationSettings;
         $this->streamxClient = $streamxClient;
         $this->streamxAvailabilityChecker = $streamxAvailabilityChecker;
+        $this->rabbitMqConfiguration = $rabbitMqConfiguration;
         $this->indexerRegistry = $indexerRegistry;
         $this->indexersConfig = $indexersConfig;
     }
@@ -63,6 +67,10 @@ class StreamxIndexerServices {
 
     public function getStreamxAvailabilityChecker(): StreamxAvailabilityChecker {
         return $this->streamxAvailabilityChecker;
+    }
+
+    public function getRabbitMqConfiguration(): RabbitMqConfiguration {
+        return $this->rabbitMqConfiguration;
     }
 
     public function getIndexerRegistry(): IndexerRegistry {

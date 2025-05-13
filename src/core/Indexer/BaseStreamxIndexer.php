@@ -11,6 +11,7 @@ use Magento\Store\Api\Data\StoreInterface;
 use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCore\Api\BasicDataLoader;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
+use StreamX\ConnectorCore\Client\RabbitMQ\RabbitMqConfiguration;
 use StreamX\ConnectorCore\Client\StreamxAvailabilityChecker;
 use StreamX\ConnectorCore\Client\StreamxClient;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
@@ -29,6 +30,7 @@ abstract class BaseStreamxIndexer extends AbstractProcessor implements IndexerAc
     private OptimizationSettings $optimizationSettings;
     private StreamxClient $streamxClient;
     private StreamxAvailabilityChecker $streamxAvailabilityChecker;
+    private RabbitMqConfiguration $rabbitMqConfiguration;
     /**
      * @var DataProviderInterface[]
      */
@@ -47,6 +49,7 @@ abstract class BaseStreamxIndexer extends AbstractProcessor implements IndexerAc
         $this->optimizationSettings = $indexerServices->getOptimizationSettings();
         $this->streamxClient = $indexerServices->getStreamxClient();
         $this->streamxAvailabilityChecker = $indexerServices->getStreamxAvailabilityChecker();
+        $this->rabbitMqConfiguration = $indexerServices->getRabbitMqConfiguration();
         $indexerDefinition = $indexerServices->getIndexersConfig()->getById(static::INDEXER_ID);
         $this->dataProviders = $indexerDefinition->getDataProviders();
         $this->indexerId = $indexerDefinition->getIndexerId();
@@ -86,7 +89,10 @@ abstract class BaseStreamxIndexer extends AbstractProcessor implements IndexerAc
             return;
         }
 
-        $shouldPerformStreamxAvailabilityCheck = $this->optimizationSettings->shouldPerformStreamxAvailabilityCheck();
+        $shouldPerformStreamxAvailabilityCheck =
+            $this->optimizationSettings->shouldPerformStreamxAvailabilityCheck()
+            &&
+            !$this->rabbitMqConfiguration->isEnabled(); // if RabbitMQ is enabled - we don't need to check for StreamX availability, and allow waiting for it to become available using retry queues
 
         foreach ($this->indexedStoresProvider->getStores() as $store) {
             $storeId = (int) $store->getId();
