@@ -5,7 +5,7 @@ namespace StreamX\ConnectorCore\Indexer;
 use Magento\Framework\Indexer\IndexerRegistry;
 use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCore\Api\IndexersConfigInterface;
-use StreamX\ConnectorCore\Client\StreamxAvailabilityCheckerFactory;
+use StreamX\ConnectorCore\Client\StreamxAvailabilityChecker;
 use StreamX\ConnectorCore\Client\StreamxClientFactory;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
 use StreamX\ConnectorCore\System\GeneralConfig;
@@ -17,7 +17,7 @@ class StreamxIndexerServices {
     private LoggerInterface $logger;
     private OptimizationSettings $optimizationSettings;
     private StreamxClientFactory $streamxClientFactory;
-    private StreamxAvailabilityCheckerFactory $streamxAvailabilityCheckerFactory;
+    private StreamxAvailabilityChecker $streamxAvailabilityChecker;
     private IndexerRegistry $indexerRegistry;
     private IndexersConfigInterface $indexersConfig;
 
@@ -27,7 +27,7 @@ class StreamxIndexerServices {
         LoggerInterface $logger,
         OptimizationSettings $optimizationSettings,
         StreamxClientFactory $streamxClientFactory,
-        StreamxAvailabilityCheckerFactory $streamxAvailabilityCheckerFactory,
+        StreamxAvailabilityChecker $streamxAvailabilityChecker,
         IndexerRegistry $indexerRegistry,
         IndexersConfigInterface $indexersConfig
     ) {
@@ -36,7 +36,7 @@ class StreamxIndexerServices {
         $this->logger = $logger;
         $this->optimizationSettings = $optimizationSettings;
         $this->streamxClientFactory = $streamxClientFactory;
-        $this->streamxAvailabilityCheckerFactory = $streamxAvailabilityCheckerFactory;
+        $this->streamxAvailabilityChecker = $streamxAvailabilityChecker;
         $this->indexerRegistry = $indexerRegistry;
         $this->indexersConfig = $indexersConfig;
     }
@@ -61,8 +61,8 @@ class StreamxIndexerServices {
         return $this->streamxClientFactory;
     }
 
-    public function getStreamxAvailabilityCheckerFactory(): StreamxAvailabilityCheckerFactory {
-        return $this->streamxAvailabilityCheckerFactory;
+    public function getStreamxAvailabilityChecker(): StreamxAvailabilityChecker {
+        return $this->streamxAvailabilityChecker;
     }
 
     public function getIndexerRegistry(): IndexerRegistry {

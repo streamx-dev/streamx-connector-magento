@@ -4,6 +4,7 @@ namespace StreamX\ConnectorCatalog\test\integration;
 
 use StreamX\ConnectorCatalog\test\integration\utils\ValidationFileUtils;
 use StreamX\ConnectorCore\Client\StreamxAvailabilityChecker;
+use StreamX\ConnectorCore\Client\StreamxPublisherFactory;
 
 class StreamxAvailabilityCheckerTest extends BaseStreamxTest {
 
@@ -24,7 +25,7 @@ class StreamxAvailabilityCheckerTest extends BaseStreamxTest {
         $checker = $this->createChecker($restIngestionUrl);
 
         // then
-        $this->assertTrue($checker->isStreamxAvailable());
+        $this->assertTrue($checker->isStreamxAvailable(self::STORE_ID));
     }
 
     /** @test */
@@ -36,7 +37,7 @@ class StreamxAvailabilityCheckerTest extends BaseStreamxTest {
         $checker = $this->createChecker($restIngestionUrl);
 
         // then
-        $this->assertFalse($checker->isStreamxAvailable());
+        $this->assertFalse($checker->isStreamxAvailable(self::STORE_ID));
     }
 
     /** @test */
@@ -48,13 +49,14 @@ class StreamxAvailabilityCheckerTest extends BaseStreamxTest {
         $checker = $this->createChecker($restIngestionUrl);
 
         // then
-        $this->assertFalse($checker->isStreamxAvailable());
+        $this->assertFalse($checker->isStreamxAvailable(self::STORE_ID));
     }
 
     private function createChecker(string $restIngestionUrl): StreamxAvailabilityChecker {
         $loggerMock = $this->createLoggerMock();
         $clientConfigurationMock = $this->createClientConfigurationMock($restIngestionUrl);
-        return new StreamxAvailabilityChecker($loggerMock, $clientConfigurationMock, self::STORE_ID);
+        $streamxPublisherFactory = new StreamxPublisherFactory($clientConfigurationMock);
+        return new StreamxAvailabilityChecker($loggerMock, $streamxPublisherFactory);
     }
 
     private static function changedRestIngestionUrl(string $urlPartName, $newValue): string {

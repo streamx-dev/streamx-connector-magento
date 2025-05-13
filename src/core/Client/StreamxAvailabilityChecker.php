@@ -12,19 +12,20 @@ class StreamxAvailabilityChecker {
 
     private LoggerInterface $logger;
     private Publisher $schemasFetcher;
+    private StreamxPublisherFactory $streamxPublisherFactory;
 
     public function __construct(
         LoggerInterface $logger,
-        StreamxClientConfiguration $configuration,
-        int $storeId
+        StreamxPublisherFactory $streamxPublisherFactory
     ) {
         $this->logger = $logger;
-        $this->schemasFetcher = StreamxPublisherFactory::createStreamxPublisher($configuration, $storeId, false);
+        $this->streamxPublisherFactory = $streamxPublisherFactory;
     }
 
-    public function isStreamxAvailable(): bool {
+    public function isStreamxAvailable(int $storeId): bool {
         try {
-            $schema = $this->schemasFetcher->fetchSchema();
+            $schemasFetcher = $this->streamxPublisherFactory->getOrCreateStreamxPublisher($storeId, false);
+            $schema = $schemasFetcher->fetchSchema();
             if (str_contains($schema, 'IngestionMessage')) {
                 return true;
             }

@@ -10,7 +10,7 @@ use Magento\Framework\Mview\ActionInterface as MViewAction;
 use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCore\Api\BasicDataLoader;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
-use StreamX\ConnectorCore\Client\StreamxAvailabilityCheckerFactory;
+use StreamX\ConnectorCore\Client\StreamxAvailabilityChecker;
 use StreamX\ConnectorCore\Client\StreamxClient;
 use StreamX\ConnectorCore\Client\StreamxClientFactory;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
@@ -28,7 +28,7 @@ abstract class BaseStreamxIndexer extends AbstractProcessor implements IndexerAc
     protected LoggerInterface $logger;
     private OptimizationSettings $optimizationSettings;
     private StreamxClientFactory $streamxClientFactory;
-    private StreamxAvailabilityCheckerFactory $streamxAvailabilityCheckerFactory;
+    private StreamxAvailabilityChecker $streamxAvailabilityChecker;
     /**
      * @var DataProviderInterface[]
      */
@@ -46,7 +46,7 @@ abstract class BaseStreamxIndexer extends AbstractProcessor implements IndexerAc
         $this->logger = $indexerServices->getLogger();
         $this->optimizationSettings = $indexerServices->getOptimizationSettings();
         $this->streamxClientFactory = $indexerServices->getStreamxClientFactory();
-        $this->streamxAvailabilityCheckerFactory = $indexerServices->getStreamxAvailabilityCheckerFactory();
+        $this->streamxAvailabilityChecker = $indexerServices->getStreamxAvailabilityChecker();
         $indexerDefinition = $indexerServices->getIndexersConfig()->getById(static::INDEXER_ID);
         $this->dataProviders = $indexerDefinition->getDataProviders();
         $this->indexerId = $indexerDefinition->getIndexerId();
@@ -86,15 +86,14 @@ abstract class BaseStreamxIndexer extends AbstractProcessor implements IndexerAc
             return;
         }
 
+        $shouldPerformStreamxAvailabilityCheck = $this->optimizationSettings->shouldPerformStreamxAvailabilityCheck();
+
         foreach ($this->indexedStoresProvider->getStores() as $store) {
             $storeId = (int) $store->getId();
 
-            if ($this->optimizationSettings->shouldPerformStreamxAvailabilityCheck()) {
-                $availabilityChecker = $this->streamxAvailabilityCheckerFactory->create(['storeId' => $storeId]);
-                if (!$availabilityChecker->isStreamxAvailable()) {
-                    $this->logger->info("Cannot reindex $this->indexerId for store $storeId - StreamX is not available");
-                    continue;
-                }
+            if ($shouldPerformStreamxAvailabilityCheck && !$this->streamxAvailabilityChecker->isStreamxAvailable($storeId)) {
+                $this->logger->info("Cannot reindex $this->indexerId for store $storeId - StreamX is not available");
+                continue;
             }
 
             $this->logger->info("Start indexing $this->indexerId for store $storeId");

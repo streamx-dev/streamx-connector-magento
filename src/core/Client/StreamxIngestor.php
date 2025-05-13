@@ -7,19 +7,17 @@ use Psr\Log\LoggerInterface;
 use Streamx\Clients\Ingestion\Exceptions\StreamxClientException;
 use Streamx\Clients\Ingestion\Impl\MessageStatus;
 use Streamx\Clients\Ingestion\Publisher\Message;
-use Streamx\Clients\Ingestion\Publisher\Publisher;
 use StreamX\ConnectorCore\Traits\ExceptionLogger;
 
 class StreamxIngestor {
     use ExceptionLogger;
 
     private LoggerInterface $logger;
-    private StreamxClientConfiguration $clientConfiguration;
-    private array $streamxPublishers = []; // by store ID
+    private StreamxPublisherFactory $streamxPublisherFactory;
 
-    public function __construct(LoggerInterface $logger, StreamxClientConfiguration $clientConfiguration) {
+    public function __construct(LoggerInterface $logger, StreamxPublisherFactory $streamxPublisherFactory) {
         $this->logger = $logger;
-        $this->clientConfiguration = $clientConfiguration;
+        $this->streamxPublisherFactory = $streamxPublisherFactory;
     }
 
     /**
@@ -32,19 +30,12 @@ class StreamxIngestor {
         $action = implode(', ', array_unique(array_column($ingestionMessages, 'action')));
         $this->logger->info("Executing IngestionRequest for store $storeId with action $action and keys " . json_encode($keys));
 
-        $streamxPublisher = $this->getOrCreateStreamxPublisher($storeId);
+        $streamxPublisher = $this->streamxPublisherFactory->getOrCreateStreamxPublisher($storeId, true);
         $messageStatuses = $streamxPublisher->sendMulti($ingestionMessages);
 
         $success = $this->isEachStatusSuccess($ingestionMessages, $messageStatuses);
         $this->logger->info("Finished executing ingestion request with result: $success");
         return $success;
-    }
-
-    private function getOrCreateStreamxPublisher(int $storeId): Publisher {
-        if (!isset($this->streamxPublishers[$storeId])) {
-            $this->streamxPublishers[$storeId] = StreamxPublisherFactory::createStreamxPublisher($this->clientConfiguration, $storeId, true);
-        }
-        return $this->streamxPublishers[$storeId];
     }
 
     /**
