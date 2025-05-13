@@ -7,12 +7,12 @@ use Magento\Framework\Indexer\AbstractProcessor;
 use Magento\Framework\Indexer\ActionInterface as IndexerAction;
 use Magento\Framework\Indexer\SaveHandler\Batch;
 use Magento\Framework\Mview\ActionInterface as MViewAction;
+use Magento\Store\Api\Data\StoreInterface;
 use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCore\Api\BasicDataLoader;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 use StreamX\ConnectorCore\Client\StreamxAvailabilityChecker;
 use StreamX\ConnectorCore\Client\StreamxClient;
-use StreamX\ConnectorCore\Client\StreamxClientFactory;
 use StreamX\ConnectorCore\Config\OptimizationSettings;
 use StreamX\ConnectorCore\System\GeneralConfig;
 use StreamX\ConnectorCore\Traits\ExceptionLogger;
@@ -27,7 +27,7 @@ abstract class BaseStreamxIndexer extends AbstractProcessor implements IndexerAc
     private BasicDataLoader $entityDataLoader;
     protected LoggerInterface $logger;
     private OptimizationSettings $optimizationSettings;
-    private StreamxClientFactory $streamxClientFactory;
+    private StreamxClient $streamxClient;
     private StreamxAvailabilityChecker $streamxAvailabilityChecker;
     /**
      * @var DataProviderInterface[]
@@ -45,7 +45,7 @@ abstract class BaseStreamxIndexer extends AbstractProcessor implements IndexerAc
         $this->entityDataLoader = $entityDataLoader;
         $this->logger = $indexerServices->getLogger();
         $this->optimizationSettings = $indexerServices->getOptimizationSettings();
-        $this->streamxClientFactory = $indexerServices->getStreamxClientFactory();
+        $this->streamxClient = $indexerServices->getStreamxClient();
         $this->streamxAvailabilityChecker = $indexerServices->getStreamxAvailabilityChecker();
         $indexerDefinition = $indexerServices->getIndexersConfig()->getById(static::INDEXER_ID);
         $this->dataProviders = $indexerDefinition->getDataProviders();
@@ -98,21 +98,20 @@ abstract class BaseStreamxIndexer extends AbstractProcessor implements IndexerAc
 
             $this->logger->info("Start indexing $this->indexerId for store $storeId");
             $entities = $this->entityDataLoader->loadData($storeId, $ids);
-            $client = $this->streamxClientFactory->create(['store' => $store]);
-            $this->ingestEntities($entities, $storeId, $client);
+            $this->ingestEntities($entities, $store);
             $this->logger->info("Finished indexing $this->indexerId for store $storeId");
         }
     }
 
-    protected function ingestEntities(Traversable $entities, int $storeId, StreamxClient $client): void {
+    protected function ingestEntities(Traversable $entities, StoreInterface $store): void {
         $batchSize = $this->optimizationSettings->getBatchIndexingSize();
 
         foreach ((new Batch())->getItems($entities, $batchSize) as $entitiesBatch) {
-            $this->processEntitiesBatch($entitiesBatch, $storeId, $client);
+            $this->processEntitiesBatch($entitiesBatch, $store);
         }
     }
 
-    private function processEntitiesBatch(array $entities, int $storeId, StreamxClient $client): void {
+    private function processEntitiesBatch(array $entities, StoreInterface $store): void {
         $entitiesToPublish = [];
         $idsToUnpublish = [];
         foreach ($entities as $id => $entity) {
@@ -124,15 +123,16 @@ abstract class BaseStreamxIndexer extends AbstractProcessor implements IndexerAc
         }
 
         if (!empty($entitiesToPublish)) {
-            $this->addDataAndPublish($entitiesToPublish, $storeId, $client);
+            $this->addDataAndPublish($entitiesToPublish, $store);
         }
 
         if (!empty($idsToUnpublish)) {
-            $this->unpublish($idsToUnpublish, $client);
+            $this->unpublish($idsToUnpublish, $store);
         }
     }
 
-    private function addDataAndPublish(array $entities, int $storeId, StreamxClient $client): void {
+    private function addDataAndPublish(array $entities, StoreInterface $store): void {
+        $storeId = (int) $store->getId();
         try {
             foreach ($this->dataProviders as $dataProvider) {
                 $dataProvider->addData($entities, $storeId);
@@ -146,10 +146,10 @@ abstract class BaseStreamxIndexer extends AbstractProcessor implements IndexerAc
             return;
         }
 
-        $client->publish(array_values($entities), $this->indexerId);
+        $this->streamxClient->publish(array_values($entities), $this->indexerId, $store);
     }
 
-    private function unpublish(array $idsToUnpublish, StreamxClient $client): void {
-        $client->unpublish($idsToUnpublish, $this->indexerId);
+    private function unpublish(array $idsToUnpublish, StoreInterface $store): void {
+        $this->streamxClient->unpublish($idsToUnpublish, $this->indexerId, $store);
     }
 }

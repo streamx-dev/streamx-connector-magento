@@ -2,11 +2,11 @@
 
 namespace StreamX\ConnectorCatalog\Indexer;
 
+use Magento\Store\Api\Data\StoreInterface;
 use StreamX\ConnectorCatalog\Model\Attributes\AttributeDefinition;
 use StreamX\ConnectorCatalog\Model\Indexer\DataLoader\AttributeDataLoader;
 use StreamX\ConnectorCatalog\Model\Indexer\DataLoader\ProductDataLoader;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product;
-use StreamX\ConnectorCore\Client\StreamxClient;
 use StreamX\ConnectorCore\Indexer\BaseStreamxIndexer;
 use StreamX\ConnectorCore\Indexer\StreamxIndexerServices;
 use Traversable;
@@ -17,19 +17,19 @@ class AttributeIndexer extends BaseStreamxIndexer {
     public const INDEXER_ID = 'streamx_attribute_indexer';
 
     private Product $productModel;
-    private ProductIndexer $productsIndexer;
+    private ProductIndexer $productIndexer;
     private ProductDataLoader $productDataLoader;
 
     public function __construct(
         StreamxIndexerServices $indexerServices,
         AttributeDataLoader $dataLoader,
         Product $productModel,
-        ProductIndexer $productsIndexer,
+        ProductIndexer $productIndexer,
         ProductDataLoader $productDataLoader
     ) {
         parent::__construct($indexerServices, $dataLoader);
         $this->productModel = $productModel;
-        $this->productsIndexer = $productsIndexer;
+        $this->productIndexer = $productIndexer;
         $this->productDataLoader = $productDataLoader;
     }
 
@@ -37,7 +37,7 @@ class AttributeIndexer extends BaseStreamxIndexer {
      * Override to instead of publishing attributes -> publish products that use those attributes
      * @param Traversable<AttributeDefinition> $attributeDefinitions
      */
-    protected function ingestEntities(Traversable $attributeDefinitions, int $storeId, StreamxClient $client): void {
+    protected function ingestEntities(Traversable $attributeDefinitions, StoreInterface $store): void {
         $changedAttributeIds = [];
 
         /** @var $attributeDefinition AttributeDefinition */
@@ -50,6 +50,7 @@ class AttributeIndexer extends BaseStreamxIndexer {
             $changedAttributeIds[] = $attributeDefinition->getId();
         }
 
+        $storeId = (int) $store->getId();
         $productIds = $this->productModel->loadIdsOfProductsThatUseAttributes($changedAttributeIds, $storeId);
         if (empty($productIds)) {
             // no changes in the attributes that should cause republishing products
@@ -60,7 +61,7 @@ class AttributeIndexer extends BaseStreamxIndexer {
 
         $products = $this->productDataLoader->loadData($storeId, $productIds);
         $products = $this->filterProductsToPublish($products);
-        $this->productsIndexer->ingestEntities($products, $storeId, $client);
+        $this->productIndexer->ingestEntities($products, $store);
     }
 
     private function filterProductsToPublish(Traversable $products): Traversable {

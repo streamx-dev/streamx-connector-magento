@@ -111,9 +111,8 @@ abstract class BaseStreamxTest extends TestCase {
         return str_contains($headers[0], "200 OK");
     }
 
-    protected function createStreamxClient(int $storeId, string $storeCode): StreamxClient {
+    protected function createStreamxClient(): StreamxClient {
         $loggerMock = $this->createLoggerMock();
-        $storeMock = $this->createStoreMock($storeId, $storeCode);
 
         $rabbitMqConfigurationMock = $this->createRabbitMqConfigurationMock();
         $rabbitMqSender = new RabbitMqIngestionRequestsSender($loggerMock, $rabbitMqConfigurationMock);
@@ -122,7 +121,7 @@ abstract class BaseStreamxTest extends TestCase {
         $streamxPublisherFactory = new StreamxPublisherFactory($clientConfigurationMock);
         $streamxIngestor = new StreamxIngestor($loggerMock, $streamxPublisherFactory);
 
-        return new StreamxClient($loggerMock, $storeMock, $rabbitMqConfigurationMock, $rabbitMqSender, $streamxIngestor);
+        return new StreamxClient($loggerMock, $rabbitMqConfigurationMock, $rabbitMqSender, $streamxIngestor);
     }
 
     protected function createLoggerMock(): LoggerInterface {
@@ -133,7 +132,7 @@ abstract class BaseStreamxTest extends TestCase {
         return $loggerMock;
     }
 
-    private function createStoreMock(int $storeId, string $storeCode): StoreInterface {
+    protected function createStoreMock(int $storeId, string $storeCode): StoreInterface {
         $storeMock = $this->createMock(StoreInterface::class);
         $storeMock->method('getId')->willReturn($storeId);
         $storeMock->method('getCode')->willReturn($storeCode);

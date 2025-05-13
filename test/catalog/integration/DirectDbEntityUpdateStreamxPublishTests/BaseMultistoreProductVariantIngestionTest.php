@@ -77,8 +77,7 @@ abstract class BaseMultistoreProductVariantIngestionTest extends BaseDirectDbEnt
             self::$keyOfParentInStore2, self::$keyOfVariant1InStore2, self::$keyOfVariant2InStore2
         );
 
-        $streamxClientForStore1 = parent::createStreamxClient(self::$store1Id, self::STORE_1_CODE);
-        $streamxClientForStore2 = parent::createStreamxClient(self::$store2Id, self::STORE_2_CODE);
+        $streamxClient = parent::createStreamxClient();
 
         $publishProductsPayload = [
             self::PARENT_ID => $this->readJsonFileToArray(self::PARENT_JSON_FILE_WITH_ALL_VARIANTS),
@@ -86,8 +85,10 @@ abstract class BaseMultistoreProductVariantIngestionTest extends BaseDirectDbEnt
             self::VARIANT_2_ID => $this->readJsonFileToArray(self::VARIANT_2_JSON_FILE)
         ];
 
-        $streamxClientForStore1->publish($publishProductsPayload, ProductIndexer::INDEXER_ID);
-        $streamxClientForStore2->publish($publishProductsPayload, ProductIndexer::INDEXER_ID);
+        $store1 = parent::createStoreMock(self::$store1Id, self::STORE_1_CODE);
+        $store2 = parent::createStoreMock(self::$store2Id, self::STORE_2_CODE);
+        $streamxClient->publish($publishProductsPayload, ProductIndexer::INDEXER_ID, $store1);
+        $streamxClient->publish($publishProductsPayload, ProductIndexer::INDEXER_ID, $store2);
 
         // wait until all three products are published from both stores
         $this->assertParentIsPublishedWithAllVariantsInPayload(self::$keyOfParentInStore1);
