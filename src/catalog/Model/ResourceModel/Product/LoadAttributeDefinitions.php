@@ -8,7 +8,6 @@ use Magento\Framework\DB\Select;
 use StreamX\ConnectorCatalog\Model\Attributes\AttributeDefinition;
 use StreamX\ConnectorCatalog\Model\Attributes\AttributeOptionDefinition;
 use StreamX\ConnectorCatalog\Model\Attribute\LoadOptions;
-use StreamX\ConnectorCatalog\Model\Attributes\AttributeOptionSwatchDefinition;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\SpecialAttributes;
 use StreamX\ConnectorCatalog\Model\ProductMetaData;
 use Zend_Db_Expr;
