@@ -2,11 +2,13 @@
 
 namespace StreamX\ConnectorCatalog\test\integration\utils;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Allows retrieving published and unpublished StreamX keys.
  * The time window is: between instantiating the object, and calling its getPublishedAndUnpublishedKeys method.
  */
-class MagentoLogFileUtils  {
+class MagentoLogFileUtils {
 
     private string $logFilePath;
     private int $logFileSize;
@@ -26,7 +28,7 @@ class MagentoLogFileUtils  {
         $result = new IngestedKeys();
         foreach ($newLogLines as $line) {
             if (str_contains($line, 'with keys')) {
-                $this->parseKeys($line, $result);
+                $this->parseKeysAndAddToResult($line, $result);
             }
         }
         return $result;
@@ -45,7 +47,7 @@ class MagentoLogFileUtils  {
         return $newLines;
     }
 
-    private function parseKeys(string $line, IngestedKeys $result): void {
+    private function parseKeysAndAddToResult(string $line, IngestedKeys $result): void {
         $keysStartIndex = strpos($line, 'with keys [') + strlen('with keys [');
         $keysEndIndex = strpos($line, '] [] []');
         $keys = explode(',', substr($line, $keysStartIndex, $keysEndIndex - $keysStartIndex));
@@ -54,5 +56,23 @@ class MagentoLogFileUtils  {
         } else if (str_contains($line, 'publish')) {
             $result->addPublishedKeys($keys);
         }
+    }
+
+    public function verifyLoggedExactlyOnce(string...$stringsToFind) {
+        self::verifyLoggedTimes(1, ...$stringsToFind);
+    }
+
+    public function verifyLoggedTimes(int $expectedTimes, string...$stringsToFind) {
+        $actualCounts = array_fill_keys($stringsToFind, 0);
+        foreach ($this->readNewLogFileLines() as $line) {
+            foreach ($stringsToFind as $string) {
+                if (str_contains($line, $string)) {
+                    $actualCounts[$string] = $actualCounts[$string] + 1;
+                }
+            }
+        }
+
+        $expectedCounts = array_fill_keys($stringsToFind, $expectedTimes);
+        TestCase::assertSame($expectedCounts, $actualCounts);
     }
 }

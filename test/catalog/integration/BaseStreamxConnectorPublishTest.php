@@ -42,7 +42,7 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
     private static array $initialIndexerModes;
 
     protected static MagentoMySqlQueryExecutor $db;
-    private MagentoLogFileUtils $logFileUtils;
+    protected MagentoLogFileUtils $logFileUtils;
 
     public static function setUpBeforeClass(): void {
         if (!self::$areTestsInitialized) {
@@ -143,10 +143,11 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
     }
 
     protected function tearDown(): void {
-        $this->logFileUtils->appendLine('Finished test ' . get_class($this) . '.' . $this->getName() . ' with result ' . $this->getStatus());
+        $testName = get_class($this) . '.' . $this->getName();
+        $this->logFileUtils->appendLine("Finished test $testName with result " . $this->getStatus());
         $ingestedKeys = $this->logFileUtils->getPublishedAndUnpublishedKeys();
-        echo 'Keys ingested during the test:' . PHP_EOL;
-        echo $ingestedKeys->formatted() . PHP_EOL;
+        fwrite(STDOUT, "Keys ingested during $testName:\n");
+        fwrite(STDOUT, $ingestedKeys->formatted() . PHP_EOL);
         CodeCoverageReportGenerator::generateSingleTestCodeCoverageReport($this);
     }
 

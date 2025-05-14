@@ -4,8 +4,6 @@ namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublis
 
 use StreamX\ConnectorCatalog\Indexer\ProductIndexer;
 use StreamX\ConnectorCatalog\Model\SlugGenerator;
-use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
-use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 
 /**
  * @inheritdoc
@@ -128,12 +126,5 @@ class ProductVariantUpdateTest extends BaseAppEntityUpdateTest {
             $this->assertExactDataIsPublished($expectedParentProductKey, 'original-hoodie-product.json');
             $this->assertDataIsNotPublished($unexpectedChildProductKey);
         }
-    }
-
-    private function renameProduct(EntityIds $productId, string $newName): void {
-        MagentoEndpointsCaller::call('product/rename', [
-            'productId' => $productId->getEntityId(),
-            'newName' => $newName
-        ]);
     }
 }

@@ -5,8 +5,6 @@ namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublis
 use StreamX\ConnectorCatalog\Indexer\ProductIndexer;
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationKeyPaths;
-use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
-use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 
 /**
  * @inheritdoc
@@ -139,12 +137,5 @@ class ProductVariantUpdateWhenChangedProductTypeSettingsTest extends BaseAppEnti
             }
             self::$db->unsetProductsVisibleInStore(self::$store1Id, $childProductId); // restore default visibility of child product
         }
-    }
-
-    private function renameProduct(EntityIds $productId, string $newName): void {
-        MagentoEndpointsCaller::call('product/rename', [
-            'productId' => $productId->getEntityId(),
-            'newName' => $newName
-        ]);
     }
 }

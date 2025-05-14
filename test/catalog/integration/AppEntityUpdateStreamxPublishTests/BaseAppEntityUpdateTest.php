@@ -3,6 +3,8 @@
 namespace StreamX\ConnectorCatalog\test\integration\AppEntityUpdateStreamxPublishTests;
 
 use StreamX\ConnectorCatalog\test\integration\BaseStreamxConnectorPublishTest;
+use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
+use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 
 /**
  * @inheritdoc
@@ -13,5 +15,13 @@ use StreamX\ConnectorCatalog\test\integration\BaseStreamxConnectorPublishTest;
  * The test endpoints are deployed to the test Magento instance, and are executed serverside.
  */
 abstract class BaseAppEntityUpdateTest extends BaseStreamxConnectorPublishTest {
+
     const INDEXER_MODE = parent::UPDATE_ON_SAVE;
+
+    protected static function renameProduct(EntityIds $productId, string $newName): void {
+        MagentoEndpointsCaller::call('product/rename', [
+            'productId' => $productId->getEntityId(),
+            'newName' => $newName
+        ]);
+    }
 }
