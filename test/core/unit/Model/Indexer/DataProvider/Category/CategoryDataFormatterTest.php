@@ -1,6 +1,6 @@
 <?php
 
-namespace Model\Indexer\DataProvider\Category;
+namespace StreamX\ConnectorCore\test\unit\Model\Indexer\DataProvider\Category;
 
 use PHPUnit\Framework\TestCase;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Category\CategoryDataFormatter;
