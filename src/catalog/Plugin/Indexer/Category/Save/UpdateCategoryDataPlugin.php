@@ -50,7 +50,7 @@ class UpdateCategoryDataPlugin
 
             if ($isChangedProductList) {
                 // happens when admin edits a category adding or removing items in "Products in Category" list
-                $this->productIndexer->reindexList($category->getAffectedProductIds());
+                $this->productIndexer->reindexList($category->getAffectedProductIds(), false, false);
             }
         }
     }
