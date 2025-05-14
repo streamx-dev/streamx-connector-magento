@@ -6,7 +6,7 @@ class AttributeDefinition
 {
     private int $id;
     private string $code;
-    private string $value;
+    private string $label;
     private bool $isFacet;
 
     /**
@@ -17,10 +17,10 @@ class AttributeDefinition
     /**
      * @param AttributeOptionDefinition[] $options
      */
-    public function __construct(int $id, string $code, string $value, bool $isFacet, array $options) {
+    public function __construct(int $id, string $code, string $label, bool $isFacet, array $options) {
         $this->id = $id;
         $this->code = $code;
-        $this->value = $value;
+        $this->label = $label;
         $this->isFacet = $isFacet;
         $this->options = $options;
     }
@@ -33,8 +33,8 @@ class AttributeDefinition
         return $this->code;
     }
 
-    public function getValue(): string {
-        return $this->value;
+    public function getLabel(): string {
+        return $this->label;
     }
 
     public function isFacet(): bool {
