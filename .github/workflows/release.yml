@@ -1,0 +1,43 @@
+name: Release
+
+on: [workflow_dispatch]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Git user
+        run: |
+          git config --global user.email "github.actions@streamx.dev"
+          git config --global user.name "${GITHUB_ACTOR}"
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.SSH_SECRET_KEY }}" > ~/.ssh/id_rsa
+          chmod 0600 ~/.ssh/id_rsa
+
+      - name: Load version number from composer.json
+        run: |
+          VERSION=$(grep '"version":' composer.json | cut -d '"' -f 4)
+          echo "PROJECT_VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Create Git tag
+        run: |
+          git tag ${{ env.PROJECT_VERSION }}
+          git push origin ${{ env.PROJECT_VERSION }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.PROJECT_VERSION }}
+          name: ${{ env.PROJECT_VERSION }}
+          generate_release_notes: true
+
+      - name: Summary and next steps
+        run: |
+          echo "To make the new version publicly available via Composer, go to https://packagist.org/packages/streamx/magento-connector and click Update"
