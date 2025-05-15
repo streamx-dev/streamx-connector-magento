@@ -12,8 +12,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # Important for amending
 
       - name: Set up Git user
         run: |
@@ -23,7 +21,7 @@ jobs:
           printf '%s\n' "${{ secrets.SSH_SECRET_KEY }}" > ~/.ssh/id_rsa
           chmod 0600 ~/.ssh/id_rsa
 
-      - name: Bump version
+      - name: Edit composer.json to bump version
         run: |
           CURRENT_VERSION=$(grep '"version":' composer.json | cut -d '"' -f 4)
           NEW_VERSION=$(echo "$CURRENT_VERSION" | awk -F. '{print $1 "." $2 "." ($3+1)}')
@@ -31,14 +29,14 @@ jobs:
           sed -i 's/"version": "'"$CURRENT_VERSION"'"/"version": "'"$NEW_VERSION"'"/g' composer.json
           echo "PROJECT_NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
-      - name: Amend commit
+      - name: Commit the version bump change
         run: |
           git add composer.json
-          git commit --amend --no-edit
+          git commit -m "[no ci] Release ${{ env.PROJECT_NEW_VERSION }}"
 
       - name: Push changes
         run: |
-          git push --force
+          git push
 
       - name: Create Git tag
         run: |
