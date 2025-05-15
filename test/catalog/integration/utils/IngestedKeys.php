@@ -4,15 +4,22 @@ namespace StreamX\ConnectorCatalog\test\integration\utils;
 
 class IngestedKeys {
 
-    private array $publishedKeys = [];
-    private array $unpublishedKeys = [];
+    private array $publishedKeys = []; // key = key, value = count
+    private array $unpublishedKeys = []; // key = key, value = count
 
     public function addPublishedKeys(array $keys): void {
-        array_push($this->publishedKeys, ...$keys);
+        self::addKeys($keys, $this->publishedKeys);
     }
 
     public function addUnpublishedKeys(array $keys): void {
-        array_push($this->unpublishedKeys, ...$keys);
+        self::addKeys($keys, $this->unpublishedKeys);
+    }
+
+    private function addKeys(array $keys, array &$arrayToAddTo): void {
+        foreach ($keys as $key) {
+            $count = 1 + ($arrayToAddTo[$key] ?? 0);
+            $arrayToAddTo[$key] = $count;
+        }
     }
 
     public function formatted(): string {
@@ -27,25 +34,36 @@ class IngestedKeys {
     }
 
     private static function getFormattedKeys(array $keys, string $linePrefix) : array {
-        $idsByPrefix = self::toIdsByKeyPrefixMap(array_unique($keys));
+        $prefixToIdWithCountMap = self::toPrefixToIdWithCountMap($keys);
 
         $resultLines = [];
-        foreach ($idsByPrefix as $keyPrefix => $ids) {
+        foreach ($prefixToIdWithCountMap as $keyPrefix => $ids) {
             sort($ids);
-            $resultLines[] =  "$linePrefix$keyPrefix: " . implode(', ', $ids);
+            $resultLine = "$linePrefix$keyPrefix: " . implode(', ', $ids);
+
+            $doesAnyIdHaveCountOfTenOrMore = (bool) preg_grep('/x\s+\d{2,}/', $ids);
+            if ($doesAnyIdHaveCountOfTenOrMore) {
+                $resultLine = "\033[33m$resultLine\033[0m"; // when used with fwrite(STDOUT) - enables displayed lines in warning color
+            }
+
+            $resultLines[] = $resultLine;
         }
         return $resultLines;
     }
 
-    private static function toIdsByKeyPrefixMap(array $keys): array {
-        $idsByPrefix = [];
-        foreach ($keys as $key) {
+    private static function toPrefixToIdWithCountMap(array $keys): array {
+        $prefixToIdWithCountMap = [];
+        foreach ($keys as $key => $count) {
             $parts = explode(':', str_replace('"', '', $key));
             $prefix = $parts[0];
             $id = $parts[1];
-            $idsByPrefix[$prefix][] = $id;
+            if ($count > 1) {
+                $id .= " x $count";
+            }
+            $prefixToIdWithCountMap[$prefix][] = $id;
         }
-        ksort($idsByPrefix);
-        return $idsByPrefix;
+        ksort($prefixToIdWithCountMap);
+        return $prefixToIdWithCountMap;
     }
+
 }

@@ -16,6 +16,11 @@ class ProductUpdateTest extends BaseDirectDbEntityUpdateTest {
     /** @test */
     public function shouldPublishSimpleProductEditedDirectlyInDatabase() {
         $this->shouldPublishProductEditedDirectlyInDatabase('Joust Duffle Bag', 'bag');
+        $this->logFileUtils->verifyLoggedExactlyOnce(
+            'Consuming message with ingestion keys ["default_product:1"]',
+            'Consuming message with ingestion keys ["store_2_product:1"]',
+            'Consuming message with ingestion keys ["store_for_second_website_product:1"]'
+        );
     }
 
     /** @test */
