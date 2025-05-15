@@ -3,6 +3,7 @@
 namespace StreamX\ConnectorCatalog\Indexer;
 
 use Magento\Store\Api\Data\StoreInterface;
+use StreamX\ConnectorCatalog\Model\Attribute\IndexableAttributesFilter;
 use StreamX\ConnectorCatalog\Model\Attributes\AttributeDefinition;
 use StreamX\ConnectorCatalog\Model\Indexer\DataLoader\AttributeDataLoader;
 use StreamX\ConnectorCatalog\Model\Indexer\DataLoader\ProductDataLoader;
@@ -11,11 +12,11 @@ use StreamX\ConnectorCore\Indexer\BaseStreamxIndexer;
 use StreamX\ConnectorCore\Indexer\StreamxIndexerServices;
 use Traversable;
 
-// TODO implement checking if only relevant attribute properties have changed to trigger publishing products
 class AttributeIndexer extends BaseStreamxIndexer {
 
     public const INDEXER_ID = 'streamx_attribute_indexer';
 
+    private IndexableAttributesFilter $indexableAttributesFilter;
     private Product $productModel;
     private ProductIndexer $productIndexer;
     private ProductDataLoader $productDataLoader;
@@ -23,11 +24,13 @@ class AttributeIndexer extends BaseStreamxIndexer {
     public function __construct(
         StreamxIndexerServices $indexerServices,
         AttributeDataLoader $dataLoader,
+        IndexableAttributesFilter $indexableAttributesFilter,
         Product $productModel,
         ProductIndexer $productIndexer,
         ProductDataLoader $productDataLoader
     ) {
         parent::__construct($indexerServices, $dataLoader);
+        $this->indexableAttributesFilter = $indexableAttributesFilter;
         $this->productModel = $productModel;
         $this->productIndexer = $productIndexer;
         $this->productDataLoader = $productDataLoader;
@@ -38,30 +41,31 @@ class AttributeIndexer extends BaseStreamxIndexer {
      * @param Traversable<AttributeDefinition> $attributeDefinitions
      */
     protected function ingestEntities(Traversable $attributeDefinitions, StoreInterface $store): void {
-        $changedAttributeIds = [];
+        $addedOrEditedAttributes = [];
 
         /** @var $attributeDefinition AttributeDefinition */
         foreach ($attributeDefinitions as $attributeDefinition) {
-            if ($attributeDefinition === null) {
-                // a deleted attribute. Reindexing products that used it is handled in UpdateAttributeDataPlugin
-                continue;
-            }
-            $this->logger->info("Definition of attribute '{$attributeDefinition->getCode()}' has changed");
-            $changedAttributeIds[] = $attributeDefinition->getId();
+            if ($attributeDefinition !== null) {
+                $addedOrEditedAttributes[] = $attributeDefinition;
+            } // else: a deleted attribute. Reindexing products that used it is handled in UpdateAttributeDataPlugin
         }
 
         $storeId = (int) $store->getId();
-        $productIds = $this->productModel->loadIdsOfProductsThatUseAttributes($changedAttributeIds, $storeId);
-        if (empty($productIds)) {
-            // no changes in the attributes that should cause republishing products
-            return;
+        $indexableProductAttributes = $this->indexableAttributesFilter->filterProductAttributes($addedOrEditedAttributes, $storeId);
+        $indexableChildProductAttributes = $this->indexableAttributesFilter->filterChildProductAttributes($addedOrEditedAttributes, $storeId);
+
+        $productIds = [];
+        array_push($productIds, ...$this->productModel->loadIdsOfProductsThatUseAttributes($indexableProductAttributes, $storeId));
+        array_push($productIds, ...$this->productModel->loadIdsOfChildProductsThatUseAttributes($indexableChildProductAttributes, $storeId));
+
+        if (!empty($productIds)) {
+            // TODO to be considered: check if only relevant attribute properties have changed to trigger publishing products (only changes in code, label, isFacet and options should matter)
+            $this->logger->info("Detected the following products to re-publish due to attribute definition change: " . json_encode($productIds));
+
+            $products = $this->productDataLoader->loadData($storeId, $productIds);
+            $products = $this->filterProductsToPublish($products);
+            $this->productIndexer->ingestEntities($products, $store);
         }
-
-        $this->logger->info("Detected the following products to re-publish due to attribute definition change: " . json_encode($productIds));
-
-        $products = $this->productDataLoader->loadData($storeId, $productIds);
-        $products = $this->filterProductsToPublish($products);
-        $this->productIndexer->ingestEntities($products, $store);
     }
 
     private function filterProductsToPublish(Traversable $products): Traversable {

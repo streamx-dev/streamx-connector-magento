@@ -52,11 +52,36 @@ class AttributeUpdateTest extends BaseDirectDbEntityUpdateTest {
             // then
             $this->assertExactDataIsPublished($expectedKey, $validationFile);
         } finally {
-            try {
-                $this->renameAttributeInDb($attributeId, $oldDisplayName);
-            } finally {
-                ConfigurationEditUtils::restoreDefaultIndexedProductAttributes();
-            }
+            $this->renameAttributeInDb($attributeId, $oldDisplayName);
+            ConfigurationEditUtils::restoreDefaultIndexedProductAttributes();
+        }
+    }
+
+    /** @test */
+    public function shouldNotPublishProduct_WhenItsNotIndexedAttribute_WasEditedDirectlyInDatabase(): void {
+        // given
+        $attributeCode = 'tax_class_id';
+        $attributeId = self::$db->getProductAttributeId($attributeCode);
+        $oldDisplayName = self::$db->getAttributeDisplayName($attributeId);
+        $newDisplayName = "Name modified for testing, was $oldDisplayName";
+
+        // and
+        $productId = self::$db->getProductId('Joust Duffle Bag');
+        $expectedKey = self::productKey($productId);
+        self::removeFromStreamX($expectedKey);
+
+        try {
+            // when
+            ConfigurationEditUtils::unsetIndexedProductAttribute($attributeCode);
+            $this->renameAttributeInDb($attributeId, $newDisplayName);
+            $this->reindexMview();
+
+            // then
+            usleep(200_000);
+            $this->assertDataIsNotPublished($expectedKey);
+        } finally {
+            $this->renameAttributeInDb($attributeId, $oldDisplayName);
+            ConfigurationEditUtils::restoreDefaultIndexedProductAttributes();
         }
     }
 

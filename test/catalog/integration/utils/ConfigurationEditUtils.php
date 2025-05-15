@@ -36,7 +36,13 @@ class ConfigurationEditUtils {
         $attributes = explode(',', self::readDefaultValue(ConfigurationKeyPaths::PRODUCT_ATTRIBUTES));
         array_push($attributes, ...$attributeCodes);
         $attributes = array_unique($attributes);
-        self::setConfigurationValue(ConfigurationKeyPaths::PRODUCT_ATTRIBUTES, implode(',', $attributes));
+        self::setIndexedProductAttributes(...$attributes);
+    }
+
+    public static function unsetIndexedProductAttribute(string $attributeCode): void {
+        $attributes = explode(',', self::readDefaultValue(ConfigurationKeyPaths::PRODUCT_ATTRIBUTES));
+        $attributes = array_filter($attributes, fn($val) => $val !== $attributeCode);
+        self::setIndexedProductAttributes(...$attributes);
     }
 
     public static function allowIndexingAllProductAttributes(): void {

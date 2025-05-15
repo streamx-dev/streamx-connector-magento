@@ -19,7 +19,7 @@ abstract class BaseProductAttributes
     protected abstract function getConfiguredAttributes(int $storeId): array;
 
     /**
-     * @return string[]
+     * @return string[] attribute codes. If empty - it means the Connector should index all attributes
      */
     public function getAttributesToIndex(int $storeId): array
     {

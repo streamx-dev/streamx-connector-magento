@@ -4,12 +4,67 @@
   "lang": "en",
   "attributes": [
     {
+      "name": "small_image",
+      "label": "Small",
+      "values": [
+        {
+          "value": "https:\/\/magento.test:444\/media\/catalog\/product\/l\/u\/luma-foam-roller.jpg",
+          "label": "https:\/\/magento.test:444\/media\/catalog\/product\/l\/u\/luma-foam-roller.jpg"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "thumbnail",
+      "label": "Thumbnail",
+      "values": [
+        {
+          "value": "https:\/\/magento.test:444\/media\/catalog\/product\/l\/u\/luma-foam-roller.jpg",
+          "label": "https:\/\/magento.test:444\/media\/catalog\/product\/l\/u\/luma-foam-roller.jpg"
+        }
+      ],
+      "isFacet": false
+    },
+    {
       "name": "url_key",
       "label": "URL Key",
       "values": [
         {
           "value": "sprite-foam-roller",
           "label": "sprite-foam-roller"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "status",
+      "label": "Enable Product",
+      "values": [
+        {
+          "value": "Enabled",
+          "label": "Enabled"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "visibility",
+      "label": "Visibility",
+      "values": [
+        {
+          "value": "Catalog, Search",
+          "label": "Catalog, Search"
+        }
+      ],
+      "isFacet": false
+    },
+    {
+      "name": "tax_class_id",
+      "label": "Tax Class",
+      "values": [
+        {
+          "value": "Taxable Goods",
+          "label": "Taxable Goods"
         }
       ],
       "isFacet": false
