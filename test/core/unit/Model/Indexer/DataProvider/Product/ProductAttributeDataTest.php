@@ -5,6 +5,7 @@ namespace StreamX\ConnectorCore\test\unit\Model\Indexer\DataProvider\Product;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCatalog\Model\Attributes\ProductAttributes;
+use StreamX\ConnectorCatalog\Model\Config\Source\SlugOptionsSource;
 use StreamX\ConnectorCatalog\Model\Indexer\DataProvider\Product\ProductAttributeData;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\LoadAttributeDefinitions;
 use StreamX\ConnectorCatalog\Model\ResourceModel\Product\ProductAttributesProvider;
@@ -17,22 +18,19 @@ class ProductAttributeDataTest extends TestCase
     /** @test */
     public function shouldApplySlug() {
         // test all possible combinations
-        $this->assertApplySlug(false, false, null, 'joust-duffle-bag-1');
-        $this->assertApplySlug(false, false, 'abc', 'joust-duffle-bag-1');
-        $this->assertApplySlug(false, true, null, 'joust-duffle-bag-1');
-        $this->assertApplySlug(false, true, 'abc', 'abc-1');
-        $this->assertApplySlug(true, false, null, 'joust-duffle-bag-1');
-        $this->assertApplySlug(true, false, 'abc', 'abc');
-        $this->assertApplySlug(true, true, null, 'joust-duffle-bag-1');
-        $this->assertApplySlug(true, true, 'abc', 'abc');
+        $this->assertApplySlug(SlugOptionsSource::NAME_AND_ID, null, 'joust-duffle-bag-1');
+        $this->assertApplySlug(SlugOptionsSource::NAME_AND_ID, 'abc', 'joust-duffle-bag-1');
+        $this->assertApplySlug(SlugOptionsSource::URL_KEY_AND_ID, null, 'joust-duffle-bag-1');
+        $this->assertApplySlug(SlugOptionsSource::URL_KEY_AND_ID, 'abc', 'abc-1');
+        $this->assertApplySlug(SlugOptionsSource::URL_KEY, null, 'joust-duffle-bag-1');
+        $this->assertApplySlug(SlugOptionsSource::URL_KEY, 'abc', 'abc');
     }
 
-    private function assertApplySlug(bool $useUrlKey, bool $useUrlKeyAndId, ?string $urlKey, string $expectedSlug): void
+    private function assertApplySlug(int $slugGenerationStrategy, ?string $urlKey, string $expectedSlug): void
     {
         // given
         $catalogConfigMock = $this->createMock(CatalogConfig::class);
-        $catalogConfigMock->method('useUrlKeyToGenerateSlug')->willReturn($useUrlKey);
-        $catalogConfigMock->method('useUrlKeyAndIdToGenerateSlug')->willReturn($useUrlKeyAndId);
+        $catalogConfigMock->method('slugGenerationStrategy')->willReturn($slugGenerationStrategy);
 
         $slugGenerator = new SlugGenerator($catalogConfigMock);
 
@@ -40,7 +38,26 @@ class ProductAttributeDataTest extends TestCase
         $product = [
             'id' => 1,
             'name' => 'Joust Duffle Bag',
-            'url_key' => $urlKey,
+            'attributes' => [
+                [
+                    'name' => 'price',
+                    'values' => [
+                        [
+                            'label' => "123 label",
+                            'value' => 123
+                        ]
+                    ]
+                ],
+                [
+                    'name' => 'url_key',
+                    'values' => [
+                        [
+                            'label' => "$urlKey label",
+                            'value' => $urlKey
+                        ]
+                    ]
+                ]
+            ]
         ];
 
         // when

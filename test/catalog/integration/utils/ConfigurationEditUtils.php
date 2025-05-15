@@ -7,7 +7,7 @@ class ConfigurationKeyPaths {
     public const EXPORT_PRODUCTS_NOT_VISIBLE_INDIVIDUALLY = 'streamx_connector_settings/catalog_settings/export_products_not_visible_individually';
     public const USE_PRICES_INDEX = 'streamx_connector_settings/catalog_settings/use_prices_index';
     public const USE_CATALOG_PRICE_RULES = 'streamx_connector_settings/catalog_settings/use_catalog_price_rules';
-    public const USE_URL_KEY_AND_ID_TO_GENERATE_SLUG = 'streamx_connector_settings/catalog_settings/use_url_key_and_id_to_generate_slug';
+    public const SLUG_GENERATION_STRATEGY = 'streamx_connector_settings/catalog_settings/slug_generation_strategy';
     public const ALLOWED_PRODUCT_TYPES = 'streamx_connector_settings/catalog_settings/allowed_product_types';
     public const ENABLE_RABBIT_MQ = 'streamx_connector_settings/rabbit_mq/enable';
 }
