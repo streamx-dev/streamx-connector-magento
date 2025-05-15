@@ -73,7 +73,7 @@ class UpdateAttributeDataPlugin {
 
         $productIdsToReindex = $this->productIdsToReindexByAttributeId[$attributeId] ?? null;
         if ($productIdsToReindex) {
-            $this->productIndexer->reindexList($productIdsToReindex);
+            $this->productIndexer->reindexList($productIdsToReindex, false, false);
             unset($this->productIdsToReindexByAttributeId[$attributeId]);
         }
 

@@ -22,30 +22,26 @@ class ProductIndexer extends BaseStreamxIndexer {
         $this->dependencyInfoProvider = $dependencyInfoProvider;
     }
 
-    public function markIndexerAsInvalid(): void {
-        $this->getIndexer()->invalidate();
-    }
-
+    /**
+     * @inheritdoc
+     */
     public function reindexRow($id, $forceReindex = false): void {
-        if ($this->hasToReindex()) {
+        if ($this->areAllIndexersToRunBeforeInUpdateByScheduleMode()) {
             parent::reindexRow($id, $forceReindex);
         }
     }
 
-    public function reindexList($ids, $forceReindex = false) {
-        if ($this->hasToReindex()) {
+    /**
+     * @inheritdoc
+     */
+    public function reindexList($ids, $forceReindex = false, bool $checkStateOfIndexersToRunBefore = true) {
+        if (!$checkStateOfIndexersToRunBefore || $this->areAllIndexersToRunBeforeInUpdateByScheduleMode()) {
             parent::reindexList($ids, $forceReindex);
         }
     }
 
-    private function hasToReindex(): bool {
-        $dependentIndexerIds = $this->dependencyInfoProvider->getIndexerIdsToRunBefore($this->getIndexerId());
-        // TODO: verify if the below condition is always safe:
-        //   if any of the indexers to run before is in Update On Save mode -> our products indexer will not be executed
-        return $this->areAllIndexersInUpdateByScheduleMode($dependentIndexerIds);
-    }
-
-    private function areAllIndexersInUpdateByScheduleMode(array $indexerIds): bool {
+    private function areAllIndexersToRunBeforeInUpdateByScheduleMode(): bool {
+        $indexerIds = $this->dependencyInfoProvider->getIndexerIdsToRunBefore($this->getIndexerId());
         foreach ($indexerIds as $indexerId) {
             $indexer = $this->indexerRegistry->get($indexerId);
             if (!$indexer->isScheduled()) {
