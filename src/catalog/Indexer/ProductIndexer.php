@@ -40,10 +40,15 @@ class ProductIndexer extends BaseStreamxIndexer {
 
     private function hasToReindex(): bool {
         $dependentIndexerIds = $this->dependencyInfoProvider->getIndexerIdsToRunBefore($this->getIndexerId());
+        // TODO: verify if the below condition is always safe:
+        //   if any of the indexers to run before is in Update On Save mode -> our products indexer will not be executed
+        return $this->areAllIndexersInUpdateByScheduleMode($dependentIndexerIds);
+    }
 
-        foreach ($dependentIndexerIds as $indexerId) {
-            $dependentIndexer = $this->indexerRegistry->get($indexerId);
-            if (!$dependentIndexer->isScheduled()) {
+    private function areAllIndexersInUpdateByScheduleMode(array $indexerIds): bool {
+        foreach ($indexerIds as $indexerId) {
+            $indexer = $this->indexerRegistry->get($indexerId);
+            if (!$indexer->isScheduled()) {
                 return false;
             }
         }

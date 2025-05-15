@@ -114,13 +114,13 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
         }
     }
 
-    private static function getIndexerMode(string $indexerId): string {
+    protected static function getIndexerMode(string $indexerId): string {
         return MagentoEndpointsCaller::call('indexer/mode/get', [
             'indexerId' => $indexerId
         ]);
     }
 
-    private static function setIndexerMode(string $indexerId, string $mode): void {
+    protected static function setIndexerMode(string $indexerId, string $mode): void {
         MagentoEndpointsCaller::call('indexer/mode/set', [
             'indexerId' => $indexerId,
             'mode' => $mode

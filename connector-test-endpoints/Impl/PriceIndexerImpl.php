@@ -12,6 +12,7 @@ class PriceIndexerImpl implements PriceIndexerInterface {
     private IndexerInterface $streamxProductIndexer;
 
     public function __construct(IndexerFactory $indexerFactory) {
+        // as declared in etc/indexer.xml file, streamx_product_indexer depends on catalog_product_price indexer
         $this->magentoPriceIndexer = $indexerFactory->create()->load('catalog_product_price');
         $this->streamxProductIndexer = $indexerFactory->create()->load('streamx_product_indexer');
     }
