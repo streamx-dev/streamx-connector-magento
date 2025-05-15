@@ -36,12 +36,12 @@ jobs:
 
       - name: Push changes
         run: |
-          git push
+          git push origin ${{ github.ref_name }}
 
       - name: Create Git tag
         run: |
           git tag ${{ env.PROJECT_NEW_VERSION }}
-          git push origin ${{ env.PROJECT_NEW_VERSION }}
+          git push origin ${{ github.ref_name }} ${{ env.PROJECT_NEW_VERSION }}
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
