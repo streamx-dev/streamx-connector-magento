@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: main
 
       - name: Set up Git user
         run: |
@@ -37,7 +39,7 @@ jobs:
       - name: Push changes as new tag
         run: |
           git tag ${{ env.PROJECT_NEW_VERSION }}
-          git push origin ${{ github.ref_name }} --tags
+          git push origin main --tags
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
