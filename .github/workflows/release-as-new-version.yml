@@ -10,16 +10,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+#      - name: Set up SSH with deploy key
+#        run: |
+#          mkdir -p ~/.ssh
+#          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/id_rsa
+#          chmod 600 ~/.ssh/id_rsa
+#
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           ref: main
-
-      - name: Set up SSH with deploy key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
 
       - name: Edit composer.json to bump version
         run: |
