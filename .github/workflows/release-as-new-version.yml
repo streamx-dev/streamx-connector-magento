@@ -34,7 +34,7 @@ jobs:
           git add composer.json
           git commit -m "[no ci] Release ${{ env.PROJECT_NEW_VERSION }}"
 
-      - name: Push changes and create tag
+      - name: Push changes as new tag
         run: |
           git tag ${{ env.PROJECT_NEW_VERSION }}
           git push origin ${{ github.ref_name }} --tags
