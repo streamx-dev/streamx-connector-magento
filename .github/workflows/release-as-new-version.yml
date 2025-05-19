@@ -2,9 +2,6 @@ name: Release as new version
 
 on: [workflow_dispatch]
 
-#permissions:
-#  contents: write
-
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -13,7 +10,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: main
           ssh-key: ${{ secrets.DEPLOY_KEY }}
 
       - name: Set up SSH with deploy key
@@ -37,7 +33,7 @@ jobs:
           git add composer.json
           git commit -m "[no ci] Release ${{ env.PROJECT_NEW_VERSION }}"
           git tag ${{ env.PROJECT_NEW_VERSION }}
-          git push origin main --tags
+          git push origin ${{ github.ref_name }} --tags
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
