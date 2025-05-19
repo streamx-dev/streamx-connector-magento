@@ -34,14 +34,10 @@ jobs:
           git add composer.json
           git commit -m "[no ci] Release ${{ env.PROJECT_NEW_VERSION }}"
 
-      - name: Push changes
-        run: |
-          git push origin ${{ github.ref_name }}
-
-      - name: Create Git tag
+      - name: Push changes and create tag
         run: |
           git tag ${{ env.PROJECT_NEW_VERSION }}
-          git push origin ${{ github.ref_name }} ${{ env.PROJECT_NEW_VERSION }}
+          git push origin ${{ github.ref_name }} --tags
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
