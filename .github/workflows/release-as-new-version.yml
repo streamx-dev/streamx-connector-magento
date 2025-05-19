@@ -2,9 +2,6 @@ name: Release as new version
 
 on: [workflow_dispatch]
 
-permissions:
-  contents: write
-
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -12,14 +9,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
 
-      - name: Set up Git user
+      - name: Set up SSH with deploy key
         run: |
-          git config --global user.email "github.actions@streamx.dev"
-          git config --global user.name "${GITHUB_ACTOR}"
           mkdir -p ~/.ssh
-          printf '%s\n' "${{ secrets.SSH_SECRET_KEY }}" > ~/.ssh/id_rsa
-          chmod 0600 ~/.ssh/id_rsa
+          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
 
       - name: Edit composer.json to bump version
         run: |
@@ -29,19 +26,14 @@ jobs:
           sed -i 's/"version": "'"$CURRENT_VERSION"'"/"version": "'"$NEW_VERSION"'"/g' composer.json
           echo "PROJECT_NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
-      - name: Commit the version bump change
+      - name: Push version bump as new tag
         run: |
+          git config --global user.email "github.actions@streamx.dev"
+          git config --global user.name "${GITHUB_ACTOR}"
           git add composer.json
           git commit -m "[no ci] Release ${{ env.PROJECT_NEW_VERSION }}"
-
-      - name: Push changes
-        run: |
-          git push
-
-      - name: Create Git tag
-        run: |
           git tag ${{ env.PROJECT_NEW_VERSION }}
-          git push origin ${{ env.PROJECT_NEW_VERSION }}
+          git push origin ${{ github.ref_name }} --tags
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
