@@ -19,8 +19,8 @@ jobs:
       - name: Set up SSH with deploy key
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
+          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
 
       - name: Edit composer.json to bump version
         run: |
@@ -30,7 +30,7 @@ jobs:
           sed -i 's/"version": "'"$CURRENT_VERSION"'"/"version": "'"$NEW_VERSION"'"/g' composer.json
           echo "PROJECT_NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
-      - name: Bump version and push as new tag
+      - name: Push version bump as new tag
         run: |
           git config --global user.email "github.actions@streamx.dev"
           git config --global user.name "${GITHUB_ACTOR}"
