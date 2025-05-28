@@ -79,14 +79,14 @@ abstract class BaseAttributeData implements DataProviderInterface
 
         foreach ($attributesData as $productId => $attributeCodesAndValues) {
             foreach ($attributeCodesAndValues as $attributeCode => $attributeValues) {
-                $this->addAttributeToProduct($indexData[$productId], $productId, $attributeCode, $attributeValues, $attributeDefinitionsMap);
+                $this->addAttributeToProduct($indexData[$productId], $productId, $attributeCode, $attributeValues, $attributeDefinitionsMap, $storeId);
             }
 
             $this->applySlug($indexData[$productId]);
         }
     }
 
-    private function addAttributeToProduct(array &$productData, int $productId, string $attributeCode, array $attributeValues, array $attributeDefinitionsMap): void
+    private function addAttributeToProduct(array &$productData, int $productId, string $attributeCode, array $attributeValues, array $attributeDefinitionsMap, int $storeId): void
     {
         if ($attributeCode == 'name') {
             $name = $this->getSingleAttributeValue($attributeCode, $attributeValues, $productId);
@@ -97,7 +97,7 @@ abstract class BaseAttributeData implements DataProviderInterface
             $productData['description'] = ProductDescriptionUnwrapper::unwrapIfWrapped($description);
         } elseif ($attributeCode == 'image') {
             $productData['primaryImage'] = [
-                'url' => $this->imageUrlManager->getProductImageUrl($this->getSingleAttributeValue($attributeCode, $attributeValues, $productId)),
+                'url' => $this->imageUrlManager->getProductImageUrl($this->getSingleAttributeValue($attributeCode, $attributeValues, $productId), $storeId),
                 'alt' => null // expecting MediaGalleryData (which is executed later) to fill this field
             ];
         } elseif ($attributeCode == 'price') {
@@ -108,7 +108,7 @@ abstract class BaseAttributeData implements DataProviderInterface
             ];
         } else {
             $attributeDefinition = $attributeDefinitionsMap[$attributeCode];
-            $productData['attributes'][] = $this->formatAttributeAsArray($attributeDefinition, $attributeValues);
+            $productData['attributes'][] = $this->formatAttributeAsArray($attributeDefinition, $attributeValues, $storeId);
         }
     }
 
@@ -123,23 +123,23 @@ abstract class BaseAttributeData implements DataProviderInterface
         return $attributeValues[0];
     }
 
-    private function formatAttributeAsArray(AttributeDefinition $attributeDefinition, array $attributeValues): array
+    private function formatAttributeAsArray(AttributeDefinition $attributeDefinition, array $attributeValues, int $storeId): array
     {
         return [
             'name' => $attributeDefinition->getCode(),
             'label' => $attributeDefinition->getLabel(),
             'values' => array_map(
-                fn ($attributeValue) => $this->formatAttributeValueAsArray($attributeDefinition, $attributeValue),
+                fn ($attributeValue) => $this->formatAttributeValueAsArray($attributeDefinition, $attributeValue, $storeId),
                 $attributeValues
             ),
             'isFacet' => $attributeDefinition->isFacet()
         ];
     }
 
-    private function formatAttributeValueAsArray(AttributeDefinition $attributeDefinition, $attributeValue): array
+    private function formatAttributeValueAsArray(AttributeDefinition $attributeDefinition, $attributeValue, int $storeId): array
     {
         if (in_array($attributeDefinition->getCode(), self::IMAGE_ATTRIBUTES)) {
-            $value = $this->imageUrlManager->getProductImageUrl($attributeValue);
+            $value = $this->imageUrlManager->getProductImageUrl($attributeValue, $storeId);
             return [
                 'value' => $value,
                 'label' => $value
