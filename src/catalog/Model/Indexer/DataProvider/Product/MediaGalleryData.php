@@ -42,7 +42,7 @@ class MediaGalleryData implements DataProviderInterface
             $linkFieldId  = $mediaImage['row_id'];
             $entityId = $this->rowIdToEntityId[$linkFieldId] ?? $linkFieldId;
 
-            $imageUrl = $this->imageUrlManager->getProductImageUrl($mediaImage['file']);
+            $imageUrl = $this->imageUrlManager->getProductImageUrl($mediaImage['file'], $storeId);
             $imageAlt = $this->getLabel($mediaImage);
             $image = [
                 'url' => $imageUrl,
