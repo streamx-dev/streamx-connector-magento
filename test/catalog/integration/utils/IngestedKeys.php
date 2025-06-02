@@ -66,4 +66,8 @@ class IngestedKeys {
         return $prefixToIdWithCountMap;
     }
 
+    public function empty(): bool {
+        return empty($this->publishedKeys) && empty($this->unpublishedKeys);
+    }
+
 }

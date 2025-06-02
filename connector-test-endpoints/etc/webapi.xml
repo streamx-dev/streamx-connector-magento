@@ -110,7 +110,19 @@
   </route>
 
   <route url="/V1/configuration/edit" method="PUT">
-    <service class="StreamX\ConnectorTestEndpoints\Api\ConfigurationEditControllerInterface" method="setConfigurationValue"/>
+    <service class="StreamX\ConnectorTestEndpoints\Api\ConfigurationEditControllerInterface" method="setGlobalConfigurationValue"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+  <route url="/V1/configuration/store/set" method="PUT">
+    <service class="StreamX\ConnectorTestEndpoints\Api\ConfigurationEditControllerInterface" method="setStoreLevelConfigurationValue"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+  <route url="/V1/configuration/store/remove" method="PUT">
+    <service class="StreamX\ConnectorTestEndpoints\Api\ConfigurationEditControllerInterface" method="removeStoreLevelConfigurationValue"/>
     <resources>
       <resource ref="anonymous"/>
     </resources>

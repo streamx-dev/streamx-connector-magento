@@ -146,8 +146,12 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
         $testName = get_class($this) . '.' . $this->getName();
         $this->logFileUtils->appendLine("Finished test $testName with result " . $this->getStatus());
         $ingestedKeys = $this->logFileUtils->getPublishedAndUnpublishedKeys();
-        fwrite(STDOUT, "Keys ingested during $testName:\n");
-        fwrite(STDOUT, $ingestedKeys->formatted() . PHP_EOL);
+        if ($ingestedKeys->empty()) {
+            fwrite(STDOUT, "No keys were ingested during $testName:\n");
+        } else {
+            fwrite(STDOUT, "Keys ingested during $testName:\n");
+            fwrite(STDOUT, $ingestedKeys->formatted() . PHP_EOL);
+        }
         CodeCoverageReportGenerator::generateSingleTestCodeCoverageReport($this);
     }
 
