@@ -127,9 +127,9 @@ abstract class BaseProductImportTest extends BaseStreamxConnectorPublishTest {
         }
     }
 
-    private static function deleteProducts(): void {
+    private function deleteProducts(): void {
         foreach ([self::B072ZLCB3M_PRODUCT_JSON_FILE, self::X072ZLCB3M_PRODUCT_JSON_FILE, self::Y072ZLCB3M_PRODUCT_JSON_FILE, self::Z072ZLCB3M_PRODUCT_JSON_FILE] as $productJsonFile) {
-            $sku = json_decode(ValidationFileUtils::readValidationFileContent($productJsonFile), true)['sku'];
+            $sku = json_decode(self::readValidationFileContent($productJsonFile), true)['sku'];
             try {
                 $productId = self::getProductIdBySku($sku);
                 MagentoEndpointsCaller::call('product/delete', [
