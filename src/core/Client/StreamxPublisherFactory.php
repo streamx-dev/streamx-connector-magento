@@ -4,26 +4,18 @@ namespace StreamX\ConnectorCore\Client;
 
 use GuzzleHttp\Client as GuzzleHttpClient;
 use Streamx\Clients\Ingestion\Builders\StreamxClientBuilders;
-use Streamx\Clients\Ingestion\Publisher\Publisher;
 
 class StreamxPublisherFactory {
 
     private StreamxClientConfiguration $clientConfiguration;
-    private array $streamxPublishersCache = []; // key: storeId_streamFlag
 
     public function __construct(StreamxClientConfiguration $clientConfiguration) {
         $this->clientConfiguration = $clientConfiguration;
     }
 
-    public function getOrCreateStreamxPublisher(int $storeId, bool $streamFlag): Publisher {
-        $cacheKey = sprintf('%s_%s', $storeId, $streamFlag ? 'true' : 'false');
-        if (!isset($this->streamxPublishersCache[$cacheKey])) {
-            $this->streamxPublishersCache[$cacheKey] = self::createStreamxPublisher($this->clientConfiguration, $storeId, $streamFlag);
-        }
-        return $this->streamxPublishersCache[$cacheKey];
-    }
+    public function createStreamxPublisher(int $storeId, bool $streamFlag): StreamxPublisher {
+        $configuration = $this->clientConfiguration;
 
-    private function createStreamxPublisher(StreamxClientConfiguration $configuration, int $storeId, bool $streamFlag): Publisher {
         $httpClient = new GuzzleHttpClient([
             'connect_timeout' => 1, // maximum time (in seconds) to establish the connection
             'timeout' => 5, // maximum time (in seconds) to wait for response
@@ -31,18 +23,20 @@ class StreamxPublisherFactory {
             'stream' => $streamFlag
         ]);
 
-        $ingestionClientBuilder = StreamxClientBuilders::create($configuration->getIngestionBaseUrl($storeId))
-            ->setHttpClient($httpClient);
+        $baseUrl = $configuration->getIngestionBaseUrl($storeId);
+        $ingestionClientBuilder = StreamxClientBuilders::create($baseUrl)->setHttpClient($httpClient);
 
         $authToken = $configuration->getAuthToken($storeId);
         if ($authToken) {
             $ingestionClientBuilder->setAuthToken($authToken);
         }
 
-        return $ingestionClientBuilder->build()->newPublisher(
+        $publisher = $ingestionClientBuilder->build()->newPublisher(
             $configuration->getChannelName($storeId),
             $configuration->getChannelSchemaName($storeId)
         );
+
+        return new StreamxPublisher($publisher, $baseUrl);
     }
 
 }

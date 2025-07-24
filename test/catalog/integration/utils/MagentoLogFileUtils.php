@@ -27,7 +27,7 @@ class MagentoLogFileUtils {
         $newLogLines = $this->readNewLogFileLines();
         $result = new IngestedKeys();
         foreach ($newLogLines as $line) {
-            if (str_contains($line, 'with keys')) {
+            if (str_contains($line, 'Start sending') && str_contains($line, 'with keys')) {
                 $this->parseKeysAndAddToResult($line, $result);
             }
         }
@@ -58,11 +58,24 @@ class MagentoLogFileUtils {
         }
     }
 
-    public function verifyLoggedExactlyOnce(string...$stringsToFind) {
+    public function verifyLoggedExactlyOnce(string ...$stringsToFind) {
         self::verifyLoggedTimes(1, ...$stringsToFind);
     }
 
-    public function verifyLoggedTimes(int $expectedTimes, string...$stringsToFind) {
+    public function verifyLoggedTimes(int $expectedTimes, string ...$stringsToFind) {
+        $actualCounts = $this->readActualCounts($stringsToFind);
+        $expectedCounts = array_fill_keys($stringsToFind, $expectedTimes);
+        TestCase::assertSame($expectedCounts, $actualCounts);
+    }
+
+    public function verifyLogged(string ...$stringsToFind) {
+        $actualCounts = $this->readActualCounts($stringsToFind);
+        foreach ($actualCounts as $string => $count) {
+            TestCase::assertGreaterThan(0, $count, $string);
+        }
+    }
+
+    private function readActualCounts(array $stringsToFind): array {
         $actualCounts = array_fill_keys($stringsToFind, 0);
         foreach ($this->readNewLogFileLines() as $line) {
             foreach ($stringsToFind as $string) {
@@ -71,8 +84,6 @@ class MagentoLogFileUtils {
                 }
             }
         }
-
-        $expectedCounts = array_fill_keys($stringsToFind, $expectedTimes);
-        TestCase::assertSame($expectedCounts, $actualCounts);
+        return $actualCounts;
     }
 }

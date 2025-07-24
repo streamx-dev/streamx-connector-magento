@@ -3,12 +3,13 @@
 namespace StreamX\ConnectorCore\Client;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\App\ResourceConnection;
 use StreamX\ConnectorCore\Api\BaseConfigurationReader;
 
 class StreamxClientConfiguration extends BaseConfigurationReader
 {
-    public function __construct(ScopeConfigInterface $scopeConfig) {
-        parent::__construct($scopeConfig, 'streamx_client');
+    public function __construct(ResourceConnection $connection, ScopeConfigInterface $scopeConfig) {
+        parent::__construct($connection, $scopeConfig, 'streamx_client');
     }
 
     public function getIngestionBaseUrl(int $storeId): string {
