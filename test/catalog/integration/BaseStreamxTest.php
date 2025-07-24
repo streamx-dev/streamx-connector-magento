@@ -6,7 +6,9 @@ use Magento\Store\Api\Data\StoreInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Streamx\Clients\Ingestion\Builders\StreamxClientBuilders;
+use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageReportGenerator;
 use StreamX\ConnectorCatalog\test\integration\utils\JsonFormatter;
+use StreamX\ConnectorCatalog\test\integration\utils\MagentoLogFileUtils;
 use StreamX\ConnectorCatalog\test\integration\utils\ValidationFileUtils;
 use StreamX\ConnectorCore\Client\RabbitMQ\RabbitMqConfiguration;
 use StreamX\ConnectorCore\Client\RabbitMQ\RabbitMqConnectionSettings;
@@ -39,6 +41,14 @@ abstract class BaseStreamxTest extends TestCase {
     protected const RABBIT_MQ_API_PORT = 15672;
     protected const RABBIT_MQ_USER = 'magento';
     protected const RABBIT_MQ_PASSWORD = 'magento';
+
+    protected function setUp(): void {
+        CodeCoverageReportGenerator::hideCoverageFilesFromPreviousTest();
+    }
+
+    protected function tearDown(): void {
+        CodeCoverageReportGenerator::generateSingleTestCodeCoverageReport($this);
+    }
 
     /**
      * @param array $regexReplacements what to change in the actual StreamX response Json, to match the validation file
