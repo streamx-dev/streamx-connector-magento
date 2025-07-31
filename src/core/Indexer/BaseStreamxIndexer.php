@@ -12,9 +12,7 @@ use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCore\Api\BasicDataLoader;
 use StreamX\ConnectorCore\Api\DataProviderInterface;
 use StreamX\ConnectorCore\Client\RabbitMQ\RabbitMqConfiguration;
-use StreamX\ConnectorCore\Client\StreamxAvailabilityChecker;
 use StreamX\ConnectorCore\Client\StreamxClient;
-use StreamX\ConnectorCore\Config\OptimizationSettings;
 use StreamX\ConnectorCore\System\GeneralConfig;
 use StreamX\ConnectorCore\Traits\ExceptionLogger;
 use Traversable;
@@ -23,13 +21,11 @@ abstract class BaseStreamxIndexer extends AbstractProcessor implements IndexerAc
 
     use ExceptionLogger;
 
-    private GeneralConfig $connectorConfig;
+    private GeneralConfig $generalConfig;
     private IndexedStoresProvider $indexedStoresProvider;
     private BasicDataLoader $entityDataLoader;
     protected LoggerInterface $logger;
-    private OptimizationSettings $optimizationSettings;
     private StreamxClient $streamxClient;
-    private StreamxAvailabilityChecker $streamxAvailabilityChecker;
     private RabbitMqConfiguration $rabbitMqConfiguration;
     /**
      * @var DataProviderInterface[]
@@ -42,13 +38,11 @@ abstract class BaseStreamxIndexer extends AbstractProcessor implements IndexerAc
         BasicDataLoader $entityDataLoader
     ) {
         parent::__construct($indexerServices->getIndexerRegistry());
-        $this->connectorConfig = $indexerServices->getConnectorConfig();
+        $this->generalConfig = $indexerServices->getGeneralConfig();
         $this->indexedStoresProvider = $indexerServices->getIndexedStoresProvider();
         $this->entityDataLoader = $entityDataLoader;
         $this->logger = $indexerServices->getLogger();
-        $this->optimizationSettings = $indexerServices->getOptimizationSettings();
         $this->streamxClient = $indexerServices->getStreamxClient();
-        $this->streamxAvailabilityChecker = $indexerServices->getStreamxAvailabilityChecker();
         $this->rabbitMqConfiguration = $indexerServices->getRabbitMqConfiguration();
         $indexerDefinition = $indexerServices->getIndexersConfig()->getById(static::INDEXER_ID);
         $this->dataProviders = $indexerDefinition->getDataProviders();
@@ -84,24 +78,13 @@ abstract class BaseStreamxIndexer extends AbstractProcessor implements IndexerAc
     }
 
     private function loadAndIngestEntities(array $ids): void {
-        if (!$this->connectorConfig->isEnabled()) {
+        if (!$this->generalConfig->isEnabled()) {
             $this->logger->info("StreamX Connector is disabled, skipping indexing $this->indexerId");
             return;
         }
 
-        $shouldPerformStreamxAvailabilityCheck =
-            $this->optimizationSettings->shouldPerformStreamxAvailabilityCheck()
-            &&
-            !$this->rabbitMqConfiguration->isEnabled(); // if RabbitMQ is enabled - we don't need to check for StreamX availability, and allow waiting for it to become available using retry queues
-
         foreach ($this->indexedStoresProvider->getStores() as $store) {
             $storeId = (int) $store->getId();
-
-            if ($shouldPerformStreamxAvailabilityCheck && !$this->streamxAvailabilityChecker->isStreamxAvailable($storeId)) {
-                $this->logger->info("Cannot reindex $this->indexerId for store $storeId - StreamX is not available");
-                continue;
-            }
-
             $this->logger->info("Start indexing $this->indexerId for store $storeId");
             $entities = $this->entityDataLoader->loadData($storeId, $ids);
             $this->ingestEntities($entities, $store);
@@ -110,7 +93,7 @@ abstract class BaseStreamxIndexer extends AbstractProcessor implements IndexerAc
     }
 
     protected function ingestEntities(Traversable $entities, StoreInterface $store): void {
-        $batchSize = $this->optimizationSettings->getBatchIndexingSize();
+        $batchSize = $this->generalConfig->getBatchIndexingSize();
 
         foreach ((new Batch())->getItems($entities, $batchSize) as $entitiesBatch) {
             $this->processEntitiesBatch($entitiesBatch, $store);

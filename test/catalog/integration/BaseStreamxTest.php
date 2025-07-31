@@ -161,7 +161,7 @@ abstract class BaseStreamxTest extends TestCase {
         return $rabbitMqConfigurationMock;
     }
 
-    protected function createClientConfigurationMock(string $restIngestionUrl): StreamxClientConfiguration {
+    private function createClientConfigurationMock(string $restIngestionUrl): StreamxClientConfiguration {
         $clientConfigurationMock = $this->createMock(StreamxClientConfiguration::class);
         $clientConfigurationMock->method('getIngestionBaseUrl')->willReturn($restIngestionUrl);
         $clientConfigurationMock->method('getChannelName')->willReturn(self::CHANNEL_NAME);

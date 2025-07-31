@@ -5,6 +5,7 @@
         <streamx_connector_settings>
             <general_settings>
                 <enable>0</enable>
+                <batch_indexing_size>100</batch_indexing_size>
             </general_settings>
             <streamx_client>
                 <ingestion_base_url>http://rest-ingestion:8080</ingestion_base_url>
@@ -19,10 +20,6 @@
                 <user>magento</user>
                 <password>magento</password>
             </rabbit_mq>
-            <optimization_settings>
-                <should_perform_streamx_availability_check>1</should_perform_streamx_availability_check>
-                <batch_indexing_size>100</batch_indexing_size>
-            </optimization_settings>
         </streamx_connector_settings>
     </default>
 </config>

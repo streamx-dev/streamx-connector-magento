@@ -13,14 +13,15 @@ class StreamxPublisherFactory {
         $this->clientConfiguration = $clientConfiguration;
     }
 
-    public function createStreamxPublisher(int $storeId, bool $streamFlag): StreamxPublisher {
+    public function createStreamxPublisher(int $storeId): StreamxPublisher {
         $configuration = $this->clientConfiguration;
 
         $httpClient = new GuzzleHttpClient([
+            // TODO make timeouts configurable
             'connect_timeout' => 1, // maximum time (in seconds) to establish the connection
             'timeout' => 5, // maximum time (in seconds) to wait for response
             'verify' => !$configuration->shouldDisableCertificateValidation($storeId),
-            'stream' => $streamFlag
+            'stream' => 'true'
         ]);
 
         $baseUrl = $configuration->getIngestionBaseUrl($storeId);
