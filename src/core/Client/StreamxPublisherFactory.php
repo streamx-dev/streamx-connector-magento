@@ -17,9 +17,8 @@ class StreamxPublisherFactory {
         $configuration = $this->clientConfiguration;
 
         $httpClient = new GuzzleHttpClient([
-            // TODO make timeouts configurable
-            'connect_timeout' => 1, // maximum time (in seconds) to establish the connection
-            'timeout' => 5, // maximum time (in seconds) to wait for response
+            'connect_timeout' => $configuration->getConnectionTimeout($storeId),
+            'timeout' => $configuration->getResponseTimeout($storeId),
             'verify' => !$configuration->shouldDisableCertificateValidation($storeId),
             'stream' => 'true'
         ]);

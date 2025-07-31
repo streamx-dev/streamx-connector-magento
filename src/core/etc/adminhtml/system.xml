@@ -55,9 +55,19 @@
                     <label>Auth token</label>
                     <comment>Auth token to use when calling StreamX Rest Ingestion endpoints</comment>
                 </field>
-                <field id="disable_certificate_validation" translate="label comment" type="select" sortOrder="71" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="connection_timeout" translate="label comment" type="text" sortOrder="71" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Connection timeout</label>
+                    <comment>Maximum time (in seconds) to establish a connection to the StreamX REST Ingestion endpoint</comment>
+                    <validate>required-entry validate-digits</validate>
+                </field>
+                <field id="response_timeout" translate="label comment" type="text" sortOrder="81" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Response timeout</label>
+                    <comment>Maximum time (in seconds) to wait for a response from the StreamX REST Ingestion endpoint</comment>
+                    <validate>required-entry validate-digits</validate>
+                </field>
+                <field id="disable_certificate_validation" translate="label comment" type="select" sortOrder="91" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Disable certificate validation</label>
-                    <comment>Select Yes to disable certificate validation when calling StreamX Rest Ingestion endpoints - for example to allow untrusted certificates</comment>
+                    <comment>Select Yes to disable certificate validation when calling the StreamX Rest Ingestion endpoint - for example to allow untrusted certificates</comment>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
             </group>
