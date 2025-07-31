@@ -143,7 +143,12 @@ composer update # enough to execute this only once - will create the './vendor/b
 open target/coverage-reports/index.html
 ```
 
-5. To switch Magento back to debug mode, execute:
+5. Generate summary test coverage report:
+ * Run all tests (while Magento is in the coverage mode)
+ * Run the `SummaryCoverageMeasurementTest` test
+ * Open summary code coverage report html page generated at `target/coverage-reports/StreamX/ConnectorCatalog/test/integration/SummaryCoverageMeasurementTest/shouldMeasureSummaryCoverage/index.html`
+
+6. To switch Magento back to debug mode, execute:
 ```bash
 bash scripts/switch-magento-xdebug-to-debug.sh
 ```

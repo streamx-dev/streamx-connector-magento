@@ -15,7 +15,7 @@ It's designed to work with PHP Storm IDE.
    - then open the server settings again, to map also `[your full local path to streamx-connector-magento]/magento/src` to `/var/www/html`.
      - if no such path is available to be selected in the window - as a workaround add the mapping manually:
      - open `.idea/workspace.xml` file in a text editor (the file may be hidden)
-     - below the existing mappping: `<mapping local-root="$PROJECT_DIR$/src" remote-root="/var/www/html/app/code/StreamX/Connector/src" />`
+     - below the existing mapping: `<mapping local-root="$PROJECT_DIR$/src" remote-root="/var/www/html/app/code/StreamX/Connector/src" />`
      - add mapping: `<mapping local-root="$PROJECT_DIR$/magento/src" remote-root="/var/www/html" />`
 
 3. Prepare your browser to become a tool to trigger Connector PHP code to stop at breakpoints:

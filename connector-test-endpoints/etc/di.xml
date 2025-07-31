@@ -42,6 +42,10 @@
       for="StreamX\ConnectorTestEndpoints\Api\ProductImportControllerInterface"
       type="StreamX\ConnectorTestEndpoints\Impl\ProductImportControllerImpl"/>
 
+    <preference
+      for="StreamX\ConnectorTestEndpoints\Api\ObserverRunnerInterface"
+      type="StreamX\ConnectorTestEndpoints\Impl\ObserverRunnerImpl"/>
+
     <type name="Magento\Webapi\Controller\Rest">
         <plugin name="codeCoveragePlugin" type="StreamX\ConnectorTestEndpoints\Impl\EndpointCodeCoveragePlugin" />
         <plugin name="exceptionPlugin" type="StreamX\ConnectorTestEndpoints\Impl\EndpointExceptionPlugin" />

@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 use StreamX\ConnectorCatalog\Indexer\AttributeIndexer;
 use StreamX\ConnectorCatalog\Indexer\CategoryIndexer;
 use StreamX\ConnectorCatalog\Indexer\ProductIndexer;
-use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageReportGenerator;
 use StreamX\ConnectorCatalog\test\integration\utils\EntityIds;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoLogFileUtils;
@@ -137,9 +136,9 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
     }
 
     protected function setUp(): void {
+        parent::setUp();
         $this->logFileUtils = new MagentoLogFileUtils();
         $this->logFileUtils->appendLine('Starting test ' . get_class($this) . '.' . $this->getName());
-        CodeCoverageReportGenerator::hideCoverageFilesFromPreviousTest();
     }
 
     protected function tearDown(): void {
@@ -152,7 +151,7 @@ abstract class BaseStreamxConnectorPublishTest extends BaseStreamxTest {
             fwrite(STDOUT, "Keys ingested during $testName:\n");
             fwrite(STDOUT, $ingestedKeys->formatted() . PHP_EOL);
         }
-        CodeCoverageReportGenerator::generateSingleTestCodeCoverageReport($this);
+        parent::tearDown();
     }
 
     public static function productKey(EntityIds $productId, string $storeCode = self::STORE_1_CODE): string {

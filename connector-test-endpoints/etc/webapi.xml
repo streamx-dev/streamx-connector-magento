@@ -163,4 +163,11 @@
     </resources>
   </route>
 
+  <route url="/V1/observers/execute" method="PUT">
+    <service class="StreamX\ConnectorTestEndpoints\Api\ObserverRunnerInterface" method="execute"/>
+    <resources>
+      <resource ref="anonymous"/>
+    </resources>
+  </route>
+
 </routes>
