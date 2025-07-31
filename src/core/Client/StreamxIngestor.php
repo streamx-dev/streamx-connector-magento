@@ -27,13 +27,15 @@ class StreamxIngestor {
     public function send(array $ingestionMessages, int $storeId): bool {
         $keys = array_column($ingestionMessages, 'key');
         $action = implode(', ', array_unique(array_column($ingestionMessages, 'action')));
-        $this->logger->info("Executing IngestionRequest for store $storeId with action $action and keys " . json_encode($keys));
 
-        $streamxPublisher = $this->streamxPublisherFactory->getOrCreateStreamxPublisher($storeId, true);
-        $messageStatuses = $streamxPublisher->sendMulti($ingestionMessages);
+        $streamxPublisher = $this->streamxPublisherFactory->createStreamxPublisher($storeId, true);
+        $baseUrl = $streamxPublisher->getBaseUrl();
+        $this->logger->info("Ingesting data with action $action to store $storeId at $baseUrl with keys " . json_encode($keys));
+
+        $messageStatuses = $streamxPublisher->getPublisher()->sendMulti($ingestionMessages);
 
         $success = $this->isEachStatusSuccess($ingestionMessages, $messageStatuses);
-        $this->logger->info("Finished executing ingestion request with result: $success");
+        $this->logger->info('Finished ingesting data with ' . ($success ? 'success' : 'failure'));
         return $success;
     }
 

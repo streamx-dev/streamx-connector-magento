@@ -24,7 +24,7 @@ class StreamxAvailabilityChecker {
 
     public function isStreamxAvailable(int $storeId): bool {
         try {
-            $schemasFetcher = $this->streamxPublisherFactory->getOrCreateStreamxPublisher($storeId, false);
+            $schemasFetcher = $this->streamxPublisherFactory->createStreamxPublisher($storeId, false)->getPublisher();
             $schema = $schemasFetcher->fetchSchema();
             if (str_contains($schema, 'IngestionMessage')) {
                 return true;
