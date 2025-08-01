@@ -14,7 +14,7 @@ class ConfigurationKeyPaths {
 
     public const ENABLE_RABBIT_MQ = 'streamx_connector_settings/rabbit_mq/enable';
 
-    public const BATCH_INDEXING_SIZE = 'streamx_connector_settings/optimization_settings/batch_indexing_size';
+    public const BATCH_INDEXING_SIZE = 'streamx_connector_settings/general_settings/batch_indexing_size';
 
     public const BASE_SECURE_LINK_URL = 'web/secure/base_link_url';
 }

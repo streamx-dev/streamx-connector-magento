@@ -45,7 +45,6 @@ class RabbitMqIngestionRequestsConsumer {
                 }
                 usleep(self::CONSUME_MESSAGES_BATCH_INTERVAL_MICROSECONDS);
             } else {
-                $loggerWrapper->info('Rabbit MQ is currently disabled in configuration');
                 sleep(self::CHECK_IF_RABBIT_MQ_IS_ENABLED_INTERVAL_SECONDS);
             }
         }

@@ -25,4 +25,12 @@ class GeneralConfig extends BaseConfigurationReader
         );
         return array_map('intval', $storeIds);
     }
+
+    public function getBatchIndexingSize(): int {
+        return (int)$this->getGlobalConfigValue('batch_indexing_size');
+    }
+
+    function getBatchIndexingSizeConfigFieldPath(): string {
+        return $this->getConfigFieldFullPath('batch_indexing_size');
+    }
 }

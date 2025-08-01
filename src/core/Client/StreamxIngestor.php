@@ -28,7 +28,7 @@ class StreamxIngestor {
         $keys = array_column($ingestionMessages, 'key');
         $action = implode(', ', array_unique(array_column($ingestionMessages, 'action')));
 
-        $streamxPublisher = $this->streamxPublisherFactory->createStreamxPublisher($storeId, true);
+        $streamxPublisher = $this->streamxPublisherFactory->createStreamxPublisher($storeId);
         $baseUrl = $streamxPublisher->getBaseUrl();
         $this->logger->info("Ingesting data with action $action to store $storeId at $baseUrl with keys " . json_encode($keys));
 

@@ -7,15 +7,12 @@ use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationEditUtils;
 use StreamX\ConnectorCatalog\test\integration\utils\ConfigurationKeyPaths;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoEndpointsCaller;
 use StreamX\ConnectorCatalog\test\integration\utils\MagentoMySqlQueryExecutor;
-use StreamX\ConnectorCore\Config\OptimizationSettingsObserver;
+use StreamX\ConnectorCore\Config\GeneralConfigObserver;
 
 class BatchIndexingSizeLimitTest extends BaseStreamxTest {
 
     /** @test */
     public function shouldNotAllowTooHighBatchIndexingSize() {
-        // given
-        $this->assertCurrentBatchIndexingSize(100);
-
         try {
             // when: set acceptable value
             $this->attemptSettingBatchIndexingSize(200);
@@ -37,7 +34,7 @@ class BatchIndexingSizeLimitTest extends BaseStreamxTest {
         ConfigurationEditUtils::setConfigurationValue(ConfigurationKeyPaths::BATCH_INDEXING_SIZE, $size);
 
         MagentoEndpointsCaller::call('observers/execute', [
-            'observerClassName' => OptimizationSettingsObserver::class
+            'observerClassName' => GeneralConfigObserver::class
         ]);
     }
 

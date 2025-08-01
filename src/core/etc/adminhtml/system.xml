@@ -26,6 +26,14 @@
                         <field id="enable">1</field>
                     </depends>
                 </field>
+                <field id="batch_indexing_size" translate="label comment" type="text" sortOrder="41" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Batch Indexing Size</label>
+                    <comment>Specify how many changed Products / Categories can be published to StreamX in a single operation. When exceeded - the data will be published in batches</comment>
+                    <validate>required-entry validate-digits validate-between-1-and-500</validate>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
             </group>
 
             <group id="streamx_client" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
@@ -91,22 +99,6 @@
                 </field>
             </group>
 
-            <group id="optimization_settings" translate="label" type="text" sortOrder="350" showInDefault="1" showInWebsite="0" showInStore="0">
-                <label>Optimization Settings</label>
-                <depends>
-                    <field id="streamx_connector_settings/general_settings/enable">1</field>
-                </depends>
-                <field id="should_perform_streamx_availability_check" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Check StreamX availability</label>
-                    <comment>Enable to perform StreamX availability check before indexing data</comment>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-                <field id="batch_indexing_size" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Batch Indexing Size</label>
-                    <comment>Specify how many changed Products / Categories can be published to StreamX in a single operation. When exceeded - the data will be published in batches</comment>
-                    <validate>required-entry validate-digits validate-between-1-and-500</validate>
-                </field>
-            </group>
         </section>
     </system>
 </config>

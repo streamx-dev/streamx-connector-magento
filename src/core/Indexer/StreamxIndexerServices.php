@@ -6,47 +6,39 @@ use Magento\Framework\Indexer\IndexerRegistry;
 use Psr\Log\LoggerInterface;
 use StreamX\ConnectorCore\Api\IndexersConfigInterface;
 use StreamX\ConnectorCore\Client\RabbitMQ\RabbitMqConfiguration;
-use StreamX\ConnectorCore\Client\StreamxAvailabilityChecker;
 use StreamX\ConnectorCore\Client\StreamxClient;
-use StreamX\ConnectorCore\Config\OptimizationSettings;
 use StreamX\ConnectorCore\System\GeneralConfig;
 
 class StreamxIndexerServices {
 
-    private GeneralConfig $connectorConfig;
+    private GeneralConfig $generalConfig;
     private IndexedStoresProvider $indexedStoresProvider;
     private LoggerInterface $logger;
-    private OptimizationSettings $optimizationSettings;
     private StreamxClient $streamxClient;
-    private StreamxAvailabilityChecker $streamxAvailabilityChecker;
     private RabbitMqConfiguration $rabbitMqConfiguration;
     private IndexerRegistry $indexerRegistry;
     private IndexersConfigInterface $indexersConfig;
 
     public function __construct(
-        GeneralConfig $connectorConfig,
+        GeneralConfig $generalConfig,
         IndexedStoresProvider $indexedStoresProvider,
         LoggerInterface $logger,
-        OptimizationSettings $optimizationSettings,
         StreamxClient $streamxClient,
-        StreamxAvailabilityChecker $streamxAvailabilityChecker,
         RabbitMqConfiguration $rabbitMqConfiguration,
         IndexerRegistry $indexerRegistry,
         IndexersConfigInterface $indexersConfig
     ) {
-        $this->connectorConfig = $connectorConfig;
+        $this->generalConfig = $generalConfig;
         $this->indexedStoresProvider = $indexedStoresProvider;
         $this->logger = $logger;
-        $this->optimizationSettings = $optimizationSettings;
         $this->streamxClient = $streamxClient;
-        $this->streamxAvailabilityChecker = $streamxAvailabilityChecker;
         $this->rabbitMqConfiguration = $rabbitMqConfiguration;
         $this->indexerRegistry = $indexerRegistry;
         $this->indexersConfig = $indexersConfig;
     }
 
-    public function getConnectorConfig(): GeneralConfig {
-        return $this->connectorConfig;
+    public function getGeneralConfig(): GeneralConfig {
+        return $this->generalConfig;
     }
 
     public function getIndexedStoresProvider(): IndexedStoresProvider {
@@ -57,16 +49,8 @@ class StreamxIndexerServices {
         return $this->logger;
     }
 
-    public function getOptimizationSettings(): OptimizationSettings {
-        return $this->optimizationSettings;
-    }
-
     public function getStreamxClient(): StreamxClient {
         return $this->streamxClient;
-    }
-
-    public function getStreamxAvailabilityChecker(): StreamxAvailabilityChecker {
-        return $this->streamxAvailabilityChecker;
     }
 
     public function getRabbitMqConfiguration(): RabbitMqConfiguration {
