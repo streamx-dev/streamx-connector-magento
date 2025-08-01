@@ -167,6 +167,8 @@ abstract class BaseStreamxTest extends TestCase {
         $clientConfigurationMock->method('getChannelName')->willReturn(self::CHANNEL_NAME);
         $clientConfigurationMock->method('getChannelSchemaName')->willReturn(self::CHANNEL_SCHEMA_NAME);
         $clientConfigurationMock->method('getAuthToken')->willReturn(null);
+        $clientConfigurationMock->method('getConnectionTimeout')->willReturn(1);
+        $clientConfigurationMock->method('getResponseTimeout')->willReturn(5);
         $clientConfigurationMock->method('shouldDisableCertificateValidation')->willReturn(false);
         return $clientConfigurationMock;
     }

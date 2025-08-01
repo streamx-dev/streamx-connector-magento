@@ -11,6 +11,8 @@
                 <ingestion_base_url>http://rest-ingestion:8080</ingestion_base_url>
                 <channel_name>data</channel_name>
                 <channel_schema_name>dev.streamx.blueprints.data.DataIngestionMessage</channel_schema_name>
+                <connection_timeout>3</connection_timeout>
+                <response_timeout>15</response_timeout>
                 <disable_certificate_validation>0</disable_certificate_validation>
             </streamx_client>
             <rabbit_mq>

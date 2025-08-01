@@ -28,6 +28,14 @@ class StreamxClientConfiguration extends BaseConfigurationReader
         return $this->getStoreLevelConfigValue('auth_token', $storeId);
     }
 
+    public function getConnectionTimeout(int $storeId): int {
+        return (int)$this->getStoreLevelConfigValue('connection_timeout', $storeId);
+    }
+
+    public function getResponseTimeout(int $storeId): int {
+        return (int)$this->getStoreLevelConfigValue('response_timeout', $storeId);
+    }
+
     public function shouldDisableCertificateValidation(int $storeId): bool {
         return (bool)$this->getStoreLevelConfigValue('disable_certificate_validation', $storeId);
     }
