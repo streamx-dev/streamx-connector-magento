@@ -25,39 +25,23 @@ class ProductType implements OptionSourceInterface
      */
     public function toOptionArray(): array
     {
-        $options = [];
-
-        foreach ($this->getProductTypes() as $typeId => $type) {
-            $options[] = [
-                'value' => $typeId,
-                'label' => (string)$type['label']
-            ];
-        }
-
-        return $options;
-    }
-
-    private function getProductTypes(): array
-    {
         if (empty($this->types)) {
-            $this->types = $this->initProductTypes();
-        }
+            $this->types[] = [
+                'value' => '',
+                'label' => __('[None]'),
+            ];
 
-        return $this->types;
-    }
-
-    private function initProductTypes(): array
-    {
-        $productTypes = $this->config->getAll();
-
-        foreach ($productTypes as $productTypeKey => $productTypeConfig) {
-            if (in_array($productTypeConfig['name'], self::SUPPORTED_TYPES)) {
-                $productTypes[$productTypeKey]['label'] = __($productTypeConfig['label']);
-            } else {
-                unset($productTypes[$productTypeKey]);
+            $allProductTypes = $this->config->getAll();
+            foreach ($allProductTypes as $productTypeKey => $productTypeConfig) {
+                if (in_array($productTypeKey, self::SUPPORTED_TYPES)) {
+                    $this->types[] = [
+                        'value' => $productTypeKey,
+                        'label' => __($productTypeConfig['label'])
+                    ];
+                }
             }
         }
 
-        return $productTypes;
+        return $this->types;
     }
 }

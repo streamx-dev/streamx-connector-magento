@@ -2,8 +2,6 @@
 
 namespace StreamX\ConnectorCore\Client;
 
-use GuzzleHttp\Client as GuzzleHttpClient;
-use Streamx\Clients\Ingestion\Builders\StreamxClientBuilders;
 use Streamx\Clients\Ingestion\Publisher\Publisher;
 
 class StreamxPublisher {

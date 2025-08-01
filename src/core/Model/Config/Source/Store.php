@@ -35,10 +35,14 @@ class Store implements OptionSourceInterface
     }
 
     private function mapToOptions(Collection $stores): array {
-        $options = [];
+        $options[] = [
+            'value' => '',
+            'label' => '[None]',
+        ];
+
         foreach ($stores as $store) {
             $options[] = [
-                'value' => (int)$store->getData('store_id'),
+                'value' => (string)$store->getData('store_id'),
                 'label' => (string)$store->getData('name')
             ];
         }

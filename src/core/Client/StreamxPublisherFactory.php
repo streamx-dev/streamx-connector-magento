@@ -2,7 +2,7 @@
 
 namespace StreamX\ConnectorCore\Client;
 
-use GuzzleHttp\Client as GuzzleHttpClient;
+use GuzzleHttp\Client;
 use Streamx\Clients\Ingestion\Builders\StreamxClientBuilders;
 
 class StreamxPublisherFactory {
@@ -16,7 +16,7 @@ class StreamxPublisherFactory {
     public function createStreamxPublisher(int $storeId): StreamxPublisher {
         $configuration = $this->clientConfiguration;
 
-        $httpClient = new GuzzleHttpClient([
+        $httpClient = new Client([
             'connect_timeout' => $configuration->getConnectionTimeout($storeId),
             'timeout' => $configuration->getResponseTimeout($storeId),
             'verify' => !$configuration->shouldDisableCertificateValidation($storeId),
