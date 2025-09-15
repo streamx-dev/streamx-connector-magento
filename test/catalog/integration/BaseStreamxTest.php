@@ -8,7 +8,6 @@ use Psr\Log\LoggerInterface;
 use Streamx\Clients\Ingestion\Builders\StreamxClientBuilders;
 use StreamX\ConnectorCatalog\test\integration\utils\CodeCoverageReportGenerator;
 use StreamX\ConnectorCatalog\test\integration\utils\JsonFormatter;
-use StreamX\ConnectorCatalog\test\integration\utils\MagentoLogFileUtils;
 use StreamX\ConnectorCatalog\test\integration\utils\ValidationFileUtils;
 use StreamX\ConnectorCore\Client\RabbitMQ\RabbitMqConfiguration;
 use StreamX\ConnectorCore\Client\RabbitMQ\RabbitMqConnectionSettings;
@@ -31,7 +30,7 @@ abstract class BaseStreamxTest extends TestCase {
     private const CHANNEL_SCHEMA_NAME = "dev.streamx.blueprints.data.DataIngestionMessage";
     private const CHANNEL_NAME = "data";
 
-    private const STREAMX_DELIVERY_SERVICE_BASE_URL = "http://localhost:8081";
+    private const STREAMX_SEARCH_SERVICE_URL_TEMPLATE = "http://localhost:9201/default/_search?q=_id:\"%s\"";
     private const WAIT_FOR_INGESTED_DATA_TIMEOUT_SECONDS = 8;
     private const SLEEP_MICROS_BETWEEN_DATA_INGESTION_CHECKS = 200_000;
 
@@ -55,16 +54,14 @@ abstract class BaseStreamxTest extends TestCase {
      * @return string the actually published data if assertion passes, or exception if assertion failed
      */
     protected function assertExactDataIsPublished(string $key, string $validationFileName, array $regexReplacements = []): ?string {
-        $url = self::STREAMX_DELIVERY_SERVICE_BASE_URL . '/' . $key;
-
         $expectedJson = $this->readValidationFileContent($validationFileName);
         $expectedFormattedJson = JsonFormatter::formatJson($expectedJson);
 
         $startTime = time();
         $response = null;
         while (time() - $startTime < self::WAIT_FOR_INGESTED_DATA_TIMEOUT_SECONDS) {
-            $response = @file_get_contents($url);
-            if ($response !== false) {
+            $response = $this->search($key);
+            if (!empty($response)) {
                 if ($this->verifySameJsonsSilently($expectedFormattedJson, $response, $regexReplacements)) {
                     return $response;
                 }
@@ -75,18 +72,16 @@ abstract class BaseStreamxTest extends TestCase {
         if ($response !== false) {
             $this->verifySameJsonsOrThrow($expectedFormattedJson, $response, $regexReplacements);
         } else {
-            $this->fail("$url: not found");
+            $this->fail("$key: not found");
         }
 
         return $response;
     }
 
     protected function assertDataIsUnpublished(string $key): void {
-        $url = self::STREAMX_DELIVERY_SERVICE_BASE_URL . '/' . $key;
-
         $startTime = time();
         while (time() - $startTime < self::WAIT_FOR_INGESTED_DATA_TIMEOUT_SECONDS) {
-            $response = @file_get_contents($url);
+            $response = $this->search($key);
             if (empty($response)) {
                 $this->assertTrue(true); // needed to work around the "This test did not perform any assertions" warning
                 return;
@@ -94,7 +89,7 @@ abstract class BaseStreamxTest extends TestCase {
             usleep(self::SLEEP_MICROS_BETWEEN_DATA_INGESTION_CHECKS);
         }
 
-        $this->fail("$url: exists");
+        $this->fail("$key: exists");
     }
 
     protected function assertDataIsNotPublished(string $key): void {
@@ -113,12 +108,26 @@ abstract class BaseStreamxTest extends TestCase {
     }
 
     protected function isCurrentlyPublished(string $key): bool {
-        $url = self::STREAMX_DELIVERY_SERVICE_BASE_URL . '/' . $key;
-        $headers = @get_headers($url);
-        if ($headers === false) {
-            return false;
+        return !empty($this->search($key));
+    }
+
+    private function search(string $key): string {
+        $url = sprintf(self::STREAMX_SEARCH_SERVICE_URL_TEMPLATE, $key);
+        $response = @file_get_contents($url);
+        if (empty($response)) {
+            return '';
         }
-        return str_contains($headers[0], "200 OK");
+
+        $data = json_decode($response, true);
+
+        $payloads = array_map(function ($hit) {
+            return $hit['_source']['payload'];
+        }, $data['hits']['hits']);
+
+        if (empty($payloads)) {
+            return '';
+        }
+        return json_encode($payloads[0]);
     }
 
     protected function createStreamxClient(): StreamxClient {

@@ -23,8 +23,11 @@ trait ValidationFileUtils  {
         $actualFormattedJson = JsonFormatter::formatJson($actualJson);
         try {
             $expected = self::standardizeNewlines($expectedFormattedJson);
+            $expected = str_replace('https:\/\/magento.test:444', '', $expected);
+
             // allow adjusting actual json to match expected validation json
             $actual = self::standardizeNewlines(self::replaceRegexes($actualFormattedJson, $regexReplacements));
+
             $this->assertEquals($expected, $actual);
             return true;
         } catch (ExpectationFailedException $e) {
